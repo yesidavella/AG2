@@ -292,19 +292,17 @@ public class Main extends Application {
         ivImagenFondo.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
         ivImagenFondo.setLayoutY(ESQUINA_SUPERIOR_IZQ_MAPA.getY());
         grGrupoDeDiseño.getChildren().addAll(rectangle, ivImagenFondo);
-      
 
         spZonaDeDiseño.setContent(grGrupoDeDiseño);
-
-
-
 
         pestañaSimulacion.setContent(spZonaDeDiseño);
 
         cajaDePestañas.getTabs().addAll(pestañaSimulacion, pestañaResultados, pestañaResultadosHTML);
 
         diseñoVentana.setCenter(cajaDePestañas);
-
+        
+        
+        
         Thread thread = new Thread(new Runnable() {
 
             public void run() {
@@ -321,80 +319,8 @@ public class Main extends Application {
                 
                spZonaDeDiseño.setFitToHeight(true);
                spZonaDeDiseño.setFitToWidth(true);
-               
-               Bounds b = new Bounds(1, 1, 1, 200, 200, 200) {
-
-                    @Override
-                    public boolean isEmpty() {
-                        //throw new UnsupportedOperationException("Not supported yet.");
-                        System.out.println("1..");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean contains(Point2D pd) {
-                        System.out.println("2..");
-                        //throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean contains(Point3D pd) {
-                        System.out.println("3..");
-                        //throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean contains(double d, double d1) {
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean contains(double d, double d1, double d2) {
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean contains(Bounds bounds) {
-                        return true;
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-
-                    @Override
-                    public boolean contains(double d, double d1, double d2, double d3) {
-                        return true;
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-
-                    @Override
-                    public boolean contains(double d, double d1, double d2, double d3, double d4, double d5) {
-                        return true;
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-
-                    @Override
-                    public boolean intersects(Bounds bounds) {
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean intersects(double d, double d1, double d2, double d3) {
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean intersects(double d, double d1, double d2, double d3, double d4, double d5) {
-                        return true;
-//                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-                };
-               
-               spZonaDeDiseño.setViewportBounds(b);
+                             
+       
                spZonaDeDiseño.setPrefViewportHeight(200);
             }
         });
