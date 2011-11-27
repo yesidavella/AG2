@@ -289,9 +289,9 @@ public class Main extends Application {
 
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(pestañaResultadosHTML);
 
-//        ivImagenFondo.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
-//        ivImagenFondo.setLayoutY(ESQUINA_SUPERIOR_IZQ_MAPA.getY());
-        grGrupoDeDiseño.getChildren().addAll(rectangle);
+        ivImagenFondo.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
+        ivImagenFondo.setLayoutY(ESQUINA_SUPERIOR_IZQ_MAPA.getY());
+        grGrupoDeDiseño.getChildren().addAll(rectangle, ivImagenFondo);
       
 
         spZonaDeDiseño.setContent(grGrupoDeDiseño);
