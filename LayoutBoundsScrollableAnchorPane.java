@@ -13,7 +13,7 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
  
 public class LayoutBoundsScrollableAnchorPane extends Application  {
-  // define some controls.
+  // define some controls y muchas cosas mas.
   final ToggleButton stroke    = new ToggleButton("Add Border");
   final ToggleButton effect    = new ToggleButton("Add Effect");
   final ToggleButton translate = new ToggleButton("Translate");
