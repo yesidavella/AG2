@@ -1,10 +1,11 @@
 package com.ag2.presentacion.diseño;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.shape.QuadCurve;
 
-public class EnlaceGrafico implements NodoListener {
+public class EnlaceGrafico implements NodoListener,  Serializable  {
 
     private NodoGrafico nodoGraficoA;
     private NodoGrafico nodoGraficoB;

@@ -2,6 +2,7 @@ package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -14,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.StrokeType;
 
-public class ArcoGrafico extends QuadCurve {
+public class ArcoGrafico extends QuadCurve implements Serializable {
 
     private Group group;
     private NodoGrafico nodoGraficoB;

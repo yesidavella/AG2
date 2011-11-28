@@ -3,38 +3,32 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
-import com.sun.scenario.effect.Color4f;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
-public abstract class NodoGrafico extends Group {
+public abstract class NodoGrafico extends Group implements Serializable {
 
     private String nombre = null;
-    private Image imagen = null;
-    public ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
+    private transient Image imagen = null;
+    private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
     private static NodoGrafico nodoAComodin = null;
-    public Line enlaceComodin = new Line();
+    private transient Line enlaceComodin = new Line();
     public static final byte CENTRO_IMAGEN_NODO_GRAFICO = 15;
     private boolean estaEliminado = false;
-    private ImageView imageView;
-    private Label lblNombre;
-    public boolean selecionado = false;
-    DropShadow dropShadow = new DropShadow();
+    private transient ImageView imageView;
+    private transient Label lblNombre;
+    private boolean selecionado = false;
+    private transient DropShadow dropShadow = new DropShadow();
 
     public boolean isSelecionado() {
         return selecionado;
@@ -42,15 +36,12 @@ public abstract class NodoGrafico extends Group {
 
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
-        if (!selecionado) 
-        {
+        if (!selecionado) {
             dropShadow.setColor(Color.WHITESMOKE);
             dropShadow.setSpread(.2);
             dropShadow.setWidth(15);
             dropShadow.setHeight(15);
-        }
-        else
-        {
+        } else {
             dropShadow.setColor(Color.AQUAMARINE);
             dropShadow.setSpread(.5);
             dropShadow.setWidth(60);
@@ -94,21 +85,18 @@ public abstract class NodoGrafico extends Group {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
 
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) 
-                {
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
                     nodoGrafico.setEliminado(true);
                     group.getChildren().remove(nodoGrafico);
                     group.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) 
-                {
-                    if(group.getNodoGraficoSelecionado()!=null)
-                    {    
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                    if (group.getNodoGraficoSelecionado() != null) {
                         group.getNodoGraficoSelecionado().setSelecionado(false);
-                    }                                             
+                    }
                     nodoGrafico.setSelecionado(true);
-                    group.setNodoGraficoSelecionado(nodoGrafico); 
+                    group.setNodoGraficoSelecionado(nodoGrafico);
                 }
                 updateNodoListener();
             }

@@ -3,6 +3,7 @@ package com.ag2.presentacion.controles;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -11,15 +12,15 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
-public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>  {
+public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable  {
 
-    private ScrollPane spZonaDeDiseño;
-    private double posicionActualRatonX = 0;
-    private double posicionActualRatonY = 0;
-    private ObservableList  listaClientes = FXCollections.observableArrayList();     
-    private ObservableList  listaRecursos = FXCollections.observableArrayList(); 
-    private ObservableList  listaSwitches = FXCollections.observableArrayList(); 
-    private ObservableList  listaNodoServicio = FXCollections.observableArrayList(); 
+    private transient ScrollPane spZonaDeDiseño;
+    private transient double posicionActualRatonX = 0;
+    private transient double posicionActualRatonY = 0;
+    private transient  ObservableList  listaClientes = FXCollections.observableArrayList();     
+    private transient ObservableList  listaRecursos = FXCollections.observableArrayList(); 
+    private transient ObservableList  listaSwitches = FXCollections.observableArrayList(); 
+    private transient ObservableList  listaNodoServicio = FXCollections.observableArrayList(); 
     
     
     private NodoGrafico nodoGraficoSelecionado;

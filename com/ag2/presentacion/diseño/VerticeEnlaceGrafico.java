@@ -2,6 +2,7 @@ package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
+import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -9,7 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class VerticeEnlaceGrafico extends Circle implements ArcoListener {
+public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serializable 
+{
 
     private ArcoGrafico arcoGraficoA;
     private ArcoGrafico arcoGraficoB;
