@@ -1,5 +1,6 @@
 package com.ag2.presentacion;
 
+import com.ag2.config.Serializador;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
@@ -132,10 +133,12 @@ public class Main extends Application {
 
             public void handle(ActionEvent t) 
             {
+                Serializador serializador = new Serializador(primaryStage); 
+                serializador.guardar(grGrupoDeDiseño);
                 System.out.print("cl");
-                 FileChooser fileChooser = new FileChooser(); 
-                fileChooser.showOpenDialog(primaryStage); 
-               
+//                FileChooser fileChooser = new FileChooser(); 
+//                fileChooser.showOpenDialog(primaryStage); 
+//               
             }
         });
        
