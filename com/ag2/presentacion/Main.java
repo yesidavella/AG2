@@ -301,7 +301,7 @@ public class Main extends Application {
 
         diseñoVentana.setCenter(cajaDePestañas);
         
-        
+      
         
         Thread thread = new Thread(new Runnable() {
 
