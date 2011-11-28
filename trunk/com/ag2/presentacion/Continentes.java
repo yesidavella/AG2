@@ -11,7 +11,7 @@ package com.ag2.presentacion;
 public enum Continentes 
 {
     NORTE_AMERICA("Norte America"), CENTRO_AMERICA("Centro America"), SUR_AMERICA("Sur America"),
-    EUROPA("Europa"), AFRICA("Africa"), ASIA("Asia"), OCEANIA("Oceania"), MEDIO_ORIENTE("MEDIO"); 
+    EUROPA("Europa"), AFRICA("Africa"), ASIA("Asia"), OCEANIA("Oceania");  
     
         String nombre; 
         private Continentes(String nombre)

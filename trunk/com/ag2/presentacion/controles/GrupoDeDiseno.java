@@ -20,6 +20,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>  {
     private ObservableList  listaRecursos = FXCollections.observableArrayList(); 
     private ObservableList  listaSwitches = FXCollections.observableArrayList(); 
     private ObservableList  listaNodoServicio = FXCollections.observableArrayList(); 
+    
+    
     private NodoGrafico nodoGraficoSelecionado;
 
     public NodoGrafico getNodoGraficoSelecionado() {
@@ -127,6 +129,27 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>  {
 
     }
   
+    public void eliminarNodeListaNavegacion(NodoGrafico nodoGrafico)
+    {
+        if(nodoGrafico instanceof NodoClienteGrafico)
+        {
+            listaClientes.remove(nodoGrafico);
+        }
+        else if(nodoGrafico instanceof NodoDeRecursoGrafico)
+        {
+            listaRecursos.remove(nodoGrafico);
+        }
+        else if(nodoGrafico instanceof EnrutadorGrafico)
+        {
+            listaSwitches.remove(nodoGrafico);
+        } 
+        else if(nodoGrafico instanceof NodoDeServicioGrafico)
+        {
+            listaNodoServicio.remove(nodoGrafico);
+        } 
+        
+    }         
+            
     private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo,MouseEvent me) {
         
         double posicionX=0;
