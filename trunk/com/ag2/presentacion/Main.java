@@ -5,7 +5,6 @@ import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResustadosPhosphorus;
-import com.ag2.presentacion.diseño.NodoClienteGrafico;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import java.util.logging.Level;
@@ -15,8 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -73,8 +77,8 @@ public class Main extends Application {
         Scene scene = new Scene(layOutVentanaPrincipal, 1280, 720);
         scene.getStylesheets().add(Main.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
 
-        //Diseño superior
-        crearBarraDeMenus(layOutVentanaPrincipal);
+       //Diseño superior
+        crearBarraDeMenus(layOutVentanaPrincipal, primaryStage);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         TilePane barraDeEjecucion = creacionBarraDeEjecucion();
@@ -96,9 +100,11 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        
     }
 
-    private void crearBarraDeMenus(BorderPane diseñoVentana) {
+    private void crearBarraDeMenus(BorderPane diseñoVentana, final Stage primaryStage) {
 
         //Panel de menus
         HBox hBoxContenedorDeMenu = new HBox();
@@ -120,6 +126,19 @@ public class Main extends Application {
 
         menuArchivo.getItems().addAll(itemNuevoPrj, new SeparatorMenuItem(), itemAbrir, itemGuardar, new SeparatorMenuItem(), itemCerrar);
         menuAyuda.getItems().addAll(itemAyuda, new SeparatorMenuItem(), itemAcercaDe);
+        
+       
+        itemGuardar.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent t) 
+            {
+                System.out.print("cl");
+                 FileChooser fileChooser = new FileChooser(); 
+                fileChooser.showOpenDialog(primaryStage); 
+               
+            }
+        });
+       
 
         //La barra de menus
         MenuBar mnuBarBarraDeMenus = new MenuBar();
