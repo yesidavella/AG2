@@ -98,6 +98,7 @@ public abstract class NodoGrafico extends Group {
                 {
                     nodoGrafico.setEliminado(true);
                     group.getChildren().remove(nodoGrafico);
+                    group.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
                 if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) 
