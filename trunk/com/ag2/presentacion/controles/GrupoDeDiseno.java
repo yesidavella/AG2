@@ -11,15 +11,24 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
-public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent> {
+public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>  {
 
     private ScrollPane spZonaDeDiseño;
     private double posicionActualRatonX = 0;
     private double posicionActualRatonY = 0;
-    ObservableList  listaClientes = FXCollections.observableArrayList();     
-    ObservableList  listaRecursos = FXCollections.observableArrayList(); 
-    ObservableList  listaSwitches = FXCollections.observableArrayList(); 
-    ObservableList  listaNodoServicio = FXCollections.observableArrayList(); 
+    private ObservableList  listaClientes = FXCollections.observableArrayList();     
+    private ObservableList  listaRecursos = FXCollections.observableArrayList(); 
+    private ObservableList  listaSwitches = FXCollections.observableArrayList(); 
+    private ObservableList  listaNodoServicio = FXCollections.observableArrayList(); 
+    private NodoGrafico nodoGraficoSelecionado;
+
+    public NodoGrafico getNodoGraficoSelecionado() {
+        return nodoGraficoSelecionado;
+    }
+
+    public void setNodoGraficoSelecionado(NodoGrafico nodoGraficoSelecionado) {
+        this.nodoGraficoSelecionado = nodoGraficoSelecionado;
+    }
      
     
     public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
@@ -70,8 +79,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent> {
             
             NodoGrafico nuevoNodo = null;
             
-            if (botonSeleccionado == TiposDeBoton.MANO) {
+            if (botonSeleccionado == TiposDeBoton.MANO) 
+            {
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
+                
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) 
             {  
                 nuevoNodo = new NodoClienteGrafico();
@@ -102,6 +113,14 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent> {
                 nuevoNodo = new NodoDeRecursoGrafico();
                 listaRecursos.add(nuevoNodo); 
             }
+            if(nuevoNodo!=null)
+            {                
+                if(nodoGraficoSelecionado!=null)
+                {
+                    nodoGraficoSelecionado.setSelecionado(false);
+                }    
+                nodoGraficoSelecionado = nuevoNodo;                 
+            }     
            
            dibujarNuevoNodoEnElMapa(nuevoNodo,mouEvent);
         }
@@ -139,5 +158,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent> {
     public ObservableList getListaSwitches() {
         return listaSwitches;
     }
+
+    
     
 }
