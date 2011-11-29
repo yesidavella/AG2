@@ -4,6 +4,7 @@ import com.ag2.config.serializacion.*;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -20,17 +21,20 @@ import javafx.scene.shape.Line;
 public abstract class NodoGrafico extends Group implements Serializable {
 
     private String nombre = null;
-    private ImageSerializable  imagen = null;
+    private transient Image imagen = null;
     private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
     private static NodoGrafico nodoAComodin = null;
-    private LineSerializable enlaceComodin = new LineSerializable();
+    private transient Line enlaceComodin = new Line();
     public static final byte CENTRO_IMAGEN_NODO_GRAFICO = 15;
     private boolean estaEliminado = false;
-    private ImageViewSerializable imageView;
-    private LabelSerializable lblNombre;
+    private transient ImageView imageView;
+    private transient Label lblNombre;
     private boolean selecionado = false;
-    private DropShadowSerializable dropShadow = new DropShadowSerializable();
-    private VBoxSerializable vBox = new VBoxSerializable();
+    private transient DropShadow dropShadow = new DropShadow();
+    private transient VBox  vBox = new VBox();
+    private double posX;
+    private double posY;
+    String urlDeImagen; 
 
     public boolean isSelecionado() {
         return selecionado;
@@ -60,20 +64,19 @@ public abstract class NodoGrafico extends Group implements Serializable {
         return nombre;
     }
 
-    public NodoGrafico(String nombre, String urlDeImagen) {
+    public NodoGrafico(String nombre, String urlDeImagen)
+    {
         setSelecionado(true);
-
-
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
 
         this.nombre = nombre;
-        lblNombre = new LabelSerializable(nombre);
+        lblNombre = new Label(nombre);
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
 
-        imagen = new ImageSerializable(getClass().getResourceAsStream(urlDeImagen));
-        imageView = new ImageViewSerializable(imagen);
+        imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
+        imageView = new ImageView(imagen);
         // Rectangle rectangle = new Rectangle(imagen.getWidth(), imagen.getWidth()); 
         vBox.getChildren().addAll(imageView, lblNombre);
 
@@ -211,6 +214,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
     }
 
     public void updateNodoListener() {
+        posX = this.getLayoutX();
+        posY = this.getLayoutY();
+
         for (NodoListener nodoListener : nodosListener) {
             nodoListener.update();
         }
@@ -234,5 +240,18 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    private void readObject(ObjectInputStream inputStream) 
+    {
+        try 
+        {
+            inputStream.defaultReadObject();
+            setLayoutX(posX);
+            setLayoutY(posY);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

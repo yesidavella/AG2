@@ -1,8 +1,7 @@
 package com.ag2.presentacion;
 
-import com.ag2.config.Serializador;
+import com.ag2.config.serializacion.Serializador;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
-import com.ag2.config.serializacion.ScrollPaneSerializable;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
@@ -36,7 +35,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    ScrollPaneSerializable spZonaDeDiseño = new ScrollPaneSerializable();
+    ScrollPane spZonaDeDiseño = new ScrollPane();
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno(spZonaDeDiseño);
     Image iImagenFondo = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/mapaMundi.jpg"));
     ImageView ivImagenFondo = new ImageView(iImagenFondo);

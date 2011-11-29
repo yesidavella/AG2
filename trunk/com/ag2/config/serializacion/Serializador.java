@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package com.ag2.config;
+package com.ag2.config.serializacion;
 
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.FileOutputStream;
