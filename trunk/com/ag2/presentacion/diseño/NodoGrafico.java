@@ -3,6 +3,7 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.sun.scenario.effect.Color4f;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -14,7 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 public abstract class NodoGrafico extends Group implements Serializable {
 
@@ -29,6 +32,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient Label lblNombre;
     private boolean selecionado = false;
     private transient DropShadow dropShadow = new DropShadow();
+    VBox vBox = new VBox();
 
     public boolean isSelecionado() {
         return selecionado;
@@ -39,13 +43,18 @@ public abstract class NodoGrafico extends Group implements Serializable {
         if (!selecionado) {
             dropShadow.setColor(Color.WHITESMOKE);
             dropShadow.setSpread(.2);
-            dropShadow.setWidth(15);
-            dropShadow.setHeight(15);
+            dropShadow.setWidth(20);
+            dropShadow.setHeight(20);
+            vBox.setStyle("-fx-border-width: 0");
         } else {
+
+            vBox.setStyle("-fx-border-color: #55FFF7;-fx-border-width: 2");
+            this.toFront();
             dropShadow.setColor(Color.AQUAMARINE);
-            dropShadow.setSpread(.5);
-            dropShadow.setWidth(60);
-            dropShadow.setHeight(60);
+            dropShadow.setSpread(.2);
+            dropShadow.setWidth(25);
+            dropShadow.setHeight(25);
+
         }
     }
 
@@ -57,7 +66,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     public NodoGrafico(String nombre, String urlDeImagen) {
         setSelecionado(true);
 
-        VBox vBox = new VBox();
+
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
 
@@ -95,7 +104,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     if (group.getNodoGraficoSelecionado() != null) {
                         group.getNodoGraficoSelecionado().setSelecionado(false);
                     }
-                    nodoGrafico.setSelecionado(true);
+                    if (group.getNodoGraficoSelecionado() != nodoGrafico) {
+                        nodoGrafico.setSelecionado(true);
+                    }
                     group.setNodoGraficoSelecionado(nodoGrafico);
                 }
                 updateNodoListener();
@@ -132,10 +143,17 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
+                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
                     setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
 
+                    if (group.getNodoGraficoSelecionado() != null) {
+                        group.getNodoGraficoSelecionado().setSelecionado(false);
+                    }
+                    nodoGrafico.setSelecionado(true);
+                    group.setNodoGraficoSelecionado(nodoGrafico);
                     updateNodoListener();
                 } else if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
