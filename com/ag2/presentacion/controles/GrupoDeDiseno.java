@@ -1,6 +1,6 @@
 package com.ag2.presentacion.controles;
 
-import com.ag2.config.serializacion.ScrollPaneSerializable;
+
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
@@ -10,11 +10,12 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable  {
 
-    private ScrollPaneSerializable spZonaDeDiseño;
+    private ScrollPane spZonaDeDiseño;
     private double posicionActualRatonX = 0;
     private double posicionActualRatonY = 0;
     private transient ObservableList  listaClientes = FXCollections.observableArrayList() ;     
@@ -34,7 +35,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
      
     
-    public GrupoDeDiseno(ScrollPaneSerializable spZonaDeDiseño) {
+    public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño =  spZonaDeDiseño;
         setOnMousePressed(this);
         setOnMouseDragged(this);
