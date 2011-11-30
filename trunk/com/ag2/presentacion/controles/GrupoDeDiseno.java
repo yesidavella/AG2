@@ -34,13 +34,11 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         this.nodoGraficoSelecionado = nodoGraficoSelecionado;
     }
      
-    
     public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño =  spZonaDeDiseño;
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
-
     }
     
     public void handle(MouseEvent mouEvent) {
@@ -184,6 +182,4 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         return listaSwitches;
     }
 
-    
-    
 }
