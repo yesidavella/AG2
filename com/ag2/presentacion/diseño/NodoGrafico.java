@@ -33,8 +33,27 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient DropShadow dropShadow = new DropShadow();
     private transient VBox  vBox = new VBox();
     private double posX;
-    private double posY;
-    String urlDeImagen; 
+
+    public double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(double posX) 
+    {
+        this.posX = posX;
+        setLayoutX(posX); 
+    }
+
+    public double getPosY() {
+        return posY;
+    }
+
+    public void setPosY(double posY) {
+        this.posY = posY;
+        setLayoutY(posY);
+    }
+    private double posY;     
+    private String urlDeImagen; 
 
     public boolean isSelecionado() {
         return selecionado;
@@ -69,15 +88,14 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setSelecionado(true);
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
-
+        this.urlDeImagen = urlDeImagen; 
         this.nombre = nombre;
         lblNombre = new Label(nombre);
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
 
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-        imageView = new ImageView(imagen);
-        // Rectangle rectangle = new Rectangle(imagen.getWidth(), imagen.getWidth()); 
+        imageView = new ImageView(imagen);      
         vBox.getChildren().addAll(imageView, lblNombre);
 
 
@@ -249,6 +267,16 @@ public abstract class NodoGrafico extends Group implements Serializable {
             inputStream.defaultReadObject();
             setLayoutX(posX);
             setLayoutY(posY);
+            imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
+            imageView = new ImageView(imagen);      
+            vBox = new VBox();
+            lblNombre = new Label(nombre); 
+            vBox.getChildren().addAll(imageView, lblNombre);
+            this.getChildren().addAll(vBox);
+            //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
+            setScaleX(0.5);
+            setScaleY(0.5);
+            
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -152,6 +152,19 @@ public class Main extends Application {
 //               
             }
         });
+        itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent t) 
+            {
+                Serializador serializador = new Serializador(primaryStage); 
+                GrupoDeDiseno deDiseno=  serializador.cargar(); 
+                
+                System.out.print("cl");
+//                FileChooser fileChooser = new FileChooser(); 
+//                fileChooser.showOpenDialog(primaryStage); 
+//               
+            }
+        });
        
 
         //La barra de menus
