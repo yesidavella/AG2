@@ -6,10 +6,6 @@ package com.ag2.presentacion;
 
 import javafx.scene.control.CheckBox;
 
-/**
- *
- * @author CAMACHO ROLDAN
- */
 public class ObjetoConPropiedades {
     
     private String propiedad1;

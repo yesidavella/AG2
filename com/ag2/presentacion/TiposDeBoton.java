@@ -76,5 +76,4 @@ import javafx.scene.image.Image;
             return posicionImagenDeCursorEnXyY;
         }
 
-
     };

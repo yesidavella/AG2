@@ -21,11 +21,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -54,6 +57,10 @@ public class Main extends Application {
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
     Slider sliderZoom = new Slider();
+    
+    private boolean estaBloqueadoEventoDeTeclado = false;
+    private TiposDeBoton estadoAnteriorDeBtnAEventoTcld;
+    private Cursor cursorAnteriorAEventoTcld;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -69,13 +76,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        
         primaryStage.setTitle("Modelo AG2- Simulador Grafico");
 
         BorderPane layOutVentanaPrincipal = new BorderPane();//Layout de toda la aplicacion
         layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
 
         Scene scene = new Scene(layOutVentanaPrincipal, 1280, 720);
+        adicionarEventoDeTecladoAEscena(scene);
         scene.getStylesheets().add(Main.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
 
        //Diseño superior
@@ -102,6 +110,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+        tgHerramientas.selectToggle(btnCliente);
+        Main.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
+        grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
         
     }
 
@@ -238,7 +249,7 @@ public class Main extends Application {
     private void creacionBtnsDeNodos(GridPane grdPnBarraHerramientas) {
 
 
-        btnCliente.setToggleGroup(tgHerramientas);
+        btnCliente.setToggleGroup(tgHerramientas);        
         btnNodoDeServicio.setToggleGroup(tgHerramientas);
         btnEnrutadorOptico.setToggleGroup(tgHerramientas);
         btnEnrutadorDeRafaga.setToggleGroup(tgHerramientas);
@@ -288,6 +299,7 @@ public class Main extends Application {
     private void crearLienzoDePestañas(BorderPane diseñoVentana) {
 
         TabPane cajaDePestañas = new TabPane();
+        
         Tab pestañaSimulacion = new Tab();
         pestañaSimulacion.setText("Simulación");
         pestañaSimulacion.setClosable(false);
@@ -322,8 +334,6 @@ public class Main extends Application {
         cajaDePestañas.getTabs().addAll(pestañaSimulacion, pestañaResultados, pestañaResultadosHTML);
 
         diseñoVentana.setCenter(cajaDePestañas);
-        
-      
         
         Thread thread = new Thread(new Runnable() {
 
@@ -623,6 +633,37 @@ public class Main extends Application {
                     spZonaDeDiseño.setVvalue(nodoGrafico.getLayoutY() / 18750);
                     grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
                     grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
+                }
+            }
+        });
+    }
+
+    private void adicionarEventoDeTecladoAEscena(final Scene escena) {
+        
+        escena.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            public void handle(KeyEvent event) {
+
+                if(estaBloqueadoEventoDeTeclado==false && event.isControlDown() && grGrupoDeDiseño.isHover() ){
+                    estaBloqueadoEventoDeTeclado=true;
+                    
+                    estadoAnteriorDeBtnAEventoTcld = Main.getEstadoTipoBoton();
+                    cursorAnteriorAEventoTcld = grGrupoDeDiseño.getCursor();
+                    
+                    Main.setEstadoTipoBoton(TiposDeBoton.MANO);
+                    grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                }   
+            }
+        });
+        
+        escena.setOnKeyReleased(new EventHandler<KeyEvent>(){
+
+            public void handle(KeyEvent event) {
+                
+                if(estaBloqueadoEventoDeTeclado=true){
+                    estaBloqueadoEventoDeTeclado=false;
+                    Main.setEstadoTipoBoton(estadoAnteriorDeBtnAEventoTcld);
+                    grGrupoDeDiseño.setCursor(cursorAnteriorAEventoTcld);
                 }
             }
         });
