@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable  {
 
-    private ScrollPane spZonaDeDiseño;
+    private transient ScrollPane spZonaDeDiseño;
     private double posicionActualRatonX = 0;
     private double posicionActualRatonY = 0;
     private transient ObservableList  listaClientes = FXCollections.observableArrayList() ;     
@@ -155,13 +155,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         double posicionX=0;
         double posicionY=0;
         
-        if(nuevoNodo != null){
-            
+        if(nuevoNodo != null)
+        {            
             posicionX = me.getX()-(Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX()+(nuevoNodo.getImagen().getWidth()/8));
             posicionY = me.getY()-(Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY()+(nuevoNodo.getImagen().getHeight()/8));
                     
-            nuevoNodo.setLayoutX(posicionX);
-            nuevoNodo.setLayoutY(posicionY);
+            nuevoNodo.setPosX(posicionX);
+            nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);
         }
     }

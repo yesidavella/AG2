@@ -5,9 +5,7 @@
 package com.ag2.config.serializacion;
 
 import com.ag2.presentacion.controles.GrupoDeDiseno;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Stage;
@@ -16,28 +14,43 @@ import javafx.stage.Stage;
  *
  * @author Frank
  */
-public class Serializador 
-{
-    Stage primaryStage; 
-    public Serializador(final Stage primaryStage)
-    {
-        this.primaryStage= primaryStage;         
+public class Serializador {
+
+    Stage primaryStage;
+
+    public Serializador(final Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
-    public void guardar(GrupoDeDiseno  grupoDeDiseno) 
+
+    public void guardar(GrupoDeDiseno grupoDeDiseno) {
+        try {
+
+            FileOutputStream fs = new FileOutputStream("PruebaSerial.ag2");
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(grupoDeDiseno);
+            os.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Serializador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public GrupoDeDiseno cargar()
     {
         try 
         {
-          
-            FileOutputStream fs = new FileOutputStream("PruebaSerial.ag2");
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject( grupoDeDiseno); 
-            os.close();
+            FileInputStream fileInputStream = new FileInputStream("PruebaSerial.ag2");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            GrupoDeDiseno grupoDeDiseno = (GrupoDeDiseno) objectInputStream.readObject();   
+            objectInputStream.close();
+            return grupoDeDiseno; 
             
-        } catch (IOException ex) 
+        } catch (Exception e) 
         {
-            Logger.getLogger(Serializador.class.getName()).log(Level.SEVERE, null, ex);
+            e.printStackTrace();
         }
-        
+        return null; 
     }
-            
+
 }
