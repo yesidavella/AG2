@@ -66,7 +66,12 @@ public class Main extends Application {
         Application.launch(args);
     }
 
-    public static TiposDeBoton getEstadoTipoBoton() {
+    public static TiposDeBoton getEstadoTipoBoton()
+    {
+        if(estadoTipoBoton==null)
+        {
+           estadoTipoBoton= TiposDeBoton.PUNTERO;
+        }   
         return estadoTipoBoton;
     }
 
@@ -99,7 +104,7 @@ public class Main extends Application {
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
-        crearLienzoDePestañas(layOutVentanaPrincipal);
+        crearLienzoDetabs(layOutVentanaPrincipal);
 
         //layOutVentanaPrincipal.setRight(v);
 
@@ -145,11 +150,8 @@ public class Main extends Application {
             public void handle(ActionEvent t) 
             {
                 Serializador serializador = new Serializador(primaryStage); 
-                serializador.guardar(grGrupoDeDiseño);
-                System.out.print("cl");
-//                FileChooser fileChooser = new FileChooser(); 
-//                fileChooser.showOpenDialog(primaryStage); 
-//               
+                serializador.guardar(grGrupoDeDiseño);               
+             
             }
         });
         itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
@@ -157,12 +159,13 @@ public class Main extends Application {
             public void handle(ActionEvent t) 
             {
                 Serializador serializador = new Serializador(primaryStage); 
-                GrupoDeDiseno deDiseno=  serializador.cargar(); 
-                
-                System.out.print("cl");
-//                FileChooser fileChooser = new FileChooser(); 
-//                fileChooser.showOpenDialog(primaryStage); 
-//               
+                GrupoDeDiseno grupoDeDiseno=  serializador.cargar(); 
+                spZonaDeDiseño.setContent(grupoDeDiseno);
+                grupoDeDiseno.setSpZonaDeDiseño(spZonaDeDiseño);                                  
+                grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
+                ivImagenFondo.toBack(); 
+                rectangle.toBack();                
+              
             }
         });
        
@@ -309,20 +312,20 @@ public class Main extends Application {
 
     }
 
-    private void crearLienzoDePestañas(BorderPane diseñoVentana) {
+    private void crearLienzoDetabs(BorderPane diseñoVentana) {
 
-        TabPane cajaDePestañas = new TabPane();
+        TabPane cajaDetabs = new TabPane();
         
-        Tab pestañaSimulacion = new Tab();
-        pestañaSimulacion.setText("Simulación");
-        pestañaSimulacion.setClosable(false);
+        Tab tabSimulacion = new Tab();
+        tabSimulacion.setText("Simulación");
+        tabSimulacion.setClosable(false);
 
-        Tab pestañaResultados = new Tab();
-        Tab pestañaResultadosHTML = new Tab();
-        pestañaResultados.setText("Resultados Phosphorus");
-        pestañaResultadosHTML.setText("Resultado Phosphorus HTML");
+        Tab tabResultados = new Tab();
+        Tab tabResultadosHTML = new Tab();
+        tabResultados.setText("Resultados Phosphorus");
+        tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-        ResustadosPhosphorus resustadosPhosphorus = new ResustadosPhosphorus(pestañaResultados);
+        ResustadosPhosphorus resustadosPhosphorus = new ResustadosPhosphorus(tabResultados);
         resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
         resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
         resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
@@ -334,7 +337,7 @@ public class Main extends Application {
         resustadosPhosphorus.adicionarResultadoConmutador("Comutador ", "xx", "xx", "xx", "xx", "xx", "xx", "xx");
 
 
-        ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(pestañaResultadosHTML);
+        ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
 
         ivImagenFondo.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
         ivImagenFondo.setLayoutY(ESQUINA_SUPERIOR_IZQ_MAPA.getY());
@@ -342,11 +345,11 @@ public class Main extends Application {
 
         spZonaDeDiseño.setContent(grGrupoDeDiseño);
 
-        pestañaSimulacion.setContent(spZonaDeDiseño);
+        tabSimulacion.setContent(spZonaDeDiseño);
 
-        cajaDePestañas.getTabs().addAll(pestañaSimulacion, pestañaResultados, pestañaResultadosHTML);
+        cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
 
-        diseñoVentana.setCenter(cajaDePestañas);
+        diseñoVentana.setCenter(cajaDetabs);
         
         Thread thread = new Thread(new Runnable() {
 

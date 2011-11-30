@@ -2,14 +2,13 @@ package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
+import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.ImageCursor;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
@@ -17,13 +16,59 @@ import javafx.scene.shape.StrokeType;
 
 public class ArcoGrafico extends QuadCurve implements Serializable {
 
-    private Group group;
+    private GrupoDeDiseno group;
     private NodoGrafico nodoGraficoB;
     private ArrayList<ArcoListener> arcoListeners  = new ArrayList<ArcoListener>(); 
     private boolean eliminado= false;
     private EnlaceGrafico enlaceGrafico;
+    private double posIniX; 
+    private double posIniY;
 
-    public ArcoGrafico(EnlaceGrafico enlaceGrafico, Group group)
+    public double getPosFinX()
+    {
+        
+        return posFinX;
+    }
+
+    public void setPosFinX(double posFinX)
+    {
+        setEndX(posFinX);
+        this.posFinX = posFinX;       
+    }
+
+    public double getPosFinY() {
+        return posFinY;
+    }
+
+    public void setPosFinY(double posFinY)
+    {
+        setEndY(posFinY);
+        this.posFinY = posFinY;
+    }
+
+    public double getPosIniX() {
+        return posIniX;
+    }
+
+    public void setPosIniX(double posIniX)
+    {
+        setStartX(posIniX);
+        this.posIniX = posIniX;
+    }
+
+    public double getPosIniY() {
+        return posIniY;
+    }
+
+    public void setPosIniY(double posIniY) 
+    {
+         setStartY(posIniY);
+        this.posIniY = posIniY;
+    }
+    private double posFinX; 
+    private double posFinY; 
+
+    public ArcoGrafico(EnlaceGrafico enlaceGrafico, GrupoDeDiseno group)
     {
         this.group = group;
         this.enlaceGrafico = enlaceGrafico;
@@ -88,13 +133,13 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     ArcoGrafico quadCurveFuente = (ArcoGrafico) mouseEvent.getSource();           
                     ArcoGrafico quadCurveNueva = new ArcoGrafico(quadCurveFuente.getEnlaceGrafico(),quadCurveFuente.getGroup() );
 
-                    quadCurveNueva.setStartX(clickX);
-                    quadCurveNueva.setStartY(clickY);
-                    quadCurveNueva.setEndX(quadCurveFuente.getEndX());
-                    quadCurveNueva.setEndY(quadCurveFuente.getEndY());
+                    quadCurveNueva.setPosIniX(clickX);
+                    quadCurveNueva.setPosIniY(clickY);
+                    quadCurveNueva.setPosFinX(quadCurveFuente.getPosFinX());
+                    quadCurveNueva.setPosFinY(quadCurveFuente.getPosFinY());
 
-                    quadCurveFuente.setEndX(clickX);
-                    quadCurveFuente.setEndY(clickY);              
+                    quadCurveFuente.setPosFinX(clickX);
+                    quadCurveFuente.setPosFinY(clickY);              
                    
                     quadCurveFuente.calcularCentroXY(); 
                     quadCurveNueva.calcularCentroXY();                 
@@ -155,7 +200,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         
     }        
 
-    public Group getGroup() {
+    public GrupoDeDiseno getGroup() {
         return group;
     }
      public NodoGrafico getNodoGraficoB() {

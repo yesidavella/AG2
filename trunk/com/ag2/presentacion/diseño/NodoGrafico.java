@@ -31,17 +31,16 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient Label lblNombre;
     private boolean selecionado = false;
     private transient DropShadow dropShadow = new DropShadow();
-    private transient VBox  vBox = new VBox();
+    private transient VBox vBox = new VBox();
     private double posX;
 
     public double getPosX() {
         return posX;
     }
 
-    public void setPosX(double posX) 
-    {
+    public void setPosX(double posX) {
         this.posX = posX;
-        setLayoutX(posX); 
+        setLayoutX(posX);
     }
 
     public double getPosY() {
@@ -52,8 +51,8 @@ public abstract class NodoGrafico extends Group implements Serializable {
         this.posY = posY;
         setLayoutY(posY);
     }
-    private double posY;     
-    private String urlDeImagen; 
+    private double posY;
+    private String urlDeImagen;
 
     public boolean isSelecionado() {
         return selecionado;
@@ -83,19 +82,18 @@ public abstract class NodoGrafico extends Group implements Serializable {
         return nombre;
     }
 
-    public NodoGrafico(String nombre, String urlDeImagen)
-    {
+    public NodoGrafico(String nombre, String urlDeImagen) {
         setSelecionado(true);
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
-        this.urlDeImagen = urlDeImagen; 
+        this.urlDeImagen = urlDeImagen;
         this.nombre = nombre;
         lblNombre = new Label(nombre);
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
 
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-        imageView = new ImageView(imagen);      
+        imageView = new ImageView(imagen);
         vBox.getChildren().addAll(imageView, lblNombre);
 
 
@@ -104,31 +102,94 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setScaleX(0.5);
         setScaleY(0.5);
 
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
+        establecerEventoOnMouseClicked();
+
+        establecerEventoOnMousePressed();
+
+        establecerEventoOnMouseDragged();
+
+        establecerEventoOnMouseReleased();
+
+        establecerEventoOnMouseEntered();
+    }
+
+    private void establecerEventoOnMouseEntered() {
+        setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent mouseEvent) {
+
+                TiposDeBoton tipoDeBotonSeleccionado = Main.getEstadoTipoBoton();
+                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+
+                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
+                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                } else {
+                    setCursor(tipoDeBotonSeleccionado.getImagenCursor());
+                }
+
+                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
+                        && nodoAComodin != null
+                        && nodoAComodin != nodoGrafico) {
+
+                    GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
+                    group.getChildren().remove(enlaceComodin);
+
+                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico);
+                    enlaceGrafico.addArcosInicialAlGrupo();
+
+                    nodoAComodin.toFront();
+                    nodoGrafico.toFront();
+
+                } else if (tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
+                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                }
+                nodoAComodin = null;
+            }
+        });
+    }
+
+    private void establecerEventoOnMouseReleased() {
+        setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent mouseEvent) {
+
+                setScaleX(0.5);
+                setScaleY(0.5);
+
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                    Group group = (Group) nodoGrafico.getParent();
+                    group.getChildren().remove(enlaceComodin);
+                }
+            }
+        });
+    }
+
+    private void establecerEventoOnMouseDragged() {
+        setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
-
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
-                    nodoGrafico.setEliminado(true);
-                    group.getChildren().remove(nodoGrafico);
-                    group.eliminarNodeListaNavegacion(nodoGrafico);
-
-                }
                 if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                    setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
+                    setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
+
                     if (group.getNodoGraficoSelecionado() != null) {
                         group.getNodoGraficoSelecionado().setSelecionado(false);
                     }
-                    if (group.getNodoGraficoSelecionado() != nodoGrafico) {
-                        nodoGrafico.setSelecionado(true);
-                    }
+                    nodoGrafico.setSelecionado(true);
                     group.setNodoGraficoSelecionado(nodoGrafico);
+                    updateNodoListener();
+                } else if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                    enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
+                    enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
                 }
-                updateNodoListener();
             }
         });
+    }
 
+    private void establecerEventoOnMousePressed() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
@@ -151,74 +212,31 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 setScaleY(1);
             }
         });
+    }
 
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
+    private void establecerEventoOnMouseClicked() {
+        setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
-                    setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
 
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
+                    nodoGrafico.setEliminado(true);
+                    group.getChildren().remove(nodoGrafico);
+                    group.eliminarNodeListaNavegacion(nodoGrafico);
+
+                }
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     if (group.getNodoGraficoSelecionado() != null) {
                         group.getNodoGraficoSelecionado().setSelecionado(false);
                     }
-                    nodoGrafico.setSelecionado(true);
+                    if (group.getNodoGraficoSelecionado() != nodoGrafico) {
+                        nodoGrafico.setSelecionado(true);
+                    }
                     group.setNodoGraficoSelecionado(nodoGrafico);
-                    updateNodoListener();
-                } else if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-                    enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
-                    enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
                 }
-            }
-        });
-
-        setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent mouseEvent) {
-
-                setScaleX(0.5);
-                setScaleY(0.5);
-
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                    Group group = (Group) nodoGrafico.getParent();
-                    group.getChildren().remove(enlaceComodin);
-                }
-            }
-        });
-
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent mouseEvent) {
-
-                TiposDeBoton tipoDeBotonSeleccionado = Main.getEstadoTipoBoton();
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
-                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
-                } else {
-                    setCursor(tipoDeBotonSeleccionado.getImagenCursor());
-                }
-
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
-                        && nodoAComodin != null
-                        && nodoAComodin != nodoGrafico) {
-
-                    Group group = (Group) nodoGrafico.getParent();
-                    group.getChildren().remove(enlaceComodin);
-
-                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico);
-                    enlaceGrafico.addArcosInicialAlGrupo();
-
-                    nodoAComodin.toFront();
-                    nodoGrafico.toFront();
-
-                } else if (tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
-                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
-                }
-                nodoAComodin = null;
+                updateNodoListener();
             }
         });
     }
@@ -260,25 +278,32 @@ public abstract class NodoGrafico extends Group implements Serializable {
         this.nombre = nombre;
     }
 
-    private void readObject(ObjectInputStream inputStream) 
-    {
-        try 
-        {
+    private void readObject(ObjectInputStream inputStream) {
+        try {
             inputStream.defaultReadObject();
             setLayoutX(posX);
             setLayoutY(posY);
             imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-            imageView = new ImageView(imagen);      
+            imageView = new ImageView(imagen);
             vBox = new VBox();
-            lblNombre = new Label(nombre); 
+            lblNombre = new Label(nombre);
+            lblNombre.setTextFill(Color.BLACK);
+            lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
             vBox.getChildren().addAll(imageView, lblNombre);
-            this.getChildren().addAll(vBox);
-            //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
+            this.getChildren().addAll(vBox);           
             setScaleX(0.5);
             setScaleY(0.5);
-            
+            dropShadow = new DropShadow();
+            setSelecionado(false);
+            setEffect(dropShadow);
+            establecerEventoOnMouseClicked();
+            establecerEventoOnMousePressed();
+            establecerEventoOnMouseDragged();
+            establecerEventoOnMouseReleased();
+            establecerEventoOnMouseEntered();
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
