@@ -1,6 +1,7 @@
 package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.Group;
@@ -83,5 +84,21 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
 
     public NodoGrafico getNodoGraficoA() {
         return nodoGraficoA;
+    }
+    private void readObject(ObjectInputStream inputStream) {
+        try 
+        {
+            inputStream.defaultReadObject();
+            for(ArcoGrafico arcoGrafico: arcos)
+            {
+                group.getChildren().add(arcoGrafico);
+            }    
+            
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
     }
 }

@@ -158,9 +158,8 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
                 setScaleX(0.5);
                 setScaleY(0.5);
-                
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) 
-                {
+
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
@@ -226,54 +225,37 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     group.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) 
-                {
-                    NodoGrafico nodoGraficoSelecionado = group.getNodoGraficoSelecionado() ; 
-                 if (!arrastrando) 
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                    NodoGrafico nodoGraficoSelecionado = group.getNodoGraficoSelecionado();
+                    if (!arrastrando) 
                     {
-                        
-                        
-                        if(nodoGraficoSelecionado==nodoGrafico)
-                        {
+                        if (nodoGraficoSelecionado == nodoGrafico) {
                             nodoGraficoSelecionado.setSelecionado(false);
                             group.setNodoGraficoSelecionado(null);
-                        }   
-                        else
-                        {
-                            if(nodoGraficoSelecionado==null)
-                            {
+                        } else {
+                            if (nodoGraficoSelecionado == null) {
                                 nodoGrafico.setSelecionado(true);
                                 group.setNodoGraficoSelecionado(nodoGrafico);
-                            }    
-                            else
-                            {
+                            } else {
                                 nodoGraficoSelecionado.setSelecionado(false);
                                 nodoGrafico.setSelecionado(true);
                                 group.setNodoGraficoSelecionado(nodoGrafico);
-                            }    
-                        }                      
-                            
-                    }
-                    else
-                    {
-                        if(nodoGrafico!=nodoGraficoSelecionado)
-                        {
-                             if(nodoGraficoSelecionado==null)
-                            {
+                            }
+                        }
+
+                    } else {
+                        if (nodoGrafico != nodoGraficoSelecionado) {
+                            if (nodoGraficoSelecionado == null) {
                                 nodoGrafico.setSelecionado(true);
                                 group.setNodoGraficoSelecionado(nodoGrafico);
-                            }    
-                            else
-                            {
+                            } else {
                                 nodoGraficoSelecionado.setSelecionado(false);
                                 nodoGrafico.setSelecionado(true);
                                 group.setNodoGraficoSelecionado(nodoGrafico);
-                            }    
-                           
-                        }     
-                        
+                            }
+                        }
                     }
-                    arrastrando=false; 
+                    arrastrando = false;
 
                 }
                 updateNodoListener();
@@ -332,6 +314,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             vBox.getChildren().addAll(imageView, lblNombre);
             vBox.setAlignment(Pos.CENTER);
             this.getChildren().addAll(vBox);
+            enlaceComodin = new Line();
             setScaleX(0.5);
             setScaleY(0.5);
             dropShadow = new DropShadow();
@@ -342,6 +325,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             establecerEventoOnMouseDragged();
             establecerEventoOnMouseReleased();
             establecerEventoOnMouseEntered();
+
 
         } catch (Exception e) {
             e.printStackTrace();
