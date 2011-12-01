@@ -3,6 +3,7 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -23,6 +24,27 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     private EnlaceGrafico enlaceGrafico;
     private double posIniX; 
     private double posIniY;
+    private double centroX;
+    private double centroY;
+
+    public double getCentroX() {
+        return centroX;
+    }
+
+    public void setCentroX(double centroX) 
+    {
+        setControlX(centroX);                   
+        this.centroX = centroX;
+    }
+
+    public double getCentroY() {
+        return centroY;
+    }
+
+    public void setCentroY(double centroY) {
+        setControlY(centroY);
+        this.centroY = centroY;
+    }
 
     public double getPosFinX()
     {
@@ -73,7 +95,11 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         this.group = group;
         this.enlaceGrafico = enlaceGrafico;
         this.nodoGraficoB = this.enlaceGrafico.getNodoGraficoB();       
-        
+        establecerConfigInicial();
+
+    }
+
+    private void establecerConfigInicial() {
         setFill(null);
         setStrokeWidth(2);
         setStroke(Color.AQUAMARINE);
@@ -89,9 +115,8 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         establecerEventoMouseDragged(this);
         establecerEnventoClicked(this);
         establecerEventoOnMouseEntered(this);
-
     }
-    public void calcularCentroXY()
+        public void calcularCentroXY()
     {
         double x1 = getStartX();
         double y1 = getStartY();
@@ -99,8 +124,8 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         double x2 = getEndX();
         double y2 = getEndY();
 
-        double centroX = (x1 + x2) / 2;
-        double centroY = (y1 + y2) / 2;
+        centroX = (x1 + x2) / 2;
+        centroY = (y1 + y2) / 2;
 
         setControlX(centroX);
         setControlY(centroY);     
@@ -114,9 +139,10 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                 if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     double dragX = me.getX();
                     double dragY = me.getY();
-                    QuadCurve quadCurve = (QuadCurve)me.getSource();
-                    quadCurve.setControlX(dragX);
-                    quadCurve.setControlY(dragY);
+                    ArcoGrafico arcoGrafico = (ArcoGrafico)me.getSource();
+                    arcoGrafico.setCentroX(dragX); 
+                    arcoGrafico.setCentroY(dragY); 
+                   
                 }
             }
         });
@@ -226,5 +252,26 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                 }
             }
         });
+    }
+    private void readObject(ObjectInputStream inputStream)
+    {
+        try 
+        {
+            inputStream.defaultReadObject();  
+            setStartX(posIniX);
+            setStartY(posIniY);
+            setEndX(posFinX);
+            setEndY(posFinY);           
+            setControlX(centroX);
+            setControlY(centroY);  
+            establecerConfigInicial();
+            
+            
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
     }
 }
