@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -95,6 +96,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
         imageView = new ImageView(imagen);
+        vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(imageView, lblNombre);
 
 
@@ -156,8 +158,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
                 setScaleX(0.5);
                 setScaleY(0.5);
-
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) 
+                {
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
@@ -327,6 +330,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             lblNombre.setTextFill(Color.BLACK);
             lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
             vBox.getChildren().addAll(imageView, lblNombre);
+            vBox.setAlignment(Pos.CENTER);
             this.getChildren().addAll(vBox);
             setScaleX(0.5);
             setScaleY(0.5);
