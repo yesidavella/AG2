@@ -33,6 +33,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient DropShadow dropShadow = new DropShadow();
     private transient VBox vBox = new VBox();
     private double posX;
+    private boolean arrastrando = false;
 
     public double getPosX() {
         return posX;
@@ -170,16 +171,11 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
                     setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
-
-                    if (group.getNodoGraficoSelecionado() != null) {
-                        group.getNodoGraficoSelecionado().setSelecionado(false);
-                    }
-                    nodoGrafico.setSelecionado(true);
-                    group.setNodoGraficoSelecionado(nodoGrafico);
                     updateNodoListener();
                 } else if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
@@ -227,14 +223,55 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     group.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    if (group.getNodoGraficoSelecionado() != null) {
-                        group.getNodoGraficoSelecionado().setSelecionado(false);
+                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) 
+                {
+                    NodoGrafico nodoGraficoSelecionado = group.getNodoGraficoSelecionado() ; 
+                 if (!arrastrando) 
+                    {
+                        
+                        
+                        if(nodoGraficoSelecionado==nodoGrafico)
+                        {
+                            nodoGraficoSelecionado.setSelecionado(false);
+                            group.setNodoGraficoSelecionado(null);
+                        }   
+                        else
+                        {
+                            if(nodoGraficoSelecionado==null)
+                            {
+                                nodoGrafico.setSelecionado(true);
+                                group.setNodoGraficoSelecionado(nodoGrafico);
+                            }    
+                            else
+                            {
+                                nodoGraficoSelecionado.setSelecionado(false);
+                                nodoGrafico.setSelecionado(true);
+                                group.setNodoGraficoSelecionado(nodoGrafico);
+                            }    
+                        }                      
+                            
                     }
-                    if (group.getNodoGraficoSelecionado() != nodoGrafico) {
-                        nodoGrafico.setSelecionado(true);
+                    else
+                    {
+                        if(nodoGrafico!=nodoGraficoSelecionado)
+                        {
+                             if(nodoGraficoSelecionado==null)
+                            {
+                                nodoGrafico.setSelecionado(true);
+                                group.setNodoGraficoSelecionado(nodoGrafico);
+                            }    
+                            else
+                            {
+                                nodoGraficoSelecionado.setSelecionado(false);
+                                nodoGrafico.setSelecionado(true);
+                                group.setNodoGraficoSelecionado(nodoGrafico);
+                            }    
+                           
+                        }     
+                        
                     }
-                    group.setNodoGraficoSelecionado(nodoGrafico);
+                    arrastrando=false; 
+
                 }
                 updateNodoListener();
             }
@@ -290,7 +327,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             lblNombre.setTextFill(Color.BLACK);
             lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
             vBox.getChildren().addAll(imageView, lblNombre);
-            this.getChildren().addAll(vBox);           
+            this.getChildren().addAll(vBox);
             setScaleX(0.5);
             setScaleY(0.5);
             dropShadow = new DropShadow();
@@ -302,8 +339,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             establecerEventoOnMouseReleased();
             establecerEventoOnMouseEntered();
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
