@@ -1,5 +1,7 @@
 package com.ag2.presentacion.controles;
 
+import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
+import com.ag2.presentacion.InterfaceGraficaNodos;
 import com.ag2.presentacion.Main;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
@@ -14,9 +16,10 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
-public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable {
+public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable,InterfaceGraficaNodos {
 
     private transient ScrollPane spZonaDeDiseño;
+    private ArrayList<ControladorCreacionYAdminDeNodo> controladoresRegistrados;
 
     public ScrollPane getSpZonaDeDiseño() {
         return spZonaDeDiseño;
@@ -47,6 +50,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
+        controladoresRegistrados = new ArrayList<ControladorCreacionYAdminDeNodo>();
     }
 
     public void handle(MouseEvent mouEvent) {
@@ -124,6 +128,12 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             }
 
             dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
+            
+            //Le aviso a todos los controladores de la generacion del nuevo NodoGrafico
+            for(ControladorCreacionYAdminDeNodo controladorRegistrado:controladoresRegistrados){
+                controladorRegistrado.crearNodo(nuevoNodo);
+                System.out.println("Avisando a controlador..");
+            }
         }
 
     }
@@ -141,10 +151,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     }
 
-    public void addcionarObjectoSerializable(Serializable serializable) {
-        objectosSerializables.add(serializable);
-    }
-
     private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo, MouseEvent me) {
 
         double posicionX = 0;
@@ -158,9 +164,15 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);
             addcionarObjectoSerializable(nuevoNodo);
+            
+
         }
     }
 
+    public void addcionarObjectoSerializable(Serializable serializable) {
+        objectosSerializables.add(serializable);
+    }
+    
     public ObservableList getListaClientes() {
         return listaClientes;
     }
@@ -175,6 +187,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     public ObservableList getListaSwitches() {
         return listaSwitches;
+    }
+    
+    public void addControladorCrearNodo(ControladorCreacionYAdminDeNodo ctrlCrearNodo){
+        controladoresRegistrados.add(ctrlCrearNodo);
     }
 
     private void readObject(ObjectInputStream inputStream) {
@@ -200,4 +216,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             e.printStackTrace();
         }
     }
+
+   
 }

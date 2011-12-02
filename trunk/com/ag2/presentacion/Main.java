@@ -1,7 +1,14 @@
 package com.ag2.presentacion;
 
-import com.ag2.config.serializacion.Serializador;
+import Grid.GridSimulation;
+import Grid.GridSimulator;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
+import com.ag2.config.serializacion.Serializador;
+import com.ag2.controlador.ControladorCreacionNodo;
+import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
+import com.ag2.modelo.ModeloCrearCliente;
+import com.ag2.modelo.ModeloCrearNodo;
+import com.ag2.modelo.ModeloCrearNodoDeServicio;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
@@ -27,16 +34,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import simbase.SimulationInstance;
 
 public class Main extends Application {
+    public static GridSimulator simulador;
+    public static SimulationInstance simulacion;
 
     ScrollPane spZonaDeDiseño = new ScrollPane();
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno(spZonaDeDiseño);
@@ -63,7 +71,7 @@ public class Main extends Application {
     private Cursor cursorAnteriorAEventoTcld;
 
     public static void main(String[] args) {
-        Application.launch(args);
+        Application.launch(Main.class,args);
     }
 
     public static TiposDeBoton getEstadoTipoBoton()
@@ -106,8 +114,6 @@ public class Main extends Application {
         //Diseño central
         crearLienzoDetabs(layOutVentanaPrincipal);
 
-        //layOutVentanaPrincipal.setRight(v);
-
         //Diseño inferior
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
@@ -115,9 +121,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        tgHerramientas.selectToggle(btnCliente);
-        Main.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
-        grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
+        inicializarSimulacionYSuEstado();
         
     }
 
@@ -676,12 +680,39 @@ public class Main extends Application {
 
             public void handle(KeyEvent event) {
                 
-                if(estaBloqueadoEventoDeTeclado=true){
+                if(estaBloqueadoEventoDeTeclado==true){
                     estaBloqueadoEventoDeTeclado=false;
                     Main.setEstadoTipoBoton(estadoAnteriorDeBtnAEventoTcld);
                     grGrupoDeDiseño.setCursor(cursorAnteriorAEventoTcld);
                 }
             }
         });
+    }
+
+    private void inicializarSimulacionYSuEstado() {
+        //Estado inicial de botones
+        tgHerramientas.selectToggle(btnCliente);
+        Main.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
+        grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
+        
+        //Controladores y Modelos
+        ControladorCreacionYAdminDeNodo controlador = new ControladorCreacionNodo();
+        controlador.addVistaGrDeDiseño(grGrupoDeDiseño);
+        grGrupoDeDiseño.addControladorCrearNodo(controlador);
+        ModeloCrearNodo modeloCrearCliente = new ModeloCrearCliente();
+        controlador.addModelo(modeloCrearCliente);
+        
+        //ControladorCrearNodo ctrlCrearNodoDeServicio = new ControladorCrearNodoDeServicio();
+        //controlador.addVistaGrDeDiseño(grGrupoDeDiseño);
+        //grGrupoDeDiseño.addControladorCrearNodo(ctrlCrearNodoDeServicio);
+        ModeloCrearNodoDeServicio modeloCrearNodoDeServicio = new ModeloCrearNodoDeServicio();
+        controlador.addModelo(modeloCrearNodoDeServicio);
+        
+        
+        
+        simulacion = new GridSimulation("ConfigInit.cfg");
+        simulador = new GridSimulator();
+        simulacion.setSimulator(simulador);
+
     }
 }
