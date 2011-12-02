@@ -36,6 +36,29 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private double posX;
     private boolean arrastrando = false;
 
+    @Override
+    public boolean equals(Object obj) 
+    {
+      
+        if(obj instanceof  NodoGrafico)
+        {
+            NodoGrafico nodoGrafico = (NodoGrafico)obj; 
+             return nombre.equals( nodoGrafico.getNombre()); 
+        }    
+        return false; 
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + (this.nombre != null ? this.nombre.hashCode() : 0);
+        return hash;
+    }
+
+   
+    
+    
+
     public double getPosX() {
         return posX;
     }
