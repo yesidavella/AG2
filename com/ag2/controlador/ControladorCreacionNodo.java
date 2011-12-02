@@ -17,9 +17,9 @@ public class ControladorCreacionNodo extends ControladorCreacionYAdminDeNodo {
 
             Entity nuevoNodoPhophorous = null;
             
-            if (nodoGrafico instanceof NodoClienteGrafico && modeloRegistrado instanceof ModeloCrearCliente) {
+            if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof NodoClienteGrafico) {
                 nuevoNodoPhophorous = ((ModeloCrearCliente)modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
-            } else if (nodoGrafico instanceof NodoDeServicioGrafico && modeloRegistrado instanceof ModeloCrearNodoDeServicio) {
+            } else if (modeloRegistrado instanceof ModeloCrearNodoDeServicio && nodoGrafico instanceof NodoDeServicioGrafico) {
                 nuevoNodoPhophorous = ((ModeloCrearNodoDeServicio)modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
             }
             
