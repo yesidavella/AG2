@@ -3,7 +3,7 @@ package com.ag2.presentacion;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Index extends Application{
+public class Main extends Application{
     
     @Override
     public void start(Stage stgEscenario) throws Exception {
