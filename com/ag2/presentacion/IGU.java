@@ -76,7 +76,6 @@ public class IGU extends Scene{
     
         if(iguAG2 == null){
             BorderPane layOutVentanaPrincipal = new BorderPane();//Layout de toda la aplicacion
-
             iguAG2 = new IGU(layOutVentanaPrincipal, 1280, 720);
         }
         return iguAG2;
@@ -118,7 +117,7 @@ public class IGU extends Scene{
         VBox contenedorHerramietas = new VBox();
 
         contenedorHerramietas.getChildren().addAll(barraDeEjecucion, barraHerramientas);
-        (layOutVentanaPrincipal).setLeft(contenedorHerramietas);
+        layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
         crearLienzoDetabs(layOutVentanaPrincipal);
