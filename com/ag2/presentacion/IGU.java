@@ -103,6 +103,8 @@ public class IGU extends Scene{
         
         layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
         
+        stgEscenario = Main.getStgEscenario();
+        
        //Diseño superior
         if(stgEscenario == null)
             System.out.println("Esta nuloooooo como un putas");
@@ -125,16 +127,8 @@ public class IGU extends Scene{
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
 
-//        escenaPrimaria.setScene(this);
-//        escenaPrimaria.show();
-        
         inicializarSimulacionYSuEstado();
     }
-
-    public void setStgEscenario(Stage stgEscenario) {
-        this.stgEscenario = stgEscenario;
-    }
-    
 
     private void crearBarraDeMenus(BorderPane diseñoVentana, final Stage primaryStage) {
 
