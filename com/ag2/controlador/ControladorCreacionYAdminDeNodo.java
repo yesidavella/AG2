@@ -11,7 +11,7 @@ public abstract class ControladorCreacionYAdminDeNodo {
     
     private InterfaceGraficaNodos interfaceGraficaNodos;
     protected  ArrayList<ModeloCrearNodo> modelosRegistrados;
-    private Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
+    protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
     
     public ControladorCreacionYAdminDeNodo(){
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
@@ -32,13 +32,14 @@ public abstract class ControladorCreacionYAdminDeNodo {
         return modelosRegistrados.remove(modeloCrearNodo);
     }
     
-    protected  void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico,Entity nodoReal){
+    protected void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico,Entity nodoReal){
         parejasDeNodosExistentes.put(nodoGrafico, nodoReal);
     }
     
     protected void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico){
         parejasDeNodosExistentes.remove(nodoGrafico);
     }
+    
     
     public abstract void crearNodo(NodoGrafico nodoGrafico);
     

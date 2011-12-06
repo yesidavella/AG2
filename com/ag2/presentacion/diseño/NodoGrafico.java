@@ -1,7 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.config.serializacion.*;
-import com.ag2.presentacion.Main;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
@@ -32,14 +31,13 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient Label lblNombre;
     private boolean selecionado = false;
     private transient DropShadow dropShadow = new DropShadow();
-    private transient VBox vBox = new VBox();
+    private transient VBox cuadroExteriorResaltado = new VBox();
     private double posX;
     private boolean arrastrando = false;
 
     @Override
     public boolean equals(Object obj) 
     {
-      
         if(obj instanceof  NodoGrafico)
         {
             NodoGrafico nodoGrafico = (NodoGrafico)obj; 
@@ -54,10 +52,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
         hash = 41 * hash + (this.nombre != null ? this.nombre.hashCode() : 0);
         return hash;
     }
-
-   
-    
-    
 
     public double getPosX() {
         return posX;
@@ -90,10 +84,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
             dropShadow.setSpread(.2);
             dropShadow.setWidth(20);
             dropShadow.setHeight(20);
-            vBox.setStyle("-fx-border-width: 0");
+            cuadroExteriorResaltado.setStyle("-fx-border-width: 0");
         } else {
 
-            vBox.setStyle("-fx-border-color: #55FFF7;-fx-border-width: 2");
+            cuadroExteriorResaltado.setStyle("-fx-border-color: #55FFF7;-fx-border-width: 2");
             this.toFront();
             dropShadow.setColor(Color.AQUAMARINE);
             dropShadow.setSpread(.2);
@@ -119,11 +113,11 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
         imageView = new ImageView(imagen);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(imageView, lblNombre);
+        cuadroExteriorResaltado.setAlignment(Pos.CENTER);
+        cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
 
 
-        this.getChildren().addAll(vBox);
+        this.getChildren().addAll(cuadroExteriorResaltado);
         //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
         setScaleX(0.5);
         setScaleY(0.5);
@@ -137,14 +131,17 @@ public abstract class NodoGrafico extends Group implements Serializable {
         establecerEventoOnMouseReleased();
 
         establecerEventoOnMouseEntered();
+
     }
 
     private void establecerEventoOnMouseEntered() {
         setOnMouseEntered(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(MouseEvent mouseEvent) {        
+        System.out.println("Ancho:"+cuadroExteriorResaltado.getWidth());
+        System.out.println("Alto:"+cuadroExteriorResaltado.getHeight());
 
-                TiposDeBoton tipoDeBotonSeleccionado = Main.getEstadoTipoBoton();
+                TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
@@ -182,7 +179,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 setScaleX(0.5);
                 setScaleY(0.5);
 
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
@@ -198,11 +195,11 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
                     setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
                     updateNodoListener();
-                } else if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
                     enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
                 }
@@ -214,7 +211,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                     nodoAComodin = nodoGrafico;
@@ -242,13 +239,13 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
 
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
                     nodoGrafico.setEliminado(true);
                     group.getChildren().remove(nodoGrafico);
                     group.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     NodoGrafico nodoGraficoSelecionado = group.getNodoGraficoSelecionado();
                     if (!arrastrando) 
                     {
@@ -330,13 +327,13 @@ public abstract class NodoGrafico extends Group implements Serializable {
             setLayoutY(posY);
             imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
             imageView = new ImageView(imagen);
-            vBox = new VBox();
+            cuadroExteriorResaltado = new VBox();
             lblNombre = new Label(nombre);
             lblNombre.setTextFill(Color.BLACK);
             lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
-            vBox.getChildren().addAll(imageView, lblNombre);
-            vBox.setAlignment(Pos.CENTER);
-            this.getChildren().addAll(vBox);
+            cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
+            cuadroExteriorResaltado.setAlignment(Pos.CENTER);
+            this.getChildren().addAll(cuadroExteriorResaltado);
             enlaceComodin = new Line();
             setScaleX(0.5);
             setScaleY(0.5);

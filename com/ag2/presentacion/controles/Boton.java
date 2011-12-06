@@ -1,6 +1,6 @@
 package com.ag2.presentacion.controles;
 
-import com.ag2.presentacion.Main;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -43,7 +43,7 @@ public class Boton extends ToggleButton {
 
                 if (botonOrigen.isSelected()){
                     
-                    Main.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
+                    IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
                     
                     switch (botonOrigen.tipoDeBoton) {
 
