@@ -2,7 +2,7 @@ package com.ag2.presentacion.controles;
 
 import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
 import com.ag2.presentacion.InterfaceGraficaNodos;
-import com.ag2.presentacion.Main;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
 import java.io.ObjectInputStream;
@@ -56,7 +56,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void handle(MouseEvent mouEvent) {
 
         EventType tipoDeEvento = mouEvent.getEventType();
-        TiposDeBoton botonSeleccionado = Main.getEstadoTipoBoton();
+        TiposDeBoton botonSeleccionado = IGU.getEstadoTipoBoton();
 
         if (tipoDeEvento == MouseEvent.MOUSE_PRESSED) {
 
@@ -132,10 +132,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             //Le aviso a todos los controladores de la generacion del nuevo NodoGrafico
             for(ControladorCreacionYAdminDeNodo controladorRegistrado:controladoresRegistrados){
                 controladorRegistrado.crearNodo(nuevoNodo);
-                System.out.println("Avisando a controlador..");
             }
         }
-
     }
 
     public void eliminarNodeListaNavegacion(NodoGrafico nodoGrafico) {
@@ -157,15 +155,19 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         double posicionY = 0;
 
         if (nuevoNodo != null) {
-            posicionX = me.getX() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX() + (nuevoNodo.getImagen().getWidth() / 8));
-            posicionY = me.getY() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY() + (nuevoNodo.getImagen().getHeight() / 8));
+//            posicionX = me.getX() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX() + (nuevoNodo.getImagen().getWidth() / 8));
+//            posicionY = me.getY() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY() + (nuevoNodo.getImagen().getHeight() / 8));
 
+            posicionX = me.getX() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX());
+            posicionY = me.getY() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY());
+            
+            System.out.println("posicionX:"+posicionX);
+            System.out.println("posicionY:"+posicionY);
+            
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);
             addcionarObjectoSerializable(nuevoNodo);
-            
-
         }
     }
 
@@ -211,11 +213,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             listaSwitches = FXCollections.observableArrayList();
             listaNodoServicio = FXCollections.observableArrayList();
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-   
 }

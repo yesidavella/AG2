@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.presentacion.Main;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
@@ -136,7 +136,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         arco.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent me) {
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     double dragX = me.getX();
                     double dragY = me.getY();
                     ArcoGrafico arcoGrafico = (ArcoGrafico)me.getSource();
@@ -154,7 +154,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
             public void handle(MouseEvent mouseEvent) {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) 
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) 
                 {
                     ArcoGrafico quadCurveFuente = (ArcoGrafico) mouseEvent.getSource();           
                     ArcoGrafico quadCurveNueva = new ArcoGrafico(quadCurveFuente.getEnlaceGrafico(),quadCurveFuente.getGroup() );
@@ -177,7 +177,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     enlaceGrafico.getArcos().add(quadCurveNueva);
                    
                 }
-                else if(Main.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR)
+                else if(IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR)
                 {
                   
                    enlaceGrafico.getNodoGraficoA().removeNodoListener(enlaceGrafico);
@@ -241,7 +241,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
             public void handle(MouseEvent mouseEvent) {
                 ArcoGrafico quadCurveFuente = (ArcoGrafico) mouseEvent.getSource();
 
-                TiposDeBoton tipoDeBotonSeleccionado = Main.getEstadoTipoBoton();
+                TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ADICIONAR_VERTICE || tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
                     quadCurveFuente.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());

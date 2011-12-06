@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.presentacion.Main;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -72,7 +72,7 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serial
 
             public void handle(MouseEvent t) {
 
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setCursor(Cursor.MOVE);
                 }
             }
@@ -83,7 +83,7 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serial
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                if (Main.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) mouseEvent.getSource();
 
                     double dragX = mouseEvent.getX();
