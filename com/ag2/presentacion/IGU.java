@@ -76,7 +76,7 @@ public class IGU extends Scene{
     
         if(iguAG2 == null){
             BorderPane layOutVentanaPrincipal = new BorderPane();//Layout de toda la aplicacion
-            layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
+
             iguAG2 = new IGU(layOutVentanaPrincipal, 1280, 720);
         }
         return iguAG2;
@@ -99,11 +99,13 @@ public class IGU extends Scene{
         super(layOutVentanaPrincipal, ancho, alto);
         
         adicionarEventoDeTecladoAEscena(this);
-        getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
-
+        getStylesheets().add(getClass().getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
+        
+        layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
+        
        //Diseño superior
         if(stgEscenario == null)
-            System.out.println("Esta nuloooooo");
+            System.out.println("Esta nuloooooo como un putas");
         
         crearBarraDeMenus(layOutVentanaPrincipal, stgEscenario);
 
