@@ -1,4 +1,3 @@
-
 package com.ag2.presentacion;
 
 import javafx.geometry.Point2D;

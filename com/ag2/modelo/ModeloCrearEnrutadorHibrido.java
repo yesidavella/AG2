@@ -1,13 +1,13 @@
 package com.ag2.modelo;
 
 import Grid.Entity;
-import com.ag2.presentacion.IGU;
+import com.ag2.presentacion.Main;
 
 public class ModeloCrearEnrutadorHibrido extends ModeloCrearNodo{
 
     @Override
     public Entity crearNodoPhophorous(String nombreNodoGrafico) {
         System.out.println("Creo Enrutador Hibrido con monbre:"+nombreNodoGrafico);
-        return Grid.Utilities.Util.createHybridSwitch(nombreNodoGrafico, IGU.simulador);
+        return Grid.Utilities.Util.createHybridSwitch(nombreNodoGrafico, Main.simulador);
     }
 }

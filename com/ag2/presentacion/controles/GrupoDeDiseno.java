@@ -1,8 +1,8 @@
 package com.ag2.presentacion.controles;
 
 import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
-import com.ag2.presentacion.InterfaceGraficaNodos;
 import com.ag2.presentacion.IGU;
+import com.ag2.presentacion.InterfaceGraficaNodos;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
 import java.io.ObjectInputStream;

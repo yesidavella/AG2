@@ -1,12 +1,7 @@
 package com.ag2.presentacion;
 
-import Grid.GridSimulation;
-import Grid.GridSimulator;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.config.serializacion.Serializador;
-import com.ag2.controlador.ControladorCreacionNodo;
-import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
-import com.ag2.modelo.*;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
@@ -15,7 +10,6 @@ import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,7 +21,6 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,11 +32,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import simbase.SimulationInstance;
 
 public class IGU extends Scene{
-    public static GridSimulator simulador;
-    public static SimulationInstance simulacion;
 
     ScrollPane spZonaDeDiseño = new ScrollPane();
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno(spZonaDeDiseño);
@@ -70,45 +60,25 @@ public class IGU extends Scene{
     private Cursor cursorAnteriorAEventoTcld;
     
     private static IGU iguAG2;
-    private Stage stgEscenario;
     
-    public static IGU getInstancia(){
+    public static IGU getInstanciaIGUAg2(){
     
         if(iguAG2 == null){
-            BorderPane layOutVentanaPrincipal = new BorderPane();//Layout de toda la aplicacion
-            iguAG2 = new IGU(layOutVentanaPrincipal, 1280, 720);
+            iguAG2 = new IGU(new BorderPane(), 1280, 720);
         }
         return iguAG2;
     }
-        
-    public static TiposDeBoton getEstadoTipoBoton()
-    {
-        if(estadoTipoBoton == null)
-        {
-           estadoTipoBoton = TiposDeBoton.PUNTERO;
-        }   
-        return estadoTipoBoton;
-    }
 
-    public static void setEstadoTipoBoton(TiposDeBoton tiposDeBoton) {
-        estadoTipoBoton = tiposDeBoton;
-    }
-
-    public IGU(BorderPane layOutVentanaPrincipal, double ancho, double alto){
-        super(layOutVentanaPrincipal, ancho, alto);
+    private IGU(BorderPane layOutVentanaPrincipal, double anchoVentana, double altoVentana){
+        super(layOutVentanaPrincipal, anchoVentana, altoVentana);
         
         adicionarEventoDeTecladoAEscena(this);
-        getStylesheets().add(getClass().getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
+        getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
         
         layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
         
-        stgEscenario = Main.getStgEscenario();
-        
        //Diseño superior
-        if(stgEscenario == null)
-            System.out.println("Esta nuloooooo como un putas");
-        
-        crearBarraDeMenus(layOutVentanaPrincipal, stgEscenario);
+        crearBarraDeMenus(layOutVentanaPrincipal, Main.getStgEscenario());
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         TilePane barraDeEjecucion = creacionBarraDeEjecucion();
@@ -126,7 +96,20 @@ public class IGU extends Scene{
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
 
-        inicializarSimulacionYSuEstado();
+        inicializarEstadoDeIGU();
+    }
+           
+    public static TiposDeBoton getEstadoTipoBoton()
+    {
+        if(estadoTipoBoton == null)
+        {
+           estadoTipoBoton = TiposDeBoton.PUNTERO;
+        }   
+        return estadoTipoBoton;
+    }
+
+    public static void setEstadoTipoBoton(TiposDeBoton tiposDeBoton) {
+        estadoTipoBoton = tiposDeBoton;
     }
 
     private void crearBarraDeMenus(BorderPane diseñoVentana, final Stage primaryStage) {
@@ -340,7 +323,6 @@ public class IGU extends Scene{
         resustadosPhosphorus.adicionarResultadoRecurso("Recurso 1", "09", "87", "56");
         resustadosPhosphorus.adicionarResultadoConmutador("Comutador ", "xx", "xx", "xx", "xx", "xx", "xx", "xx");
 
-
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
 
         ivImagenFondo.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
@@ -372,7 +354,6 @@ public class IGU extends Scene{
                spZonaDeDiseño.setFitToHeight(true);
                spZonaDeDiseño.setFitToWidth(true);
                              
-       
                spZonaDeDiseño.setPrefViewportHeight(200);
             }
         });
@@ -687,38 +668,14 @@ public class IGU extends Scene{
         });
     }
 
-    private void inicializarSimulacionYSuEstado() {
+    private void inicializarEstadoDeIGU() {
         //Estado inicial de botones
         tgHerramientas.selectToggle(btnCliente);
         IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
         grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
-        
-        //Controladores y Modelos
-        ControladorCreacionYAdminDeNodo ctrlCreadorYAdministradorNodo = new ControladorCreacionNodo();
-        grGrupoDeDiseño.addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
-        ctrlCreadorYAdministradorNodo.addVistaGrDeDiseño(grGrupoDeDiseño);
-        
-        ModeloCrearNodo modeloCrearNodo = new ModeloCrearCliente();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        modeloCrearNodo = new ModeloCrearNodoDeServicio();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        modeloCrearNodo = new ModeloCrearNodoDeRecurso();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        modeloCrearNodo = new ModeloCrearEnrutadorRafaga();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        modeloCrearNodo = new ModeloCrearEnrutadorOptico();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
-        
-        simulacion = new GridSimulation("ConfigInit.cfg");
-        simulador = new GridSimulator();
-        simulacion.setSimulator(simulador);
     }
 
+    public GrupoDeDiseno getGrGrupoDeDiseño() {
+        return grGrupoDeDiseño;
+    }
 }
