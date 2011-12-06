@@ -102,6 +102,9 @@ public class IGU extends Scene{
         getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
 
        //Diseño superior
+        if(stgEscenario == null)
+            System.out.println("Esta nuloooooo");
+        
         crearBarraDeMenus(layOutVentanaPrincipal, stgEscenario);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
