@@ -3,9 +3,16 @@ package com.ag2.modelo;
 import Grid.Entity;
 import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
 
-public abstract class ModeloCrearNodo {
+public abstract class ModeloCrearNodo 
+{
     
     private ControladorCreacionYAdminDeNodo ctrlCrearNodo;
+    protected SimulacionBase simulacionBase; 
+    
+    public ModeloCrearNodo()
+    {
+        simulacionBase=  SimulacionBase.getInstance();
+    }
     
     public boolean addControladorCrearNodo(ControladorCreacionYAdminDeNodo ctrlCrearNodo){
         this.ctrlCrearNodo = ctrlCrearNodo;
