@@ -1,19 +1,15 @@
 package com.ag2.presentacion;
 
-import Grid.GridSimulation;
-import Grid.GridSimulator;
 import com.ag2.controlador.ControladorCreacionNodo;
 import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
 import com.ag2.modelo.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import simbase.SimulationInstance;
 
 public class Main extends Application{
     
     private static Stage stgEscenario;
-    public static GridSimulator simulador;
-    public SimulationInstance simulacion;
+    
     
     @Override
     public void start(Stage stgEscenario){
@@ -21,9 +17,8 @@ public class Main extends Application{
         stgEscenario.setTitle("Modelo AG2- Simulador Grafico");
         this.stgEscenario=stgEscenario;//FIXME: Esto es una mierdaaaaaa
         stgEscenario.setScene(IGU.getInstanciaIGUAg2());
-        stgEscenario.show();
-        
-        inicializarSimulacion();
+        stgEscenario.show();        
+      
         inicializarModelosYContrladoresDeCreacionDeNodos();
     }
     
@@ -35,11 +30,7 @@ public class Main extends Application{
         return stgEscenario;
     }
     
-    private void inicializarSimulacion() {
-        simulacion = new GridSimulation("ConfigInit.cfg");
-        simulador = new GridSimulator();
-        simulacion.setSimulator(simulador);
-    }
+   
 
     private void inicializarModelosYContrladoresDeCreacionDeNodos() {
         
