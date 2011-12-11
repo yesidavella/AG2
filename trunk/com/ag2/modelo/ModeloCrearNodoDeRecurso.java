@@ -7,7 +7,7 @@ public class ModeloCrearNodoDeRecurso extends ModeloCrearNodo{
 
     @Override
     public Entity crearNodoPhophorous(String nombreNodoGrafico) {
-        System.out.println("Creo Nodo de Recurso con monbre:"+nombreNodoGrafico);
+        //System.out.println("Creo Nodo de Recurso con monbre:"+nombreNodoGrafico);
         return Grid.Utilities.Util.createHyridResourceNode(nombreNodoGrafico,simulacionBase.getSimulador());
     }   
 }

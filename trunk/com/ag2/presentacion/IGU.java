@@ -8,6 +8,8 @@ import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResustadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.PropiedadeNodo;
+import com.ag2.presentacion.diseño.TablaPropiedadesDispositivo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -54,6 +56,7 @@ public class IGU extends Scene{
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
     Slider sliderZoom = new Slider();
+    TablaPropiedadesDispositivo propiedadesDispositivoTbl ; 
     
     private boolean estaTeclaCtrlOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEventoTcld;
@@ -368,12 +371,13 @@ public class IGU extends Scene{
 
         TilePane tlPnLogos = creacionImagenesDeProyectos();
 
-        TableView<ObjetoConPropiedades> tblPropiedadesDispositivo = crearTablaDePropiedadesDeDispositivo();
+        propiedadesDispositivoTbl = new TablaPropiedadesDispositivo();
+       
 
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
 
         SplitPane divisorDeTablas = new SplitPane();
-        divisorDeTablas.getItems().addAll(tblPropiedadesDispositivo, tblPropiedadesSimulacion);
+        divisorDeTablas.getItems().addAll(propiedadesDispositivoTbl, tblPropiedadesSimulacion);
 
         HBox hBox = new HBox();
         Label lbSliderZoom = new Label(" % Nivel zoom ");
@@ -395,8 +399,7 @@ public class IGU extends Scene{
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
                 grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
                 grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
-                System.out.println(" slider :" + sliderZoom.getValue() + " " + sliderZoom.getValue() / 100 + " " + sliderZoom.getValue() / 100);
-                System.out.println(" sp :" + spZonaDeDiseño.getHvalue() + "   " + spZonaDeDiseño.getVvalue());
+                
             }
         });
 
@@ -424,33 +427,6 @@ public class IGU extends Scene{
         tlPneLogos.getChildren().addAll(imagenAG2, imagenPhosphorus);
 
         return tlPneLogos;
-    }
-
-    private TableView<ObjetoConPropiedades> crearTablaDePropiedadesDeDispositivo() {
-        //Tabla de propiedades del dispositivo
-        TableView<ObjetoConPropiedades> propiedadesDispositivoTbl = new TableView<ObjetoConPropiedades>();
-
-        propiedadesDispositivoTbl.setPrefHeight(200);
-        propiedadesDispositivoTbl.setPrefWidth(400);
-
-        TableColumn nombrePropiedadDispositivo = new TableColumn("PROPIEDAD");
-        nombrePropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<ObjetoConPropiedades, String>("propiedad1"));
-
-        TableColumn valorPropiedadDispositivo = new TableColumn("VALOR");
-        valorPropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<ObjetoConPropiedades, CheckBox>("propiedad2"));
-
-        TableColumn tituloTblDispositivo = new TableColumn("PROPIEDADES DISPOSITIVO");
-        tituloTblDispositivo.getColumns().addAll(nombrePropiedadDispositivo, valorPropiedadDispositivo);
-
-        propiedadesDispositivoTbl.getColumns().add(tituloTblDispositivo);
-
-        ObservableList<ObjetoConPropiedades> datosPropiedadesDispositivo = FXCollections.observableArrayList(
-                new ObjetoConPropiedades("obj1Prop1", new CheckBox("Toes")),
-                new ObjetoConPropiedades("obj2Prop1", new CheckBox("hhhh")));
-
-        propiedadesDispositivoTbl.setItems(datosPropiedadesDispositivo);
-
-        return propiedadesDispositivoTbl;
     }
 
     private TableView<String> crearTablaDePropiedadesDeSimulacion() {
@@ -549,7 +525,7 @@ public class IGU extends Scene{
 
                 if (cbContinentes.getSelectionModel().getSelectedItem() instanceof Continentes) {
                     Continentes continente = (Continentes) cbContinentes.getSelectionModel().getSelectedItem();
-                    System.out.println(continente.toString());
+                    //System.out.println(continente.toString());
                     switch (continente) {
                         case AFRICA: {
                             sliderZoom.setValue(30);
@@ -613,7 +589,7 @@ public class IGU extends Scene{
             public void handle(MouseEvent t) {
                 if (cbRecursos.getSelectionModel().getSelectedItem() instanceof NodoDeRecursoGrafico) {
                     NodoDeRecursoGrafico nodoDeRecursoGrafico = (NodoDeRecursoGrafico) cbRecursos.getSelectionModel().getSelectedItem();
-                    System.out.println(nodoDeRecursoGrafico.getLayoutX() + " " + nodoDeRecursoGrafico.getLayoutY());
+                    //System.out.println(nodoDeRecursoGrafico.getLayoutX() + " " + nodoDeRecursoGrafico.getLayoutY());
                 }
             }
         });
@@ -677,5 +653,9 @@ public class IGU extends Scene{
 
     public GrupoDeDiseno getGrGrupoDeDiseño() {
         return grGrupoDeDiseño;
+    }
+
+    public TablaPropiedadesDispositivo getPropiedadesDispositivoTbl() {
+        return propiedadesDispositivoTbl;
     }
 }

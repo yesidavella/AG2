@@ -35,7 +35,7 @@ public final class EditorPropiedades {
         }
         catch (Exception ex)
         {
-            System.out.println("Failed to read from " + nameArchivo + " file. Due to :" + ex.toString());
+            //System.out.println("Failed to read from " + nameArchivo + " file. Due to :" + ex.toString());
             
         }
 
@@ -51,7 +51,7 @@ public final class EditorPropiedades {
             
         } catch (Exception ex) {
             
-            System.out.println("Failed to write from " + nameArchivo + " file. Due to :" + ex.toString());
+            //System.out.println("Failed to write from " + nameArchivo + " file. Due to :" + ex.toString());
         }
         
     }        

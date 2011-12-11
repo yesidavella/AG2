@@ -1,5 +1,6 @@
 package com.ag2.presentacion.diseño;
 
+import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
@@ -35,6 +36,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient VBox cuadroExteriorResaltado = new VBox();
     private double posX;
     private boolean arrastrando = false;
+    private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo; 
 
     @Override
     public boolean equals(Object obj) 
@@ -86,8 +88,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
             dropShadow.setWidth(20);
             dropShadow.setHeight(20);
             cuadroExteriorResaltado.setStyle("-fx-border-width: 0");
-        } else {
-
+        } else 
+        {
+            controladorAbstractoAdminNodo.consultarPropiedades(this); 
             cuadroExteriorResaltado.setStyle("-fx-border-color: #55FFF7;-fx-border-width: 2");
             this.toFront();
             dropShadow.setColor(Color.AQUAMARINE);
@@ -102,8 +105,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
         return nombre;
     }
 
-    public NodoGrafico(String nombre, String urlDeImagen) {
-        setSelecionado(true);
+    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
+        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
+//        setSelecionado(true);
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
         this.urlDeImagen = urlDeImagen;
@@ -141,8 +145,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {        
-        System.out.println("Ancho:"+cuadroExteriorResaltado.getWidth());
-        System.out.println("Alto:"+cuadroExteriorResaltado.getHeight());
+
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
