@@ -1,12 +1,12 @@
 package com.ag2.modelo;
 
 import Grid.Entity;
-import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
+import com.ag2.controlador.ControladorAbstractoAdminNodo;
 
 public abstract class ModeloCrearNodo 
 {
     
-    private ControladorCreacionYAdminDeNodo ctrlCrearNodo;
+    private ControladorAbstractoAdminNodo ctrlCrearNodo;
     protected SimulacionBase simulacionBase; 
     
     public ModeloCrearNodo()
@@ -14,7 +14,7 @@ public abstract class ModeloCrearNodo
         simulacionBase=  SimulacionBase.getInstance();
     }
     
-    public boolean addControladorCrearNodo(ControladorCreacionYAdminDeNodo ctrlCrearNodo){
+    public boolean addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo){
         this.ctrlCrearNodo = ctrlCrearNodo;
         
         if(this.ctrlCrearNodo!=null){

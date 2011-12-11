@@ -4,7 +4,7 @@ import Grid.Entity;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.diseño.*;
 
-public class ControladorCreacionNodo extends ControladorCreacionYAdminDeNodo {
+public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
     @Override
     public void crearNodo(NodoGrafico nodoGrafico) {
