@@ -1,0 +1,5 @@
+
+
+   Bugs                                       Estado                                                        
+01-Selecion de nodos y arrastre               OK-Solucionado.
+

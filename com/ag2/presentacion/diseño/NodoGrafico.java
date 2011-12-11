@@ -21,11 +21,12 @@ import javafx.scene.shape.Line;
 public abstract class NodoGrafico extends Group implements Serializable {
 
     private String nombre = null;
-    private transient Image imagen = null;
+    protected  transient Image imagen = null;
     private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
     private static NodoGrafico nodoAComodin = null;
     private transient Line enlaceComodin = new Line();
-    public static final byte CENTRO_IMAGEN_NODO_GRAFICO = 15;
+    protected double  centroImagenX;
+    protected  double centroImagenY ;
     private boolean estaEliminado = false;
     private transient ImageView imageView;
     private transient Label lblNombre;
@@ -110,8 +111,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
         lblNombre = new Label(nombre);
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
-
+     
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
+        centroImagenX = imagen.getHeight()/2  ; 
+        centroImagenY = imagen.getWidth()/2; 
         imageView = new ImageView(imagen);
         cuadroExteriorResaltado.setAlignment(Pos.CENTER);
         cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
@@ -196,8 +199,8 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - CENTRO_IMAGEN_NODO_GRAFICO);
-                    setLayoutY(getLayoutY() + mouseEvent.getY() - CENTRO_IMAGEN_NODO_GRAFICO);
+                    setLayoutX(getLayoutX() + mouseEvent.getX() - centroImagenX);
+                    setLayoutY(getLayoutY() + mouseEvent.getY() - centroImagenY);
                     updateNodoListener();
                 } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
@@ -217,10 +220,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     nodoAComodin = nodoGrafico;
                     double x = nodoGrafico.getLayoutX();
                     double y = nodoGrafico.getLayoutY();
-                    enlaceComodin.setStartX(x + CENTRO_IMAGEN_NODO_GRAFICO);
-                    enlaceComodin.setStartY(y + CENTRO_IMAGEN_NODO_GRAFICO);
-                    enlaceComodin.setEndX(x + CENTRO_IMAGEN_NODO_GRAFICO);
-                    enlaceComodin.setEndY(y + CENTRO_IMAGEN_NODO_GRAFICO);
+                    enlaceComodin.setStartX(x + centroImagenX);
+                    enlaceComodin.setStartY(y + centroImagenY);
+                    enlaceComodin.setEndX(x + centroImagenX);
+                    enlaceComodin.setEndY(y + centroImagenY);
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().add(enlaceComodin);
                     nodoGrafico.toFront();
