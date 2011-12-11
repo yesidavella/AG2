@@ -7,13 +7,13 @@ import com.ag2.presentacion.diseño.NodoGrafico;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public abstract class ControladorCreacionYAdminDeNodo {
+public abstract class ControladorAbstractoAdminNodo {
     
     private InterfaceGraficaNodos interfaceGraficaNodos;
     protected  ArrayList<ModeloCrearNodo> modelosRegistrados;
     protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
     
-    public ControladorCreacionYAdminDeNodo(){
+    public ControladorAbstractoAdminNodo(){
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
         parejasDeNodosExistentes = new Hashtable<NodoGrafico, Entity>();
     }

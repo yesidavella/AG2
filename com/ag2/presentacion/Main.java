@@ -1,7 +1,7 @@
 package com.ag2.presentacion;
 
-import com.ag2.controlador.ControladorCreacionNodo;
-import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
+import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.controlador.ControladorAdminNodo;
 import com.ag2.modelo.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -35,7 +35,7 @@ public class Main extends Application{
     private void inicializarModelosYContrladoresDeCreacionDeNodos() {
         
         //Controladores y Modelos
-        ControladorCreacionYAdminDeNodo ctrlCreadorYAdministradorNodo = new ControladorCreacionNodo();
+        ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo = new ControladorAdminNodo();
         IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
         ctrlCreadorYAdministradorNodo.addVistaGrDeDiseño(IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño());
         

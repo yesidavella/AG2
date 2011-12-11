@@ -1,6 +1,6 @@
 package com.ag2.presentacion.controles;
 
-import com.ag2.controlador.ControladorCreacionYAdminDeNodo;
+import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.InterfaceGraficaNodos;
 import com.ag2.presentacion.TiposDeBoton;
@@ -19,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable,InterfaceGraficaNodos {
 
     private transient ScrollPane spZonaDeDiseño;
-    private ArrayList<ControladorCreacionYAdminDeNodo> controladoresRegistrados;
+    private ArrayList<ControladorAbstractoAdminNodo> controladoresRegistrados;
 
     public ScrollPane getSpZonaDeDiseño() {
         return spZonaDeDiseño;
@@ -50,7 +50,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
-        controladoresRegistrados = new ArrayList<ControladorCreacionYAdminDeNodo>();
+        controladoresRegistrados = new ArrayList<ControladorAbstractoAdminNodo>();
     }
 
     public void handle(MouseEvent mouEvent) {
@@ -130,7 +130,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
             
             //Le aviso a todos los controladores de la generacion del nuevo NodoGrafico
-            for(ControladorCreacionYAdminDeNodo controladorRegistrado:controladoresRegistrados){
+            for(ControladorAbstractoAdminNodo controladorRegistrado:controladoresRegistrados){
                 controladorRegistrado.crearNodo(nuevoNodo);
             }
         }
@@ -191,7 +191,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         return listaSwitches;
     }
     
-    public void addControladorCrearNodo(ControladorCreacionYAdminDeNodo ctrlCrearNodo){
+    public void addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo){
         controladoresRegistrados.add(ctrlCrearNodo);
     }
 
