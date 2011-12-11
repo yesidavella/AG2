@@ -2,7 +2,7 @@ package com.ag2.presentacion.controles;
 
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.InterfaceGraficaNodos;
+import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.diseño.*;
 import java.io.ObjectInputStream;
@@ -16,7 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
-public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable,InterfaceGraficaNodos {
+public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
     private transient ScrollPane spZonaDeDiseño;
     private ArrayList<ControladorAbstractoAdminNodo> controladoresRegistrados;
@@ -92,32 +92,33 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
             NodoGrafico nuevoNodo = null;
+            ControladorAbstractoAdminNodo controladorPrincipal = controladoresRegistrados.get(0);
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
-                nuevoNodo = new NodoClienteGrafico();
+                nuevoNodo = new NodoClienteGrafico(controladorPrincipal);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
-                nuevoNodo = new NodoDeServicioGrafico();
+                nuevoNodo = new NodoDeServicioGrafico(controladorPrincipal);
                 listaNodoServicio.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
-                nuevoNodo = new EnrutadorOpticoGrafico();
+                nuevoNodo = new EnrutadorOpticoGrafico(controladorPrincipal);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new EnrutadorRafagaGrafico();
+                nuevoNodo = new EnrutadorRafagaGrafico(controladorPrincipal);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new EnrutadorHibridoGrafico();
+                nuevoNodo = new EnrutadorHibridoGrafico(controladorPrincipal);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
-                nuevoNodo = new NodoDeRecursoGrafico();
+                nuevoNodo = new NodoDeRecursoGrafico(controladorPrincipal);
                 listaRecursos.add(nuevoNodo);
             }
             if (nuevoNodo != null) {
@@ -125,14 +126,17 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                     nodoGraficoSelecionado.setSelecionado(false);
                 }
                 nodoGraficoSelecionado = nuevoNodo;
+                dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
+                for (ControladorAbstractoAdminNodo controladorRegistrado : controladoresRegistrados) {
+                    controladorRegistrado.crearNodo(nuevoNodo);
+                }
+                nuevoNodo.setSelecionado(true);
             }
 
-            dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
-            
+
+
             //Le aviso a todos los controladores de la generacion del nuevo NodoGrafico
-            for(ControladorAbstractoAdminNodo controladorRegistrado:controladoresRegistrados){
-                controladorRegistrado.crearNodo(nuevoNodo);
-            }
+
         }
     }
 
@@ -160,10 +164,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             posicionX = me.getX() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX());
             posicionY = me.getY() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY());
-            
-            System.out.println("posicionX:"+posicionX);
-            System.out.println("posicionY:"+posicionY);
-            
+
+
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);
@@ -174,7 +176,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void addcionarObjectoSerializable(Serializable serializable) {
         objectosSerializables.add(serializable);
     }
-    
+
     public ObservableList getListaClientes() {
         return listaClientes;
     }
@@ -190,8 +192,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public ObservableList getListaSwitches() {
         return listaSwitches;
     }
-    
-    public void addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo){
+
+    public void addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo) {
         controladoresRegistrados.add(ctrlCrearNodo);
     }
 
@@ -216,5 +218,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
 }

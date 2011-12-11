@@ -2,14 +2,15 @@ package com.ag2.controlador;
 
 import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
-import com.ag2.presentacion.InterfaceGraficaNodos;
+import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.PropiedadeNodo;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public abstract class ControladorAbstractoAdminNodo {
     
-    private InterfaceGraficaNodos interfaceGraficaNodos;
+    protected  ArrayList<VistaNodosGraficos>  listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>(); 
     protected  ArrayList<ModeloCrearNodo> modelosRegistrados;
     protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
     
@@ -18,9 +19,10 @@ public abstract class ControladorAbstractoAdminNodo {
         parejasDeNodosExistentes = new Hashtable<NodoGrafico, Entity>();
     }
     
-    public void addVistaGrDeDiseño(InterfaceGraficaNodos vistaGrDeDiseño){
+    public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño){
         
-        this.interfaceGraficaNodos = vistaGrDeDiseño;
+        listaVistaNodosGraficos.add(vistaGrDeDiseño);
+        
     }
     
     public boolean addModelo(ModeloCrearNodo modeloCrearNodo){
@@ -39,8 +41,8 @@ public abstract class ControladorAbstractoAdminNodo {
     protected void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico){
         parejasDeNodosExistentes.remove(nodoGrafico);
     }
-    
-    
+        
     public abstract void crearNodo(NodoGrafico nodoGrafico);
+    public abstract void consultarPropiedades(NodoGrafico nodoGrafico); 
     
 }

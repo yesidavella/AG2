@@ -1,8 +1,12 @@
 package com.ag2.controlador;
 
+import Distributions.DDNegExp;
 import Grid.Entity;
+import Grid.Interfaces.ClientNode;
 import com.ag2.modelo.*;
+import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
+import java.util.ArrayList;
 
 public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
@@ -25,12 +29,36 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                 nuevoNodoPhophorous = ((ModeloCrearEnrutadorOptico)modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
             }else if(modeloRegistrado instanceof ModeloCrearEnrutadorHibrido && nodoGrafico instanceof EnrutadorHibridoGrafico) {
                 nuevoNodoPhophorous = ((ModeloCrearEnrutadorHibrido)modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
-            }
-            
+            }            
             if(nuevoNodoPhophorous != null){
                 addNodoGraficoYNodoPhosphorous(nodoGrafico, nuevoNodoPhophorous);
             }
         }
+    }
+
+
+    public void consultarPropiedades(NodoGrafico nodoGrafico)
+    {
+         
+        ArrayList<PropiedadeNodo> propiedadeNodos = new ArrayList<PropiedadeNodo>(); 
+        
+
+        if(nodoGrafico instanceof NodoClienteGrafico)   
+        {
+            ClientNode clientNode =   (ClientNode) parejasDeNodosExistentes.get(nodoGrafico); 
+            DDNegExp dDNegExp = (DDNegExp)clientNode.getState().getJobInterArrival(); 
+      
+            PropiedadeNodo propiedadedPromedioTrabajos = new PropiedadeNodo("Promedio Salida de trabajos", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);             
+            propiedadedPromedioTrabajos.setPrimerValor(String.valueOf(dDNegExp.getAvg()));
+            propiedadeNodos.add(propiedadedPromedioTrabajos);
+        }
+       
+        for(VistaNodosGraficos  vistaNodosGraficos: listaVistaNodosGraficos)
+        {
+            vistaNodosGraficos.cargarPropiedades(propiedadeNodos);
+            
+        }
+
     }
 
 }
