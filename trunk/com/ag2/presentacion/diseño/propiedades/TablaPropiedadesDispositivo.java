@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package com.ag2.presentacion.diseño;
+package com.ag2.presentacion.diseño.propiedades;
 
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.presentacion.VistaNodosGraficos;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
 
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos)
     {
-          ObservableList datosPropiedades = FXCollections.observableArrayList();
+       ObservableList datosPropiedades = FXCollections.observableArrayList();
         for(PropiedadeNodo propiedadeNodo : propiedadeNodos)
         {
           

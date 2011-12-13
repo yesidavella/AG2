@@ -1,5 +1,6 @@
 package com.ag2.presentacion.controles;
 
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.VistaNodosGraficos;
