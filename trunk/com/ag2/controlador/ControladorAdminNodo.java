@@ -58,8 +58,16 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadeNodos, distribucionesFlops);
             
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("Generación de maximo intervalo de retraso");
+            PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("Generación de intervalo maximo de retraso");
             crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesMaximoRetraso);
+           
+            //===========================================================================================================
+            PropiedadNodoDistribuciones distribucionesTamanoTrabajo= new PropiedadNodoDistribuciones("Generación del tamaño del trabajo");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoTrabajo);
+            
+            //===========================================================================================================
+            PropiedadNodoDistribuciones distribucionesTamanoRespuesta= new PropiedadNodoDistribuciones("Generación del tamaño de la respuesta");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoRespuesta);
             
             
         }
@@ -153,7 +161,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             PropiedadeNodo propiedaA = new PropiedadeNodo("Constante", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(constantDistribution.getConstant()));
             propiedadeNodos.add(propiedaA);
-
         }
     }
 

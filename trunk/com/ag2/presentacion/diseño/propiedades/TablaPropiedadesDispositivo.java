@@ -26,14 +26,16 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
     public TablaPropiedadesDispositivo()
     {
         setPrefHeight(200);
-        setPrefWidth(400);
+        setPrefWidth(500);
         
         TableColumn nombrePropiedadDispositivo = new TableColumn("PROPIEDAD");
         nombrePropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, String>("nombre"));
-
+        nombrePropiedadDispositivo.setMinWidth(300);
+        
         TableColumn valorPropiedadDispositivo = new TableColumn("VALOR");
         valorPropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, Control>("control"));
-
+        valorPropiedadDispositivo.setMinWidth(200);
+        
         TableColumn tituloTblDispositivo = new TableColumn("PROPIEDADES DISPOSITIVO");
         tituloTblDispositivo.getColumns().addAll(nombrePropiedadDispositivo, valorPropiedadDispositivo);
 
