@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
-package com.ag2.presentacion.diseño;
+package com.ag2.presentacion.diseño.propiedades;
 
-import com.ag2.presentacion.diseño.PropiedadeNodo.TipoDePropiedadNodo;
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNodo;
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -18,12 +18,12 @@ import javafx.scene.control.TextField;
 public class PropiedadeNodo 
 {
     public enum TipoDePropiedadNodo{ TEXTO, NUMERO, BOLEANO ,LISTA_TEXTO };
-    public enum TipoDeDistribucion{CONSTANT, ER_LANG, HYPER_EXPONENTIAL, EXPONENTIAL_NEGATIVA, NORMAL, POISSON_PROCESS,UNMIFORM, DISCRETA }; 
+ 
     
     private String nombre;
     private ArrayList<String>  valorArrayList = new ArrayList<String>();
     private TipoDePropiedadNodo tipoDePropiedadNodo; 
-    private Control control;
+    protected  Control control;
 
     public Control getControl() {
         return control;
@@ -88,6 +88,7 @@ public class PropiedadeNodo
                
                  break; 
             }
+          
         }
         valorArrayList.add(0, valor);
     }
