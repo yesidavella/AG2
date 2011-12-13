@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 public class PropiedadeNodo 
 {
     public enum TipoDePropiedadNodo{ TEXTO, NUMERO, BOLEANO ,LISTA_TEXTO };
+    public enum TipoDeDistribucion{CONSTANT, ER_LANG, HYPER_EXPONENTIAL, EXPONENTIAL_NEGATIVA, NORMAL, POISSON_PROCESS,UNMIFORM, DISCRETA }; 
     
     private String nombre;
     private ArrayList<String>  valorArrayList = new ArrayList<String>();
