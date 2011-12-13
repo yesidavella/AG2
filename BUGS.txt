@@ -2,5 +2,5 @@
  
    Bugs                                       Estado                                                  
 01-Selecion de nodos y arrastre               OK-Solucionado. 
-02-MVC propiedades de dispositivo             Pendiente.
-03-Crear proyecto gogle code de phosphorous   Pendiente.
+02-MVC lectura propiedades de dispositivo     20%
+03-Crear proyecto gogle code de phosphorous   OK. franklinalwinmartinez@gmail.com  -  BV2rA3Su5ST9  : Toda la carpta  Sources 
