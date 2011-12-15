@@ -1,6 +1,4 @@
-
- 
-   Bugs                                       Estado                                                  
+    Bugs                                       Estado                                                  
 01-Selecion de nodos y arrastre               OK-Solucionado. 
 02-MVC lectura propiedades de dispositivo     Pendiente
 03-MVC escritura propiedades de dispositivo   Pendiente
