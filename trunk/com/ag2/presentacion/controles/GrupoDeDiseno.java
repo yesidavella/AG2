@@ -126,18 +126,15 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 if (nodoGraficoSelecionado != null) {
                     nodoGraficoSelecionado.setSelecionado(false);
                 }
-                nodoGraficoSelecionado = nuevoNodo;
+                
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
+                nodoGraficoSelecionado = nuevoNodo;
+                
                 for (ControladorAbstractoAdminNodo controladorRegistrado : controladoresRegistrados) {
                     controladorRegistrado.crearNodo(nuevoNodo);
                 }
                 nuevoNodo.setSelecionado(true);
             }
-
-
-
-            //Le aviso a todos los controladores de la generacion del nuevo NodoGrafico
-
         }
     }
 
@@ -160,13 +157,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         double posicionY = 0;
 
         if (nuevoNodo != null) {
-//            posicionX = me.getX() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX() + (nuevoNodo.getImagen().getWidth() / 8));
-//            posicionY = me.getY() - (Main.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY() + (nuevoNodo.getImagen().getHeight() / 8));
 
-            posicionX = me.getX() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getX());
-            posicionY = me.getY() - (IGU.getEstadoTipoBoton().getPosicionImagenDeCursorEnXyY().getY());
-
-
+            posicionX = me.getX() - nuevoNodo.getAncho()/2;
+            posicionY = me.getY() - nuevoNodo.getAlto()/2;
+            
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);

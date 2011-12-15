@@ -7,7 +7,11 @@ public class EnrutadorHibridoGrafico extends EnrutadorGrafico{
     private static short contadorNodo = 0; 
     public EnrutadorHibridoGrafico(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) 
     {
-        super("Enrutador_Hibrido_"+(++contadorNodo) ,"../../../../recursos/imagenes/enrutador_hibrido_mapa.png", controladorAbstractoAdminNodo );
+        super("Enrutador\nHibrido_"+(++contadorNodo) ,"../../../../recursos/imagenes/enrutador_hibrido_mapa.png", controladorAbstractoAdminNodo );
+        
+        if(contadorNodo>9){
+            setAncho((short)46);
+        }
     }
     
 }

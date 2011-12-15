@@ -34,10 +34,10 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
 
         arcInicial = new ArcoGrafico(this, this.group);
         
-        arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getImagen().getWidth()/2);
-        arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getImagen().getHeight()/2);
-        arcInicial.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getImagen().getWidth()/2);
-        arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getImagen().getHeight()/2);
+        arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
+        arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
+        arcInicial.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho()/2);
+        arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
 
@@ -69,13 +69,13 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
             } 
             else
             {
-                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getImagen().getWidth()/2);
-                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getImagen().getHeight()/2);
+                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
+                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
 
                 ArcoGrafico arcoFinal = arcos.get(arcos.size() - 1);
 
-                arcoFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getImagen().getWidth()/2);
-                arcoFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getImagen().getHeight()/2);
+                arcoFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho()/2);
+                arcoFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
 
             }
         }

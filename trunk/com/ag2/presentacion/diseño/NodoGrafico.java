@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
 
 public abstract class NodoGrafico extends Group implements Serializable {
 
@@ -26,8 +27,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
     private static NodoGrafico nodoAComodin = null;
     private transient Line enlaceComodin = new Line();
-    protected double  centroImagenX;
-    protected  double centroImagenY ;
     private boolean estaEliminado = false;
     private transient ImageView imageView;
     private transient Label lblNombre;
@@ -36,7 +35,45 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private transient VBox cuadroExteriorResaltado = new VBox();
     private double posX;
     private boolean arrastrando = false;
-    private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo; 
+    private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
+    private short alto;
+    private short ancho;
+    
+    
+    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
+        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
+//        setSelecionado(true);
+        //  vBox.setStyle("-fx-background-color:#FA0606");
+        setEffect(dropShadow);
+        this.urlDeImagen = urlDeImagen;
+        this.nombre = nombre;
+        lblNombre = new Label(nombre);
+        lblNombre.setTextFill(Color.BLACK);
+        lblNombre.setTextAlignment(TextAlignment.CENTER);
+        lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
+     
+        imagen = new Image(getClass().getResourceAsStream(urlDeImagen)); 
+        imageView = new ImageView(imagen);
+        cuadroExteriorResaltado.setAlignment(Pos.CENTER);
+        cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
+
+
+        this.getChildren().addAll(cuadroExteriorResaltado);
+        //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
+        setScaleX(0.5);
+        setScaleY(0.5);
+
+        establecerEventoOnMouseClicked();
+
+        establecerEventoOnMousePressed();
+
+        establecerEventoOnMouseDragged();
+
+        establecerEventoOnMouseReleased();
+
+        establecerEventoOnMouseEntered();
+    }
+
 
     @Override
     public boolean equals(Object obj) 
@@ -105,46 +142,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
         return nombre;
     }
 
-    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
-        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
-//        setSelecionado(true);
-        //  vBox.setStyle("-fx-background-color:#FA0606");
-        setEffect(dropShadow);
-        this.urlDeImagen = urlDeImagen;
-        this.nombre = nombre;
-        lblNombre = new Label(nombre);
-        lblNombre.setTextFill(Color.BLACK);
-        lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
-     
-        imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-        centroImagenX = imagen.getHeight()/2; 
-        centroImagenY = imagen.getWidth()/2; 
-        imageView = new ImageView(imagen);
-        cuadroExteriorResaltado.setAlignment(Pos.CENTER);
-        cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
-
-
-        this.getChildren().addAll(cuadroExteriorResaltado);
-        //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
-        setScaleX(0.5);
-        setScaleY(0.5);
-
-        establecerEventoOnMouseClicked();
-
-        establecerEventoOnMousePressed();
-
-        establecerEventoOnMouseDragged();
-
-        establecerEventoOnMouseReleased();
-
-        establecerEventoOnMouseEntered();
-    }
-
     private void establecerEventoOnMouseEntered() {
         setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {        
-
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
@@ -176,6 +177,50 @@ public abstract class NodoGrafico extends Group implements Serializable {
         });
     }
 
+    private void establecerEventoOnMousePressed() {
+        setOnMousePressed(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent mouseEvent) {
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+
+                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                    nodoAComodin = nodoGrafico;
+                    double x = nodoGrafico.getLayoutX();
+                    double y = nodoGrafico.getLayoutY();
+                    enlaceComodin.setStartX(x + ancho/2);
+                    enlaceComodin.setStartY(y + alto/2);
+                    enlaceComodin.setEndX(x + ancho/2);
+                    enlaceComodin.setEndY(y + alto/2);
+                    Group group = (Group) nodoGrafico.getParent();
+                    group.getChildren().add(enlaceComodin);
+                    nodoGrafico.toFront();
+                }
+
+                setScaleX(1);
+                setScaleY(1);
+            }
+        });
+    }
+    
+        private void establecerEventoOnMouseDragged() {
+        setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent mouseEvent) {
+                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                arrastrando = true;
+                GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                    setLayoutX(getLayoutX() + mouseEvent.getX()-ancho/2);
+                    setLayoutY(getLayoutY() + mouseEvent.getY()-alto/2);
+                    updateNodoListener();
+                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                    enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
+                    enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
+                }
+            }
+        });
+    }
+    
     private void establecerEventoOnMouseReleased() {
         setOnMouseReleased(new EventHandler<MouseEvent>() {
 
@@ -189,50 +234,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
                 }
-            }
-        });
-    }
-
-    private void establecerEventoOnMouseDragged() {
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent mouseEvent) {
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                arrastrando = true;
-                GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - centroImagenX);
-                    setLayoutY(getLayoutY() + mouseEvent.getY() - centroImagenY);
-                    updateNodoListener();
-                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-                    enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
-                    enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
-                }
-            }
-        });
-    }
-
-    private void establecerEventoOnMousePressed() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent mouseEvent) {
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-
-                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                    nodoAComodin = nodoGrafico;
-                    double x = nodoGrafico.getLayoutX();
-                    double y = nodoGrafico.getLayoutY();
-                    enlaceComodin.setStartX(x + centroImagenX);
-                    enlaceComodin.setStartY(y + centroImagenY);
-                    enlaceComodin.setEndX(x + centroImagenX);
-                    enlaceComodin.setEndY(y + centroImagenY);
-                    Group group = (Group) nodoGrafico.getParent();
-                    group.getChildren().add(enlaceComodin);
-                    nodoGrafico.toFront();
-                }
-
-                setScaleX(1);
-                setScaleY(1);
             }
         });
     }
@@ -355,5 +356,21 @@ public abstract class NodoGrafico extends Group implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public short getAlto() {
+        return alto;
+    }
+
+    public void setAlto(short alto) {
+        this.alto = alto;
+    }
+
+    public short getAncho() {
+        return ancho;
+    }
+
+    public void setAncho(short ancho) {
+        this.ancho = ancho;
     }
 }
