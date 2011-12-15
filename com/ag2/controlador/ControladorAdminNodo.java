@@ -1,13 +1,13 @@
 package com.ag2.controlador;
 
 import Distributions.*;
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import Grid.Entity;
 import Grid.Interfaces.ClientNode;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.PropiedadNodoDistribuciones;
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
 
 public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {

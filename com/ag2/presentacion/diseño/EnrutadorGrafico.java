@@ -6,9 +6,9 @@ public  abstract class EnrutadorGrafico extends NodoGrafico{
     
     public EnrutadorGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
     {        
-        super(nombre, urlDeImagen, controladorAbstractoAdminNodo);
-        centroImagenX = imagen.getHeight()/2  +15; 
-        centroImagenY = imagen.getWidth()/2; 
+        super(nombre, urlDeImagen, controladorAbstractoAdminNodo); 
+        setAlto((short)62);
+        setAncho((short)42);
     }    
     
 }

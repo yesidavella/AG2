@@ -30,8 +30,6 @@ public class Main extends Application{
         return stgEscenario;
     }
     
-   
-
     private void inicializarModelosYContrladoresDeCreacionDeNodos() {
         
         //Controladores y Modelos

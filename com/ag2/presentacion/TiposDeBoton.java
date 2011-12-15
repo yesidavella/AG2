@@ -38,7 +38,7 @@ import javafx.scene.image.Image;
 
             if (nombreImagenCursor != null) {
                 Image imgCursor = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/" + nombreImagenCursor + ".png"));
-                posicionImagenDeCursorEnXyY = new Point2D(posicionImgY, posicionImgY);
+                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
                 imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
             }
         }
@@ -49,7 +49,7 @@ import javafx.scene.image.Image;
 
             if (nombreImagenCursor != null) {
                 Image imgCursor = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/" + nombreImagenCursor + ".png"));
-                posicionImagenDeCursorEnXyY = new Point2D(posicionImgY, posicionImgY);
+                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
                 imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
             }
             
