@@ -117,7 +117,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
      
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-        centroImagenX = imagen.getHeight()/2  ; 
+        centroImagenX = imagen.getHeight()/2; 
         centroImagenY = imagen.getWidth()/2; 
         imageView = new ImageView(imagen);
         cuadroExteriorResaltado.setAlignment(Pos.CENTER);
@@ -138,7 +138,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
         establecerEventoOnMouseReleased();
 
         establecerEventoOnMouseEntered();
-
     }
 
     private void establecerEventoOnMouseEntered() {
@@ -200,7 +199,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             public void handle(MouseEvent mouseEvent) {
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 arrastrando = true;
-                GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
+                GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - centroImagenX);
                     setLayoutY(getLayoutY() + mouseEvent.getY() - centroImagenY);
