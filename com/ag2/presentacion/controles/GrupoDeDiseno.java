@@ -9,6 +9,7 @@ import com.ag2.presentacion.diseño.*;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,6 +22,14 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     private transient ScrollPane spZonaDeDiseño;
     private ArrayList<ControladorAbstractoAdminNodo> controladoresRegistrados;
+    
+    public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
+        this.spZonaDeDiseño = spZonaDeDiseño;
+        setOnMousePressed(this);
+        setOnMouseDragged(this);
+        setOnMouseReleased(this);
+        controladoresRegistrados = new ArrayList<ControladorAbstractoAdminNodo>();
+    }
 
     public ScrollPane getSpZonaDeDiseño() {
         return spZonaDeDiseño;
@@ -44,14 +53,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     public void setNodoGraficoSelecionado(NodoGrafico nodoGraficoSelecionado) {
         this.nodoGraficoSelecionado = nodoGraficoSelecionado;
-    }
-
-    public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
-        this.spZonaDeDiseño = spZonaDeDiseño;
-        setOnMousePressed(this);
-        setOnMouseDragged(this);
-        setOnMouseReleased(this);
-        controladoresRegistrados = new ArrayList<ControladorAbstractoAdminNodo>();
     }
 
     public void handle(MouseEvent mouEvent) {
@@ -89,6 +90,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 posicionActualRatonY = mouEvent.getSceneY();
             }
+            
+            
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
@@ -135,6 +138,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.setSelecionado(true);
             }
+            
         }
     }
 
