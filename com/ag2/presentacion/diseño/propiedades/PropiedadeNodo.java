@@ -18,8 +18,8 @@ import javafx.scene.control.TextField;
 public class PropiedadeNodo 
 {
     public enum TipoDePropiedadNodo{ TEXTO, NUMERO, BOLEANO ,LISTA_TEXTO };
- 
-    
+   
+    private String id;
     private String nombre;
     private ArrayList<String>  valorArrayList = new ArrayList<String>();
     private TipoDePropiedadNodo tipoDePropiedadNodo; 
@@ -33,9 +33,12 @@ public class PropiedadeNodo
         this.control = control;
     }
 
-    public PropiedadeNodo(String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) {
+    public PropiedadeNodo(String id, String nombre, TipoDePropiedadNodo tipoDePropiedadNodo)
+    {
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo; 
+        this.id = id;     
+        
         switch(tipoDePropiedadNodo)
         {
             case BOLEANO:
@@ -55,6 +58,10 @@ public class PropiedadeNodo
                  break; 
             }
         }
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNombre() {
