@@ -43,6 +43,15 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private short alto;
     private short ancho;
     public static boolean inicioGeneracionDeEnlace = false;
+    private short cantidadDeEnlaces = 0;
+
+    public short getCantidadDeEnlaces() {
+        return cantidadDeEnlaces;
+    }
+
+    public void setCantidadDeEnlaces(short cantidadDeEnlaces) {
+        this.cantidadDeEnlaces = cantidadDeEnlaces;
+    }
 
     public boolean isInicioGeneracionDeEnlace() {
         return inicioGeneracionDeEnlace;
@@ -185,6 +194,9 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
                     EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico);
                     enlaceGrafico.addArcosInicialAlGrupo();
+                    
+                    nodoAComodin.setCantidadDeEnlaces((short)(nodoAComodin.getCantidadDeEnlaces()+1));
+                    nodoGrafico.setCantidadDeEnlaces((short)(nodoGrafico.getCantidadDeEnlaces()+1));
 
                     nodoAComodin.toFront();
                     nodoGrafico.toFront();
@@ -197,12 +209,18 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             private boolean puedeGenerarEnlaceEntreNodos(NodoGrafico nodoA, NodoGrafico nodoB) {
                 if(nodoA instanceof NodoClienteGrafico){
+                    if(nodoA.getCantidadDeEnlaces()>=1){
+                        return false;
+                    }
                     return (nodoB instanceof EnrutadorGrafico);
                 }else if(nodoA instanceof NodoDeServicioGrafico){
                     return (nodoB instanceof EnrutadorGrafico);
                 }else if(nodoA instanceof NodoDeRecursoGrafico){
                     return (nodoB instanceof EnrutadorGrafico);
                 }else if(nodoA instanceof EnrutadorGrafico){
+                    if(nodoB instanceof NodoClienteGrafico && nodoB.getCantidadDeEnlaces()>=1){
+                        return false;
+                    }
                     return true;
                 }
                 return false;

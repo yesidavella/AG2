@@ -179,10 +179,15 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                 }
                 else if(IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR)
                 {
-                  
-                   enlaceGrafico.getNodoGraficoA().removeNodoListener(enlaceGrafico);
-                   enlaceGrafico.getNodoGraficoB().removeNodoListener(enlaceGrafico);
-                   
+                    NodoGrafico nodoA = enlaceGrafico.getNodoGraficoA();
+                    NodoGrafico nodoB = enlaceGrafico.getNodoGraficoB();
+                    
+                    nodoA.removeNodoListener(enlaceGrafico);
+                    nodoB.removeNodoListener(enlaceGrafico);
+                    
+                    nodoA.setCantidadDeEnlaces((short)(nodoA.getCantidadDeEnlaces()-1));
+                    nodoB.setCantidadDeEnlaces((short)(nodoB.getCantidadDeEnlaces()-1));
+                    
                    for(ArcoGrafico arcoGrafico: enlaceGrafico.getArcos() )
                    {
                        arcoGrafico.setEliminado(true); 
@@ -234,7 +239,6 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     }
 
     private void establecerEventoOnMouseEntered(ArcoGrafico arco) {
-
 
         arco.setOnMouseEntered(new EventHandler<MouseEvent>() {
 

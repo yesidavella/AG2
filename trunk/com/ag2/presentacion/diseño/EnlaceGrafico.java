@@ -55,7 +55,6 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
         {
             if (nodoGraficoA.isEliminado() || nodoGraficoB.isEliminado()) {
 
-               
                 for (ArcoGrafico arcoGrafico : arcos) 
                 {
                     arcoGrafico.setEliminado(true);
@@ -65,10 +64,8 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
                 nodoGraficoA = null;
                 nodoGraficoB = null;
 
-
             } 
-            else
-            {
+            else{
                 arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
                 arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
 
@@ -76,15 +73,14 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
 
                 arcoFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho()/2);
                 arcoFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
-
             }
         }
     }
-    //
 
     public NodoGrafico getNodoGraficoA() {
         return nodoGraficoA;
     }
+    
     private void readObject(ObjectInputStream inputStream) {
         try 
         {
@@ -94,11 +90,8 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
                 group.getChildren().add(arcoGrafico);
             }    
             
-        }
-        catch (Exception e) 
-        {
+        }catch (Exception e){
             e.printStackTrace();
         }
-        
     }
 }
