@@ -37,7 +37,7 @@ public class Main extends Application{
         IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl());
-     
+        IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl().addControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
         
         ModeloCrearNodo modeloCrearNodo = new ModeloCrearCliente();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
