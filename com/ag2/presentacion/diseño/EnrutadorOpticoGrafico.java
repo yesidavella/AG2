@@ -6,6 +6,6 @@ public class EnrutadorOpticoGrafico extends EnrutadorGrafico{
 
    private   static short contadorNodo = 0;
     public EnrutadorOpticoGrafico(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
-        super("Enrutador\nOptico_"+(++contadorNodo),"../../../../recursos/imagenes/enrutador_optico_mapa.png", controladorAbstractoAdminNodo);
+        super("Enrutador_Optico_"+(++contadorNodo),"../../../../recursos/imagenes/enrutador_optico_mapa.png", controladorAbstractoAdminNodo);
     }
 }

@@ -60,7 +60,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setEffect(dropShadow);
         this.urlDeImagen = urlDeImagen;
         this.nombre = nombre;
-        lblNombre = new Label(nombre);
+        lblNombre = new Label(formatearNombre(nombre));
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setTextAlignment(TextAlignment.CENTER);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
@@ -198,6 +198,12 @@ public abstract class NodoGrafico extends Group implements Serializable {
             private boolean puedeGenerarEnlaceEntreNodos(NodoGrafico nodoA, NodoGrafico nodoB) {
                 if(nodoA instanceof NodoClienteGrafico){
                     return (nodoB instanceof EnrutadorGrafico);
+                }else if(nodoA instanceof NodoDeServicioGrafico){
+                    return (nodoB instanceof EnrutadorGrafico);
+                }else if(nodoA instanceof NodoDeRecursoGrafico){
+                    return (nodoB instanceof EnrutadorGrafico);
+                }else if(nodoA instanceof EnrutadorGrafico){
+                    return true;
                 }
                 return false;
             }
@@ -432,6 +438,14 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
     public void setAncho(short ancho) {
         this.ancho = ancho;
+    }
+
+    private String formatearNombre(String nombre) {
+        
+        if(nombre.startsWith("Enrutador")){
+            return nombre.substring(0, "Enrutador".length())+"\n"+nombre.substring("Enrutador".length()+1, nombre.length());
+        }
+        return nombre;
     }
 
 
