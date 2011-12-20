@@ -221,4 +221,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
+
+    public void updatePropiedad(NodoGrafico nodoGrafico, String id, String valor) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+   
 }
