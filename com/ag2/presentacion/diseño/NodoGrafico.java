@@ -4,10 +4,12 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -40,14 +42,14 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private short alto;
     private short ancho;
-    public static boolean b = false;
+    public static boolean inicioGeneracionDeEnlace = false;
 
-    public boolean isB() {
-        return b;
+    public boolean isInicioGeneracionDeEnlace() {
+        return inicioGeneracionDeEnlace;
     }
 
-    public void setB(boolean b) {
-        this.b = b;
+    public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
+        this.inicioGeneracionDeEnlace = inicioGeneracionDeEnlace;
     }
     
     
@@ -84,7 +86,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
         establecerEventoOnMouseEntered();
         
         establecerEventoOnMouseExit();
-        
     }
 
 
@@ -158,10 +159,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private void establecerEventoOnMouseEntered() {
         setOnMouseEntered(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {     
+            public void handle(MouseEvent mouseEvent) {
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                NodoGrafico nodoGrafico = (NodoGrafico)mouseEvent.getSource();
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
                     setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
@@ -169,15 +170,17 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     setCursor(tipoDeBotonSeleccionado.getImagenCursor());
                 }
                 
-                if (b==false) {
+                if (inicioGeneracionDeEnlace==false) {
                     nodoAComodin = null;
                 }
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
                         && nodoAComodin != null
-                        && nodoAComodin != nodoGrafico && NodoGrafico.b) {
+                        && nodoAComodin != nodoGrafico
+                        && NodoGrafico.inicioGeneracionDeEnlace
+                        && puedeGenerarEnlaceEntreNodos(nodoAComodin,nodoGrafico)) {
 
-                    GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
+                    GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
 
                     EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico);
@@ -191,6 +194,13 @@ public abstract class NodoGrafico extends Group implements Serializable {
                 }
                 nodoAComodin = null;
             }
+
+            private boolean puedeGenerarEnlaceEntreNodos(NodoGrafico nodoA, NodoGrafico nodoB) {
+                if(nodoA instanceof NodoClienteGrafico){
+                    return (nodoB instanceof EnrutadorGrafico);
+                }
+                return false;
+            }
         });
     }
 
@@ -199,7 +209,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-                System.out.println("Pressed:"+getNombre());
+//                System.out.println("Pressed:"+getNombre());
                 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
@@ -216,8 +226,8 @@ public abstract class NodoGrafico extends Group implements Serializable {
                     nodoGrafico.toFront();
                     
                     if(mouseEvent.isPrimaryButtonDown() && isHover()){
-                        NodoGrafico.b = true;
-                        System.out.println("Botn Primario opri y hover...");
+                        NodoGrafico.inicioGeneracionDeEnlace = true;
+//                        System.out.println("Botn Primario opri y hover...");
                     }
                 }
 
@@ -231,7 +241,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Drangged:"+getNombre());
+//                System.out.println("Drangged:"+getNombre());
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
@@ -252,7 +262,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-                System.out.println("Solto:"+getNombre()+" -- B="+b);
+//                System.out.println("Solto:"+getNombre()+" -- B="+inicioGeneracionDeEnlace);
 
                 setScaleX(0.5);
                 setScaleY(0.5);
@@ -273,7 +283,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-                System.out.println("Clicked:"+getNombre());
+//                System.out.println("Clicked:"+getNombre());
                 
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
@@ -318,6 +328,23 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
                 }
                 updateNodoListener();
+            }
+        });
+    }
+    
+    private void establecerEventoOnMouseExit() {
+
+        setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Exit:" + getNombre());
+
+
+                if (!mouseEvent.isPrimaryButtonDown()) {
+                    NodoGrafico.inicioGeneracionDeEnlace = false;
+                    nodoAComodin = null;
+                }
+
             }
         });
     }
@@ -407,21 +434,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
         this.ancho = ancho;
     }
 
-    private void establecerEventoOnMouseExit() {
 
-        setOnMouseExited(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("Exit:" + getNombre());
-                
-                
-                if (!mouseEvent.isPrimaryButtonDown()) {
-                    NodoGrafico.b = false;
-                    nodoAComodin = null;
-                }
-
-            }
-        });
-    }
     
 }
