@@ -45,23 +45,6 @@ public abstract class NodoGrafico extends Group implements Serializable {
     public static boolean inicioGeneracionDeEnlace = false;
     private short cantidadDeEnlaces = 0;
 
-    public short getCantidadDeEnlaces() {
-        return cantidadDeEnlaces;
-    }
-
-    public void setCantidadDeEnlaces(short cantidadDeEnlaces) {
-        this.cantidadDeEnlaces = cantidadDeEnlaces;
-    }
-
-    public boolean isInicioGeneracionDeEnlace() {
-        return inicioGeneracionDeEnlace;
-    }
-
-    public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
-        this.inicioGeneracionDeEnlace = inicioGeneracionDeEnlace;
-    }
-    
-    
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
 //        setSelecionado(true);
@@ -465,7 +448,20 @@ public abstract class NodoGrafico extends Group implements Serializable {
         }
         return nombre;
     }
-
-
     
+    public short getCantidadDeEnlaces() {
+        return cantidadDeEnlaces;
+    }
+
+    public void setCantidadDeEnlaces(short cantidadDeEnlaces) {
+        this.cantidadDeEnlaces = cantidadDeEnlaces;
+    }
+
+    public boolean isInicioGeneracionDeEnlace() {
+        return inicioGeneracionDeEnlace;
+    }
+
+    public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
+        this.inicioGeneracionDeEnlace = inicioGeneracionDeEnlace;
+    }
 }
