@@ -44,30 +44,32 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
 
         if (nodoGrafico instanceof NodoClienteGrafico) {
+            
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGrafico);
 
             //===========================================================================================================
-            PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedadNodoNombre.setPrimerValor(clientNode.getId());
             propiedadeNodos.add(propiedadNodoNombre);
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("Generación de trabajos");
-            crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadeNodos, distribucionesTrabajos);
+            
+            PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("generacionTrabajos","Generación de trabajos");
+            crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadeNodos, distribucionesTrabajos,"generacionTrabajos");
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesFlops = new PropiedadNodoDistribuciones("Generación de flops por trabajo");
-            crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadeNodos, distribucionesFlops);
+            PropiedadNodoDistribuciones distribucionesFlops = new PropiedadNodoDistribuciones( "generacionFlops","Generación de flops por trabajo");
+            crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadeNodos, distribucionesFlops,"generacionFlops");
             
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("Generación de intervalo maximo de retraso");
-            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesMaximoRetraso);
+            PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("generacionMaximoRetraso","Generación de intervalo maximo de retraso");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesMaximoRetraso,"generacionMaximoRetraso");
            
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTamanoTrabajo = new PropiedadNodoDistribuciones("Generación del tamaño del trabajo");
-            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoTrabajo);
+            PropiedadNodoDistribuciones distribucionesTamanoTrabajo= new PropiedadNodoDistribuciones("generacionTamañoTrabajo","Generación del tamaño del trabajo");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoTrabajo,"generacionTamañoTrabajo");
             
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTamanoRespuesta= new PropiedadNodoDistribuciones("Generación del tamaño de la respuesta");
-            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoRespuesta);
+            PropiedadNodoDistribuciones distribucionesTamanoRespuesta= new PropiedadNodoDistribuciones("generacionTamañoRespuesta","Generación del tamaño de la respuesta");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoRespuesta,"generacionTamañoRespuesta");
             
             
         }
@@ -79,7 +81,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
     }
 
-    private void crearPropiedadDistriducion(DiscreteDistribution discreteDistribution, ArrayList<PropiedadeNodo> propiedadeNodos, PropiedadNodoDistribuciones propiedadNodoDistribuciones) {
+    private void crearPropiedadDistriducion(DiscreteDistribution discreteDistribution, ArrayList<PropiedadeNodo> propiedadeNodos, PropiedadNodoDistribuciones propiedadNodoDistribuciones,String id ) {
 
         propiedadeNodos.add(propiedadNodoDistribuciones);
 
@@ -89,11 +91,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
             DDErlang dDErlang = (DDErlang) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo("Orden", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id+"_Orden" , "Orden", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDErlang.getN()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDErlang.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -102,18 +104,18 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo("Lamdas", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id+"_Lamdas","Lamdas", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedaA.setPrimerValor(getStringArrayDoubles(dDHyperExp.getLambdas()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Oportunidades", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Oportunidades","Oportunidades", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedaB.setPrimerValor(getStringArrayDoubles(dDHyperExp.getChances()));
             propiedadeNodos.add(propiedaB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Promedio","Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDNegExp.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -122,11 +124,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo("Desviación estandar", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id+"_DesviacionEstandar","Desviación estandar", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDNormal.getDev()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Promedio","Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDNormal.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -135,7 +137,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Promedio","Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDPoissonProcess.getAverage()));
             propiedadeNodos.add(propiedaB);
 
@@ -144,11 +146,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo("Minimo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id+"_Minimo","Minimo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDUniform.getMin()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo("Maximo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id+"_Maximo", "Maximo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDUniform.getMax()));
             propiedadeNodos.add(propiedaB);
 
@@ -158,7 +160,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo("Constante", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id+"_Constante","Constante", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(constantDistribution.getConstant()));
             propiedadeNodos.add(propiedaA);
         }
@@ -172,5 +174,10 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             separador = "-";
         }
         return resultado.toString();
+    }
+
+    @Override
+    public void updatePropiedad(NodoGrafico nodoGrafico, String id, String valor) {
+        System.out.println("prop control "+id);
     }
 }
