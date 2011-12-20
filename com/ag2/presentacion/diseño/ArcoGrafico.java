@@ -200,8 +200,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         });
     }
     
-    
-     public boolean isEliminado() {
+    public boolean isEliminado() {
         return eliminado;
     }
 
