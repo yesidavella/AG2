@@ -62,7 +62,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesMaximoRetraso);
            
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTamanoTrabajo= new PropiedadNodoDistribuciones("Generación del tamaño del trabajo");
+            PropiedadNodoDistribuciones distribucionesTamanoTrabajo = new PropiedadNodoDistribuciones("Generación del tamaño del trabajo");
             crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesTamanoTrabajo);
             
             //===========================================================================================================
