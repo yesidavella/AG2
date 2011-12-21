@@ -54,18 +54,18 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
        ObservableList datosPropiedades = FXCollections.observableArrayList();
         for(PropiedadeNodo propiedadeNodo : propiedadeNodos)
         {
-          
+           propiedadeNodo.setTablaPropiedadesDispositivo(this);
             datosPropiedades.add(propiedadeNodo);
         }
         setItems(datosPropiedades);       
     }
 
-    public void updatePropiedad(NodoGrafico nodoGrafico, String id, String valor) 
+    public void updatePropiedad( String id, String valor) 
     {
-        System.out.println("prop "+id);
+        System.out.println("prop "+valor);
         if(controladorAbstractoAdminNodo!=null)
         {
-            controladorAbstractoAdminNodo.updatePropiedad(nodoGrafico, id, valor);
+            controladorAbstractoAdminNodo.updatePropiedad( id, valor);
         }
     }
 

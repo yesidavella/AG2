@@ -44,6 +44,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     private short ancho;
     public static boolean inicioGeneracionDeEnlace = false;
     private short cantidadDeEnlaces = 0;
+    private String  nombreOriginal;
 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
@@ -52,6 +53,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setEffect(dropShadow);
         this.urlDeImagen = urlDeImagen;
         this.nombre = nombre;
+        this.nombreOriginal = nombre;
         lblNombre = new Label(formatearNombre(nombre));
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setTextAlignment(TextAlignment.CENTER);
@@ -80,6 +82,10 @@ public abstract class NodoGrafico extends Group implements Serializable {
         establecerEventoOnMouseExit();
     }
 
+    public String getNombreOriginal() {
+        return nombreOriginal;
+    }
+
 
     @Override
     public boolean equals(Object obj) 
@@ -87,7 +93,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         if(obj instanceof  NodoGrafico)
         {
             NodoGrafico nodoGrafico = (NodoGrafico)obj; 
-             return nombre.equals( nodoGrafico.getNombre()); 
+             return nombreOriginal.equals( nodoGrafico.getNombreOriginal()); 
         }    
         return false; 
     }
@@ -95,7 +101,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + (this.nombre != null ? this.nombre.hashCode() : 0);
+        hash = 41 * hash + (this.nombreOriginal != null ? this.nombreOriginal.hashCode() : 0);
         return hash;
     }
 
@@ -391,6 +397,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        lblNombre.setText(nombre);
     }
 
     private void readObject(ObjectInputStream inputStream) {

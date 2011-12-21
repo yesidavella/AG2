@@ -87,7 +87,8 @@ public enum TipoDePropiedadesPhosphorus {
         textField.setText(editorPropiedades.getValorPropiedad(this));
         textField.setOnKeyTyped(new EventHandler<KeyEvent>() {
 
-            public void handle(KeyEvent keyEvent) {
+         public void handle(KeyEvent keyEvent) 
+                {
                 String valor = ((TextField) keyEvent.getSource()).getText();
                 TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);            
                 
