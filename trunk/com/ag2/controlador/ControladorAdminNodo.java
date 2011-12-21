@@ -182,18 +182,61 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     }
 
     @Override
-    public void updatePropiedad(String id, String valor) {
-        System.out.println("prop control " + id);
+    public void updatePropiedad(String id, String valor)
+    {
+        System.out.println("prop control " + id +" "+valor);
 
-
-
-        if (id.equalsIgnoreCase("nombre")) {
+        if (id.equalsIgnoreCase("nombre")) 
+        {
             nodoGraficoSeleccionado.setNombre(valor);
             //clientNode.setID(valor);
         }
-
-
-
-
+        
+        if (nodoGraficoSeleccionado instanceof NodoClienteGrafico)
+        {
+            ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
+            if(id.equalsIgnoreCase("generacionTrabajos"))
+            {
+                clientNode.getState().setJobInterArrival(getDistributionByText(valor));                
+            }            
+        }  
+    }
+    
+    private DiscreteDistribution getDistributionByText(String value)
+    {
+        if(value.equals("Uniforme"))
+        {
+            return new DDUniform(10, 20);
+        }  
+        else if(value.equals("Constante"))
+        {
+            return new ConstantDistribution(10);
+        }
+        else if(value.equals("Erlang"))
+        {
+            return new DDErlang(1, 2);
+        }
+        else if(value.equals("Hiper-exponencial"))
+        {
+            return new DDHyperExp(new double[]{1,2,3}, new double[]{1,2,3});
+        }
+        else if(value.equals("Exponencial-negativa"))
+        {
+            return new DDNegExp(2);
+        }
+        else if(value.equals("Normal"))
+        {
+            return new DDNormal(2,3);            
+        }
+        else if(value.equals("Possion"))
+        {
+            return new DDPoissonProcess(2);
+        }
+        
+        
+        
+        
+        return null;
+        
     }
 }

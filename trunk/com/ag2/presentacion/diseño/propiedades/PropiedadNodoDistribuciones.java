@@ -23,6 +23,7 @@ public class PropiedadNodoDistribuciones extends PropiedadeNodo {
         POISSON_PROCESS("Possion"),
         UNMIFORM("Uniforme");
         private String nombre;
+     
 
         private TipoDeDistribucion(String nombre) {
             this.nombre = nombre;

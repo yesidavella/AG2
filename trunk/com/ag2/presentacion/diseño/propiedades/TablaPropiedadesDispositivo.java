@@ -4,7 +4,6 @@
  */
 package com.ag2.presentacion.diseño.propiedades;
 
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.VistaNodosGraficos;
