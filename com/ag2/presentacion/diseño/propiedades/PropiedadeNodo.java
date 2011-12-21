@@ -7,6 +7,9 @@ package com.ag2.presentacion.diseño.propiedades;
 import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNodo;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -20,6 +23,17 @@ import javafx.scene.input.KeyEvent;
  */
 public class PropiedadeNodo {
 
+    private void establecerEventoOnKeyTyped(final String id) {
+        ((TextField) control).setOnKeyTyped(new EventHandler<KeyEvent>() {
+
+            public void handle(KeyEvent keyEvent) {
+
+                TextField textField = (TextField) keyEvent.getSource();
+                tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText() + keyEvent.getCharacter());
+            }
+        });
+    }
+
     public enum TipoDePropiedadNodo {
 
         TEXTO, NUMERO, BOLEANO, LISTA_TEXTO
@@ -30,7 +44,6 @@ public class PropiedadeNodo {
     private TipoDePropiedadNodo tipoDePropiedadNodo;
     protected Control control;
     private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
-  
 
     public Control getControl() {
         return control;
@@ -39,11 +52,9 @@ public class PropiedadeNodo {
     public void setControl(Control control) {
         this.control = control;
     }
-    
 
-    public PropiedadeNodo( final String id, String nombre, TipoDePropiedadNodo tipoDePropiedadNodo)
-    {
-        
+    public PropiedadeNodo(final String id, String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) {
+
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo;
         this.id = id;
@@ -55,21 +66,27 @@ public class PropiedadeNodo {
             }
             case LISTA_TEXTO: {
                 control = new ChoiceBox<String>();
+                
+                  ((ChoiceBox) control).getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+
+                public void changed(ObservableValue ov, Object t, Object t1) 
+                {
+                    ChoiceBox choiceBox= (ChoiceBox)control; 
+                    choiceBox.getSelectionModel().getSelectedItem().toString();
+                    if(tablaPropiedadesDispositivo!=null)
+                    tablaPropiedadesDispositivo.updatePropiedad(id, choiceBox.getSelectionModel().getSelectedItem().toString());
+                }
+            });
+               
+
+
+             
                 break;
             }
             case NUMERO:
-            case TEXTO: 
-            {
+            case TEXTO: {
                 control = new TextField();
-                ((TextField) control).setOnKeyTyped(new EventHandler<KeyEvent>() {
-
-                    public void handle(KeyEvent keyEvent)
-                    {                       
-                       
-                       TextField textField = (TextField) keyEvent.getSource();
-                       tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText()+ keyEvent.getCharacter());                    
-                    }
-                });
+                establecerEventoOnKeyTyped(id);
             }
         }
     }
