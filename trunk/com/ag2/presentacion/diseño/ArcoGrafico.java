@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -154,9 +153,10 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
             public void handle(MouseEvent mouseEvent) {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) 
-                {
-                    ArcoGrafico quadCurveFuente = (ArcoGrafico) mouseEvent.getSource();           
+                
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE){
+                    
+                    ArcoGrafico quadCurveFuente = (ArcoGrafico)mouseEvent.getSource();           
                     ArcoGrafico quadCurveNueva = new ArcoGrafico(quadCurveFuente.getEnlaceGrafico(),quadCurveFuente.getGroup() );
 
                     quadCurveNueva.setPosIniX(clickX);
@@ -170,15 +170,14 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     quadCurveFuente.calcularCentroXY(); 
                     quadCurveNueva.calcularCentroXY();                 
                                        
-                    VerticeEnlaceGrafico separadorGrafico = new VerticeEnlaceGrafico(quadCurveFuente,quadCurveNueva,clickX,clickY   );              
+                    VerticeEnlaceGrafico nuevoVertice = new VerticeEnlaceGrafico(quadCurveFuente,quadCurveNueva,clickX,clickY   );              
 
-                    group.getChildren().addAll(quadCurveNueva, separadorGrafico);
+                    group.getChildren().addAll(quadCurveNueva, nuevoVertice);
                     nodoGraficoB.toFront();
                     enlaceGrafico.getArcos().add(quadCurveNueva);
                    
-                }
-                else if(IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR)
-                {
+                }else if(IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR){
+                    
                     NodoGrafico nodoA = enlaceGrafico.getNodoGraficoA();
                     NodoGrafico nodoB = enlaceGrafico.getNodoGraficoB();
                     
@@ -226,14 +225,14 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         for( ArcoListener arcoListener : arcoListeners)
         {
             arcoListener.update();
-        }     
-        
+        }
     }        
 
     public GrupoDeDiseno getGroup() {
         return group;
     }
-     public NodoGrafico getNodoGraficoB() {
+    
+    public NodoGrafico getNodoGraficoB() {
         return nodoGraficoB;
     }
 
@@ -268,8 +267,6 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
             setControlX(centroX);
             setControlY(centroY);  
             establecerConfigInicial();
-            
-            
         }
         catch (Exception e) 
         {
