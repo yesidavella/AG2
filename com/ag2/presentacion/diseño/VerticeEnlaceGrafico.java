@@ -31,9 +31,6 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serial
 
         this.arcoGraficoA.addNodoListener(this);
         this.arcoGraficoB.addNodoListener(this);
-
-        
-
     }
 
     public double getPosX() {
