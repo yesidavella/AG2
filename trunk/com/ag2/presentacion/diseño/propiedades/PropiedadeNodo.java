@@ -65,9 +65,8 @@ public class PropiedadeNodo {
                 break;
             }
             case LISTA_TEXTO: {
-                control = new ChoiceBox<String>();
-                
-                  ((ChoiceBox) control).getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+                control = new ChoiceBox<String>();                
+                ((ChoiceBox) control).getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
                 public void changed(ObservableValue ov, Object t, Object t1) 
                 {
