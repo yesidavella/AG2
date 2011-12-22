@@ -97,11 +97,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
             DDErlang dDErlang = (DDErlang) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_Orden", "Orden", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_DDErlang_Orden", "Orden", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDErlang.getN()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDErlang_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDErlang.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -110,18 +110,18 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_Lamdas", "Lamdas", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_DDHyperExp_Lamdas", "Lamdas", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedaA.setPrimerValor(getStringArrayDoubles(dDHyperExp.getLambdas()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Oportunidades", "Oportunidades", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDHyperExp_Oportunidades", "Oportunidades", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedaB.setPrimerValor(getStringArrayDoubles(dDHyperExp.getChances()));
             propiedadeNodos.add(propiedaB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDNegExp_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDNegExp.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -130,11 +130,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_DesviacionEstandar", "Desviación estandar", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_DDNormal_DesviacionEstandar", "Desviación estandar", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDNormal.getDev()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDNormal_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDNormal.getAvg()));
             propiedadeNodos.add(propiedaB);
 
@@ -143,7 +143,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDPoissonProcess_Promedio", "Promedio", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDPoissonProcess.getAverage()));
             propiedadeNodos.add(propiedaB);
 
@@ -152,11 +152,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_Minimo", "Minimo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_DDUniform_Minimo", "Minimo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(dDUniform.getMin()));
             propiedadeNodos.add(propiedaA);
 
-            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_Maximo", "Maximo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaB = new PropiedadeNodo(id + "_DDUniform_Maximo", "Maximo", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaB.setPrimerValor(String.valueOf(dDUniform.getMax()));
             propiedadeNodos.add(propiedaB);
 
@@ -165,7 +165,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
-            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_Constante", "Constante", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+            PropiedadeNodo propiedaA = new PropiedadeNodo(id + "_ConstantDistribution_Constante", "Constante", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
             propiedaA.setPrimerValor(String.valueOf(constantDistribution.getConstant()));
             propiedadeNodos.add(propiedaA);
         }
@@ -197,8 +197,40 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
             if(id.equalsIgnoreCase("generacionTrabajos"))
             {
-                clientNode.getState().setJobInterArrival(getDistributionByText(valor));                
-            }            
+                clientNode.getState().setJobInterArrival(getDistributionByText(valor)); 
+                consultarPropiedades(nodoGraficoSeleccionado);                
+            }
+            else if(id.contains("generacionTrabajos")) 
+            {               
+                  if(id.contains("DDErlang"))
+                  {
+                      DDErlang dDErlang = (DDErlang)clientNode.getState().getJobInterArrival();
+                      
+                      if(id.contains("Orden"))
+                      {
+                           dDErlang.setN(Integer.parseInt(valor));
+                      }
+                      else if(id.contains("Promedio"))
+                      {
+                           dDErlang.setAvg(Double.parseDouble(valor));
+                      }                  
+                  } 
+                  else if(id.contains("DDHyperExp"))
+                  {
+                      DDHyperExp dDHyperExp = (DDHyperExp)clientNode.getState().getJobInterArrival();
+                      
+                      if(id.contains("Lamdas"))
+                      {
+                          
+                           
+                      }
+                      else if(id.contains("Oportunidades"))
+                      {
+                          
+                      }                   
+                      
+                  }
+            }
         }  
     }
     
@@ -232,10 +264,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         {
             return new DDPoissonProcess(2);
         }
-        
-        
-        
-        
+               
         return null;
         
     }
