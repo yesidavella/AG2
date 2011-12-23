@@ -108,7 +108,7 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serial
         return arcoGraficoB;
     }
 
-    public void update() {
+    public void updateArco() {
         if (  !eliminado && (arcoGraficoA.isEliminado() || arcoGraficoB.isEliminado() )) 
         {
             eliminado= true; 

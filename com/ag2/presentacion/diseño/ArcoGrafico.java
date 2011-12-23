@@ -224,7 +224,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     {
         for( ArcoListener arcoListener : arcoListeners)
         {
-            arcoListener.update();
+            arcoListener.updateArco();
         }
     }        
 

@@ -4,8 +4,6 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class EnlaceGrafico implements NodoListener,  Serializable  {
 
@@ -14,7 +12,6 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
     private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
     private ArcoGrafico arcInicial;
     private GrupoDeDiseno group;
-    private PuertoGrafico puertoInicial,puertoFinal;
 
     public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB) {
         this.nodoGraficoA = nodoGraficoA;
@@ -34,26 +31,18 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
         
-        puertoInicial = new PuertoGrafico(nodoGraficoA.getLayoutX(),nodoGraficoA.getLayoutY(),0);
-        puertoFinal = new PuertoGrafico(nodoGraficoB.getLayoutX(),nodoGraficoB.getLayoutY(),30);
-        
-        System.out.println("Creo enlace...");
-        
     }
 
     public void addArcosInicialAlGrupo() {
-
         group.getChildren().add(arcInicial);
-        group.getChildren().addAll(puertoInicial,puertoFinal);
-
-    }
-    
-    public NodoGrafico getNodoGraficoB() {
-        return nodoGraficoB;
     }
 
     public ArrayList<ArcoGrafico> getArcos() {
         return arcos;
+    }
+    
+    public NodoGrafico getNodoGraficoB() {
+        return nodoGraficoB;
     }
 
     //nuevo 
