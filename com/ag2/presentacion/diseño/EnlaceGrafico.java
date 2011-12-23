@@ -4,14 +4,16 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
-public class EnlaceGrafico implements NodoListener,  Serializable  {
+public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccionable  {
 
     private NodoGrafico nodoGraficoA;
     private NodoGrafico nodoGraficoB;
     private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
     private ArcoGrafico arcInicial;
-    private GrupoDeDiseno group;
+    private GrupoDeDiseno grGrDeDiseño;
 
     public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB) {
         this.nodoGraficoA = nodoGraficoA;
@@ -20,9 +22,9 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
         this.nodoGraficoA.addNodoListener(this);
         this.nodoGraficoB.addNodoListener(this);
 
-        this.group = group;
+        this.grGrDeDiseño = group;
 
-        arcInicial = new ArcoGrafico(this, this.group);
+        arcInicial = new ArcoGrafico(this, this.grGrDeDiseño);
         
         arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
         arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
@@ -30,11 +32,10 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
         arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
-        
     }
 
     public void addArcosInicialAlGrupo() {
-        group.getChildren().add(arcInicial);
+        grGrDeDiseño.getChildren().add(arcInicial);
     }
 
     public ArrayList<ArcoGrafico> getArcos() {
@@ -55,7 +56,7 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
                 {
                     arcoGrafico.setEliminado(true);
                     arcoGrafico.updateArcoListeners();
-                    group.getChildren().remove(arcoGrafico);
+                    grGrDeDiseño.getChildren().remove(arcoGrafico);
                 }
                 nodoGraficoA = null;
                 nodoGraficoB = null;
@@ -83,11 +84,16 @@ public class EnlaceGrafico implements NodoListener,  Serializable  {
             inputStream.defaultReadObject();
             for(ArcoGrafico arcoGrafico: arcos)
             {
-                group.getChildren().add(arcoGrafico);
+                grGrDeDiseño.getChildren().add(arcoGrafico);
             }    
             
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    public void seleccionar(boolean isSeleccionado) {
+        System.out.println("Enlace seleccionar()");
+    }
+
 }
