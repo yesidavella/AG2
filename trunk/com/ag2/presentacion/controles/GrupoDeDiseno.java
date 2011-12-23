@@ -126,7 +126,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             
             if (nuevoNodo != null) {
                 if (objetoGraficoSelecionado != null) {
-                    ((NodoGrafico)objetoGraficoSelecionado).seleccionar(false);
+                    objetoGraficoSelecionado.seleccionar(false);
                 }
                 
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
