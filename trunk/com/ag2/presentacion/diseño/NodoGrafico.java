@@ -4,16 +4,12 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -24,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 
-public abstract class NodoGrafico extends Group implements Serializable {
+public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, Serializable{
 
     private String nombre = null;
     protected  transient Image imagen = null;
@@ -129,7 +125,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         return selecionado;
     }
 
-    public void setSelecionado(boolean selecionado) {
+    public void seleccionar(boolean selecionado) {
         this.selecionado = selecionado;
         if (!selecionado) {
             dropShadow.setColor(Color.WHITESMOKE);
@@ -222,7 +218,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-//                System.out.println("Pressed:"+getNombre());
+                System.out.println("Pressed..");
                 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
@@ -254,6 +250,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
+                System.out.println("Dragged..");
 //                System.out.println("Drangged:"+getNombre());
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 arrastrando = true;
@@ -275,7 +272,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-//                System.out.println("Solto:"+getNombre()+" -- B="+inicioGeneracionDeEnlace);
+                System.out.println("Release..");
 
                 setScaleX(0.5);
                 setScaleY(0.5);
@@ -296,49 +293,48 @@ public abstract class NodoGrafico extends Group implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 
-//                System.out.println("Clicked:"+getNombre());
+                System.out.println("Clicked...");
                 
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
+                GrupoDeDiseno grGrpDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
                     nodoGrafico.setEliminado(true);
-                    group.getChildren().remove(nodoGrafico);
-                    group.eliminarNodeListaNavegacion(nodoGrafico);
+                    grGrpDeDiseño.getChildren().remove(nodoGrafico);
+                    grGrpDeDiseño.eliminarNodeListaNavegacion(nodoGrafico);
 
                 }
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    NodoGrafico nodoGraficoSelecionado = group.getNodoGraficoSelecionado();
-                    if (!arrastrando) 
-                    {
-                        if (nodoGraficoSelecionado == nodoGrafico) {
-                            nodoGraficoSelecionado.setSelecionado(false);
-                            group.setNodoGraficoSelecionado(null);
+                    
+                    NodoGrafico nodoGraficoSeleccionado = (NodoGrafico)grGrpDeDiseño.getObjetoGraficoSelecionado();
+                    if (!arrastrando){
+                        if (nodoGraficoSeleccionado == nodoGrafico) {
+                            nodoGraficoSeleccionado.seleccionar(false);
+                            grGrpDeDiseño.setObjetoGraficoSelecionado(null);
                         } else {
-                            if (nodoGraficoSelecionado == null) {
-                                nodoGrafico.setSelecionado(true);
-                                group.setNodoGraficoSelecionado(nodoGrafico);
+                            if (nodoGraficoSeleccionado == null) {
+                                nodoGrafico.seleccionar(true);
+                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
-                                nodoGraficoSelecionado.setSelecionado(false);
-                                nodoGrafico.setSelecionado(true);
-                                group.setNodoGraficoSelecionado(nodoGrafico);
+                                nodoGraficoSeleccionado.seleccionar(false);
+                                nodoGrafico.seleccionar(true);
+                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             }
                         }
 
                     } else {
-                        if (nodoGrafico != nodoGraficoSelecionado) {
-                            if (nodoGraficoSelecionado == null) {
-                                nodoGrafico.setSelecionado(true);
-                                group.setNodoGraficoSelecionado(nodoGrafico);
+                        if (nodoGrafico != nodoGraficoSeleccionado) {
+                            if (nodoGraficoSeleccionado == null) {
+                                nodoGrafico.seleccionar(true);
+                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
-                                nodoGraficoSelecionado.setSelecionado(false);
-                                nodoGrafico.setSelecionado(true);
-                                group.setNodoGraficoSelecionado(nodoGrafico);
+                                nodoGraficoSeleccionado.seleccionar(false);
+                                nodoGrafico.seleccionar(true);
+                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             }
                         }
                     }
                     arrastrando = false;
-
                 }
                 updateNodoListener();
             }
@@ -418,7 +414,7 @@ public abstract class NodoGrafico extends Group implements Serializable {
             setScaleX(0.5);
             setScaleY(0.5);
             dropShadow = new DropShadow();
-            setSelecionado(false);
+            seleccionar(false);
             setEffect(dropShadow);
             establecerEventoOnMouseClicked();
             establecerEventoOnMousePressed();

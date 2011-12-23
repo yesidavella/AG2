@@ -1,20 +1,20 @@
 package com.ag2.presentacion.controles;
 
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.TiposDeBoton;
+import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
@@ -22,6 +22,14 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     private transient ScrollPane spZonaDeDiseño;
     private ArrayList<ControladorAbstractoAdminNodo> controladoresRegistrados;
+    private double posicionActualRatonX = 0;
+    private double posicionActualRatonY = 0;
+    private transient ObservableList listaClientes = FXCollections.observableArrayList();
+    private transient ObservableList listaRecursos = FXCollections.observableArrayList();
+    private transient ObservableList listaSwitches = FXCollections.observableArrayList();
+    private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
+    private ObjetoSeleccionable objetoGraficoSelecionado;
+    private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
     
     public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño = spZonaDeDiseño;
@@ -38,21 +46,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void setSpZonaDeDiseño(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño = spZonaDeDiseño;
     }
-    private double posicionActualRatonX = 0;
-    private double posicionActualRatonY = 0;
-    private transient ObservableList listaClientes = FXCollections.observableArrayList();
-    private transient ObservableList listaRecursos = FXCollections.observableArrayList();
-    private transient ObservableList listaSwitches = FXCollections.observableArrayList();
-    private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
-    private NodoGrafico nodoGraficoSelecionado;
-    private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
 
-    public NodoGrafico getNodoGraficoSelecionado() {
-        return nodoGraficoSelecionado;
+    public ObjetoSeleccionable getObjetoGraficoSelecionado() {
+        return objetoGraficoSelecionado;
     }
 
-    public void setNodoGraficoSelecionado(NodoGrafico nodoGraficoSelecionado) {
-        this.nodoGraficoSelecionado = nodoGraficoSelecionado;
+    public void setObjetoGraficoSelecionado(ObjetoSeleccionable objetoGraficoSelecionado) {
+        this.objetoGraficoSelecionado = objetoGraficoSelecionado;
     }
 
     public void handle(MouseEvent mouEvent) {
@@ -90,8 +90,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 posicionActualRatonY = mouEvent.getSceneY();
             }
-            
-            
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
@@ -125,20 +123,20 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 nuevoNodo = new NodoDeRecursoGrafico(controladorPrincipal);
                 listaRecursos.add(nuevoNodo);
             }
+            
             if (nuevoNodo != null) {
-                if (nodoGraficoSelecionado != null) {
-                    nodoGraficoSelecionado.setSelecionado(false);
+                if (objetoGraficoSelecionado != null) {
+                    ((NodoGrafico)objetoGraficoSelecionado).seleccionar(false);
                 }
                 
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
-                nodoGraficoSelecionado = nuevoNodo;
+                objetoGraficoSelecionado = nuevoNodo;
                 
                 for (ControladorAbstractoAdminNodo controladorRegistrado : controladoresRegistrados) {
                     controladorRegistrado.crearNodo(nuevoNodo);
                 }
-                nuevoNodo.setSelecionado(true);
+                nuevoNodo.seleccionar(true);
             }
-            
         }
     }
 
@@ -225,6 +223,4 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void updatePropiedad( String id, String valor) {
         
     }
-
-   
 }
