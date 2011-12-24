@@ -306,29 +306,30 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 }
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     
-                    NodoGrafico nodoGraficoSeleccionado = (NodoGrafico)grGrpDeDiseño.getObjetoGraficoSelecionado();
+                    ObjetoSeleccionable objSeleccionado = grGrpDeDiseño.getObjetoGraficoSelecionado();
+                    
                     if (!arrastrando){
-                        if (nodoGraficoSeleccionado == nodoGrafico) {
-                            nodoGraficoSeleccionado.seleccionar(false);
+                        if (objSeleccionado == nodoGrafico) {
+                            objSeleccionado.seleccionar(false);
                             grGrpDeDiseño.setObjetoGraficoSelecionado(null);
                         } else {
-                            if (nodoGraficoSeleccionado == null) {
+                            if (objSeleccionado == null) {
                                 nodoGrafico.seleccionar(true);
                                 grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
-                                nodoGraficoSeleccionado.seleccionar(false);
+                                objSeleccionado.seleccionar(false);
                                 nodoGrafico.seleccionar(true);
                                 grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             }
                         }
 
                     } else {
-                        if (nodoGrafico != nodoGraficoSeleccionado) {
-                            if (nodoGraficoSeleccionado == null) {
+                        if (nodoGrafico != objSeleccionado) {
+                            if (objSeleccionado == null) {
                                 nodoGrafico.seleccionar(true);
                                 grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
-                                nodoGraficoSeleccionado.seleccionar(false);
+                                objSeleccionado.seleccionar(false);
                                 nodoGrafico.seleccionar(true);
                                 grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
                             }

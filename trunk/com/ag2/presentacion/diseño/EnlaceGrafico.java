@@ -4,8 +4,7 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccionable  {
 
@@ -14,6 +13,7 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
     private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
     private ArcoGrafico arcInicial;
     private GrupoDeDiseno grGrDeDiseño;
+    private boolean isSeleccionado;
 
     public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB) {
         this.nodoGraficoA = nodoGraficoA;
@@ -32,6 +32,8 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
         arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
+        
+        seleccionar(true);
     }
 
     public void addArcosInicialAlGrupo() {
@@ -94,6 +96,35 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
 
     public void seleccionar(boolean isSeleccionado) {
         System.out.println("Enlace seleccionar()");
+        
+        ObjetoSeleccionable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
+        
+        System.out.println("El anterior:"+objSeleccionado);
+        
+        if(objSeleccionado!=null && objSeleccionado!=this){
+            objSeleccionado.seleccionar(false);
+        }
+        
+        this.isSeleccionado = isSeleccionado;
+        
+        if(isSeleccionado){
+            for(ArcoGrafico arcoGrafico:arcos){
+                arcoGrafico.setStroke(Color.RED);
+            }
+            
+            grGrDeDiseño.setObjetoGraficoSelecionado(this);
+
+        }else{
+            for(ArcoGrafico arcoGrafico:arcos){
+                arcoGrafico.setStroke(Color.AQUAMARINE);
+            }
+            grGrDeDiseño.setObjetoGraficoSelecionado(null);
+        }
+        
+    }
+    
+    public boolean getSeleccionado(){
+        return isSeleccionado;
     }
 
 }
