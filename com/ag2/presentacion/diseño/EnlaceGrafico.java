@@ -34,6 +34,7 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
         arcos.add(arcInicial);
         
         seleccionar(true);
+        
     }
 
     public void addArcosInicialAlGrupo() {
@@ -95,11 +96,8 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
     }
 
     public void seleccionar(boolean isSeleccionado) {
-        System.out.println("Enlace seleccionar()");
         
         ObjetoSeleccionable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
-        
-        System.out.println("El anterior:"+objSeleccionado);
         
         if(objSeleccionado!=null && objSeleccionado!=this){
             objSeleccionado.seleccionar(false);
@@ -109,14 +107,16 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
         
         if(isSeleccionado){
             for(ArcoGrafico arcoGrafico:arcos){
-                arcoGrafico.setStroke(Color.RED);
+                arcoGrafico.getStyleClass().remove("arcoNoSeleccionado");
+                arcoGrafico.getStyleClass().add("arcoSeleccionado");
             }
             
             grGrDeDiseño.setObjetoGraficoSelecionado(this);
 
         }else{
             for(ArcoGrafico arcoGrafico:arcos){
-                arcoGrafico.setStroke(Color.AQUAMARINE);
+                arcoGrafico.getStyleClass().remove("arcoSeleccionado");
+                arcoGrafico.getStyleClass().add("arcoNoSeleccionado");
             }
             grGrDeDiseño.setObjetoGraficoSelecionado(null);
         }

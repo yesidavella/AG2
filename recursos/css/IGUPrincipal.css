@@ -44,3 +44,23 @@ TableView{
     -fx-border-style: dotted;
     -fx-border-width: 0.1;
 }
+
+.arcoSeleccionado{
+    -fx-stroke:#44FF00;
+    -fx-stroke-dash-array: 12 6 9 6;
+}
+
+.arcoNoSeleccionado{
+    -fx-stroke:#7FFFD4;
+    -fx-stroke-dash-array: 100%;
+}
+
+.nodoSeleccionado{
+   -fx-border-color: #44FF00;
+   -fx-border-width: 2;
+   -fx-border-style: dashed;
+}
+
+.nodoNoSeleccionado{
+    -fx-border-width: 0;
+}

@@ -132,13 +132,16 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
             dropShadow.setSpread(.2);
             dropShadow.setWidth(20);
             dropShadow.setHeight(20);
-            cuadroExteriorResaltado.setStyle("-fx-border-width: 0");
-        } else 
-        {
-            controladorAbstractoAdminNodo.consultarPropiedades(this); 
-            cuadroExteriorResaltado.setStyle("-fx-border-color: #55FFF7;-fx-border-width: 2");
+
+            cuadroExteriorResaltado.getStyleClass().remove("nodoSeleccionado");
+            cuadroExteriorResaltado.getStyleClass().add("nodoNoSeleccionado");
+        }else{
+            controladorAbstractoAdminNodo.consultarPropiedades(this);
+            cuadroExteriorResaltado.getStyleClass().remove("nodoNoSeleccionado");
+            cuadroExteriorResaltado.getStyleClass().add("nodoSeleccionado");
+       
             this.toFront();
-            dropShadow.setColor(Color.AQUAMARINE);
+            dropShadow.setColor(Color.web("#44FF00"));
             dropShadow.setSpread(.2);
             dropShadow.setWidth(25);
             dropShadow.setHeight(25);

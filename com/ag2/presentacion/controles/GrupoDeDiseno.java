@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
@@ -200,6 +199,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             setOnMousePressed(this);
             setOnMouseDragged(this);
             setOnMouseReleased(this);
+            
             for (Serializable serializable : objectosSerializables) {
                 if (serializable instanceof NodoGrafico) {
                     NodoGrafico nodoGrafico = (NodoGrafico) serializable;
