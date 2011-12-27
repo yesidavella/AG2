@@ -31,8 +31,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     public ArcoGrafico(EnlaceGrafico enlaceGrafico, GrupoDeDiseno grGrDeDiseño) {
         this.grGrDeDiseño = grGrDeDiseño;
         this.enlaceGrafico = enlaceGrafico;
-        //enlaceGrafico.seleccionar(true);
-        
+
         this.nodoGraficoB = this.enlaceGrafico.getNodoGraficoB();
         establecerConfigInicial();
     }
@@ -95,7 +94,6 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     private void establecerConfigInicial() {
         setFill(null);
         setStrokeWidth(2);
-        setStroke(Color.AQUAMARINE);//Color.AQUAMARINE
         setStrokeType(StrokeType.CENTERED);
 
         DropShadow drpShdResplandorArco = new DropShadow();
@@ -153,7 +151,11 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     ArcoGrafico arcoGrafico = (ArcoGrafico) me.getSource();
                     arcoGrafico.setCentroX(dragX);
                     arcoGrafico.setCentroY(dragY);
-
+                    
+                    if(!enlaceGrafico.getSeleccionado()){
+                        enlaceGrafico.seleccionar(true);
+                    }
+                    
                 }
             }
         });
@@ -171,28 +173,32 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                 if(IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO){
                     if(!enlaceGrafico.getSeleccionado()){
                         enlaceGrafico.seleccionar(true);
+                    }else{
+                        enlaceGrafico.seleccionar(false);
                     }
-                }if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) {
+                }
+                
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) {
+                    
+                    ArcoGrafico arcGrafFuente = (ArcoGrafico)mouseEvent.getSource();
+                    ArcoGrafico arcGrafNuevo = new ArcoGrafico(arcGrafFuente.getEnlaceGrafico(), arcGrafFuente.getGroup());
 
-                    ArcoGrafico quadCurveFuente = (ArcoGrafico) mouseEvent.getSource();
-                    ArcoGrafico quadCurveNueva = new ArcoGrafico(quadCurveFuente.getEnlaceGrafico(), quadCurveFuente.getGroup());
+                    arcGrafNuevo.setPosIniX(clickX);
+                    arcGrafNuevo.setPosIniY(clickY);
+                    arcGrafNuevo.setPosFinX(arcGrafFuente.getPosFinX());
+                    arcGrafNuevo.setPosFinY(arcGrafFuente.getPosFinY());
 
-                    quadCurveNueva.setPosIniX(clickX);
-                    quadCurveNueva.setPosIniY(clickY);
-                    quadCurveNueva.setPosFinX(quadCurveFuente.getPosFinX());
-                    quadCurveNueva.setPosFinY(quadCurveFuente.getPosFinY());
+                    arcGrafFuente.setPosFinX(clickX);
+                    arcGrafFuente.setPosFinY(clickY);
 
-                    quadCurveFuente.setPosFinX(clickX);
-                    quadCurveFuente.setPosFinY(clickY);
+                    arcGrafFuente.calcularCentroXY();
+                    arcGrafNuevo.calcularCentroXY();
 
-                    quadCurveFuente.calcularCentroXY();
-                    quadCurveNueva.calcularCentroXY();
+                    VerticeEnlaceGrafico verticeNuevo = new VerticeEnlaceGrafico(arcGrafFuente, arcGrafNuevo, clickX, clickY);
 
-                    VerticeEnlaceGrafico nuevoVertice = new VerticeEnlaceGrafico(quadCurveFuente, quadCurveNueva, clickX, clickY);
-
-                    grGrDeDiseño.getChildren().addAll(quadCurveNueva, nuevoVertice);
+                    grGrDeDiseño.getChildren().addAll(arcGrafNuevo, verticeNuevo);
                     nodoGraficoB.toFront();
-                    enlaceGrafico.getArcos().add(quadCurveNueva);
+                    enlaceGrafico.getArcos().add(arcGrafNuevo);
                     
                     enlaceGrafico.seleccionar(true);
                     
