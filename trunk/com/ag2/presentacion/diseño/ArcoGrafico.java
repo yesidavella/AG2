@@ -135,7 +135,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ADICIONAR_VERTICE || tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
                     quadCurveFuente.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 } else if (tipoDeBotonSeleccionado == TiposDeBoton.PUNTERO) {
-                    quadCurveFuente.setCursor(Cursor.CROSSHAIR);
+                    quadCurveFuente.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 }
             }
         });

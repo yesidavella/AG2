@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
         EJECUTAR("ejecutar"),
         PARAR("parar"),
         
-        PUNTERO("puntero"),
+        PUNTERO("puntero",null,0,0,"puntero_sobre_enlace",1,21),
         MANO("mano","mano_abierta_cursor",0,0,"mano_cerrada_cursor",0,0),
         ADICIONAR_VERTICE("adicionar_vertice","adicionar_vertice_cursor",3,3,"adicionar_vertice_sobre_elemento_cursor",3,5),
         ELIMINAR("eliminar","eliminar_cursor",0,0,"eliminar_sobre_elemento_cursor",0,0),
