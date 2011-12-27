@@ -46,8 +46,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
         ArrayList<PropiedadeNodo> propiedadeNodos = new ArrayList<PropiedadeNodo>();
 
-
-
         if (nodoGrafico instanceof NodoClienteGrafico) {
 
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGrafico);
