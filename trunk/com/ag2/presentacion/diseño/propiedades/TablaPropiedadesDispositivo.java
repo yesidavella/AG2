@@ -66,7 +66,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         {
             controladorAbstractoAdminNodo.updatePropiedad( id, valor);
         }
-    }
+     }
 
     
 }
