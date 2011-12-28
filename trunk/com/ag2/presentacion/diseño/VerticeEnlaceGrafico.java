@@ -11,8 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class VerticeEnlaceGrafico extends Circle implements ArcoListener, Serializable 
-{
+public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoSeleccionable,Serializable {
 
     private ArcoGrafico arcoGraficoA;
     private ArcoGrafico arcoGraficoB;
@@ -133,5 +132,13 @@ inputStream.defaultReadObject();
             e.printStackTrace();
         }
         
+    }
+
+    public void seleccionar(boolean isSeleccionado) {
+        if(isSeleccionado){
+            setFill(Color.RED);
+        }else{
+            setFill(Color.BLACK);
+        }
     }
 }
