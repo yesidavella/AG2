@@ -253,7 +253,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Dragged..");
+//                System.out.println("Dragged..");
 //                System.out.println("Drangged:"+getNombre());
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 arrastrando = true;
@@ -274,8 +274,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         setOnMouseReleased(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                
-                System.out.println("Release..");
+//                System.out.println("Release..");
 
                 setScaleX(0.5);
                 setScaleY(0.5);
@@ -295,8 +294,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                
-                System.out.println("Clicked...");
+//                System.out.println("Clicked...");
                 
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno grGrpDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
@@ -350,8 +348,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Exit:" + getNombre());
-
+                //System.out.println("Exit:" + getNombre());
 
                 if (!mouseEvent.isPrimaryButtonDown()) {
                     NodoGrafico.inicioGeneracionDeEnlace = false;
