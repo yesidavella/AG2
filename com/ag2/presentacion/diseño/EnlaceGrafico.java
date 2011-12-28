@@ -109,6 +109,12 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
             for(ArcoGrafico arcoGrafico:arcos){
                 arcoGrafico.getStyleClass().remove("arcoNoSeleccionado");
                 arcoGrafico.getStyleClass().add("arcoSeleccionado");
+                
+                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVertice();
+                
+                if(verticeGrafico!= null){
+                    verticeGrafico.seleccionar(true);
+                }
             }
             
             grGrDeDiseño.setObjetoGraficoSelecionado(this);
@@ -117,6 +123,12 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
             for(ArcoGrafico arcoGrafico:arcos){
                 arcoGrafico.getStyleClass().remove("arcoSeleccionado");
                 arcoGrafico.getStyleClass().add("arcoNoSeleccionado");
+                
+                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVertice();
+                
+                if(verticeGrafico!= null){
+                    verticeGrafico.seleccionar(false);
+                }
             }
             grGrDeDiseño.setObjetoGraficoSelecionado(null);
         }

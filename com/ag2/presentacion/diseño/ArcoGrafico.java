@@ -27,6 +27,11 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     private double centroY;
     private double posFinX;
     private double posFinY;
+    private VerticeEnlaceGrafico vertice;
+
+    public VerticeEnlaceGrafico getVertice() {
+        return vertice;
+    }
 
     public ArcoGrafico(EnlaceGrafico enlaceGrafico, GrupoDeDiseno grGrDeDiseño) {
         this.grGrDeDiseño = grGrDeDiseño;
@@ -165,7 +170,6 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         arco.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Enlace papa:"+enlaceGrafico.getSeleccionado());
 
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
@@ -195,6 +199,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     arcGrafNuevo.calcularCentroXY();
 
                     VerticeEnlaceGrafico verticeNuevo = new VerticeEnlaceGrafico(arcGrafFuente, arcGrafNuevo, clickX, clickY);
+                    vertice = verticeNuevo;
 
                     grGrDeDiseño.getChildren().addAll(arcGrafNuevo, verticeNuevo);
                     nodoGraficoB.toFront();
