@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -220,11 +219,11 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     arcGrafNuevo.setVerticeGrafInicial(verticeNuevo);
                     arcGrafFuente.setVerticeGrafFinal(verticeNuevo);
                     
-                    enlaceGrafico.determinarArcoInicialYFinal();
-
                     grGrDeDiseño.getChildren().addAll(arcGrafNuevo,verticeNuevo);
                     nodoGraficoB.toFront();
+                    
                     enlaceGrafico.getArcos().add(arcGrafNuevo);
+                    enlaceGrafico.determinarArcoInicialYFinal();
                     
                     enlaceGrafico.seleccionar(true);
                     

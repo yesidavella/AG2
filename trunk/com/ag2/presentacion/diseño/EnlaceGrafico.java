@@ -1,10 +1,10 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 
 public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSeleccionable  {
 
@@ -32,7 +32,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
-        
+ 
+        determinarArcoInicialYFinal();
         seleccionar(true);
         
     }
@@ -112,7 +113,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
-                    verticeGrafico.seleccionar(true);
+                    verticeGrafico.setFill(Color.web("#44FF00"));
+                    verticeGrafico.toFront();
                 }
             }
             
@@ -126,7 +128,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
-                    verticeGrafico.seleccionar(false);
+                    verticeGrafico.setFill(Color.AQUAMARINE);
+                    verticeGrafico.toFront();
                 }
             }
             grGrDeDiseño.setObjetoGraficoSelecionado(null);
@@ -147,7 +150,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             if (arco.getVerticeGrafInicial() == null) {
                 arcInicial = arco;
             }
-
+            
             if (arco.getVerticeGrafFinal() == null) {
                 arcFinal = arco;
             }

@@ -8,26 +8,24 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoSeleccionable,Serializable {
+public class VerticeEnlaceGrafico extends Circle implements ArcoListener,Serializable {
 
     private ArcoGrafico arcoGraficoA;
     private ArcoGrafico arcoGraficoB;
     private boolean eliminado = false; 
     private double posX;  
     private double posY; 
-    private double diametro = 3;  
+    private double diametro = 3;
+    private boolean arrastro;
     
     public VerticeEnlaceGrafico(ArcoGrafico arcoGraficoA, ArcoGrafico arcoGraficoB, double posX, double posY) {
         
         this.posX = posX; 
         this.posY = posY; 
         this.arcoGraficoA = arcoGraficoA;
-//        arcoGraficoA.setFill(Color.GREEN);
         this.arcoGraficoB = arcoGraficoB;
-//        arcoGraficoB.setFill(Color.BLUE);
         
         establecerConfigInicial();
 
@@ -60,10 +58,12 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
     {
         setCenterX(this.posX);
         setCenterY(this.posY);
-        setRadius(diametro);               
-        //setFill(Color.LIGHTBLUE);             
-        establecerEventoOnMouseDragged();
+        setRadius(diametro);
+        
         establecerEventoOnMouseEntered();
+        establecerEventoOnMouseDragged();
+        establecerEventoOnMouseClicked();
+
     }
 
     private void establecerEventoOnMouseEntered() {
@@ -83,7 +83,8 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
 
             public void handle(MouseEvent mouseEvent) {
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) mouseEvent.getSource();
+                    
+                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico)mouseEvent.getSource();
 
                     double dragX = mouseEvent.getX();
                     double dragY = mouseEvent.getY();
@@ -96,7 +97,34 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
 
                     verticeEnlaceGrafico.getArcoGraficoB().setPosIniX(dragX);
                     verticeEnlaceGrafico.getArcoGraficoB().setPosIniY(dragY);
+                    
+                    if(!verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()){
+                        verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(true);
+                    }
+                    verticeEnlaceGrafico.setArrastro(true);
+                }
+            }
+        });
+    }
+    
+    private void establecerEventoOnMouseClicked() {
+        setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+            public void handle(MouseEvent eventoDeRaton) {
+
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                    VerticeEnlaceGrafico verticeGrafico = (VerticeEnlaceGrafico)eventoDeRaton.getSource();
+                    
+                    if (!verticeGrafico.isArrastro()) {
+
+                        if (verticeGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()) {
+                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(false);
+                        } else {
+                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(true);
+                        }
+                    }
+                    
+                    verticeGrafico.setArrastro(false);
                 }
             }
         });
@@ -117,6 +145,14 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
     public void setArcoGraficoB(ArcoGrafico arcoGraficoB) {
         this.arcoGraficoB = arcoGraficoB;
     }
+    
+    public boolean isArrastro() {
+        return arrastro;
+    }
+
+    public void setArrastro(boolean arrastro) {
+        this.arrastro = arrastro;
+    }
 
     public void updateArco() {
         if (  !eliminado && (arcoGraficoA.isEliminado() || arcoGraficoB.isEliminado() )) 
@@ -130,27 +166,14 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
         }
     }
     
-    private void readObject(ObjectInputStream inputStream)
-    {
-        try 
-        {
-inputStream.defaultReadObject(); 
+    private void readObject(ObjectInputStream inputStream) {
+        try {
+            inputStream.defaultReadObject();
             establecerConfigInicial();
-            
-        }
-        catch (Exception e) 
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
-    }
 
-    public void seleccionar(boolean isSeleccionado) {
-        if(isSeleccionado){
-            setFill(Color.web("#44FF00"));
-        }else{
-            setFill(Color.AQUAMARINE);
-        }
-        toFront();
     }
 }
