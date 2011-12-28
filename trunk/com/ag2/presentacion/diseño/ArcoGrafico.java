@@ -27,11 +27,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     private double centroY;
     private double posFinX;
     private double posFinY;
-    private VerticeEnlaceGrafico vertice;
-
-    public VerticeEnlaceGrafico getVertice() {
-        return vertice;
-    }
+    private VerticeEnlaceGrafico verticeGrafInicial,verticeGrafFinal;
 
     public ArcoGrafico(EnlaceGrafico enlaceGrafico, GrupoDeDiseno grGrDeDiseño) {
         this.grGrDeDiseño = grGrDeDiseño;
@@ -40,7 +36,23 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         this.nodoGraficoB = this.enlaceGrafico.getNodoGraficoB();
         establecerConfigInicial();
     }
+    
+    public VerticeEnlaceGrafico getVerticeGrafInicial() {
+        return verticeGrafInicial;
+    }
 
+    public void setVerticeGrafInicial(VerticeEnlaceGrafico verticeGrafInicial) {
+        this.verticeGrafInicial = verticeGrafInicial;
+    }
+
+    public VerticeEnlaceGrafico getVerticeGrafFinal() {
+        return verticeGrafFinal;
+    }
+
+    public void setVerticeGrafFinal(VerticeEnlaceGrafico verticeGrafFinal) {
+        this.verticeGrafFinal = verticeGrafFinal;
+    }
+    
     public double getCentroX() {
         return centroX;
     }
@@ -199,9 +211,18 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     arcGrafNuevo.calcularCentroXY();
 
                     VerticeEnlaceGrafico verticeNuevo = new VerticeEnlaceGrafico(arcGrafFuente, arcGrafNuevo, clickX, clickY);
-                    vertice = verticeNuevo;
+                    
+                    if( arcGrafFuente.getVerticeGrafFinal()!=null){
+                        arcGrafFuente.getVerticeGrafFinal().setArcoGraficoA(arcGrafNuevo);
+                        arcGrafNuevo.setVerticeGrafFinal(arcGrafFuente.getVerticeGrafFinal());
+                    }
+                    
+                    arcGrafNuevo.setVerticeGrafInicial(verticeNuevo);
+                    arcGrafFuente.setVerticeGrafFinal(verticeNuevo);
+                    
+                    enlaceGrafico.determinarArcoInicialYFinal();
 
-                    grGrDeDiseño.getChildren().addAll(arcGrafNuevo, verticeNuevo);
+                    grGrDeDiseño.getChildren().addAll(arcGrafNuevo,verticeNuevo);
                     nodoGraficoB.toFront();
                     enlaceGrafico.getArcos().add(arcGrafNuevo);
                     

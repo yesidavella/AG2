@@ -1,17 +1,17 @@
 package com.ag2.presentacion.diseño;
 
+import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
 
-public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccionable  {
+public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSeleccionable  {
 
     private NodoGrafico nodoGraficoA;
     private NodoGrafico nodoGraficoB;
     private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
-    private ArcoGrafico arcInicial;
+    private ArcoGrafico arcInicial,arcFinal;
     private GrupoDeDiseno grGrDeDiseño;
     private boolean isSeleccionado;
 
@@ -64,15 +64,14 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
                 nodoGraficoA = null;
                 nodoGraficoB = null;
 
-            } 
-            else{
-                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
-                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
+            }else{
+                
+                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho() / 2);
+                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto() / 2);
 
-                ArcoGrafico arcoFinal = arcos.get(arcos.size() - 1);
+                arcFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho() / 2);
+                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto() / 2);
 
-                arcoFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho()/2);
-                arcoFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
             }
         }
     }
@@ -110,7 +109,7 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
                 arcoGrafico.getStyleClass().remove("arcoNoSeleccionado");
                 arcoGrafico.getStyleClass().add("arcoSeleccionado");
                 
-                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVertice();
+                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.seleccionar(true);
@@ -124,7 +123,7 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
                 arcoGrafico.getStyleClass().remove("arcoSeleccionado");
                 arcoGrafico.getStyleClass().add("arcoNoSeleccionado");
                 
-                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVertice();
+                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.seleccionar(false);
@@ -138,5 +137,20 @@ public class EnlaceGrafico implements NodoListener,  Serializable,ObjetoSeleccio
     public boolean getSeleccionado(){
         return isSeleccionado;
     }
+    
+    public void determinarArcoInicialYFinal(){
 
+        for (ArcoGrafico arco : arcos) {
+            /*Para saber por q esto se puede asegurar, vease ArcoGrafico metodo setOnMouseClicked
+             * cuando el tipo de boton seleccionado es TiposDeBoton.ADICIONAR_VERTICE
+            */
+            if (arco.getVerticeGrafInicial() == null) {
+                arcInicial = arco;
+            }
+
+            if (arco.getVerticeGrafFinal() == null) {
+                arcFinal = arco;
+            }
+        }
+    }
 }

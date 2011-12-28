@@ -25,7 +25,10 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
         this.posX = posX; 
         this.posY = posY; 
         this.arcoGraficoA = arcoGraficoA;
+//        arcoGraficoA.setFill(Color.GREEN);
         this.arcoGraficoB = arcoGraficoB;
+//        arcoGraficoB.setFill(Color.BLUE);
+        
         establecerConfigInicial();
 
         this.arcoGraficoA.addNodoListener(this);
@@ -58,7 +61,7 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
         setCenterX(this.posX);
         setCenterY(this.posY);
         setRadius(diametro);               
-        setFill(Color.LIGHTBLUE);             
+        //setFill(Color.LIGHTBLUE);             
         establecerEventoOnMouseDragged();
         establecerEventoOnMouseEntered();
     }
@@ -106,6 +109,14 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,ObjetoS
     public ArcoGrafico getArcoGraficoB() {
         return arcoGraficoB;
     }
+    
+    public void setArcoGraficoA(ArcoGrafico arcoGraficoA) {
+        this.arcoGraficoA = arcoGraficoA;
+    }
+
+    public void setArcoGraficoB(ArcoGrafico arcoGraficoB) {
+        this.arcoGraficoB = arcoGraficoB;
+    }
 
     public void updateArco() {
         if (  !eliminado && (arcoGraficoA.isEliminado() || arcoGraficoB.isEliminado() )) 
@@ -136,9 +147,10 @@ inputStream.defaultReadObject();
 
     public void seleccionar(boolean isSeleccionado) {
         if(isSeleccionado){
-            setFill(Color.RED);
+            setFill(Color.web("#44FF00"));
         }else{
-            setFill(Color.BLACK);
+            setFill(Color.AQUAMARINE);
         }
+        toFront();
     }
 }
