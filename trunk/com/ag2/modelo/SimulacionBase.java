@@ -16,8 +16,7 @@ public class SimulacionBase
     {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulator();
-        simulacion.setSimulator(simulador);
-        
+        simulacion.setSimulator(simulador);        
         
     }
     public static SimulacionBase getInstance()
@@ -30,9 +29,7 @@ public class SimulacionBase
     public void run()
     {
         simulacion.run();
-    }
-
-  
+    }  
     
     public GridSimulator getSimulador() {
         return simulador;

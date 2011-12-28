@@ -2,14 +2,17 @@ package com.ag2.controlador;
 
 import Distributions.*;
 import Grid.Entity;
+import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
+import Grid.Interfaces.ResourceNode;
+import Grid.Interfaces.Switches.AbstractSwitch;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.PropiedadNodoDistribuciones;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
-import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import java.util.ArrayList;
+import simbase.Time;
 
 public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
@@ -46,16 +49,17 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
         ArrayList<PropiedadeNodo> propiedadeNodos = new ArrayList<PropiedadeNodo>();
 
+        
+            //===========================================================================================================
+            PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            propiedadNodoNombre.setPrimerValor(nodoGraficoSeleccionado.getNombre());
+            propiedadeNodos.add(propiedadNodoNombre);
+            //===========================================================================================================
+        
         if (nodoGrafico instanceof NodoClienteGrafico) {
 
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGrafico);
 
-            //===========================================================================================================
-            PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
-            //propiedadNodoNombre.setPrimerValor(clientNode.getId());
-            propiedadNodoNombre.setPrimerValor(nodoGraficoSeleccionado.getNombre());
-            propiedadeNodos.add(propiedadNodoNombre);
-            //===========================================================================================================
 
             PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("generacionTrabajos", "Generación de trabajos");
             crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadeNodos, distribucionesTrabajos, "generacionTrabajos");
@@ -77,10 +81,43 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
 
         }
+        else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
+            ResourceNode resource = (ResourceNode) parejasDeNodosExistentes.get(nodoGrafico);
 
+          
+            PropiedadeNodo propiedadCpuCapacity = new PropiedadeNodo("CpuCapacity", "Cpu Capacity", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            CPU cpu = (CPU) resource.getCpuSet().get(0);
+            if (cpu != null) {
+
+                propiedadCpuCapacity.setPrimerValor(String.valueOf(cpu.getCpuCapacity()));
+            } else {
+                propiedadCpuCapacity.setPrimerValor("0");
+            }
+            propiedadeNodos.add(propiedadCpuCapacity);
+
+            //===========================================================================================================
+            PropiedadeNodo propiedadQueueSize = new PropiedadeNodo("QueueSize", "Queue Size", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            propiedadQueueSize.setPrimerValor(String.valueOf(resource.getMaxQueueSize()));
+            propiedadeNodos.add(propiedadQueueSize);
+
+            //===========================================================================================================
+            PropiedadeNodo propiedadCpuCount = new PropiedadeNodo("CpuCount", "Cpu Count", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            propiedadCpuCount.setPrimerValor(String.valueOf(resource.getCpuCount()));
+            propiedadeNodos.add(propiedadCpuCount);
+           //============================================================================================================
+            
+        } else if ( nodoGrafico instanceof EnrutadorGrafico) 
+        {
+            AbstractSwitch abstractSwitch = (AbstractSwitch) parejasDeNodosExistentes.get(nodoGrafico);  
+            
+             //===========================================================================================================
+            PropiedadeNodo propiedadHandleDelay = new PropiedadeNodo("HandleDelay", "Handle Delay", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+            propiedadHandleDelay.setPrimerValor(String.valueOf( abstractSwitch.getHandleDelay().getTime()));
+            propiedadeNodos.add(propiedadHandleDelay);
+        }
+        
         for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
             vistaNodosGraficos.cargarPropiedades(propiedadeNodos);
-
         }
 
     }
@@ -188,59 +225,62 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             //clientNode.setID(valor);
         }
 
-        if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) 
-        {
+        if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) {
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
-            
-            if (id.equalsIgnoreCase("generacionTrabajos"))
-            {
+
+            if (id.equalsIgnoreCase("generacionTrabajos")) {
                 clientNode.getState().setJobInterArrival(getDistributionByText(valor));
                 consultarPropiedades(nodoGraficoSeleccionado);
-            }
-            else if (id.contains("generacionTrabajos")) 
-            {
+            } else if (id.contains("generacionTrabajos")) {
                 setValuesDistribution(clientNode.getState().getJobInterArrival(), valor, id);
-            }
-            else if (id.equalsIgnoreCase("generacionFlops"))
-            {
+            } else if (id.equalsIgnoreCase("generacionFlops")) {
                 clientNode.getState().setFlops(getDistributionByText(valor));
                 consultarPropiedades(nodoGraficoSeleccionado);
-            } 
-            else if (id.contains("generacionFlops"))
-            {
-                setValuesDistribution(clientNode.getState().getFlops(), valor, id);                
-            } 
-            else if (id.equalsIgnoreCase("generacionMaximoRetraso")) 
-            {
+            } else if (id.contains("generacionFlops")) {
+                setValuesDistribution(clientNode.getState().getFlops(), valor, id);
+            } else if (id.equalsIgnoreCase("generacionMaximoRetraso")) {
                 clientNode.getState().setMaxDelayInterval(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);                
-            }
-            else if (id.contains("generacionMaximoRetraso")) 
-            {
+                consultarPropiedades(nodoGraficoSeleccionado);
+            } else if (id.contains("generacionMaximoRetraso")) {
                 setValuesDistribution(clientNode.getState().getMaxDelayInterval(), valor, id);
-                
-            } else if (id.equalsIgnoreCase("generacionTamañoTrabajo")) 
-            {
+
+            } else if (id.equalsIgnoreCase("generacionTamañoTrabajo")) {
                 clientNode.getState().setSizeDistribution(getDistributionByText(valor));
                 consultarPropiedades(nodoGraficoSeleccionado);
-                
-            } else if (id.contains("generacionTamañoTrabajo")) 
-            {
+
+            } else if (id.contains("generacionTamañoTrabajo")) {
                 setValuesDistribution(clientNode.getState().getSizeDistribution(), valor, id);
-            } 
-            else if (id.equalsIgnoreCase("generacionTamañoRespuesta")) 
-            {
+            } else if (id.equalsIgnoreCase("generacionTamañoRespuesta")) {
                 clientNode.getState().setAckSizeDistribution(getDistributionByText(valor));
                 consultarPropiedades(nodoGraficoSeleccionado);
-                
-            } else if (id.contains("generacionTamañoRespuesta"))
-            {
+
+            } else if (id.contains("generacionTamañoRespuesta")) {
                 setValuesDistribution(clientNode.getState().getAckSizeDistribution(), valor, id);
             }
 
+        } else if (nodoGraficoSeleccionado instanceof NodoDeRecursoGrafico) {
+            ResourceNode resource = (ResourceNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
 
+            if (id.equalsIgnoreCase("CpuCapacity")) {
+                resource.setCpuCapacity(Double.parseDouble(valor));
+            } else if (id.equalsIgnoreCase("QueueSize")) {
+                resource.setQueueSize(Integer.parseInt(valor));
+            } else if (id.equalsIgnoreCase("CpuCount")) {
+                CPU cpu = (CPU) resource.getCpuSet().get(0);
+                double capacity = 0;
+                if (cpu != null) {
+                    capacity = cpu.getCpuCapacity();
+                }
+                resource.setCpuCount(Integer.parseInt(valor), capacity);
+            }
 
-
+        }else if ( nodoGraficoSeleccionado instanceof EnrutadorGrafico) 
+        {
+            AbstractSwitch abstractSwitch = (AbstractSwitch) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);  
+             if (id.equalsIgnoreCase("HandleDelay")) 
+             {
+                 abstractSwitch.setHandleDelay(new Time(Double.parseDouble(valor)));
+             }            
         }
     }
 
