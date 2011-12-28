@@ -5,13 +5,16 @@ import Grid.Entity;
 import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
+import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switches.AbstractSwitch;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
+import com.ag2.presentacion.diseño.propiedades.NodeRelationProperty;
 import com.ag2.presentacion.diseño.propiedades.PropiedadNodoDistribuciones;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import simbase.Time;
 
 public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
@@ -59,8 +62,29 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         if (nodoGrafico instanceof NodoClienteGrafico) {
 
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGrafico);
-
-
+            
+            //===========================================================================================================
+              NodeRelationProperty nodeRelationProperty =  new NodeRelationProperty("ServiceNode", "Service node");
+                            
+                   
+              for(NodoGrafico nodoGraficoService: parejasDeNodosExistentes.keySet())
+              {
+                  if(nodoGraficoService instanceof NodoDeServicioGrafico )
+                  {
+                      nodeRelationProperty.getObservableListNodes().add(nodoGraficoService);
+                  }                  
+              }
+              if(clientNode.getServiceNode()!=null)
+              {
+                  NodoGrafico nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), parejasDeNodosExistentes);
+                  if(nodoServiceSelected!=null)
+                  {
+                      nodeRelationProperty.setPrimerValor(nodoServiceSelected);
+                  }
+              }
+            propiedadeNodos.add(nodeRelationProperty);
+            
+            //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("generacionTrabajos", "Generación de trabajos");
             crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadeNodos, distribucionesTrabajos, "generacionTrabajos");
             //===========================================================================================================
@@ -221,14 +245,26 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         System.out.println("prop control " + id + " " + valor);
 
         if (id.equalsIgnoreCase("nombre")) {
-            nodoGraficoSeleccionado.setNombre(valor);
-            //clientNode.setID(valor);
+            nodoGraficoSeleccionado.setNombre(valor);          
         }
 
-        if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) {
+        if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) 
+        {
             ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
-
-            if (id.equalsIgnoreCase("generacionTrabajos")) {
+                       
+            
+            if(id.equalsIgnoreCase("ServiceNode"))
+            {
+               NodoGrafico nodoGraficoServiceSelected = findNodoGraficoByName(valor, parejasDeNodosExistentes); 
+               if(nodoGraficoServiceSelected!=null)
+               {
+                   clientNode.setServiceNode((ServiceNode)parejasDeNodosExistentes.get(nodoGraficoServiceSelected));
+                   
+               }
+               
+               System.out.println("valorrr: "+valor); 
+            }
+            else if (id.equalsIgnoreCase("generacionTrabajos")) {
                 clientNode.getState().setJobInterArrival(getDistributionByText(valor));
                 consultarPropiedades(nodoGraficoSeleccionado);
             } else if (id.contains("generacionTrabajos")) {
@@ -373,5 +409,25 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
         return null;
 
+    }
+    public NodoGrafico findKeyNodeByValueNode(Entity entity, Hashtable<NodoGrafico, Entity> hashtable) 
+    {
+        for (NodoGrafico nodoGrafico : hashtable.keySet()) {
+            if (hashtable.get(nodoGrafico) == entity) {
+                return nodoGrafico;
+            }
+        }
+        return null;
+    }
+    public NodoGrafico findNodoGraficoByName(String name, Hashtable<NodoGrafico, Entity> hashtable)
+    {
+        for (NodoGrafico nodoGrafico : hashtable.keySet()) 
+        {
+             if(nodoGrafico.getNombre().equals(name))
+             {
+                 return nodoGrafico; 
+             }
+        }
+        return null;
     }
 }
