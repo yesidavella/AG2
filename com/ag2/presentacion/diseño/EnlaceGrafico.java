@@ -26,10 +26,10 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
         arcInicial = new ArcoGrafico(this, this.grGrDeDiseño);
         
-        arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho()/2);
-        arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto()/2);
-        arcInicial.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho()/2);
-        arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto()/2);
+        arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
+        arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
+        arcInicial.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
+        arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAltoActual()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
  
@@ -67,12 +67,13 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
             }else{
                 
-                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAncho() / 2);
-                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAlto() / 2);
+                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
+                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + 
+                        ((nodoGraficoA.getAltoActual()>nodoGraficoA.getAltoInicial())?(nodoGraficoA.getAltoInicial()/4)+(nodoGraficoA.getAltoActual()/4):nodoGraficoA.getAltoInicial()/2));
 
-                arcFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAncho() / 2);
-                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAlto() / 2);
-
+                arcFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
+                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + 
+                        ((nodoGraficoB.getAltoActual()>nodoGraficoB.getAltoInicial())?(nodoGraficoB.getAltoInicial()/4)+(nodoGraficoB.getAltoActual()/4):nodoGraficoB.getAltoInicial()/2));
             }
         }
     }

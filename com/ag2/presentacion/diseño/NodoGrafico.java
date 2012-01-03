@@ -29,10 +29,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private transient Line enlaceComodin = new Line();
     private boolean estaEliminado = false;
     private transient ImageView imageView;
-    private transient Label lblNombre;
+    protected transient Label lblNombre;
     private boolean selecionado = false;
     private transient DropShadow dropShadow = new DropShadow();
-    private transient VBox cuadroExteriorResaltado = new VBox();
+    protected transient VBox cuadroExteriorResaltado = new VBox();
     private double posX;
     private boolean arrastrando = false;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
@@ -41,6 +41,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     public static boolean inicioGeneracionDeEnlace = false;
     private short cantidadDeEnlaces = 0;
     private String  nombreOriginal;
+    protected short pasoNombreParaSaltoLinea;
+    private short altoInicial = 0;
 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
@@ -77,11 +79,18 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         
         establecerEventoOnMouseExit();
     }
+    
+    public void setAltoInicial(short altoInicial) {
+        this.altoInicial = altoInicial;
+    }
+    
+    public short getAltoInicial() {
+        return altoInicial;
+    }
 
     public String getNombreOriginal() {
         return nombreOriginal;
     }
-
 
     @Override
     public boolean equals(Object obj) 
@@ -221,7 +230,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
             public void handle(MouseEvent mouseEvent) {
                 
-                System.out.println("Pressed..");
+                setAncho((short)cuadroExteriorResaltado.getWidth());
+                setAlto((short)cuadroExteriorResaltado.getHeight());
                 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
@@ -283,7 +293,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                     Group group = (Group) nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
-                    
                     
                 }
             }
@@ -394,7 +403,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        lblNombre.setText(nombre);
+        lblNombre.setText(formatearNombreConSaltoDeLineas(nombre));
     }
 
     private void readObject(ObjectInputStream inputStream) {
@@ -423,21 +432,26 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
             establecerEventoOnMouseReleased();
             establecerEventoOnMouseEntered();
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    public short getAlto() {
+    public short getAltoActual() {
         return alto;
     }
 
     public void setAlto(short alto) {
+        
+        if(altoInicial==0){
+            setAltoInicial(alto);
+            System.out.println("Alto:"+alto+" AltoInicial:"+altoInicial);
+        }
+        
         this.alto = alto;
     }
 
-    public short getAncho() {
+    public short getAnchoActual() {
         return ancho;
     }
 
@@ -446,7 +460,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     private String formatearNombre(String nombre) {
-        
+
         if(nombre.startsWith("Enrutador")){
             return nombre.substring(0, "Enrutador".length())+"\n"+nombre.substring("Enrutador".length()+1, nombre.length());
         }
@@ -467,5 +481,31 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
         this.inicioGeneracionDeEnlace = inicioGeneracionDeEnlace;
+    }
+
+    public String formatearNombreConSaltoDeLineas(String nombre) {
+
+        StringBuilder nombreModificado = new StringBuilder();
+
+        nombre = nombre.trim();
+        int tamaño = nombre.length();
+        int i = 0;
+        
+        while (tamaño >= pasoNombreParaSaltoLinea) {
+            
+            nombreModificado.append(nombre.substring(i * pasoNombreParaSaltoLinea, (i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)).append("\n");
+
+            tamaño = nombre.substring(((i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)).length();
+
+            if (tamaño > 0 && tamaño < pasoNombreParaSaltoLinea) {
+                nombreModificado.append(nombre.substring(((i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)));
+            }
+
+            i++;
+        }
+        setAlto((short)cuadroExteriorResaltado.getHeight());
+        setAncho((short)cuadroExteriorResaltado.getWidth());
+        updateNodoListener();
+        return (nombreModificado.length() == 0) ? nombre : nombreModificado.toString();
     }
 }

@@ -9,6 +9,8 @@ public  abstract class EnrutadorGrafico extends NodoGrafico{
         super(nombre, urlDeImagen, controladorAbstractoAdminNodo); 
         setAlto((short)62);
         setAncho((short)42);
-    }    
+        
+        pasoNombreParaSaltoLinea = 10;
+    }
     
 }
