@@ -10,7 +10,7 @@ public  abstract class EnrutadorGrafico extends NodoGrafico{
         setAlto((short)62);
         setAncho((short)42);
         
-        pasoNombreParaSaltoLinea = 10;
+        pasoDeSaltoLinea = 10;
     }
     
 }

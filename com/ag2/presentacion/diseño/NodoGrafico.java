@@ -41,7 +41,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     public static boolean inicioGeneracionDeEnlace = false;
     private short cantidadDeEnlaces = 0;
     private String  nombreOriginal;
-    protected short pasoNombreParaSaltoLinea;
+    protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
@@ -445,7 +445,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         
         if(altoInicial==0){
             setAltoInicial(alto);
-            System.out.println("Alto:"+alto+" AltoInicial:"+altoInicial);
         }
         
         this.alto = alto;
@@ -491,14 +490,14 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         int tamaño = nombre.length();
         int i = 0;
         
-        while (tamaño >= pasoNombreParaSaltoLinea) {
+        while (tamaño >= pasoDeSaltoLinea) {
             
-            nombreModificado.append(nombre.substring(i * pasoNombreParaSaltoLinea, (i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)).append("\n");
+            nombreModificado.append(nombre.substring(i * pasoDeSaltoLinea, (i * pasoDeSaltoLinea) + pasoDeSaltoLinea)).append("\n");
 
-            tamaño = nombre.substring(((i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)).length();
+            tamaño = nombre.substring(((i * pasoDeSaltoLinea) + pasoDeSaltoLinea)).length();
 
-            if (tamaño > 0 && tamaño < pasoNombreParaSaltoLinea) {
-                nombreModificado.append(nombre.substring(((i * pasoNombreParaSaltoLinea) + pasoNombreParaSaltoLinea)));
+            if (tamaño > 0 && tamaño < pasoDeSaltoLinea) {
+                nombreModificado.append(nombre.substring(((i * pasoDeSaltoLinea) + pasoDeSaltoLinea)));
             }
 
             i++;

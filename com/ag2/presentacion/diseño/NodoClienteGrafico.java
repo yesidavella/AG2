@@ -19,6 +19,6 @@ public class NodoClienteGrafico extends NodoGrafico{
             setAncho((short)44);
         }
         
-        pasoNombreParaSaltoLinea = 9;
+        pasoDeSaltoLinea = 9;
     }
 }
