@@ -159,8 +159,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
         if (nuevoNodo != null) {
 
-            posicionX = me.getX() - nuevoNodo.getAncho()/2;
-            posicionY = me.getY() - nuevoNodo.getAlto()/2;
+            posicionX = me.getX() - nuevoNodo.getAnchoActual()/2;
+            posicionY = me.getY() - nuevoNodo.getAltoActual()/2;
             
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);

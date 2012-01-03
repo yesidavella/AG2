@@ -61,7 +61,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
 
     public void updatePropiedad( String id, String valor) 
     {
-        System.out.println("prop "+valor);
+        //System.out.println("prop "+valor);
         if(controladorAbstractoAdminNodo!=null)
         {
             controladorAbstractoAdminNodo.updatePropiedad( id, valor);

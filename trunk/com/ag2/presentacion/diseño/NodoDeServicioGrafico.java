@@ -9,5 +9,8 @@ public class NodoDeServicioGrafico extends NodoGrafico{
         super( "Agentador_"+(++contadorNodo),"../../../../recursos/imagenes/nodo_servicio_mapa.png",controladorAbstractoAdminNodo);
         setAlto((short)74);
         setAncho((short)61);
+                
+        pasoNombreParaSaltoLinea = 12;
     }
+
 }

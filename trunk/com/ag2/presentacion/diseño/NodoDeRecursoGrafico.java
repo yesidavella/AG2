@@ -9,5 +9,8 @@ public class NodoDeRecursoGrafico extends NodoGrafico{
         super("Cluster_"+(++contadorNodo),"../../../../recursos/imagenes/recurso_cursor_mapa.png", controladorAbstractoAdminNodo);
         setAlto((short)67);
         setAncho((short)49);
+                
+        pasoNombreParaSaltoLinea = 11;
     }
+
 }

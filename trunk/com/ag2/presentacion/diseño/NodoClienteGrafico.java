@@ -8,13 +8,17 @@ public class NodoClienteGrafico extends NodoGrafico{
     
     public NodoClienteGrafico(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
     {
-        super("Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo);
-        setAlto((short)50);
         
+        super("Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo);
+        
+        setAlto((short)50);
+
         if(contadorNodo<10){
             setAncho((short)40);
         }else{
             setAncho((short)44);
         }
+        
+        pasoNombreParaSaltoLinea = 9;
     }
 }
