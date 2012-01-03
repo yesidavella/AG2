@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
@@ -136,6 +137,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.seleccionar(true);
             }
+            
         }
     }
 

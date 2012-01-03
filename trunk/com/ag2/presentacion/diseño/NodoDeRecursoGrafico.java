@@ -10,7 +10,7 @@ public class NodoDeRecursoGrafico extends NodoGrafico{
         setAlto((short)67);
         setAncho((short)49);
                 
-        pasoNombreParaSaltoLinea = 11;
+        pasoDeSaltoLinea = 11;
     }
 
 }

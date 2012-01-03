@@ -9,6 +9,7 @@ import com.ag2.presentacion.controles.ResustadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import com.sun.javafx.geom.transform.Affine3D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -31,6 +33,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 
 public class IGU extends Scene{
@@ -84,10 +88,10 @@ public class IGU extends Scene{
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         TilePane barraDeEjecucion = creacionBarraDeEjecucion();
         GridPane barraHerramientas = creacionBarraDeHerramientas();
+        VBox vBoxContenedorIndicadoresEjec = crearElemsIndicadoresEjecucion();
 
         VBox contenedorHerramietas = new VBox();
-
-        contenedorHerramietas.getChildren().addAll(barraDeEjecucion, barraHerramientas);
+        contenedorHerramietas.getChildren().addAll(barraDeEjecucion, barraHerramientas,vBoxContenedorIndicadoresEjec);
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
@@ -395,6 +399,17 @@ public class IGU extends Scene{
         sliderZoom.valueProperty().addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+                
+                Transform t = new Transform() {
+
+                    @Override
+                    public void impl_apply(Affine3D arg0) {
+                        System.out.println("trnaformadno");
+                    }
+                };
+                t.scale(2, 3, 6000, 11000);
+                grGrupoDeDiseño.getTransforms().add(t);
+                
                 grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
                 grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
                 
@@ -655,5 +670,24 @@ public class IGU extends Scene{
 
     public TablaPropiedadesDispositivo getPropiedadesDispositivoTbl() {
         return propiedadesDispositivoTbl;
+    }
+
+    private VBox crearElemsIndicadoresEjecucion() {
+        
+        VBox vBoxCajaContenedoraIndicadores = new VBox(10);
+        vBoxCajaContenedoraIndicadores.getStyleClass().add("barraDeHerramientas");
+        vBoxCajaContenedoraIndicadores.setPadding(new Insets(10, 10, 10, 10));
+        vBoxCajaContenedoraIndicadores.setAlignment(Pos.CENTER);
+        
+        Label lblIndicadoraEjec = new Label("Ejecución:");
+        lblIndicadoraEjec.setFont(new Font("Arial Bold", 10));
+        
+        ProgressBar prgBarBarraProgresoEjec = new ProgressBar(0);
+        prgBarBarraProgresoEjec.setPrefWidth(70);
+        prgBarBarraProgresoEjec.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
+//        prgBarBarraProgresoEjec.setProgress(-1);
+        vBoxCajaContenedoraIndicadores.getChildren().addAll(lblIndicadoraEjec,prgBarBarraProgresoEjec);
+        
+        return  vBoxCajaContenedoraIndicadores;
     }
 }
