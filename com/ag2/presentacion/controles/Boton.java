@@ -34,7 +34,7 @@ public class Boton extends ToggleButton {
         this.tipoDeBoton = tipoDeBoton;
     }
     
-    public void setGropoDeDiseño(final Group grGrupoDeDiseño) {
+    public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -43,10 +43,16 @@ public class Boton extends ToggleButton {
 
                 if (botonOrigen.isSelected()){
                     
-                    IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
+                    if(botonOrigen.tipoDeBoton==TiposDeBoton.EJECUTAR){
+                        IGU.getInstanciaIGUAg2().deshabilitar();
+                    }else if(botonOrigen.tipoDeBoton==TiposDeBoton.PARAR){
+                        IGU.getInstanciaIGUAg2().habilitar();
+                    } else {
+                        IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
+                    }
                     
                     switch (botonOrigen.tipoDeBoton) {
-
+                            
                         case PUNTERO:
                             grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
                             break;
@@ -82,8 +88,8 @@ public class Boton extends ToggleButton {
                             grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
                             break;
                     }
-                } else {
-                    grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                }else{
+                    botonOrigen.setSelected(true);
                 }
             }
         });

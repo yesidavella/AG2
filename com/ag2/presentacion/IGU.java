@@ -17,11 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -48,6 +44,9 @@ public class IGU extends Scene{
     Rectangle rectangle = new Rectangle(25000, 18750, Color.LIGHTBLUE);
     public static final Point2D ESQUINA_SUPERIOR_IZQ_MAPA = new Point2D(12500 - 5000, 9375 - 2617);
     GridPane gpNavegacionMapa = new GridPane();
+    
+    Boton btnEjecutar = new Boton(TiposDeBoton.EJECUTAR);
+    Boton btnParar = new Boton(TiposDeBoton.PARAR);
     private Boton btnMoverEscena;
     private Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
     Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
@@ -57,11 +56,15 @@ public class IGU extends Scene{
     Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
+    private static TiposDeBoton estadoTipoBotonAnterior = TiposDeBoton.MANO;
     Slider sliderZoom = new Slider();
-    TablaPropiedadesDispositivo propiedadesDispositivoTbl ; 
+    TablaPropiedadesDispositivo propiedadesDispositivoTbl;
+    
+    private GridPane barraHerramientas;
+    private ProgressBar prgBarBarraProgresoEjec;
     
     private boolean estaTeclaCtrlOprimida = false;
-    private TiposDeBoton estadoAnteriorDeBtnAEventoTcld;
+    private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEventoTcld;
     
     private static IGU iguAG2;
@@ -87,7 +90,7 @@ public class IGU extends Scene{
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         TilePane barraDeEjecucion = creacionBarraDeEjecucion();
-        GridPane barraHerramientas = creacionBarraDeHerramientas();
+        barraHerramientas = creacionBarraDeHerramientas();
         VBox vBoxContenedorIndicadoresEjec = crearElemsIndicadoresEjecucion();
 
         VBox contenedorHerramietas = new VBox();
@@ -95,8 +98,8 @@ public class IGU extends Scene{
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
-        crearLienzoDetabs(layOutVentanaPrincipal);
-
+        TabPane cajaDetabs = crearLienzoDetabs();
+        layOutVentanaPrincipal.setCenter(cajaDetabs);
         //Diseño inferior
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
@@ -180,15 +183,15 @@ public class IGU extends Scene{
         tlPnBarraDeEjecucion.setHgap(4);
         tlPnBarraDeEjecucion.setPrefColumns(2);
 
-        Boton btnEjecutar = new Boton(TiposDeBoton.EJECUTAR);
         Tooltip tTipBtnEjecutar = new Tooltip("Ejecutar simulación");
         btnEjecutar.setTooltip(tTipBtnEjecutar);
         btnEjecutar.setToggleGroup(tgEjecucion);
+        btnEjecutar.setGrupoDeDiseño(null);
 
-        Boton btnParar = new Boton(TiposDeBoton.PARAR);
         Tooltip tTipBtnParar = new Tooltip("Parar simulación");
         btnParar.setTooltip(tTipBtnParar);
         btnParar.setToggleGroup(tgEjecucion);
+        btnParar.setGrupoDeDiseño(null);
 
         tlPnBarraDeEjecucion.getChildren().addAll(btnEjecutar, btnParar);
 
@@ -216,10 +219,10 @@ public class IGU extends Scene{
         Boton btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
         Boton btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
 
-        btnMoverEscena.setGropoDeDiseño(grGrupoDeDiseño);
-        btnSeleccion.setGropoDeDiseño(grGrupoDeDiseño);
-        btnDividirEnlaceCuadrado.setGropoDeDiseño(grGrupoDeDiseño);
-        btnEliminar.setGropoDeDiseño(grGrupoDeDiseño);
+        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
 
         btnMoverEscena.setToggleGroup(tgHerramientas);
         btnSeleccion.setToggleGroup(tgHerramientas);
@@ -265,13 +268,13 @@ public class IGU extends Scene{
         btnRecurso.setToggleGroup(tgHerramientas);
         btnEnlace.setToggleGroup(tgHerramientas);
 
-        btnCliente.setGropoDeDiseño(grGrupoDeDiseño);
-        btnNodoDeServicio.setGropoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorOptico.setGropoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorDeRafaga.setGropoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorHibrido.setGropoDeDiseño(grGrupoDeDiseño);
-        btnRecurso.setGropoDeDiseño(grGrupoDeDiseño);
-        btnEnlace.setGropoDeDiseño(grGrupoDeDiseño);
+        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño);
 
         btnCliente.setTooltip(new Tooltip("Nodo cliente"));
         btnNodoDeServicio.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
@@ -304,14 +307,13 @@ public class IGU extends Scene{
 
     }
 
-    private void crearLienzoDetabs(BorderPane diseñoVentana) {
+    private TabPane crearLienzoDetabs() {
 
         TabPane cajaDetabs = new TabPane();
         
         Tab tabSimulacion = new Tab();
         tabSimulacion.setText("Simulación");
         tabSimulacion.setClosable(false);
-
         Tab tabResultados = new Tab();
         Tab tabResultadosHTML = new Tab();
         tabResultados.setText("Resultados Phosphorus");
@@ -339,8 +341,6 @@ public class IGU extends Scene{
         tabSimulacion.setContent(spZonaDeDiseño);
 
         cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
-
-        diseñoVentana.setCenter(cajaDetabs);
         
         Thread thread = new Thread(new Runnable() {
 
@@ -363,6 +363,8 @@ public class IGU extends Scene{
             }
         });
         thread.start();
+        
+        return cajaDetabs;
     }
 
     private HBox crearImagenesYTablasDePropiedades() {
@@ -375,7 +377,6 @@ public class IGU extends Scene{
 
         propiedadesDispositivoTbl = new TablaPropiedadesDispositivo();
        
-
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
 
         SplitPane divisorDeTablas = new SplitPane();
@@ -481,7 +482,6 @@ public class IGU extends Scene{
         cbSwicthes.setMinWidth(150);
         cbNodosServicio.setMinWidth(150);
 
-
         Button btnIrContinentes = new Button("ir");
         Button btnIrClientes = new Button("ir");
         Button btnIrRecursos = new Button("ir");
@@ -493,7 +493,6 @@ public class IGU extends Scene{
         Label lbClientes = new Label("Clientes");
         Label lbRecursos = new Label("Recursos");
         Label lbNodosServicio = new Label("Agendadores");
-
 
         GridPane.setConstraints(lbContinentes, 0, 0);
         gpNavegacionMapa.getChildren().add(lbContinentes);
@@ -635,7 +634,7 @@ public class IGU extends Scene{
                 if(estaTeclaCtrlOprimida==false && event.isControlDown() && grGrupoDeDiseño.isHover() ){
                     estaTeclaCtrlOprimida=true;
                     
-                    estadoAnteriorDeBtnAEventoTcld = IGU.getEstadoTipoBoton();
+                    estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
                     cursorAnteriorAEventoTcld = grGrupoDeDiseño.getCursor();
                     
                     IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
@@ -650,7 +649,7 @@ public class IGU extends Scene{
                 
                 if(estaTeclaCtrlOprimida==true){
                     estaTeclaCtrlOprimida=false;
-                    IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEventoTcld);
+                    IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
                     grGrupoDeDiseño.setCursor(cursorAnteriorAEventoTcld);
                 }
             }
@@ -658,8 +657,8 @@ public class IGU extends Scene{
     }
 
     private void inicializarEstadoDeIGU() {
-        //Estado inicial de botones
-        tgHerramientas.selectToggle(btnCliente);
+        btnParar.setSelected(true);
+        btnCliente.setSelected(true);
         IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
         grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
     }
@@ -682,12 +681,29 @@ public class IGU extends Scene{
         Label lblIndicadoraEjec = new Label("Ejecución:");
         lblIndicadoraEjec.setFont(new Font("Arial Bold", 10));
         
-        ProgressBar prgBarBarraProgresoEjec = new ProgressBar(0);
+        prgBarBarraProgresoEjec = new ProgressBar(0);
         prgBarBarraProgresoEjec.setPrefWidth(70);
         prgBarBarraProgresoEjec.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
-//        prgBarBarraProgresoEjec.setProgress(-1);
+
         vBoxCajaContenedoraIndicadores.getChildren().addAll(lblIndicadoraEjec,prgBarBarraProgresoEjec);
         
         return  vBoxCajaContenedoraIndicadores;
+    }
+    
+    public void habilitar(){
+        barraHerramientas.setDisable(false);
+        barraHerramientas.setOpacity(1);
+        prgBarBarraProgresoEjec.setProgress(0);
+        IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
+        grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
+    }
+    
+    public void deshabilitar(){
+        barraHerramientas.setDisable(true);
+        barraHerramientas.setOpacity(0.99);
+        prgBarBarraProgresoEjec.setProgress(-1);
+        estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
+        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
+        grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }
 }
