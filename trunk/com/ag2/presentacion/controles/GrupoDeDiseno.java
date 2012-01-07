@@ -16,6 +16,7 @@ import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.transform.Scale;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
@@ -29,6 +30,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
     private ObjetoSeleccionable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
+    private Scale sclEscalaDeZoom;
     
     public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño = spZonaDeDiseño;
@@ -36,6 +38,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         setOnMouseDragged(this);
         setOnMouseReleased(this);
         controladoresRegistrados = new ArrayList<ControladorAbstractoAdminNodo>();
+        sclEscalaDeZoom = new Scale();
+        getTransforms().add(sclEscalaDeZoom);
     }
 
     public ScrollPane getSpZonaDeDiseño() {
@@ -136,6 +140,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.seleccionar(true);
             }
+            System.out.println("PosX:"+mouEvent.getX()+" PosY:"+mouEvent.getY());
         }
     }
 
@@ -221,6 +226,18 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
 
     public void updatePropiedad( String id, String valor) {
+        
+    }
+
+    public void generarZoom(double escalaEnX, double escalaEnY) {
+        
+        sclEscalaDeZoom.setPivotX(10100);
+        sclEscalaDeZoom.setPivotY(9800);
+        
+        System.out.println("X:"+visibleProperty()+" Y:"+spZonaDeDiseño.getScene().yProperty());
+        
+        sclEscalaDeZoom.setX(escalaEnX);
+        sclEscalaDeZoom.setY(escalaEnY);
         
     }
     

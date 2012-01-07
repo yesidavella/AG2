@@ -9,7 +9,6 @@ import com.ag2.presentacion.controles.ResustadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
-import com.sun.javafx.geom.transform.Affine3D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -30,7 +29,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 
 public class IGU extends Scene{
@@ -85,7 +83,7 @@ public class IGU extends Scene{
         
         layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
         
-       //Diseño superior
+        //Diseño superior
         crearBarraDeMenus(layOutVentanaPrincipal, Main.getStgEscenario());
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
@@ -401,18 +399,7 @@ public class IGU extends Scene{
 
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
                 
-                Transform t = new Transform() {
-
-                    @Override
-                    public void impl_apply(Affine3D arg0) {
-                        System.out.println("trnaformadno");
-                    }
-                };
-                t.scale(2, 3, 6000, 11000);
-                grGrupoDeDiseño.getTransforms().add(t);
-                
-                grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
-                grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
+                grGrupoDeDiseño.generarZoom(sliderZoom.getValue()/100,sliderZoom.getValue()/100);
                 
             }
         });
