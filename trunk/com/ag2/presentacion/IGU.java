@@ -37,14 +37,14 @@ public class IGU extends Scene{
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno(spZonaDeDiseño);
     Image iImagenFondo = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/mapaMundi.jpg"));
     ImageView ivImagenFondo = new ImageView(iImagenFondo);
-    ToggleGroup tgEjecucion = new ToggleGroup();
+  
     ToggleGroup tgHerramientas = new ToggleGroup();
     Rectangle rectangle = new Rectangle(25000, 18750, Color.LIGHTBLUE);
     public static final Point2D ESQUINA_SUPERIOR_IZQ_MAPA = new Point2D(12500 - 5000, 9375 - 2617);
     GridPane gpNavegacionMapa = new GridPane();
+     ExecutePane executePane = new ExecutePane();
     
-    Boton btnEjecutar = new Boton(TiposDeBoton.EJECUTAR);
-    Boton btnParar = new Boton(TiposDeBoton.PARAR);
+   
     private Boton btnMoverEscena;
     private Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
     Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
@@ -87,12 +87,12 @@ public class IGU extends Scene{
         crearBarraDeMenus(layOutVentanaPrincipal, Main.getStgEscenario());
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
-        TilePane barraDeEjecucion = creacionBarraDeEjecucion();
+       
         barraHerramientas = creacionBarraDeHerramientas();
         VBox vBoxContenedorIndicadoresEjec = crearElemsIndicadoresEjecucion();
 
         VBox contenedorHerramietas = new VBox();
-        contenedorHerramietas.getChildren().addAll(barraDeEjecucion, barraHerramientas,vBoxContenedorIndicadoresEjec);
+        contenedorHerramietas.getChildren().addAll(executePane, barraHerramientas,vBoxContenedorIndicadoresEjec);
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
@@ -173,28 +173,7 @@ public class IGU extends Scene{
         diseñoVentana.setTop(hBoxContenedorDeMenu);
     }
 
-    private TilePane creacionBarraDeEjecucion() {
-
-        TilePane tlPnBarraDeEjecucion = new TilePane();
-        tlPnBarraDeEjecucion.getStyleClass().add("barraDeHerramientas");
-        tlPnBarraDeEjecucion.setPadding(new Insets(10, 10, 10, 10));
-        tlPnBarraDeEjecucion.setHgap(4);
-        tlPnBarraDeEjecucion.setPrefColumns(2);
-
-        Tooltip tTipBtnEjecutar = new Tooltip("Ejecutar simulación");
-        btnEjecutar.setTooltip(tTipBtnEjecutar);
-        btnEjecutar.setToggleGroup(tgEjecucion);
-        btnEjecutar.setGrupoDeDiseño(null);
-
-        Tooltip tTipBtnParar = new Tooltip("Parar simulación");
-        btnParar.setTooltip(tTipBtnParar);
-        btnParar.setToggleGroup(tgEjecucion);
-        btnParar.setGrupoDeDiseño(null);
-
-        tlPnBarraDeEjecucion.getChildren().addAll(btnEjecutar, btnParar);
-
-        return tlPnBarraDeEjecucion;
-    }
+    
 
     private GridPane creacionBarraDeHerramientas() {
 
@@ -644,7 +623,7 @@ public class IGU extends Scene{
     }
 
     private void inicializarEstadoDeIGU() {
-        btnParar.setSelected(true);
+     
         btnCliente.setSelected(true);
         IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
         grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
@@ -693,4 +672,9 @@ public class IGU extends Scene{
         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
         grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }
+
+    public ExecutePane getExecutePane() {
+        return executePane;
+    }
+    
 }
