@@ -26,6 +26,17 @@ public class SimulacionBase
         }
         return simulacionBase;
     }
+    public void route()
+    {
+       simulador.route();
+    }
+    public void initEntities()
+    {
+         simulador.initEntities();
+    }
+    
+    
+       
     public void run()
     {
         simulacion.run();
