@@ -9,6 +9,7 @@ import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNo
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
@@ -53,7 +54,7 @@ public class PropiedadeNodo {
         this.control = control;
     }
 
-    public PropiedadeNodo(final String id, String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) {
+    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) {
 
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo;
@@ -62,22 +63,39 @@ public class PropiedadeNodo {
         switch (tipoDePropiedadNodo) {
             case BOLEANO: {
                 control = new CheckBox();
+                ((CheckBox) control).setOnAction(new EventHandler<ActionEvent>() {
+
+                    public void handle(ActionEvent actionEvent) 
+                    {
+                        CheckBox checkBox = (CheckBox)actionEvent.getSource(); 
+                      
+                        String valor="_ON"; 
+                        if(!checkBox.isSelected())
+                        {    
+                            valor="OFF";                             
+                        }
+                        tablaPropiedadesDispositivo.updatePropiedad(id,nombre+valor );
+                        checkBox.setDisable(true);
+                         
+                        
+                    }
+                });
                 break;
             }
             case LISTA_TEXTO: {
-                control = new ChoiceBox<String>();                
+                control = new ChoiceBox<String>();
                 ((ChoiceBox) control).getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
-                public void changed(ObservableValue ov, Object t, Object t1) 
-                {
-                    ChoiceBox choiceBox= (ChoiceBox)control; 
-                    choiceBox.getSelectionModel().getSelectedItem().toString();
-                    if(tablaPropiedadesDispositivo!=null)
-                    tablaPropiedadesDispositivo.updatePropiedad(id, choiceBox.getSelectionModel().getSelectedItem().toString());
-                }
-            });
-               
-             
+                    public void changed(ObservableValue ov, Object t, Object t1) {
+                        ChoiceBox choiceBox = (ChoiceBox) control;
+                        choiceBox.getSelectionModel().getSelectedItem().toString();
+                        if (tablaPropiedadesDispositivo != null) {
+                            tablaPropiedadesDispositivo.updatePropiedad(id, choiceBox.getSelectionModel().getSelectedItem().toString());
+                        }
+                    }
+                });
+
+
                 break;
             }
             case NUMERO:
