@@ -33,8 +33,7 @@ public class SimulacionBase
     public void initEntities()
     {
          simulador.initEntities();
-    }
-    
+    }   
     
        
     public void run()
