@@ -20,8 +20,7 @@ public class SimulacionBase
         
     }
     public static SimulacionBase getInstance()
-    {
-         if(simulacionBase == null){
+    {         if(simulacionBase == null){
             simulacionBase = new SimulacionBase();
         }
         return simulacionBase;
