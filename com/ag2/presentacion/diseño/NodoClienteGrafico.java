@@ -21,4 +21,10 @@ public class NodoClienteGrafico extends NodoGrafico{
         
         pasoDeSaltoLinea = 9;
     }
+
+    @Override
+    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace) {
+        return (nodoInicioDelEnlace instanceof EnrutadorGrafico) && getCantidadDeEnlaces()<1;
+    }
+    
 }
