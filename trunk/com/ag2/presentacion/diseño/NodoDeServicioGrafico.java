@@ -13,4 +13,9 @@ public class NodoDeServicioGrafico extends NodoGrafico{
         pasoDeSaltoLinea = 12;
     }
 
+    @Override
+    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace) {
+        return (nodoInicioDelEnlace instanceof EnrutadorGrafico);
+    }
+
 }

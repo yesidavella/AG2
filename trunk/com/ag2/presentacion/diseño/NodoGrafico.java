@@ -179,12 +179,22 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 if (inicioGeneracionDeEnlace==false) {
                     nodoAComodin = null;
                 }
+                
+                if(nodoAComodin!=null && nodoGrafico!=null){
+                   
+                    if(nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)){
+                        System.out.println("Bien..");
+                    }else{
+                        System.out.println("Mal..");
+                    }
+                    
+                }
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
                         && nodoAComodin != null
                         && nodoAComodin != nodoGrafico
                         && NodoGrafico.inicioGeneracionDeEnlace
-                        && puedeGenerarEnlaceEntreNodos(nodoAComodin,nodoGrafico)) {
+                        && nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
 
                     GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
@@ -203,25 +213,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 }
                 nodoAComodin = null;
             }
-
-            private boolean puedeGenerarEnlaceEntreNodos(NodoGrafico nodoA, NodoGrafico nodoB) {
-                if(nodoA instanceof NodoClienteGrafico){
-                    if(nodoA.getCantidadDeEnlaces()>=1){
-                        return false;
-                    }
-                    return (nodoB instanceof EnrutadorGrafico);
-                }else if(nodoA instanceof NodoDeServicioGrafico){
-                    return (nodoB instanceof EnrutadorGrafico);
-                }else if(nodoA instanceof NodoDeRecursoGrafico){
-                    return (nodoB instanceof EnrutadorGrafico);
-                }else if(nodoA instanceof EnrutadorGrafico){
-                    if(nodoB instanceof NodoClienteGrafico && nodoB.getCantidadDeEnlaces()>=1){
-                        return false;
-                    }
-                    return true;
-                }
-                return false;
-            }
+ 
         });
     }
 
@@ -249,7 +241,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     
                     if(mouseEvent.isPrimaryButtonDown() && isHover()){
                         NodoGrafico.inicioGeneracionDeEnlace = true;
-//                        System.out.println("Botn Primario opri y hover...");
                     }
                 }
 
@@ -507,4 +498,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         updateNodoListener();
         return (nombreModificado.length() == 0) ? nombre : nombreModificado.toString();
     }
+    
+    public Line getEnlaceComodin() {
+        return enlaceComodin;
+    }
+    
+    public abstract boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace);
 }

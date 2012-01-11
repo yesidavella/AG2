@@ -37,6 +37,7 @@ public class SimulacionBase {
 
     public void run() {
         simulacion.run();
+        
     }
 
     public GridSimulator getSimulador() {

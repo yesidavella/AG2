@@ -12,5 +12,15 @@ public  abstract class EnrutadorGrafico extends NodoGrafico{
         
         pasoDeSaltoLinea = 10;
     }
+
+    @Override
+    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoComienzoEnlace) {
+        
+        if(nodoComienzoEnlace instanceof NodoClienteGrafico){
+            return (nodoComienzoEnlace.getCantidadDeEnlaces()>=1)?false:true;
+        }
+        
+        return true;
+    }
     
 }

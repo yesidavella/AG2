@@ -70,7 +70,7 @@ public class IGU extends Scene{
     public static IGU getInstanciaIGUAg2(){
     
         if(iguAG2 == null){
-            iguAG2 = new IGU(new BorderPane(), 1280, 720);
+            iguAG2 = new IGU(new BorderPane(), 1200, 800);
         }
         return iguAG2;
     }
@@ -155,7 +155,7 @@ public class IGU extends Scene{
             public void handle(ActionEvent t) 
             {
                 Serializador serializador = new Serializador(primaryStage); 
-                GrupoDeDiseno grupoDeDiseno=  serializador.cargar(); 
+                GrupoDeDiseno grupoDeDiseno =  serializador.cargar(); 
                 spZonaDeDiseño.setContent(grupoDeDiseno);
                 grupoDeDiseno.setSpZonaDeDiseño(spZonaDeDiseño);                                  
                 grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
@@ -378,7 +378,7 @@ public class IGU extends Scene{
 
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
                 
-                grGrupoDeDiseño.generarZoom(sliderZoom.getValue()/100,sliderZoom.getValue()/100);
+                grGrupoDeDiseño.generarZoom(sliderZoom.getValue()/100);
                 
             }
         });

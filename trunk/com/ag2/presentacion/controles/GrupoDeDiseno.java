@@ -229,15 +229,15 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         
     }
 
-    public void generarZoom(double escalaEnX, double escalaEnY) {
+    public void generarZoom(double factorEscala) {
         
-        sclEscalaDeZoom.setPivotX(10100);
-        sclEscalaDeZoom.setPivotY(9800);
+        sclEscalaDeZoom.setPivotX(2*spZonaDeDiseño.getHvalue()*12500);//10100
+        sclEscalaDeZoom.setPivotY(2*spZonaDeDiseño.getVvalue()*9375);//9800
         
-        System.out.println("X:"+visibleProperty()+" Y:"+spZonaDeDiseño.getScene().yProperty());
+//        System.out.println("X:"+2*spZonaDeDiseño.getHvalue()*12500+" Y:"+2*spZonaDeDiseño.getVvalue()*9375);
         
-        sclEscalaDeZoom.setX(escalaEnX);
-        sclEscalaDeZoom.setY(escalaEnY);
+        sclEscalaDeZoom.setX(factorEscala);
+        sclEscalaDeZoom.setY(factorEscala);
         
     }
     
