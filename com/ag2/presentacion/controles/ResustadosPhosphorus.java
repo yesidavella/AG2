@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
  *
  * @author Frank
  */
-public class ResustadosPhosphorus {
+public class ResustadosPhosphorus implements  ViewResultsPhosphorus {
 
     private Tab tab;
     private TableView tvResultadosClientePhosphorus = new TableView();
@@ -34,21 +34,19 @@ public class ResustadosPhosphorus {
     private final ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso =  FXCollections.observableArrayList();
     private final ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador =  FXCollections.observableArrayList();
     
-    public ResustadosPhosphorus(Tab tab) {
+    public ResustadosPhosphorus(Tab tab)
+    {
         this.tab = tab;
         VBox vBox = new VBox();
         vBox.setSpacing(7);
         vBox.setPadding(new Insets(8, 8, 8, 8));
-        
-        
-        
+                
         creartvResultadosCliente();
         creartvResultadosRecurso();    
         creartvResultadosConmutadores();       
         vBox.getChildren().addAll(lbCliente, tvResultadosClientePhosphorus, lbRecurso,tvResultadosRecursoPhosphorus,lbConmutador,tvResultadosConmutadorPhosphorus );
         tab.setContent(vBox);
         
-     
 
     }
 
