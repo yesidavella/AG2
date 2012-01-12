@@ -61,6 +61,6 @@ public class Main extends Application{
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
         
         ResultsController resultsController = new ResultsController();
-        resultsController.setViewResultsPhosphorus(null);
+        resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
     }
 }
