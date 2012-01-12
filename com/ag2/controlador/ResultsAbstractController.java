@@ -4,6 +4,8 @@
  */
 package com.ag2.controlador;
 
+import com.ag2.modelo.OutputterModel;
+import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.controles.ViewResultsPhosphorus;
 
 /**
@@ -13,7 +15,8 @@ import com.ag2.presentacion.controles.ViewResultsPhosphorus;
 public abstract class ResultsAbstractController 
 {
     protected  ViewResultsPhosphorus viewResultsPhosphorus;
-
+    protected  OutputterModel outputterModel = new OutputterModel(SimulacionBase.getInstance().getSimulador()); 
+    
     public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) 
     {
         this.viewResultsPhosphorus = viewResultsPhosphorus;
