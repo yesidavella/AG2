@@ -54,7 +54,7 @@ public class IGU extends Scene{
     Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    private static TiposDeBoton estadoTipoBotonAnterior = TiposDeBoton.MANO;
+    
     Slider sliderZoom = new Slider();
     TablaPropiedadesDispositivo propiedadesDispositivoTbl;
     
