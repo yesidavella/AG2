@@ -1,9 +1,6 @@
 package com.ag2.presentacion;
 
-import com.ag2.controlador.ControladorAbstractoAdminNodo;
-import com.ag2.controlador.ControladorAdminNodo;
-import com.ag2.controlador.ExecuteAbstractController;
-import com.ag2.controlador.ExecuteController;
+import com.ag2.controlador.*;
 import com.ag2.modelo.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -62,5 +59,8 @@ public class Main extends Application{
         
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        
+        ResultsController resultsController = new ResultsController();
+        resultsController.setViewResultsPhosphorus(null);
     }
 }
