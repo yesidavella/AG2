@@ -62,18 +62,18 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
         if (nodoGrafico instanceof NodoClienteGrafico) {
 
-            ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGrafico);
+            ClientNode clientNode = (ClientNode) PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
 
             //===========================================================================================================
             NodeRelationProperty nodeRelationProperty = new NodeRelationProperty("ServiceNode", "Service node");
 
-            for (NodoGrafico nodoGraficoService : parejasDeNodosExistentes.keySet()) {
+            for (NodoGrafico nodoGraficoService : PAREJA_DE_NODOS_EXISTENTES.keySet()) {
                 if (nodoGraficoService instanceof NodoDeServicioGrafico) {
                     nodeRelationProperty.getObservableListNodes().add(nodoGraficoService);
                 }
             }
             if (clientNode.getServiceNode() != null) {
-                NodoGrafico nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), parejasDeNodosExistentes);
+                NodoGrafico nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), PAREJA_DE_NODOS_EXISTENTES);
                 if (nodoServiceSelected != null) {
                     nodeRelationProperty.setPrimerValor(nodoServiceSelected);
                 }
@@ -101,7 +101,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
 
         } else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
-            ResourceNode resource = (ResourceNode) parejasDeNodosExistentes.get(nodoGrafico);
+            ResourceNode resource = (ResourceNode) PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
 
 
             PropiedadeNodo propiedadCpuCapacity = new PropiedadeNodo("CpuCapacity", "Cpu Capacity", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
@@ -125,7 +125,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             propiedadeNodos.add(propiedadCpuCount);
             //============================================================================================================
 
-            for (NodoGrafico nodoGraficoService : parejasDeNodosExistentes.keySet()) {
+            for (NodoGrafico nodoGraficoService : PAREJA_DE_NODOS_EXISTENTES.keySet()) {
 
 
                 if (nodoGraficoService instanceof NodoDeServicioGrafico) {
@@ -145,7 +145,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             //============================================================================================================
 
         } else if (nodoGrafico instanceof EnrutadorGrafico) {
-            AbstractSwitch abstractSwitch = (AbstractSwitch) parejasDeNodosExistentes.get(nodoGrafico);
+            AbstractSwitch abstractSwitch = (AbstractSwitch) PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
 
             //===========================================================================================================
             PropiedadeNodo propiedadHandleDelay = new PropiedadeNodo("HandleDelay", "Handle Delay", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
@@ -262,12 +262,12 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         }
 
         if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) {
-            ClientNode clientNode = (ClientNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
+            ClientNode clientNode = (ClientNode) PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoSeleccionado);
 
             if (id.equalsIgnoreCase("ServiceNode")) {
-                NodoGrafico nodoGraficoServiceSelected = findNodoGraficoByName(valor, parejasDeNodosExistentes);
+                NodoGrafico nodoGraficoServiceSelected = findNodoGraficoByName(valor, PAREJA_DE_NODOS_EXISTENTES);
                 if (nodoGraficoServiceSelected != null) {
-                    clientNode.setServiceNode((ServiceNode) parejasDeNodosExistentes.get(nodoGraficoServiceSelected));
+                    clientNode.setServiceNode((ServiceNode) PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoServiceSelected));
                 }
 
 
@@ -302,7 +302,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             }
 
         } else if (nodoGraficoSeleccionado instanceof NodoDeRecursoGrafico) {
-            ResourceNode resource = (ResourceNode) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
+            ResourceNode resource = (ResourceNode) PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoSeleccionado);
 
 
             if (id.equalsIgnoreCase("CpuCapacity")) {
@@ -319,7 +319,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             } else if (id.equalsIgnoreCase("RelationshipResouceAndServiceNodo")) {
                 String serviceNodeName = valor.replace("_ON", "").replace("_OFF", "");
 
-                Enumeration<NodoGrafico> enumeration = parejasDeNodosExistentes.keys();
+                Enumeration<NodoGrafico> enumeration = PAREJA_DE_NODOS_EXISTENTES.keys();
                 NodoGrafico nodoGrafico;
                 while ((nodoGrafico = enumeration.nextElement()) != null) {
                     if (nodoGrafico.getNombre().equals(serviceNodeName)) {
@@ -327,7 +327,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                         break;
                     }
                 }
-                Entity entity = parejasDeNodosExistentes.get(nodoGrafico);
+                Entity entity = PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
                 if (valor.contains("_ON")) {
                     if (entity != null && entity instanceof ServiceNode) {
 
@@ -348,7 +348,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
 
         } else if (nodoGraficoSeleccionado instanceof EnrutadorGrafico) {
-            AbstractSwitch abstractSwitch = (AbstractSwitch) parejasDeNodosExistentes.get(nodoGraficoSeleccionado);
+            AbstractSwitch abstractSwitch = (AbstractSwitch) PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoSeleccionado);
             if (id.equalsIgnoreCase("HandleDelay")) {
                 abstractSwitch.setHandleDelay(new Time(Double.parseDouble(valor)));
             }

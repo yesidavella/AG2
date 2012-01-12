@@ -1,5 +1,6 @@
 package com.ag2.presentacion.controles;
 
+import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
@@ -21,7 +22,8 @@ import javafx.scene.transform.Scale;
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
     private transient ScrollPane spZonaDeDiseño;
-    private ArrayList<ControladorAbstractoAdminNodo> controladoresRegistrados;
+    private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
+    private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
     private double posicionActualRatonX = 0;
     private double posicionActualRatonY = 0;
     private transient ObservableList listaClientes = FXCollections.observableArrayList();
@@ -37,7 +39,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
-        controladoresRegistrados = new ArrayList<ControladorAbstractoAdminNodo>();
+        ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
+        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
         sclEscalaDeZoom = new Scale();
         getTransforms().add(sclEscalaDeZoom);
     }
@@ -97,33 +100,34 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
             NodoGrafico nuevoNodo = null;
-            ControladorAbstractoAdminNodo controladorPrincipal = controladoresRegistrados.get(0);
+            ControladorAbstractoAdminNodo controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
+            ControladorAbstractoAdminEnlace controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
-                nuevoNodo = new NodoClienteGrafico(controladorPrincipal);
+                nuevoNodo = new NodoClienteGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
-                nuevoNodo = new NodoDeServicioGrafico(controladorPrincipal);
+                nuevoNodo = new NodoDeServicioGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaNodoServicio.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
-                nuevoNodo = new EnrutadorOpticoGrafico(controladorPrincipal);
+                nuevoNodo = new EnrutadorOpticoGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new EnrutadorRafagaGrafico(controladorPrincipal);
+                nuevoNodo = new EnrutadorRafagaGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new EnrutadorHibridoGrafico(controladorPrincipal);
+                nuevoNodo = new EnrutadorHibridoGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
-                nuevoNodo = new NodoDeRecursoGrafico(controladorPrincipal);
+                nuevoNodo = new NodoDeRecursoGrafico(controladorAdminNodo,controladorAdminEnlace);
                 listaRecursos.add(nuevoNodo);
             }
             
@@ -135,7 +139,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
                 objetoGraficoSelecionado = nuevoNodo;
                 
-                for (ControladorAbstractoAdminNodo controladorRegistrado : controladoresRegistrados) {
+                for (ControladorAbstractoAdminNodo controladorRegistrado : ctrladoresRegistradosAdminNodo) {
                     controladorRegistrado.crearNodo(nuevoNodo);
                 }
                 nuevoNodo.seleccionar(true);
@@ -195,7 +199,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
 
     public void addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo) {
-        controladoresRegistrados.add(ctrlCrearNodo);
+        ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
     }
 
     private void readObject(ObjectInputStream inputStream) {
@@ -239,6 +243,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         sclEscalaDeZoom.setX(factorEscala);
         sclEscalaDeZoom.setY(factorEscala);
         
+    }
+
+    public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
+        ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
     }
     
 }
