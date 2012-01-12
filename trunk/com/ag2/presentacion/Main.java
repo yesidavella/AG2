@@ -60,6 +60,13 @@ public class Main extends Application{
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
         
+        ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
+        ModeloAbstractoCrearEnlace modeloCrearEnlace = new ModeloCrearEnlace();
+        ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
+        
+        IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
+//        ctrlCrearYAdminEnlace.setControlAdminNodo(ctrlCreadorYAdministradorNodo);
+        
         ResultsController resultsController = new ResultsController();
         resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
     }

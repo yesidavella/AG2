@@ -12,11 +12,11 @@ public abstract class ControladorAbstractoAdminNodo {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected Hashtable<NodoGrafico, Entity> parejasDeNodosExistentes;
+    protected static Hashtable<NodoGrafico, Entity> PAREJA_DE_NODOS_EXISTENTES;
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
-        parejasDeNodosExistentes = new Hashtable<NodoGrafico, Entity>();
+        PAREJA_DE_NODOS_EXISTENTES = new Hashtable<NodoGrafico, Entity>();
     }
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
@@ -34,11 +34,15 @@ public abstract class ControladorAbstractoAdminNodo {
     }
 
     protected void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico, Entity nodoReal) {
-        parejasDeNodosExistentes.put(nodoGrafico, nodoReal);
+        PAREJA_DE_NODOS_EXISTENTES.put(nodoGrafico, nodoReal);
     }
 
     protected void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico) {
-        parejasDeNodosExistentes.remove(nodoGrafico);
+        PAREJA_DE_NODOS_EXISTENTES.remove(nodoGrafico);
+    }
+    
+    public static Entity GET_NODO_PHOSPHOROUS_CON_NODO_GRAFICO(NodoGrafico nodoGrafico){
+        return PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
     }
 
     public abstract void crearNodo(NodoGrafico nodoGrafico);

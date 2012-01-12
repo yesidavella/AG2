@@ -1,5 +1,6 @@
 package com.ag2.presentacion.diseño;
 
+import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
@@ -36,6 +37,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private double posX;
     private boolean arrastrando = false;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
+    private ControladorAbstractoAdminEnlace controladorAbstractoAdminEnlace;
     private short alto;
     private short ancho;
     public static boolean inicioGeneracionDeEnlace = false;
@@ -44,8 +46,9 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
 
-    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
-        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo; 
+    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
+        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
+        this.controladorAbstractoAdminEnlace = ctrlAbsAdminEnlace; 
 //        setSelecionado(true);
         //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
@@ -204,6 +207,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     
                     nodoAComodin.setCantidadDeEnlaces((short)(nodoAComodin.getCantidadDeEnlaces()+1));
                     nodoGrafico.setCantidadDeEnlaces((short)(nodoGrafico.getCantidadDeEnlaces()+1));
+                    
+                    controladorAbstractoAdminEnlace.crearEnlace(enlaceGrafico);
 
                     nodoAComodin.toFront();
                     nodoGrafico.toFront();
