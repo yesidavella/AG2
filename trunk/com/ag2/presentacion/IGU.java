@@ -64,6 +64,7 @@ public class IGU extends Scene{
     private boolean estaTeclaCtrlOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEventoTcld;
+    private ResustadosPhosphorus resustadosPhosphorus;
     
     private static IGU iguAG2;
     
@@ -296,7 +297,7 @@ public class IGU extends Scene{
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-        ResustadosPhosphorus resustadosPhosphorus = new ResustadosPhosphorus(tabResultados);
+        resustadosPhosphorus = new ResustadosPhosphorus(tabResultados);
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
@@ -677,4 +678,7 @@ public class IGU extends Scene{
         return executePane;
     }
     
+    public ResustadosPhosphorus getResustadosPhosphorus() {
+        return resustadosPhosphorus;
+    }
 }
