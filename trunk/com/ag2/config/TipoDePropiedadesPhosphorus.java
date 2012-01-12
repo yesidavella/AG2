@@ -9,9 +9,7 @@ import javafx.event.EventType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 
 public enum TipoDePropiedadesPhosphorus {
 
@@ -41,23 +39,21 @@ public enum TipoDePropiedadesPhosphorus {
         this.control = control;
 
     }
-    
     private String nombrePropiedadPhosphorus;
     private Control control;
     private EditorPropiedades editorPropiedades = EditorPropiedades.getUniqueInstance();
-    
-    public String getNombrePropiedad()
-    {
-        return this.toString().replace("_"," "); 
-        
-    }        
+
+    public String getNombrePropiedad() {
+        return this.toString().replace("_", " ");
+
+    }
 
     private TipoDePropiedadesPhosphorus(String nombre, Control control) {
         nombrePropiedadPhosphorus = nombre;
         this.control = control;
         if (control instanceof TextField) {
             establecerEventoPropiedad((TextField) control);
-            
+
         } else if (control instanceof CheckBox) {
             establecerEventoPropiedad(((CheckBox) control));
 
@@ -87,11 +83,20 @@ public enum TipoDePropiedadesPhosphorus {
         textField.setText(editorPropiedades.getValorPropiedad(this));
         textField.setOnKeyTyped(new EventHandler<KeyEvent>() {
 
-         public void handle(KeyEvent keyEvent) 
-                {
-                String valor = ((TextField) keyEvent.getSource()).getText();
-                TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);            
-                
+            public void handle(KeyEvent keyEvent) {
+                String valor = ((TextField) keyEvent.getSource()).getText() + keyEvent.getCharacter();
+                TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
+            }
+        });
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            public void handle(KeyEvent keyEvent)
+            {             
+                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
+                {                   
+                    String valor = ((TextField) keyEvent.getSource()).getText();
+                    TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
+                }
             }
         });
     }

@@ -16,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -24,15 +25,31 @@ import javafx.scene.input.KeyEvent;
  */
 public class PropiedadeNodo {
 
-    private void establecerEventoOnKeyTyped(final String id) {
-        ((TextField) control).setOnKeyTyped(new EventHandler<KeyEvent>() {
-
-            public void handle(KeyEvent keyEvent) {
-
+    private void establecerEventoOnKeyTyped(final String id) 
+    {
+        TextField textField = ((TextField) control); 
+        textField.setOnKeyTyped(new EventHandler<KeyEvent>()
+        {
+            public void handle(KeyEvent keyEvent) 
+            {
                 TextField textField = (TextField) keyEvent.getSource();
                 tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText() + keyEvent.getCharacter());
             }
         });
+        
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            public void handle(KeyEvent keyEvent)
+            {             
+                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
+                {                                   
+                    String valor = ((TextField) keyEvent.getSource()).getText();
+                    tablaPropiedadesDispositivo.updatePropiedad(id, valor);
+                }
+            }
+        });
+        
+        
     }
 
     public enum TipoDePropiedadNodo {
