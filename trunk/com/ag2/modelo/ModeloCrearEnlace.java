@@ -5,7 +5,7 @@ import Grid.Entity;
 public class ModeloCrearEnlace extends ModeloAbstractoCrearEnlace {
 
     @Override
-    public void crearEnlacePhosphorous(Entity nodoPhosA, Entity nodoPhosB) {
-        ModeloUtil.createBiDirectionalLink(nodoPhosA,nodoPhosB);
+    public EnlacePhosphorous crearEnlacePhosphorous(Entity nodoPhosA, Entity nodoPhosB) {
+        return ModeloUtil.crearEnlaceBiDireccional(nodoPhosA,nodoPhosB);
     }
 }
