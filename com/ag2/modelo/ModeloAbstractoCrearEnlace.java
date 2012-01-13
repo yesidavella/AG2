@@ -20,5 +20,5 @@ public abstract class ModeloAbstractoCrearEnlace {
         return controladoresRegistrados.remove(controlador);
     }
     
-    public abstract void crearEnlacePhosphorous(Entity nodoPhosA,Entity nodoPhosB);
+    public abstract EnlacePhosphorous crearEnlacePhosphorous(Entity nodoPhosA,Entity nodoPhosB);
 }

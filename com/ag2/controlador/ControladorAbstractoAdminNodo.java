@@ -4,18 +4,19 @@ import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
-import com.ag2.util.ContenedorParejasNodosExistentes;
+import com.ag2.util.ContenedorParejasObjetosExistentes;
+import com.ag2.util.ContenedorParejasObjetosExistentes.ContenedorParejasDeNodosExistentes;
 import java.util.ArrayList;
 
 public abstract class ControladorAbstractoAdminNodo {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected ContenedorParejasNodosExistentes parejasDeNodosExistentes;
+    protected ContenedorParejasDeNodosExistentes parejasDeNodosExistentes;
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
-        parejasDeNodosExistentes = ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes();
+        parejasDeNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
     }
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {

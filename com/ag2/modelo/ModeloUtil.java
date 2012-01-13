@@ -76,4 +76,55 @@ public class ModeloUtil extends Util {
         return customLinkSpeed;
     }
 
+    static EnlacePhosphorous crearEnlaceBiDireccional(Entity from, Entity to) {
+        
+        GridOutPort puertoSalidaNodoA = null;
+        GridOutPort puertoSalidaNodoB = null;
+        
+        try {
+            puertoSalidaNodoA = ModeloUtil.crearEnlace(from, to);
+            puertoSalidaNodoB = ModeloUtil.crearEnlace(to, from);
+        } catch (IllegalEdgeException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
+        
+        return new EnlacePhosphorous(from, puertoSalidaNodoA, to, puertoSalidaNodoB);
+    }
+
+    /**
+     * Creates a one way link between from and to.
+     *
+     * @param from The first end of the link
+     * @param to The second end of the link.
+     * @throws IllegalEdgeException
+     */
+    public static GridOutPort crearEnlace(Entity from, Entity to) throws IllegalEdgeException {
+        if (from.supportsOBS() == to.supportsOBS() && from.supportsOCS() == to.supportsOCS()) {
+            
+            StringBuffer buffer = new StringBuffer(from.getId());
+            buffer.append("-");
+            buffer.append(to.getId());
+            
+            double customLinkSpeed = getCustomLinkSpeed(from);
+            
+            GridOutPort out = new GridOutPort(buffer.toString(), from,
+                    GridSimulation.configuration.getDoubleProperty(
+                    Config.ConfigEnum.switchingSpeed),
+                    customLinkSpeed,
+                    GridSimulation.configuration.getIntProperty(
+                    Config.ConfigEnum.defaultWavelengths));
+            GridInPort in = new GridInPort(buffer.toString(), to);
+            out.setTarget(in);
+            in.setSource(out);
+            from.addOutPort(out);
+            to.addInPort(in);
+            
+            return out;
+            
+        } else {
+            throw new IllegalEdgeException("Cannot connect two entities which do not share the same swithcing protocols "
+                    + from.getId() + " -->" + to.getId());
+        }
+    }
 }

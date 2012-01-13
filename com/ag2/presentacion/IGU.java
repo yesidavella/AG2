@@ -9,6 +9,7 @@ import com.ag2.presentacion.controles.ResustadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import com.ag2.util.ContenedorParejasObjetosExistentes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -380,7 +381,7 @@ public class IGU extends Scene{
             public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
                 
                 grGrupoDeDiseño.generarZoom(sliderZoom.getValue()/100);
-                
+
             }
         });
 
