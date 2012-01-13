@@ -1,10 +1,8 @@
 package com.ag2.controlador;
 
-import Grid.Port.GridOutPort;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public abstract class ControladorAbstractoAdminEnlace {
     
@@ -23,6 +21,5 @@ public abstract class ControladorAbstractoAdminEnlace {
     }
     
     public abstract void crearEnlace(EnlaceGrafico enlaceGrafico);
-    
-    
+    public abstract void consultarPropiedades(EnlaceGrafico enlaceGrafico);
 }
