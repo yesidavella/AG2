@@ -144,7 +144,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.seleccionar(true);
             }
-            System.out.println("PosX:"+mouEvent.getX()+" PosY:"+mouEvent.getY());
+            //System.out.println("PosX:"+mouEvent.getX()+" PosY:"+mouEvent.getY());
         }
     }
 

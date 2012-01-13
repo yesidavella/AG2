@@ -42,7 +42,7 @@ public class IGU extends Scene{
     Rectangle rectangle = new Rectangle(25000, 18750, Color.LIGHTBLUE);
     public static final Point2D ESQUINA_SUPERIOR_IZQ_MAPA = new Point2D(12500 - 5000, 9375 - 2617);
     GridPane gpNavegacionMapa = new GridPane();
-     ExecutePane executePane = new ExecutePane();
+    ExecutePane executePane = new ExecutePane();
     
    
     private Boton btnMoverEscena;
