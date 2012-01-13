@@ -5,6 +5,7 @@ import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.util.ContenedorParejasNodosExistentes;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
@@ -18,16 +19,15 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
                 NodoGrafico nodoGraficoA = enlaceGrafico.getNodoGraficoA();
                 NodoGrafico nodoGraficoB = enlaceGrafico.getNodoGraficoB();
 
-                Entity nodoPhophorousA = ControladorAbstractoAdminNodo.PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoA);
-                Entity nodoPhophorousB = ControladorAbstractoAdminNodo.PAREJA_DE_NODOS_EXISTENTES.get(nodoGraficoB);
+                Entity nodoPhosphorousA = ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoA);
+                Entity nodoPhosphorousB = ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoB);
                 
-                if( nodoPhophorousA!=null && nodoPhophorousB!=null){
-                    modelo.crearEnlacePhosphorous(nodoPhophorousA,nodoPhophorousB);
+                if( nodoPhosphorousA!=null && nodoPhosphorousB!=null){
+                    modelo.crearEnlacePhosphorous(nodoPhosphorousA,nodoPhosphorousB);
                 }else{
                     System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
                 }
             }
         }
-        
     }
 }

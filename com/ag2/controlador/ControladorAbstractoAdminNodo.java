@@ -4,19 +4,18 @@ import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.util.ContenedorParejasNodosExistentes;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 public abstract class ControladorAbstractoAdminNodo {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected static Hashtable<NodoGrafico, Entity> PAREJA_DE_NODOS_EXISTENTES;
+    protected ContenedorParejasNodosExistentes parejasDeNodosExistentes;
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
-        PAREJA_DE_NODOS_EXISTENTES = new Hashtable<NodoGrafico, Entity>();
+        parejasDeNodosExistentes = ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes();
     }
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
@@ -33,16 +32,12 @@ public abstract class ControladorAbstractoAdminNodo {
         return modelosRegistrados.remove(modeloCrearNodo);
     }
 
-    protected void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico, Entity nodoReal) {
-        PAREJA_DE_NODOS_EXISTENTES.put(nodoGrafico, nodoReal);
+    public void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico, Entity nodoPhosphorous) {
+        parejasDeNodosExistentes.put(nodoGrafico, nodoPhosphorous);
     }
 
-    protected void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico) {
-        PAREJA_DE_NODOS_EXISTENTES.remove(nodoGrafico);
-    }
-    
-    public static Entity GET_NODO_PHOSPHOROUS_CON_NODO_GRAFICO(NodoGrafico nodoGrafico){
-        return PAREJA_DE_NODOS_EXISTENTES.get(nodoGrafico);
+    public void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico) {
+        parejasDeNodosExistentes.remove(nodoGrafico);
     }
 
     public abstract void crearNodo(NodoGrafico nodoGrafico);

@@ -65,7 +65,6 @@ public class Main extends Application{
         cntrCrearYAdminEnlace.addModelo(modeloCrearEnlace);
         
         IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearEnlace(cntrCrearYAdminEnlace);
-//        ctrlCrearYAdminEnlace.setControlAdminNodo(ctrlCreadorYAdministradorNodo);
         
         ResultsController resultsController = new ResultsController();
         resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
