@@ -190,7 +190,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     }else{
                         System.out.println("Mal..");
                     }
-                    
                 }
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
@@ -202,13 +201,13 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     GrupoDeDiseno group = (GrupoDeDiseno)nodoGrafico.getParent();
                     group.getChildren().remove(enlaceComodin);
 
-                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico);
+                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico,controladorAbstractoAdminEnlace);
                     enlaceGrafico.addArcosInicialAlGrupo();
                     
                     nodoAComodin.setCantidadDeEnlaces((short)(nodoAComodin.getCantidadDeEnlaces()+1));
                     nodoGrafico.setCantidadDeEnlaces((short)(nodoGrafico.getCantidadDeEnlaces()+1));
                     
-                    controladorAbstractoAdminEnlace.crearEnlace(enlaceGrafico);
+
 
                     nodoAComodin.toFront();
                     nodoGrafico.toFront();
