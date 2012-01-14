@@ -5,14 +5,14 @@ import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.util.ContenedorParejasObjetosExistentes;
-import com.ag2.util.ContenedorParejasObjetosExistentes.ContenedorParejasDeNodosExistentes;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public abstract class ControladorAbstractoAdminNodo {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected ContenedorParejasDeNodosExistentes parejasDeNodosExistentes;
+    protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
