@@ -7,7 +7,7 @@ import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.util.ContenedorParejasObjetosExistentes;
-import com.ag2.util.ContenedorParejasObjetosExistentes.ContenedorParejasDeEnlacesExistentes;
+import java.util.Hashtable;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
@@ -36,8 +36,8 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
     @Override
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
-        ContenedorParejasDeEnlacesExistentes c = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
-        EnlacePhosphorous ep = c.get(enlaceGrafico);
+        Hashtable c = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
+        EnlacePhosphorous ep = (EnlacePhosphorous)c.get(enlaceGrafico);
         System.out.println("idEnlGr:"+enlaceGrafico+" IdEnlPhos:"+ep+" Puers:" +ep.getPuertoSalidaNodoPhosA()+" ** "+ep.getPuertoSalidaNodoPhosB());
     }
 }
