@@ -6,7 +6,7 @@ import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import java.util.Hashtable;
 
-public class ContenedorParejasObjetosExistentes{
+public abstract class ContenedorParejasObjetosExistentes{
     
     private static Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes;
     private static Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes;
