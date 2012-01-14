@@ -4,13 +4,11 @@
  */
 package com.ag2.presentacion.diseño.propiedades;
 
-import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNodo;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -47,9 +45,7 @@ public class PropiedadeNodo {
                     tablaPropiedadesDispositivo.updatePropiedad(id, valor);
                 }
             }
-        });
-        
-        
+        });  
     }
 
     public enum TipoDePropiedadNodo {
