@@ -17,25 +17,23 @@ public class NodeRelationProperty extends PropiedadeNodo {
 
     private transient ObservableList observableListNodes = FXCollections.observableArrayList();
     private String nombre;
-    public NodeRelationProperty(String id, String nombre) 
-    {
+    
+    public NodeRelationProperty(String id, String nombre) {
         super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO);        
         ChoiceBox  choiceBox =  ((ChoiceBox) control); 
-        choiceBox.setItems(observableListNodes);
-                 
+        choiceBox.setItems(observableListNodes);            
     }
-      public String toString() {
-            return nombre.toString();
-        }
+    
+    public String toString() {
+        return nombre.toString();
+    }
 
     public ObservableList getObservableListNodes() 
     {
         return observableListNodes;
     }
-    public void setPrimerValor(NodoGrafico nodoGrafico)
-    {
+    
+    public void setPrimerValor(NodoGrafico nodoGrafico){
          ((ChoiceBox) control).getSelectionModel().select(nodoGrafico);
     }
-     
-
 }

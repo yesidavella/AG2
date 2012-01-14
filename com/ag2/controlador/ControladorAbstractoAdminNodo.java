@@ -20,7 +20,6 @@ public abstract class ControladorAbstractoAdminNodo {
     }
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
-
         listaVistaNodosGraficos.add(vistaGrDeDiseño);
     }
 
@@ -42,10 +41,6 @@ public abstract class ControladorAbstractoAdminNodo {
     }
 
     public abstract void crearNodo(NodoGrafico nodoGrafico);
-
     public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
-
     public abstract void updatePropiedad(String id, String valor);
-
-    
 }
