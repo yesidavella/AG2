@@ -5,7 +5,7 @@ import com.ag2.config.serializacion.Serializador;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
-import com.ag2.presentacion.controles.ResustadosPhosphorus;
+import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
@@ -65,7 +65,7 @@ public class IGU extends Scene{
     private boolean estaTeclaCtrlOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEventoTcld;
-    private ResustadosPhosphorus resustadosPhosphorus;
+    private ResultadosPhosphorus resultadosPhosphorus;
     
     private static IGU iguAG2;
     
@@ -298,7 +298,7 @@ public class IGU extends Scene{
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-        resustadosPhosphorus = new ResustadosPhosphorus(tabResultados);
+        resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
 //        resustadosPhosphorus.adicionarResultadoCliente("Cliente1 ", "12", "34", "45", "67", "89");
@@ -679,7 +679,7 @@ public class IGU extends Scene{
         return executePane;
     }
     
-    public ResustadosPhosphorus getResustadosPhosphorus() {
-        return resustadosPhosphorus;
+    public ResultadosPhosphorus getResustadosPhosphorus() {
+        return resultadosPhosphorus;
     }
 }

@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
  *
  * @author Frank
  */
-public class ResustadosPhosphorus implements  ViewResultsPhosphorus {
+public class ResultadosPhosphorus implements  ViewResultsPhosphorus {
 
     private Tab tab;
     private TableView tvResultadosClientePhosphorus = new TableView();
@@ -34,7 +34,7 @@ public class ResustadosPhosphorus implements  ViewResultsPhosphorus {
     private final ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso =  FXCollections.observableArrayList();
     private final ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador =  FXCollections.observableArrayList();
     
-    public ResustadosPhosphorus(Tab tab)
+    public ResultadosPhosphorus(Tab tab)
     {
         this.tab = tab;
         VBox vBox = new VBox();

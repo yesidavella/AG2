@@ -6,7 +6,9 @@ import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.util.ContenedorParejasObjetosExistentes;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
@@ -36,8 +38,18 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
     @Override
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
-        Hashtable c = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
-        EnlacePhosphorous ep = (EnlacePhosphorous)c.get(enlaceGrafico);
-        System.out.println("idEnlGr:"+enlaceGrafico+" IdEnlPhos:"+ep+" Puers:" +ep.getPuertoSalidaNodoPhosA()+" ** "+ep.getPuertoSalidaNodoPhosB());
+
+        ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
+
+        //===========================================================================================================
+        PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
+        
+        EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous)ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
+        
+        propiedadNodoNombre.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre()+"<->"+enlaceGrafico.getNodoGraficoB().getNombre());
+        propiedadesDeNodo.add(propiedadNodoNombre);
+        //===========================================================================================================
+        
+        tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeNodo);
     }
 }
