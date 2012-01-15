@@ -24,6 +24,7 @@ public class SimulacionBase {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulator();
         simulacion.setSimulator(simulador);
+        
     }
 
     public void setOutputterModel(OutputterModel outputterModel) 

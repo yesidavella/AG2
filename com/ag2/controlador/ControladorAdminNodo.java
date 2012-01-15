@@ -459,4 +459,13 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         }
         return null;
     }
+
+    @Override
+    public void removeNodo(NodoGrafico nodoGrafico) 
+    {
+        Entity entity = parejasDeNodosExistentes.get(nodoGrafico); 
+        SimulacionBase.getInstance().getSimulador().unRegister(entity);
+        
+        
+    }
 }
