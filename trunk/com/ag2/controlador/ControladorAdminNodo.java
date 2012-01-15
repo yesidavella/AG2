@@ -52,13 +52,12 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     public void consultarPropiedades(NodoGrafico nodoGrafico) {
         nodoGraficoSeleccionado = nodoGrafico;
 
-        ArrayList<PropiedadeNodo> propiedadeNodos = new ArrayList<PropiedadeNodo>();
-
+        ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
 
         //===========================================================================================================
         PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
         propiedadNodoNombre.setPrimerValor(nodoGraficoSeleccionado.getNombre());
-        propiedadeNodos.add(propiedadNodoNombre);
+        propiedadesDeNodo.add(propiedadNodoNombre);
         //===========================================================================================================
 
         if (nodoGrafico instanceof NodoClienteGrafico) {
@@ -79,26 +78,26 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                     nodeRelationProperty.setPrimerValor(nodoServiceSelected);
                 }
             }
-            propiedadeNodos.add(nodeRelationProperty);
+            propiedadesDeNodo.add(nodeRelationProperty);
 
             //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("generacionTrabajos", "Generación de trabajos");
-            crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadeNodos, distribucionesTrabajos, "generacionTrabajos");
+            crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadesDeNodo, distribucionesTrabajos, "generacionTrabajos");
             //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesFlops = new PropiedadNodoDistribuciones("generacionFlops", "Generación de flops por trabajo");
-            crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadeNodos, distribucionesFlops, "generacionFlops");
+            crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadesDeNodo, distribucionesFlops, "generacionFlops");
 
             //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("generacionMaximoRetraso", "Generación de intervalo maximo de retraso");
-            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadeNodos, distribucionesMaximoRetraso, "generacionMaximoRetraso");
+            crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadesDeNodo, distribucionesMaximoRetraso, "generacionMaximoRetraso");
 
             //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesTamanoTrabajo = new PropiedadNodoDistribuciones("generacionTamañoTrabajo", "Generación del tamaño del trabajo");
-            crearPropiedadDistriducion(clientNode.getState().getSizeDistribution(), propiedadeNodos, distribucionesTamanoTrabajo, "generacionTamañoTrabajo");
+            crearPropiedadDistriducion(clientNode.getState().getSizeDistribution(), propiedadesDeNodo, distribucionesTamanoTrabajo, "generacionTamañoTrabajo");
 
             //===========================================================================================================
             PropiedadNodoDistribuciones distribucionesTamanoRespuesta = new PropiedadNodoDistribuciones("generacionTamañoRespuesta", "Generación del tamaño de la respuesta");
-            crearPropiedadDistriducion(clientNode.getState().getAckSizeDistribution(), propiedadeNodos, distribucionesTamanoRespuesta, "generacionTamañoRespuesta");
+            crearPropiedadDistriducion(clientNode.getState().getAckSizeDistribution(), propiedadesDeNodo, distribucionesTamanoRespuesta, "generacionTamañoRespuesta");
 
 
         } else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
@@ -113,17 +112,17 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             } else {
                 propiedadCpuCapacity.setPrimerValor("0");
             }
-            propiedadeNodos.add(propiedadCpuCapacity);
+            propiedadesDeNodo.add(propiedadCpuCapacity);
 
             //===========================================================================================================
             PropiedadeNodo propiedadQueueSize = new PropiedadeNodo("QueueSize", "Queue Size", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedadQueueSize.setPrimerValor(String.valueOf(resource.getMaxQueueSize()));
-            propiedadeNodos.add(propiedadQueueSize);
+            propiedadesDeNodo.add(propiedadQueueSize);
 
             //===========================================================================================================
             PropiedadeNodo propiedadCpuCount = new PropiedadeNodo("CpuCount", "Cpu Count", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedadCpuCount.setPrimerValor(String.valueOf(resource.getCpuCount()));
-            propiedadeNodos.add(propiedadCpuCount);
+            propiedadesDeNodo.add(propiedadCpuCount);
             //============================================================================================================
 
             for (NodoGrafico nodoGraficoService : parejasDeNodosExistentes.keySet()) {
@@ -131,7 +130,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
                 if (nodoGraficoService instanceof NodoDeServicioGrafico) {
                     PropiedadeNodo propiedadeNodo = new PropiedadeNodo("RelationshipResouceAndServiceNodo", nodoGraficoService.getNombre(), PropiedadeNodo.TipoDePropiedadNodo.BOLEANO);
-                    propiedadeNodos.add(propiedadeNodo);
+                    propiedadesDeNodo.add(propiedadeNodo);
                     for (ServiceNode serviceNode : resource.getServiceNodes()) {
 
                         if (serviceNode.getID().equals(nodoGraficoService.getNombreOriginal()))
@@ -151,11 +150,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             //===========================================================================================================
             PropiedadeNodo propiedadHandleDelay = new PropiedadeNodo("HandleDelay", "Handle Delay", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
             propiedadHandleDelay.setPrimerValor(String.valueOf(abstractSwitch.getHandleDelay().getTime()));
-            propiedadeNodos.add(propiedadHandleDelay);
+            propiedadesDeNodo.add(propiedadHandleDelay);
         }
 
         for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
-            vistaNodosGraficos.cargarPropiedades(propiedadeNodos);
+            vistaNodosGraficos.cargarPropiedades(propiedadesDeNodo);
         }
 
     }

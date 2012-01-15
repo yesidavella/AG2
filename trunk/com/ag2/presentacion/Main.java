@@ -2,6 +2,7 @@ package com.ag2.presentacion;
 
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
+import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -60,11 +61,13 @@ public class Main extends Application{
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
         
-        ControladorAbstractoAdminEnlace cntrCrearYAdminEnlace = new ControladorAdminEnlace();
+        ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
         ModeloAbstractoCrearEnlace modeloCrearEnlace = new ModeloCrearEnlace();
-        cntrCrearYAdminEnlace.addModelo(modeloCrearEnlace);
+        ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
         
-        IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearEnlace(cntrCrearYAdminEnlace);
+        ctrlCrearYAdminEnlace.addVistaEnlace(IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl());
+        IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl().addControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
         
         ResultsController resultsController = new ResultsController();
         resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
