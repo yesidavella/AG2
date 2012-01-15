@@ -48,8 +48,8 @@ public class PropiedadeNodo {
         });  
     }
 
-    public enum TipoDePropiedadNodo {
-
+    public enum TipoDePropiedadNodo 
+    {
         TEXTO, NUMERO, BOLEANO, LISTA_TEXTO
     };
     private String id;
@@ -67,13 +67,15 @@ public class PropiedadeNodo {
         this.control = control;
     }
 
-    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) {
-
+    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) 
+    {
+        
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo;
         this.id = id;
 
-        switch (tipoDePropiedadNodo) {
+        switch (tipoDePropiedadNodo) 
+        {
             case BOLEANO: {
                 control = new CheckBox();
                 ((CheckBox) control).setOnAction(new EventHandler<ActionEvent>() {
@@ -136,20 +138,22 @@ public class PropiedadeNodo {
     }
 
     public void setPrimerValor(String valor) {
-        switch (tipoDePropiedadNodo) {
-            case BOLEANO: {
+
+        switch (tipoDePropiedadNodo) 
+        {
+            case BOLEANO:
+            {
                 if (valor.equalsIgnoreCase("true")) {
                     ((CheckBox) control).setSelected(true);
                 }
                 break;
             }
             case NUMERO:
-            case TEXTO: {
+            case TEXTO:
+            {
                 ((TextField) control).setText(valor);
-
                 break;
             }
-
         }
         valorArrayList.add(0, valor);
     }

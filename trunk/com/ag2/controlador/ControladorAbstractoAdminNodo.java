@@ -43,4 +43,5 @@ public abstract class ControladorAbstractoAdminNodo {
     public abstract void crearNodo(NodoGrafico nodoGrafico);
     public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
     public abstract void updatePropiedad(String id, String valor);
+    public abstract void removeNodo(NodoGrafico nodoGrafico); 
 }
