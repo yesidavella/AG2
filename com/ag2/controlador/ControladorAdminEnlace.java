@@ -1,6 +1,7 @@
 package com.ag2.controlador;
 
 import Grid.Entity;
+import Grid.Port.GridOutPort;
 import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.modelo.ModeloCrearEnlace;
@@ -40,15 +41,45 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
 
         ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
-
-        //===========================================================================================================
-        PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO);
-        
         EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous)ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
-        
-        propiedadNodoNombre.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre()+"<->"+enlaceGrafico.getNodoGraficoB().getNombre());
-        propiedadesDeNodo.add(propiedadNodoNombre);
+        GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
+        GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
+        /*
+         **Enlace de nodo Phosphorous de A hacia B (A->B)
+         */
         //===========================================================================================================
+        PropiedadeNodo propNombreDireccionCanalAB = new PropiedadeNodo("direcciónCanalAB", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
+        propNombreDireccionCanalAB.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre()+"-->"+enlaceGrafico.getNodoGraficoB().getNombre());
+        propiedadesDeNodo.add(propNombreDireccionCanalAB);
+        
+        PropiedadeNodo propVelEnlaceAB = new PropiedadeNodo("linkSpeedAB", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+        propVelEnlaceAB.setPrimerValor(Double.toString(puertoSalidaNodoA.getLinkSpeed()));
+        propiedadesDeNodo.add(propVelEnlaceAB);
+        //===========================================================================================================
+
+        /*
+         **Enlace de nodo Phosphorous de B hacia A (B->A)
+         */
+        //===========================================================================================================
+        PropiedadeNodo propNombreDireccionCanalBA = new PropiedadeNodo("direcciónCanalBA", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
+        propNombreDireccionCanalBA.setPrimerValor(enlaceGrafico.getNodoGraficoB().getNombre()+"-->"+enlaceGrafico.getNodoGraficoA().getNombre());
+        propiedadesDeNodo.add(propNombreDireccionCanalBA);
+        
+        PropiedadeNodo propVelEnlaceBA = new PropiedadeNodo("linkSpeedBA", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+        propVelEnlaceBA.setPrimerValor(Double.toString(puertoSalidaNodoB.getLinkSpeed()));
+        propiedadesDeNodo.add(propVelEnlaceBA);
+        //===========================================================================================================
+        
+        /*
+         **Propiedades comunes en ambas direcciones del canal.
+         */
+        PropiedadeNodo propVelConmutacion = new PropiedadeNodo("switchingSpeed", "Vel. de Conmutación:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+        propVelConmutacion.setPrimerValor( (puertoSalidaNodoA.getSwitchingSpeed()==puertoSalidaNodoB.getSwitchingSpeed())?Integer.toString((int)puertoSalidaNodoB.getSwitchingSpeed()):"Problema leyendo Vel. de conmutación.");
+        propiedadesDeNodo.add(propVelConmutacion);
+        
+        PropiedadeNodo propWavelengths = new PropiedadeNodo("defaultWavelengths", "Cantidad de λs:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
+        propWavelengths.setPrimerValor( (puertoSalidaNodoA.getMaxNumberOfWavelengths()==puertoSalidaNodoB.getMaxNumberOfWavelengths())?Integer.toString(puertoSalidaNodoB.getMaxNumberOfWavelengths()):"Problema leyendo el numero de λ.");
+        propiedadesDeNodo.add(propWavelengths);
         
         tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeNodo);
     }

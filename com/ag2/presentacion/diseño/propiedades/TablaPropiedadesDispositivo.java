@@ -40,7 +40,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         valorPropiedadDispositivo.setMinWidth(200);
         valorPropiedadDispositivo.setPrefWidth(250);
         
-        TableColumn tituloTblDispositivo = new TableColumn("PROPIEDADES DISPOSITIVO");
+        TableColumn tituloTblDispositivo = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
         tituloTblDispositivo.getColumns().addAll(nombrePropiedadDispositivo, valorPropiedadDispositivo);
 
         getColumns().add(tituloTblDispositivo);

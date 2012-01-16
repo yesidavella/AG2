@@ -10,10 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -50,7 +47,7 @@ public class PropiedadeNodo {
 
     public enum TipoDePropiedadNodo 
     {
-        TEXTO, NUMERO, BOLEANO, LISTA_TEXTO
+        TEXTO, NUMERO, BOLEANO, LISTA_TEXTO, ETIQUETA
     };
     private String id;
     private String nombre;
@@ -113,8 +110,11 @@ public class PropiedadeNodo {
 
                 break;
             }
-            case NUMERO:
-            case TEXTO: {
+            case ETIQUETA: {
+                control = new Label();
+                break;
+            }
+            case NUMERO:case TEXTO : {
                 control = new TextField();
                 establecerEventoOnKeyTyped(id);
             }
@@ -148,6 +148,9 @@ public class PropiedadeNodo {
                 }
                 break;
             }
+            case ETIQUETA:
+                ((Label)control).setText(valor);
+                break;
             case NUMERO:
             case TEXTO:
             {

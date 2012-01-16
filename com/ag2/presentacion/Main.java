@@ -2,7 +2,6 @@ package com.ag2.presentacion;
 
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
-import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
