@@ -40,7 +40,7 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
     @Override
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
 
-        ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
+        ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
         EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous)ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
         GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
         GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
@@ -50,11 +50,11 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
         //===========================================================================================================
         PropiedadeNodo propNombreDireccionCanalAB = new PropiedadeNodo("direcciónCanalAB", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
         propNombreDireccionCanalAB.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre()+"-->"+enlaceGrafico.getNodoGraficoB().getNombre());
-        propiedadesDeNodo.add(propNombreDireccionCanalAB);
+        propiedadesDeEnlace.add(propNombreDireccionCanalAB);
         
         PropiedadeNodo propVelEnlaceAB = new PropiedadeNodo("linkSpeedAB", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
         propVelEnlaceAB.setPrimerValor(Double.toString(puertoSalidaNodoA.getLinkSpeed()));
-        propiedadesDeNodo.add(propVelEnlaceAB);
+        propiedadesDeEnlace.add(propVelEnlaceAB);
         //===========================================================================================================
 
         /*
@@ -63,11 +63,11 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
         //===========================================================================================================
         PropiedadeNodo propNombreDireccionCanalBA = new PropiedadeNodo("direcciónCanalBA", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
         propNombreDireccionCanalBA.setPrimerValor(enlaceGrafico.getNodoGraficoB().getNombre()+"-->"+enlaceGrafico.getNodoGraficoA().getNombre());
-        propiedadesDeNodo.add(propNombreDireccionCanalBA);
+        propiedadesDeEnlace.add(propNombreDireccionCanalBA);
         
         PropiedadeNodo propVelEnlaceBA = new PropiedadeNodo("linkSpeedBA", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
         propVelEnlaceBA.setPrimerValor(Double.toString(puertoSalidaNodoB.getLinkSpeed()));
-        propiedadesDeNodo.add(propVelEnlaceBA);
+        propiedadesDeEnlace.add(propVelEnlaceBA);
         //===========================================================================================================
         
         /*
@@ -75,12 +75,12 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
          */
         PropiedadeNodo propVelConmutacion = new PropiedadeNodo("switchingSpeed", "Vel. de Conmutación:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
         propVelConmutacion.setPrimerValor( (puertoSalidaNodoA.getSwitchingSpeed()==puertoSalidaNodoB.getSwitchingSpeed())?Integer.toString((int)puertoSalidaNodoB.getSwitchingSpeed()):"Problema leyendo Vel. de conmutación.");
-        propiedadesDeNodo.add(propVelConmutacion);
+        propiedadesDeEnlace.add(propVelConmutacion);
         
         PropiedadeNodo propWavelengths = new PropiedadeNodo("defaultWavelengths", "Cantidad de λs:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
         propWavelengths.setPrimerValor( (puertoSalidaNodoA.getMaxNumberOfWavelengths()==puertoSalidaNodoB.getMaxNumberOfWavelengths())?Integer.toString(puertoSalidaNodoB.getMaxNumberOfWavelengths()):"Problema leyendo el numero de λ.");
-        propiedadesDeNodo.add(propWavelengths);
+        propiedadesDeEnlace.add(propWavelengths);
         
-        tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeNodo);
+        tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeEnlace);
     }
 }
