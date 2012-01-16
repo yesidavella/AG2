@@ -33,7 +33,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private ObjetoSeleccionable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
     private Scale sclEscalaDeZoom;
-    
+
     public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
         this.spZonaDeDiseño = spZonaDeDiseño;
         setOnMousePressed(this);
@@ -107,38 +107,38 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
-                nuevoNodo = new NodoClienteGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new NodoClienteGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
-                nuevoNodo = new NodoDeServicioGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new NodoDeServicioGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaNodoServicio.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
-                nuevoNodo = new EnrutadorOpticoGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new EnrutadorOpticoGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new EnrutadorRafagaGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new EnrutadorRafagaGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new EnrutadorHibridoGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new EnrutadorHibridoGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
-                nuevoNodo = new NodoDeRecursoGrafico(controladorAdminNodo,controladorAdminEnlace);
+                nuevoNodo = new NodoDeRecursoGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaRecursos.add(nuevoNodo);
             }
-            
+
             if (nuevoNodo != null) {
                 if (objetoGraficoSelecionado != null) {
                     objetoGraficoSelecionado.seleccionar(false);
                 }
-                
+
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
                 objetoGraficoSelecionado = nuevoNodo;
-                
+
                 for (ControladorAbstractoAdminNodo controladorRegistrado : ctrladoresRegistradosAdminNodo) {
                     controladorRegistrado.crearNodo(nuevoNodo);
                 }
@@ -168,9 +168,9 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
         if (nuevoNodo != null) {
 
-            posicionX = me.getX() - nuevoNodo.getAnchoActual()/2;
-            posicionY = me.getY() - nuevoNodo.getAltoActual()/2;
-            
+            posicionX = me.getX() - nuevoNodo.getAnchoActual() / 2;
+            posicionY = me.getY() - nuevoNodo.getAltoActual() / 2;
+
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);
             getChildren().addAll(nuevoNodo);
@@ -208,7 +208,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             setOnMousePressed(this);
             setOnMouseDragged(this);
             setOnMouseReleased(this);
-            
+
             for (Serializable serializable : objectosSerializables) {
                 if (serializable instanceof NodoGrafico) {
                     NodoGrafico nodoGrafico = (NodoGrafico) serializable;
@@ -229,24 +229,20 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
 
-    public void updatePropiedad( String id, String valor) {
-        
+    public void updatePropiedad(String id, String valor) {
     }
 
     public void generarZoom(double factorEscala) {
-        
-        sclEscalaDeZoom.setPivotX(2*spZonaDeDiseño.getHvalue()*12500);//10100
-        sclEscalaDeZoom.setPivotY(2*spZonaDeDiseño.getVvalue()*9375);//9800
-        
+
+        sclEscalaDeZoom.setPivotX(2 * spZonaDeDiseño.getHvalue() * 12500);//10100
+        sclEscalaDeZoom.setPivotY(2 * spZonaDeDiseño.getVvalue() * 9375);//9800
 //        System.out.println("X:"+2*spZonaDeDiseño.getHvalue()*12500+" Y:"+2*spZonaDeDiseño.getVvalue()*9375);
-        
         sclEscalaDeZoom.setX(factorEscala);
         sclEscalaDeZoom.setY(factorEscala);
-        
+
     }
 
     public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
         ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
     }
-    
 }
