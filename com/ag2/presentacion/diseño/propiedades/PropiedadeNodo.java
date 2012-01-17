@@ -10,52 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-/**
- *
- * @author Frank
- */
 public class PropiedadeNodo {
-
-    private void establecerEventoOnKeyTyped(final String id) 
-    {
-        final TextField textField = ((TextField) control); 
-//        textField.setOnKeyTyped(new EventHandler<KeyEvent>()
-//        {
-//            public void handle(KeyEvent keyEvent) 
-//            {
-////                TextField textField = (TextField) keyEvent.getSource();
-////                tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText() + keyEvent.getCharacter());
-//            }
-//        });
-//        
-//        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
-//        {
-//            public void handle(KeyEvent keyEvent)
-//            {             
-//                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
-//                {                                   
-////                    String valor = ((TextField) keyEvent.getSource()).getText();
-////                    tablaPropiedadesDispositivo.updatePropiedad(id, valor);
-//                }
-//            }
-//        });
-        
-        textField.setOnMouseExited(new EventHandler<MouseEvent>(){
-
-            public void handle(MouseEvent event) {
-                IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
-            }
-        });
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>(){
-
-            public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
-                
-                if(beforeStateFocus==true && currentStateFocus==false){
-                    tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText());
-                }
-            }
-        });
-    }
 
     public enum TipoDePropiedadNodo 
     {
@@ -67,14 +22,6 @@ public class PropiedadeNodo {
     private TipoDePropiedadNodo tipoDePropiedadNodo;
     protected Control control;
     private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
-
-    public Control getControl() {
-        return control;
-    }
-
-    public void setControl(Control control) {
-        this.control = control;
-    }
 
     public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) 
     {
@@ -180,4 +127,33 @@ public class PropiedadeNodo {
     public void setTablaPropiedadesDispositivo(TablaPropiedadesDispositivo tablaPropiedadesDispositivo) {
         this.tablaPropiedadesDispositivo = tablaPropiedadesDispositivo;
     }
+    
+    private void establecerEventoOnKeyTyped(final String id) {
+        final TextField textField = ((TextField) control);
+
+        textField.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+                IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
+            }
+        });
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+            public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
+
+                if (beforeStateFocus == true && currentStateFocus == false) {
+                    tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText());
+                }
+            }
+        });
+    }
+    
+    public Control getControl() {
+        return control;
+    }
+
+    public void setControl(Control control) {
+        this.control = control;
+    }
+
 }
