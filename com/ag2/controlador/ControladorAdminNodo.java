@@ -255,7 +255,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
     @Override
     public void updatePropiedad(String id, String valor) {
-        System.out.println("prop control " + id + " " + valor);
 
         if (id.equalsIgnoreCase("nombre")) {
             nodoGraficoSeleccionado.setNombre(valor);

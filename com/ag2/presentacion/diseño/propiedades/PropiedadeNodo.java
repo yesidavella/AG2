@@ -8,8 +8,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -60,7 +58,6 @@ public class PropiedadeNodo {
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
                 
                 if(beforeStateFocus==true && currentStateFocus==false){
-                    System.out.println("Funciona...");
                     tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText());
                 }
             }
