@@ -43,14 +43,7 @@ public class PropiedadeNodo {
         textField.setOnMouseExited(new EventHandler<MouseEvent>(){
 
             public void handle(MouseEvent event) {
-                
-                TextField textControl = (TextField)event.getSource();
-
-                if(textControl.isFocused()){
-                    String valor = textControl.getText();
-                    tablaPropiedadesDispositivo.updatePropiedad(id, valor);
-                    IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
-                }
+                IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
             }
         });
         textField.focusedProperty().addListener(new ChangeListener<Boolean>(){
