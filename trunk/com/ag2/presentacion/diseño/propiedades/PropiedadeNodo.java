@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.presentacion.diseño.propiedades;
 
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNodo;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
@@ -13,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -22,27 +20,51 @@ public class PropiedadeNodo {
 
     private void establecerEventoOnKeyTyped(final String id) 
     {
-        TextField textField = ((TextField) control); 
-        textField.setOnKeyTyped(new EventHandler<KeyEvent>()
-        {
-            public void handle(KeyEvent keyEvent) 
-            {
-                TextField textField = (TextField) keyEvent.getSource();
-                tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText() + keyEvent.getCharacter());
-            }
-        });
+        final TextField textField = ((TextField) control); 
+//        textField.setOnKeyTyped(new EventHandler<KeyEvent>()
+//        {
+//            public void handle(KeyEvent keyEvent) 
+//            {
+////                TextField textField = (TextField) keyEvent.getSource();
+////                tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText() + keyEvent.getCharacter());
+//            }
+//        });
+//        
+//        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
+//        {
+//            public void handle(KeyEvent keyEvent)
+//            {             
+//                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
+//                {                                   
+////                    String valor = ((TextField) keyEvent.getSource()).getText();
+////                    tablaPropiedadesDispositivo.updatePropiedad(id, valor);
+//                }
+//            }
+//        });
         
-        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
-        {
-            public void handle(KeyEvent keyEvent)
-            {             
-                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
-                {                                   
-                    String valor = ((TextField) keyEvent.getSource()).getText();
+        textField.setOnMouseExited(new EventHandler<MouseEvent>(){
+
+            public void handle(MouseEvent event) {
+                
+                TextField textControl = (TextField)event.getSource();
+
+                if(textControl.isFocused()){
+                    String valor = textControl.getText();
                     tablaPropiedadesDispositivo.updatePropiedad(id, valor);
+                    IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
                 }
             }
-        });  
+        });
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>(){
+
+            public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
+                
+                if(beforeStateFocus==true && currentStateFocus==false){
+                    System.out.println("Funciona...");
+                    tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText());
+                }
+            }
+        });
     }
 
     public enum TipoDePropiedadNodo 
@@ -88,8 +110,6 @@ public class PropiedadeNodo {
                         }
                         tablaPropiedadesDispositivo.updatePropiedad(id,nombre+valor );
                         checkBox.setDisable(true);
-                         
-                        
                     }
                 });
                 break;
@@ -106,8 +126,6 @@ public class PropiedadeNodo {
                         }
                     }
                 });
-
-
                 break;
             }
             case ETIQUETA: {

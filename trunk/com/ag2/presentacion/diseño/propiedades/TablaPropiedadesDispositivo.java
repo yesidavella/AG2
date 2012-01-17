@@ -2,7 +2,11 @@ package com.ag2.presentacion.diseño.propiedades;
 
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.VistaNodosGraficos;
+import com.ag2.presentacion.diseño.EnlaceGrafico;
+import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.ObjetoSeleccionable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,11 +63,14 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
 
     public void updatePropiedad( String id, String valor) 
     {
-       
-        if(controladorAbstractoAdminNodo!=null)
-        {
-            controladorAbstractoAdminNodo.updatePropiedad( id, valor);
+        ObjetoSeleccionable objetoSeleccionado = IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
+        
+        if(objetoSeleccionado != null){
+            if (objetoSeleccionado instanceof NodoGrafico) {
+                controladorAbstractoAdminNodo.updatePropiedad(id, valor);
+            } else if (objetoSeleccionado instanceof EnlaceGrafico) {
+                controladorAdminEnlace.updatePropiedad(id, valor);
+            }
         }
      }
-    
 }
