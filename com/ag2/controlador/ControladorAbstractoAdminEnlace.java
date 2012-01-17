@@ -24,6 +24,7 @@ public abstract class ControladorAbstractoAdminEnlace {
     
     public abstract void crearEnlace(EnlaceGrafico enlaceGrafico);
     public abstract void consultarPropiedades(EnlaceGrafico enlaceGrafico);
+    public abstract void updatePropiedad(String id,String valor);
 
     public void addVistaEnlace(TablaPropiedadesDispositivo propiedadesDispositivoTbl) {
         this.tblPropiedadesDispositivo = propiedadesDispositivoTbl;

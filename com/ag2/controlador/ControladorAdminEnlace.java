@@ -10,9 +10,13 @@ import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import com.ag2.util.ContenedorParejasObjetosExistentes;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
+
+    private Entity nodoPhosphorousA;
+    private Entity nodoPhosphorousB; 
+    private GridOutPort puertoSalidaNodoA;
+    private GridOutPort puertoSalidaNodoB;
 
     @Override
     public void crearEnlace(EnlaceGrafico enlaceGrafico) {
@@ -24,8 +28,8 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
                 NodoGrafico nodoGraficoA = enlaceGrafico.getNodoGraficoA();
                 NodoGrafico nodoGraficoB = enlaceGrafico.getNodoGraficoB();
 
-                Entity nodoPhosphorousA = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoA);
-                Entity nodoPhosphorousB = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoB);
+                nodoPhosphorousA = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoA);
+                nodoPhosphorousB = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoB);
                 
                 if( nodoPhosphorousA!=null && nodoPhosphorousB!=null){
                     EnlacePhosphorous nuevoEnlacePhosphorous = modelo.crearEnlacePhosphorous(nodoPhosphorousA,nodoPhosphorousB);
@@ -42,13 +46,13 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
         EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous)ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
-        GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
-        GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
+        puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
+        puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
         /*
          **Enlace de nodo Phosphorous de A hacia B (A->B)
          */
         //===========================================================================================================
-        PropiedadeNodo propNombreDireccionCanalAB = new PropiedadeNodo("direcciónCanalAB", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
+        PropiedadeNodo propNombreDireccionCanalAB = new PropiedadeNodo("direcciónCanalAB", "Dirección del Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
         propNombreDireccionCanalAB.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre()+"-->"+enlaceGrafico.getNodoGraficoB().getNombre());
         propiedadesDeEnlace.add(propNombreDireccionCanalAB);
         
@@ -61,7 +65,7 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
          **Enlace de nodo Phosphorous de B hacia A (B->A)
          */
         //===========================================================================================================
-        PropiedadeNodo propNombreDireccionCanalBA = new PropiedadeNodo("direcciónCanalBA", "Dirección Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
+        PropiedadeNodo propNombreDireccionCanalBA = new PropiedadeNodo("direcciónCanalBA", "Dirección del Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA);
         propNombreDireccionCanalBA.setPrimerValor(enlaceGrafico.getNodoGraficoB().getNombre()+"-->"+enlaceGrafico.getNodoGraficoA().getNombre());
         propiedadesDeEnlace.add(propNombreDireccionCanalBA);
         
@@ -74,7 +78,7 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
          **Propiedades comunes en ambas direcciones del canal.
          */
         PropiedadeNodo propVelConmutacion = new PropiedadeNodo("switchingSpeed", "Vel. de Conmutación:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
-        propVelConmutacion.setPrimerValor( (puertoSalidaNodoA.getSwitchingSpeed()==puertoSalidaNodoB.getSwitchingSpeed())?Integer.toString((int)puertoSalidaNodoB.getSwitchingSpeed()):"Problema leyendo Vel. de conmutación.");
+        propVelConmutacion.setPrimerValor( (puertoSalidaNodoA.getSwitchingSpeed()==puertoSalidaNodoB.getSwitchingSpeed())?Double.toString(puertoSalidaNodoB.getSwitchingSpeed()):"Problema leyendo Vel. de conmutación.");
         propiedadesDeEnlace.add(propVelConmutacion);
         
         PropiedadeNodo propWavelengths = new PropiedadeNodo("defaultWavelengths", "Cantidad de λs:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO);
@@ -82,5 +86,21 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
         propiedadesDeEnlace.add(propWavelengths);
         
         tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeEnlace);
+    }
+
+    @Override
+    public void updatePropiedad(String id, String valor) {
+
+        if(id.equalsIgnoreCase("linkSpeedAB")){
+            puertoSalidaNodoA.setLinkSpeed(Double.valueOf(valor));
+        }else if(id.equalsIgnoreCase("linkSpeedBA")){
+            puertoSalidaNodoB.setLinkSpeed(Double.valueOf(valor));
+        }else if(id.equalsIgnoreCase("switchingSpeed")){
+            puertoSalidaNodoA.setSwitchingSpeed(Double.valueOf(valor));
+            puertoSalidaNodoB.setSwitchingSpeed(Double.valueOf(valor));
+        }else if(id.equalsIgnoreCase("defaultWavelengths")){
+            puertoSalidaNodoA.setMaxNumberOfWavelengths(Integer.parseInt(valor));
+            puertoSalidaNodoB.setMaxNumberOfWavelengths(Integer.parseInt(valor));
+        }
     }
 }
