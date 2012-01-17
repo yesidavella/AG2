@@ -1,6 +1,9 @@
 package com.ag2.config;
 
+import com.ag2.presentacion.IGU;
 import com.sun.javafx.scene.control.WeakEventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,23 +81,23 @@ public enum TipoDePropiedadesPhosphorus {
         });
     }
 
-    private void establecerEventoPropiedad(TextField textField) {
+    private void establecerEventoPropiedad(final TextField textField) {
 
         textField.setText(editorPropiedades.getValorPropiedad(this));
-        textField.setOnKeyTyped(new EventHandler<KeyEvent>() {
 
-            public void handle(KeyEvent keyEvent) {
-                String valor = ((TextField) keyEvent.getSource()).getText() + keyEvent.getCharacter();
-                TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
+        textField.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+                IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
             }
         });
-        textField.setOnKeyPressed(new EventHandler<KeyEvent>()
-        {
-            public void handle(KeyEvent keyEvent)
-            {             
-                if (keyEvent.getCode().equals(KeyCode.DELETE)) 
-                {                   
-                    String valor = ((TextField) keyEvent.getSource()).getText();
+        
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+            public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
+
+                if (beforeStateFocus == true && currentStateFocus == false) {
+                    String valor = textField.getText();
                     TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
                 }
             }
