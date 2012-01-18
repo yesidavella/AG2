@@ -14,18 +14,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
-    private transient ScrollPane spZonaDeDiseño;
     private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
     private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
-    private double posicionActualRatonX = 0;
-    private double posicionActualRatonY = 0;
     private transient ObservableList listaClientes = FXCollections.observableArrayList();
     private transient ObservableList listaRecursos = FXCollections.observableArrayList();
     private transient ObservableList listaSwitches = FXCollections.observableArrayList();
@@ -33,9 +32,19 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private ObjetoSeleccionable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
     private Scale sclEscalaDeZoom;
+    private Rectangle backgroudRec;
+    
+    private double dragBaseX, dragBaseY;
+    private double dragBase2X, dragBase2Y;
 
-    public GrupoDeDiseno(ScrollPane spZonaDeDiseño) {
-        this.spZonaDeDiseño = spZonaDeDiseño;
+    public GrupoDeDiseno() {
+        backgroudRec = new Rectangle(360, 175, Color.RED);
+        backgroudRec.setTranslateX(-backgroudRec.getWidth()/2);
+        backgroudRec.setTranslateY(-backgroudRec.getHeight()/2);
+        backgroudRec.setScaleX(17);
+        backgroudRec.setScaleY(17);
+        
+        getChildren().add(backgroudRec);
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
@@ -43,14 +52,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
         sclEscalaDeZoom = new Scale();
         getTransforms().add(sclEscalaDeZoom);
-    }
-
-    public ScrollPane getSpZonaDeDiseño() {
-        return spZonaDeDiseño;
-    }
-
-    public void setSpZonaDeDiseño(ScrollPane spZonaDeDiseño) {
-        this.spZonaDeDiseño = spZonaDeDiseño;
     }
 
     public ObjetoSeleccionable getObjetoGraficoSelecionado() {
@@ -70,43 +71,42 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
-                posicionActualRatonX = mouEvent.getSceneX();
-                posicionActualRatonY = mouEvent.getSceneY();
+                dragBaseX = translateXProperty().get();
+                dragBaseY = translateYProperty().get();
+                dragBase2X = mouEvent.getSceneX();
+                dragBase2Y = mouEvent.getSceneY();
             }
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_DRAGGED) {
-
-            if (botonSeleccionado == TiposDeBoton.MANO) {
-
-                double factorX = Math.abs(posicionActualRatonX - mouEvent.getSceneX());
-
-                if (mouEvent.getSceneX() < posicionActualRatonX) {
-                    spZonaDeDiseño.setHvalue(spZonaDeDiseño.getHvalue() + factorX * 0.0000413 * spZonaDeDiseño.getScaleX());
-                } else if (mouEvent.getSceneX() > posicionActualRatonX) {
-                    spZonaDeDiseño.setHvalue(spZonaDeDiseño.getHvalue() - factorX * 0.0000413 * spZonaDeDiseño.getScaleX());
-                }
-                posicionActualRatonX = mouEvent.getSceneX();
-
-                double factorY = Math.abs(posicionActualRatonY - mouEvent.getSceneY());
-
-                if (mouEvent.getSceneY() < posicionActualRatonY) {
-                    spZonaDeDiseño.setVvalue(spZonaDeDiseño.getVvalue() + factorY * 0.0000544 * spZonaDeDiseño.getScaleY());
-                } else if (mouEvent.getSceneY() > posicionActualRatonY) {
-                    spZonaDeDiseño.setVvalue(spZonaDeDiseño.getVvalue() - factorY * 0.0000544 * spZonaDeDiseño.getScaleY());
-                }
-                posicionActualRatonY = mouEvent.getSceneY();
+            
+            if(botonSeleccionado==TiposDeBoton.MANO){
+                setTranslateX(dragBaseX + (mouEvent.getSceneX()-dragBase2X));
+                setTranslateY(dragBaseY + (mouEvent.getSceneY()-dragBase2Y)); 
             }
-
+            
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
             NodoGrafico nuevoNodo = null;
             ControladorAbstractoAdminNodo controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
             ControladorAbstractoAdminEnlace controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
+            double posClcikX = mouEvent.getX();
+            double posClcikY = mouEvent.getY();
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
 
+            } else if (botonSeleccionado == TiposDeBoton.ZOOM_PLUS) {
+                setZoom(1.2, posClcikX, posClcikY);
+                
+            } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
+                
+                if(sclEscalaDeZoom.getX()>0.2){
+                    setZoom(0.8, posClcikX, posClcikY);
+                }
+                
+                
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
+              
                 nuevoNodo = new NodoClienteGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
@@ -144,7 +144,11 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.seleccionar(true);
             }
-            //System.out.println("PosX:"+mouEvent.getX()+" PosY:"+mouEvent.getY());
+
+
+
+
+        } else if (tipoDeEvento == MouseEvent.MOUSE_CLICKED) {
         }
     }
 
@@ -222,6 +226,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             listaNodoServicio = FXCollections.observableArrayList();
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
@@ -232,13 +237,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void updatePropiedad(String id, String valor) {
     }
 
-    public void generarZoom(double factorEscala) {
+    private void setZoom(double escala, double posClickX, double posClickY) {
 
-        sclEscalaDeZoom.setPivotX(2 * spZonaDeDiseño.getHvalue() * 12500);//10100
-        sclEscalaDeZoom.setPivotY(2 * spZonaDeDiseño.getVvalue() * 9375);//9800
+        sclEscalaDeZoom.setPivotX(posClickX);
+        sclEscalaDeZoom.setPivotY(posClickY);
 //        System.out.println("X:"+2*spZonaDeDiseño.getHvalue()*12500+" Y:"+2*spZonaDeDiseño.getVvalue()*9375);
-        sclEscalaDeZoom.setX(factorEscala);
-        sclEscalaDeZoom.setY(factorEscala);
+        sclEscalaDeZoom.setX(sclEscalaDeZoom.getX() * escala);
+        sclEscalaDeZoom.setY(sclEscalaDeZoom.getY() * escala);
 
     }
 

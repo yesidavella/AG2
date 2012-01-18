@@ -51,42 +51,10 @@ public class Boton extends ToggleButton {
                         IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
                     }
                     
-                    switch (botonOrigen.tipoDeBoton) {
-                            
-                        case PUNTERO:
-                            grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
-                            break;
-                        case MANO:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ADICIONAR_VERTICE:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ELIMINAR:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                            
-                        case CLIENTE:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case NODO_DE_SERVICIO:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ENRUTADOR_HIBRIDO:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ENRUTADOR_OPTICO:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ENRUTADOR_RAFAGA:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case ENLACE:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
-                        case RECURSO:
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
-                            break;
+                    if(botonOrigen.tipoDeBoton==TiposDeBoton.PUNTERO){
+                        grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                    }else{
+                        grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
                     }
                 }else{
                     botonOrigen.setSelected(true);

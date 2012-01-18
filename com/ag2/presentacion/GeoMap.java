@@ -12,8 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -29,15 +31,13 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-/**
- *
- * @author Frank
- */
 public class GeoMap extends Group {
 
-    Group texts = new Group();    
+    Group texts = new Group();
 
     public GeoMap() {
+        
+     
         try {
 
             Color[] colors = new Color[]{Color.GREY};//, Color.RED, Color.ORANGE, Color.VIOLET, Color.CHOCOLATE, Color.YELLOW, Color.AZURE };
@@ -91,11 +91,14 @@ public class GeoMap extends Group {
                 }
                 ii++;
             }
-
+       
+        scaleXProperty().set(17);
+        scaleYProperty().set(-17);
             setStyle("  -fx-background-color:#B2BEFF;");
             getChildren().add(texts);
         } catch (IOException ex) {
             Logger.getLogger(GeoMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
