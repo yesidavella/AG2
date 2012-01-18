@@ -1,18 +1,16 @@
 package com.ag2.config;
 
 import com.ag2.presentacion.IGU;
-import com.sun.javafx.scene.control.WeakEventHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseEvent;
 
 public enum TipoDePropiedadesPhosphorus {
 

@@ -38,7 +38,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private double dragBase2X, dragBase2Y;
 
     public GrupoDeDiseno() {
-        backgroudRec = new Rectangle(360, 175, Color.RED);
+        backgroudRec = new Rectangle(360, 175, Color.BLUE);
         backgroudRec.setTranslateX(-backgroudRec.getWidth()/2);
         backgroudRec.setTranslateY(-backgroudRec.getHeight()/2);
         backgroudRec.setScaleX(17);

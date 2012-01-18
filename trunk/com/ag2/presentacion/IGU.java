@@ -7,14 +7,13 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
-import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -31,10 +31,7 @@ public class IGU extends Scene {
 
     GeoMap geoMap = new GeoMap();
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
-//    Image iImagenFondo = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/mapaMundi.jpg"));
-//    ImageView ivImagenFondo = new ImageView(iImagenFondo);
     ToggleGroup tgHerramientas = new ToggleGroup();
-
     GridPane gpNavegacionMapa = new GridPane();
     ExecutePane executePane = new ExecutePane();
     private Boton btnMoverEscena;
@@ -46,7 +43,7 @@ public class IGU extends Scene {
     Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    TablaPropiedadesDispositivo propiedadesDispositivoTbl;
+    TablaPropiedadesDispositivo tbPropiedadesDispositivo;
     private GridPane barraHerramientas;
     private ProgressBar prgBarBarraProgresoEjec;
     private boolean estaTeclaCtrlOprimida = false;
@@ -75,7 +72,6 @@ public class IGU extends Scene {
         crearBarraDeMenus(layOutVentanaPrincipal, Main.getStgEscenario());
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
-
         barraHerramientas = creacionBarraDeHerramientas();
         VBox vBoxContenedorIndicadoresEjec = crearElemsIndicadoresEjecucion();
 
@@ -174,29 +170,29 @@ public class IGU extends Scene {
         Boton btnSeleccion = new Boton(TiposDeBoton.PUNTERO);
         Boton btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
         Boton btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
-        Boton btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
         Boton btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
+        Boton btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
 
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
         btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
         btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
         btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
 
         btnMoverEscena.setToggleGroup(tgHerramientas);
         btnSeleccion.setToggleGroup(tgHerramientas);
         btnDividirEnlaceCuadrado.setToggleGroup(tgHerramientas);
         btnEliminar.setToggleGroup(tgHerramientas);
-        btnPlusZoom.setToggleGroup(tgHerramientas);
         btnMinusZoom.setToggleGroup(tgHerramientas);
+        btnPlusZoom.setToggleGroup(tgHerramientas);
 
         btnMoverEscena.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton."));
         btnSeleccion.setTooltip(new Tooltip("Seleccione cualquier objeto"));
         btnDividirEnlaceCuadrado.setTooltip(new Tooltip("Añadale vertices a un enlace"));
         btnEliminar.setTooltip(new Tooltip("Elimine un objeto"));
-        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde realize el click"));
         btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde realize el click"));
+        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde realize el click"));
 
         GridPane.setConstraints(btnSeleccion, 0, 0);
         grdPnBarraHerramientas.getChildren().add(btnSeleccion);
@@ -210,11 +206,11 @@ public class IGU extends Scene {
         GridPane.setConstraints(btnEliminar, 1, 1);
         grdPnBarraHerramientas.getChildren().add(btnEliminar);
         
-        GridPane.setConstraints(btnPlusZoom, 0, 2);
-        grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
-        
-        GridPane.setConstraints(btnMinusZoom, 1, 2);
+        GridPane.setConstraints(btnMinusZoom, 0, 2);
         grdPnBarraHerramientas.getChildren().add(btnMinusZoom);
+        
+        GridPane.setConstraints(btnPlusZoom, 1, 2);
+        grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
         
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
         separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
@@ -311,16 +307,21 @@ public class IGU extends Scene {
 
         TilePane tlPnLogos = creacionImagenesDeProyectos();
 
-        propiedadesDispositivoTbl = new TablaPropiedadesDispositivo();
-
+        tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
+        StackPane stPnCajaPropDispositivo = new StackPane();
+        stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
+        
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
-
-        SplitPane divisorDeTablas = new SplitPane();
-        divisorDeTablas.getItems().addAll(propiedadesDispositivoTbl, tblPropiedadesSimulacion);
+        StackPane stPnCajaPropSimulacion = new StackPane();
+        stPnCajaPropSimulacion.getChildren().add(tblPropiedadesSimulacion);
+        
+        SplitPane splPnCajaTablasDeProp = new SplitPane();
+        splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo,stPnCajaPropSimulacion);
+        splPnCajaTablasDeProp.setDividerPositions(0.525f);
 
         VBox vbCajaNavegacion = new VBox();
         crearPanelDeNavegacionMapa(vbCajaNavegacion);
-        hBoxCajaInferior.getChildren().addAll(tlPnLogos, divisorDeTablas, vbCajaNavegacion);
+        hBoxCajaInferior.getChildren().addAll(tlPnLogos, splPnCajaTablasDeProp, vbCajaNavegacion);
         return hBoxCajaInferior;
     }
 
@@ -344,21 +345,30 @@ public class IGU extends Scene {
 
     private TableView<String> crearTablaDePropiedadesDeSimulacion() {
 
-        TableView<String> propiedadesSimulacionTbl = new TableView<String>();
-        propiedadesSimulacionTbl.setPrefHeight(200);
-        propiedadesSimulacionTbl.setPrefWidth(400);
+        TableView<String> tbVwPropSimulacion = new TableView<String>();
 
-        TableColumn tcNombrePropiedad = new TableColumn("PROPIEDAD");
-        tcNombrePropiedad.setMinWidth(150);
-        tcNombrePropiedad.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, String>("nombrePropiedad"));
-        TableColumn tcValorPropiedad = new TableColumn("VALOR");
-        tcValorPropiedad.setMinWidth(250);
-        tcValorPropiedad.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, Control>("control"));
-        TableColumn tituloSimCol = new TableColumn("PROPIEDADES SIMULACIÓN");
-        tituloSimCol.getColumns().addAll(tcNombrePropiedad, tcValorPropiedad);
-        propiedadesSimulacionTbl.getColumns().addAll(tituloSimCol);
-        propiedadesSimulacionTbl.setItems(TipoDePropiedadesPhosphorus.getDatos());
-        return propiedadesSimulacionTbl;
+        TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
+        tbColPropNombre.setMinWidth(145);
+        tbColPropNombre.setPrefWidth(155);
+        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, String>("nombrePropiedad"));
+        
+        TableColumn tbColPropValor = new TableColumn("VALOR");
+        tbColPropValor.setMinWidth(150);
+        tbColPropValor.setPrefWidth(185);
+        tbColPropValor.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, Control>("control"));
+        
+        TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
+        tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
+        tbVwPropSimulacion.getColumns().addAll(tbColTituloTbSim);
+        
+        tbVwPropSimulacion.setItems(TipoDePropiedadesPhosphorus.getDatos());
+        
+        tbVwPropSimulacion.setMinWidth(tbColTituloTbSim.getMinWidth()+13);
+        tbVwPropSimulacion.setPrefWidth(345);
+        
+        tbVwPropSimulacion.setPrefHeight(200);
+        
+        return tbVwPropSimulacion;
     }
 
     public void crearPanelDeNavegacionMapa(VBox vBox) {
@@ -492,7 +502,7 @@ public class IGU extends Scene {
     }
 
     public TablaPropiedadesDispositivo getPropiedadesDispositivoTbl() {
-        return propiedadesDispositivoTbl;
+        return tbPropiedadesDispositivo;
     }
 
     private VBox crearElemsIndicadoresEjecucion() {
