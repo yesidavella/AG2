@@ -30,24 +30,26 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
     }    
   
     public TablaPropiedadesDispositivo()
-    {
-        setPrefHeight(200);
-        setPrefWidth(500);
+    {   
+        TableColumn tbColNombrePropDispositivo = new TableColumn("PROPIEDAD");
+        tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, String>("nombre"));
+        tbColNombrePropDispositivo.setMinWidth(110);
+        tbColNombrePropDispositivo.setPrefWidth(175);
         
-        TableColumn nombrePropiedadDispositivo = new TableColumn("PROPIEDAD");
-        nombrePropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, String>("nombre"));
-        nombrePropiedadDispositivo.setMinWidth(150);
-        nombrePropiedadDispositivo.setPrefWidth(150);
+        TableColumn tbColValorPropDispositivo = new TableColumn("VALOR");
+        tbColValorPropDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, Control>("control"));
+        tbColValorPropDispositivo.setMinWidth(200);
+        tbColValorPropDispositivo.setPrefWidth(215);
         
-        TableColumn valorPropiedadDispositivo = new TableColumn("VALOR");
-        valorPropiedadDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, Control>("control"));
-        valorPropiedadDispositivo.setMinWidth(200);
-        valorPropiedadDispositivo.setPrefWidth(250);
-        
-        TableColumn tituloTblDispositivo = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
-        tituloTblDispositivo.getColumns().addAll(nombrePropiedadDispositivo, valorPropiedadDispositivo);
+        TableColumn tbColTituloTbDispositivo = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
+        tbColTituloTbDispositivo.getColumns().addAll(tbColNombrePropDispositivo, tbColValorPropDispositivo);
 
-        getColumns().add(tituloTblDispositivo);
+        getColumns().add(tbColTituloTbDispositivo);
+        
+        setMinWidth(tbColTituloTbDispositivo.getMinWidth());
+        setPrefWidth(435);
+        
+        setPrefHeight(200);
     }
 
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
