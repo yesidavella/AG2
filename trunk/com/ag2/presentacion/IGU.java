@@ -80,7 +80,7 @@ public class IGU extends Scene {
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
 
         //Diseño central
-        TabPane cajaDetabs = crearLienzoDetabs();
+        TabPane cajaDetabs = crearLienzoDeTabs();
         layOutVentanaPrincipal.setCenter(cajaDetabs);
         //Diseño inferior
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
@@ -272,7 +272,7 @@ public class IGU extends Scene {
 
     }
 
-    private TabPane crearLienzoDetabs() {
+    private TabPane crearLienzoDeTabs() {
 
         TabPane cajaDetabs = new TabPane();
 
