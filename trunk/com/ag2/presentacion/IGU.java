@@ -9,12 +9,8 @@ import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
-import com.ag2.util.ContenedorParejasObjetosExistentes;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,21 +24,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class IGU extends Scene {
 
     GeoMap geoMap = new GeoMap();
-    ScrollPane spZonaDeDiseño = new ScrollPane();
-    GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno(spZonaDeDiseño);
+    GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
 //    Image iImagenFondo = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/mapaMundi.jpg"));
 //    ImageView ivImagenFondo = new ImageView(iImagenFondo);
     ToggleGroup tgHerramientas = new ToggleGroup();
-    Rectangle rectangle = new Rectangle(25000, 18750, Color.BLUE);
-    public static final Point2D ESQUINA_SUPERIOR_IZQ_MAPA = new Point2D(25000 / 2, 18750 / 2);
+
     GridPane gpNavegacionMapa = new GridPane();
     ExecutePane executePane = new ExecutePane();
     private Boton btnMoverEscena;
@@ -54,7 +46,6 @@ public class IGU extends Scene {
     Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    Slider sliderZoom = new Slider();
     TablaPropiedadesDispositivo propiedadesDispositivoTbl;
     private GridPane barraHerramientas;
     private ProgressBar prgBarBarraProgresoEjec;
@@ -149,11 +140,8 @@ public class IGU extends Scene {
             public void handle(ActionEvent t) {
                 Serializador serializador = new Serializador(primaryStage);
                 GrupoDeDiseno grupoDeDiseno = serializador.cargar();
-                spZonaDeDiseño.setContent(grupoDeDiseno);
-                grupoDeDiseno.setSpZonaDeDiseño(spZonaDeDiseño);
                 //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
                 //   ivImagenFondo.toBack(); 
-                rectangle.toBack();
             }
         });
 
@@ -186,22 +174,29 @@ public class IGU extends Scene {
         Boton btnSeleccion = new Boton(TiposDeBoton.PUNTERO);
         Boton btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
         Boton btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
+        Boton btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
+        Boton btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
 
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
         btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
         btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
 
         btnMoverEscena.setToggleGroup(tgHerramientas);
         btnSeleccion.setToggleGroup(tgHerramientas);
         btnDividirEnlaceCuadrado.setToggleGroup(tgHerramientas);
         btnEliminar.setToggleGroup(tgHerramientas);
+        btnPlusZoom.setToggleGroup(tgHerramientas);
+        btnMinusZoom.setToggleGroup(tgHerramientas);
 
         btnMoverEscena.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton."));
         btnSeleccion.setTooltip(new Tooltip("Seleccione cualquier objeto"));
         btnDividirEnlaceCuadrado.setTooltip(new Tooltip("Añadale vertices a un enlace"));
-
         btnEliminar.setTooltip(new Tooltip("Elimine un objeto"));
+        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde realize el click"));
+        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde realize el click"));
 
         GridPane.setConstraints(btnSeleccion, 0, 0);
         grdPnBarraHerramientas.getChildren().add(btnSeleccion);
@@ -214,11 +209,17 @@ public class IGU extends Scene {
 
         GridPane.setConstraints(btnEliminar, 1, 1);
         grdPnBarraHerramientas.getChildren().add(btnEliminar);
-
+        
+        GridPane.setConstraints(btnPlusZoom, 0, 2);
+        grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
+        
+        GridPane.setConstraints(btnMinusZoom, 1, 2);
+        grdPnBarraHerramientas.getChildren().add(btnMinusZoom);
+        
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
         separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
 
-        GridPane.setConstraints(separadorHerramientas, 0, 2);
+        GridPane.setConstraints(separadorHerramientas, 0, 3);
         separadorHerramientas.setValignment(VPos.CENTER);
 
         GridPane.setColumnSpan(separadorHerramientas, 2);
@@ -290,37 +291,14 @@ public class IGU extends Scene {
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
 
-        geoMap.setLayoutX(ESQUINA_SUPERIOR_IZQ_MAPA.getX());
-        geoMap.setLayoutY(ESQUINA_SUPERIOR_IZQ_MAPA.getY());
 
-        geoMap.setScaleX(17);
-        geoMap.setScaleY(-17);
-        grGrupoDeDiseño.getChildren().addAll(rectangle, geoMap);
+//        geoMap.setScaleX(17);
+     //   geoMap.setScaleY(-1);
+        grGrupoDeDiseño.getChildren().addAll(geoMap);
 
-        spZonaDeDiseño.setContent(grGrupoDeDiseño);
-
-        tabSimulacion.setContent(spZonaDeDiseño);
+        tabSimulacion.setContent(grGrupoDeDiseño);
 
         cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
-
-        Thread thread = new Thread(new Runnable() {
-
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                spZonaDeDiseño.setHvalue(0.47);
-                spZonaDeDiseño.setVvalue(0.5);
-
-                spZonaDeDiseño.setFitToHeight(true);
-                spZonaDeDiseño.setFitToWidth(true);
-
-                spZonaDeDiseño.setPrefViewportHeight(200);
-            }
-        });
-        thread.start();
 
         return cajaDetabs;
     }
@@ -340,38 +318,9 @@ public class IGU extends Scene {
         SplitPane divisorDeTablas = new SplitPane();
         divisorDeTablas.getItems().addAll(propiedadesDispositivoTbl, tblPropiedadesSimulacion);
 
-        HBox hBox = new HBox();
-        Label lbSliderZoom = new Label(" % Nivel zoom ");
-
-        sliderZoom.setOrientation(Orientation.HORIZONTAL);
-        sliderZoom.setMin(10);
-        sliderZoom.setMax(250);
-        sliderZoom.setValue(100);
-        sliderZoom.setShowTickLabels(true);
-        sliderZoom.setMajorTickUnit(10);
-        sliderZoom.setMinorTickCount(10);
-        sliderZoom.setBlockIncrement(10);
-        sliderZoom.setMinWidth(240);
-        sliderZoom.setSnapToTicks(true);
-        sliderZoom.setShowTickMarks(true);
-
-        sliderZoom.valueProperty().addListener(new ChangeListener<Number>() {
-
-            public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-
-                grGrupoDeDiseño.generarZoom(sliderZoom.getValue() / 100);
-//                System.out.println("H: "+spZonaDeDiseño.getHvalue()+" "+( 25000*spZonaDeDiseño.getHvalue()) );
-//                System.out.println("V: "+spZonaDeDiseño.getVvalue()+" "+( 18750*spZonaDeDiseño.getVvalue()));
-
-
-            }
-        });
-
-        hBox.getChildren().addAll(lbSliderZoom, sliderZoom);
-        VBox vBox = new VBox();
-        vBox.getChildren().add(hBox);
-        crearPanelDeNavegacionMapa(vBox);
-        hBoxCajaInferior.getChildren().addAll(tlPnLogos, divisorDeTablas, vBox);
+        VBox vbCajaNavegacion = new VBox();
+        crearPanelDeNavegacionMapa(vbCajaNavegacion);
+        hBoxCajaInferior.getChildren().addAll(tlPnLogos, divisorDeTablas, vbCajaNavegacion);
         return hBoxCajaInferior;
     }
 
@@ -419,37 +368,25 @@ public class IGU extends Scene {
         gpNavegacionMapa.setHgap(4);
         gpNavegacionMapa.getStyleClass().add("barraDeHerramientas");
 
-        final ChoiceBox cbContinentes = new ChoiceBox(FXCollections.observableArrayList(Continentes.values()));
-
         final ChoiceBox cbClientes = new ChoiceBox(grGrupoDeDiseño.getListaClientes());
         final ChoiceBox cbRecursos = new ChoiceBox(grGrupoDeDiseño.getListaRecursos());
         final ChoiceBox cbSwicthes = new ChoiceBox(grGrupoDeDiseño.getListaSwitches());
         final ChoiceBox cbNodosServicio = new ChoiceBox(grGrupoDeDiseño.getListaNodoServicio());
 
-        cbContinentes.setMinWidth(150);
         cbClientes.setMinWidth(150);
         cbRecursos.setMinWidth(150);
         cbSwicthes.setMinWidth(150);
         cbNodosServicio.setMinWidth(150);
 
-        Button btnIrContinentes = new Button("ir");
         Button btnIrClientes = new Button("ir");
         Button btnIrRecursos = new Button("ir");
         Button btnIrSwichtes = new Button("ir");
         Button btnIrNodoServicio = new Button("ir");
 
-        Label lbContinentes = new Label("Continentes");
         Label lbRouters = new Label("Enrutadores");
         Label lbClientes = new Label("Clientes");
         Label lbRecursos = new Label("Recursos");
         Label lbNodosServicio = new Label("Agendadores");
-
-        GridPane.setConstraints(lbContinentes, 0, 0);
-        gpNavegacionMapa.getChildren().add(lbContinentes);
-        GridPane.setConstraints(cbContinentes, 1, 0);
-        gpNavegacionMapa.getChildren().add(cbContinentes);
-        GridPane.setConstraints(btnIrContinentes, 2, 0);
-        gpNavegacionMapa.getChildren().add(btnIrContinentes);
 
         GridPane.setConstraints(lbClientes, 0, 2);
         gpNavegacionMapa.getChildren().add(lbClientes);
@@ -480,99 +417,37 @@ public class IGU extends Scene {
         gpNavegacionMapa.getChildren().add(btnIrNodoServicio);
 
         vBox.getChildren().add(gpNavegacionMapa);
-
-        btnIrContinentes.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-
-                if (cbContinentes.getSelectionModel().getSelectedItem() instanceof Continentes) {
-                    Continentes continente = (Continentes) cbContinentes.getSelectionModel().getSelectedItem();
-                    //System.out.println(continente.toString());
-                    switch (continente) {
-                        case AFRICA: {
-                            sliderZoom.setValue(30);
-                            spZonaDeDiseño.setHvalue(0.500d);
-                            spZonaDeDiseño.setVvalue(0.503d);
-
-                            break;
-                        }
-                        case ASIA: {
-                            sliderZoom.setValue(30);
-                            spZonaDeDiseño.setHvalue(0.529d);
-                            spZonaDeDiseño.setVvalue(0.496d);
-                            break;
-                        }
-                        case CENTRO_AMERICA: {
-                            sliderZoom.setValue(60);
-                            spZonaDeDiseño.setHvalue(0.427d);
-                            spZonaDeDiseño.setVvalue(0.503d);
-                            break;
-                        }
-                        case EUROPA: {
-                            sliderZoom.setValue(65);
-                            spZonaDeDiseño.setHvalue(0.501d);
-                            spZonaDeDiseño.setVvalue(0.469d);
-
-                            break;
-                        }
-                        case NORTE_AMERICA: {
-                            sliderZoom.setValue(40);
-                            spZonaDeDiseño.setHvalue(0.443d);
-                            spZonaDeDiseño.setVvalue(0.484d);
-                            break;
-                        }
-                        case OCEANIA: {
-                            sliderZoom.setValue(50);
-                            spZonaDeDiseño.setHvalue(0.569d);
-                            spZonaDeDiseño.setVvalue(0.542d);
-                            break;
-                        }
-                        case SUR_AMERICA: {
-                            sliderZoom.setValue(30);
-                            spZonaDeDiseño.setHvalue(0.476d);
-                            spZonaDeDiseño.setVvalue(0.515d);
-                            break;
-                        }
-                    }
-                    grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
-                    grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
-                }
-            }
-        });
-
-
-        establecerEventoBotonesIr(btnIrClientes, cbClientes);
-        establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
-        establecerEventoBotonesIr(btnIrRecursos, cbRecursos);
-        establecerEventoBotonesIr(btnIrSwichtes, cbSwicthes);
+//        establecerEventoBotonesIr(btnIrClientes, cbClientes);
+//        establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
+//        establecerEventoBotonesIr(btnIrRecursos, cbRecursos);
+//        establecerEventoBotonesIr(btnIrSwichtes, cbSwicthes);
 
         cbRecursos.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
                 if (cbRecursos.getSelectionModel().getSelectedItem() instanceof NodoDeRecursoGrafico) {
                     NodoDeRecursoGrafico nodoDeRecursoGrafico = (NodoDeRecursoGrafico) cbRecursos.getSelectionModel().getSelectedItem();
-                    //System.out.println(nodoDeRecursoGrafico.getLayoutX() + " " + nodoDeRecursoGrafico.getLayoutY());
                 }
             }
         });
     }
 
-    private void establecerEventoBotonesIr(Button button, final ChoiceBox cbClientes) {
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-                if (cbClientes.getSelectionModel().getSelectedItem() instanceof NodoGrafico) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) cbClientes.getSelectionModel().getSelectedItem();
-
-                    sliderZoom.setValue(100);
-                    spZonaDeDiseño.setHvalue(nodoGrafico.getLayoutX() / 25000);
-                    spZonaDeDiseño.setVvalue(nodoGrafico.getLayoutY() / 18750);
-                    grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
-                    grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
-                }
-            }
-        });
-    }
+//    private void establecerEventoBotonesIr(Button button, final ChoiceBox cbClientes) {
+//        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//
+//            public void handle(MouseEvent t) {
+//                if (cbClientes.getSelectionModel().getSelectedItem() instanceof NodoGrafico) {
+//                    NodoGrafico nodoGrafico = (NodoGrafico) cbClientes.getSelectionModel().getSelectedItem();
+//
+//                    sliderZoom.setValue(100);
+//                    spZonaDeDiseño.setHvalue(nodoGrafico.getLayoutX() / 25000);
+//                    spZonaDeDiseño.setVvalue(nodoGrafico.getLayoutY() / 18750);
+//                    grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
+//                    grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
+//                }
+//            }
+//        });
+//    }
 
     private void adicionarEventoDeTecladoAEscena(final Scene escena) {
 

@@ -8,7 +8,6 @@ import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
-import com.ag2.util.ContenedorParejasObjetosExistentes;
 import java.util.ArrayList;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {

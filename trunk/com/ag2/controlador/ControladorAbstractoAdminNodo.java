@@ -4,7 +4,6 @@ import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
-import com.ag2.util.ContenedorParejasObjetosExistentes;
 import java.util.ArrayList;
 import java.util.Hashtable;
 

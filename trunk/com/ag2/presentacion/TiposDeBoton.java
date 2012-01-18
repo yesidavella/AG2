@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
         MANO("mano","mano_abierta_cursor",0,0,"mano_cerrada_cursor",0,0),
         ADICIONAR_VERTICE("adicionar_vertice","adicionar_vertice_cursor",3,3,"adicionar_vertice_sobre_elemento_cursor",3,5),
         ELIMINAR("eliminar","eliminar_cursor",0,0,"eliminar_sobre_elemento_cursor",0,0),
+        ZOOM_PLUS("eliminar","eliminar_cursor",0,0),
+        ZOOM_MINUS("eliminar","eliminar_cursor",0,0),
         
         CLIENTE("cliente","cliente_cursor",14,14),
         ENRUTADOR_OPTICO("enrutador_optico","enrutador_optico_cursor",10,13),

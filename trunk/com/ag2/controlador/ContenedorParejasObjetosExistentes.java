@@ -1,4 +1,4 @@
-package com.ag2.util;
+package com.ag2.controlador;
 
 import Grid.Entity;
 import com.ag2.modelo.EnlacePhosphorous;
@@ -26,5 +26,4 @@ public abstract class ContenedorParejasObjetosExistentes{
         }
         return contenedorParejasEnlacesExistentes;
     }
-    
 }
