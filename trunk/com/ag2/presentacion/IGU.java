@@ -136,7 +136,7 @@ public class IGU extends Scene {
                 Serializador serializador = new Serializador(primaryStage);
                 GrupoDeDiseno grupoDeDiseno = serializador.cargar();
                 //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
-                //   ivImagenFondo.toBack(); 
+                //   ivImagenFondo.toBack();
             }
         });
 
@@ -204,13 +204,13 @@ public class IGU extends Scene {
 
         GridPane.setConstraints(btnEliminar, 1, 1);
         grdPnBarraHerramientas.getChildren().add(btnEliminar);
-        
+       
         GridPane.setConstraints(btnMinusZoom, 0, 2);
         grdPnBarraHerramientas.getChildren().add(btnMinusZoom);
-        
+       
         GridPane.setConstraints(btnPlusZoom, 1, 2);
         grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
-        
+       
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
         separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
 
@@ -288,7 +288,6 @@ public class IGU extends Scene {
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
 
         grGrupoDeDiseño.getChildren().addAll(geoMap);
-
         tabSimulacion.setContent(grGrupoDeDiseño);
 
         cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
@@ -307,11 +306,11 @@ public class IGU extends Scene {
         tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
         StackPane stPnCajaPropDispositivo = new StackPane();
         stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
-        
+       
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
         StackPane stPnCajaPropSimulacion = new StackPane();
         stPnCajaPropSimulacion.getChildren().add(tblPropiedadesSimulacion);
-        
+       
         SplitPane splPnCajaTablasDeProp = new SplitPane();
         splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo,stPnCajaPropSimulacion);
         splPnCajaTablasDeProp.setDividerPositions(0.525f);
@@ -348,23 +347,23 @@ public class IGU extends Scene {
         tbColPropNombre.setMinWidth(145);
         tbColPropNombre.setPrefWidth(155);
         tbColPropNombre.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, String>("nombrePropiedad"));
-        
+       
         TableColumn tbColPropValor = new TableColumn("VALOR");
         tbColPropValor.setMinWidth(150);
         tbColPropValor.setPrefWidth(185);
         tbColPropValor.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, Control>("control"));
-        
+       
         TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
         tbVwPropSimulacion.getColumns().addAll(tbColTituloTbSim);
-        
+       
         tbVwPropSimulacion.setItems(TipoDePropiedadesPhosphorus.getDatos());
-        
+       
         tbVwPropSimulacion.setMinWidth(tbColTituloTbSim.getMinWidth()+13);
         tbVwPropSimulacion.setPrefWidth(345);
-        
+       
         tbVwPropSimulacion.setPrefHeight(200);
-        
+       
         return tbVwPropSimulacion;
     }
 
@@ -546,3 +545,4 @@ public class IGU extends Scene {
         return resultadosPhosphorus;
     }
 }
+

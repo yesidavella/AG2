@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.presentacion;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -20,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -99,6 +96,8 @@ public class GeoMap extends Group {
         } catch (IOException ex) {
             Logger.getLogger(GeoMap.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+
     }
 
 }
