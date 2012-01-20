@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -47,10 +48,11 @@ public class ResultadosPhosphorousHTML {
     WebView browser = new WebView();
     WebEngine webEngine = browser.getEngine();
     String directorioResultados;
-
-    public ResultadosPhosphorousHTML(Tab tab) {
-
-        btnIzqFin.setGraphic(ivIzqFin);
+    VBox vBox = new VBox();
+        HBox hBox = new HBox();
+    public ResultadosPhosphorousHTML(final Tab tab) 
+    {
+         btnIzqFin.setGraphic(ivIzqFin);
         btnIzq.setGraphic(ivIzq);
         btnDer.setGraphic(ivDer);
         btnDerFin.setGraphic(ivDerFin);
@@ -59,10 +61,25 @@ public class ResultadosPhosphorousHTML {
         btnIzq.setMaxSize(20, 18);
         btnDer.setMaxSize(20, 18);
         btnDerFin.setMaxSize(20, 18);
-
-        VBox vBox = new VBox();
-        HBox hBox = new HBox();
+        hBox.getChildren().addAll(btnIzqFin, btnIzq, txtPagina, btnDer, btnDerFin);
+        
         hBox.setAlignment(Pos.CENTER);
+        
+        loadFilesHTMLs(tab);
+        
+        tab.setOnSelectionChanged(new EventHandler<Event>() {
+
+            public void handle(Event t) {
+                if(tab.isSelected()){
+                  loadFilesHTMLs(tab);
+                }
+            }
+        });
+
+    }
+
+    private void loadFilesHTMLs(Tab tab) {
+       
 
         String directorioActual = new File("").getAbsolutePath();
         directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS;
@@ -110,16 +127,25 @@ public class ResultadosPhosphorousHTML {
         });
 
         txtPagina.setMaxWidth(50);
-        hBox.getChildren().addAll(btnIzqFin, btnIzq, txtPagina, btnDer, btnDerFin);
+       
 
         if (archivosHTML != null && archivosHTML.length > 1) {
             paginaActual = 1;
             txtPagina.setText(paginaActual + "/" + paginasTotales);
             webEngine.load("file:///" + directorioResultados + File.separator + archivosHTML[0]);
-            vBox.getChildren().addAll(browser, hBox);
+            if(! vBox.getChildren().contains(browser))
+            {
+              vBox.getChildren().addAll(browser);
+            }
+            if(!vBox.getChildren().contains(hBox)){
+                 vBox.getChildren().addAll( hBox);
+            }
         } else {
             txtPagina.setText("--");
+            if(!vBox.getChildren().contains(hBox))
+            {
             vBox.getChildren().addAll(hBox);
+            }
             btnDer.setDisable(true);
             btnDerFin.setDisable(true);
         }
@@ -132,7 +158,6 @@ public class ResultadosPhosphorousHTML {
 
         btnIzq.setDisable(true);
         btnIzqFin.setDisable(true);
-
     }
 
     private void deshabilitarBotonesNavegacion() {
