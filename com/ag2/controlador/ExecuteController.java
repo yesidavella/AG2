@@ -16,9 +16,9 @@ public class ExecuteController extends  ExecuteAbstractController
     public void run()
     {
         
-       Thread thread = new Thread(SimulacionBase.getInstance());
-       thread.start();
-       System.out.println("###########----  RUN ----####################################################");
+//       Thread thread = new Thread(SimulacionBase.getInstance());
+//       thread.start();
+//       System.out.println("###########----  RUN ----####################################################");
        
     }
     

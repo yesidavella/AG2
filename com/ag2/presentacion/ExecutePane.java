@@ -6,6 +6,7 @@ package com.ag2.presentacion;
 
 import com.ag2.controlador.ExecuteAbstractController;
 import com.ag2.presentacion.controles.Boton;
+import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -38,7 +39,7 @@ import javafx.scene.layout.TilePane;
     }
     
 
-    public ExecutePane()
+    public ExecutePane(GrupoDeDiseno grupoDeDiseno)
     {
         getStyleClass().add("barraDeHerramientas");
         setPadding(new Insets(10, 10, 10, 10));
@@ -76,6 +77,9 @@ import javafx.scene.layout.TilePane;
         btnParar.setGrupoDeDiseño(null);
         btnParar.setSelected(true);
         getChildren().addAll(btnEjecutar, btnParar);
+        
+        btnEjecutar.setGrupoDeDiseño(grupoDeDiseno);
+        btnParar.setGrupoDeDiseño(grupoDeDiseno);
     }
     
     

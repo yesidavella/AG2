@@ -33,7 +33,7 @@ public class IGU extends Scene {
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
     ToggleGroup tgHerramientas = new ToggleGroup();
     GridPane gpNavegacionMapa = new GridPane();
-    ExecutePane executePane = new ExecutePane();
+    ExecutePane executePane = new ExecutePane(grGrupoDeDiseño);
     private Boton btnMoverEscena;
     private Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
     Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
