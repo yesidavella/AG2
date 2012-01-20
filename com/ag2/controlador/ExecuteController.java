@@ -14,8 +14,11 @@ public class ExecuteController extends  ExecuteAbstractController
 {  
     public void run()
     {
-       System.out.println("RUN");
-       SimulacionBase.getInstance().run();
+       
+       Thread thread = new Thread( SimulacionBase.getInstance());
+       thread.start();
+       System.out.println("###########----  RUN ----####################################################");
+       
     }
     
 }
