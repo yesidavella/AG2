@@ -23,7 +23,7 @@ public class Boton extends ToggleButton {
         setGraphic(visorDeImagen);
         setMaxWidth(ANCHO);
         setMaxHeight(ALTO);
-        
+
     }
 
     public TiposDeBoton getTipoDeBoton() {
@@ -33,30 +33,34 @@ public class Boton extends ToggleButton {
     public void setTipoDeBoton(TiposDeBoton tipoDeBoton) {
         this.tipoDeBoton = tipoDeBoton;
     }
-    
+
     public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouEvent) {
-                Boton botonOrigen = (Boton)mouEvent.getSource();
+                Boton botonOrigen = (Boton) mouEvent.getSource();
 
-                if (botonOrigen.isSelected()){
-                    
-                    if(botonOrigen.tipoDeBoton==TiposDeBoton.EJECUTAR){
+                if (botonOrigen.isSelected()) {
+
+                    if (botonOrigen.tipoDeBoton == TiposDeBoton.EJECUTAR) {
                         IGU.getInstanciaIGUAg2().deshabilitar();
-                    }else if(botonOrigen.tipoDeBoton==TiposDeBoton.PARAR){
+                    } else if (botonOrigen.tipoDeBoton == TiposDeBoton.PARAR) {
                         IGU.getInstanciaIGUAg2().habilitar();
                     } else {
                         IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
                     }
-                    
-                    if(botonOrigen.tipoDeBoton==TiposDeBoton.PUNTERO){
+
+                    if (botonOrigen.tipoDeBoton == TiposDeBoton.PUNTERO) {
                         grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
-                    }else{
-                        grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
+                    } else {
+                        if (tipoDeBoton.getImagenCursor() != null) {
+                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
+                        } else {
+                            grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                        }
                     }
-                }else{
+                } else {
                     botonOrigen.setSelected(true);
                 }
             }
