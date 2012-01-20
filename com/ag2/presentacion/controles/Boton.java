@@ -43,13 +43,8 @@ public class Boton extends ToggleButton {
 
                 if (botonOrigen.isSelected()) {
 
-                    if (botonOrigen.tipoDeBoton == TiposDeBoton.EJECUTAR) {
-                        IGU.getInstanciaIGUAg2().deshabilitar();
-                    } else if (botonOrigen.tipoDeBoton == TiposDeBoton.PARAR) {
-                        IGU.getInstanciaIGUAg2().habilitar();
-                    } else {
-                        IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
-                    }
+                    IGU.setEstadoTipoBoton(botonOrigen.getTipoDeBoton());
+
 
                     if (botonOrigen.tipoDeBoton == TiposDeBoton.PUNTERO) {
                         grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
