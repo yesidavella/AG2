@@ -12,7 +12,7 @@ import com.ag2.controlador.ResultsAbstractController;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
-public class SimulacionBase {
+public class SimulacionBase implements Runnable{
 
     private static SimulacionBase simulacionBase;
     private GridSimulator simulador;
@@ -54,7 +54,9 @@ public class SimulacionBase {
         simulador.initEntities();
     }
 
-    public void run() {
+    @Override
+    public void run() 
+    {
         route();
         initEntities();
         simulacion.run();
