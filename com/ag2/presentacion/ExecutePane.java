@@ -6,6 +6,7 @@ package com.ag2.presentacion;
 
 import com.ag2.controlador.ExecuteAbstractController;
 import com.ag2.presentacion.controles.Boton;
+import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ToggleGroup;
@@ -17,11 +18,12 @@ import javafx.scene.layout.TilePane;
  *
  * @author Frank
  */
-public class ExecutePane extends TilePane implements ExecuteView {
+    public class ExecutePane extends TilePane implements ExecuteView {
 
     Boton btnEjecutar = new Boton(TiposDeBoton.EJECUTAR);
     Boton btnParar = new Boton(TiposDeBoton.PARAR);
     ToggleGroup tgEjecucion = new ToggleGroup();
+    ResultadosPhosphorousHTML resultadosPhosphorousHTML;
     
     ExecuteAbstractController  executeAbstractController;
 
@@ -30,6 +32,11 @@ public class ExecutePane extends TilePane implements ExecuteView {
         this.executeAbstractController = executeAbstractController;
         executeAbstractController.setExecuteView(this);
     }
+
+    public void setResultadosPhosphorousHTML(ResultadosPhosphorousHTML resultadosPhosphorousHTML) {
+        this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
+    }
+    
 
     public ExecutePane()
     {
@@ -49,7 +56,14 @@ public class ExecutePane extends TilePane implements ExecuteView {
             {
                if(executeAbstractController!=null)
                {
+                   if(resultadosPhosphorousHTML!=null)
+                   {
+                       resultadosPhosphorousHTML.deleteHTMLFiles();
+                   }
+                   
                    executeAbstractController.run();
+               
+                   
                }
             }
         });

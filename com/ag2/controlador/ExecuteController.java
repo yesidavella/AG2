@@ -12,10 +12,11 @@ import com.ag2.modelo.SimulacionBase;
  */
 public class ExecuteController extends  ExecuteAbstractController
 {  
+    @Override
     public void run()
     {
-       
-       Thread thread = new Thread( SimulacionBase.getInstance());
+        
+       Thread thread = new Thread(SimulacionBase.getInstance());
        thread.start();
        System.out.println("###########----  RUN ----####################################################");
        

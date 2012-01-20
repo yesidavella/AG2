@@ -286,10 +286,8 @@ public class IGU extends Scene {
 
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
+        executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
 
-
-//        geoMap.setScaleX(17);
-     //   geoMap.setScaleY(-1);
         grGrupoDeDiseño.getChildren().addAll(geoMap);
 
         tabSimulacion.setContent(grGrupoDeDiseño);

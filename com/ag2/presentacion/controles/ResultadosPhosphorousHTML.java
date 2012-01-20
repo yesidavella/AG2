@@ -34,7 +34,6 @@ public class ResultadosPhosphorousHTML {
     private ImageView ivIzq = new ImageView(new Image(getClass().getResourceAsStream("../../../../recursos/imagenes/mini_izquierda.png")));
     private ImageView ivDer = new ImageView(new Image(getClass().getResourceAsStream("../../../../recursos/imagenes/mini_derecha.png")));
     private ImageView ivDerFin = new ImageView(new Image(getClass().getResourceAsStream("../../../../recursos/imagenes/mini_derecha_fin.png")));
-    
     private Button btnIzqFin = new Button();
     private Button btnIzq = new Button();
     private Button btnDer = new Button();
@@ -49,10 +48,10 @@ public class ResultadosPhosphorousHTML {
     WebEngine webEngine = browser.getEngine();
     String directorioResultados;
     VBox vBox = new VBox();
-        HBox hBox = new HBox();
-    public ResultadosPhosphorousHTML(final Tab tab) 
-    {
-         btnIzqFin.setGraphic(ivIzqFin);
+    HBox hBox = new HBox();
+
+    public ResultadosPhosphorousHTML(final Tab tab) {
+        btnIzqFin.setGraphic(ivIzqFin);
         btnIzq.setGraphic(ivIzq);
         btnDer.setGraphic(ivDer);
         btnDerFin.setGraphic(ivDerFin);
@@ -62,24 +61,40 @@ public class ResultadosPhosphorousHTML {
         btnDer.setMaxSize(20, 18);
         btnDerFin.setMaxSize(20, 18);
         hBox.getChildren().addAll(btnIzqFin, btnIzq, txtPagina, btnDer, btnDerFin);
-        
+
         hBox.setAlignment(Pos.CENTER);
-        
+
         loadFilesHTMLs(tab);
-        
+
         tab.setOnSelectionChanged(new EventHandler<Event>() {
 
             public void handle(Event t) {
-                if(tab.isSelected()){
-                  loadFilesHTMLs(tab);
+                if (tab.isSelected()) {
+                    loadFilesHTMLs(tab);
                 }
             }
         });
 
     }
 
+    public void deleteHTMLFiles() {
+        String directorioActual = new File("").getAbsolutePath();
+        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS;
+        File file = new File(directorioResultados);
+
+        if (file.exists()) {
+            archivosHTML = file.list();
+            paginasTotales = archivosHTML.length;
+        }
+        for (int i = 0; i < paginasTotales; i++) 
+        {
+            File fileHtml = new File(directorioResultados + File.separator + archivosHTML[i]);
+            fileHtml.delete();
+        }
+    }
+
     private void loadFilesHTMLs(Tab tab) {
-       
+
 
         String directorioActual = new File("").getAbsolutePath();
         directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS;
@@ -105,19 +120,15 @@ public class ResultadosPhosphorousHTML {
                 Pattern p = Pattern.compile("\\d+");
                 Matcher m = p.matcher(valorPagina);
 
-                if (m.matches()) 
-                {
+                if (m.matches()) {
                     paginaActual = Integer.parseInt(txtPagina.getText());
 
-                    if (paginaActual > paginasTotales || paginaActual < 1) 
-                    {
+                    if (paginaActual > paginasTotales || paginaActual < 1) {
                         paginaActual = 1;
                         txtPagina.setText(paginaActual + "/" + paginasTotales);
                         webEngine.load("file:///" + directorioResultados + File.separator + archivosHTML[paginaActual - 1]);
                         deshabilitarBotonesNavegacion();
-                    }
-                    else
-                    {
+                    } else {
                         txtPagina.setText(paginaActual + "/" + paginasTotales);
                         webEngine.load("file:///" + directorioResultados + File.separator + archivosHTML[paginaActual - 1]);
                         deshabilitarBotonesNavegacion();
@@ -127,24 +138,22 @@ public class ResultadosPhosphorousHTML {
         });
 
         txtPagina.setMaxWidth(50);
-       
+
 
         if (archivosHTML != null && archivosHTML.length > 1) {
             paginaActual = 1;
             txtPagina.setText(paginaActual + "/" + paginasTotales);
             webEngine.load("file:///" + directorioResultados + File.separator + archivosHTML[0]);
-            if(! vBox.getChildren().contains(browser))
-            {
-              vBox.getChildren().addAll(browser);
+            if (!vBox.getChildren().contains(browser)) {
+                vBox.getChildren().addAll(browser);
             }
-            if(!vBox.getChildren().contains(hBox)){
-                 vBox.getChildren().addAll( hBox);
+            if (!vBox.getChildren().contains(hBox)) {
+                vBox.getChildren().addAll(hBox);
             }
         } else {
             txtPagina.setText("--");
-            if(!vBox.getChildren().contains(hBox))
-            {
-            vBox.getChildren().addAll(hBox);
+            if (!vBox.getChildren().contains(hBox)) {
+                vBox.getChildren().addAll(hBox);
             }
             btnDer.setDisable(true);
             btnDerFin.setDisable(true);
