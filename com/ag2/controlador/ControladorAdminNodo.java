@@ -131,14 +131,14 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                 if (nodoGraficoService instanceof NodoDeServicioGrafico) {
                     PropiedadeNodo propiedadeNodo = new PropiedadeNodo("RelationshipResouceAndServiceNodo", nodoGraficoService.getNombre(), PropiedadeNodo.TipoDePropiedadNodo.BOLEANO);
                     propiedadesDeNodo.add(propiedadeNodo);
-                    for (ServiceNode serviceNode : resource.getServiceNodes()) {
-
+                    for (ServiceNode serviceNode : resource.getServiceNodes())
+                    {
                         if (serviceNode.getID().equals(nodoGraficoService.getNombreOriginal()))
                         {
                             propiedadeNodo.setPrimerValor("true");
+                            propiedadeNodo.setDisable(true);
                         }
                     }
-
                 }
             }
 
@@ -328,17 +328,15 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                 }
                 Entity entity = parejasDeNodosExistentes.get(nodoGrafico);
                 if (valor.contains("_ON")) {
-                    if (entity != null && entity instanceof ServiceNode) {
-
+                    if (entity != null && entity instanceof ServiceNode) 
+                    {
                         ServiceNode serviceNode = (ServiceNode) entity;
-                        resource.addServiceNode(serviceNode);
-                        //FIXME: probar cuando yesid termine los MVC
+                        resource.addServiceNode(serviceNode);                  
                     }
 
                 } else if (valor.contains("_OFF")) {
                     if (entity != null && entity instanceof ServiceNode) {
                         ServiceNode serviceNode = (ServiceNode) entity;
-
                     }
                 }
 

@@ -70,5 +70,6 @@ public class Main extends Application{
         
         ResultsController resultsController = new ResultsController();
         resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
+        SimulacionBase.getInstance().setResultsAbstractController(resultsController);
     }
 }
