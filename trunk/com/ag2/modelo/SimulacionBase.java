@@ -8,6 +8,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Outputter;
+import com.ag2.controlador.ResultsAbstractController;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
@@ -32,6 +33,9 @@ public class SimulacionBase {
         this.outputterModel = outputterModel;
     }
     
+     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
+        outputterModel.setResultsAbstractController( resultsAbstractController); 
+    } 
     
 
     public static SimulacionBase getInstance() {
@@ -41,11 +45,20 @@ public class SimulacionBase {
         return simulacionBase;
     }
 
-    public void route() 
+    private  void route() 
     {
-        simulador.route();
-        
-        for(SimBaseEntity entity: simulador.getEntities())
+        simulador.route();           
+    }
+
+    private void initEntities() {
+        simulador.initEntities();
+    }
+
+    public void run() {
+        route();
+        initEntities();
+        simulacion.run();
+          for(SimBaseEntity entity: simulador.getEntities())
         {
             if(entity instanceof ClientNode)
             {
@@ -60,15 +73,6 @@ public class SimulacionBase {
                outputterModel.printResource((ResourceNode)entity);
             }            
         }
-            
-    }
-
-    public void initEntities() {
-        simulador.initEntities();
-    }
-
-    public void run() {
-        simulacion.run();
         
     }
 
@@ -79,4 +83,5 @@ public class SimulacionBase {
     public GridSimulator getSimulador() {
         return simulador;
     }
+    
 }

@@ -22,6 +22,12 @@ public class PropiedadeNodo {
     private TipoDePropiedadNodo tipoDePropiedadNodo;
     protected Control control;
     private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
+    
+    public void setDisable(boolean  isDisable)
+    {
+        control.setDisable(isDisable);
+    }
+
 
     public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) 
     {
@@ -29,6 +35,7 @@ public class PropiedadeNodo {
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo;
         this.id = id;
+        
 
         switch (tipoDePropiedadNodo) 
         {

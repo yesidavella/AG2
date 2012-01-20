@@ -21,6 +21,7 @@ public class OutputterModel extends Outputter
 {
     private ResultsAbstractController resultsAbstractController;
 
+    
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
     }   
