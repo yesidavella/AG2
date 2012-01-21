@@ -85,6 +85,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                         IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);
                         IGU.getInstanciaIGUAg2().habilitar();
                         grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                        executeAbstractController.stop();
                     }
                 });
             }
