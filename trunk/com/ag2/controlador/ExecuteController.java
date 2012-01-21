@@ -21,5 +21,10 @@ public class ExecuteController extends  ExecuteAbstractController
        System.out.println("###########----  RUN ----####################################################");
        
     }
+
+    @Override
+    public void stop() {
+        SimulacionBase.getInstance().stop();
+    }
     
 }

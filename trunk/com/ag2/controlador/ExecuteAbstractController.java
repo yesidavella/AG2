@@ -19,6 +19,6 @@ public abstract class ExecuteAbstractController
     }
         
         public abstract  void run(); 
-       
+       public abstract  void stop(); 
     
 }
