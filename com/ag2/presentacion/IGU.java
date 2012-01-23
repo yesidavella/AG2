@@ -15,6 +15,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,7 +29,6 @@ import javafx.stage.Stage;
 
 public class IGU extends Scene {
 
-    GeoMap geoMap = new GeoMap();
     GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
     ToggleGroup tgHerramientas = new ToggleGroup();
     GridPane gpNavegacionMapa = new GridPane();
@@ -276,19 +276,25 @@ public class IGU extends Scene {
         TabPane cajaDetabs = new TabPane();
 
         Tab tabSimulacion = new Tab();
-        tabSimulacion.setText("Simulación");
-        tabSimulacion.setClosable(false);
         Tab tabResultados = new Tab();
         Tab tabResultadosHTML = new Tab();
+        
+        tabSimulacion.setClosable(false);
+        tabSimulacion.setText("Simulación");
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
+        ScrollPane scPnPanelWorld = new ScrollPane();
+        Group grRoot = new Group();
+        
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
+        grGrupoDeDiseño.setScrollPane(scPnPanelWorld);
 
-        grGrupoDeDiseño.getChildren().addAll(geoMap);
-        tabSimulacion.setContent(grGrupoDeDiseño);
+        grRoot.getChildren().add(grGrupoDeDiseño);
+        scPnPanelWorld.setContent(grRoot);
+        tabSimulacion.setContent(scPnPanelWorld);
 
         cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
 
