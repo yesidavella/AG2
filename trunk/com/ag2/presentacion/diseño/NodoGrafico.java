@@ -68,7 +68,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         this.getChildren().addAll(cuadroExteriorResaltado);
         //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
         setScaleX(0.5);
-        setScaleY(0.5);
+        setScaleY(-0.5);
 
         establecerEventoOnMouseClicked();
 
@@ -245,7 +245,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     }
                 }
                 setScaleX(1);
-                setScaleY(1);
+                setScaleY(-1);
             }
         });
     }
@@ -260,12 +260,12 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
-                    setLayoutY(getLayoutY() + mouseEvent.getY() - alto / 2);
+                    setLayoutX(getLayoutX() + mouseEvent.getX() - ancho/2);
+                    setLayoutY(getLayoutY() - (mouseEvent.getY() - alto/2));
                     updateNodoListener();
                 } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
-                    enlaceComodin.setEndY(getLayoutY() + (mouseEvent.getY()));
+                    enlaceComodin.setEndY(getLayoutY()+alto-(mouseEvent.getY()));
                 }
             }
         });
@@ -278,7 +278,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 //                System.out.println("Release..");
 
                 setScaleX(0.5);
-                setScaleY(0.5);
+                setScaleY(-0.5);
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();

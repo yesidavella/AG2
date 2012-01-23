@@ -7,18 +7,40 @@ import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import java.io.File;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.opengis.feature.simple.SimpleFeature;
 
 public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
@@ -31,26 +53,22 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private ObjetoSeleccionable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
     private Scale sclEscalaDeZoom;
-    private Rectangle backgroudRec;
-    
+    private final int MAP_SCALE = 17;
+    private final double PERCENT_ZOOM = 1.2;
+    private ScrollPane scPnPanelWorld;
     private double dragBaseX, dragBaseY;
     private double dragBase2X, dragBase2Y;
 
     public GrupoDeDiseno() {
-        backgroudRec = new Rectangle(360, 175, Color.BLUE);
-        backgroudRec.setTranslateX(-backgroudRec.getWidth()/2);
-        backgroudRec.setTranslateY(-backgroudRec.getHeight()/2);
-        backgroudRec.setScaleX(17);
-        backgroudRec.setScaleY(17);
-        
-        getChildren().add(backgroudRec);
         setOnMousePressed(this);
         setOnMouseDragged(this);
         setOnMouseReleased(this);
         ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
         ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
-        sclEscalaDeZoom = new Scale();
+        sclEscalaDeZoom = new Scale(1, -1);
         getTransforms().add(sclEscalaDeZoom);
+
+        loadGeoMap();
     }
 
     public ObjetoSeleccionable getObjetoGraficoSelecionado() {
@@ -74,15 +92,19 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 dragBaseY = translateYProperty().get();
                 dragBase2X = mouEvent.getSceneX();
                 dragBase2Y = mouEvent.getSceneY();
+            } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
+                zoom(1/PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
+            } else if (botonSeleccionado == TiposDeBoton.ZOOM_PLUS) {
+                zoom(PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
             }
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_DRAGGED) {
-            
-            if(botonSeleccionado==TiposDeBoton.MANO){
-                setTranslateX(dragBaseX + (mouEvent.getSceneX()-dragBase2X));
-                setTranslateY(dragBaseY + (mouEvent.getSceneY()-dragBase2Y)); 
+
+            if (botonSeleccionado == TiposDeBoton.MANO) {
+                setTranslateX(dragBaseX + (mouEvent.getSceneX() - dragBase2X));
+                setTranslateY(dragBaseY + (mouEvent.getSceneY() - dragBase2Y));
             }
-            
+
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
             NodoGrafico nuevoNodo = null;
@@ -94,18 +116,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenCursor());
 
-            } else if (botonSeleccionado == TiposDeBoton.ZOOM_PLUS) {
-                setZoom(1.2, posClcikX, posClcikY);
-                
-            } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
-                
-                if(sclEscalaDeZoom.getX()>0.2){
-                    setZoom(0.8, posClcikX, posClcikY);
-                }
-                
-                
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
-              
+
                 nuevoNodo = new NodoClienteGrafico(controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
@@ -143,11 +155,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                 }
                 nuevoNodo.seleccionar(true);
             }
-
-
-
-
-        } else if (tipoDeEvento == MouseEvent.MOUSE_CLICKED) {
         }
     }
 
@@ -161,7 +168,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         } else if (nodoGrafico instanceof NodoDeServicioGrafico) {
             listaNodoServicio.remove(nodoGrafico);
         }
-
     }
 
     private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo, MouseEvent me) {
@@ -236,17 +242,116 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void updatePropiedad(String id, String valor) {
     }
 
-    private void setZoom(double escala, double posClickX, double posClickY) {
+    public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
+        ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
+    }
 
-        sclEscalaDeZoom.setPivotX(posClickX);
-        sclEscalaDeZoom.setPivotY(posClickY);
-//        System.out.println("X:"+2*spZonaDeDiseño.getHvalue()*12500+" Y:"+2*spZonaDeDiseño.getVvalue()*9375);
-        sclEscalaDeZoom.setX(sclEscalaDeZoom.getX() * escala);
-        sclEscalaDeZoom.setY(sclEscalaDeZoom.getY() * escala);
+    private void loadGeoMap() {
+
+        Group texts = new Group();
+
+        try {
+
+            Color[] colors = new Color[]{Color.GREY};//, Color.RED, Color.ORANGE, Color.VIOLET, Color.CHOCOLATE, Color.YELLOW, Color.AZURE };
+            int currentColor = 0;
+
+            File file = new File("src\\maps\\110m_admin_0_countries.shp");
+            FileDataStore store = FileDataStoreFinder.getDataStore(file);
+            SimpleFeatureSource featureSource = store.getFeatureSource();
+            SimpleFeatureCollection c = featureSource.getFeatures();
+            SimpleFeatureIterator featuresIterator = c.features();
+            Coordinate[] coords;
+            Geometry polygon;
+            Point centroid;
+            Bounds bounds;
+
+            while (featuresIterator.hasNext()) {
+                SimpleFeature o = featuresIterator.next();
+                String name = (String) o.getAttribute("NAME");
+                Object geometry = o.getDefaultGeometry();
+
+                if (geometry instanceof MultiPolygon) {
+                    MultiPolygon multiPolygon = (MultiPolygon) geometry;
+
+                    centroid = multiPolygon.getCentroid();
+                    final Text text = new Text(name);
+                    bounds = text.getBoundsInLocal();
+                    text.setFont(new Font(6));
+                    text.getTransforms().add(new Translate(centroid.getX() * MAP_SCALE, centroid.getY() * MAP_SCALE));
+                    text.getTransforms().add(new Scale(0.1 * MAP_SCALE, -0.1 * MAP_SCALE));
+                    text.getTransforms().add(new Translate(-bounds.getWidth() / 2., bounds.getHeight() / 2.));
+                    texts.getChildren().add(text);
+
+                    for (int geometryI = 0; geometryI < multiPolygon.getNumGeometries(); geometryI++) {
+                        polygon = multiPolygon.getGeometryN(geometryI);
+
+                        coords = polygon.getCoordinates();
+                        Path path = new Path();
+                        path.setStrokeWidth(0.5);
+                        currentColor = (currentColor + 1) % colors.length;
+                        path.setFill(colors[currentColor]);
+                        path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
+
+                        for (int i = 1; i < coords.length; i++) {
+                            path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
+                        }
+                        path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
+                        getChildren().add(path);
+                    }
+                }
+            }
+            setStyle("  -fx-background-color:#B2BEFF;");
+            getChildren().add(texts);
+
+            Rectangle backgroudRec = new Rectangle(360, 175, Color.BLUE);
+            backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
+            backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
+            backgroudRec.setScaleX(MAP_SCALE);
+            backgroudRec.setScaleY(MAP_SCALE);
+            getChildren().add(backgroudRec);
+            backgroudRec.toBack();
+
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void zoom(final double percentZoom, double puntoPivoteX, double puntoPivoteY) {
+
+        sclEscalaDeZoom.setPivotX(puntoPivoteX);
+        sclEscalaDeZoom.setPivotY(puntoPivoteY);
+        sclEscalaDeZoom.setX(sclEscalaDeZoom.getX() * percentZoom);
+        sclEscalaDeZoom.setY(sclEscalaDeZoom.getY() * percentZoom);
+
+        double anchoActual = getBoundsInParent().getWidth();
+        double altoActual = getBoundsInParent().getHeight();
+
+        double corrimientoX = anchoActual / 2;
+        double corrimientoY = altoActual / 2;
+
+        double coorAbsClickX = corrimientoX + puntoPivoteX * percentZoom;
+        double coorAbsClickY = corrimientoY + puntoPivoteY * percentZoom;
+
+        double porcentajeClickX = coorAbsClickX / anchoActual;
+        double porcentajeClickY = coorAbsClickY / altoActual;
+
+        double desfaceMaxEnX = scPnPanelWorld.getViewportBounds().getWidth() / 2;
+        double funcDeDesfaceEnX = (-2*desfaceMaxEnX*(porcentajeClickX)) + desfaceMaxEnX;
+
+        double desfaceMaxEnY = scPnPanelWorld.getViewportBounds().getHeight() / 2;
+        double funcDeDesfaceEnY = (-2 * (desfaceMaxEnY) * (porcentajeClickY)) + desfaceMaxEnY;
+        /*
+         * Convercion de pixeles a porcentaje del resultado de la funcion de desface.
+         */
+        double porcCorreccionX = funcDeDesfaceEnX / anchoActual;
+        double porcCorreccionY = funcDeDesfaceEnY / altoActual;
+
+        scPnPanelWorld.setVvalue(porcentajeClickY - porcCorreccionY);
+        scPnPanelWorld.setHvalue(porcentajeClickX - porcCorreccionX);
 
     }
 
-    public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
-        ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
+    public void setScrollPane(ScrollPane scPnPanelWorld) {
+        this.scPnPanelWorld = scPnPanelWorld;
     }
 }
