@@ -25,6 +25,7 @@ import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -112,7 +113,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                     scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX());
                 }
                 posicionActualRatonX = mouEvent.getSceneX();
-                System.out.println("ScalaX:"+sclEscalaDeZoom.getX()+" Total:"+(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
+                System.out.println("ScalaX:" + sclEscalaDeZoom.getX() + " Total:" + (scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
 //
 //                double factorY = Math.abs(posicionActualRatonY - mouEvent.getSceneY());
 //
@@ -285,6 +286,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             Point centroid;
             Bounds bounds;
 
+            DropShadow ds = new DropShadow();
+            ds.setColor(Color.LIGHTGREY);
+           
+            ds.setSpread(0.4);
+            ds.setWidth(10);
+            ds.setHeight(10);
+
             while (featuresIterator.hasNext()) {
                 SimpleFeature o = featuresIterator.next();
                 String name = (String) o.getAttribute("NAME");
@@ -317,20 +325,20 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                             path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
                         }
                         path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
-                        getChildren().add(path);
+                        getChildren().add(path);path.setEffect(ds);
                     }
                 }
             }
 
             getChildren().add(texts);
-            
-            Stop[] stops = { 
+
+            Stop[] stops = {
                 new Stop(0.1, Color.web("#9DCAFF")),
                 new Stop(0.6, Color.web("#005AFF")),
                 new Stop(0.8, Color.BLUE)
             };
             Rectangle backgroudRec = new Rectangle(360, 175,
-                    new RadialGradient (0, 0, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE,stops));
+                    new RadialGradient(-90, 0.7, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE, stops));
 
             backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
             backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
