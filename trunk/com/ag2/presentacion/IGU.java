@@ -544,11 +544,13 @@ public class IGU extends Scene {
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
+        prgBarBarraProgresoEjec.setVisible(false);
         IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
         grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }
 
     public void deshabilitar() {
+        prgBarBarraProgresoEjec.setVisible(true);
         barraHerramientas.setDisable(true);
         barraHerramientas.setOpacity(0.99);
         prgBarBarraProgresoEjec.setProgress(-1);
