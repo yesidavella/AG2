@@ -113,7 +113,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                     scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX());
                 }
                 posicionActualRatonX = mouEvent.getSceneX();
-                System.out.println("ScalaX:" + sclEscalaDeZoom.getX() + " Total:" + (scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
+                //System.out.println("ScalaX:" + sclEscalaDeZoom.getX() + " Total:" + (scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
 //
 //                double factorY = Math.abs(posicionActualRatonY - mouEvent.getSceneY());
 //
@@ -286,12 +286,12 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             Point centroid;
             Bounds bounds;
 
-            DropShadow ds = new DropShadow();
-            ds.setColor(Color.LIGHTGREY);
-           
-            ds.setSpread(0.4);
-            ds.setWidth(10);
-            ds.setHeight(10);
+//            DropShadow ds = new DropShadow();
+//            ds.setColor(Color.LIGHTGREY);
+//           
+//            ds.setSpread(0.4);
+//            ds.setWidth(10);
+//            ds.setHeight(10);
 
             while (featuresIterator.hasNext()) {
                 SimpleFeature o = featuresIterator.next();
@@ -325,11 +325,11 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                             path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
                         }
                         path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
-                        getChildren().add(path);path.setEffect(ds);
+                        getChildren().add(path);//path.setEffect(ds);
                     }
                 }
             }
-
+            //setEffect(ds);
             getChildren().add(texts);
 
             Stop[] stops = {
