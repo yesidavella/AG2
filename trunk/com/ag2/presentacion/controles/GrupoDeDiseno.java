@@ -59,8 +59,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
     private ScrollPane scPnPanelWorld;
-    private double posicionActualRatonX = 0;
-    private double posicionActualRatonY = 0;
+    private double dragMouX = 0;
+    private double dragMouY = 0;
 
     public GrupoDeDiseno() {
         setOnMousePressed(this);
@@ -68,7 +68,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         setOnMouseReleased(this);
         ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
         ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
-        sclEscalaDeZoom = new Scale(1, -1);
+        sclEscalaDeZoom = new Scale(1.44, -1.44);
         getTransforms().add(sclEscalaDeZoom);
 
         loadGeoMap();
@@ -91,8 +91,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
-                posicionActualRatonX = mouEvent.getSceneX();
-                posicionActualRatonY = mouEvent.getSceneY();
+                dragMouX = mouEvent.getX();
+                dragMouY = mouEvent.getY();
 
             } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
                 zoom(1 / PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
@@ -104,25 +104,17 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
 
-                double factorX = Math.abs(posicionActualRatonX - mouEvent.getSceneX());
+                double currentWidth = getBoundsInParent().getWidth();
+                double distanceMovedX = dragMouX - mouEvent.getX();
+                double percentToMoveX = distanceMovedX / currentWidth;
 
-                if (mouEvent.getSceneX() < posicionActualRatonX) {
-                    scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() + factorX * 0.0002 * sclEscalaDeZoom.getX());
-                } else if (mouEvent.getSceneX() > posicionActualRatonX) {
-                    scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX());
-                }
-                posicionActualRatonX = mouEvent.getSceneX();
-                //System.out.println("ScalaX:" + sclEscalaDeZoom.getX() + " Total:" + (scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
-//
-//                double factorY = Math.abs(posicionActualRatonY - mouEvent.getSceneY());
-//
-//                if (mouEvent.getSceneY() < posicionActualRatonY) {
-//                    scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() + factorY * 0.0000544 * scPnPanelWorld.getScaleY());
-//                } else if (mouEvent.getSceneY() > posicionActualRatonY) {
-//                    scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() - factorY * 0.0000544 * scPnPanelWorld.getScaleY());
-//                }
-//                posicionActualRatonY = mouEvent.getSceneY();
+                scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() + percentToMoveX);
 
+                double currentHeight = getBoundsInParent().getHeight();
+                double distanceMovedY = dragMouY - mouEvent.getY();
+                double percentToMoveY = distanceMovedY / currentHeight;
+
+                scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() - percentToMoveY);
             }
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
@@ -272,7 +264,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
         try {
 
-            Color[] colors = new Color[]{Color.GREY};//, Color.RED, Color.ORANGE, Color.VIOLET, Color.CHOCOLATE, Color.YELLOW, Color.AZURE };
+            Color[] colors = new Color[]{Color.web("#A0A5CE")};//, Color.RED, Color.ORANGE, Color.VIOLET, Color.CHOCOLATE, Color.YELLOW, Color.AZURE };
             int currentColor = 0;
 
             File file = new File("src\\maps\\110m_admin_0_countries.shp");
@@ -391,11 +383,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         this.scPnPanelWorld = scPnPanelWorld;
     }
 
-    public void enableDisign() 
-    {
+    public void enableDisign() {
         IGU.getInstanciaIGUAg2().habilitar();
         IGU.getInstanciaIGUAg2().getExecutePane().habilitar();
         setCursor(TiposDeBoton.MANO.getImagenCursor());
-        
+
     }
 }

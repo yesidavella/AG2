@@ -12,9 +12,10 @@ public class Main extends Application{
         stgEscenario.setTitle("Modelo AG2- Simulador Grafico");
         stgEscenario.setScene(IGU.getInstanciaIGUAg2());
         IGU.getInstanciaIGUAg2().setStage(stgEscenario);
-        stgEscenario.show();       
-      
+        stgEscenario.show();
+
         inicializarModelosYContrladoresDeCreacionDeNodos();
+        IGU.getInstanciaIGUAg2().inicializarEstadoDeIGU();
     }
     
     public static void main(String[] args){

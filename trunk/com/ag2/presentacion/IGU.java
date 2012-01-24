@@ -45,12 +45,17 @@ public class IGU extends Scene {
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
     TablaPropiedadesDispositivo tbPropiedadesDispositivo;
     private GridPane barraHerramientas;
+    private ScrollPane scPnWorld = new ScrollPane();
     private ProgressBar prgBarBarraProgresoEjec;
     private boolean estaTeclaPrincipalOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEventoTcld;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
+
+    public ScrollPane getScPnWorld() {
+        return scPnWorld;
+    }
     private Stage stgEscenario;
 
     public static IGU getInstanciaIGUAg2() {
@@ -87,7 +92,7 @@ public class IGU extends Scene {
         HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
 
-        inicializarEstadoDeIGU();
+//        inicializarEstadoDeIGU();
     }
 
     public void setStage(Stage stage) {
@@ -290,17 +295,16 @@ public class IGU extends Scene {
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-        ScrollPane scPnPanelWorld = new ScrollPane();
         Group grRoot = new Group();
 
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
-        grGrupoDeDiseño.setScrollPane(scPnPanelWorld);
+        grGrupoDeDiseño.setScrollPane(scPnWorld);
 
         grRoot.getChildren().add(grGrupoDeDiseño);
-        scPnPanelWorld.setContent(grRoot);
-        tabSimulacion.setContent(scPnPanelWorld);
+        scPnWorld.setContent(grRoot);
+        tabSimulacion.setContent(scPnWorld);
 
         cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
 
@@ -506,11 +510,14 @@ public class IGU extends Scene {
         });
     }
 
-    private void inicializarEstadoDeIGU() {
+    public void inicializarEstadoDeIGU() {
 
         btnCliente.setSelected(true);
         IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
         grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
+        scPnWorld.setHvalue(0.27151447890809266);
+        scPnWorld.setVvalue(0.4661207267437006);
+
     }
 
     public GrupoDeDiseno getGrGrupoDeDiseño() {
@@ -540,7 +547,7 @@ public class IGU extends Scene {
         return vBoxCajaContenedoraIndicadores;
     }
 
-    public synchronized  void habilitar() {
+    public synchronized void habilitar() {
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
