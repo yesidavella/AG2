@@ -11,8 +11,14 @@ public abstract class ModeloCrearNodo
     
     public ModeloCrearNodo()
     {
-        simulacionBase=  SimulacionBase.getInstance();
+       loadSimulacionBase();
     }
+    public  void loadSimulacionBase(){
+         simulacionBase=  SimulacionBase.getInstance();
+    }
+            
+           
+            
     
     public boolean addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo){
         this.ctrlCrearNodo = ctrlCrearNodo;

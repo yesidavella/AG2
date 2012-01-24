@@ -27,8 +27,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
          Entity nuevoNodoPhophorous = null;
         for (ModeloCrearNodo modeloRegistrado : modelosRegistrados) {
-
-           
+        
 
             if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof NodoClienteGrafico) {
                 nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
@@ -467,7 +466,13 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     }
 
     @Override
-    public void reCreatePhosphorousNodos() {
+    public void reCreatePhosphorousNodos() 
+    {
+        for (ModeloCrearNodo modeloRegistrado : modelosRegistrados)
+        {
+            modeloRegistrado.loadSimulacionBase();
+        }
+        
         for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
         {
            parejasDeNodosExistentes.put(nodoGrafico, crearNodo(nodoGrafico)); 
@@ -476,6 +481,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
           for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
             vistaNodosGraficos.enableDisign();
         }
+          
             
     }
 }
