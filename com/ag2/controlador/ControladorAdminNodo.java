@@ -322,7 +322,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                 NodoGrafico nodoGrafico;
                 while ((nodoGrafico = enumeration.nextElement()) != null) {
                     if (nodoGrafico.getNombre().equals(serviceNodeName)) {
-                        System.out.println("NodoSe: " + nodoGrafico);
                         break;
                     }
                 }
@@ -340,7 +339,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                     }
                 }
 
-                System.out.println(valor);
             }
 
 
