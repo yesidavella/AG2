@@ -1,4 +1,4 @@
-    package com.ag2.presentacion.controles;
+package com.ag2.presentacion.controles;
 
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
@@ -27,6 +27,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -56,8 +59,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
     private ScrollPane scPnPanelWorld;
-    private double dragBaseX, dragBaseY;
-    private double dragBase2X, dragBase2Y;
+    private double posicionActualRatonX = 0;
+    private double posicionActualRatonY = 0;
 
     public GrupoDeDiseno() {
         setOnMousePressed(this);
@@ -88,12 +91,11 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
                 setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
-                dragBaseX = translateXProperty().get();
-                dragBaseY = translateYProperty().get();
-                dragBase2X = mouEvent.getSceneX();
-                dragBase2Y = mouEvent.getSceneY();
+                posicionActualRatonX = mouEvent.getSceneX();
+                posicionActualRatonY = mouEvent.getSceneY();
+
             } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
-                zoom(1/PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
+                zoom(1 / PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
             } else if (botonSeleccionado == TiposDeBoton.ZOOM_PLUS) {
                 zoom(PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
             }
@@ -101,8 +103,26 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         } else if (tipoDeEvento == MouseEvent.MOUSE_DRAGGED) {
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
-                setTranslateX(dragBaseX + (mouEvent.getSceneX() - dragBase2X));
-                setTranslateY(dragBaseY + (mouEvent.getSceneY() - dragBase2Y));
+
+                double factorX = Math.abs(posicionActualRatonX - mouEvent.getSceneX());
+
+                if (mouEvent.getSceneX() < posicionActualRatonX) {
+                    scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() + factorX * 0.0002 * sclEscalaDeZoom.getX());
+                } else if (mouEvent.getSceneX() > posicionActualRatonX) {
+                    scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX());
+                }
+                posicionActualRatonX = mouEvent.getSceneX();
+                System.out.println("ScalaX:"+sclEscalaDeZoom.getX()+" Total:"+(scPnPanelWorld.getHvalue() - factorX * 0.0002 * sclEscalaDeZoom.getX()));
+//
+//                double factorY = Math.abs(posicionActualRatonY - mouEvent.getSceneY());
+//
+//                if (mouEvent.getSceneY() < posicionActualRatonY) {
+//                    scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() + factorY * 0.0000544 * scPnPanelWorld.getScaleY());
+//                } else if (mouEvent.getSceneY() > posicionActualRatonY) {
+//                    scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() - factorY * 0.0000544 * scPnPanelWorld.getScaleY());
+//                }
+//                posicionActualRatonY = mouEvent.getSceneY();
+
             }
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
@@ -288,6 +308,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                         coords = polygon.getCoordinates();
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
+                        path.setFill(Color.BLACK);
                         currentColor = (currentColor + 1) % colors.length;
                         path.setFill(colors[currentColor]);
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
@@ -300,10 +321,17 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                     }
                 }
             }
-            setStyle("  -fx-background-color:#B2BEFF;");
-            getChildren().add(texts);
 
-            Rectangle backgroudRec = new Rectangle(360, 175, Color.BLUE);
+            getChildren().add(texts);
+            
+            Stop[] stops = { 
+                new Stop(0.1, Color.web("#9DCAFF")),
+                new Stop(0.6, Color.web("#005AFF")),
+                new Stop(0.8, Color.BLUE)
+            };
+            Rectangle backgroudRec = new Rectangle(360, 175,
+                    new RadialGradient (0, 0, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE,stops));
+
             backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
             backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
             backgroudRec.setScaleX(MAP_SCALE);
@@ -336,12 +364,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         double porcentajeClickY = coorAbsClickY / altoActual;
 
         double desfaceMaxEnX = scPnPanelWorld.getViewportBounds().getWidth() / 2;
-        double funcDeDesfaceEnX = (-2*desfaceMaxEnX*(porcentajeClickX)) + desfaceMaxEnX;
+        double funcDeDesfaceEnX = (-2 * desfaceMaxEnX * (porcentajeClickX)) + desfaceMaxEnX;
 
         double desfaceMaxEnY = scPnPanelWorld.getViewportBounds().getHeight() / 2;
         double funcDeDesfaceEnY = (-2 * (desfaceMaxEnY) * (porcentajeClickY)) + desfaceMaxEnY;
         /*
-         * Convercion de pixeles a porcentaje del resultado de la funcion de desface.
+         * Convercion de pixeles a porcentaje del resultado de la funcion de
+         * desface.
          */
         double porcCorreccionX = funcDeDesfaceEnX / anchoActual;
         double porcCorreccionY = funcDeDesfaceEnY / altoActual;
