@@ -51,6 +51,7 @@ public class IGU extends Scene {
     private Cursor cursorAnteriorAEventoTcld;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
+    private Stage stgEscenario;
 
     public static IGU getInstanciaIGUAg2() {
 
@@ -69,7 +70,7 @@ public class IGU extends Scene {
         layOutVentanaPrincipal.getStyleClass().add("ventanaPrincipal");
 
         //Diseño superior
-        crearBarraDeMenus(layOutVentanaPrincipal, Main.getStgEscenario());
+        crearBarraDeMenus(layOutVentanaPrincipal, stgEscenario);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         barraHerramientas = creacionBarraDeHerramientas();
@@ -87,6 +88,10 @@ public class IGU extends Scene {
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
 
         inicializarEstadoDeIGU();
+    }
+
+    public void setStage(Stage stage) {
+        this.stgEscenario = stage;
     }
 
     public static TiposDeBoton getEstadoTipoBoton() {
@@ -466,10 +471,10 @@ public class IGU extends Scene {
         escena.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             public void handle(KeyEvent event) {
-                
-                if ( (event.isAltDown() || event.isShiftDown() || event.isControlDown() ) &&
-                        estaTeclaPrincipalOprimida == false && grGrupoDeDiseño.isHover()) {
-                    
+
+                if ((event.isAltDown() || event.isShiftDown() || event.isControlDown())
+                        && estaTeclaPrincipalOprimida == false && grGrupoDeDiseño.isHover()) {
+
                     estaTeclaPrincipalOprimida = true;
                     estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
                     cursorAnteriorAEventoTcld = grGrupoDeDiseño.getCursor();
