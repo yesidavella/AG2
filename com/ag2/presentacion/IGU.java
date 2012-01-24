@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -45,7 +46,7 @@ public class IGU extends Scene {
     TablaPropiedadesDispositivo tbPropiedadesDispositivo;
     private GridPane barraHerramientas;
     private ProgressBar prgBarBarraProgresoEjec;
-    private boolean estaTeclaCtrlOprimida = false;
+    private boolean estaTeclaPrincipalOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEventoTcld;
     private ResultadosPhosphorus resultadosPhosphorus;
@@ -186,7 +187,7 @@ public class IGU extends Scene {
         btnMinusZoom.setToggleGroup(tgHerramientas);
         btnPlusZoom.setToggleGroup(tgHerramientas);
 
-        btnMoverEscena.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton."));
+        btnMoverEscena.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton (Selección rapida:Alt)."));
         btnSeleccion.setTooltip(new Tooltip("Seleccione cualquier objeto"));
         btnDividirEnlaceCuadrado.setTooltip(new Tooltip("Añadale vertices a un enlace"));
         btnEliminar.setTooltip(new Tooltip("Elimine un objeto"));
@@ -204,13 +205,13 @@ public class IGU extends Scene {
 
         GridPane.setConstraints(btnEliminar, 1, 1);
         grdPnBarraHerramientas.getChildren().add(btnEliminar);
-       
+
         GridPane.setConstraints(btnMinusZoom, 0, 2);
         grdPnBarraHerramientas.getChildren().add(btnMinusZoom);
-       
+
         GridPane.setConstraints(btnPlusZoom, 1, 2);
         grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
-       
+
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
         separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
 
@@ -278,7 +279,7 @@ public class IGU extends Scene {
         Tab tabSimulacion = new Tab();
         Tab tabResultados = new Tab();
         Tab tabResultadosHTML = new Tab();
-        
+
         tabSimulacion.setClosable(false);
         tabSimulacion.setText("Simulación");
         tabResultados.setText("Resultados Phosphorus");
@@ -286,7 +287,7 @@ public class IGU extends Scene {
 
         ScrollPane scPnPanelWorld = new ScrollPane();
         Group grRoot = new Group();
-        
+
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
@@ -312,13 +313,13 @@ public class IGU extends Scene {
         tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
         StackPane stPnCajaPropDispositivo = new StackPane();
         stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
-       
+
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
         StackPane stPnCajaPropSimulacion = new StackPane();
         stPnCajaPropSimulacion.getChildren().add(tblPropiedadesSimulacion);
-       
+
         SplitPane splPnCajaTablasDeProp = new SplitPane();
-        splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo,stPnCajaPropSimulacion);
+        splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo, stPnCajaPropSimulacion);
         splPnCajaTablasDeProp.setDividerPositions(0.525f);
 
         VBox vbCajaNavegacion = new VBox();
@@ -353,23 +354,23 @@ public class IGU extends Scene {
         tbColPropNombre.setMinWidth(145);
         tbColPropNombre.setPrefWidth(155);
         tbColPropNombre.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, String>("nombrePropiedad"));
-       
+
         TableColumn tbColPropValor = new TableColumn("VALOR");
         tbColPropValor.setMinWidth(150);
         tbColPropValor.setPrefWidth(185);
         tbColPropValor.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, Control>("control"));
-       
+
         TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
         tbVwPropSimulacion.getColumns().addAll(tbColTituloTbSim);
-       
+
         tbVwPropSimulacion.setItems(TipoDePropiedadesPhosphorus.getDatos());
-       
-        tbVwPropSimulacion.setMinWidth(tbColTituloTbSim.getMinWidth()+13);
+
+        tbVwPropSimulacion.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
         tbVwPropSimulacion.setPrefWidth(345);
-       
+
         tbVwPropSimulacion.setPrefHeight(200);
-       
+
         return tbVwPropSimulacion;
     }
 
@@ -460,21 +461,29 @@ public class IGU extends Scene {
 //            }
 //        });
 //    }
-
     private void adicionarEventoDeTecladoAEscena(final Scene escena) {
 
         escena.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             public void handle(KeyEvent event) {
-
-                if (estaTeclaCtrlOprimida == false && event.isControlDown() && grGrupoDeDiseño.isHover()) {
-                    estaTeclaCtrlOprimida = true;
-
+                
+                if ( (event.isAltDown() || event.isShiftDown() || event.isControlDown() ) &&
+                        estaTeclaPrincipalOprimida == false && grGrupoDeDiseño.isHover()) {
+                    
+                    estaTeclaPrincipalOprimida = true;
                     estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
                     cursorAnteriorAEventoTcld = grGrupoDeDiseño.getCursor();
 
-                    IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-                    grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                    if (event.isAltDown()) {
+                        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
+                        grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                    } else if (event.isShiftDown()) {
+                        IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_PLUS);
+                        grGrupoDeDiseño.setCursor(TiposDeBoton.ZOOM_PLUS.getImagenCursor());
+                    } else if (event.isControlDown()) {
+                        IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_MINUS);
+                        grGrupoDeDiseño.setCursor(TiposDeBoton.ZOOM_MINUS.getImagenCursor());
+                    }
                 }
             }
         });
@@ -483,8 +492,8 @@ public class IGU extends Scene {
 
             public void handle(KeyEvent event) {
 
-                if (estaTeclaCtrlOprimida == true) {
-                    estaTeclaCtrlOprimida = false;
+                if (estaTeclaPrincipalOprimida == true) {
+                    estaTeclaPrincipalOprimida = false;
                     IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
                     grGrupoDeDiseño.setCursor(cursorAnteriorAEventoTcld);
                 }
@@ -551,4 +560,3 @@ public class IGU extends Scene {
         return resultadosPhosphorus;
     }
 }
-
