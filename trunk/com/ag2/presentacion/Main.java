@@ -7,16 +7,16 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     
-    private static Stage stgEscenario;
+  
     
     
     @Override
     public void start(Stage stgEscenario){
 
         stgEscenario.setTitle("Modelo AG2- Simulador Grafico");
-        this.stgEscenario=stgEscenario;//FIXME: Esto es una mierdaaaaaa
         stgEscenario.setScene(IGU.getInstanciaIGUAg2());
-        stgEscenario.show();        
+        IGU.getInstanciaIGUAg2().setStage(stgEscenario);
+        stgEscenario.show();       
       
         inicializarModelosYContrladoresDeCreacionDeNodos();
     }
@@ -24,11 +24,7 @@ public class Main extends Application{
     public static void main(String[] args){
         Application.launch(args);
     }
-    
-    public static Stage getStgEscenario() {
-        return stgEscenario;
-    }
-    
+
     private void inicializarModelosYContrladoresDeCreacionDeNodos() {
         
         //Controladores y Modelos
