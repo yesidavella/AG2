@@ -5,6 +5,7 @@ import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
+import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
 import java.util.ArrayList;
 import simbase.SimBaseEntity;
@@ -17,12 +18,17 @@ public class SimulacionBase implements Runnable {
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
     private static ArrayList<SimBaseEntity> simBaseEntitys;
+    private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo; 
     
     private SimulacionBase() {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulator();
         simulacion.setSimulator(simulador);
         
+    }
+
+    public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
+        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
     }
     
     public void setOutputterModel(OutputterModel outputterModel) {
@@ -49,13 +55,11 @@ public class SimulacionBase implements Runnable {
     }
     
     public void stop() {
-        simBaseEntitys = simulador.getEntities();
+        
         simulacionBase = new SimulacionBase();
         simulacionBase.getSimulador().setEntities(simBaseEntitys);        
-        
-        for (SimBaseEntity entity : simulacionBase.getSimulador().getEntities()) {
-            entity.setSimulator(simulacionBase.getSimulador());
-        }
+        controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
+      
     }
     
     @Override
@@ -76,6 +80,7 @@ public class SimulacionBase implements Runnable {
                 outputterModel.printResource((ResourceNode) entity);
             }
         }
+        stop();
         
     }
     

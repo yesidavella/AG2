@@ -540,10 +540,10 @@ public class IGU extends Scene {
         return vBoxCajaContenedoraIndicadores;
     }
 
-    public void habilitar() {
+    public synchronized  void habilitar() {
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
-        prgBarBarraProgresoEjec.setProgress(0);
+        //prgBarBarraProgresoEjec.setProgress(0);
         IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
         grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }

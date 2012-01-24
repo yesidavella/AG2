@@ -8,5 +8,6 @@ public interface VistaNodosGraficos
 {
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos ); 
     public void updatePropiedad(String id, String valor);
+    public void enableDisign(); 
     
 }
