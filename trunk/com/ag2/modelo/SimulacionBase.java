@@ -23,8 +23,7 @@ public class SimulacionBase implements Runnable {
     private SimulacionBase() {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulator();
-        simulacion.setSimulator(simulador);
-        
+        simulacion.setSimulator(simulador);        
     }
 
     public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
@@ -56,8 +55,7 @@ public class SimulacionBase implements Runnable {
     
     public void stop() {
         
-        simulacionBase = new SimulacionBase();
-        simulacionBase.getSimulador().setEntities(simBaseEntitys);        
+        simulacionBase = new SimulacionBase();        
         controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
       
     }
