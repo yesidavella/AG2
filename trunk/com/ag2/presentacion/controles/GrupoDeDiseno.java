@@ -391,4 +391,12 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void setScrollPane(ScrollPane scPnPanelWorld) {
         this.scPnPanelWorld = scPnPanelWorld;
     }
+
+    public void enableDisign() 
+    {
+        IGU.getInstanciaIGUAg2().habilitar();
+        IGU.getInstanciaIGUAg2().getExecutePane().habilitar();
+        setCursor(TiposDeBoton.MANO.getImagenCursor());
+        
+    }
 }

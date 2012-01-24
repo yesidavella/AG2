@@ -2,6 +2,7 @@ package com.ag2.controlador;
 
 import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
+import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ public abstract class ControladorAbstractoAdminNodo {
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
     protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
 
-    public ControladorAbstractoAdminNodo() {
+    public ControladorAbstractoAdminNodo() 
+    {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
         parejasDeNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
+        SimulacionBase.getInstance().setControladorAbstractoAdminNodo(this);
     }
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
@@ -39,8 +42,9 @@ public abstract class ControladorAbstractoAdminNodo {
         parejasDeNodosExistentes.remove(nodoGrafico);
     }
 
-    public abstract void crearNodo(NodoGrafico nodoGrafico);
+    public abstract Entity crearNodo(NodoGrafico nodoGrafico);
     public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
     public abstract void updatePropiedad(String id, String valor);
     public abstract void removeNodo(NodoGrafico nodoGrafico); 
+     public abstract void reCreatePhosphorousNodos(); 
 }

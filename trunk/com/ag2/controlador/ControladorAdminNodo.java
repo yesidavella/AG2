@@ -23,11 +23,12 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     private NodoGrafico nodoGraficoSeleccionado;
 
     @Override
-    public void crearNodo(NodoGrafico nodoGrafico) {
+    public Entity crearNodo(NodoGrafico nodoGrafico) {
 
+         Entity nuevoNodoPhophorous = null;
         for (ModeloCrearNodo modeloRegistrado : modelosRegistrados) {
 
-            Entity nuevoNodoPhophorous = null;
+           
 
             if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof NodoClienteGrafico) {
                 nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getNombre());
@@ -47,6 +48,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                 //ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes().put(nodoGrafico, nuevoNodoPhophorous);
             }
         }
+        return  nuevoNodoPhophorous; 
     }
 
     public void consultarPropiedades(NodoGrafico nodoGrafico) {
@@ -462,5 +464,18 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         SimulacionBase.getInstance().getSimulador().unRegister(entity);
         
         
+    }
+
+    @Override
+    public void reCreatePhosphorousNodos() {
+        for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
+        {
+           parejasDeNodosExistentes.put(nodoGrafico, crearNodo(nodoGrafico)); 
+        }
+        
+          for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
+            vistaNodosGraficos.enableDisign();
+        }
+            
     }
 }

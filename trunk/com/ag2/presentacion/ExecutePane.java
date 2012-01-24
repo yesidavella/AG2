@@ -37,6 +37,12 @@ public class ExecutePane extends TilePane implements ExecuteView {
     public void setResultadosPhosphorousHTML(ResultadosPhosphorousHTML resultadosPhosphorousHTML) {
         this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
     }
+     public void habilitar()
+    {
+        btnParar.setSelected(true);    
+        IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
+                      
+    }
 
     public ExecutePane(GrupoDeDiseno grupoDeDiseno) {
 
@@ -79,17 +85,15 @@ public class ExecutePane extends TilePane implements ExecuteView {
                     public void handle(MouseEvent mouEvent) {
                         
                         Boton btnParar = (Boton)mouEvent.getSource();
-
-                        btnParar.setSelected(true);
-                        
-                        IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);
-                        IGU.getInstanciaIGUAg2().habilitar();
-                        grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                        IGU.getInstanciaIGUAg2().habilitar();                        
+                        habilitar();
                         executeAbstractController.stop();
                     }
                 });
             }
         };
+        
+       
 
 
         getStyleClass().add("barraDeHerramientas");

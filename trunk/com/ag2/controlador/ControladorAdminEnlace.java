@@ -102,4 +102,6 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
             puertoSalidaNodoB.setMaxNumberOfWavelengths(Integer.parseInt(valor));
         }
     }
+
+  
 }

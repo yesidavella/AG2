@@ -5,8 +5,7 @@ import com.ag2.modelo.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application{
-    
+public class Main extends Application{ 
   
     
     
