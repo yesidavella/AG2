@@ -255,7 +255,9 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     }
 
     @Override
-    public void updatePropiedad(String id, String valor) {
+    public void updatePropiedad(String id, String valor) 
+    {
+        nodoGraficoSeleccionado.getNodeProperties().put(id, valor); 
 
         if (id.equalsIgnoreCase("nombre")) {
             nodoGraficoSeleccionado.setNombre(valor);
@@ -433,7 +435,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         } else if (value.equals("Possion")) {
             return new DDPoissonProcess(2);
         }
-
         return null;
 
     }
@@ -471,16 +472,30 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         for (ModeloCrearNodo modeloRegistrado : modelosRegistrados)
         {
             modeloRegistrado.loadSimulacionBase();
-        }
-        
+        }        
         for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
         {
-           parejasDeNodosExistentes.put(nodoGrafico, crearNodo(nodoGrafico)); 
+           parejasDeNodosExistentes.put(nodoGrafico, crearNodo(nodoGrafico));
+               
+        
+               
+        }
+        for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
+        {
+            for(String id: nodoGrafico.getNodeProperties().keySet())
+           {
+               nodoGraficoSeleccionado = nodoGrafico; 
+               updatePropiedad(id, nodoGrafico.getNodeProperties().get(id));
+           } 
+            
         }
         
-          for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
+        
+        
+        for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
             vistaNodosGraficos.enableDisign();
         }
+     
           
             
     }

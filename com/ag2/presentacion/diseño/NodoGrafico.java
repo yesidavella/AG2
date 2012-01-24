@@ -8,6 +8,8 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -45,6 +47,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private String nombreOriginal;
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
+    private HashMap<String, String> propertiesNode = new HashMap<String, String>(); 
 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
@@ -82,6 +85,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
         establecerEventoOnMouseExit();
     }
+
+    public HashMap<String, String> getNodeProperties() {
+        return propertiesNode;
+    }    
 
     public void setAltoInicial(short altoInicial) {
         this.altoInicial = altoInicial;
