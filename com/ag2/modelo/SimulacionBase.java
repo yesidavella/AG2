@@ -7,7 +7,6 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
-import java.util.ArrayList;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
@@ -17,7 +16,7 @@ public class SimulacionBase implements Runnable {
     private GridSimulator simulador;
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
-    private static ArrayList<SimBaseEntity> simBaseEntitys;
+
     private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo; 
     
     private SimulacionBase() {
