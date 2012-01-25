@@ -317,7 +317,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
                     capacity = cpu.getCpuCapacity();
                 }
                 resource.setCpuCount(Integer.parseInt(valor), capacity);
-            } else if (id.equalsIgnoreCase("RelationshipResouceAndServiceNodo")) {
+            } else if (id.contains("RelationshipResouceAndServiceNodo")) {
                 String serviceNodeName = valor.replace("_ON", "").replace("_OFF", "");
 
                 Enumeration<NodoGrafico> enumeration = parejasDeNodosExistentes.keys();
