@@ -62,7 +62,7 @@ public class ResultadosPhosphorousHTML {
 
         hBox.setAlignment(Pos.CENTER);
 
-        loadFilesHTMLs(tab);
+        //loadFilesHTMLs(tab);
 
         tab.setOnSelectionChanged(new EventHandler<Event>() {
 

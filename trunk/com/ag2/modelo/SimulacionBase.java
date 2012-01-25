@@ -56,6 +56,7 @@ public class SimulacionBase implements Runnable {
     
     public void stop() {
         
+        simulacion.stopEvent= true; 
         simulacionBase = new SimulacionBase();      
         simulacionBase.setOutputterModel(outputterModel);
         simulacionBase.setControladorAbstractoAdminNodo(controladorAbstractoAdminNodo);
@@ -68,7 +69,7 @@ public class SimulacionBase implements Runnable {
     @Override
     public void run() {       
         
-        
+        simulacion.stopEvent= false; 
         route();
         initEntities();
         simulacion.run();
