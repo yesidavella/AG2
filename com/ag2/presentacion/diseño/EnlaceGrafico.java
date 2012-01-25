@@ -1,7 +1,6 @@
 package com.ag2.presentacion.diseño;
 
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
-import com.ag2.controlador.ControladorAdminEnlace;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -39,6 +38,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
  
+        properties = new HashMap<String, String>();
         determinarArcoInicialYFinal();
         controladorAdminEnlace.crearEnlace(this);
         seleccionar(true);
