@@ -8,6 +8,7 @@ import com.ag2.controlador.ExecuteAbstractController;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
+import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -27,6 +28,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
     Boton btnParar;
     ToggleGroup tgEjecucion = new ToggleGroup();
     ResultadosPhosphorousHTML resultadosPhosphorousHTML;
+    ResultadosPhosphorus resultadosPhosphorus; 
     ExecuteAbstractController executeAbstractController;
 
     public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
@@ -37,6 +39,11 @@ public class ExecutePane extends TilePane implements ExecuteView {
     public void setResultadosPhosphorousHTML(ResultadosPhosphorousHTML resultadosPhosphorousHTML) {
         this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
     }
+
+    public void setResultadosPhosphorus(ResultadosPhosphorus resultadosPhosphorus) {
+        this.resultadosPhosphorus = resultadosPhosphorus;
+    }
+    
      public void habilitar()
     {
         btnParar.setSelected(true);    
@@ -66,7 +73,11 @@ public class ExecutePane extends TilePane implements ExecuteView {
                         {
                             if (resultadosPhosphorousHTML != null)
                             {
-                                resultadosPhosphorousHTML.deleteHTMLFiles();
+                                resultadosPhosphorousHTML.lookToNextExecution();
+                            }
+                            if(resultadosPhosphorus!=null)
+                            {
+                                resultadosPhosphorus.looktToNextExecution();
                             }
                             executeAbstractController.run();
 
