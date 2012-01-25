@@ -5,6 +5,7 @@ import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
+import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
 import simbase.SimBaseEntity;
@@ -17,7 +18,8 @@ public class SimulacionBase implements Runnable {
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
 
-    private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo; 
+    private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo;
+    private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     
     private SimulacionBase() {
         simulacion = new GridSimulation("ConfigInit.cfg");
@@ -54,9 +56,13 @@ public class SimulacionBase implements Runnable {
     
     public void stop() {
         
-        simulacionBase = new SimulacionBase();        
+        simulacionBase = new SimulacionBase();      
+        simulacionBase.setOutputterModel(outputterModel);
+        simulacionBase.setControladorAbstractoAdminNodo(controladorAbstractoAdminNodo);
+        simulacionBase.setControladorAdminEnlace(controladorAdminEnlace);
         controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
-      
+        controladorAdminEnlace.reCreatePhosphorousLinks();
+        
     }
     
     @Override
@@ -86,5 +92,9 @@ public class SimulacionBase implements Runnable {
     
     public GridSimulator getSimulador() {
         return simulador;
+    }
+    
+    public void setControladorAdminEnlace(ControladorAbstractoAdminEnlace controladorAdminEnlace) {
+        this.controladorAdminEnlace = controladorAdminEnlace;
     }
 }
