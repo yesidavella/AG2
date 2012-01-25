@@ -60,8 +60,7 @@ public class SimulacionBase implements Runnable {
     }
     
     @Override
-    public void run() {
-        
+    public void run() {       
         
         
         route();

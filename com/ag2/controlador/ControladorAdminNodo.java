@@ -44,7 +44,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             }
             if (nuevoNodoPhophorous != null) {
                 addNodoGraficoYNodoPhosphorous(nodoGrafico, nuevoNodoPhophorous);
-                //ContenedorParejasNodosExistentes.getInstanciaParejasDeNodosExistentes().put(nodoGrafico, nuevoNodoPhophorous);
             }
         }
         return  nuevoNodoPhophorous; 
@@ -473,11 +472,10 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
         {
             modeloRegistrado.loadSimulacionBase();
         }        
+        
         for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
         {
-           parejasDeNodosExistentes.put(nodoGrafico, crearNodo(nodoGrafico));
-               
-        
+           crearNodo(nodoGrafico);
                
         }
         for(NodoGrafico nodoGrafico : parejasDeNodosExistentes.keySet())
