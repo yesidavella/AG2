@@ -49,7 +49,7 @@ public class IGU extends Scene {
     private ProgressBar prgBarBarraProgresoEjec;
     private boolean estaTeclaPrincipalOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
-    private Cursor cursorAnteriorAEventoTcld;
+    private Cursor cursorAnteriorAEvento;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
 
@@ -201,8 +201,8 @@ public class IGU extends Scene {
         btnSeleccion.setTooltip(new Tooltip("Seleccione cualquier objeto"));
         btnDividirEnlaceCuadrado.setTooltip(new Tooltip("Añadale vertices a un enlace"));
         btnEliminar.setTooltip(new Tooltip("Elimine un objeto"));
-        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde realize el click"));
-        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde realize el click"));
+        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde\nrealize el click (Selección rapida:Ctrl)"));
+        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (Selección rapida:Shift)"));
 
         GridPane.setConstraints(btnSeleccion, 0, 0);
         grdPnBarraHerramientas.getChildren().add(btnSeleccion);
@@ -301,7 +301,7 @@ public class IGU extends Scene {
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
         executePane.setResultadosPhosphorus(resultadosPhosphorus);
-        
+
         grGrupoDeDiseño.setScrollPane(scPnWorld);
 
         grRoot.getChildren().add(grGrupoDeDiseño);
@@ -483,7 +483,7 @@ public class IGU extends Scene {
 
                     estaTeclaPrincipalOprimida = true;
                     estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
-                    cursorAnteriorAEventoTcld = grGrupoDeDiseño.getCursor();
+                    cursorAnteriorAEvento = grGrupoDeDiseño.getCursor();
 
                     if (event.isAltDown()) {
                         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
@@ -506,7 +506,7 @@ public class IGU extends Scene {
                 if (estaTeclaPrincipalOprimida == true) {
                     estaTeclaPrincipalOprimida = false;
                     IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
-                    grGrupoDeDiseño.setCursor(cursorAnteriorAEventoTcld);
+                    grGrupoDeDiseño.setCursor(cursorAnteriorAEvento);
                 }
             }
         });
@@ -549,23 +549,27 @@ public class IGU extends Scene {
         return vBoxCajaContenedoraIndicadores;
     }
 
-    public synchronized void habilitar() {
+    public void habilitar() {
+
+        IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
+        grGrupoDeDiseño.setCursor(cursorAnteriorAEvento);
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
         prgBarBarraProgresoEjec.setVisible(false);
-        IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
-        grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }
 
     public void deshabilitar() {
+        estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
+        cursorAnteriorAEvento = grGrupoDeDiseño.getCursor();
+        
+        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
+        grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+        
         prgBarBarraProgresoEjec.setVisible(true);
         barraHerramientas.setDisable(true);
         barraHerramientas.setOpacity(0.99);
         prgBarBarraProgresoEjec.setProgress(-1);
-        estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
-        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-        grGrupoDeDiseño.setCursor(IGU.getEstadoTipoBoton().getImagenCursor());
     }
 
     public ExecutePane getExecutePane() {
