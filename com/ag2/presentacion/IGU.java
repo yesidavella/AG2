@@ -557,6 +557,7 @@ public class IGU extends Scene {
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
         prgBarBarraProgresoEjec.setVisible(false);
+        grGrupoDeDiseño.setOpacity(1);
     }
 
     public void deshabilitar() {
@@ -568,8 +569,9 @@ public class IGU extends Scene {
         
         prgBarBarraProgresoEjec.setVisible(true);
         barraHerramientas.setDisable(true);
-        barraHerramientas.setOpacity(0.99);
+        barraHerramientas.setOpacity(0.8);
         prgBarBarraProgresoEjec.setProgress(-1);
+        grGrupoDeDiseño.setOpacity(0.8);
     }
 
     public ExecutePane getExecutePane() {
