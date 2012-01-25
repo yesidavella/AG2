@@ -20,11 +20,20 @@ public class SimulacionBase implements Runnable {
 
     private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
+    private ResultsAbstractController resultsAbstractController; 
     
     private SimulacionBase() {
+        
+        
+      
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulator();
-        simulacion.setSimulator(simulador);        
+        simulacion.setSimulator(simulador);       
+       
+    }
+
+    public ResultsAbstractController getResultsAbstractController() {
+        return resultsAbstractController;
     }
 
     public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
@@ -35,8 +44,11 @@ public class SimulacionBase implements Runnable {
         this.outputterModel = outputterModel;
     }
     
-    public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
+    public void setResultsAbstractController(ResultsAbstractController resultsAbstractController)
+    {
+        this.resultsAbstractController = resultsAbstractController; 
         outputterModel.setResultsAbstractController(resultsAbstractController);
+        
     }
     
     public static SimulacionBase getInstance() {
@@ -58,7 +70,14 @@ public class SimulacionBase implements Runnable {
         
         simulacion.stopEvent= true; 
         simulacionBase = new SimulacionBase();      
-        simulacionBase.setOutputterModel(outputterModel);
+        
+       
+        OutputterModel outputterModelNew = new OutputterModel(simulacionBase.getSimulador()); 
+        simulacionBase.setResultsAbstractController(resultsAbstractController);
+        simulacionBase.setOutputterModel(outputterModelNew);
+        //outputterModelNew.setResultsAbstractController(resultsAbstractController);
+     
+         
         simulacionBase.setControladorAbstractoAdminNodo(controladorAbstractoAdminNodo);
         simulacionBase.setControladorAdminEnlace(controladorAdminEnlace);
         controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
