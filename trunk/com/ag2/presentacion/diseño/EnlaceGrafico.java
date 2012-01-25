@@ -6,6 +6,7 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.scene.paint.Color;
 
 public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSeleccionable  {
@@ -17,6 +18,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     private GrupoDeDiseno grGrDeDiseño;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     private boolean isSeleccionado;
+    private HashMap<String,String> properties;
 
     public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB,ControladorAbstractoAdminEnlace controladorAdminEnlace) {
         this.nodoGraficoA = nodoGraficoA;
@@ -162,5 +164,9 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 arcFinal = arco;
             }
         }
+    }
+    
+    public HashMap<String, String> getProperties() {
+        return properties;
     }
 }

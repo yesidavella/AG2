@@ -1,17 +1,22 @@
 package com.ag2.controlador;
 
+import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 public abstract class ControladorAbstractoAdminEnlace {
     
     protected ArrayList<ModeloAbstractoCrearEnlace> modelosRegistrados;
     protected TablaPropiedadesDispositivo tblPropiedadesDispositivo;
+    protected Hashtable<EnlaceGrafico,EnlacePhosphorous> parejasDeEnlacesExistentes;
     
     public ControladorAbstractoAdminEnlace(){
         modelosRegistrados = new ArrayList<ModeloAbstractoCrearEnlace>();
+        parejasDeEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
     }
     
     public boolean addModelo(ModeloAbstractoCrearEnlace modelo) {
@@ -30,4 +35,6 @@ public abstract class ControladorAbstractoAdminEnlace {
     public void addVistaEnlace(TablaPropiedadesDispositivo propiedadesDispositivoTbl) {
         this.tblPropiedadesDispositivo = propiedadesDispositivoTbl;
     }
+    
+    public abstract void reCreatePhosphorousLinks();
 }

@@ -5,6 +5,7 @@ import Grid.Port.GridOutPort;
 import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.modelo.ModeloCrearEnlace;
+import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
@@ -19,7 +20,9 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
     @Override
     public void crearEnlace(EnlaceGrafico enlaceGrafico) {
-                
+        
+        
+        
         for(ModeloAbstractoCrearEnlace modelo:modelosRegistrados){
 
             if(modelo instanceof ModeloCrearEnlace){
@@ -38,6 +41,8 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
                 }
             }
         }
+        
+        SimulacionBase.getInstance().setControladorAdminEnlace(this);
     }
 
     @Override
@@ -90,6 +95,8 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
     @Override
     public void updatePropiedad(String id, String valor) {
 
+        
+        
         if(id.equalsIgnoreCase("linkSpeedAB")){
             puertoSalidaNodoA.setLinkSpeed(Double.valueOf(valor));
         }else if(id.equalsIgnoreCase("linkSpeedBA")){
@@ -101,6 +108,19 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
             puertoSalidaNodoA.setMaxNumberOfWavelengths(Integer.parseInt(valor));
             puertoSalidaNodoB.setMaxNumberOfWavelengths(Integer.parseInt(valor));
         }
+    }
+
+    @Override
+    public void reCreatePhosphorousLinks() {
+        System.out.println("Creando...");
+        
+        for(EnlaceGrafico enlaceGrafico:parejasDeEnlacesExistentes.keySet()){
+            crearEnlace(enlaceGrafico);
+        }
+        
+        
+        
+        
     }
 
   
