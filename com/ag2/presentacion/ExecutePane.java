@@ -47,7 +47,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
      public void habilitar()
     {
         btnParar.setSelected(true);    
-        IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
+        //IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
                       
     }
 
@@ -65,9 +65,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
                         
                         btnEjecutar.setSelected(true);
 
-                        IGU.setEstadoTipoBoton(TiposDeBoton.EJECUTAR);
                         IGU.getInstanciaIGUAg2().deshabilitar();
-                        grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                        //IGU.setEstadoTipoBoton(TiposDeBoton.EJECUTAR);
                         
                         if (executeAbstractController != null)
                         {
