@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
-    private EnlaceGrafico enlaceGraficoSeleccionado;
-
     @Override
     public void crearEnlace(EnlaceGrafico enlaceGrafico) {
 
@@ -45,8 +43,6 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
     @Override
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
-
-        enlaceGraficoSeleccionado = enlaceGrafico;
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
         EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous) ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
