@@ -15,13 +15,12 @@ import com.ag2.presentacion.controles.ViewResultsPhosphorus;
 public abstract class ResultsAbstractController 
 {
     protected  ViewResultsPhosphorus viewResultsPhosphorus;
-    protected  OutputterModel outputterModel = new OutputterModel(SimulacionBase.getInstance().getSimulador()); 
+   protected  OutputterModel outputterModel = new OutputterModel(SimulacionBase.getInstance().getSimulador()); 
     
     public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) 
     {
         this.viewResultsPhosphorus = viewResultsPhosphorus;
-    }
-    
+    }       
     
    public abstract  void adicionarResultadoCliente(String tcCliente, String tcPeticionesEnviadas , 
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, 

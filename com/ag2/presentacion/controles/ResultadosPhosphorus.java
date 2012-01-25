@@ -48,14 +48,17 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
 
     public void looktToNextExecution()
     {
-        for (int i = 0; i < dataCliente.size(); i++) {
-            dataCliente.remove(i); 
+        int sizeClients =  dataCliente.size(); 
+        for (int i = 0; i < sizeClients; i++) {
+            dataCliente.remove(0); 
         }
-        for (int i = 0; i < dataConmutador.size(); i++) {
-            dataConmutador.remove(i); 
+        int sizeSwitches =  dataConmutador.size(); 
+        for (int i = 0; i <sizeSwitches; i++) {
+            dataConmutador.remove(0); 
         }
-        for (int i = 0; i < dataRecurso.size(); i++) {
-            dataRecurso.remove(i); 
+        int sizeResources =  dataRecurso.size();          
+        for (int i = 0; i < sizeResources; i++) {
+            dataRecurso.remove(0); 
         }
     }
 

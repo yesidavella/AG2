@@ -29,7 +29,7 @@ public class OutputterModel extends Outputter
     public OutputterModel(GridSimulator sim)
     {
         super(sim); 
-        SimulacionBase.getInstance().setOutputterModel(this);
+       SimulacionBase.getInstance().setOutputterModel(this);
     }
     @Override
      public void printClient(ClientNode client) 
