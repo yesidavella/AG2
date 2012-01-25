@@ -38,7 +38,7 @@ public class ResultadosPhosphorousHTML {
     private Button btnDerFin = new Button();
     //private Label lbPagina = new Label("Pag"); 
     private TextField txtPagina = new TextField();
-    private String CARPETA_RESULTADOS = "ResultadosPhosphorous";
+    private String CARPETA_RESULTADOS = "Results_HTML";
     private int paginasTotales = 0;
     private int paginaActual = 0;
     private String[] archivosHTML;
@@ -47,8 +47,15 @@ public class ResultadosPhosphorousHTML {
     String directorioResultados;
     VBox vBox = new VBox();
     HBox hBox = new HBox();
+    int countExecutions = 0; 
 
-    public ResultadosPhosphorousHTML(final Tab tab) {
+    public void lookToNextExecution()
+    {
+        countExecutions++; 
+    }
+    public ResultadosPhosphorousHTML(final Tab tab)
+    {
+        
         btnIzqFin.setGraphic(ivIzqFin);
         btnIzq.setGraphic(ivIzq);
         btnDer.setGraphic(ivDer);
@@ -75,27 +82,12 @@ public class ResultadosPhosphorousHTML {
 
     }
 
-    public void deleteHTMLFiles() {
-        String directorioActual = new File("").getAbsolutePath();
-        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS;
-        File file = new File(directorioResultados);
-
-        if (file.exists()) {
-            archivosHTML = file.list();
-            paginasTotales = archivosHTML.length;
-        }
-        for (int i = 0; i < paginasTotales; i++) 
-        {
-            File fileHtml = new File(directorioResultados + File.separator + archivosHTML[i]);
-            fileHtml.delete();
-        }
-    }
-
+   
     private void loadFilesHTMLs(Tab tab) {
 
 
         String directorioActual = new File("").getAbsolutePath();
-        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS;
+        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS+"_"+countExecutions;
         File file = new File(directorioResultados);
 
         if (file.exists()) {

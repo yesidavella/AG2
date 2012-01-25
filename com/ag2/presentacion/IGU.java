@@ -300,6 +300,7 @@ public class IGU extends Scene {
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
+        executePane.setResultadosPhosphorus(resultadosPhosphorus);
         
         grGrupoDeDiseño.setScrollPane(scPnWorld);
 
