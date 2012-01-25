@@ -52,7 +52,7 @@ public class PropiedadeNodo {
                         {    
                             valor="OFF";                             
                         }
-                        tablaPropiedadesDispositivo.updatePropiedad(id,nombre+valor );
+                        tablaPropiedadesDispositivo.updatePropiedad(id+"_"+nombre,nombre+valor );
                         checkBox.setDisable(true);
                     }
                 });
