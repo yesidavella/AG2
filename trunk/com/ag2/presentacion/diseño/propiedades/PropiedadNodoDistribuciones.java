@@ -37,7 +37,7 @@ public class PropiedadNodoDistribuciones extends PropiedadeNodo {
     };
 
     public PropiedadNodoDistribuciones(String id, String nombre) {
-        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO);
+        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO, false );
         ((ChoiceBox) control).setItems(FXCollections.observableArrayList(TipoDeDistribucion.values()));
     }
 

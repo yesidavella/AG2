@@ -44,7 +44,7 @@ public abstract class ControladorAbstractoAdminNodo {
 
     public abstract Entity crearNodo(NodoGrafico nodoGrafico);
     public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
-    public abstract void updatePropiedad(boolean conusultar, String id, String valor);
+    public abstract void updatePropiedad(boolean isSubProperty,boolean conusultar, String id, String valor);
     public abstract void removeNodo(NodoGrafico nodoGrafico); 
      public abstract void reCreatePhosphorousNodos(); 
 }

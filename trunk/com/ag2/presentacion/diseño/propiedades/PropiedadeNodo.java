@@ -22,20 +22,28 @@ public class PropiedadeNodo {
     private TipoDePropiedadNodo tipoDePropiedadNodo;
     protected Control control;
     private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
+    private boolean subProperty = false; 
     
     public void setDisable(boolean  isDisable)
     {
         control.setDisable(isDisable);
     }
 
+    public boolean isSubProperty() {
+        return subProperty;
+    }
 
-    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo) 
+    public void setSubProperty(boolean subProperty) {
+        this.subProperty = subProperty;
+    }
+
+    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo, boolean isSubProperty) 
     {
         
         this.nombre = nombre;
         this.tipoDePropiedadNodo = tipoDePropiedadNodo;
         this.id = id;
-        
+        this.subProperty = isSubProperty; 
 
         switch (tipoDePropiedadNodo) 
         {
@@ -52,7 +60,7 @@ public class PropiedadeNodo {
                         {    
                             valor="OFF";                             
                         }
-                        tablaPropiedadesDispositivo.updatePropiedad(id+"_"+nombre,nombre+valor );
+                        tablaPropiedadesDispositivo.updatePropiedad(subProperty,id+"_"+nombre,nombre+valor );
                         checkBox.setDisable(true);
                     }
                 });
@@ -66,7 +74,7 @@ public class PropiedadeNodo {
                         ChoiceBox choiceBox = (ChoiceBox) control;
                         choiceBox.getSelectionModel().getSelectedItem().toString();
                         if (tablaPropiedadesDispositivo != null) {
-                            tablaPropiedadesDispositivo.updatePropiedad(id, choiceBox.getSelectionModel().getSelectedItem().toString());
+                            tablaPropiedadesDispositivo.updatePropiedad(subProperty, id, choiceBox.getSelectionModel().getSelectedItem().toString());
                         }
                     }
                 });
@@ -149,7 +157,7 @@ public class PropiedadeNodo {
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
 
                 if (beforeStateFocus == true && currentStateFocus == false) {
-                    tablaPropiedadesDispositivo.updatePropiedad(id, textField.getText());
+                    tablaPropiedadesDispositivo.updatePropiedad(subProperty, id, textField.getText());
                 }
             }
         });

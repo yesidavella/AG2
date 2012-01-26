@@ -251,8 +251,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
 
-    public void updatePropiedad(String id, String valor) {
-    }
+    
 
     public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
         ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
@@ -386,5 +385,9 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void enableDisign() {
         IGU.getInstanciaIGUAg2().habilitar();
         IGU.getInstanciaIGUAg2().getExecutePane().habilitar();
+    }
+
+    public void updatePropiedad(boolean isSubProperty, String id, String valor) {
+        
     }
 }
