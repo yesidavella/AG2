@@ -14,7 +14,7 @@ import simbase.SimulationInstance;
 public class SimulacionBase implements Runnable {
     
     private static SimulacionBase simulacionBase;
-    private GridSimulator simulador;
+    private GridSimulatorModel simulador;
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
 
@@ -24,10 +24,8 @@ public class SimulacionBase implements Runnable {
     
     private SimulacionBase() {
         
-        
-      
         simulacion = new GridSimulation("ConfigInit.cfg");
-        simulador = new GridSimulator();
+        simulador = new GridSimulatorModel();
         simulacion.setSimulator(simulador);       
        
     }
@@ -48,6 +46,7 @@ public class SimulacionBase implements Runnable {
     {
         this.resultsAbstractController = resultsAbstractController; 
         outputterModel.setResultsAbstractController(resultsAbstractController);
+        simulador.setViewResultsPhosphorus(resultsAbstractController);
         
     }
     

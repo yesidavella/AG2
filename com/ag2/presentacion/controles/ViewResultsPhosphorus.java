@@ -27,6 +27,11 @@ public interface  ViewResultsPhosphorus
                                             String relDropRes,
                                             String reltotDrop); 
    
+   public void setExecutionPercentage(double Percentage); 
+ 
+   
+   
+   
    
     
 }
