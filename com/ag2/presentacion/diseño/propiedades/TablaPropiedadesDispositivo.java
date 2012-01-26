@@ -63,13 +63,13 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         setItems(datosPropiedades);       
     }
 
-    public void updatePropiedad( String id, String valor) 
+    public void updatePropiedad(boolean isSubProperty, String id, String valor) 
     {
         ObjetoSeleccionable objetoSeleccionado = IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
         
         if(objetoSeleccionado != null){
             if (objetoSeleccionado instanceof NodoGrafico) {
-                controladorAbstractoAdminNodo.updatePropiedad(true,id, valor);
+                controladorAbstractoAdminNodo.updatePropiedad(isSubProperty,true,id, valor);
             } else if (objetoSeleccionado instanceof EnlaceGrafico) {
                 controladorAdminEnlace.updatePropiedad((EnlaceGrafico)objetoSeleccionado,id, valor);
             }

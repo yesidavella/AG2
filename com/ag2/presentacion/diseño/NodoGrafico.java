@@ -53,7 +53,9 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
     private HashMap<String, String> propertiesNode = new HashMap<String, String>();
-
+    private HashMap<String, String> subPropertiesNode = new HashMap<String, String>();
+    
+   
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
         this.controladorAdminEnlace = ctrlAbsAdminEnlace;
@@ -532,6 +534,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     public Line getEnlaceComodin() {
         return enlaceComodin;
+    }
+
+    public HashMap<String, String> getSubPropertiesNode() {
+        return subPropertiesNode;
     }
 
     public abstract boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace);

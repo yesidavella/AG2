@@ -19,7 +19,7 @@ public class NodeRelationProperty extends PropiedadeNodo {
     private String nombre;
     
     public NodeRelationProperty(String id, String nombre) {
-        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO);        
+        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO, false);        
         ChoiceBox  choiceBox =  ((ChoiceBox) control); 
         choiceBox.setItems(observableListNodes);            
     }
