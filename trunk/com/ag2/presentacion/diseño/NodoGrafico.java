@@ -193,30 +193,27 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     nodoAComodin = null;
                 }
 
-                if (nodoAComodin != null && nodoGrafico != null) {
+                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE){
+                    
+                    if(nodoAComodin != null && nodoAComodin != nodoGrafico && NodoGrafico.inicioGeneracionDeEnlace){
+                        
+                        if(nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)){
+                        
+                            GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
+                            grDeDiseño.getChildren().remove(enlaceComodin);
 
-                    if (!nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
-                        nodoGrafico.playDenyLinkAnimation();
+                            EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grDeDiseño, nodoAComodin, nodoGrafico, controladorAdminEnlace);
+                            enlaceGrafico.addArcosInicialAlGrupo();
+
+                            nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
+                            nodoGrafico.setCantidadDeEnlaces((short) (nodoGrafico.getCantidadDeEnlaces() + 1));
+
+                            nodoAComodin.toFront();
+                            nodoGrafico.toFront();
+                        }else {
+                            nodoGrafico.playDenyLinkAnimation();
+                        }
                     }
-                }
-
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE
-                        && nodoAComodin != null
-                        && nodoAComodin != nodoGrafico
-                        && NodoGrafico.inicioGeneracionDeEnlace
-                        && nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
-
-                    GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
-                    grDeDiseño.getChildren().remove(enlaceComodin);
-
-                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grDeDiseño, nodoAComodin, nodoGrafico, controladorAdminEnlace);
-                    enlaceGrafico.addArcosInicialAlGrupo();
-
-                    nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
-                    nodoGrafico.setCantidadDeEnlaces((short) (nodoGrafico.getCantidadDeEnlaces() + 1));
-
-                    nodoAComodin.toFront();
-                    nodoGrafico.toFront();
 
                 } else if (tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
                     setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
