@@ -69,7 +69,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         
         if(objetoSeleccionado != null){
             if (objetoSeleccionado instanceof NodoGrafico) {
-                controladorAbstractoAdminNodo.updatePropiedad(id, valor);
+                controladorAbstractoAdminNodo.updatePropiedad(true,id, valor);
             } else if (objetoSeleccionado instanceof EnlaceGrafico) {
                 controladorAdminEnlace.updatePropiedad((EnlaceGrafico)objetoSeleccionado,id, valor);
             }
