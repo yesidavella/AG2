@@ -9,7 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -21,7 +24,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, Serializable {
 
@@ -47,7 +52,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private String nombreOriginal;
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
-    private HashMap<String, String> propertiesNode = new HashMap<String, String>(); 
+    private HashMap<String, String> propertiesNode = new HashMap<String, String>();
 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
@@ -88,7 +93,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     public HashMap<String, String> getNodeProperties() {
         return propertiesNode;
-    }    
+    }
 
     public void setAltoInicial(short altoInicial) {
         this.altoInicial = altoInicial;
@@ -190,10 +195,27 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
                 if (nodoAComodin != null && nodoGrafico != null) {
 
-                    if (nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
-                        System.out.println("Bien..");
-                    } else {
-                        System.out.println("Mal..");
+                    if (!nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
+
+                        Image img = new Image(getClass().getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png"));
+                        ImageView imgVw = new ImageView(img);
+                        
+                        imgVw.setLayoutX(nodoGrafico.getPosX());
+                        imgVw.setLayoutY(nodoGrafico.getPosY());
+                        
+                        imgVw.setScaleX(imgVw.getScaleX()/2);
+                        imgVw.setScaleY(imgVw.getScaleY()/2);
+                        
+                        GrupoDeDiseno g = (GrupoDeDiseno) nodoGrafico.getParent();
+                        g.getChildren().add(imgVw);
+
+                        FadeTransition ft = new FadeTransition(Duration.millis(1000), imgVw);
+                        ft.setFromValue(1.0);
+                        ft.setToValue(0);
+                        ft.play();
+                        
+                        imgVw.setDisable(true);
+                        
                     }
                 }
 
@@ -203,10 +225,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                         && NodoGrafico.inicioGeneracionDeEnlace
                         && nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
 
-                    GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
-                    group.getChildren().remove(enlaceComodin);
+                    GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
+                    grDeDiseño.getChildren().remove(enlaceComodin);
 
-                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(group, nodoAComodin, nodoGrafico, controladorAdminEnlace);
+                    EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grDeDiseño, nodoAComodin, nodoGrafico, controladorAdminEnlace);
                     enlaceGrafico.addArcosInicialAlGrupo();
 
                     nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
@@ -267,12 +289,12 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - ancho/2);
-                    setLayoutY(getLayoutY() - (mouseEvent.getY() - alto/2));
+                    setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
+                    setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
                     updateNodoListener();
                 } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
-                    enlaceComodin.setEndY(getLayoutY()+alto-(mouseEvent.getY()));
+                    enlaceComodin.setEndY(getLayoutY() + alto - (mouseEvent.getY()));
                 }
             }
         });
@@ -306,13 +328,12 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
                 GrupoDeDiseno grGrpDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR)
-                {
-                   
+                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
+
                     nodoGrafico.setEliminado(true);
                     grGrpDeDiseño.getChildren().remove(nodoGrafico);
                     grGrpDeDiseño.eliminarNodeListaNavegacion(nodoGrafico);
-                     controladorAbstractoAdminNodo.removeNodo(nodoGrafico); 
+                    controladorAbstractoAdminNodo.removeNodo(nodoGrafico);
 
                 }
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
