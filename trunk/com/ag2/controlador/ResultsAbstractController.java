@@ -39,6 +39,8 @@ public abstract class ResultsAbstractController
                                             String relDropRes,
                                             String reltotDrop); 
    
+    public abstract void setExecutionPercentage(double Percentage); 
+   
             
     
     

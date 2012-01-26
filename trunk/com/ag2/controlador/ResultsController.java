@@ -39,6 +39,12 @@ public class ResultsController  extends ResultsAbstractController
         }     
       
     }
+
+    @Override
+    public void setExecutionPercentage(double Percentage)
+    {
+        viewResultsPhosphorus.setExecutionPercentage(Percentage);
+    }
     
     
 }
