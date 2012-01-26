@@ -7,10 +7,7 @@ package com.ag2.presentacion.controles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -60,6 +57,11 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
         for (int i = 0; i < sizeResources; i++) {
             dataRecurso.remove(0); 
         }
+          final ProgressIndicator pi = new ProgressIndicator(0);
+        pi.setMinSize(300, 300);
+        tab.setContent(pi);
+        
+        
     }
 
     private void creartvResultadosConmutadores() {
