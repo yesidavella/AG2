@@ -16,6 +16,7 @@ import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import simbase.SimBaseSimulator;
 import simbase.Time;
 
 public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
@@ -254,7 +255,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     }
 
     @Override
-    public void updatePropiedad(String id, String valor) 
+    public void updatePropiedad(boolean conusultar, String id, String valor) 
     {
         nodoGraficoSeleccionado.getNodeProperties().put(id, valor); 
 
@@ -274,29 +275,29 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
             } else if (id.equalsIgnoreCase("generacionTrabajos")) {
                 clientNode.getState().setJobInterArrival(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);
+                if(conusultar){consultarPropiedades(nodoGraficoSeleccionado);}
             } else if (id.contains("generacionTrabajos")) {
                 setValuesDistribution(clientNode.getState().getJobInterArrival(), valor, id);
             } else if (id.equalsIgnoreCase("generacionFlops")) {
                 clientNode.getState().setFlops(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);
+                if(conusultar){consultarPropiedades(nodoGraficoSeleccionado);}
             } else if (id.contains("generacionFlops")) {
                 setValuesDistribution(clientNode.getState().getFlops(), valor, id);
             } else if (id.equalsIgnoreCase("generacionMaximoRetraso")) {
                 clientNode.getState().setMaxDelayInterval(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);
+                if(conusultar){consultarPropiedades(nodoGraficoSeleccionado);}
             } else if (id.contains("generacionMaximoRetraso")) {
                 setValuesDistribution(clientNode.getState().getMaxDelayInterval(), valor, id);
 
             } else if (id.equalsIgnoreCase("generacionTamañoTrabajo")) {
                 clientNode.getState().setSizeDistribution(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);
+                if(conusultar){consultarPropiedades(nodoGraficoSeleccionado);}
 
             } else if (id.contains("generacionTamañoTrabajo")) {
                 setValuesDistribution(clientNode.getState().getSizeDistribution(), valor, id);
             } else if (id.equalsIgnoreCase("generacionTamañoRespuesta")) {
                 clientNode.getState().setAckSizeDistribution(getDistributionByText(valor));
-                consultarPropiedades(nodoGraficoSeleccionado);
+                if(conusultar){consultarPropiedades(nodoGraficoSeleccionado);}
 
             } else if (id.contains("generacionTamañoRespuesta")) {
                 setValuesDistribution(clientNode.getState().getAckSizeDistribution(), valor, id);
@@ -418,21 +419,23 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
 
     }
 
-    private DiscreteDistribution getDistributionByText(String value) {
+    private DiscreteDistribution getDistributionByText(String value) 
+    {
+        SimBaseSimulator baseSimulator = SimulacionBase.getInstance().getSimulador(); 
         if (value.equals("Uniforme")) {
-            return new DDUniform(10, 20);
+            return new DDUniform(baseSimulator,10, 20);
         } else if (value.equals("Constante")) {
             return new ConstantDistribution(10);
         } else if (value.equals("Erlang")) {
-            return new DDErlang(1, 2);
+            return new DDErlang(baseSimulator,1, 2);
         } else if (value.equals("Hiper-exponencial")) {
-            return new DDHyperExp(new double[]{1, 2, 3}, new double[]{1, 2, 3});
+            return new DDHyperExp(baseSimulator,new double[]{1, 2, 3}, new double[]{1, 2, 3});
         } else if (value.equals("Exponencial-negativa")) {
-            return new DDNegExp(2);
+            return new DDNegExp(baseSimulator,2);
         } else if (value.equals("Normal")) {
-            return new DDNormal(2, 3);
+            return new DDNormal(baseSimulator,2, 3);
         } else if (value.equals("Possion")) {
-            return new DDPoissonProcess(2);
+            return new DDPoissonProcess(baseSimulator,2);
         }
         return null;
 
@@ -460,8 +463,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
     public void removeNodo(NodoGrafico nodoGrafico) 
     {
         Entity entity = parejasDeNodosExistentes.get(nodoGrafico); 
-        SimulacionBase.getInstance().getSimulador().unRegister(entity);
-        
+        SimulacionBase.getInstance().getSimulador().unRegister(entity);       
         
     }
 
@@ -483,11 +485,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
             for(String id: nodoGrafico.getNodeProperties().keySet())
            {
                nodoGraficoSeleccionado = nodoGrafico; 
-               updatePropiedad(id, nodoGrafico.getNodeProperties().get(id));
+               updatePropiedad(false, id, nodoGrafico.getNodeProperties().get(id));
            } 
             
         }
-        
+         
         
         
         for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
