@@ -10,9 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -24,7 +22,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -53,9 +50,10 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
     private HashMap<String, String> propertiesNode = new HashMap<String, String>();
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(
+            new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
     private HashMap<String, String> subPropertiesNode = new HashMap<String, String>();
-    
-   
+
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
         this.controladorAdminEnlace = ctrlAbsAdminEnlace;
@@ -198,26 +196,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                 if (nodoAComodin != null && nodoGrafico != null) {
 
                     if (!nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
-
-                        Image img = new Image(getClass().getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png"));
-                        ImageView imgVw = new ImageView(img);
-                        
-                        imgVw.setLayoutX(nodoGrafico.getPosX());
-                        imgVw.setLayoutY(nodoGrafico.getPosY());
-                        
-                        imgVw.setScaleX(imgVw.getScaleX()/2);
-                        imgVw.setScaleY(imgVw.getScaleY()/2);
-                        
-                        GrupoDeDiseno g = (GrupoDeDiseno) nodoGrafico.getParent();
-                        g.getChildren().add(imgVw);
-
-                        FadeTransition ft = new FadeTransition(Duration.millis(1000), imgVw);
-                        ft.setFromValue(1.0);
-                        ft.setToValue(0);
-                        ft.play();
-                        
-                        imgVw.setDisable(true);
-                        
+                        nodoGrafico.playDenyLinkAnimation();
                     }
                 }
 
@@ -235,8 +214,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
                     nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
                     nodoGrafico.setCantidadDeEnlaces((short) (nodoGrafico.getCantidadDeEnlaces() + 1));
-
-
 
                     nodoAComodin.toFront();
                     nodoGrafico.toFront();
@@ -285,9 +262,9 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-//                System.out.println("Dragged..");
-//                System.out.println("Drangged:"+getNombre());
+
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+
                 arrastrando = true;
                 GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
@@ -538,6 +515,29 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     public HashMap<String, String> getSubPropertiesNode() {
         return subPropertiesNode;
+    }
+
+    private void playDenyLinkAnimation() {
+
+        IMG_VW_DENY_LINK.setLayoutX(getPosX() + getAnchoActual() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
+        IMG_VW_DENY_LINK.setLayoutY(getPosY() + 0.75 * getAltoActual() - (getAltoInicial() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
+
+        GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) getParent();
+        grDeDiseño.getChildren().add(IMG_VW_DENY_LINK);
+
+        FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(1000), IMG_VW_DENY_LINK);
+        fadeImgDenyLink.setFromValue(1.0);
+        fadeImgDenyLink.setToValue(0);
+        fadeImgDenyLink.play();
+
+        fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent arg0) {
+
+                GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) IMG_VW_DENY_LINK.getParent();
+                grDeDiseño.getChildren().remove(IMG_VW_DENY_LINK);
+            }
+        });
     }
 
     public abstract boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace);
