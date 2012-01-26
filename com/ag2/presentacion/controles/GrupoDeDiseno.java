@@ -336,6 +336,12 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             backgroudRec.setScaleY(MAP_SCALE);
             getChildren().add(backgroudRec);
             backgroudRec.toBack();
+            
+            Rectangle r = new Rectangle(10, 10);
+            r.setFill(Color.WHITE);
+            r.setLayoutX(0);
+            r.setLayoutY(0);
+            getChildren().add(r);
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);

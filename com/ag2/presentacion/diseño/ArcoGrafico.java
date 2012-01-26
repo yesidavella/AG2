@@ -296,6 +296,5 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
