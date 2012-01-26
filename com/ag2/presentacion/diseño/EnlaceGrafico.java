@@ -75,12 +75,10 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             }else{
                 
                 arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
-                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + 
-                        ((nodoGraficoA.getAltoActual()>nodoGraficoA.getAltoInicial())?(nodoGraficoA.getAltoInicial()/4)+(nodoGraficoA.getAltoActual()/4):nodoGraficoA.getAltoInicial()/2));
+                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getAltoActual() - nodoGraficoA.getAltoInicial()/4);
 
                 arcFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
-                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + 
-                        ((nodoGraficoB.getAltoActual()>nodoGraficoB.getAltoInicial())?(nodoGraficoB.getAltoInicial()/4)+(nodoGraficoB.getAltoActual()/4):+nodoGraficoB.getAltoInicial()/2));
+                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + 0.75*nodoGraficoB.getAltoActual()- nodoGraficoB.getAltoInicial()/4);
             }
         }
     }
