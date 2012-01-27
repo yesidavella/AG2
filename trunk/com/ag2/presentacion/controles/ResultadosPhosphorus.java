@@ -7,6 +7,7 @@ package com.ag2.presentacion.controles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -38,12 +39,14 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
        
         vBox.setSpacing(7);
         vBox.setPadding(new Insets(8, 8, 8, 8));
+        vBox.setAlignment(Pos.CENTER);
         
         creartvResultadosCliente();
         creartvResultadosRecurso();
         creartvResultadosConmutadores();
         vBox.getChildren().addAll(progressIndicator, lbCliente, tvResultadosClientePhosphorus, lbRecurso, tvResultadosRecursoPhosphorus, lbConmutador, tvResultadosConmutadorPhosphorus);
         tab.setContent(vBox);
+        
         
     }
     
@@ -61,10 +64,39 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
             dataRecurso.remove(0);
         }
         
-         progressIndicator.setMinSize(250, 250);  
+        showProgressIndicator();
+        
+       
+        
+        
+    }
+    public void showProgressIndicator()
+    {
+        progressIndicator.setMinSize(250, 250);
         progressIndicator.setVisible(true);
+        lbCliente.setVisible(false);
+        tvResultadosClientePhosphorus.setVisible(false);
+        lbRecurso.setVisible(false);
+        tvResultadosRecursoPhosphorus.setVisible(false);
+        lbConmutador.setVisible(false);
+        tvResultadosConmutadorPhosphorus.setVisible(false);
         
-        
+    }
+    public void hideProgressIndicator()
+    {
+        if (progressIndicator.isVisible()) 
+        {
+            progressIndicator.setMaxSize(1, 1);
+            progressIndicator.setMinSize(1, 1);
+            progressIndicator.setVisible(false);
+
+            lbCliente.setVisible(true);
+            tvResultadosClientePhosphorus.setVisible(true);
+            lbRecurso.setVisible(true);
+            tvResultadosRecursoPhosphorus.setVisible(true);
+            lbConmutador.setVisible(true);
+            tvResultadosConmutadorPhosphorus.setVisible(true);
+        }
     }
     
     private void creartvResultadosConmutadores() {
@@ -171,9 +203,7 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
         
         
-        progressIndicator.setMaxSize(1, 1);
-        progressIndicator.setMinSize(1, 1);
-        progressIndicator.setVisible(false);
+       hideProgressIndicator();
         
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(tcCliente);
