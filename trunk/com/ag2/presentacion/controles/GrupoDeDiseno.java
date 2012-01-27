@@ -82,6 +82,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         this.objetoGraficoSelecionado = objetoGraficoSelecionado;
     }
 
+    public Scale getSclEscalaDeZoom() {
+        return sclEscalaDeZoom;
+    }
+
     public void handle(MouseEvent mouEvent) {
 
         EventType tipoDeEvento = mouEvent.getEventType();
@@ -251,8 +255,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
 
-    
-
     public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
         ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
     }
@@ -336,7 +338,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             backgroudRec.setScaleY(MAP_SCALE);
             getChildren().add(backgroudRec);
             backgroudRec.toBack();
-            
+
             Rectangle r = new Rectangle(10, 10);
             r.setFill(Color.WHITE);
             r.setLayoutX(0);
@@ -348,7 +350,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         }
     }
 
-    private void zoom(final double percentZoom, double puntoPivoteX, double puntoPivoteY) {
+    public void zoom(final double percentZoom, double puntoPivoteX, double puntoPivoteY) {
 
         sclEscalaDeZoom.setPivotX(puntoPivoteX);
         sclEscalaDeZoom.setPivotY(puntoPivoteY);
@@ -394,6 +396,5 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) {
-        
     }
 }

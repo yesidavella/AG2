@@ -522,7 +522,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) getParent();
         grDeDiseño.getChildren().add(IMG_VW_DENY_LINK);
 
-        FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(1000), IMG_VW_DENY_LINK);
+        FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
         fadeImgDenyLink.setFromValue(1.0);
         fadeImgDenyLink.setToValue(0);
         fadeImgDenyLink.play();
