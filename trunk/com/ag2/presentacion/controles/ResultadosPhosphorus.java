@@ -33,7 +33,8 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus {
     
     public ResultadosPhosphorus(Tab tab) {
         this.tab = tab;
-        progressIndicator.setMinSize(250, 250);        
+        progressIndicator.setMinSize(1, 1);    
+        progressIndicator.setVisible(false);
        
         vBox.setSpacing(7);
         vBox.setPadding(new Insets(8, 8, 8, 8));
