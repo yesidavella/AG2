@@ -7,6 +7,7 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
+import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 public class IGU extends Scene {
@@ -110,7 +112,7 @@ public class IGU extends Scene {
         estadoTipoBoton = tiposDeBoton;
     }
 
-    private void crearBarraDeMenus(BorderPane diseñoVentana, final Stage primaryStage) {
+    private void crearBarraDeMenus(BorderPane diseñoVentana, final Stage stgEscenario) {
 
         //Panel de menus
         HBox hBoxContenedorDeMenu = new HBox();
@@ -136,7 +138,7 @@ public class IGU extends Scene {
         itemGuardar.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                Serializador serializador = new Serializador(primaryStage);
+                Serializador serializador = new Serializador(stgEscenario);
                 serializador.guardar(grGrupoDeDiseño);
 
             }
@@ -144,7 +146,7 @@ public class IGU extends Scene {
         itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                Serializador serializador = new Serializador(primaryStage);
+                Serializador serializador = new Serializador(stgEscenario);
                 GrupoDeDiseno grupoDeDiseno = serializador.cargar();
                 //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
                 //   ivImagenFondo.toBack();
@@ -441,37 +443,54 @@ public class IGU extends Scene {
         gpNavegacionMapa.getChildren().add(btnIrNodoServicio);
 
         vBox.getChildren().add(gpNavegacionMapa);
-//        establecerEventoBotonesIr(btnIrClientes, cbClientes);
-//        establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
-//        establecerEventoBotonesIr(btnIrRecursos, cbRecursos);
-//        establecerEventoBotonesIr(btnIrSwichtes, cbSwicthes);
 
-        cbRecursos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        establecerEventoBotonesIr(btnIrClientes, cbClientes);
+        establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
+        establecerEventoBotonesIr(btnIrRecursos, cbRecursos);
+        establecerEventoBotonesIr(btnIrSwichtes, cbSwicthes);
+
+    }
+
+    private void establecerEventoBotonesIr(Button goButton, final ChoiceBox chobNodes) {
+
+        goButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
-                if (cbRecursos.getSelectionModel().getSelectedItem() instanceof NodoDeRecursoGrafico) {
-                    NodoDeRecursoGrafico nodoDeRecursoGrafico = (NodoDeRecursoGrafico) cbRecursos.getSelectionModel().getSelectedItem();
+                NodoGrafico selectedNode = (NodoGrafico) chobNodes.getSelectionModel().getSelectedItem();
+
+                if (selectedNode != null) {
+                    
+                    Scale sclEscalaDeZoom = grGrupoDeDiseño.getSclEscalaDeZoom();
+                    sclEscalaDeZoom.setX(1.5);
+                    sclEscalaDeZoom.setY(-1.5);
+                    
+                    double worldWidth = grGrupoDeDiseño.getBoundsInParent().getWidth();
+                    double worldHeight = grGrupoDeDiseño.getBoundsInParent().getHeight();
+                    //La posicion (0,0) esta en la esquina superior izquierda
+                    double posXNewCoords = (selectedNode.getPosX() * 1.5) + (worldWidth/2);
+                    double posYNewCoords = (selectedNode.getPosY() * (-1.5)) + (worldHeight/2);
+
+                    double posXInPercentage = posXNewCoords / worldWidth;
+                    double posYInPercentage = posYNewCoords / worldHeight;
+
+                    double maxErrorInX = scPnWorld.getViewportBounds().getWidth() / 2;
+                    double funcToCalculateXError = (-2 * maxErrorInX * posXInPercentage) + maxErrorInX;
+                    double percentageXError = funcToCalculateXError/worldWidth;
+                    
+                    double maxErrorInY = scPnWorld.getViewportBounds().getHeight() / 2;
+                    double funcToCalculateYError = (-2 * maxErrorInY * posYInPercentage) + maxErrorInY;
+                    double percentageYError = funcToCalculateYError/worldHeight;
+                    
+                    double percentImgHeightCorrecX = (selectedNode.getAnchoActual())/worldWidth;
+                    double percentImgHeightCorrecY = (selectedNode.getAltoActual())/worldHeight;
+                    
+                    scPnWorld.setHvalue(posXInPercentage-percentageXError+percentImgHeightCorrecX);
+                    scPnWorld.setVvalue(posYInPercentage-percentageYError-percentImgHeightCorrecY);
                 }
             }
         });
     }
 
-//    private void establecerEventoBotonesIr(Button button, final ChoiceBox cbClientes) {
-//        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//
-//            public void handle(MouseEvent t) {
-//                if (cbClientes.getSelectionModel().getSelectedItem() instanceof NodoGrafico) {
-//                    NodoGrafico nodoGrafico = (NodoGrafico) cbClientes.getSelectionModel().getSelectedItem();
-//
-//                    sliderZoom.setValue(100);
-//                    spZonaDeDiseño.setHvalue(nodoGrafico.getLayoutX() / 25000);
-//                    spZonaDeDiseño.setVvalue(nodoGrafico.getLayoutY() / 18750);
-//                    grGrupoDeDiseño.setScaleX(sliderZoom.getValue() / 100);
-//                    grGrupoDeDiseño.setScaleY(sliderZoom.getValue() / 100);
-//                }
-//            }
-//        });
-//    }
     private void adicionarEventoDeTecladoAEscena(final Scene escena) {
 
         escena.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -563,10 +582,10 @@ public class IGU extends Scene {
     public void deshabilitar() {
         estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
         cursorAnteriorAEvento = grGrupoDeDiseño.getCursor();
-        
+
         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
         grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
-        
+
         prgBarBarraProgresoEjec.setVisible(true);
         barraHerramientas.setDisable(true);
         barraHerramientas.setOpacity(0.8);
