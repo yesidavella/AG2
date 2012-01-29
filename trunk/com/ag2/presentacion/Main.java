@@ -1,21 +1,33 @@
 package com.ag2.presentacion;
 
+import com.ag2.config.serializacion.Serializador;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application{ 
+public class Main extends Application
+{
+    private transient Serializador serializador; 
+    private ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo;
+    private ExecuteAbstractController  executeAbstractController;      
+    private ModeloCrearNodo modeloCrearNodo;         
+    private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace ; 
+     
+     
     @Override
-    public void start(Stage stgEscenario){
-
-        stgEscenario.setTitle("Modelo AG2- Simulador Grafico");
-        stgEscenario.setScene(IGU.getInstanciaIGUAg2());
-        IGU.getInstanciaIGUAg2().setStage(stgEscenario);
-        stgEscenario.show();
+    public void start(Stage stage)
+    {
+        
+        stage.setTitle("Modelo AG2- Simulador Grafico");
+        stage.setScene(IGU.getInstance());
+        IGU.getInstance().setStage(stage);
+        stage.show();
 
         inicializarModelosYContrladoresDeCreacionDeNodos();
-        IGU.getInstanciaIGUAg2().inicializarEstadoDeIGU();
+        IGU.getInstance().inicializarEstadoDeIGU();
+        serializador = new Serializador(this, stage);
+
     }
     
     public static void main(String[] args){
@@ -25,17 +37,17 @@ public class Main extends Application{
     private void inicializarModelosYContrladoresDeCreacionDeNodos() {
         
         //Controladores y Modelos
-        ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo = new ControladorAdminNodo();
-        ExecuteAbstractController  executeAbstractController = new ExecuteController(); 
+        ctrlCreadorYAdministradorNodo = new ControladorAdminNodo();
+        executeAbstractController = new ExecuteController(); 
         
-        IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño());
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl());
-        IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl().addControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
-        IGU.getInstanciaIGUAg2().getExecutePane().setExecuteAbstractController(executeAbstractController);
+        IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
+        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
+        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().addControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
         
         
-        ModeloCrearNodo modeloCrearNodo = new ModeloCrearCliente();
+        modeloCrearNodo = new ModeloCrearCliente();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
         
         modeloCrearNodo = new ModeloCrearNodoDeServicio();
@@ -53,16 +65,24 @@ public class Main extends Application{
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
         
-        ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
+        ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
         ModeloAbstractoCrearEnlace modeloCrearEnlace = new ModeloCrearEnlace();
         ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
         
-        ctrlCrearYAdminEnlace.addVistaEnlace(IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl());
-        IGU.getInstanciaIGUAg2().getPropiedadesDispositivoTbl().addControladorAdminEnlace(ctrlCrearYAdminEnlace);
-        IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
+        ctrlCrearYAdminEnlace.addVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().addControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
         
         ResultsController resultsController = new ResultsController();
-        resultsController.setViewResultsPhosphorus(IGU.getInstanciaIGUAg2().getResustadosPhosphorus());
+        resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulacionBase.getInstance().setResultsAbstractController(resultsController);
+    }
+    public void save()
+    {
+        serializador.guardar();
+    }
+     public void load()
+    {
+        Main main =  serializador.cargar(); 
     }
 }

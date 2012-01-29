@@ -54,13 +54,14 @@ public class IGU extends Scene {
     private Cursor cursorAnteriorAEvento;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
-
+    private Main main; 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
     }
+    
     private Stage stgEscenario;
 
-    public static IGU getInstanciaIGUAg2() {
+    public static IGU getInstance() {
 
         if (iguAG2 == null) {
             iguAG2 = new IGU(new BorderPane(), 1200, 800);
@@ -138,16 +139,17 @@ public class IGU extends Scene {
         itemGuardar.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                Serializador serializador = new Serializador(stgEscenario);
-                serializador.guardar(grGrupoDeDiseño);
+               
+                main.save();
 
             }
         });
         itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                Serializador serializador = new Serializador(stgEscenario);
-                GrupoDeDiseno grupoDeDiseno = serializador.cargar();
+                
+                main.load(); 
+              //  GrupoDeDiseno grupoDeDiseno = serializador.cargar();
                 //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
                 //   ivImagenFondo.toBack();
             }

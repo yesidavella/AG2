@@ -4,6 +4,7 @@
  */
 package com.ag2.config.serializacion;
 
+import com.ag2.presentacion.Main;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.*;
 import java.util.logging.Level;
@@ -20,20 +21,21 @@ public class Serializador {
 
     Stage primaryStage;
     FileChooser fileChooser = new FileChooser();
-
-    public Serializador(final Stage primaryStage) {
+    Main main;   
+    public Serializador(Main main, final Stage primaryStage) 
+    {
+        this.main = main ; 
         this.primaryStage = primaryStage;
          fileChooser.getExtensionFilters().add(new ExtensionFilter("AG2 Document (*.ag2)", "*.ag2"));
     }
 
-    public void guardar(GrupoDeDiseno grupoDeDiseno) {
-        try {
-
-           
+    public void guardar() {
+        try 
+        {           
 
             FileOutputStream fileOutputStream = new FileOutputStream(fileChooser.showSaveDialog(primaryStage));
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(grupoDeDiseno);
+            objectOutputStream.writeObject(main);
             objectOutputStream.close();
 
         } catch (IOException ex) {
@@ -41,15 +43,15 @@ public class Serializador {
         }
     }
 
-    public GrupoDeDiseno cargar() {
+    public Main cargar() {
         try 
         {
 
             FileInputStream fileInputStream = new FileInputStream(fileChooser.showOpenDialog(primaryStage));
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            GrupoDeDiseno grupoDeDiseno = (GrupoDeDiseno) objectInputStream.readObject();
+            Main main = (Main) objectInputStream.readObject();
             objectInputStream.close();
-            return grupoDeDiseno;
+            return main;
 
         } catch (Exception e) {
             e.printStackTrace();

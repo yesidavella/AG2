@@ -65,7 +65,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) 
     {
-        ObjetoSeleccionable objetoSeleccionado = IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
+        ObjetoSeleccionable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
         
         if(objetoSeleccionado != null){
             if (objetoSeleccionado instanceof NodoGrafico) {

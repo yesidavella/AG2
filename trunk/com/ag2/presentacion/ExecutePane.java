@@ -65,7 +65,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                         
                         btnEjecutar.setSelected(true);
 
-                        IGU.getInstanciaIGUAg2().deshabilitar();
+                        IGU.getInstance().deshabilitar();
                         //IGU.setEstadoTipoBoton(TiposDeBoton.EJECUTAR);
                         
                         if (executeAbstractController != null)
@@ -95,7 +95,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                     public void handle(MouseEvent mouEvent) {
                         
                         Boton btnParar = (Boton)mouEvent.getSource();
-                        IGU.getInstanciaIGUAg2().habilitar();                        
+                        IGU.getInstance().habilitar();                        
                         habilitar();
                         executeAbstractController.stop();
                     }
