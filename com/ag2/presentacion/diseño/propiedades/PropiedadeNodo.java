@@ -149,7 +149,7 @@ public class PropiedadeNodo {
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                IGU.getInstanciaIGUAg2().getGrGrupoDeDiseño().requestFocus();
+                IGU.getInstance().getGrGrupoDeDiseño().requestFocus();
             }
         });
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
