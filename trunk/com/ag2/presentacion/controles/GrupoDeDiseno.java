@@ -304,7 +304,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
                         coords = polygon.getCoordinates();
                         Path path = new Path();
-                        path.toBack();
+                        
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
                         currentColor = (currentColor + 1) % colors.length;
@@ -315,7 +315,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                             path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
                         }
                         path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
-                        getChildren().add(path);//path.setEffect(ds);
+                        getChildren().add(path);
+                        path.toBack();
                     }
                 }
             }
