@@ -25,10 +25,10 @@ import javafx.scene.layout.TilePane;
  */
 public class ExecutePane extends TilePane implements ExecuteView, Serializable {
 
-    Boton btnEjecutar;
-    Boton btnParar;
-    ToggleGroup tgEjecucion = new ToggleGroup();
-    ResultadosPhosphorousHTML resultadosPhosphorousHTML;
+    private transient Boton btnEjecutar;
+    private transient Boton btnParar;
+    private transient ToggleGroup tgEjecucion = new ToggleGroup();
+    private transient ResultadosPhosphorousHTML resultadosPhosphorousHTML;
     ResultadosPhosphorus resultadosPhosphorus; 
     ExecuteAbstractController executeAbstractController;
 

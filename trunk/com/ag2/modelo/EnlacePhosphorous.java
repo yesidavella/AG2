@@ -2,8 +2,9 @@ package com.ag2.modelo;
 
 import Grid.Entity;
 import Grid.Port.GridOutPort;
+import java.io.Serializable;
 
-public class EnlacePhosphorous {
+public class EnlacePhosphorous implements Serializable{
     
     private Entity nodoPhosphorousA;
     private GridOutPort puertoSalidaDeNodoPhosA;

@@ -5,12 +5,13 @@
 package com.ag2.controlador;
 
 import com.ag2.presentacion.ExecuteView;
+import java.io.Serializable;
 
 /**
  *
  * @author Frank
  */
-public abstract class ExecuteAbstractController
+public abstract class ExecuteAbstractController implements Serializable
 {
         ExecuteView executeView;
 
