@@ -226,7 +226,9 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
     private void readObject(ObjectInputStream inputStream) {
         try {
+            
             inputStream.defaultReadObject();
+            loadGeoMap();
             setOnMousePressed(this);
             setOnMouseDragged(this);
             setOnMouseReleased(this);
@@ -242,9 +244,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             listaRecursos = FXCollections.observableArrayList();
             listaSwitches = FXCollections.observableArrayList();
             listaNodoServicio = FXCollections.observableArrayList();
-            
             sclEscalaDeZoom = new Scale(1.44, -1.44);
             getTransforms().add(sclEscalaDeZoom);
+            
+          
 
         } catch (Exception e) {
 
@@ -278,12 +281,6 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             Point centroid;
             Bounds bounds;
 
-//            DropShadow ds = new DropShadow();
-//            ds.setColor(Color.LIGHTGREY);
-//           
-//            ds.setSpread(0.4);
-//            ds.setWidth(10);
-//            ds.setHeight(10);
 
             while (featuresIterator.hasNext()) {
                 SimpleFeature o = featuresIterator.next();
@@ -307,6 +304,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
                         coords = polygon.getCoordinates();
                         Path path = new Path();
+                        path.toBack();
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
                         currentColor = (currentColor + 1) % colors.length;
@@ -396,14 +394,5 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) {
-    }
-    
-    private void writeObject(ObjectOutputStream   objectOutputStream)
-    {
-        try {
-            objectOutputStream.defaultWriteObject();
-        } catch (IOException ex) {
-            Logger.getLogger(GrupoDeDiseno.class.getName()).log(Level.SEVERE, null, ex);
-        } 
     }
 }

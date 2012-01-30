@@ -3,6 +3,7 @@ package com.ag2.presentacion;
 import com.ag2.config.serializacion.Serializador;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
+import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.Serializable;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,7 +15,7 @@ public class Main extends Application implements Serializable
     private ExecuteAbstractController  executeAbstractController;      
     private ModeloCrearNodo modeloCrearNodo;         
     private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace ; 
-    private IGU igu;  
+    private GrupoDeDiseno grupoDeDiseno; 
      
     @Override
     public void start(Stage stage)
@@ -22,10 +23,10 @@ public class Main extends Application implements Serializable
         
         stage.setTitle("Modelo AG2- Simulador Grafico");
         stage.setScene(IGU.getInstance());        
-        IGU.getInstance().setStage(stage);
-        igu= IGU.getInstance(); 
-        igu.setMain(this);
+        IGU.getInstance().setStage(stage);      
+        IGU.getInstance().setMain(this);
         stage.show();
+        grupoDeDiseno = IGU.getInstance().getGrGrupoDeDiseño(); 
 
         inicializarModelosYContrladoresDeCreacionDeNodos();
         IGU.getInstance().inicializarEstadoDeIGU();
@@ -80,12 +81,45 @@ public class Main extends Application implements Serializable
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulacionBase.getInstance().setResultsAbstractController(resultsController);
     }
+
+    public ControladorAbstractoAdminNodo getCtrlCreadorYAdministradorNodo() {
+        return ctrlCreadorYAdministradorNodo;
+    }
+
+    public ControladorAbstractoAdminEnlace getCtrlCrearYAdminEnlace() {
+        return ctrlCrearYAdminEnlace;
+    }
+
+    public ExecuteAbstractController getExecuteAbstractController() {
+        return executeAbstractController;
+    }
+
+    public ModeloCrearNodo getModeloCrearNodo() {
+        return modeloCrearNodo;
+    }
+
+    public Serializador getSerializador() {
+        return serializador;
+    }
+
+    public GrupoDeDiseno getGrupoDeDiseno() {
+        return grupoDeDiseno;
+    }
+    
+    
     public void save()
     {
         serializador.guardar();
     }
-     public void load()
+    public void load()
     {
         Main main =  serializador.cargar(); 
+        if(main!=null)
+        {
+            IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+        }
+        
     }
+     
 }
+
