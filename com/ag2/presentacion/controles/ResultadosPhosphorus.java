@@ -21,16 +21,16 @@ import javafx.scene.text.Font;
 public class ResultadosPhosphorus implements ViewResultsPhosphorus, Serializable{
     
     private transient Tab tab;
-    private TableView tvResultadosClientePhosphorus = new TableView();
-    private TableView tvResultadosRecursoPhosphorus = new TableView();
-    private TableView tvResultadosConmutadorPhosphorus = new TableView();
+    private transient TableView tvResultadosClientePhosphorus = new TableView();
+    private transient TableView tvResultadosRecursoPhosphorus = new TableView();
+    private transient TableView tvResultadosConmutadorPhosphorus = new TableView();
     private transient Label lbCliente = new Label("Resultados del cliente");
     private transient Label lbRecurso = new Label("Resultados del recurso");
     private transient Label lbConmutador = new Label("Resultados del Conmutador Optico");
     private transient  ObservableList<ConjuntoProiedadesPhosphorus> dataCliente = FXCollections.observableArrayList();
     private transient ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso = FXCollections.observableArrayList();
     private transient ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador = FXCollections.observableArrayList();
-    private VBox vBox = new VBox();
+    private transient VBox vBox = new VBox();
     private transient ProgressIndicator progressIndicator = new ProgressIndicator(0);
     
     public ResultadosPhosphorus(Tab tab) {
