@@ -5,10 +5,13 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,8 +60,6 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
         this.controladorAdminEnlace = ctrlAbsAdminEnlace;
-//        setSelecionado(true);
-        //  vBox.setStyle("-fx-background-color:#FA0606");
         setEffect(dropShadow);
         this.urlDeImagen = urlDeImagen;
         this.nombre = nombre;
@@ -74,20 +75,15 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
 
         this.getChildren().addAll(cuadroExteriorResaltado);
-        //La escala a la mitad por q la imagen esta al 2X de tamaño deseado
+      
         setScaleX(0.5);
         setScaleY(-0.5);
 
         establecerEventoOnMouseClicked();
-
         establecerEventoOnMousePressed();
-
         establecerEventoOnMouseDragged();
-
         establecerEventoOnMouseReleased();
-
         establecerEventoOnMouseEntered();
-
         establecerEventoOnMouseExit();
     }
 
@@ -131,6 +127,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         this.posX = posX;
         setLayoutX(posX);
     }
+   
 
     public double getPosY() {
         return posY;
@@ -403,6 +400,17 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         this.nombre = nombre;
         lblNombre.setText(formatearNombreConSaltoDeLineas(nombre));
     }
+    private void writeObject(java.io.ObjectOutputStream outputStream)
+    {
+        try {
+            posX = getLayoutX(); 
+            posY = getLayoutY(); 
+            outputStream.defaultWriteObject();
+          
+        } catch (IOException ex) {
+            Logger.getLogger(NodoGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void readObject(ObjectInputStream inputStream) {
         try {
@@ -420,7 +428,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
             this.getChildren().addAll(cuadroExteriorResaltado);
             enlaceComodin = new Line();
             setScaleX(0.5);
-            setScaleY(0.5);
+            setScaleY(-0.5);
             dropShadow = new DropShadow();
             seleccionar(false);
             setEffect(dropShadow);
@@ -429,6 +437,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
             establecerEventoOnMouseDragged();
             establecerEventoOnMouseReleased();
             establecerEventoOnMouseEntered();
+            this.toFront();
 
         } catch (Exception e) {
             e.printStackTrace();

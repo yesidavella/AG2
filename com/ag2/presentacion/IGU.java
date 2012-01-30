@@ -7,12 +7,8 @@ import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -35,35 +31,43 @@ import javafx.stage.Stage;
 
 public class IGU extends Scene implements Serializable {
 
-    private GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
-    private transient ToggleGroup tgHerramientas; 
-    private transient GridPane gpNavegacionMapa;
-    private ExecutePane executePane = new ExecutePane(grGrupoDeDiseño);
-    private transient Boton btnMoverEscena;
-    private transient Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
-    private transient Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
-    private transient Boton btnEnrutadorOptico = new Boton(TiposDeBoton.ENRUTADOR_OPTICO);
-    private transient Boton btnEnrutadorDeRafaga = new Boton(TiposDeBoton.ENRUTADOR_RAFAGA);
-    private transient Boton btnEnrutadorHibrido = new Boton(TiposDeBoton.ENRUTADOR_HIBRIDO);
-    private transient Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
-    private transient Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
-    private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    private transient TablaPropiedadesDispositivo tbPropiedadesDispositivo;
-    private transient GridPane barraHerramientas;
-    private transient ScrollPane scPnWorld;
-    private transient ProgressBar prgBarBarraProgresoEjec;
-    private boolean estaTeclaPrincipalOprimida = false;
-    private transient TiposDeBoton estadoAnteriorDeBtnAEvento;
-    private transient Cursor cursorAnteriorAEvento;
-    private transient ResultadosPhosphorus resultadosPhosphorus;
-    private static IGU iguAG2;
-    private Main main;
-    private transient StackPane stPnCajaPropDispositivo = new StackPane();
+    private  GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
+    private  ToggleGroup tgHerramientas; 
+    private  GridPane gpNavegacionMapa;
+    private  ExecutePane executePane;
+    private  Boton btnMoverEscena;
+    private  Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
+    private  Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
+    private  Boton btnEnrutadorOptico = new Boton(TiposDeBoton.ENRUTADOR_OPTICO);
+    private  Boton btnEnrutadorDeRafaga = new Boton(TiposDeBoton.ENRUTADOR_RAFAGA);
+    private  Boton btnEnrutadorHibrido = new Boton(TiposDeBoton.ENRUTADOR_HIBRIDO);
+    private  Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
+    private  Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
+    private  static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
+    private  TablaPropiedadesDispositivo tbPropiedadesDispositivo;
+    private  GridPane barraHerramientas;
+    private  ScrollPane scPnWorld;
+    private  ProgressBar prgBarBarraProgresoEjec;
+    private  boolean estaTeclaPrincipalOprimida = false;
+    private  TiposDeBoton estadoAnteriorDeBtnAEvento;
+    private  Cursor cursorAnteriorAEvento;
+    private  ResultadosPhosphorus resultadosPhosphorus;
+    private  static IGU iguAG2;
+    private  Main main;
+    private  StackPane stPnCajaPropDispositivo = new StackPane();    
+    private  Boton btnSeleccion ;
+    private  Boton btnDividirEnlaceCuadrado ;
+    private  Boton btnEliminar;
+    private  Boton btnMinusZoom;
+    private  Boton btnPlusZoom ;
+    private  Group grRoot = new Group();
+    private  VBox vbCajaNavegacion = new VBox();
 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
     }
     private transient Stage stgEscenario;
+    
 
     public static IGU getInstance() {
 
@@ -76,6 +80,34 @@ public class IGU extends Scene implements Serializable {
     public void setMain(Main main) {
         this.main = main;
     }
+    public void loadGrupoDeDiseno(GrupoDeDiseno grupoDeDiseño)
+    {
+        
+       grRoot.getChildren().remove(this.grGrupoDeDiseño); 
+       this.grGrupoDeDiseño = grupoDeDiseño; 
+       executePane = new ExecutePane(grGrupoDeDiseño);
+       
+        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+        
+        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño);        
+        
+        grGrupoDeDiseño.setScrollPane(scPnWorld);
+        grRoot.getChildren().add(grGrupoDeDiseño);
+        crearPanelDeNavegacionMapa(vbCajaNavegacion);
+        adicionarEventoDeTecladoAEscena(this);
+    }
+    
 
     private IGU(BorderPane layOutVentanaPrincipal, double anchoVentana, double altoVentana) 
     {
@@ -83,6 +115,7 @@ public class IGU extends Scene implements Serializable {
         scPnWorld = new ScrollPane();
         tgHerramientas = new ToggleGroup();
         gpNavegacionMapa = new GridPane();
+        executePane = new ExecutePane(grGrupoDeDiseño);
         
         adicionarEventoDeTecladoAEscena(this);
         getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
@@ -157,13 +190,8 @@ public class IGU extends Scene implements Serializable {
             }
         });
         itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent t) {
-
-                main.load();
-                //  GrupoDeDiseno grupoDeDiseno = serializador.cargar();
-                //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
-                //   ivImagenFondo.toBack();
+                main.load();               
             }
         });
 
@@ -193,11 +221,11 @@ public class IGU extends Scene implements Serializable {
     private void creacionDeBtnsDeUtilidades(GridPane grdPnBarraHerramientas) {
 
         btnMoverEscena = new Boton(TiposDeBoton.MANO);
-        Boton btnSeleccion = new Boton(TiposDeBoton.PUNTERO);
-        Boton btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
-        Boton btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
-        Boton btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
-        Boton btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
+        btnSeleccion = new Boton(TiposDeBoton.PUNTERO);
+        btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
+        btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
+        btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
+        btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
 
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
@@ -311,7 +339,7 @@ public class IGU extends Scene implements Serializable {
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-        Group grRoot = new Group();
+       
 
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
@@ -349,7 +377,7 @@ public class IGU extends Scene implements Serializable {
         splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo, stPnCajaPropSimulacion);
         splPnCajaTablasDeProp.setDividerPositions(0.525f);
 
-        VBox vbCajaNavegacion = new VBox();
+       
         crearPanelDeNavegacionMapa(vbCajaNavegacion);
         hBoxCajaInferior.getChildren().addAll(tlPnLogos, splPnCajaTablasDeProp, vbCajaNavegacion);
         return hBoxCajaInferior;
@@ -456,7 +484,10 @@ public class IGU extends Scene implements Serializable {
         GridPane.setConstraints(btnIrNodoServicio, 2, 5);
         gpNavegacionMapa.getChildren().add(btnIrNodoServicio);
 
-        vBox.getChildren().add(gpNavegacionMapa);
+        if(! vBox.getChildren().contains(gpNavegacionMapa))
+        {
+            vBox.getChildren().add(gpNavegacionMapa);
+        }
 
         establecerEventoBotonesIr(btnIrClientes, cbClientes);
         establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
@@ -631,12 +662,5 @@ public class IGU extends Scene implements Serializable {
             e.printStackTrace();
         }
     }
-     private void writeObject(ObjectOutputStream   objectOutputStream)
-    {
-        try {
-            objectOutputStream.defaultWriteObject();
-        } catch (IOException ex) {
-            Logger.getLogger(GrupoDeDiseno.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }
+   
 }
