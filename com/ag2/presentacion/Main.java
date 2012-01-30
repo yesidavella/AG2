@@ -3,25 +3,28 @@ package com.ag2.presentacion;
 import com.ag2.config.serializacion.Serializador;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
+import java.io.Serializable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application
+public class Main extends Application implements Serializable
 {
     private transient Serializador serializador; 
     private ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo;
     private ExecuteAbstractController  executeAbstractController;      
     private ModeloCrearNodo modeloCrearNodo;         
     private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace ; 
-     
+    private IGU igu;  
      
     @Override
     public void start(Stage stage)
     {
         
         stage.setTitle("Modelo AG2- Simulador Grafico");
-        stage.setScene(IGU.getInstance());
+        stage.setScene(IGU.getInstance());        
         IGU.getInstance().setStage(stage);
+        igu= IGU.getInstance(); 
+        igu.setMain(this);
         stage.show();
 
         inicializarModelosYContrladoresDeCreacionDeNodos();

@@ -1,14 +1,18 @@
 package com.ag2.presentacion;
 
 import com.ag2.config.TipoDePropiedadesPhosphorus;
-import com.ag2.config.serializacion.Serializador;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
-import com.ag2.presentacion.diseño.NodoDeRecursoGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -22,7 +26,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -30,35 +33,36 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-public class IGU extends Scene {
+public class IGU extends Scene implements Serializable {
 
-    GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
-    ToggleGroup tgHerramientas = new ToggleGroup();
-    GridPane gpNavegacionMapa = new GridPane();
-    ExecutePane executePane = new ExecutePane(grGrupoDeDiseño);
-    private Boton btnMoverEscena;
-    private Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
-    Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
-    Boton btnEnrutadorOptico = new Boton(TiposDeBoton.ENRUTADOR_OPTICO);
-    Boton btnEnrutadorDeRafaga = new Boton(TiposDeBoton.ENRUTADOR_RAFAGA);
-    Boton btnEnrutadorHibrido = new Boton(TiposDeBoton.ENRUTADOR_HIBRIDO);
-    Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
-    Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
+    private GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
+    private transient ToggleGroup tgHerramientas; 
+    private transient GridPane gpNavegacionMapa;
+    private ExecutePane executePane = new ExecutePane(grGrupoDeDiseño);
+    private transient Boton btnMoverEscena;
+    private transient Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
+    private transient Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
+    private transient Boton btnEnrutadorOptico = new Boton(TiposDeBoton.ENRUTADOR_OPTICO);
+    private transient Boton btnEnrutadorDeRafaga = new Boton(TiposDeBoton.ENRUTADOR_RAFAGA);
+    private transient Boton btnEnrutadorHibrido = new Boton(TiposDeBoton.ENRUTADOR_HIBRIDO);
+    private transient Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
+    private transient Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    TablaPropiedadesDispositivo tbPropiedadesDispositivo;
-    private GridPane barraHerramientas;
-    private ScrollPane scPnWorld = new ScrollPane();
-    private ProgressBar prgBarBarraProgresoEjec;
+    private transient TablaPropiedadesDispositivo tbPropiedadesDispositivo;
+    private transient GridPane barraHerramientas;
+    private transient ScrollPane scPnWorld;
+    private transient ProgressBar prgBarBarraProgresoEjec;
     private boolean estaTeclaPrincipalOprimida = false;
-    private TiposDeBoton estadoAnteriorDeBtnAEvento;
-    private Cursor cursorAnteriorAEvento;
-    private ResultadosPhosphorus resultadosPhosphorus;
+    private transient TiposDeBoton estadoAnteriorDeBtnAEvento;
+    private transient Cursor cursorAnteriorAEvento;
+    private transient ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
-    private Main main; 
+    private Main main;
+    private transient StackPane stPnCajaPropDispositivo = new StackPane();
+
     public ScrollPane getScPnWorld() {
         return scPnWorld;
     }
-    
     private Stage stgEscenario;
 
     public static IGU getInstance() {
@@ -69,9 +73,17 @@ public class IGU extends Scene {
         return iguAG2;
     }
 
-    private IGU(BorderPane layOutVentanaPrincipal, double anchoVentana, double altoVentana) {
-        super(layOutVentanaPrincipal, anchoVentana, altoVentana);
+    public void setMain(Main main) {
+        this.main = main;
+    }
 
+    private IGU(BorderPane layOutVentanaPrincipal, double anchoVentana, double altoVentana) 
+    {
+        super(layOutVentanaPrincipal, anchoVentana, altoVentana);
+        scPnWorld = new ScrollPane();
+        tgHerramientas = new ToggleGroup();
+        gpNavegacionMapa = new GridPane();
+        
         adicionarEventoDeTecladoAEscena(this);
         getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
 
@@ -139,7 +151,7 @@ public class IGU extends Scene {
         itemGuardar.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-               
+
                 main.save();
 
             }
@@ -147,9 +159,9 @@ public class IGU extends Scene {
         itemAbrir.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
-                
-                main.load(); 
-              //  GrupoDeDiseno grupoDeDiseno = serializador.cargar();
+
+                main.load();
+                //  GrupoDeDiseno grupoDeDiseno = serializador.cargar();
                 //grupoDeDiseno.getChildren().addAll(rectangle, ivImagenFondo);
                 //   ivImagenFondo.toBack();
             }
@@ -326,7 +338,7 @@ public class IGU extends Scene {
         TilePane tlPnLogos = creacionImagenesDeProyectos();
 
         tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
-        StackPane stPnCajaPropDispositivo = new StackPane();
+        ///  StackPane stPnCajaPropDispositivo = new StackPane();
         stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
 
         TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
@@ -461,33 +473,33 @@ public class IGU extends Scene {
                 NodoGrafico selectedNode = (NodoGrafico) chobNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
-                    
+
                     Scale sclEscalaDeZoom = grGrupoDeDiseño.getSclEscalaDeZoom();
                     sclEscalaDeZoom.setX(1.5);
                     sclEscalaDeZoom.setY(-1.5);
-                    
+
                     double worldWidth = grGrupoDeDiseño.getBoundsInParent().getWidth();
                     double worldHeight = grGrupoDeDiseño.getBoundsInParent().getHeight();
                     //La posicion (0,0) esta en la esquina superior izquierda
-                    double posXNewCoords = (selectedNode.getPosX() * 1.5) + (worldWidth/2);
-                    double posYNewCoords = (selectedNode.getPosY() * (-1.5)) + (worldHeight/2);
+                    double posXNewCoords = (selectedNode.getPosX() * 1.5) + (worldWidth / 2);
+                    double posYNewCoords = (selectedNode.getPosY() * (-1.5)) + (worldHeight / 2);
 
                     double posXInPercentage = posXNewCoords / worldWidth;
                     double posYInPercentage = posYNewCoords / worldHeight;
 
                     double maxErrorInX = scPnWorld.getViewportBounds().getWidth() / 2;
                     double funcToCalculateXError = (-2 * maxErrorInX * posXInPercentage) + maxErrorInX;
-                    double percentageXError = funcToCalculateXError/worldWidth;
-                    
+                    double percentageXError = funcToCalculateXError / worldWidth;
+
                     double maxErrorInY = scPnWorld.getViewportBounds().getHeight() / 2;
                     double funcToCalculateYError = (-2 * maxErrorInY * posYInPercentage) + maxErrorInY;
-                    double percentageYError = funcToCalculateYError/worldHeight;
-                    
-                    double percentImgHeightCorrecX = (selectedNode.getAnchoActual())/worldWidth;
-                    double percentImgHeightCorrecY = (selectedNode.getAltoActual())/worldHeight;
-                    
-                    scPnWorld.setHvalue(posXInPercentage-percentageXError+percentImgHeightCorrecX);
-                    scPnWorld.setVvalue(posYInPercentage-percentageYError-percentImgHeightCorrecY);
+                    double percentageYError = funcToCalculateYError / worldHeight;
+
+                    double percentImgHeightCorrecX = (selectedNode.getAnchoActual()) / worldWidth;
+                    double percentImgHeightCorrecY = (selectedNode.getAltoActual()) / worldHeight;
+
+                    scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
+                    scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
                 }
             }
         });
@@ -601,5 +613,30 @@ public class IGU extends Scene {
 
     public ResultadosPhosphorus getResustadosPhosphorus() {
         return resultadosPhosphorus;
+    }
+
+    private void readObject(ObjectInputStream inputStream) {
+        try 
+        {
+            inputStream.defaultReadObject();
+            tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
+            stPnCajaPropDispositivo = new StackPane();
+            stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
+            scPnWorld = new ScrollPane(); 
+            tgHerramientas = new ToggleGroup();
+            gpNavegacionMapa = new GridPane();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+     private void writeObject(ObjectOutputStream   objectOutputStream)
+    {
+        try {
+            objectOutputStream.defaultWriteObject();
+        } catch (IOException ex) {
+            Logger.getLogger(GrupoDeDiseno.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 }

@@ -4,6 +4,7 @@
  */
 package com.ag2.presentacion.controles;
 
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,20 +18,20 @@ import javafx.scene.text.Font;
  *
  * @author Frank
  */
-public class ResultadosPhosphorus implements ViewResultsPhosphorus {
+public class ResultadosPhosphorus implements ViewResultsPhosphorus, Serializable{
     
-    private Tab tab;
+    private transient Tab tab;
     private TableView tvResultadosClientePhosphorus = new TableView();
     private TableView tvResultadosRecursoPhosphorus = new TableView();
     private TableView tvResultadosConmutadorPhosphorus = new TableView();
-    Label lbCliente = new Label("Resultados del cliente");
-    Label lbRecurso = new Label("Resultados del recurso");
-    Label lbConmutador = new Label("Resultados del Conmutador Optico");
-    private ObservableList<ConjuntoProiedadesPhosphorus> dataCliente = FXCollections.observableArrayList();
-    private ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso = FXCollections.observableArrayList();
-    private ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador = FXCollections.observableArrayList();
+    private transient Label lbCliente = new Label("Resultados del cliente");
+    private transient Label lbRecurso = new Label("Resultados del recurso");
+    private transient Label lbConmutador = new Label("Resultados del Conmutador Optico");
+    private transient  ObservableList<ConjuntoProiedadesPhosphorus> dataCliente = FXCollections.observableArrayList();
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso = FXCollections.observableArrayList();
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador = FXCollections.observableArrayList();
     private VBox vBox = new VBox();
-    private final ProgressIndicator progressIndicator = new ProgressIndicator(0);
+    private transient ProgressIndicator progressIndicator = new ProgressIndicator(0);
     
     public ResultadosPhosphorus(Tab tab) {
         this.tab = tab;
