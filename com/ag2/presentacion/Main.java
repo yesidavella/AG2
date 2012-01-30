@@ -117,8 +117,7 @@ public class Main extends Application implements Serializable
         if(main!=null)
         {
             IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
-        }
-        
+        }        
     }
      
 }

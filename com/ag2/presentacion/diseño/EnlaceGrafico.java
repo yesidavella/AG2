@@ -87,14 +87,19 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         return nodoGraficoA;
     }
     
+    
     private void readObject(ObjectInputStream inputStream) {
         try 
         {
             inputStream.defaultReadObject();
             for(ArcoGrafico arcoGrafico: arcos)
             {
+                arcoGrafico.toFront();
+                nodoGraficoA.toFront();
+                nodoGraficoB.toFront();
                 grGrDeDiseño.getChildren().add(arcoGrafico);
             }    
+            
             
         }catch (Exception e){
             e.printStackTrace();

@@ -3,9 +3,12 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -282,6 +285,22 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
     public NodoGrafico getNodoGraficoB() {
         return nodoGraficoB;
     }
+      private void writeObject(java.io.ObjectOutputStream outputStream)
+    {
+        try {
+            posIniX = getStartX(); 
+            posIniY = getStartY(); 
+            posFinX = getEndX(); 
+            posFinY = getEndY(); 
+            centroX = getControlX();        
+            centroY = getCentroY(); 
+                    
+            outputStream.defaultWriteObject();
+          
+        } catch (IOException ex) {
+            Logger.getLogger(NodoGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void readObject(ObjectInputStream inputStream) {
         try {
@@ -293,6 +312,8 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
             setControlX(centroX);
             setControlY(centroY);
             establecerConfigInicial();
+            toFront();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
