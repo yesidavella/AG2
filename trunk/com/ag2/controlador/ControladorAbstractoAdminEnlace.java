@@ -4,11 +4,11 @@ import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 
-public abstract class ControladorAbstractoAdminEnlace {
+public abstract class ControladorAbstractoAdminEnlace implements Serializable {
     
     protected ArrayList<ModeloAbstractoCrearEnlace> modelosRegistrados;
     protected TablaPropiedadesDispositivo tblPropiedadesDispositivo;

@@ -5,6 +5,7 @@
 package com.ag2.presentacion.diseño.propiedades;
 
 import com.ag2.presentacion.diseño.NodoGrafico;
+import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
@@ -13,7 +14,7 @@ import javafx.scene.control.ChoiceBox;
  *
  * @author Frank
  */
-public class NodeRelationProperty extends PropiedadeNodo {
+public class NodeRelationProperty extends PropiedadeNodo implements Serializable{
 
     private transient ObservableList observableListNodes = FXCollections.observableArrayList();
     private String nombre;

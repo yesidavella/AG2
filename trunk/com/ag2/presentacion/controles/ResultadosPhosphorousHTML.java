@@ -35,8 +35,7 @@ public class ResultadosPhosphorousHTML {
     private Button btnIzqFin = new Button();
     private Button btnIzq = new Button();
     private Button btnDer = new Button();
-    private Button btnDerFin = new Button();
-    //private Label lbPagina = new Label("Pag"); 
+    private Button btnDerFin = new Button();   
     private TextField txtPagina = new TextField();
     private String CARPETA_RESULTADOS = "Results_HTML";
     private int paginasTotales = 0;

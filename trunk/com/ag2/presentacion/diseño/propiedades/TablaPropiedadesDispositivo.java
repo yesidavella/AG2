@@ -7,6 +7,7 @@ import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.ObjetoSeleccionable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> implements VistaNodosGraficos
+public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> implements VistaNodosGraficos, Serializable
 {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;

@@ -20,7 +20,7 @@ public class PropiedadeNodo {
     private String nombre;
     private ArrayList<String> valorArrayList = new ArrayList<String>();
     private TipoDePropiedadNodo tipoDePropiedadNodo;
-    protected Control control;
+    protected transient Control control;
     private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
     private boolean subProperty = false; 
     

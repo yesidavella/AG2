@@ -5,10 +5,11 @@ import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public abstract class ControladorAbstractoAdminNodo {
+public abstract class ControladorAbstractoAdminNodo implements Serializable {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;

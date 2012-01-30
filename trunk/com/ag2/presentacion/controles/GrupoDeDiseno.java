@@ -11,10 +11,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,10 +52,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
     private ObjetoSeleccionable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
-    private Scale sclEscalaDeZoom;
+    private transient Scale sclEscalaDeZoom;
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
-    private ScrollPane scPnPanelWorld;
+    private transient ScrollPane scPnPanelWorld;
     private double dragMouX = 0;
     private double dragMouY = 0;
 
@@ -245,6 +242,9 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             listaRecursos = FXCollections.observableArrayList();
             listaSwitches = FXCollections.observableArrayList();
             listaNodoServicio = FXCollections.observableArrayList();
+            
+            sclEscalaDeZoom = new Scale(1.44, -1.44);
+            getTransforms().add(sclEscalaDeZoom);
 
         } catch (Exception e) {
 
@@ -396,5 +396,14 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     }
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) {
+    }
+    
+    private void writeObject(ObjectOutputStream   objectOutputStream)
+    {
+        try {
+            objectOutputStream.defaultWriteObject();
+        } catch (IOException ex) {
+            Logger.getLogger(GrupoDeDiseno.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 }

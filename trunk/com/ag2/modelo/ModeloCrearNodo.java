@@ -2,8 +2,9 @@ package com.ag2.modelo;
 
 import Grid.Entity;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import java.io.Serializable;
 
-public abstract class ModeloCrearNodo 
+public abstract class ModeloCrearNodo implements Serializable 
 {
     
     private ControladorAbstractoAdminNodo ctrlCrearNodo;
@@ -16,8 +17,6 @@ public abstract class ModeloCrearNodo
     public  void loadSimulacionBase(){
          simulacionBase=  SimulacionBase.getInstance();
     }
-            
-           
             
     
     public boolean addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo){

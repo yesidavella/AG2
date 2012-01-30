@@ -9,6 +9,7 @@ import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
+import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -22,7 +23,7 @@ import javafx.scene.layout.TilePane;
  *
  * @author Frank
  */
-public class ExecutePane extends TilePane implements ExecuteView {
+public class ExecutePane extends TilePane implements ExecuteView, Serializable {
 
     Boton btnEjecutar;
     Boton btnParar;

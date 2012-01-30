@@ -13,13 +13,14 @@ import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.NodeRelationProperty;
 import com.ag2.presentacion.diseño.propiedades.PropiedadNodoDistribuciones;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import simbase.SimBaseSimulator;
 import simbase.Time;
 
-public class ControladorAdminNodo extends ControladorAbstractoAdminNodo {
+public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implements Serializable{
 
     private NodoGrafico nodoGraficoSeleccionado;
 

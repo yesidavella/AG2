@@ -8,15 +8,16 @@ import Grid.Interfaces.Switch;
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
+import java.io.Serializable;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
-public class SimulacionBase implements Runnable {
+public class SimulacionBase implements Runnable, Serializable {
     
     private static SimulacionBase simulacionBase;
-    private GridSimulatorModel simulador;
-    private SimulationInstance simulacion;
-    private OutputterModel outputterModel;
+    private transient GridSimulatorModel simulador;
+    private transient SimulationInstance simulacion;
+    private transient OutputterModel outputterModel;
 
     private ControladorAbstractoAdminNodo  controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;

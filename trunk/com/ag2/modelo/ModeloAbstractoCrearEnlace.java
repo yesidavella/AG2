@@ -2,9 +2,10 @@ package com.ag2.modelo;
 
 import Grid.Entity;
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class ModeloAbstractoCrearEnlace {
+public abstract class ModeloAbstractoCrearEnlace implements Serializable{
     
     private ArrayList<ControladorAbstractoAdminEnlace> controladoresRegistrados;
     

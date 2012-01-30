@@ -5,7 +5,6 @@
 package com.ag2.config.serializacion;
 
 import com.ag2.presentacion.Main;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
