@@ -86,7 +86,7 @@ public enum TipoDePropiedadesPhosphorus {
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                IGU.getInstance().getGrGrupoDeDiseño().requestFocus();
+                IGU.getInstance().getGrGrupoDeDiseño().getGroup().requestFocus();
             }
         });
         

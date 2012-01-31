@@ -2,15 +2,16 @@ package com.ag2.presentacion.diseño;
 
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.presentacion.controles.GrupoDeDiseno;
 
 public class NodoClienteGrafico extends NodoGrafico{
 
     private static int contadorNodo = 0;
     
-    public NodoClienteGrafico(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace)
+    public NodoClienteGrafico(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace)
     {
         
-        super("Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
+        super(grupoDeDiseno,"Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
         
         setAlto((short)50);
 

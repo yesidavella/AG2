@@ -34,7 +34,7 @@ public class Boton extends ToggleButton {
         this.tipoDeBoton = tipoDeBoton;
     }
 
-    public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
+    public void setGrupoDeDiseño(final Group group) {
 
         setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -47,12 +47,12 @@ public class Boton extends ToggleButton {
 
 
                     if (botonOrigen.tipoDeBoton == TiposDeBoton.PUNTERO) {
-                        grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                        group.setCursor(Cursor.DEFAULT);
                     } else {
                         if (tipoDeBoton.getImagenCursor() != null) {
-                            grGrupoDeDiseño.setCursor(tipoDeBoton.getImagenCursor());
+                            group.setCursor(tipoDeBoton.getImagenCursor());
                         } else {
-                            grGrupoDeDiseño.setCursor(Cursor.DEFAULT);
+                            group.setCursor(Cursor.DEFAULT);
                         }
                     }
                 } else {

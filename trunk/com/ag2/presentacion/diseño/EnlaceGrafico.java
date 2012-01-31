@@ -46,7 +46,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     }
 
     public void addArcosInicialAlGrupo() {
-        grGrDeDiseño.getChildren().add(arcInicial);
+        grGrDeDiseño.add(arcInicial);
     }
 
     public ArrayList<ArcoGrafico> getArcos() {
@@ -69,7 +69,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 {
                     arcoGrafico.setEliminado(true);
                     arcoGrafico.updateArcoListeners();
-                    grGrDeDiseño.getChildren().remove(arcoGrafico);
+                    grGrDeDiseño.remove(arcoGrafico);
                 }
                 nodoGraficoA = null;
                 nodoGraficoB = null;
@@ -99,7 +99,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 
                 nodoGraficoA.toFront();
                 nodoGraficoB.toFront();                
-                grGrDeDiseño.getChildren().add(arcoGrafico);
+                grGrDeDiseño.add(arcoGrafico);
                 arcoGrafico.toFront();
             }    
             update();
