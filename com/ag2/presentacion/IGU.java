@@ -86,7 +86,7 @@ public class IGU extends Scene implements Serializable {
        grRoot.getChildren().remove(this.grGrupoDeDiseño); 
        this.grGrupoDeDiseño = grupoDeDiseño; 
        executePane = new ExecutePane(grGrupoDeDiseño);
-       
+       grGrupoDeDiseño.getChildren(); 
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
         btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);

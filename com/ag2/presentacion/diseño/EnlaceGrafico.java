@@ -57,8 +57,10 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         return nodoGraficoB;
     }
 
-    //nuevo 
-    public void update() {
+    
+    @Override
+    public void update()
+    {
         if (nodoGraficoA != null && nodoGraficoB != null) 
         {
             if (nodoGraficoA.isEliminado() || nodoGraficoB.isEliminado()) {
@@ -94,16 +96,18 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             inputStream.defaultReadObject();
             for(ArcoGrafico arcoGrafico: arcos)
             {
-                arcoGrafico.toFront();
+                
                 nodoGraficoA.toFront();
-                nodoGraficoB.toFront();
+                nodoGraficoB.toFront();                
                 grGrDeDiseño.getChildren().add(arcoGrafico);
+                arcoGrafico.toFront();
             }    
-            
+            update();
             
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     public void seleccionar(boolean isSeleccionado) {
