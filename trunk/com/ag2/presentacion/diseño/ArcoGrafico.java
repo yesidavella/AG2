@@ -304,14 +304,16 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
 
     private void readObject(ObjectInputStream inputStream) {
         try {
+            
             inputStream.defaultReadObject();
+            establecerConfigInicial();
             setStartX(posIniX);
             setStartY(posIniY);
             setEndX(posFinX);
             setEndY(posFinY);
             setControlX(centroX);
             setControlY(centroY);
-            establecerConfigInicial();
+            
             toFront();
             
         } catch (Exception e) {

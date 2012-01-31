@@ -55,10 +55,11 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
     private transient Scale sclEscalaDeZoom;
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
-    private transient ScrollPane scPnPanelWorld;
+    private transient ScrollPane scPnPanelWorld;    
     private double dragMouX = 0;
     private double dragMouY = 0;
 
+   
     public GrupoDeDiseno() {
         setOnMousePressed(this);
         setOnMouseDragged(this);
@@ -308,7 +309,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
                         currentColor = (currentColor + 1) % colors.length;
-                        path.setFill(colors[currentColor]);
+                        path.setFill(null);
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 1; i < coords.length; i++) {
@@ -334,15 +335,16 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
             backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
             backgroudRec.setScaleX(MAP_SCALE);
-            backgroudRec.setScaleY(MAP_SCALE);
+            backgroudRec.setScaleY(MAP_SCALE);       
+           
             getChildren().add(backgroudRec);
             backgroudRec.toBack();
 
-            Rectangle r = new Rectangle(10, 10);
-            r.setFill(Color.WHITE);
-            r.setLayoutX(0);
-            r.setLayoutY(0);
-            getChildren().add(r);
+//            Rectangle r = new Rectangle(10, 10);
+//            r.setFill(Color.WHITE);
+//            r.setLayoutX(0);
+//            r.setLayoutY(0);
+//            getChildren().add(r);
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
