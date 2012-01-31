@@ -31,10 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -46,43 +43,39 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
+public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
-   
     private transient ObservableList listaClientes = FXCollections.observableArrayList();
     private transient ObservableList listaRecursos = FXCollections.observableArrayList();
     private transient ObservableList listaSwitches = FXCollections.observableArrayList();
     private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
     private transient ScrollPane scPnPanelWorld;
     private transient Scale sclEscalaDeZoom;
-    private transient Group group; 
-    
+    private transient Group group;
     private ObjetoSeleccionable objetoGraficoSelecionado;
-    private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();    
+    private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();
     private final int MAP_SCALE = 17;
-    private final double PERCENT_ZOOM = 1.2;          
+    private final double PERCENT_ZOOM = 1.2;
     private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
     private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
     private double dragMouX = 0;
     private double dragMouY = 0;
-   
-    
-    public GrupoDeDiseno() 
-    {
+
+    public GrupoDeDiseno() {
         initTransientObjects();
         ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
-        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();    
-       
+        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
+
     }
-    public void initTransientObjects()
-    {
-        group = new Group(); 
+
+    public void initTransientObjects() {
+        group = new Group();
         group.setOnMousePressed(this);
         group.setOnMouseDragged(this);
         group.setOnMouseReleased(this);
         sclEscalaDeZoom = new Scale(1.44, -1.44);
         group.getTransforms().add(sclEscalaDeZoom);
-        loadGeoMap();        
+        loadGeoMap();
     }
 
     public ObjetoSeleccionable getObjetoGraficoSelecionado() {
@@ -145,7 +138,7 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
 
-                nuevoNodo = new NodoClienteGrafico( this,controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new NodoClienteGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
@@ -196,22 +189,35 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
             listaNodoServicio.remove(nodoGrafico);
         }
     }
-    public void add(Node node)
-    {        
-        group.getChildren().add(node); 
-        if(node instanceof Serializable)
-        {
-             objectsSerializable.add((Serializable)node);
-        }        
+
+    public void add(Node node) {
+        group.getChildren().add(node);
+        if (node instanceof Serializable) {
+            objectsSerializable.add((Serializable) node);
+        }
     }
-    
-    public void remove(Node node)
+    public void add(NodoGrafico node)
     {
-         group.getChildren().remove(node);
-         if(node instanceof Serializable)
-        {
-             objectsSerializable.remove((Serializable)node);
-        }  
+        group.getChildren().add(node.getGroup());
+        if (node instanceof Serializable) {
+            objectsSerializable.add((Serializable) node);
+        }
+    }
+
+    public void remove(Node node) {
+        group.getChildren().remove(node);
+        if (node instanceof Serializable) {
+            objectsSerializable.remove((Serializable) node);
+        }
+    }
+
+    public void remove(NodoGrafico nodoGrafico) {
+        Group group = nodoGrafico.getGroup();
+
+        group.getChildren().remove(group);
+        if (nodoGrafico instanceof Serializable) {
+            objectsSerializable.remove((Serializable) nodoGrafico);
+        }
     }
 
     private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo, MouseEvent me) {
@@ -224,18 +230,16 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
             posicionX = me.getX() - nuevoNodo.getAnchoActual() / 2;
             posicionY = me.getY() - nuevoNodo.getAltoActual() / 2;
 
-            nuevoNodo.setPosX(posicionX);
-            nuevoNodo.setPosY(posicionY);
+            nuevoNodo.setLayoutX(posicionX);
+            nuevoNodo.setLayoutY(posicionY);
             add(nuevoNodo);
-            
+
         }
     }
 
     public Group getGroup() {
         return group;
     }
-
-  
 
     public ObservableList getListaClientes() {
         return listaClientes;
@@ -257,14 +261,11 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
         ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
     }
 
-    private void readObject(ObjectInputStream inputStream) 
-    {
-        try 
-        {
+    private void readObject(ObjectInputStream inputStream) {
+        try {
             inputStream.defaultReadObject();
 
-        } catch (Exception e) 
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -280,7 +281,7 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
 
         Group texts = new Group();
 
-        try {         
+        try {
 
             File file = new File("src\\maps\\110m_admin_0_countries.shp");
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
@@ -315,10 +316,10 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
 
                         coords = polygon.getCoordinates();
                         Path path = new Path();
-                        
+
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-                    
+
                         path.setFill(Color.web("#A0A5CE"));
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
@@ -331,7 +332,7 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
                     }
                 }
             }
-       
+
             add(texts);
 
             Stop[] stops = {
@@ -345,8 +346,8 @@ public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, V
             backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
             backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
             backgroudRec.setScaleX(MAP_SCALE);
-            backgroudRec.setScaleY(MAP_SCALE);       
-           
+            backgroudRec.setScaleY(MAP_SCALE);
+
             add(backgroudRec);
             backgroudRec.toBack();
 

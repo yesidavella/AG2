@@ -28,20 +28,27 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, Serializable {
+public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
-    private String nombre = null;
+    
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(
+            new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
+    
     protected transient Image imagen = null;
-    private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
-    private static NodoGrafico nodoAComodin = null;
-    private transient Line enlaceComodin = new Line();
-    private boolean estaEliminado = false;
+    private transient Line enlaceComodin;
     private transient ImageView imageView;
     protected transient Label lblNombre;
-    private boolean selecionado = false;
     private transient DropShadow dropShadow = new DropShadow();
-    protected transient VBox cuadroExteriorResaltado = new VBox();
-    private double posX;
+    protected transient VBox cuadroExteriorResaltado;
+    
+    
+    private String nombre = null;
+    private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
+    private static NodoGrafico nodoAComodin = null;
+    private boolean estaEliminado = false;
+    private boolean selecionado = false;
+  
+    private String urlDeImagen;
     private boolean arrastrando = false;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
@@ -52,35 +59,49 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private String nombreOriginal;
     protected short pasoDeSaltoLinea;
     private short altoInicial = 0;
-    private HashMap<String, String> propertiesNode = new HashMap<String, String>();
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(
-            new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
-    private HashMap<String, String> subPropertiesNode = new HashMap<String, String>();
-    private GrupoDeDiseno grupoDeDiseno; 
+    private HashMap<String, String> propertiesNode;   
+    private HashMap<String, String> subPropertiesNode;
+    private GrupoDeDiseno grupoDeDiseno;
+    private Group group;
+    private double layoutX; 
+    private double layoutY; 
 
-    
-    public NodoGrafico(GrupoDeDiseno grupoDeDiseno,String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
-        this.grupoDeDiseno= grupoDeDiseno; 
+    public NodoGrafico(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) 
+    {
+        
+        this.grupoDeDiseno = grupoDeDiseno;
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
-        this.controladorAdminEnlace = ctrlAbsAdminEnlace;
-        setEffect(dropShadow);
+        this.controladorAdminEnlace = ctrlAbsAdminEnlace;    
         this.urlDeImagen = urlDeImagen;
         this.nombre = nombre;
         this.nombreOriginal = nombre;
+        propertiesNode = new HashMap<String, String>(); 
+        subPropertiesNode = new HashMap<String, String>();       
+       
+        initTransientObjects();
+
+        
+    }
+   public void initTransientObjects()
+   {
+        group = new Group();
+        group.setEffect(dropShadow);
         lblNombre = new Label(formatearNombre(nombre));
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setTextAlignment(TextAlignment.CENTER);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
-
+        
+        
+        enlaceComodin = new Line(); 
+        cuadroExteriorResaltado = new VBox();
         imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
         imageView = new ImageView(imagen);
         cuadroExteriorResaltado.setAlignment(Pos.CENTER);
         cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
-
-        this.getChildren().addAll(cuadroExteriorResaltado);
-      
-        setScaleX(0.5);
-        setScaleY(-0.5);
+        
+        group.getChildren().addAll(cuadroExteriorResaltado);
+        group.setScaleX(0.5);
+        group.setScaleY(-0.5);
 
         establecerEventoOnMouseClicked();
         establecerEventoOnMousePressed();
@@ -88,7 +109,9 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         establecerEventoOnMouseReleased();
         establecerEventoOnMouseEntered();
         establecerEventoOnMouseExit();
-    }
+   }
+    
+    
 
     public HashMap<String, String> getNodeProperties() {
         return propertiesNode;
@@ -122,26 +145,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         return hash;
     }
 
-    public double getPosX() {
-        return posX;
-    }
-
-    public void setPosX(double posX) {
-        this.posX = posX;
-        setLayoutX(posX);
-    }
+    
    
-
-    public double getPosY() {
-        return posY;
-    }
-
-    public void setPosY(double posY) {
-        this.posY = posY;
-        setLayoutY(posY);
-    }
-    private double posY;
-    private String urlDeImagen;
 
     public boolean isSelecionado() {
         return selecionado;
@@ -162,7 +167,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
             cuadroExteriorResaltado.getStyleClass().remove("nodoNoSeleccionado");
             cuadroExteriorResaltado.getStyleClass().add("nodoSeleccionado");
 
-            this.toFront();
+            group.toFront();
             dropShadow.setColor(Color.web("#44FF00"));
             dropShadow.setSpread(.2);
             dropShadow.setWidth(25);
@@ -176,31 +181,31 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     private void establecerEventoOnMouseEntered() {
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
+        group.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                NodoGrafico nodoGrafico =NodoGrafico.this ;
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
-                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                    group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 } else {
-                    setCursor(tipoDeBotonSeleccionado.getImagenCursor());
+                    group.setCursor(tipoDeBotonSeleccionado.getImagenCursor());
                 }
 
                 if (inicioGeneracionDeEnlace == false) {
                     nodoAComodin = null;
                 }
 
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE){
-                    
-                    if(nodoAComodin != null && nodoAComodin != nodoGrafico && NodoGrafico.inicioGeneracionDeEnlace){
-                        
-                        if(nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)){
-                        
-                            
-                           
+                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
+
+                    if (nodoAComodin != null && nodoAComodin != nodoGrafico && NodoGrafico.inicioGeneracionDeEnlace) {
+
+                        if (nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
+
+
+
                             grupoDeDiseno.remove(enlaceComodin);
 
                             EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grupoDeDiseno, nodoAComodin, nodoGrafico, controladorAdminEnlace);
@@ -209,15 +214,15 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                             nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
                             nodoGrafico.setCantidadDeEnlaces((short) (nodoGrafico.getCantidadDeEnlaces() + 1));
 
-                            nodoAComodin.toFront();
-                            nodoGrafico.toFront();
-                        }else {
+                            nodoAComodin.getGroup().toFront();
+                            nodoGrafico.getGroup().toFront();
+                        } else {
                             nodoGrafico.playDenyLinkAnimation();
                         }
                     }
 
                 } else if (tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
-                    setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                    group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 }
                 nodoAComodin = null;
             }
@@ -225,7 +230,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     private void establecerEventoOnMousePressed() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
+        group.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
@@ -241,29 +246,28 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                     enlaceComodin.setStartX(x + ancho / 2);
                     enlaceComodin.setStartY(y + alto / 2);
                     enlaceComodin.setEndX(x + ancho / 2);
-                    enlaceComodin.setEndY(y + alto / 2);
-                    Group group = (Group) nodoGrafico.getParent();
+                    enlaceComodin.setEndY(y + alto / 2);                    
                     group.getChildren().add(enlaceComodin);
-                    nodoGrafico.toFront();
+                    nodoGrafico.group.toFront();
 
-                    if (mouseEvent.isPrimaryButtonDown() && isHover()) {
+                    if (mouseEvent.isPrimaryButtonDown() && group.isHover()) {
                         NodoGrafico.inicioGeneracionDeEnlace = true;
                     }
                 }
-                setScaleX(1);
-                setScaleY(-1);
+                group.setScaleX(1);
+                group.setScaleY(-1);
             }
         });
     }
 
     private void establecerEventoOnMouseDragged() {
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
+        group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
-              
+
                 arrastrando = true;
-                
+
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
@@ -277,17 +281,16 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     private void establecerEventoOnMouseReleased() {
-        setOnMouseReleased(new EventHandler<MouseEvent>() {
+        group.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 //                System.out.println("Release..");
 
-                setScaleX(0.5);
-                setScaleY(-0.5);
+                group.setScaleX(0.5);
+                group.setScaleY(-0.5);
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                    Group group = (Group) nodoGrafico.getParent();
+                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();                  
                     group.getChildren().remove(enlaceComodin);
 
                 }
@@ -296,13 +299,13 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     private void establecerEventoOnMouseClicked() {
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
+        group.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 //                System.out.println("Clicked...");
 
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-               
+                NodoGrafico nodoGrafico = NodoGrafico.this; 
+
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
 
@@ -352,7 +355,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
     private void establecerEventoOnMouseExit() {
 
-        setOnMouseExited(new EventHandler<MouseEvent>() {
+        group.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
                 //System.out.println("Exit:" + getNombre());
@@ -375,8 +378,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     }
 
     public void updateNodoListener() {
-        posX = this.getLayoutX();
-        posY = this.getLayoutY();
+        layoutX = this.getLayoutX();
+        layoutY = this.getLayoutY();
 
         for (NodoListener nodoListener : nodosListener) {
             nodoListener.update();
@@ -403,46 +406,20 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         this.nombre = nombre;
         lblNombre.setText(formatearNombreConSaltoDeLineas(nombre));
     }
-    private void writeObject(java.io.ObjectOutputStream outputStream)
+
+   
+    private void readObject(ObjectInputStream inputStream)
     {
-        try {
-            posX = getLayoutX(); 
-            posY = getLayoutY(); 
-            outputStream.defaultWriteObject();
-          
-        } catch (IOException ex) {
-            Logger.getLogger(NodoGrafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void readObject(ObjectInputStream inputStream) {
-        try {
+        try
+        {
             inputStream.defaultReadObject();
-            setLayoutX(posX);
-            setLayoutY(posY);
-            imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-            imageView = new ImageView(imagen);
-            cuadroExteriorResaltado = new VBox();
-            lblNombre = new Label(nombre);
-            lblNombre.setTextFill(Color.BLACK);
-            lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
-            cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
-            cuadroExteriorResaltado.setAlignment(Pos.CENTER);
-            this.getChildren().addAll(cuadroExteriorResaltado);
-            enlaceComodin = new Line();
-            setScaleX(0.5);
-            setScaleY(-0.5);
-            dropShadow = new DropShadow();
-            seleccionar(false);
-            setEffect(dropShadow);
-            establecerEventoOnMouseClicked();
-            establecerEventoOnMousePressed();
-            establecerEventoOnMouseDragged();
-            establecerEventoOnMouseReleased();
-            establecerEventoOnMouseEntered();
-            this.toFront();
-
-        } catch (Exception e) {
+            initTransientObjects();
+            group.setLayoutX(layoutX);
+            group.setLayoutY(layoutY);
+            
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
         }
     }
@@ -526,12 +503,35 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         return subPropertiesNode;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public double getLayoutX() {
+        return layoutX;
+    }
+
+    public void setLayoutX(double layoutX) {
+        this.layoutX = layoutX;
+        group.setLayoutX(layoutX);
+    }
+
+    public double getLayoutY() {
+        return layoutY;
+    }
+
+    public void setLayoutY(double layoutY) {
+        this.layoutY = layoutY;
+        group.setLayoutY(layoutY);
+    }
+    
+
     private void playDenyLinkAnimation() {
 
-        IMG_VW_DENY_LINK.setLayoutX(getPosX() + getAnchoActual() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
-        IMG_VW_DENY_LINK.setLayoutY(getPosY() + 0.75 * getAltoActual() - (getAltoInicial() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
+        IMG_VW_DENY_LINK.setLayoutX(getLayoutX() + getAnchoActual() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
+        IMG_VW_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getAltoActual() - (getAltoInicial() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
 
-       
+
         grupoDeDiseno.add(IMG_VW_DENY_LINK);
 
         FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
@@ -541,7 +541,7 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
         fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent arg0) {              
+            public void handle(ActionEvent arg0) {
                 grupoDeDiseno.remove(IMG_VW_DENY_LINK);
             }
         });
