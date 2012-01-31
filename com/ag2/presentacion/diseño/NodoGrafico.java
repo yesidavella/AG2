@@ -56,8 +56,11 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
     private static ImageView IMG_VW_DENY_LINK = new ImageView(
             new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
     private HashMap<String, String> subPropertiesNode = new HashMap<String, String>();
+    private GrupoDeDiseno grupoDeDiseno; 
 
-    public NodoGrafico(String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
+    
+    public NodoGrafico(GrupoDeDiseno grupoDeDiseno,String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
+        this.grupoDeDiseno= grupoDeDiseno; 
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
         this.controladorAdminEnlace = ctrlAbsAdminEnlace;
         setEffect(dropShadow);
@@ -196,10 +199,11 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                         
                         if(nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)){
                         
-                            GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
-                            grDeDiseño.getChildren().remove(enlaceComodin);
+                            
+                           
+                            grupoDeDiseno.remove(enlaceComodin);
 
-                            EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grDeDiseño, nodoAComodin, nodoGrafico, controladorAdminEnlace);
+                            EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grupoDeDiseno, nodoAComodin, nodoGrafico, controladorAdminEnlace);
                             enlaceGrafico.addArcosInicialAlGrupo();
 
                             nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
@@ -257,10 +261,9 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
             public void handle(MouseEvent mouseEvent) {
 
-                NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-
+              
                 arrastrando = true;
-                GrupoDeDiseno group = (GrupoDeDiseno) nodoGrafico.getParent();
+                
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
@@ -299,32 +302,32 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 //                System.out.println("Clicked...");
 
                 NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
-                GrupoDeDiseno grGrpDeDiseño = (GrupoDeDiseno) nodoGrafico.getParent();
+               
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
 
                     nodoGrafico.setEliminado(true);
-                    grGrpDeDiseño.getChildren().remove(nodoGrafico);
-                    grGrpDeDiseño.eliminarNodeListaNavegacion(nodoGrafico);
+                    grupoDeDiseno.remove(nodoGrafico);
+                    grupoDeDiseno.eliminarNodeListaNavegacion(nodoGrafico);
                     controladorAbstractoAdminNodo.removeNodo(nodoGrafico);
 
                 }
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
 
-                    ObjetoSeleccionable objSeleccionado = grGrpDeDiseño.getObjetoGraficoSelecionado();
+                    ObjetoSeleccionable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
 
                     if (!arrastrando) {
                         if (objSeleccionado == nodoGrafico) {
                             objSeleccionado.seleccionar(false);
-                            grGrpDeDiseño.setObjetoGraficoSelecionado(null);
+                            grupoDeDiseno.setObjetoGraficoSelecionado(null);
                         } else {
                             if (objSeleccionado == null) {
                                 nodoGrafico.seleccionar(true);
-                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
+                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
                                 objSeleccionado.seleccionar(false);
                                 nodoGrafico.seleccionar(true);
-                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
+                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
                             }
                         }
 
@@ -332,11 +335,11 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
                         if (nodoGrafico != objSeleccionado) {
                             if (objSeleccionado == null) {
                                 nodoGrafico.seleccionar(true);
-                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
+                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
                             } else {
                                 objSeleccionado.seleccionar(false);
                                 nodoGrafico.seleccionar(true);
-                                grGrpDeDiseño.setObjetoGraficoSelecionado(nodoGrafico);
+                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
                             }
                         }
                     }
@@ -528,8 +531,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
         IMG_VW_DENY_LINK.setLayoutX(getPosX() + getAnchoActual() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
         IMG_VW_DENY_LINK.setLayoutY(getPosY() + 0.75 * getAltoActual() - (getAltoInicial() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
 
-        GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) getParent();
-        grDeDiseño.getChildren().add(IMG_VW_DENY_LINK);
+       
+        grupoDeDiseno.add(IMG_VW_DENY_LINK);
 
         FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
         fadeImgDenyLink.setFromValue(1.0);
@@ -538,10 +541,8 @@ public abstract class NodoGrafico extends Group implements ObjetoSeleccionable, 
 
         fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent arg0) {
-
-                GrupoDeDiseno grDeDiseño = (GrupoDeDiseno) IMG_VW_DENY_LINK.getParent();
-                grDeDiseño.getChildren().remove(IMG_VW_DENY_LINK);
+            public void handle(ActionEvent arg0) {              
+                grupoDeDiseno.remove(IMG_VW_DENY_LINK);
             }
         });
     }

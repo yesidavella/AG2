@@ -11,7 +11,10 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +24,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -42,34 +46,43 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
+public class GrupoDeDiseno  implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
-    private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
-    private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
+   
     private transient ObservableList listaClientes = FXCollections.observableArrayList();
     private transient ObservableList listaRecursos = FXCollections.observableArrayList();
     private transient ObservableList listaSwitches = FXCollections.observableArrayList();
     private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
-    private ObjetoSeleccionable objetoGraficoSelecionado;
-    private ArrayList<Serializable> objectosSerializables = new ArrayList<Serializable>();
+    private transient ScrollPane scPnPanelWorld;
     private transient Scale sclEscalaDeZoom;
+    private transient Group group; 
+    
+    private ObjetoSeleccionable objetoGraficoSelecionado;
+    private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();    
     private final int MAP_SCALE = 17;
-    private final double PERCENT_ZOOM = 1.2;
-    private transient ScrollPane scPnPanelWorld;    
+    private final double PERCENT_ZOOM = 1.2;          
+    private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
+    private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
     private double dragMouX = 0;
     private double dragMouY = 0;
-
    
-    public GrupoDeDiseno() {
-        setOnMousePressed(this);
-        setOnMouseDragged(this);
-        setOnMouseReleased(this);
+    
+    public GrupoDeDiseno() 
+    {
+        initTransientObjects();
         ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
-        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
+        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();    
+       
+    }
+    public void initTransientObjects()
+    {
+        group = new Group(); 
+        group.setOnMousePressed(this);
+        group.setOnMouseDragged(this);
+        group.setOnMouseReleased(this);
         sclEscalaDeZoom = new Scale(1.44, -1.44);
-        getTransforms().add(sclEscalaDeZoom);
-
-        loadGeoMap();
+        group.getTransforms().add(sclEscalaDeZoom);
+        loadGeoMap();        
     }
 
     public ObjetoSeleccionable getObjetoGraficoSelecionado() {
@@ -92,7 +105,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         if (tipoDeEvento == MouseEvent.MOUSE_PRESSED) {
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
-                setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
+                group.setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
                 dragMouX = mouEvent.getX();
                 dragMouY = mouEvent.getY();
 
@@ -106,13 +119,13 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
 
-                double currentWidth = getBoundsInParent().getWidth();
+                double currentWidth = group.getBoundsInParent().getWidth();
                 double distanceMovedX = dragMouX - mouEvent.getX();
                 double percentToMoveX = distanceMovedX / currentWidth;
 
                 scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() + percentToMoveX);
 
-                double currentHeight = getBoundsInParent().getHeight();
+                double currentHeight = group.getBoundsInParent().getHeight();
                 double distanceMovedY = dragMouY - mouEvent.getY();
                 double percentToMoveY = distanceMovedY / currentHeight;
 
@@ -128,31 +141,31 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             double posClcikY = mouEvent.getY();
 
             if (botonSeleccionado == TiposDeBoton.MANO) {
-                setCursor(TiposDeBoton.MANO.getImagenCursor());
+                group.setCursor(TiposDeBoton.MANO.getImagenCursor());
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
 
-                nuevoNodo = new NodoClienteGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new NodoClienteGrafico( this,controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
-                nuevoNodo = new NodoDeServicioGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new NodoDeServicioGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaNodoServicio.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
-                nuevoNodo = new EnrutadorOpticoGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new EnrutadorOpticoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new EnrutadorRafagaGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new EnrutadorRafagaGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new EnrutadorHibridoGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new EnrutadorHibridoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
-                nuevoNodo = new NodoDeRecursoGrafico(controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new NodoDeRecursoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
                 listaRecursos.add(nuevoNodo);
             }
 
@@ -183,6 +196,23 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             listaNodoServicio.remove(nodoGrafico);
         }
     }
+    public void add(Node node)
+    {        
+        group.getChildren().add(node); 
+        if(node instanceof Serializable)
+        {
+             objectsSerializable.add((Serializable)node);
+        }        
+    }
+    
+    public void remove(Node node)
+    {
+         group.getChildren().remove(node);
+         if(node instanceof Serializable)
+        {
+             objectsSerializable.remove((Serializable)node);
+        }  
+    }
 
     private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo, MouseEvent me) {
 
@@ -196,14 +226,16 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
             nuevoNodo.setPosX(posicionX);
             nuevoNodo.setPosY(posicionY);
-            getChildren().addAll(nuevoNodo);
-            addcionarObjectoSerializable(nuevoNodo);
+            add(nuevoNodo);
+            
         }
     }
 
-    public void addcionarObjectoSerializable(Serializable serializable) {
-        objectosSerializables.add(serializable);
+    public Group getGroup() {
+        return group;
     }
+
+  
 
     public ObservableList getListaClientes() {
         return listaClientes;
@@ -225,33 +257,14 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
     }
 
-    private void readObject(ObjectInputStream inputStream) {
-        try {
-            
+    private void readObject(ObjectInputStream inputStream) 
+    {
+        try 
+        {
             inputStream.defaultReadObject();
-            loadGeoMap();
-            setOnMousePressed(this);
-            setOnMouseDragged(this);
-            setOnMouseReleased(this);
 
-            for (Serializable serializable : objectosSerializables) {
-                if (serializable instanceof NodoGrafico) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) serializable;
-                    getChildren().add(nodoGrafico);
-                }
-            }
-
-            listaClientes = FXCollections.observableArrayList();
-            listaRecursos = FXCollections.observableArrayList();
-            listaSwitches = FXCollections.observableArrayList();
-            listaNodoServicio = FXCollections.observableArrayList();
-            sclEscalaDeZoom = new Scale(1.44, -1.44);
-            getTransforms().add(sclEscalaDeZoom);
-            
-          
-
-        } catch (Exception e) {
-
+        } catch (Exception e) 
+        {
             e.printStackTrace();
         }
     }
@@ -267,10 +280,7 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
 
         Group texts = new Group();
 
-        try {
-
-            Color[] colors = new Color[]{Color.web("#A0A5CE")};//, Color.RED, Color.ORANGE, Color.VIOLET, Color.CHOCOLATE, Color.YELLOW, Color.AZURE };
-            int currentColor = 0;
+        try {         
 
             File file = new File("src\\maps\\110m_admin_0_countries.shp");
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
@@ -308,21 +318,21 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
                         
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-                        currentColor = (currentColor + 1) % colors.length;
-                        path.setFill(null);
+                    
+                        path.setFill(Color.web("#A0A5CE"));
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 1; i < coords.length; i++) {
                             path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
                         }
                         path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
-                        getChildren().add(path);
+                        add(path);
                         path.toBack();
                     }
                 }
             }
-            //setEffect(ds);
-            getChildren().add(texts);
+       
+            add(texts);
 
             Stop[] stops = {
                 new Stop(0.1, Color.web("#9DCAFF")),
@@ -337,14 +347,10 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
             backgroudRec.setScaleX(MAP_SCALE);
             backgroudRec.setScaleY(MAP_SCALE);       
            
-            getChildren().add(backgroudRec);
+            add(backgroudRec);
             backgroudRec.toBack();
 
-//            Rectangle r = new Rectangle(10, 10);
-//            r.setFill(Color.WHITE);
-//            r.setLayoutX(0);
-//            r.setLayoutY(0);
-//            getChildren().add(r);
+
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
@@ -358,8 +364,8 @@ public class GrupoDeDiseno extends Group implements EventHandler<MouseEvent>, Se
         sclEscalaDeZoom.setX(sclEscalaDeZoom.getX() * percentZoom);
         sclEscalaDeZoom.setY(sclEscalaDeZoom.getY() * percentZoom);
 
-        double anchoActual = getBoundsInParent().getWidth();
-        double altoActual = getBoundsInParent().getHeight();
+        double anchoActual = group.getBoundsInParent().getWidth();
+        double altoActual = group.getBoundsInParent().getHeight();
 
         double corrimientoX = anchoActual / 2;
         double corrimientoY = altoActual / 2;

@@ -85,25 +85,25 @@ public class IGU extends Scene implements Serializable {
         
        grRoot.getChildren().remove(this.grGrupoDeDiseño); 
        this.grGrupoDeDiseño = grupoDeDiseño; 
-       executePane = new ExecutePane(grGrupoDeDiseño);
-       grGrupoDeDiseño.getChildren(); 
-        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+       executePane = new ExecutePane(grGrupoDeDiseño.getGroup());
+    
+        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         
-        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño);        
+        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());        
         
         grGrupoDeDiseño.setScrollPane(scPnWorld);
-        grRoot.getChildren().add(grGrupoDeDiseño);
+        grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
         crearPanelDeNavegacionMapa(vbCajaNavegacion);
         adicionarEventoDeTecladoAEscena(this);
     }
@@ -115,7 +115,7 @@ public class IGU extends Scene implements Serializable {
         scPnWorld = new ScrollPane();
         tgHerramientas = new ToggleGroup();
         gpNavegacionMapa = new GridPane();
-        executePane = new ExecutePane(grGrupoDeDiseño);
+        executePane = new ExecutePane(grGrupoDeDiseño.getGroup());
         
         adicionarEventoDeTecladoAEscena(this);
         getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());
@@ -227,12 +227,12 @@ public class IGU extends Scene implements Serializable {
         btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
         btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
 
-        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
 
         btnMoverEscena.setToggleGroup(tgHerramientas);
         btnSeleccion.setToggleGroup(tgHerramientas);
@@ -287,13 +287,13 @@ public class IGU extends Scene implements Serializable {
         btnRecurso.setToggleGroup(tgHerramientas);
         btnEnlace.setToggleGroup(tgHerramientas);
 
-        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño);
-        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño);
+        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
 
         btnCliente.setTooltip(new Tooltip("Nodo cliente"));
         btnNodoDeServicio.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
@@ -348,7 +348,7 @@ public class IGU extends Scene implements Serializable {
 
         grGrupoDeDiseño.setScrollPane(scPnWorld);
 
-        grRoot.getChildren().add(grGrupoDeDiseño);
+        grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
         scPnWorld.setContent(grRoot);
         tabSimulacion.setContent(scPnWorld);
 
@@ -509,8 +509,8 @@ public class IGU extends Scene implements Serializable {
                     sclEscalaDeZoom.setX(1.5);
                     sclEscalaDeZoom.setY(-1.5);
 
-                    double worldWidth = grGrupoDeDiseño.getBoundsInParent().getWidth();
-                    double worldHeight = grGrupoDeDiseño.getBoundsInParent().getHeight();
+                    double worldWidth = grGrupoDeDiseño.getGroup().getBoundsInParent().getWidth();
+                    double worldHeight = grGrupoDeDiseño.getGroup().getBoundsInParent().getHeight();
                     //La posicion (0,0) esta en la esquina superior izquierda
                     double posXNewCoords = (selectedNode.getPosX() * 1.5) + (worldWidth / 2);
                     double posYNewCoords = (selectedNode.getPosY() * (-1.5)) + (worldHeight / 2);
@@ -543,21 +543,21 @@ public class IGU extends Scene implements Serializable {
             public void handle(KeyEvent event) {
 
                 if ((event.isAltDown() || event.isShiftDown() || event.isControlDown())
-                        && estaTeclaPrincipalOprimida == false && grGrupoDeDiseño.isHover()) {
+                        && estaTeclaPrincipalOprimida == false && grGrupoDeDiseño.getGroup().isHover()) {
 
                     estaTeclaPrincipalOprimida = true;
                     estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
-                    cursorAnteriorAEvento = grGrupoDeDiseño.getCursor();
+                    cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
                     if (event.isAltDown()) {
                         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-                        grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.MANO.getImagenCursor());
                     } else if (event.isShiftDown()) {
                         IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_PLUS);
-                        grGrupoDeDiseño.setCursor(TiposDeBoton.ZOOM_PLUS.getImagenCursor());
+                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.ZOOM_PLUS.getImagenCursor());
                     } else if (event.isControlDown()) {
                         IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_MINUS);
-                        grGrupoDeDiseño.setCursor(TiposDeBoton.ZOOM_MINUS.getImagenCursor());
+                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.ZOOM_MINUS.getImagenCursor());
                     }
                 }
             }
@@ -570,7 +570,7 @@ public class IGU extends Scene implements Serializable {
                 if (estaTeclaPrincipalOprimida == true) {
                     estaTeclaPrincipalOprimida = false;
                     IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
-                    grGrupoDeDiseño.setCursor(cursorAnteriorAEvento);
+                    grGrupoDeDiseño.getGroup().setCursor(cursorAnteriorAEvento);
                 }
             }
         });
@@ -580,7 +580,7 @@ public class IGU extends Scene implements Serializable {
 
         btnCliente.setSelected(true);
         IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
-        grGrupoDeDiseño.setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
+        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
 
@@ -616,26 +616,26 @@ public class IGU extends Scene implements Serializable {
     public void habilitar() {
 
         IGU.setEstadoTipoBoton(estadoAnteriorDeBtnAEvento);
-        grGrupoDeDiseño.setCursor(cursorAnteriorAEvento);
+        grGrupoDeDiseño.getGroup().setCursor(cursorAnteriorAEvento);
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
         prgBarBarraProgresoEjec.setVisible(false);
-        grGrupoDeDiseño.setOpacity(1);
+        grGrupoDeDiseño.getGroup().setOpacity(1);
     }
 
     public void deshabilitar() {
         estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
-        cursorAnteriorAEvento = grGrupoDeDiseño.getCursor();
+        cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-        grGrupoDeDiseño.setCursor(TiposDeBoton.MANO.getImagenCursor());
+        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.MANO.getImagenCursor());
 
         prgBarBarraProgresoEjec.setVisible(true);
         barraHerramientas.setDisable(true);
         barraHerramientas.setOpacity(0.8);
         prgBarBarraProgresoEjec.setProgress(-1);
-        grGrupoDeDiseño.setOpacity(0.8);
+        grGrupoDeDiseño.getGroup().setOpacity(0.8);
     }
 
     public ExecutePane getExecutePane() {

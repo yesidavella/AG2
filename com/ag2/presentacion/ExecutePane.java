@@ -52,7 +52,7 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
                       
     }
 
-    public ExecutePane(GrupoDeDiseno grupoDeDiseno) {
+    public ExecutePane(Group group) {
 
         btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
 
@@ -134,7 +134,7 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
         btnParar.setSelected(true);
         getChildren().addAll(btnEjecutar, btnParar);
 
-        btnEjecutar.setGrupoDeDiseño(grupoDeDiseno);
-        btnParar.setGrupoDeDiseño(grupoDeDiseno);
+        btnEjecutar.setGrupoDeDiseño(group);
+        btnParar.setGrupoDeDiseño(group);
     }
 }
