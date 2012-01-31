@@ -224,7 +224,7 @@ public class ArcoGrafico extends QuadCurve implements Serializable {
                     
                     grGrDeDiseño.add(arcGrafNuevo);
                     grGrDeDiseño.add(verticeNuevo); 
-                    nodoGraficoB.toFront();
+                    nodoGraficoB.getGroup().toFront();
                     
                     enlaceGrafico.getArcos().add(arcGrafNuevo);
                     enlaceGrafico.determinarArcoInicialYFinal();

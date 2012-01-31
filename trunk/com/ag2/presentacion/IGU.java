@@ -512,8 +512,8 @@ public class IGU extends Scene implements Serializable {
                     double worldWidth = grGrupoDeDiseño.getGroup().getBoundsInParent().getWidth();
                     double worldHeight = grGrupoDeDiseño.getGroup().getBoundsInParent().getHeight();
                     //La posicion (0,0) esta en la esquina superior izquierda
-                    double posXNewCoords = (selectedNode.getPosX() * 1.5) + (worldWidth / 2);
-                    double posYNewCoords = (selectedNode.getPosY() * (-1.5)) + (worldHeight / 2);
+                    double posXNewCoords = (selectedNode.getLayoutX() * 1.5) + (worldWidth / 2);
+                    double posYNewCoords = (selectedNode.getLayoutY() * (-1.5)) + (worldHeight / 2);
 
                     double posXInPercentage = posXNewCoords / worldWidth;
                     double posYInPercentage = posYNewCoords / worldHeight;

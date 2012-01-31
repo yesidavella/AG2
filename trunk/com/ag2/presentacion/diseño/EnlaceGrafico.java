@@ -97,8 +97,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             for(ArcoGrafico arcoGrafico: arcos)
             {
                 
-                nodoGraficoA.toFront();
-                nodoGraficoB.toFront();                
+                           
                 grGrDeDiseño.add(arcoGrafico);
                 arcoGrafico.toFront();
             }    
