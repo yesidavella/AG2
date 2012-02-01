@@ -239,7 +239,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
-                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();
+                    NodoGrafico nodoGrafico = NodoGrafico.this; 
                     nodoAComodin = nodoGrafico;
                     double x = nodoGrafico.getLayoutX();
                     double y = nodoGrafico.getLayoutY();
@@ -264,8 +264,6 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-
-
                 arrastrando = true;
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
@@ -290,7 +288,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
                 group.setScaleY(-0.5);
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) mouseEvent.getSource();                  
+                                    
                     group.getChildren().remove(enlaceComodin);
 
                 }
@@ -302,7 +300,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-//                System.out.println("Clicked...");
+
 
                 NodoGrafico nodoGrafico = NodoGrafico.this; 
 

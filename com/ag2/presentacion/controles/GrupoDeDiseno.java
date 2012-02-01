@@ -203,6 +203,15 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             objectsSerializable.add((Serializable) node);
         }
     }
+    public void add(ArcoGrafico arcoGrafico)
+    {
+        group.getChildren().add(arcoGrafico.getQuadCurve());
+        
+        if (arcoGrafico instanceof Serializable)
+        {
+            objectsSerializable.add((Serializable) arcoGrafico);
+        }
+    }
 
     public void remove(Node node) {
         group.getChildren().remove(node);
@@ -212,11 +221,18 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     }
 
     public void remove(NodoGrafico nodoGrafico) {
-        Group group = nodoGrafico.getGroup();
+       
 
-        group.getChildren().remove(group);
+        group.getChildren().remove(nodoGrafico);
         if (nodoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) nodoGrafico);
+        }
+    }
+    public void remove(ArcoGrafico arcoGrafico) 
+    {
+        group.getChildren().remove(arcoGrafico);
+        if (arcoGrafico instanceof Serializable) {
+            objectsSerializable.remove((Serializable) arcoGrafico);
         }
     }
 
