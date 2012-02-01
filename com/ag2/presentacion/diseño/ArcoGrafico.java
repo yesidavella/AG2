@@ -15,13 +15,13 @@ import javafx.scene.shape.StrokeType;
 
 public class ArcoGrafico  implements Serializable {
 
+    private transient QuadCurve quadCurve;
+    
     private GrupoDeDiseno grGrDeDiseño;
     private NodoGrafico nodoGraficoB;
     private ArrayList<ArcoListener> arcoListeners = new ArrayList<ArcoListener>();
     private boolean eliminado = false;
-    private EnlaceGrafico enlaceGrafico;
-    private transient QuadCurve quadCurve;
-    
+    private EnlaceGrafico enlaceGrafico;   
     private double startX;    
     private double startY;
     private double endX;
@@ -101,6 +101,7 @@ public class ArcoGrafico  implements Serializable {
 
             public void handle(MouseEvent mouseEvent) {
                 ArcoGrafico quadCurveFuente = ArcoGrafico.this;
+                
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
 
