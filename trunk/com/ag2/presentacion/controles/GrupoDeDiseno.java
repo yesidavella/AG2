@@ -45,10 +45,10 @@ import org.opengis.feature.simple.SimpleFeature;
 
 public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
 
-    private transient ObservableList listaClientes = FXCollections.observableArrayList();
-    private transient ObservableList listaRecursos = FXCollections.observableArrayList();
-    private transient ObservableList listaSwitches = FXCollections.observableArrayList();
-    private transient ObservableList listaNodoServicio = FXCollections.observableArrayList();
+    private transient ObservableList listaClientes;
+    private transient ObservableList listaRecursos;
+    private transient ObservableList listaSwitches;
+    private transient ObservableList listaNodoServicio;
     private transient ScrollPane scPnPanelWorld;
     private transient Scale sclEscalaDeZoom;
     private transient Group group;
@@ -76,6 +76,11 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         sclEscalaDeZoom = new Scale(1.44, -1.44);
         group.getTransforms().add(sclEscalaDeZoom);
         loadGeoMap();
+        listaClientes = FXCollections.observableArrayList();
+        listaRecursos = FXCollections.observableArrayList();
+        listaSwitches = FXCollections.observableArrayList();
+        listaNodoServicio = FXCollections.observableArrayList();
+
     }
 
     public ObjetoSeleccionable getObjetoGraficoSelecionado() {
