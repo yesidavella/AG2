@@ -54,7 +54,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
     public void consultarPropiedades(NodoGrafico nodoGrafico) {
         nodoGraficoSeleccionado = nodoGrafico;
 
-        ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
+            ArrayList<PropiedadeNodo> propiedadesDeNodo = new ArrayList<PropiedadeNodo>();
 
         //===========================================================================================================
         PropiedadeNodo propiedadNodoNombre = new PropiedadeNodo("nombre", "Nombre", PropiedadeNodo.TipoDePropiedadNodo.TEXTO, false);
