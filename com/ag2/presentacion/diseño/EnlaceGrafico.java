@@ -93,7 +93,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     private void readObject(ObjectInputStream inputStream) {
         try 
         {
-            inputStream.defaultReadObject();          
+            inputStream.defaultReadObject(); 
+        
             
         }catch (Exception e){
             e.printStackTrace();

@@ -5,13 +5,10 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,6 +37,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     protected transient Label lblNombre;
     private transient DropShadow dropShadow = new DropShadow();
     protected transient VBox cuadroExteriorResaltado;
+    private transient Group group;
     
     
     private String nombre = null;
@@ -61,8 +59,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private short altoInicial = 0;
     private HashMap<String, String> propertiesNode;   
     private HashMap<String, String> subPropertiesNode;
-    private GrupoDeDiseno grupoDeDiseno;
-    private Group group;
+    private GrupoDeDiseno grupoDeDiseno;    
     private double layoutX; 
     private double layoutY; 
 

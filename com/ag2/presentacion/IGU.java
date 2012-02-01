@@ -83,7 +83,7 @@ public class IGU extends Scene implements Serializable {
     public void loadGrupoDeDiseno(GrupoDeDiseno grupoDeDiseño)
     {
         
-       grRoot.getChildren().remove(this.grGrupoDeDiseño); 
+       grRoot.getChildren().remove(this.grGrupoDeDiseño.getGroup()); 
        this.grGrupoDeDiseño = grupoDeDiseño; 
        executePane = new ExecutePane(grGrupoDeDiseño.getGroup());
     

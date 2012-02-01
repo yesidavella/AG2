@@ -20,7 +20,7 @@ public class ArcoGrafico  implements Serializable {
     private ArrayList<ArcoListener> arcoListeners = new ArrayList<ArcoListener>();
     private boolean eliminado = false;
     private EnlaceGrafico enlaceGrafico;
-    private QuadCurve quadCurve;
+    private transient QuadCurve quadCurve;
     
     private double startX;    
     private double startY;
@@ -309,13 +309,12 @@ public class ArcoGrafico  implements Serializable {
             inputStream.defaultReadObject();
             initTransientObjects();
             quadCurve.setScaleX(startX);
-            quadCurve.setScaleY(startY);
-            
+            quadCurve.setScaleY(startY);            
             quadCurve.setEndX(startX);
-            quadCurve.setEndX(startY);
+            quadCurve.setEndX(startY);            
+            quadCurve.setControlX(controlX);
+            quadCurve.setControlY(controlY);
             
-            
-          
             
         } catch (Exception e) {
             e.printStackTrace();
