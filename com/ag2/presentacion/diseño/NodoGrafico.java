@@ -35,7 +35,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private transient Line enlaceComodin;
     private transient ImageView imageView;
     protected transient Label lblNombre;
-    private transient DropShadow dropShadow = new DropShadow();
+    private transient DropShadow dropShadow;
     protected transient VBox cuadroExteriorResaltado;
     private transient Group group;
     
@@ -81,7 +81,9 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     }
    public void initTransientObjects()
    {
+       
         group = new Group();
+         dropShadow= new DropShadow(); 
         group.setEffect(dropShadow);
         lblNombre = new Label(formatearNombre(nombre));
         lblNombre.setTextFill(Color.BLACK);
@@ -414,6 +416,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
             initTransientObjects();
             group.setLayoutX(layoutX);
             group.setLayoutY(layoutY);
+            seleccionar(false);
             
         } 
         catch (Exception e) 
