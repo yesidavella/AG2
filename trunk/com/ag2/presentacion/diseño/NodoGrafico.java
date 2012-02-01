@@ -241,13 +241,15 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                     NodoGrafico nodoGrafico = NodoGrafico.this; 
                     nodoAComodin = nodoGrafico;
+                   
                     double x = nodoGrafico.getLayoutX();
                     double y = nodoGrafico.getLayoutY();
                     enlaceComodin.setStartX(x + ancho / 2);
                     enlaceComodin.setStartY(y + alto / 2);
                     enlaceComodin.setEndX(x + ancho / 2);
                     enlaceComodin.setEndY(y + alto / 2);                    
-                    group.getChildren().add(enlaceComodin);
+                    grupoDeDiseno.add(enlaceComodin);
+                    enlaceComodin.toFront(); 
                     nodoGrafico.group.toFront();
 
                     if (mouseEvent.isPrimaryButtonDown() && group.isHover()) {
@@ -264,13 +266,15 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                arrastrando = true;
+               
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
                     updateNodoListener();
-                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE)
+                {
+                     arrastrando = true;
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
                     enlaceComodin.setEndY(getLayoutY() + alto - (mouseEvent.getY()));
                 }
@@ -282,14 +286,13 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         group.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-//                System.out.println("Release..");
 
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
                                     
-                    group.getChildren().remove(enlaceComodin);
+                    grupoDeDiseno.remove(enlaceComodin);
 
                 }
             }

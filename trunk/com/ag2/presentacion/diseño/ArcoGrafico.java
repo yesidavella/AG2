@@ -41,6 +41,7 @@ public class ArcoGrafico  implements Serializable {
         this.grGrDeDiseño = grGrDeDiseño;
         this.enlaceGrafico = enlaceGrafico;
         this.nodoGraficoB = this.enlaceGrafico.getNodoGraficoB();
+        
         initTransientObjects();
     }
   
@@ -78,6 +79,8 @@ public class ArcoGrafico  implements Serializable {
         establecerEventoMouseDragged();
         establecerEnventoClicked();
         establecerEventoOnMouseEntered();
+        
+       
     }
 
     public void calcularCentroXY() {
