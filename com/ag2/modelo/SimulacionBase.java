@@ -17,9 +17,9 @@ import simbase.SimulationInstance;
 public class SimulacionBase implements Runnable, Serializable {
 
     private static SimulacionBase simulacionBase;
-    private transient GridSimulatorModel simulador;
-    private transient SimulationInstance simulacion;
-    private transient OutputterModel outputterModel;
+    private  GridSimulatorModel simulador;
+    private  SimulationInstance simulacion;
+    private  OutputterModel outputterModel;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
