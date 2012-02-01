@@ -20,10 +20,10 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     private HashMap<String,String> properties;
 
     public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB,ControladorAbstractoAdminEnlace controladorAdminEnlace) {
+        
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;
         this.controladorAdminEnlace = controladorAdminEnlace;
-
         this.nodoGraficoA.addNodoListener(this);
         this.nodoGraficoB.addNodoListener(this);
 
@@ -31,10 +31,10 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
         arcInicial = new ArcoGrafico(this, this.grGrDeDiseño);
         
-        arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
-        arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
-        arcInicial.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
-        arcInicial.setPosFinY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAltoActual()/2);
+        arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
+        arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
+        arcInicial.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
+        arcInicial.setEndY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAltoActual()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
  
@@ -76,11 +76,11 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
             }else{
                 
-                arcInicial.setPosIniX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
-                arcInicial.setPosIniY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getAltoActual() - nodoGraficoA.getAltoInicial()/4);
+                arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
+                arcInicial.setStartY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getAltoActual() - nodoGraficoA.getAltoInicial()/4);
 
-                arcFinal.setPosFinX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
-                arcFinal.setPosFinY(nodoGraficoB.getLayoutY() + 0.75*nodoGraficoB.getAltoActual()- nodoGraficoB.getAltoInicial()/4);
+                arcFinal.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
+                arcFinal.setEndY(nodoGraficoB.getLayoutY() + 0.75*nodoGraficoB.getAltoActual()- nodoGraficoB.getAltoInicial()/4);
             }
         }
     }
@@ -93,15 +93,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     private void readObject(ObjectInputStream inputStream) {
         try 
         {
-            inputStream.defaultReadObject();
-            for(ArcoGrafico arcoGrafico: arcos)
-            {
-                
-                           
-                grGrDeDiseño.add(arcoGrafico);
-                arcoGrafico.toFront();
-            }    
-            update();
+            inputStream.defaultReadObject();          
             
         }catch (Exception e){
             e.printStackTrace();
@@ -121,8 +113,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         
         if(isSeleccionado){
             for(ArcoGrafico arcoGrafico:arcos){
-                arcoGrafico.getStyleClass().remove("arcoNoSeleccionado");
-                arcoGrafico.getStyleClass().add("arcoSeleccionado");
+                arcoGrafico.getQuadCurve().getStyleClass().remove("arcoNoSeleccionado");
+                arcoGrafico.getQuadCurve().getStyleClass().add("arcoSeleccionado");
                 
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
@@ -137,8 +129,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
         }else{
             for(ArcoGrafico arcoGrafico:arcos){
-                arcoGrafico.getStyleClass().remove("arcoSeleccionado");
-                arcoGrafico.getStyleClass().add("arcoNoSeleccionado");
+                arcoGrafico.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
+                arcoGrafico.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
                 
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 

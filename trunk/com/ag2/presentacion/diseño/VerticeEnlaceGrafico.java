@@ -92,11 +92,11 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,Seriali
                     verticeEnlaceGrafico.setCenterX(dragX);
                     verticeEnlaceGrafico.setCenterY(dragY);
 
-                    verticeEnlaceGrafico.getArcoGraficoA().setPosFinX(dragX);
-                    verticeEnlaceGrafico.getArcoGraficoA().setPosFinY(dragY);
+                    verticeEnlaceGrafico.getArcoGraficoA().setEndX(dragX);
+                    verticeEnlaceGrafico.getArcoGraficoA().setEndY(dragY);
 
-                    verticeEnlaceGrafico.getArcoGraficoB().setPosIniX(dragX);
-                    verticeEnlaceGrafico.getArcoGraficoB().setPosIniY(dragY);
+                    verticeEnlaceGrafico.getArcoGraficoB().setStartX(dragX);
+                    verticeEnlaceGrafico.getArcoGraficoB().setStartY(dragY);
                     
                     if(!verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()){
                         verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(true);
