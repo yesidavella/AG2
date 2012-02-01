@@ -74,12 +74,12 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         group.setOnMouseDragged(this);
         group.setOnMouseReleased(this);
         sclEscalaDeZoom = new Scale(1.44, -1.44);
-        group.getTransforms().add(sclEscalaDeZoom);
-        loadGeoMap();
+        group.getTransforms().add(sclEscalaDeZoom);        
         listaClientes = FXCollections.observableArrayList();
         listaRecursos = FXCollections.observableArrayList();
         listaSwitches = FXCollections.observableArrayList();
         listaNodoServicio = FXCollections.observableArrayList();
+        loadGeoMap();
 
     }
 
@@ -228,14 +228,14 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     public void remove(NodoGrafico nodoGrafico) {
        
 
-        group.getChildren().remove(nodoGrafico);
+        group.getChildren().remove(nodoGrafico.getGroup());
         if (nodoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) nodoGrafico);
         }
     }
     public void remove(ArcoGrafico arcoGrafico) 
     {
-        group.getChildren().remove(arcoGrafico);
+        group.getChildren().remove(arcoGrafico.getQuadCurve());
         if (arcoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) arcoGrafico);
         }
@@ -287,12 +287,24 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         {           
             inputStream.defaultReadObject();
             initTransientObjects();
+            
             for(Serializable serializable: objectsSerializable)
             {
-                if(serializable instanceof Node)
+                if(serializable instanceof ArcoGrafico)
                 {
-                    group.getChildren().add((Node)serializable);
+                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable; 
+                    group.getChildren().add(arcoGrafico.getQuadCurve());                                   
+                }           
+            }
+            
+            for(Serializable serializable: objectsSerializable)
+            {
+                if(serializable instanceof NodoGrafico)
+                {
+                    NodoGrafico nodoGrafico = (NodoGrafico)serializable;
+                    group.getChildren().add(nodoGrafico.getGroup());                   
                 }
+                
             }
             
         } catch (Exception e) {

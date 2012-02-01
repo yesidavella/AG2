@@ -309,10 +309,13 @@ public class ArcoGrafico  implements Serializable {
             
             inputStream.defaultReadObject();
             initTransientObjects();
-            quadCurve.setScaleX(startX);
-            quadCurve.setScaleY(startY);            
+            
+            quadCurve.setStartX(startX);
+            quadCurve.setStartY(startY); 
+            
             quadCurve.setEndX(startX);
-            quadCurve.setEndX(startY);            
+            quadCurve.setEndY(startY); 
+            
             quadCurve.setControlX(controlX);
             quadCurve.setControlY(controlY);
             
