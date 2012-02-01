@@ -3,12 +3,9 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -94,7 +91,7 @@ public class ArcoGrafico  implements Serializable {
         controlY = (y1 + y2) / 2;
 
         setControlX(controlX);
-        setControlY(controlX);
+        setControlY(controlY);
 
     }
 
