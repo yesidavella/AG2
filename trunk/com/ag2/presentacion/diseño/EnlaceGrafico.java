@@ -29,7 +29,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
         this.grGrDeDiseño = group;
 
-        arcInicial = new ArcoGrafico(this, this.grGrDeDiseño);
+        arcInicial = new ArcoGrafico(this, grGrDeDiseño);
         
         arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
         arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
