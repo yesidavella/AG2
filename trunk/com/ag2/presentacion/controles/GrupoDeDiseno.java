@@ -278,9 +278,18 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     }
 
     private void readObject(ObjectInputStream inputStream) {
-        try {
+        try 
+        {           
             inputStream.defaultReadObject();
-
+            initTransientObjects();
+            for(Serializable serializable: objectsSerializable)
+            {
+                if(serializable instanceof Node)
+                {
+                    group.getChildren().add((Node)serializable);
+                }
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
