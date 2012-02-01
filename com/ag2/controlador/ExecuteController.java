@@ -26,5 +26,14 @@ public class ExecuteController extends  ExecuteAbstractController
     public void stop() {
         SimulacionBase.getInstance().stop();
     }
+
+    @Override
+    public boolean isWellFormedNetwork() {
+        /*
+         * 
+         */
+        //NetworkChecker.getInstance.passCheck() true o false.
+        return true;
+    }
     
 }

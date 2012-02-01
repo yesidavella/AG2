@@ -79,7 +79,13 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
                             {
                                 resultadosPhosphorus.looktToNextExecution();
                             }
-                            executeAbstractController.run();
+                            
+                            if(executeAbstractController.isWellFormedNetwork()){
+                                executeAbstractController.run();
+                            }else{
+                                //Muestro la ventana con la joda mal
+                            }
+                            
 
                         }
                     }
