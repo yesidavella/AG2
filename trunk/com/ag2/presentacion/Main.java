@@ -8,12 +8,18 @@ import java.io.Serializable;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javax.vecmath.Color3b;
 
 public class Main extends Application implements Serializable {
@@ -24,7 +30,6 @@ public class Main extends Application implements Serializable {
     private ModeloCrearNodo modeloCrearNodo;
     private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
-    private Popup p=null;
 
     @Override
     public void start(final Stage stage) {
@@ -39,30 +44,6 @@ public class Main extends Application implements Serializable {
         inicializarModelosYContrladoresDeCreacionDeNodos();
         IGU.getInstance().inicializarEstadoDeIGU();
         serializador = new Serializador(this, stage);
-
-        stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> property, Boolean arg1, Boolean arg2) {
-                
-                if (property.getValue()) {
-                    p = new Popup();
-                    Rectangle r = new Rectangle(Screen.getPrimary().getVisualBounds().getWidth()-300,Screen.getPrimary().getVisualBounds().getHeight()-300, Color.BLACK);
-                    r.setOpacity(0.5);
-                    Circle c = new Circle(300, 300, 50, Color.AQUAMARINE);
-
-                    p.show(stage);
-                    
-                    p.getContent().addAll(r, c);
-                    p.setAutoFix(true);
-                    p.centerOnScreen();
-                } else {
-                    if(p!=null){
-                        p.hide();
-                    };
-                }
-            }
-        });
 
     }
 

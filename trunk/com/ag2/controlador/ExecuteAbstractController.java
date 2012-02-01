@@ -11,15 +11,20 @@ import java.io.Serializable;
  *
  * @author Frank
  */
-public abstract class ExecuteAbstractController implements Serializable
-{
-        ExecuteView executeView;
+public abstract class ExecuteAbstractController implements Serializable {
+
+    ExecuteView executeView;
 
     public void setExecuteView(ExecuteView executeView) {
         this.executeView = executeView;
     }
-        
-        public abstract  void run(); 
-       public abstract  void stop(); 
-    
+
+    /**
+     * Verifica que la red si este bien armada, sin grafos disconexos.
+     */
+    public abstract boolean isWellFormedNetwork();
+
+    public abstract void run();
+
+    public abstract void stop();
 }
