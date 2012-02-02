@@ -362,11 +362,10 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             Point centroid;
             Bounds bounds;
 
-
             while (featuresIterator.hasNext()) {
-                SimpleFeature o = featuresIterator.next();
-                String name = (String) o.getAttribute("NAME");
-                Object geometry = o.getDefaultGeometry();
+                SimpleFeature country = featuresIterator.next();
+                String name = (String) country.getAttribute("NAME");
+                Object geometry = country.getDefaultGeometry();
 
                 if (geometry instanceof MultiPolygon) {
                     MultiPolygon multiPolygon = (MultiPolygon) geometry;
@@ -384,18 +383,18 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                         polygon = multiPolygon.getGeometryN(geometryI);
 
                         coords = polygon.getCoordinates();
+                        
                         Path path = new Path();
-
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-
-                        path.setFill(Color.web("#A0A5CE"));
+                        path.setFill(Color.web("#B5B3AB"));//A0A5CE,B7B7B7
+                        
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
-                        for (int i = 1; i < coords.length; i++) {
+                        for (int i = 0; i < coords.length; i++) {
                             path.getElements().add(new LineTo(coords[i].x * MAP_SCALE, coords[i].y * MAP_SCALE));
                         }
-                        path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
+                        //path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
                         add(path);
                         path.toBack();
                     }
