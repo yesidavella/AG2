@@ -7,7 +7,6 @@ import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -647,21 +646,21 @@ public class IGU extends Scene implements Serializable {
         return resultadosPhosphorus;
     }
 
-    private void readObject(ObjectInputStream inputStream) {
-        try 
-        {
-            inputStream.defaultReadObject();
-            tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
-            stPnCajaPropDispositivo = new StackPane();
-            stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
-            scPnWorld = new ScrollPane(); 
-            tgHerramientas = new ToggleGroup();
-            gpNavegacionMapa = new GridPane();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-    }
+//    private void readObject(ObjectInputStream inputStream) {
+//        try 
+//        {
+//            inputStream.defaultReadObject();
+//            tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
+//            stPnCajaPropDispositivo = new StackPane();
+//            stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
+//            scPnWorld = new ScrollPane(); 
+//            tgHerramientas = new ToggleGroup();
+//            gpNavegacionMapa = new GridPane();
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//        }
+//    }
    
 }

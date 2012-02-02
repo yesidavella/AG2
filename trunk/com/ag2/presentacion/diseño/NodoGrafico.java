@@ -30,7 +30,9 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     
     private static ImageView IMG_VW_DENY_LINK = new ImageView(
             new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
-    
+    public static boolean inicioGeneracionDeEnlace = false;
+    private static NodoGrafico nodoAComodin = null;
+     
     protected transient Image imagen = null;
     private transient Line enlaceComodin;
     private transient ImageView imageView;
@@ -42,7 +44,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     
     private String nombre = null;
     private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
-    private static NodoGrafico nodoAComodin = null;
+   
     private boolean estaEliminado = false;
     private boolean selecionado = false;
   
@@ -52,7 +54,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     private short alto;
     private short ancho;
-    public static boolean inicioGeneracionDeEnlace = false;
+    
     private short cantidadDeEnlaces = 0;
     private String nombreOriginal;
     protected short pasoDeSaltoLinea;
@@ -162,7 +164,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
             cuadroExteriorResaltado.getStyleClass().remove("nodoSeleccionado");
             cuadroExteriorResaltado.getStyleClass().add("nodoNoSeleccionado");
         } else {
-            //controladorAbstractoAdminNodo.consultarPropiedades(this);
+            controladorAbstractoAdminNodo.consultarPropiedades(this);
             cuadroExteriorResaltado.getStyleClass().remove("nodoNoSeleccionado");
             cuadroExteriorResaltado.getStyleClass().add("nodoSeleccionado");
 

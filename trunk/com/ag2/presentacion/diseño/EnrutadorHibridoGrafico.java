@@ -3,6 +3,7 @@ package com.ag2.presentacion.diseño;
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.ObjectInputStream;
 
 public class EnrutadorHibridoGrafico extends EnrutadorGrafico{
 
@@ -14,6 +15,20 @@ public class EnrutadorHibridoGrafico extends EnrutadorGrafico{
         
         if(contadorNodo>9){
             setAncho((short)46);
+        }
+    }
+    
+     private void readObject(ObjectInputStream inputStream)
+    {
+        try
+        {
+           inputStream.defaultReadObject();
+           contadorNodo++; 
+            
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
         }
     }
     

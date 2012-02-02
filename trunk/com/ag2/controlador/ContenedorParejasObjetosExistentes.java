@@ -4,9 +4,10 @@ import Grid.Entity;
 import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import java.io.Serializable;
 import java.util.Hashtable;
 
-public abstract class ContenedorParejasObjetosExistentes{
+public abstract class ContenedorParejasObjetosExistentes implements Serializable{
     
     private static Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes;
     private static Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes;
