@@ -19,7 +19,7 @@ public class SimulacionBase implements Runnable, Serializable {
     private static SimulacionBase simulacionBase;
     private  GridSimulatorModel simulador;
     private  SimulationInstance simulacion;
-    private  transient OutputterModel outputterModel;
+    private OutputterModel outputterModel;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
