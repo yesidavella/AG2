@@ -31,11 +31,14 @@ public class Serializador {
     public void guardar() {
         try 
         {           
-
-            FileOutputStream fileOutputStream = new FileOutputStream(fileChooser.showSaveDialog(primaryStage));
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(main);
-            objectOutputStream.close();
+            File file = fileChooser.showSaveDialog(primaryStage); 
+            if(file!=null)
+            {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(main);
+                objectOutputStream.close();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(Serializador.class.getName()).log(Level.SEVERE, null, ex);

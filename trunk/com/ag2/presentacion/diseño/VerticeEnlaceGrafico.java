@@ -2,89 +2,98 @@ package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
+import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class VerticeEnlaceGrafico extends Circle implements ArcoListener,Serializable {
+public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
 
+    
+    private transient Circle circle; 
+    
     private ArcoGrafico arcoGraficoA;
     private ArcoGrafico arcoGraficoB;
     private boolean eliminado = false; 
-    private double posX;  
-    private double posY; 
-    private double diametro = 3;
+    private final double diametro = 3;
     private boolean arrastro;
+    private double centerX; 
+    private double centerY; 
+    private GrupoDeDiseno grupoDeDiseno; 
     
-    public VerticeEnlaceGrafico(ArcoGrafico arcoGraficoA, ArcoGrafico arcoGraficoB, double posX, double posY) {
-        
-        this.posX = posX; 
-        this.posY = posY; 
+    public VerticeEnlaceGrafico(GrupoDeDiseno grupoDeDiseno,ArcoGrafico arcoGraficoA, ArcoGrafico arcoGraficoB, double posX, double posY) {
+       
+        this.grupoDeDiseno = grupoDeDiseno; 
         this.arcoGraficoA = arcoGraficoA;
-        this.arcoGraficoB = arcoGraficoB;
+        this.arcoGraficoB = arcoGraficoB;      
         
-        establecerConfigInicial();
-
+        initTransientObjects();      
+        setCenterX(posX);
+        setCenterY(posY); 
+        
         this.arcoGraficoA.addNodoListener(this);
         this.arcoGraficoB.addNodoListener(this);
-    }
-
-    public double getPosX() {
-        return posX;
-    }
-
-    public void setPosX(double posX) 
-    {
-        setCenterX(posX);
-        this.posX = posX;
-    }
-
-    public double getPosY() 
-    {
-        return posY;
-    }
-
-    public void setPosY(double posY) 
-    {
-        setCenterY(posY);
-        this.posY = posY;
-    }
-
-    private void establecerConfigInicial() 
-    {
-        setCenterX(this.posX);
-        setCenterY(this.posY);
-        setRadius(diametro);
         
+        
+    }
+    public void initTransientObjects() {
+        
+        circle = new Circle(); 
+         circle.setRadius(diametro);
+         circle.toFront();
         establecerEventoOnMouseEntered();
         establecerEventoOnMouseDragged();
         establecerEventoOnMouseClicked();
-
     }
 
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
+        circle.setCenterX(centerX);
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
+        circle.setCenterY(centerY);
+    }
+
+    public Circle getCircle() {
+        return circle;
+    }
+
+   
+
     private void establecerEventoOnMouseEntered() {
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
+      circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    setCursor(Cursor.MOVE);
+                    circle.setCursor(Cursor.MOVE);
                 }
             }
         });
     }
 
     private void establecerEventoOnMouseDragged() {
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
+        circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     
-                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico)mouseEvent.getSource();
+                    VerticeEnlaceGrafico verticeEnlaceGrafico = VerticeEnlaceGrafico.this; 
 
                     double dragX = mouseEvent.getX();
                     double dragY = mouseEvent.getY();
@@ -108,12 +117,12 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,Seriali
     }
     
     private void establecerEventoOnMouseClicked() {
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
+        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent eventoDeRaton) {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    VerticeEnlaceGrafico verticeGrafico = (VerticeEnlaceGrafico)eventoDeRaton.getSource();
+                    VerticeEnlaceGrafico verticeGrafico = VerticeEnlaceGrafico.this; 
                     
                     if (!verticeGrafico.isArrastro()) {
 
@@ -160,16 +169,20 @@ public class VerticeEnlaceGrafico extends Circle implements ArcoListener,Seriali
             eliminado= true; 
             arcoGraficoA=null; 
             arcoGraficoB=null; 
-//            arcoGraficoA.revomeNodoListener(this); 
-//            arcoGraficoB.revomeNodoListener(this);             
-            ((Group) getParent()).getChildren().remove(this);
+            arcoGraficoA.revomeNodoListener(this); 
+            arcoGraficoB.revomeNodoListener(this);             
+            grupoDeDiseno.remove(this);
         }
     }
     
     private void readObject(ObjectInputStream inputStream) {
-        try {
-            inputStream.defaultReadObject();
-            establecerConfigInicial();
+        try 
+        {
+           inputStream.defaultReadObject();
+           initTransientObjects();
+           circle.setCenterX(centerX);
+           circle.setCenterY(centerY);
+           circle.setFill(Color.AQUAMARINE); 
 
         } catch (Exception e) {
             e.printStackTrace();

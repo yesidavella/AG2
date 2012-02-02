@@ -175,7 +175,7 @@ public class ArcoGrafico  implements Serializable {
                     arcGrafFuente.calcularCentroXY();
                     arcGrafNuevo.calcularCentroXY();
 
-                    VerticeEnlaceGrafico verticeNuevo = new VerticeEnlaceGrafico(arcGrafFuente, arcGrafNuevo, clickX, clickY);
+                    VerticeEnlaceGrafico verticeNuevo = new VerticeEnlaceGrafico(grGrDeDiseño, arcGrafFuente, arcGrafNuevo, clickX, clickY);
                     
                     if( arcGrafFuente.getVerticeGrafFinal()!=null){
                         arcGrafFuente.getVerticeGrafFinal().setArcoGraficoA(arcGrafNuevo);

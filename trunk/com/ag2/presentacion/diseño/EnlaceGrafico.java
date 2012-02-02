@@ -120,8 +120,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
-                    verticeGrafico.setFill(Color.web("#44FF00"));
-                    verticeGrafico.toFront();
+                    verticeGrafico.getCircle().setFill(Color.web("#44FF00"));
+                    verticeGrafico.getCircle().toFront();
                 }
             }
             
@@ -136,8 +136,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
-                    verticeGrafico.setFill(Color.AQUAMARINE);
-                    verticeGrafico.toFront();
+                    verticeGrafico.getCircle().setFill(Color.AQUAMARINE);
+                    verticeGrafico.getCircle().toFront();
                 }
             }
             grGrDeDiseño.setObjetoGraficoSelecionado(null);
