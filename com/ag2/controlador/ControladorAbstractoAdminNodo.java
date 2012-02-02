@@ -5,6 +5,7 @@ import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.NodoGrafico;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -13,10 +14,9 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected Hashtable<NodoGrafico,Entity> parejasDeNodosExistentes;
+    protected Hashtable<NodoGrafico, Entity> parejasDeNodosExistentes;
 
-    public ControladorAbstractoAdminNodo() 
-    {
+    public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
         parejasDeNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
         SimulacionBase.getInstance().setControladorAbstractoAdminNodo(this);
@@ -24,6 +24,10 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
 
     public void addVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
         listaVistaNodosGraficos.add(vistaGrDeDiseño);
+    }
+
+    public void removeVistaGraficaNodoses(VistaNodosGraficos vistaGrDeDiseño) {
+        listaVistaNodosGraficos.remove(vistaGrDeDiseño);
     }
 
     public boolean addModelo(ModeloCrearNodo modeloCrearNodo) {
@@ -44,8 +48,26 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
     }
 
     public abstract Entity crearNodo(NodoGrafico nodoGrafico);
+
     public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
-    public abstract void updatePropiedad(boolean isSubProperty,boolean conusultar, String id, String valor);
-    public abstract void removeNodo(NodoGrafico nodoGrafico); 
-     public abstract void reCreatePhosphorousNodos(); 
+
+    public abstract void updatePropiedad(boolean isSubProperty, boolean conusultar, String id, String valor);
+
+    public abstract void removeNodo(NodoGrafico nodoGrafico);
+
+    public abstract void reCreatePhosphorousNodos();
+
+    private void readObject(ObjectInputStream inputStream) {
+        try {
+            inputStream.defaultReadObject();
+        //    listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
+            for (int i = 0; i < listaVistaNodosGraficos.size(); i++) {
+                listaVistaNodosGraficos.remove(0);                
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
 }

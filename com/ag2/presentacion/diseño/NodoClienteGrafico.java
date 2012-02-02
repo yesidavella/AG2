@@ -3,10 +3,12 @@ package com.ag2.presentacion.diseño;
 import com.ag2.controlador.ControladorAbstractoAdminEnlace;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.ObjectInputStream;
 
 public class NodoClienteGrafico extends NodoGrafico{
 
     private static int contadorNodo = 0;
+  
     
     public NodoClienteGrafico(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace)
     {
@@ -27,6 +29,20 @@ public class NodoClienteGrafico extends NodoGrafico{
     @Override
     public boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace) {
         return (nodoInicioDelEnlace instanceof EnrutadorGrafico) && getCantidadDeEnlaces()<1;
+    }
+ 
+    private void readObject(ObjectInputStream inputStream)
+    {
+        try
+        {
+           inputStream.defaultReadObject();
+           contadorNodo++; 
+            
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
     }
     
 }

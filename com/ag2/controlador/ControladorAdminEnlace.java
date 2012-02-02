@@ -10,9 +10,11 @@ import com.ag2.presentacion.diseño.EnlaceGrafico;
 import com.ag2.presentacion.diseño.NodoGrafico;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
+    Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes(); 
     @Override
     public void crearEnlace(EnlaceGrafico enlaceGrafico) {
 
@@ -45,7 +47,7 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
     public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
-        EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous) ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
+        EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous)contenedorParejasEnlacesExistentes.get(enlaceGrafico);
         GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
         GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
         /*

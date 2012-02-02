@@ -21,12 +21,12 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
     
-    public void addControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
+    public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
     {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
     }
     
-    public void addControladorAdminEnlace(ControladorAbstractoAdminEnlace controladorAdminEnlace){
+    public void setControladorAdminEnlace(ControladorAbstractoAdminEnlace controladorAdminEnlace){
         this.controladorAdminEnlace = controladorAdminEnlace;
     }    
   

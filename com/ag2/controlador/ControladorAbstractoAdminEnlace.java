@@ -31,7 +31,7 @@ public abstract class ControladorAbstractoAdminEnlace implements Serializable {
     public abstract void consultarPropiedades(EnlaceGrafico enlaceGrafico);
     public abstract void updatePropiedad(EnlaceGrafico enlaceGrafico,String id,String valor);
 
-    public void addVistaEnlace(TablaPropiedadesDispositivo propiedadesDispositivoTbl) {
+    public void setVistaEnlace(TablaPropiedadesDispositivo propiedadesDispositivoTbl) {
         this.tblPropiedadesDispositivo = propiedadesDispositivoTbl;
     }
     

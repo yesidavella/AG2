@@ -6,21 +6,7 @@ import com.ag2.modelo.*;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.Serializable;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-import javax.vecmath.Color3b;
 
 public class Main extends Application implements Serializable {
 
@@ -58,9 +44,10 @@ public class Main extends Application implements Serializable {
         executeAbstractController = new ExecuteController();
 
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
+        
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().addControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
 
 
@@ -86,8 +73,8 @@ public class Main extends Application implements Serializable {
         ModeloAbstractoCrearEnlace modeloCrearEnlace = new ModeloCrearEnlace();
         ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
 
-        ctrlCrearYAdminEnlace.addVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().addControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
 
         ResultsController resultsController = new ResultsController();
@@ -121,12 +108,23 @@ public class Main extends Application implements Serializable {
 
     public void save() {
         serializador.guardar();
-    }
+    }   
 
     public void load() {
         Main main = serializador.cargar();
-        if (main != null) {
+        if (main != null) 
+        {
+            ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
+            ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
             IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+            
+             ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+            
+            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
+            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+
         }
     }
 }
