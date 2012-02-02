@@ -504,6 +504,7 @@ public class IGU extends Scene implements Serializable {
                 NodoGrafico selectedNode = (NodoGrafico) chobNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
+                    //selectedNode.seleccionar(true);
 
                     Scale sclEscalaDeZoom = grGrupoDeDiseño.getSclEscalaDeZoom();
                     sclEscalaDeZoom.setX(1.5);

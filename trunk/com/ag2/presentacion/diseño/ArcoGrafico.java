@@ -3,9 +3,13 @@ package com.ag2.presentacion.diseño;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -38,8 +42,10 @@ public class ArcoGrafico  implements Serializable {
         this.grGrDeDiseño = grGrDeDiseño;
         this.enlaceGrafico = enlaceGrafico;
         this.nodoGraficoB = this.enlaceGrafico.getNodoGraficoB();
-        
+       
         initTransientObjects();
+//        controlX = quadCurve.getControlX();
+//        controlY = quadCurve.getControlY();
     }
   
     public VerticeEnlaceGrafico getVerticeGrafInicial() {
@@ -65,7 +71,10 @@ public class ArcoGrafico  implements Serializable {
         quadCurve.setFill(null);
         quadCurve.setStrokeWidth(2);
         quadCurve.setStrokeType(StrokeType.CENTERED);
-
+        quadCurve.setStroke(Color.LIGHTGREEN);
+        
+        
+        
         DropShadow drpShdResplandorArco = new DropShadow();
         drpShdResplandorArco.setColor(Color.LIGHTGREY);
         drpShdResplandorArco.setSpread(0.5);
@@ -121,9 +130,9 @@ public class ArcoGrafico  implements Serializable {
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     double dragX = me.getX();
                     double dragY = me.getY();
-                    
-                    quadCurve.setControlX(dragX);
-                    quadCurve.setControlY(dragY);
+                    ArcoGrafico arcoGrafico = ArcoGrafico.this ;
+                    arcoGrafico.setControlX(dragX);
+                    arcoGrafico.setControlY(dragY);
                     
                     if(!enlaceGrafico.getSeleccionado()){
                         enlaceGrafico.seleccionar(true);
@@ -313,8 +322,8 @@ public class ArcoGrafico  implements Serializable {
             quadCurve.setStartX(startX);
             quadCurve.setStartY(startY); 
             
-            quadCurve.setEndX(startX);
-            quadCurve.setEndY(startY); 
+            quadCurve.setEndX(endX);
+            quadCurve.setEndY(endY); 
             
             quadCurve.setControlX(controlX);
             quadCurve.setControlY(controlY);
@@ -322,6 +331,14 @@ public class ArcoGrafico  implements Serializable {
             
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    private void writeObject(ObjectOutputStream stream){
+        try {
+            stream.defaultWriteObject();
+        } catch (IOException ex) {
+            Logger.getLogger(ArcoGrafico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
