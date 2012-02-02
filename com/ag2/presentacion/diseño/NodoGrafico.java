@@ -162,7 +162,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
             cuadroExteriorResaltado.getStyleClass().remove("nodoSeleccionado");
             cuadroExteriorResaltado.getStyleClass().add("nodoNoSeleccionado");
         } else {
-            controladorAbstractoAdminNodo.consultarPropiedades(this);
+            //controladorAbstractoAdminNodo.consultarPropiedades(this);
             cuadroExteriorResaltado.getStyleClass().remove("nodoNoSeleccionado");
             cuadroExteriorResaltado.getStyleClass().add("nodoSeleccionado");
 
@@ -313,7 +313,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
                     grupoDeDiseno.remove(nodoGrafico);
                     grupoDeDiseno.eliminarNodeListaNavegacion(nodoGrafico);
                     controladorAbstractoAdminNodo.removeNodo(nodoGrafico);
-
+                    
                 }
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
 

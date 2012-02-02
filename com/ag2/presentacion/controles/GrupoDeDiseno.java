@@ -201,11 +201,11 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             objectsSerializable.add((Serializable) node);
         }
     }
-    public void add(NodoGrafico node)
+    public void add(NodoGrafico nodoGrafico)
     {
-        group.getChildren().add(node.getGroup());
-        if (node instanceof Serializable) {
-            objectsSerializable.add((Serializable) node);
+        group.getChildren().add(nodoGrafico.getGroup());
+        if (nodoGrafico instanceof Serializable) {
+            objectsSerializable.add((Serializable) nodoGrafico);
         }
     }
     public void add(ArcoGrafico arcoGrafico)
@@ -292,8 +292,27 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             {
                 if(serializable instanceof ArcoGrafico)
                 {
-                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable; 
-                    group.getChildren().add(arcoGrafico.getQuadCurve());                                   
+                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable;
+                    
+                    double iniX = arcoGrafico.getQuadCurve().getStartX();
+                    double iniY = arcoGrafico.getQuadCurve().getStartY();
+                    double endX = arcoGrafico.getQuadCurve().getEndX();
+                    double endY = arcoGrafico.getQuadCurve().getEndY();
+                    double cX = arcoGrafico.getQuadCurve().getControlX();
+                    double cY = arcoGrafico.getQuadCurve().getControlY();
+                    
+                    System.out.println("iniX:"+iniX+" iniY:"+iniY+" EndX:"+endX+"EndY:"+endY + " cX:"+cX+ " cY:"+cY);
+                    arcoGrafico.calcularCentroXY();
+                    QuadCurve q = arcoGrafico.getQuadCurve();
+                   // q.setFill(null);
+                    //q.setStroke(Color.BROWN);
+                    //q.setStrokeWidth(2);
+                    
+                    //q.setFill(null);
+//                    q.setControlX(cX);
+//                    q.setControlY(cY);
+                    
+                    group.getChildren().add(q);                                   
                 }           
             }
             
