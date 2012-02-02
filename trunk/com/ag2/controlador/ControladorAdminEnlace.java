@@ -14,7 +14,9 @@ import java.util.Hashtable;
 
 public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
 
-    Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes(); 
+    private Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes(); 
+    private Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes(); 
+    
     @Override
     public void crearEnlace(EnlaceGrafico enlaceGrafico) {
 
@@ -28,12 +30,12 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
                 NodoGrafico nodoGraficoA = enlaceGrafico.getNodoGraficoA();
                 NodoGrafico nodoGraficoB = enlaceGrafico.getNodoGraficoB();
 
-                nodoPhosphorousA = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoA);
-                nodoPhosphorousB = (Entity) ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(nodoGraficoB);
+                nodoPhosphorousA = (Entity) contenedorParejasNodosExistentes.get(nodoGraficoA);
+                nodoPhosphorousB = (Entity) contenedorParejasNodosExistentes.get(nodoGraficoB);
 
                 if (nodoPhosphorousA != null && nodoPhosphorousB != null) {
                     EnlacePhosphorous nuevoEnlacePhosphorous = modelo.crearEnlacePhosphorous(nodoPhosphorousA, nodoPhosphorousB);
-                    ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().put(enlaceGrafico, nuevoEnlacePhosphorous);
+                    contenedorParejasEnlacesExistentes.put(enlaceGrafico, nuevoEnlacePhosphorous);
                 } else {
                     System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
                 }

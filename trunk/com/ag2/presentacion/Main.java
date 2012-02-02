@@ -16,6 +16,8 @@ public class Main extends Application implements Serializable {
     private ModeloCrearNodo modeloCrearNodo;
     private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
+    private SimulacionBase simulacionBase =  SimulacionBase.getInstance(); 
+    private ResultsController resultsController;
 
     @Override
     public void start(final Stage stage) {
@@ -33,6 +35,10 @@ public class Main extends Application implements Serializable {
 
     }
 
+    public SimulacionBase getSimulacionBase() {
+        return simulacionBase;
+    }
+
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -42,6 +48,7 @@ public class Main extends Application implements Serializable {
         //Controladores y Modelos
         ctrlCreadorYAdministradorNodo = new ControladorAdminNodo();
         executeAbstractController = new ExecuteController();
+        resultsController = new ResultsController();
 
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
         
@@ -77,9 +84,13 @@ public class Main extends Application implements Serializable {
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
 
-        ResultsController resultsController = new ResultsController();
+       
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulacionBase.getInstance().setResultsAbstractController(resultsController);
+    }
+
+    public ResultsController getResultsController() {
+        return resultsController;
     }
 
     public ControladorAbstractoAdminNodo getCtrlCreadorYAdministradorNodo() {
@@ -114,9 +125,17 @@ public class Main extends Application implements Serializable {
         Main main = serializador.cargar();
         if (main != null) 
         {
+            SimulacionBase.loadInstance(main.getSimulacionBase()); 
+            
             ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
             ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
+            executeAbstractController= main.getExecuteAbstractController();
+            resultsController = main.getResultsController(); 
+            
             IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+            
+            IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
+              resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
             
              ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
             IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);

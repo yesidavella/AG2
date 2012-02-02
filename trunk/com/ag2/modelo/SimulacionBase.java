@@ -30,6 +30,11 @@ public class SimulacionBase implements Runnable, Serializable {
         }
         return simulacionBase;
     }
+    public static void loadInstance(SimulacionBase simulacionBase) {
+       
+        SimulacionBase.simulacionBase = simulacionBase; 
+        
+    }
 
     private SimulacionBase() {
 
