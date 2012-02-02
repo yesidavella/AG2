@@ -11,7 +11,7 @@ public class EnrutadorRafagaGrafico extends EnrutadorGrafico
     public EnrutadorRafagaGrafico(GrupoDeDiseno grupoDeDiseno,ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) {
         super(grupoDeDiseno,"Enrutador_Rafaga_"+(++contadorNodo), "../../../../recursos/imagenes/enrutador_rafaga_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
     }
-     private void readObject(ObjectInputStream inputStream)
+    private void readObject(ObjectInputStream inputStream)
     {
         try
         {
