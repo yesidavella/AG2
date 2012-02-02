@@ -208,6 +208,14 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             objectsSerializable.add((Serializable) nodoGrafico);
         }
     }
+    public void add(VerticeEnlaceGrafico verticeEnlaceGrafico)
+    {
+        group.getChildren().add(verticeEnlaceGrafico.getCircle());
+        if (verticeEnlaceGrafico instanceof Serializable) {
+            objectsSerializable.add((Serializable) verticeEnlaceGrafico);
+        }
+    }
+    
     public void add(ArcoGrafico arcoGrafico)
     {
         group.getChildren().add(arcoGrafico.getQuadCurve());
@@ -216,6 +224,15 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         {
             objectsSerializable.add((Serializable) arcoGrafico);
         }
+    }
+    public void remove(VerticeEnlaceGrafico verticeEnlaceGrafico)
+    {
+        group.getChildren().add(verticeEnlaceGrafico.getCircle());
+        if (verticeEnlaceGrafico instanceof Serializable)
+        {
+            objectsSerializable.add((Serializable) verticeEnlaceGrafico);
+        }
+        
     }
 
     public void remove(Node node) {
@@ -293,28 +310,19 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                 if(serializable instanceof ArcoGrafico)
                 {
                     ArcoGrafico arcoGrafico = (ArcoGrafico) serializable;
-                    
-                    double iniX = arcoGrafico.getQuadCurve().getStartX();
-                    double iniY = arcoGrafico.getQuadCurve().getStartY();
-                    double endX = arcoGrafico.getQuadCurve().getEndX();
-                    double endY = arcoGrafico.getQuadCurve().getEndY();
-                    double cX = arcoGrafico.getQuadCurve().getControlX();
-                    double cY = arcoGrafico.getQuadCurve().getControlY();
-                    
-                    System.out.println("iniX:"+iniX+" iniY:"+iniY+" EndX:"+endX+"EndY:"+endY + " cX:"+cX+ " cY:"+cY);
-                    arcoGrafico.calcularCentroXY();
-                    QuadCurve q = arcoGrafico.getQuadCurve();
-                   // q.setFill(null);
-                    //q.setStroke(Color.BROWN);
-                    //q.setStrokeWidth(2);
-                    
-                    //q.setFill(null);
-//                    q.setControlX(cX);
-//                    q.setControlY(cY);
-                    
-                    group.getChildren().add(q);                                   
+                    group.getChildren().add(arcoGrafico.getQuadCurve());                                   
                 }           
             }
+            for(Serializable serializable: objectsSerializable)
+            {
+                if(serializable instanceof VerticeEnlaceGrafico)
+                {
+                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) serializable;
+                    group.getChildren().add(verticeEnlaceGrafico.getCircle());                                   
+                }           
+            }
+            
+            
             
             for(Serializable serializable: objectsSerializable)
             {
