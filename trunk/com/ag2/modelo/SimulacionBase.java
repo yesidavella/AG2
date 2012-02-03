@@ -17,8 +17,8 @@ import simbase.SimulationInstance;
 public class SimulacionBase implements Runnable, Serializable {
 
     private static SimulacionBase simulacionBase;
-    private  GridSimulatorModel simulador;
-    private  SimulationInstance simulacion;
+    private GridSimulatorModel simulador;
+    private SimulationInstance simulacion;
     private OutputterModel outputterModel;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private ControladorAbstractoAdminEnlace controladorAdminEnlace;
@@ -90,11 +90,14 @@ public class SimulacionBase implements Runnable, Serializable {
 
     }
 
+    public void initNetwork() {
+        simulacion.stopEvent = false;
+        route();
+    }
+
     @Override
     public void run() {
 
-        simulacion.stopEvent = false;
-        route();
         initEntities();
         simulacion.run();
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.presentacion;
 
 import com.ag2.controlador.ExecuteAbstractController;
@@ -19,21 +15,17 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
-/**
- *
- * @author Frank
- */
 public class ExecutePane extends TilePane implements ExecuteView, Serializable {
 
     private transient Boton btnEjecutar;
     private transient Boton btnParar;
     private transient ToggleGroup tgEjecucion = new ToggleGroup();
     private transient ResultadosPhosphorousHTML resultadosPhosphorousHTML;
-    ResultadosPhosphorus resultadosPhosphorus; 
-    ExecuteAbstractController executeAbstractController;
+    ResultadosPhosphorus resultadosPhosphorus;
+    ExecuteAbstractController executeController;
 
     public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
-        this.executeAbstractController = executeAbstractController;
+        this.executeController = executeAbstractController;
         executeAbstractController.setExecuteView(this);
     }
 
@@ -44,12 +36,11 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
     public void setResultadosPhosphorus(ResultadosPhosphorus resultadosPhosphorus) {
         this.resultadosPhosphorus = resultadosPhosphorus;
     }
-    
-     public void habilitar()
-    {
-        btnParar.setSelected(true);    
+
+    public void habilitar() {
+        btnParar.setSelected(true);
         //IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
-                      
+
     }
 
     public ExecutePane(Group group) {
@@ -61,32 +52,27 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                     public void handle(MouseEvent mouEvent) {
-                        
-                        Boton btnEjecutar = (Boton)mouEvent.getSource();
-                        
-                        btnEjecutar.setSelected(true);
 
-                        IGU.getInstance().deshabilitar();
-                        //IGU.setEstadoTipoBoton(TiposDeBoton.EJECUTAR);
-                        
-                        if (executeAbstractController != null)
-                        {
-                            if (resultadosPhosphorousHTML != null)
-                            {
+                        Boton btnEjecutar = (Boton) mouEvent.getSource();
+
+                        if (executeController != null) {
+                            if (resultadosPhosphorousHTML != null) {
                                 resultadosPhosphorousHTML.lookToNextExecution();
                             }
-                            if(resultadosPhosphorus!=null)
-                            {
+                            if (resultadosPhosphorus != null) {
                                 resultadosPhosphorus.looktToNextExecution();
                             }
-                            
-                            if(executeAbstractController.isWellFormedNetwork()){
-                                executeAbstractController.run();
-                            }else{
-                                //Muestro la ventana con la joda mal
-                            }
-                            
 
+                            executeController.initNetwork();
+
+                            if (executeController.isWellFormedNetwork()) {
+                                
+                                IGU.getInstance().deshabilitar();
+                                btnEjecutar.setSelected(true);
+                                executeController.run();
+                            }else{
+                                btnParar.setSelected(true);
+                            }
                         }
                     }
                 });
@@ -100,18 +86,15 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                     public void handle(MouseEvent mouEvent) {
-                        
-                        Boton btnParar = (Boton)mouEvent.getSource();
-                        IGU.getInstance().habilitar();                        
+
+                        Boton btnParar = (Boton) mouEvent.getSource();
+                        IGU.getInstance().habilitar();
                         habilitar();
-                        executeAbstractController.stop();
+                        executeController.stop();
                     }
                 });
             }
         };
-        
-       
-
 
         getStyleClass().add("barraDeHerramientas");
         setPadding(new Insets(10, 10, 10, 10));
@@ -122,16 +105,11 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
         btnEjecutar.setTooltip(tTipBtnEjecutar);
         btnEjecutar.setToggleGroup(tgEjecucion);
 
-
-
-
         btnEjecutar.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
             }
         });
-
-
 
         Tooltip tTipBtnParar = new Tooltip("Parar simulación");
 
