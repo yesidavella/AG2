@@ -5,20 +5,21 @@ import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
 public class NetworkChecker {
 
-    private SimulationInstance simulacion;
-    private GridSimulator simulador;
-    private ArrayList<String> listOfErrors;
+    private SimulationInstance simulation;
+    private GridSimulator simulator;
+    private HashMap<Entity,String> listOfErrors;
     private boolean statusOfCheck = false;
 
-    public NetworkChecker(SimulationInstance simulacion, GridSimulator simulador) {
-        this.simulacion = simulacion;
-        this.simulador = simulador;
-        listOfErrors = new ArrayList<String>();
+    public NetworkChecker(SimulationInstance simulation, GridSimulator simulator) {
+        this.simulation = simulation;
+        this.simulator = simulator;
+        listOfErrors = new HashMap<Entity,String>();
     }
 
     public void check() {
@@ -27,7 +28,7 @@ public class NetworkChecker {
         checkCorrectNodesWithBroker();
     }
 
-    public ArrayList<String> getListOfErrors() {
+    public HashMap<Entity,String> getListOfErrors() {
         return listOfErrors;
     }
 
@@ -42,47 +43,43 @@ public class NetworkChecker {
     }
 
     private void checkAmountOfNodesCreated() {
-        if (simulador.getEntities().size() <= 0) {
-            listOfErrors.add("*La simulación no contiene ningun nodo, asegurese de colocar almenos uno de cada uno de los siguientes:Enrutador,Cliente,Cluster y Servivio.");
+        if (simulator.getEntities().size() <= 0) {
+            addError(null,". La simulación no contiene ningun nodo, asegurese de colocar almenos uno de cada uno de los siguientes:Enrutador,Cliente,Cluster y Servivio.");
         }
     }
 
     private void checkLinksBetweenNodes() {
 
-        for (SimBaseEntity entity : simulador.getEntities()) {
-            Entity node = (Entity) entity;
+        for (SimBaseEntity simBaseEntity : simulator.getEntities()) {
+            Entity node = (Entity)simBaseEntity;
 
             if (node.getOutPorts().size() <= 0) {
-                //FIXME:Estoy sacando el nombre del nodo phosphorous y no del node q esta en la GUI, pero el lio adicional es q aqui NO debo tener elementos graficos por q esto es un modelo. 
-                listOfErrors.add("*El nodo con nombre \"" + node.getId() + "\" no tiene enlaces.");
+                addError(node,". No tiene enlaces");
             }
         }
     }
 
     private void checkCorrectNodesWithBroker() {
         
-        ArrayList<ClientNode> clienteNodes = new ArrayList<ClientNode>();
-        ArrayList<ResourceNode> ResourceNodes = new ArrayList<ResourceNode>();
-        
-        for (SimBaseEntity entity : simulador.getEntities()) {
-
-            if (entity instanceof ClientNode) {
-                clienteNodes.add((ClientNode)entity);
-            }else if(entity instanceof ResourceNode){
-                ResourceNodes.add((ResourceNode)entity);
+        for(SimBaseEntity clienNode:simulator.getEntitiesOfType(ClientNode.class)){
+            if(((ClientNode)clienNode).getServiceNode()==null){
+                addError((ClientNode)clienNode,". Al ser un Cliente debe tiener un Nodo de Servicio registrado"); 
             }
         }
         
-        for(ClientNode clien:clienteNodes){
-            if(clien.getServiceNode()==null){
-                listOfErrors.add("*El Nodo Cliente con nombre \"" + clien.getId() + "\" no tiene Nodo de Servicio registrado."); 
+        for(SimBaseEntity resourceNode:simulator.getEntitiesOfType(ResourceNode.class)){
+            if(((ResourceNode)resourceNode).getServiceNodes().size()<=0){
+                addError((ResourceNode)resourceNode,". Al ser un Recurso debe tener almenos un Nodo de Servicio registrado"); 
             }
         }
+    }
+    
+    private void addError(Entity node,String description){
+        StringBuffer previousDescription=new StringBuffer();
         
-        for(ResourceNode resource:ResourceNodes){
-            if(resource.getServiceNodes().size()<=0){
-                listOfErrors.add("*El Nodo de Recurso con nombre \"" + resource.getId() + "\" debe tener almenos un Nodo de Servicio registrado."); 
-            }
+        if(listOfErrors.containsKey(node)){
+            previousDescription.append(listOfErrors.get(node));
         }
+        listOfErrors.put(node, previousDescription.append(description).toString());
     }
 }
