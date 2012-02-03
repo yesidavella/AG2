@@ -4,6 +4,7 @@ import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
+import Grid.Interfaces.Switch;
 import java.util.ArrayList;
 import java.util.HashMap;
 import simbase.SimBaseEntity;
@@ -26,6 +27,8 @@ public class NetworkChecker {
         checkAmountOfNodesCreated();
         checkLinksBetweenNodes();
         checkCorrectNodesWithBroker();
+        checkSwitchesWithOneLink();
+        checkIsolatedNetworks();
     }
 
     public HashMap<Entity,String> getListOfErrors() {
@@ -81,5 +84,18 @@ public class NetworkChecker {
             previousDescription.append(listOfErrors.get(node));
         }
         listOfErrors.put(node, previousDescription.append(description).append(".").toString());
+    }
+
+    private void checkSwitchesWithOneLink() {
+        
+        for(SimBaseEntity oneSwitch:simulator.getEntitiesOfType(Switch.class)){
+            if(oneSwitch.getOutPorts().size()==1){
+                addError((Switch)oneSwitch,". Solo tiene un enlace, debe tener almeno otro");
+            }
+        }
+    }
+
+    private void checkIsolatedNetworks() {
+        System.out.print("Figurin candonga.... nada q hago lo de las redes aisladas :D");
     }
 }
