@@ -1,16 +1,8 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.controlador;
 
 import com.ag2.presentacion.ExecuteView;
 import java.io.Serializable;
 
-/**
- *
- * @author Frank
- */
 public abstract class ExecuteAbstractController implements Serializable {
 
     ExecuteView executeView;
@@ -20,9 +12,11 @@ public abstract class ExecuteAbstractController implements Serializable {
     }
 
     /**
-     * Verifica que la red si este bien armada, sin grafos disconexos.
+     * Verifica que la red si este bien configurada para ejecutar la simulacion.
      */
     public abstract boolean isWellFormedNetwork();
+
+    public abstract void initNetwork();
 
     public abstract void run();
 

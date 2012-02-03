@@ -1,25 +1,25 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.controlador;
 
+import Grid.GridSimulator;
+import com.ag2.modelo.NetworkChecker;
 import com.ag2.modelo.SimulacionBase;
+import com.ag2.presentacion.ErrorsView;
+import simbase.SimulationInstance;
 
-/**
- *
- * @author Frank
- */
-public class ExecuteController extends  ExecuteAbstractController
-{  
+public class ExecuteController extends ExecuteAbstractController {
+
     @Override
-    public void run()
-    {
-        
-       Thread thread = new Thread(SimulacionBase.getInstance());
-       thread.start();
-       System.out.println("###########----  RUN ----####################################################");
-       
+    public void initNetwork() {
+        SimulacionBase.getInstance().initNetwork();
+    }
+
+    @Override
+    public void run() {
+
+        Thread thread = new Thread(SimulacionBase.getInstance());
+        thread.start();
+        System.out.println("###########----  RUN ----####################################################");
+
     }
 
     @Override
@@ -29,11 +29,27 @@ public class ExecuteController extends  ExecuteAbstractController
 
     @Override
     public boolean isWellFormedNetwork() {
-        /*
-         * 
-         */
-        //NetworkChecker.getInstance.passCheck() true o false.
+        
+        SimulationInstance simulacion = SimulacionBase.getInstance().getSimulacion();
+        GridSimulator simulador = SimulacionBase.getInstance().getSimulador();
+        
+        //Creo el modelo
+        NetworkChecker networkChecker = new NetworkChecker(simulacion,simulador);
+        
+        networkChecker.check();
+        
+        if(!networkChecker.passCheck()){
+            
+            ErrorsView errorWindow = new ErrorsView();
+            
+            for(String descriptionOfError:networkChecker.getListOfErrors()){
+                errorWindow.addErrorToShow(descriptionOfError);
+            }
+            
+            errorWindow.showReport();
+            return false;
+        }
+        
         return true;
     }
-    
 }
