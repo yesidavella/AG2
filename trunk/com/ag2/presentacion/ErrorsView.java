@@ -8,6 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBuilder;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -15,56 +20,57 @@ import javafx.stage.StageStyle;
 public class ErrorsView extends Stage {
 
     private Button btnAccept;
-    private ArrayList<Label> errosToShow;
-    private BorderPane bPnWindowsLayout;
+    private ArrayList<Text> errosToShow;
+    private BorderPane borPnWindowsLayout;
 
     public ErrorsView() {
         super(StageStyle.UTILITY);
-        errosToShow = new ArrayList<Label>();
+        errosToShow = new ArrayList<Text>();
         initModality(Modality.APPLICATION_MODAL);
         
-        bPnWindowsLayout = new BorderPane();
-        Scene reportScene = new Scene(bPnWindowsLayout, 500, 400);
+        borPnWindowsLayout = new BorderPane();
+        Scene reportScene = new Scene(borPnWindowsLayout, 500, 400);
         setScene(reportScene);
         
         configWindow();
     }
 
     public boolean addErrorToShow(String descriptionOfError) {
-        Label errorLabel = new Label(descriptionOfError);
-        return errosToShow.add(errorLabel);
+        Text errorText = new Text(descriptionOfError);
+        return errosToShow.add(errorText);
     }
 
-    public boolean removeErrorToShow(String descriptionOfError) {
-
-        for (Label errorLabel : errosToShow) {
-
-            if (errorLabel.getText().equalsIgnoreCase(descriptionOfError)) {
-                return errosToShow.remove(errorLabel);
-            }
-        }
-        return false;
-    }
+//    public boolean removeErrorToShow(String descriptionOfError) {
+//
+//        for (Label errorLabel : errosToShow) {
+//
+//            if (errorLabel.getText().equalsIgnoreCase(descriptionOfError)) {
+//                return errosToShow.remove(errorLabel);
+//            }
+//        }
+//        return false;
+//    }
 
     public void showReport() {
         VBox vbxErrorscontainer = new VBox();
         
-        for (Label errorLabel : errosToShow) {
-            System.out.println(errorLabel.getText());
-            vbxErrorscontainer.getChildren().add(errorLabel);
+        for (Text errorText : errosToShow) {
+            vbxErrorscontainer.getChildren().add(errorText);
         }
         
-        bPnWindowsLayout.setCenter(vbxErrorscontainer);
+        borPnWindowsLayout.setCenter(vbxErrorscontainer);
         centerOnScreen();
         show();
     }
 
     private void configWindow() {
-        Label lbTitle = new Label("LOS ERRORES ENCONTRADOS EN LA CONFIGURACIÓN DE LA RED SON LOS SIGUIENTES:");
-        bPnWindowsLayout.setTop(lbTitle);
+        Text txTitle = TextBuilder.create().text("LOS ERRORES ENCONTRADOS EN LA\nCONFIGURACIÓN DE LA RED:").
+                font(Font.font("Tahoma",FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).build();
+
+        borPnWindowsLayout.setTop(txTitle);
         
         btnAccept = new Button("Aceptar");
-        bPnWindowsLayout.setBottom(btnAccept);
+        borPnWindowsLayout.setBottom(btnAccept);
         
         btnAccept.setOnAction(new EventHandler<ActionEvent>(){
 
