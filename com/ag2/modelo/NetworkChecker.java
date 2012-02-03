@@ -80,6 +80,6 @@ public class NetworkChecker {
         if(listOfErrors.containsKey(node)){
             previousDescription.append(listOfErrors.get(node));
         }
-        listOfErrors.put(node, previousDescription.append(description).toString());
+        listOfErrors.put(node, previousDescription.append(description).append(".").toString());
     }
 }

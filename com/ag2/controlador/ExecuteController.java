@@ -50,21 +50,27 @@ public class ExecuteController extends ExecuteAbstractController {
             //Esta es la vista
             ErrorsView errorWindow = new ErrorsView();
             
-            Iterator itListOfErrors = networkChecker.getListOfErrors().entrySet().iterator();
-            
-            int errorCounter=1;
-            while(itListOfErrors.hasNext()){
-                Map.Entry<Entity,String> errorInfo = (Map.Entry<Entity,String>)itListOfErrors.next();
-                NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
-                errorWindow.addErrorToShow(errorCounter+((graphNode==null)?"":". El nodo con nombre: "+graphNode.getNombre())+errorInfo.getValue());
-                errorCounter++;
-            }
+            chargeErrorsListToShow(networkChecker, errorWindow);
 
             errorWindow.showReport();
             return false;
         }
         
         return true;
+    }
+
+    private void chargeErrorsListToShow(NetworkChecker networkChecker, ErrorsView errorWindow) {
+        
+        Iterator itListOfErrors = networkChecker.getListOfErrors().entrySet().iterator();
+        
+        int errorCounter=1;
+        while(itListOfErrors.hasNext()){
+            
+            Map.Entry<Entity,String> errorInfo = (Map.Entry<Entity,String>)itListOfErrors.next();
+            NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
+            errorWindow.addErrorToShow(errorCounter+((graphNode==null)?"":". El nodo con nombre: "+graphNode.getNombre())+errorInfo.getValue());
+            errorCounter++;
+        }
     }
 
 
