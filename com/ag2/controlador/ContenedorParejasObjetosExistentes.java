@@ -12,7 +12,7 @@ public abstract class ContenedorParejasObjetosExistentes implements Serializable
     private static Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes;
     private static Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes;
     
-    public static Hashtable getInstanciaParejasDeNodosExistentes(){
+    public static Hashtable<NodoGrafico,Entity> getInstanciaParejasDeNodosExistentes(){
     
         if(contenedorParejasNodosExistentes == null){
             contenedorParejasNodosExistentes = new Hashtable<NodoGrafico,Entity>();

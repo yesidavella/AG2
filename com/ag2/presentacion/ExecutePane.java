@@ -66,7 +66,6 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
                             executeController.initNetwork();
 
                             if (executeController.isWellFormedNetwork()) {
-                                
                                 IGU.getInstance().deshabilitar();
                                 btnEjecutar.setSelected(true);
                                 executeController.run();
