@@ -26,7 +26,7 @@ public class Main extends Application implements Serializable {
         stage.setScene(IGU.getInstance());
         IGU.getInstance().setStage(stage);
         IGU.getInstance().setMain(this);
-        stage.show();
+        stage.show();        
         grupoDeDiseno = IGU.getInstance().getGrGrupoDeDiseño();
 
         inicializarModelosYContrladoresDeCreacionDeNodos();
@@ -34,10 +34,12 @@ public class Main extends Application implements Serializable {
         serializador = new Serializador(this, stage);
 
     }
+    
 
     public SimulacionBase getSimulacionBase() {
         return simulacionBase;
     }
+   
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -116,9 +118,39 @@ public class Main extends Application implements Serializable {
     public GrupoDeDiseno getGrupoDeDiseno() {
         return grupoDeDiseno;
     }
+    public void loadFileBaseSimulation()
+    {
+        Main main = serializador.loadFileBaseSimulation();
+        if (main != null) 
+        {
+            SimulacionBase.loadInstance(main.getSimulacionBase()); 
+            
+            ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
+            ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
+            executeAbstractController= main.getExecuteAbstractController();
+            resultsController = main.getResultsController(); 
+            
+            IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+            
+            IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
+              resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
+            
+             ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+            
+            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
+            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
 
-    public void save() {
+        }
+    }
+
+    public void save(boolean  thenClose) {
         serializador.guardar();
+        if(thenClose)
+        {
+             System.exit(0);
+        }
     }   
 
     public void load() {
