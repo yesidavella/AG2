@@ -320,18 +320,31 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                     VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) serializable;
                     group.getChildren().add(verticeEnlaceGrafico.getCircle());                                   
                 }           
-            }
-            
-            
+            }                  
             
             for(Serializable serializable: objectsSerializable)
             {
                 if(serializable instanceof NodoGrafico)
                 {
                     NodoGrafico nodoGrafico = (NodoGrafico)serializable;
-                    group.getChildren().add(nodoGrafico.getGroup());                   
-                }
-                
+                    group.getChildren().add(nodoGrafico.getGroup());      
+                    if(nodoGrafico instanceof NodoClienteGrafico)
+                    {
+                        listaClientes.add(nodoGrafico);
+                    }
+                    else if(nodoGrafico instanceof NodoDeRecursoGrafico)
+                    {
+                        listaRecursos.add(nodoGrafico);
+                    }
+                    else if(nodoGrafico instanceof EnrutadorGrafico)
+                    {
+                        listaSwitches.add(nodoGrafico);
+                    }
+                    else if(nodoGrafico instanceof  NodoDeServicioGrafico)
+                    {
+                        listaNodoServicio.add(nodoGrafico);
+                    }
+                }                
             }
             
         } catch (Exception e) {
