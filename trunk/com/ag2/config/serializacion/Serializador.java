@@ -21,6 +21,8 @@ public class Serializador {
     Stage primaryStage;
     FileChooser fileChooser = new FileChooser();
     Main main;   
+    private static String NAME_BASE_FILE = "Base.ag2"; 
+            
     public Serializador(Main main, final Stage primaryStage) 
     {
         this.main = main ; 
@@ -34,6 +36,7 @@ public class Serializador {
             File file = fileChooser.showSaveDialog(primaryStage); 
             if(file!=null)
             {
+                
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(main);
@@ -48,16 +51,36 @@ public class Serializador {
     public Main cargar() {
         try 
         {
-
-            FileInputStream fileInputStream = new FileInputStream(fileChooser.showOpenDialog(primaryStage));
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Main main = (Main) objectInputStream.readObject();
-            objectInputStream.close();
-            return main;
+            File file = fileChooser.showOpenDialog(primaryStage);
+            if(file!=null)
+            {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                Main mainToLoad = (Main) objectInputStream.readObject();
+                objectInputStream.close();
+                return mainToLoad;
+            }
+            return  null; 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+    public Main loadFileBaseSimulation() {
+        try 
+        {           
+           
+            FileInputStream fileInputStream = new FileInputStream(NAME_BASE_FILE);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Main mainToLoad = (Main) objectInputStream.readObject();
+            objectInputStream.close();
+            return mainToLoad;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }
