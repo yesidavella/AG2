@@ -505,7 +505,6 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
         }
          
         
-        
         for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
             vistaNodosGraficos.enableDisign();
         }
