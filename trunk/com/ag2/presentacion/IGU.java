@@ -100,7 +100,7 @@ public class IGU extends Scene implements Serializable {
         btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());        
-        
+        executePane.setGroup(grGrupoDeDiseño.getGroup());
         grGrupoDeDiseño.setScrollPane(scPnWorld);
         grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
         crearPanelDeNavegacionMapa(vbCajaNavegacion);

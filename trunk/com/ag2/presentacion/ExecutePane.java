@@ -42,10 +42,9 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
         //IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
 
     }
-
-    public ExecutePane(Group group) {
-
-        btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
+     public void setGroup(Group group)
+     {
+          btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
 
             @Override
             public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
@@ -119,5 +118,12 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
 
         btnEjecutar.setGrupoDeDiseño(group);
         btnParar.setGrupoDeDiseño(group);
+         
+     }
+             
+
+    public ExecutePane(Group group) {
+
+       setGroup(group);
     }
 }
