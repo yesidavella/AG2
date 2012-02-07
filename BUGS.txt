@@ -1,6 +1,20 @@
 Bugs                                                              Estado                                                  
-01-Selecion de nodos y arrastre                                   OK-Solucionado.
-02-MVC lectura propiedades de dispositivo                         Pendiente
-03-MVC escritura propiedades de dispositivo                       Pendiente
-04-Crear proyecto gogle code de phosphorous                       OK. (https://phophorous-modificado2.googlecode.com/svn/trunk/) franklinalwinmartinez@gmail.com  -  BV2rA3Su5ST9  : Toda la carpta  Sources 
-05-Retraso de caracter tabla de propiedades de simulacion         Pendiente 
+1.Eliminar los outPorts mvc. Yesid 3H
+2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H
+3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin
+4. Bajar menus de navegacion y colocar titulo. COlocar 
+barra de ejecucion encima.Yesid 1H
+5.Ejecutar aplicativo fuera de netbeans. 3H Yesid
+6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid
+7.iconos mas peqeuños y colocar icono udistri. 1H Yesid
+8.No mostrar pestaña html antes de ejecutar. Los tabs no deben 
+ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin
+9.Cargar colores correctos al des-serializar, colocar escucha al
+cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin
+10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
+visual en el combo. 2H Franklin
+11.Error al cambiar distrbuciones del cliente. 2H Franklin
+12.Migrar todo a el codigo a ingles. 16H
+13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H
+14.En tab phos, traducir con significado y corregir los porcentajes. 2H
+15.Al cluster poderle cabiar el broker. 3H Franklin
