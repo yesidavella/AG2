@@ -3,16 +3,18 @@ package com.ag2.presentacion;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.LabelBuilder;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBuilder;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,18 +23,51 @@ public class ErrorsView extends Stage {
 
     private Button btnAccept;
     private ArrayList<Text> errosToShow;
-    private BorderPane borPnWindowsLayout;
+    private BorderPane brPnWindowsLayout;
 
     public ErrorsView() {
         super(StageStyle.UTILITY);
+        setResizable(true);
         errosToShow = new ArrayList<Text>();
         initModality(Modality.APPLICATION_MODAL);
-        
-        borPnWindowsLayout = new BorderPane();
-        Scene reportScene = new Scene(borPnWindowsLayout, 500, 400);
+        setResizable(false);
+
+        brPnWindowsLayout = new BorderPane();
+        brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));
+        Scene reportScene = new Scene(brPnWindowsLayout, 510, 400, Color.LIGHTSTEELBLUE);//#FFEB8C
         setScene(reportScene);
-        
+
         configWindow();
+    }
+
+    private void configWindow() {
+        HBox hbTitle = new HBox();
+        hbTitle.setPadding(new Insets(0, 0, 10, 0));
+        hbTitle.setAlignment(Pos.CENTER);
+        Label lbTitle = LabelBuilder.create().text("LOS ERRORES ENCONTRADOS EN LA CONFIGURACIÓN DE LA RED:").
+                font(Font.font("Cambria", FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).build();
+        lbTitle.setWrapText(true);
+        lbTitle.setPrefWidth(480);
+
+        hbTitle.getChildren().add(lbTitle);
+        brPnWindowsLayout.setTop(hbTitle);
+
+        btnAccept = new Button("Aceptar");
+        Label lbAdvise = LabelBuilder.create().text("¡¡¡Soluciones estos errores y vuelva a intentarlo!!!").
+                font(Font.font("Cambria", FontWeight.BOLD,FontPosture.ITALIC, 12)).build();
+        HBox hbBottom = new HBox(10);
+        hbBottom.setPadding(new Insets(10, 0, 0, 0));
+        hbBottom.setAlignment(Pos.CENTER_RIGHT);
+        hbBottom.getChildren().addAll(lbAdvise, btnAccept);
+        brPnWindowsLayout.setBottom(hbBottom);
+
+        btnAccept.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                ErrorsView.this.close();
+            }
+        });
     }
 
     public boolean addErrorToShow(String descriptionOfError) {
@@ -40,44 +75,18 @@ public class ErrorsView extends Stage {
         return errosToShow.add(errorText);
     }
 
-//    public boolean removeErrorToShow(String descriptionOfError) {
-//
-//        for (Label errorLabel : errosToShow) {
-//
-//            if (errorLabel.getText().equalsIgnoreCase(descriptionOfError)) {
-//                return errosToShow.remove(errorLabel);
-//            }
-//        }
-//        return false;
-//    }
-
     public void showReport() {
-        VBox vbxErrorscontainer = new VBox();
-        
-        for (Text errorText : errosToShow) {
-            vbxErrorscontainer.getChildren().add(errorText);
-        }
-        
-        borPnWindowsLayout.setCenter(vbxErrorscontainer);
+        ScrollPane scrPnErrorList = new ScrollPane();
+        VBox vbxErrorsContainer = new VBox(10);
+        vbxErrorsContainer.setPadding(new Insets(10));
+        scrPnErrorList.setContent(vbxErrorsContainer);
+        brPnWindowsLayout.setCenter(scrPnErrorList);
         centerOnScreen();
+
+        for (Text errorText : errosToShow) {
+            errorText.setWrappingWidth(465);
+            vbxErrorsContainer.getChildren().add(errorText);
+        }
         show();
-    }
-
-    private void configWindow() {
-        Text txTitle = TextBuilder.create().text("LOS ERRORES ENCONTRADOS EN LA\nCONFIGURACIÓN DE LA RED:").
-                font(Font.font("Tahoma",FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).build();
-
-        borPnWindowsLayout.setTop(txTitle);
-        
-        btnAccept = new Button("Aceptar");
-        borPnWindowsLayout.setBottom(btnAccept);
-        
-        btnAccept.setOnAction(new EventHandler<ActionEvent>(){
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                ErrorsView.this.close();
-            }
-        });
     }
 }

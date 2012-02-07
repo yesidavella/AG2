@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import javafx.scene.text.Font;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
@@ -68,9 +69,9 @@ public class ExecuteController extends ExecuteAbstractController {
             
             if(errorInfo.getKey() instanceof Entity){
                 NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
-                errorWindow.addErrorToShow(errorCounter+". El nodo con nombre "+graphNode.getNombre()+": "+errorInfo.getValue());
+                errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getNombre().toUpperCase()+"\": "+errorInfo.getValue());
             }else{
-                errorWindow.addErrorToShow(errorCounter+". "+errorInfo.getValue());
+                errorWindow.addErrorToShow(errorCounter+". LA SIMULACIÓN:"+errorInfo.getValue());
             }
             
             errorCounter++;
