@@ -15,36 +15,18 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
-public class ExecutePane extends TilePane implements ExecuteView, Serializable {
+public class ExecutePane extends TilePane implements ExecuteView{
 
-    private transient Boton btnEjecutar;
-    private transient Boton btnParar;
-    private transient ToggleGroup tgEjecucion = new ToggleGroup();
-    private transient ResultadosPhosphorousHTML resultadosPhosphorousHTML;
+    private  Boton btnEjecutar;
+    private  Boton btnParar;
+    private  ToggleGroup tgEjecucion = new ToggleGroup();
+    private  ResultadosPhosphorousHTML resultadosPhosphorousHTML;
     ResultadosPhosphorus resultadosPhosphorus;
     ExecuteAbstractController executeController;
 
-    public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
-        this.executeController = executeAbstractController;
-        executeAbstractController.setExecuteView(this);
-    }
+     public ExecutePane() {
 
-    public void setResultadosPhosphorousHTML(ResultadosPhosphorousHTML resultadosPhosphorousHTML) {
-        this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
-    }
-
-    public void setResultadosPhosphorus(ResultadosPhosphorus resultadosPhosphorus) {
-        this.resultadosPhosphorus = resultadosPhosphorus;
-    }
-
-    public void habilitar() {
-        btnParar.setSelected(true);
-        //IGU.setEstadoTipoBoton(TiposDeBoton.PARAR);                       
-
-    }
-     public void setGroup(Group group)
-     {
-          btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
+        btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
 
             @Override
             public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
@@ -115,15 +97,39 @@ public class ExecutePane extends TilePane implements ExecuteView, Serializable {
         btnParar.setToggleGroup(tgEjecucion);
         btnParar.setSelected(true);
         getChildren().addAll(btnEjecutar, btnParar);
+    }
+    public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
+        this.executeController = executeAbstractController;
+        executeAbstractController.setExecuteView(this);
+    }
 
-        btnEjecutar.setGrupoDeDiseño(group);
+    public void setResultadosPhosphorousHTML(ResultadosPhosphorousHTML resultadosPhosphorousHTML) {
+        this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
+    }
+
+    public void setResultadosPhosphorus(ResultadosPhosphorus resultadosPhosphorus) {
+        this.resultadosPhosphorus = resultadosPhosphorus;
+    }
+
+    public void habilitar() {
+        btnParar.setSelected(true);          
+
+    }
+    
+    
+    
+     public void setGroup(Group group)
+     {
+         btnEjecutar.setGrupoDeDiseño(group);
         btnParar.setGrupoDeDiseño(group);
+         
+         
+        
+
+        
          
      }
              
 
-    public ExecutePane(Group group) {
-
-       setGroup(group);
-    }
+   
 }

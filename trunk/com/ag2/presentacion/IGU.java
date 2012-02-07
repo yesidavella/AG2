@@ -72,7 +72,7 @@ public class IGU extends Scene implements Serializable {
     public static IGU getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new IGU(new BorderPane(), 1200, 800);
+            iguAG2 = new IGU(new BorderPane(), 1100, 700);
         }
         return iguAG2;
     }
@@ -85,8 +85,8 @@ public class IGU extends Scene implements Serializable {
 
         grRoot.getChildren().remove(this.grGrupoDeDiseño.getGroup());
         this.grGrupoDeDiseño = grupoDeDiseño;
-        executePane = new ExecutePane(grGrupoDeDiseño.getGroup());
-
+        //exercutePane = new ExecutePane(grGrupoDeDiseño.getGroup());
+        executePane.setGroup(grGrupoDeDiseño.getGroup());
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
@@ -113,7 +113,8 @@ public class IGU extends Scene implements Serializable {
         scPnWorld = new ScrollPane();
         tgHerramientas = new ToggleGroup();
         gpNavegacionMapa = new GridPane();
-        executePane = new ExecutePane(grGrupoDeDiseño.getGroup());
+        executePane = new ExecutePane();
+        executePane.setGroup(grGrupoDeDiseño.getGroup());
 
         adicionarEventoDeTecladoAEscena(this);
         getStylesheets().add(IGU.class.getResource("../../../recursos/css/IGUPrincipal.css").toExternalForm());

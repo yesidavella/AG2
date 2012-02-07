@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,10 +49,12 @@ public class Serializador {
         }
     }
 
-    public Main cargar() {
+    public Main cargar() 
+    {
+        File file = fileChooser.showOpenDialog(primaryStage);
         try 
         {
-            File file = fileChooser.showOpenDialog(primaryStage);
+            
             if(file!=null)
             {
                 FileInputStream fileInputStream = new FileInputStream(file);
@@ -62,7 +65,12 @@ public class Serializador {
             }
             return  null; 
 
-        } catch (Exception e) {
+        }
+        catch(InvalidClassException classException)
+        {
+             JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -74,10 +82,16 @@ public class Serializador {
             FileInputStream fileInputStream = new FileInputStream(NAME_BASE_FILE);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Main mainToLoad = (Main) objectInputStream.readObject();
+            
             objectInputStream.close();
             return mainToLoad;
 
-        } catch (Exception e) {
+        }
+        catch(InvalidClassException classException)
+        {
+             JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
