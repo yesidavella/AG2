@@ -133,9 +133,9 @@ public class Main extends Application implements Serializable {
             IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
             
             IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
-              resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
+            resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
             
-             ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+            ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
             IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
             
             ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());

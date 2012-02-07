@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public abstract class ExecuteAbstractController implements Serializable {
 
-    ExecuteView executeView;
+    private transient ExecuteView executeView;
 
     public void setExecuteView(ExecuteView executeView) {
         this.executeView = executeView;
