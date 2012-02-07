@@ -47,12 +47,10 @@ public class ExecuteController extends ExecuteAbstractController {
         
         if(!networkChecker.passCheck()){
             
-            //Esta es la vista
             ErrorsView errorWindow = new ErrorsView();
-            
             chargeErrorsListToShow(networkChecker, errorWindow);
-
             errorWindow.showReport();
+            
             return false;
         }
         
@@ -78,7 +76,6 @@ public class ExecuteController extends ExecuteAbstractController {
             errorCounter++;
         }
     }
-
 
     private NodoGrafico findGraphNode(Object phosNode) {
 
