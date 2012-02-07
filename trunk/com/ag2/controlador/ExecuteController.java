@@ -66,15 +66,21 @@ public class ExecuteController extends ExecuteAbstractController {
         int errorCounter=1;
         while(itListOfErrors.hasNext()){
             
-            Map.Entry<Entity,String> errorInfo = (Map.Entry<Entity,String>)itListOfErrors.next();
-            NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
-            errorWindow.addErrorToShow(errorCounter+((graphNode==null)?"":". El nodo con nombre: "+graphNode.getNombre())+errorInfo.getValue());
+            Map.Entry<Object,String> errorInfo = (Map.Entry<Object,String>)itListOfErrors.next();
+            
+            if(errorInfo.getKey() instanceof Entity){
+                NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
+                errorWindow.addErrorToShow(errorCounter+". El nodo con nombre "+graphNode.getNombre()+": "+errorInfo.getValue());
+            }else{
+                errorWindow.addErrorToShow(errorCounter+". "+errorInfo.getValue());
+            }
+            
             errorCounter++;
         }
     }
 
 
-    private NodoGrafico findGraphNode(Entity phosNode) {
+    private NodoGrafico findGraphNode(Object phosNode) {
 
         for(NodoGrafico grafNode:ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().keySet()){
             
