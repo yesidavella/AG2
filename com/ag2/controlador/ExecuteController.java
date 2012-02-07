@@ -6,15 +6,13 @@ import com.ag2.modelo.NetworkChecker;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.ErrorsView;
 import com.ag2.presentacion.diseño.NodoGrafico;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import javafx.scene.text.Font;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
+    private Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
 
     @Override
     public void initNetwork() {
@@ -69,7 +67,11 @@ public class ExecuteController extends ExecuteAbstractController {
             
             if(errorInfo.getKey() instanceof Entity){
                 NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
-                errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getNombre().toUpperCase()+"\": "+errorInfo.getValue());
+                
+                if(graphNode!= null){
+                    errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getNombre().toUpperCase()+"\": "+errorInfo.getValue());
+                }
+                
             }else{
                 errorWindow.addErrorToShow(errorCounter+". LA SIMULACIÓN:"+errorInfo.getValue());
             }
@@ -80,9 +82,9 @@ public class ExecuteController extends ExecuteAbstractController {
 
     private NodoGrafico findGraphNode(Object phosNode) {
 
-        for(NodoGrafico grafNode:ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().keySet()){
+        for(NodoGrafico grafNode:contenedorParejasNodosExistentes.keySet()){
             
-            if(ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes().get(grafNode).equals(phosNode)){
+            if(contenedorParejasNodosExistentes.get(grafNode).equals(phosNode)){
                 return grafNode;
             }
         }
