@@ -99,11 +99,14 @@ public class NetworkChecker {
     private void checkSwitchesWithWellLinked() {
 
         for (SimBaseEntity oneSwitch : simulator.getEntitiesOfType(Switch.class)) {
+            
             if (oneSwitch.getOutPorts().size() == 1) {
                 addError((Switch)oneSwitch, " \n►Solo tiene un enlace, debe tener almenos otro.");
             }else if (oneSwitch.getOutPorts().size() > 1){
+                
                 SimBaseEntity targetNode = null;
                 boolean foundDiffTargets = false;
+                
                 for(SimBaseOutPort oneOutPort:oneSwitch.getOutPorts()){
                     
                     if(targetNode == null){
