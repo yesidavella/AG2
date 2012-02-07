@@ -15,6 +15,6 @@ cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H fran
 visual en el combo. 2H Franklin
 11.Error al cambiar distrbuciones del cliente. 2H Franklin
 12.Migrar todo a el codigo a ingles. 16H
-13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H
-14.En tab phos, traducir con significado y corregir los porcentajes. 2H
+13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid
+14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid
 15.Al cluster poderle cabiar el broker. 3H Franklin
