@@ -1,21 +1,25 @@
-Bugs                                                              Estado                                                  
-1.Eliminar los outPorts mvc. Yesid 3H
-2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H
-3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin
-4. Bajar menus de navegacion y colocar titulo. COlocar 
-barra de ejecucion encima.Yesid 1H
-5.Ejecutar aplicativo fuera de netbeans. 3H Yesid
-6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid
-7.iconos mas peqeuños y colocar icono udistri. 1H Yesid
-8.No mostrar pestaña html antes de ejecutar. Los tabs no deben 
-ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin
-9.Cargar colores correctos al des-serializar, colocar escucha al
-cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin
+Bugs                                                                                               Estado                                                  
+1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Pendiente
+2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
+3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Pendiente
+4. Bajar menus de navegacion y colocar titulo. COlocar
+barra de ejecucion encima.Yesid 1H..............................................................   Pendiente
+5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Pendiente
+6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Pendiente
+7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Pendiente
+8.No mostrar pestaña html antes de ejecutar. Los tabs no deben
+ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Pendiente
+9.Cargar colores correctos al des-serializar, colocar escucha al 
+cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin ...........   Pendiente
 10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
-visual en el combo. 2H Franklin
-11.Error al cambiar distrbuciones del cliente. 2H Franklin
-12.Migrar todo a el codigo a ingles. 16H
-13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid
-14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid
-15.Al cluster poderle cabiar el broker. 3H Franklin
-16.Arreglar bugs de serializacion. 3H Franklin
+visual en el combo. 2H Franklin ................................................................   Pendiente
+11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Pendiente
+12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
+13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
+14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
+15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Pendiente
+16.Arreglar bugs de serializacion. 3H Franklin..................................................   Pendiente
+
+
+
+Nota: no se guardo lo de markov ...
