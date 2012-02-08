@@ -127,9 +127,11 @@ public class Main extends Application implements Serializable {
         }
     }
 
-    private void loadControllers(Main main) {
-        SimulacionBase.loadInstance(main.getSimulacionBase()); 
-        
+    private void loadControllers(Main main) 
+    {
+        simulacionBase =  SimulacionBase.getInstance(); 
+        SimulacionBase.loadInstance(simulacionBase); 
+       
         ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
         ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
         executeAbstractController= main.getExecuteAbstractController();
@@ -137,11 +139,14 @@ public class Main extends Application implements Serializable {
         
         IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
         
+        
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         
         ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        
+        SimulacionBase.getInstance().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
