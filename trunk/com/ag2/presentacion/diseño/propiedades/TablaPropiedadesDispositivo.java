@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño.propiedades;
 
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.VistaNodosGraficos;
@@ -19,14 +19,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> implements VistaNodosGraficos, Serializable
 {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
-    private ControladorAbstractoAdminEnlace controladorAdminEnlace;
+    private AbsControllerAdminLink controladorAdminEnlace;
     
     public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
     {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
     }
     
-    public void setControladorAdminEnlace(ControladorAbstractoAdminEnlace controladorAdminEnlace){
+    public void setControladorAdminEnlace(AbsControllerAdminLink controladorAdminEnlace){
         this.controladorAdminEnlace = controladorAdminEnlace;
     }    
   

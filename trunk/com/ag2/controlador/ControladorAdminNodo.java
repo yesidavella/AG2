@@ -7,6 +7,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switches.AbstractSwitch;
+import Grid.Port.GridOutPort;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
@@ -17,6 +18,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import simbase.Port.SimBaseOutPort;
+import simbase.SimBaseEntity;
 import simbase.SimBaseSimulator;
 import simbase.Time;
 
@@ -470,8 +473,20 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
     @Override
     public void removeNodo(NodoGrafico nodoGrafico) 
     {
-        Entity entity = parejasDeNodosExistentes.get(nodoGrafico); 
-        SimulacionBase.getInstance().getSimulador().unRegister(entity);       
+        Entity deletedEntity = parejasDeNodosExistentes.get(nodoGrafico);
+        
+        for(SimBaseOutPort outPort:deletedEntity.getOutPorts()){
+            
+            Entity target = (Entity)outPort.getTarget().getOwner();
+            
+            while(target.getOutportTo(deletedEntity)!=null){
+                GridOutPort outPortToDeleteInTarget = target.getOutportTo(deletedEntity);
+                target.getOutPorts().remove(outPortToDeleteInTarget);
+            }
+        }
+        
+        SimulacionBase.getInstance().getSimulador().unRegister(deletedEntity);
+        parejasDeNodosExistentes.remove(nodoGrafico);
         
     }
 

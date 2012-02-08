@@ -1,23 +1,23 @@
 package com.ag2.modelo;
 
 import Grid.Entity;
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class ModeloAbstractoCrearEnlace implements Serializable{
     
-    private ArrayList<ControladorAbstractoAdminEnlace> controladoresRegistrados;
+    private ArrayList<AbsControllerAdminLink> controladoresRegistrados;
     
     public ModeloAbstractoCrearEnlace(){
-        controladoresRegistrados = new ArrayList<ControladorAbstractoAdminEnlace>();
+        controladoresRegistrados = new ArrayList<AbsControllerAdminLink>();
     }
     
-    public boolean addControlador(ControladorAbstractoAdminEnlace controlador){
+    public boolean addControlador(AbsControllerAdminLink controlador){
         return controladoresRegistrados.add(controlador);
     }
     
-    public boolean removeControlador(ControladorAbstractoAdminEnlace controlador){
+    public boolean removeControlador(AbsControllerAdminLink controlador){
         return controladoresRegistrados.remove(controlador);
     }
     

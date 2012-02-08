@@ -1,12 +1,12 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 
 public  abstract class EnrutadorGrafico extends NodoGrafico{      
     
-    public EnrutadorGrafico(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace)
+    public EnrutadorGrafico(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
     {        
         super(grupoDeDiseno,nombre, urlDeImagen, controladorAbstractoAdminNodo,ctrlAbsAdminEnlace); 
         setAlto((short)62);

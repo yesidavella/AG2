@@ -1,6 +1,7 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
+import com.ag2.controlador.ContenedorParejasObjetosExistentes;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -15,15 +16,15 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
     private ArcoGrafico arcInicial,arcFinal;
     private GrupoDeDiseno grGrDeDiseño;
-    private ControladorAbstractoAdminEnlace controladorAdminEnlace;
+    private AbsControllerAdminLink adminLinkController;
     private boolean isSeleccionado;
     private HashMap<String,String> properties;
 
-    public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB,ControladorAbstractoAdminEnlace controladorAdminEnlace) {
+    public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB,AbsControllerAdminLink controladorAdminEnlace) {
         
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;
-        this.controladorAdminEnlace = controladorAdminEnlace;
+        this.adminLinkController = controladorAdminEnlace;
         this.nodoGraficoA.addNodoListener(this);
         this.nodoGraficoB.addNodoListener(this);
 
@@ -73,6 +74,8 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 }
                 nodoGraficoA = null;
                 nodoGraficoB = null;
+
+                removeGraphLink();
 
             }else{
                 
@@ -126,7 +129,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             }
             
             grGrDeDiseño.setObjetoGraficoSelecionado(this);
-            controladorAdminEnlace.consultarPropiedades(this);
+            adminLinkController.consultarPropiedades(this);
 
         }else{
             for(ArcoGrafico arcoGrafico:arcos){
@@ -167,5 +170,9 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     
     public HashMap<String, String> getProperties() {
         return properties;
+    }
+    
+    public boolean removeGraphLink(){
+        return adminLinkController.removeLink(this);
     }
 }

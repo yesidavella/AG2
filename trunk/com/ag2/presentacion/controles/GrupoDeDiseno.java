@@ -1,6 +1,6 @@
 package com.ag2.presentacion.controles;
 
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
@@ -57,14 +57,14 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
     private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
-    private ArrayList<ControladorAbstractoAdminEnlace> ctrladoresRegistradosAdminEnlace;
+    private ArrayList<AbsControllerAdminLink> ctrladoresRegistradosAdminEnlace;
     private double dragMouX = 0;
     private double dragMouY = 0;
 
     public GrupoDeDiseno() {
         initTransientObjects();
         ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
-        ctrladoresRegistradosAdminEnlace = new ArrayList<ControladorAbstractoAdminEnlace>();
+        ctrladoresRegistradosAdminEnlace = new ArrayList<AbsControllerAdminLink>();
 
     }
 
@@ -134,7 +134,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
             NodoGrafico nuevoNodo = null;
             ControladorAbstractoAdminNodo controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
-            ControladorAbstractoAdminEnlace controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
+            AbsControllerAdminLink controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
             double posClcikX = mouEvent.getX();
             double posClcikY = mouEvent.getY();
 
@@ -355,7 +355,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
     }
 
-    public void addControladorCrearEnlace(ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace) {
+    public void addControladorCrearEnlace(AbsControllerAdminLink ctrlCrearYAdminEnlace) {
         ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
     }
 
