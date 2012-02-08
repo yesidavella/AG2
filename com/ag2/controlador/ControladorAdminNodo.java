@@ -473,21 +473,8 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
     @Override
     public void removeNodo(NodoGrafico nodoGrafico) 
     {
-        Entity deletedEntity = parejasDeNodosExistentes.get(nodoGrafico);
-        
-        for(SimBaseOutPort outPort:deletedEntity.getOutPorts()){
-            
-            Entity target = (Entity)outPort.getTarget().getOwner();
-            
-            while(target.getOutportTo(deletedEntity)!=null){
-                GridOutPort outPortToDeleteInTarget = target.getOutportTo(deletedEntity);
-                target.getOutPorts().remove(outPortToDeleteInTarget);
-            }
-        }
-        
-        SimulacionBase.getInstance().getSimulador().unRegister(deletedEntity);
-        parejasDeNodosExistentes.remove(nodoGrafico);
-        
+        Entity phosNodeRemoved = parejasDeNodosExistentes.remove(nodoGrafico);
+        SimulacionBase.getInstance().getSimulador().unRegister(phosNodeRemoved);
     }
 
     @Override
@@ -518,13 +505,9 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
             
             
         }
-         
         
         for (VistaNodosGraficos vistaNodosGraficos : listaVistaNodosGraficos) {
             vistaNodosGraficos.enableDisign();
         }
-     
-          
-            
     }
 }

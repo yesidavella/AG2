@@ -305,9 +305,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-
                 NodoGrafico nodoGrafico = NodoGrafico.this; 
-
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
 
@@ -317,6 +315,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
                     controladorAbstractoAdminNodo.removeNodo(nodoGrafico);
                     
                 }
+                
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
 
                     ObjetoSeleccionable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
