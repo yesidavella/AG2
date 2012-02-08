@@ -10,6 +10,8 @@ import Grid.Routing.RoutingViaJung;
 import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import simbase.SimBaseEntity;
@@ -31,10 +33,11 @@ public class SimulacionBase implements Runnable, Serializable {
         }
         return simulacionBase;
     }
+
     public static void loadInstance(SimulacionBase simulacionBase) {
-       
-        SimulacionBase.simulacionBase = simulacionBase; 
-        
+
+        SimulacionBase.simulacionBase = simulacionBase;
+
     }
 
     private SimulacionBase() {
@@ -42,7 +45,7 @@ public class SimulacionBase implements Runnable, Serializable {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulatorModel();
         simulacion.setSimulator(simulador);
-        
+
 
     }
 
@@ -92,9 +95,14 @@ public class SimulacionBase implements Runnable, Serializable {
 
     }
 
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+    }
+
     public void initNetwork() {
         simulacion.stopEvent = false;
-        
+
         simulador.setRouting(new RoutingViaJung(simulador));
         route();
     }
