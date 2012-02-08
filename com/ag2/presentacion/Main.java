@@ -4,6 +4,8 @@ import com.ag2.config.serializacion.Serializador;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -136,8 +138,8 @@ public class Main extends Application implements Serializable {
         ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
         executeAbstractController= main.getExecuteAbstractController();
         resultsController = main.getResultsController(); 
-        
-        IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+        grupoDeDiseno = main.getGrupoDeDiseno(); 
+        IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
         
         
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
@@ -162,6 +164,12 @@ public class Main extends Application implements Serializable {
         }
     }   
 
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException 
+    {
+        simulacionBase = SimulacionBase.getInstance(); 
+        objectOutputStream.defaultWriteObject();
+
+    }
     public void load() {
         Main main = serializador.cargar();
         if (main != null) 
