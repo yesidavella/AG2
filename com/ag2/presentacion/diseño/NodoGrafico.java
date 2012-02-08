@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.ControladorAbstractoAdminEnlace;
+import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
@@ -51,7 +51,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private String urlDeImagen;
     private boolean arrastrando = false;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
-    private ControladorAbstractoAdminEnlace controladorAdminEnlace;
+    private AbsControllerAdminLink controladorAdminEnlace;
     private short alto;
     private short ancho;
     
@@ -65,7 +65,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private double layoutX; 
     private double layoutY; 
 
-    public NodoGrafico(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, ControladorAbstractoAdminEnlace ctrlAbsAdminEnlace) 
+    public NodoGrafico(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, AbsControllerAdminLink ctrlAbsAdminEnlace) 
     {
         
         this.grupoDeDiseno = grupoDeDiseno;

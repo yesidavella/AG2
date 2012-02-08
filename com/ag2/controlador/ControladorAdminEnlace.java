@@ -12,7 +12,7 @@ import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
+public class ControladorAdminEnlace extends AbsControllerAdminLink {
 
     private Hashtable<EnlaceGrafico,EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes(); 
     private Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes(); 
@@ -23,7 +23,7 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
         Entity nodoPhosphorousA;
         Entity nodoPhosphorousB;
 
-        for (ModeloAbstractoCrearEnlace modelo : modelosRegistrados) {
+        for (ModeloAbstractoCrearEnlace modelo : registeredModels) {
 
             if (modelo instanceof ModeloCrearEnlace) {
 
@@ -125,5 +125,20 @@ public class ControladorAdminEnlace extends ControladorAbstractoAdminEnlace {
                 updatePropiedad(enlaceGrafico, id, enlaceGrafico.getProperties().get(id));
             }
         }
+    }
+
+    @Override
+    public boolean removeLink(EnlaceGrafico graphLink) {
+        
+        EnlacePhosphorous phosLink = contenedorParejasEnlacesExistentes.get(graphLink);
+        
+        Entity phosNodeA = phosLink.getNodoPhosphorousA();
+        Entity phosNodeB = phosLink.getNodoPhosphorousB();
+        
+        boolean canRemoveOutPortA = phosNodeA.getOutPorts().remove(phosLink.getPuertoSalidaNodoPhosA());
+        boolean canRemoveOutPortB = phosNodeB.getOutPorts().remove(phosLink.getPuertoSalidaNodoPhosB());
+        contenedorParejasEnlacesExistentes.remove(graphLink);
+        
+        return (canRemoveOutPortA && canRemoveOutPortB);
     }
 }

@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.StrokeType;
+import javax.swing.JOptionPane;
 
 public class ArcoGrafico  implements Serializable {
 
@@ -33,10 +34,8 @@ public class ArcoGrafico  implements Serializable {
     private double controlX;
     private double controlY;
   
-    
     private VerticeEnlaceGrafico verticeGrafInicial,verticeGrafFinal;
 
-    
     public ArcoGrafico(EnlaceGrafico enlaceGrafico, GrupoDeDiseno grGrDeDiseño)
     {
         this.grGrDeDiseño = grGrDeDiseño;
@@ -73,8 +72,6 @@ public class ArcoGrafico  implements Serializable {
         quadCurve.setStrokeType(StrokeType.CENTERED);
         quadCurve.setStroke(Color.LIGHTGREEN);
         
-        
-        
         DropShadow drpShdResplandorArco = new DropShadow();
         drpShdResplandorArco.setColor(Color.LIGHTGREY);
         drpShdResplandorArco.setSpread(0.5);
@@ -86,7 +83,6 @@ public class ArcoGrafico  implements Serializable {
         establecerEnventoClicked();
         establecerEventoOnMouseEntered();
         
-       
     }
 
     public void calcularCentroXY() {
@@ -211,6 +207,11 @@ public class ArcoGrafico  implements Serializable {
 
                         grGrDeDiseño.remove(arcoGrafico);
                     }
+                    
+                    if(!enlaceGrafico.removeGraphLink()){
+                        JOptionPane.showMessageDialog(null, "No se pudo eliminar los puertos de los Nodos Phosphorous satisfactoriamente.");
+                    }
+                    
                 }
             }
         });

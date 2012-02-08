@@ -14,7 +14,7 @@ public class Main extends Application implements Serializable {
     private ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo;
     private ExecuteAbstractController executeAbstractController;
     private ModeloCrearNodo modeloCrearNodo;
-    private ControladorAbstractoAdminEnlace ctrlCrearYAdminEnlace;
+    private AbsControllerAdminLink ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
     private SimulacionBase simulacionBase =  SimulacionBase.getInstance(); 
     private ResultsController resultsController;
@@ -99,7 +99,7 @@ public class Main extends Application implements Serializable {
         return ctrlCreadorYAdministradorNodo;
     }
 
-    public ControladorAbstractoAdminEnlace getCtrlCrearYAdminEnlace() {
+    public AbsControllerAdminLink getCtrlCrearYAdminEnlace() {
         return ctrlCrearYAdminEnlace;
     }
 
