@@ -4,6 +4,7 @@
  */
 package com.ag2.presentacion.controles;
 
+import Grid.Utilities.HtmlWriter;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,16 +42,16 @@ public class ResultadosPhosphorousHTML {
     private int paginasTotales = 0;
     private int paginaActual = 0;
     private String[] archivosHTML;
-    WebView browser = new WebView();
-    WebEngine webEngine = browser.getEngine();
-    String directorioResultados;
-    VBox vBox = new VBox();
-    HBox hBox = new HBox();
-    int countExecutions = 0; 
+    private WebView browser = new WebView();
+    private WebEngine webEngine = browser.getEngine();
+    private String directorioResultados;
+    private VBox vBox = new VBox();
+    private HBox hBox = new HBox();
+    //private int countExecutions = 0; 
 
     public void lookToNextExecution()
     {
-        countExecutions++; 
+        //countExecutions++; 
     }
     public ResultadosPhosphorousHTML(final Tab tab)
     {
@@ -68,8 +69,6 @@ public class ResultadosPhosphorousHTML {
 
         hBox.setAlignment(Pos.CENTER);
 
-        //loadFilesHTMLs(tab);
-
         tab.setOnSelectionChanged(new EventHandler<Event>() {
 
             public void handle(Event t) {
@@ -86,7 +85,7 @@ public class ResultadosPhosphorousHTML {
 
 
         String directorioActual = new File("").getAbsolutePath();
-        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS+"_"+countExecutions;
+        directorioResultados = directorioActual + File.separator + CARPETA_RESULTADOS+"_"+(HtmlWriter.countObject-2);
         File file = new File(directorioResultados);
 
         if (file.exists()) {

@@ -123,26 +123,30 @@ public class Main extends Application implements Serializable {
         Main main = serializador.loadFileBaseSimulation();
         if (main != null) 
         {
-            SimulacionBase.loadInstance(main.getSimulacionBase()); 
-            
-            ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
-            ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
-            executeAbstractController= main.getExecuteAbstractController();
-            resultsController = main.getResultsController(); 
-            
-            IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
-            
-            IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
-            resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
-            
-            ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
-            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
-            
-            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
-            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
-            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
-
+            loadControllers(main);
         }
+    }
+
+    private void loadControllers(Main main) {
+        SimulacionBase.loadInstance(main.getSimulacionBase()); 
+        
+        ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
+        ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
+        executeAbstractController= main.getExecuteAbstractController();
+        resultsController = main.getResultsController(); 
+        
+        IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
+        
+        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
+        resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
+        
+        ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        
+        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
+        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+        executeAbstractController.stop();
     }
 
     public void save(boolean  thenClose) {
@@ -157,24 +161,7 @@ public class Main extends Application implements Serializable {
         Main main = serializador.cargar();
         if (main != null) 
         {
-            SimulacionBase.loadInstance(main.getSimulacionBase()); 
-            
-            ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
-            ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
-            executeAbstractController= main.getExecuteAbstractController();
-            resultsController = main.getResultsController(); 
-            
-            IGU.getInstance().loadGrupoDeDiseno(main.getGrupoDeDiseno());
-            
-            IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
-              resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
-            
-             ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
-            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
-            
-            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
-            ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
-            IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+            loadControllers(main);
 
         }
     }
