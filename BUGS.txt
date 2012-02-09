@@ -3,7 +3,7 @@ Bugs                                                                            
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Pendiente
 4. Bajar menus de navegacion y colocar titulo. COlocar
-barra de ejecucion encima.Yesid 1H..............................................................   Pendiente
+barra de ejecucion encima.Yesid 1H..............................................................   Listones
 5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Pendiente
 6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Pendiente
 7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Pendiente
