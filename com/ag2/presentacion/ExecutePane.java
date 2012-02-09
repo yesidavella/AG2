@@ -2,13 +2,10 @@ package com.ag2.presentacion;
 
 import com.ag2.controlador.ExecuteAbstractController;
 import com.ag2.presentacion.controles.Boton;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
-import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;

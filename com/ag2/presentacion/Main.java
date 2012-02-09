@@ -7,6 +7,7 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ public class Main extends Application implements Serializable {
     private GrupoDeDiseno grupoDeDiseno;
     private SimulacionBase simulacionBase =  SimulacionBase.getInstance(); 
     private ResultsController resultsController;
+    
 
     @Override
     public void start(final Stage stage) {
@@ -131,15 +133,17 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main) 
     {
-        simulacionBase =  SimulacionBase.getInstance(); 
+        simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance(); 
         SimulacionBase.loadInstance(simulacionBase); 
+        grupoDeDiseno = main.getGrupoDeDiseno(); 
+        IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
        
         ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
         ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
         executeAbstractController= main.getExecuteAbstractController();
         resultsController = main.getResultsController(); 
-        grupoDeDiseno = main.getGrupoDeDiseno(); 
-        IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
+       
+        modeloCrearNodo = main.getModeloCrearNodo(); 
         
         
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
@@ -153,7 +157,7 @@ public class Main extends Application implements Serializable {
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
-        executeAbstractController.stop();
+      //  executeAbstractController.stop();
     }
 
     public void save(boolean  thenClose) {
@@ -166,7 +170,9 @@ public class Main extends Application implements Serializable {
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException 
     {
+        
         simulacionBase = SimulacionBase.getInstance(); 
+        simulacionBase.getSimulador().getEntities(); 
         objectOutputStream.defaultWriteObject();
 
     }
