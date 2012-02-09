@@ -11,6 +11,7 @@ import java.io.Serializable;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -45,24 +47,24 @@ public class IGU extends Scene implements Serializable {
     private Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     private Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    private TablaPropiedadesDispositivo tbPropiedadesDispositivo;
+    private TablaPropiedadesDispositivo tbDeviceProperties;
     private GridPane barraHerramientas;
     private ScrollPane scPnWorld;
-    private ProgressBar prgBarBarraProgresoEjec;
+    private ProgressBar prgBarExecProgress;
     private boolean estaTeclaPrincipalOprimida = false;
     private TiposDeBoton estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEvento;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
     private Main main;
-    private StackPane stPnCajaPropDispositivo = new StackPane();
+    private StackPane stPnDeviceProperties = new StackPane();
     private Boton btnSeleccion;
     private Boton btnDividirEnlaceCuadrado;
     private Boton btnEliminar;
     private Boton btnMinusZoom;
     private Boton btnPlusZoom;
     private Group grRoot = new Group();
-    private VBox vbCajaNavegacion = new VBox();
+    private VBox vbNavegation = new VBox();
 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
@@ -104,7 +106,7 @@ public class IGU extends Scene implements Serializable {
         executePane.setGroup(grGrupoDeDiseño.getGroup());
         grGrupoDeDiseño.setScrollPane(scPnWorld);
         grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
-        crearPanelDeNavegacionMapa(vbCajaNavegacion);
+        crearPanelDeNavegacionMapa(vbNavegation);
         adicionarEventoDeTecladoAEscena(this);
     }
 
@@ -126,17 +128,15 @@ public class IGU extends Scene implements Serializable {
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         barraHerramientas = creacionBarraDeHerramientas();
-        VBox vBoxContenedorIndicadoresEjec = crearElemsIndicadoresEjecucion();
 
         VBox contenedorHerramietas = new VBox();
-        contenedorHerramietas.getChildren().addAll(executePane, barraHerramientas, vBoxContenedorIndicadoresEjec);
+        contenedorHerramietas.getChildren().addAll(executePane, barraHerramientas);
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
-
         //Diseño central
         TabPane cajaDetabs = crearLienzoDeTabs();
         layOutVentanaPrincipal.setCenter(cajaDetabs);
         //Diseño inferior
-        HBox cajaInferiorHor = crearImagenesYTablasDePropiedades();
+        HBox cajaInferiorHor = createBottomDesign();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
 
 //        inicializarEstadoDeIGU();
@@ -378,8 +378,6 @@ public class IGU extends Scene implements Serializable {
         tabResultados.setText("Resultados Phosphorus");
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
 
-
-
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
@@ -396,33 +394,35 @@ public class IGU extends Scene implements Serializable {
         return cajaDetabs;
     }
 
-    private HBox crearImagenesYTablasDePropiedades() {
+    private HBox createBottomDesign() {
 
-        HBox hBoxCajaInferior = new HBox();
-        hBoxCajaInferior.getStyleClass().add("cajaInferior");
-        hBoxCajaInferior.setSpacing(10);
+        HBox hboxAllBottom = new HBox();
+        hboxAllBottom.getStyleClass().add("cajaInferior");
+        hboxAllBottom.setSpacing(10);
 
-        TilePane tlPnLogos = creacionImagenesDeProyectos();
+        TilePane tlPnLogos = createProjectsLogos();
 
-        tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
-        ///  StackPane stPnCajaPropDispositivo = new StackPane();
-        stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
+        tbDeviceProperties = new TablaPropiedadesDispositivo();
+        stPnDeviceProperties.getChildren().add(tbDeviceProperties);
 
-        TableView<String> tblPropiedadesSimulacion = crearTablaDePropiedadesDeSimulacion();
-        StackPane stPnCajaPropSimulacion = new StackPane();
-        stPnCajaPropSimulacion.getChildren().add(tblPropiedadesSimulacion);
+        TableView<String> tbSimulationProperties = createTbSimulationProperties();
+        StackPane stPnSimulationProperties = new StackPane();
+        stPnSimulationProperties.getChildren().add(tbSimulationProperties);
 
-        SplitPane splPnCajaTablasDeProp = new SplitPane();
-        splPnCajaTablasDeProp.getItems().addAll(stPnCajaPropDispositivo, stPnCajaPropSimulacion);
-        splPnCajaTablasDeProp.setDividerPositions(0.525f);
-
-
-        crearPanelDeNavegacionMapa(vbCajaNavegacion);
-        hBoxCajaInferior.getChildren().addAll(tlPnLogos, splPnCajaTablasDeProp, vbCajaNavegacion);
-        return hBoxCajaInferior;
+        SplitPane splPnPropertiesTbs = new SplitPane();
+        splPnPropertiesTbs.getItems().addAll(stPnDeviceProperties, stPnSimulationProperties);
+        splPnPropertiesTbs.setDividerPositions(0.525f);
+        
+        VBox vbxBottomRight = new VBox(10);
+        VBox vbxExecuteIndicatorPane = createExecuteIndicatorPane();
+        crearPanelDeNavegacionMapa(vbNavegation);
+        vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
+        
+        hboxAllBottom.getChildren().addAll(tlPnLogos, splPnPropertiesTbs, vbxBottomRight);
+        return hboxAllBottom;
     }
 
-    private TilePane creacionImagenesDeProyectos() {
+    private TilePane createProjectsLogos() {
 
         //Imagen proyecto AG2
         ImageView imagenAG2 = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/logoAG2.png")));
@@ -440,7 +440,7 @@ public class IGU extends Scene implements Serializable {
         return tlPneLogos;
     }
 
-    private TableView<String> crearTablaDePropiedadesDeSimulacion() {
+    private TableView<String> createTbSimulationProperties() {
 
         TableView<String> tbVwPropSimulacion = new TableView<String>();
 
@@ -474,40 +474,53 @@ public class IGU extends Scene implements Serializable {
         gpNavegacionMapa.setVgap(5);
         gpNavegacionMapa.setHgap(4);
         gpNavegacionMapa.getStyleClass().add("barraDeHerramientas");
+        
+        Label lbTitle = new Label("LISTAS DE NAVEGACIÓN");
+        lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 14));
 
-        final ChoiceBox cbClientes = new ChoiceBox(grGrupoDeDiseño.getListaClientes());
-        final ChoiceBox cbRecursos = new ChoiceBox(grGrupoDeDiseño.getListaRecursos());
+        final ChoiceBox cbClients = new ChoiceBox(grGrupoDeDiseño.getListaClientes());
+        final ChoiceBox cbResources = new ChoiceBox(grGrupoDeDiseño.getListaRecursos());
         final ChoiceBox cbSwicthes = new ChoiceBox(grGrupoDeDiseño.getListaSwitches());
-        final ChoiceBox cbNodosServicio = new ChoiceBox(grGrupoDeDiseño.getListaNodoServicio());
+        final ChoiceBox cbServiceNodes = new ChoiceBox(grGrupoDeDiseño.getListaNodoServicio());
 
-        cbClientes.setMinWidth(150);
-        cbRecursos.setMinWidth(150);
-        cbSwicthes.setMinWidth(150);
-        cbNodosServicio.setMinWidth(150);
+        cbClients.setMinWidth(100);
+        cbResources.setMinWidth(100);
+        cbSwicthes.setMinWidth(100);
+        cbServiceNodes.setMinWidth(100);
 
-        Button btnIrClientes = new Button("ir");
-        Button btnIrRecursos = new Button("ir");
+        Button btnIrClients = new Button("ir");
+        Button btnIrResources = new Button("ir");
         Button btnIrSwichtes = new Button("ir");
-        Button btnIrNodoServicio = new Button("ir");
+        Button btnIrServiceNodes = new Button("ir");
 
         Label lbRouters = new Label("Enrutadores");
         Label lbClientes = new Label("Clientes");
         Label lbRecursos = new Label("Recursos");
         Label lbNodosServicio = new Label("Agendadores");
+        
+        lbRouters.setMinWidth(80);
+        lbClientes.setMinWidth(80);
+        lbRecursos.setMinWidth(80);
+        lbNodosServicio.setMinWidth(80);
 
+        GridPane.setConstraints(lbTitle, 0, 1);
+        GridPane.setColumnSpan(lbTitle, 3);
+        GridPane.setHalignment(lbTitle, HPos.CENTER);
+        gpNavegacionMapa.getChildren().add(lbTitle);        
+                
         GridPane.setConstraints(lbClientes, 0, 2);
         gpNavegacionMapa.getChildren().add(lbClientes);
-        GridPane.setConstraints(cbClientes, 1, 2);
-        gpNavegacionMapa.getChildren().add(cbClientes);
-        GridPane.setConstraints(btnIrClientes, 2, 2);
-        gpNavegacionMapa.getChildren().add(btnIrClientes);
+        GridPane.setConstraints(cbClients, 1, 2);
+        gpNavegacionMapa.getChildren().add(cbClients);
+        GridPane.setConstraints(btnIrClients, 2, 2);
+        gpNavegacionMapa.getChildren().add(btnIrClients);
 
         GridPane.setConstraints(lbRecursos, 0, 3);
         gpNavegacionMapa.getChildren().add(lbRecursos);
-        GridPane.setConstraints(cbRecursos, 1, 3);
-        gpNavegacionMapa.getChildren().add(cbRecursos);
-        GridPane.setConstraints(btnIrRecursos, 2, 3);
-        gpNavegacionMapa.getChildren().add(btnIrRecursos);
+        GridPane.setConstraints(cbResources, 1, 3);
+        gpNavegacionMapa.getChildren().add(cbResources);
+        GridPane.setConstraints(btnIrResources, 2, 3);
+        gpNavegacionMapa.getChildren().add(btnIrResources);
 
         GridPane.setConstraints(lbRouters, 0, 4);
         gpNavegacionMapa.getChildren().add(lbRouters);
@@ -518,23 +531,23 @@ public class IGU extends Scene implements Serializable {
 
         GridPane.setConstraints(lbNodosServicio, 0, 5);
         gpNavegacionMapa.getChildren().add(lbNodosServicio);
-        GridPane.setConstraints(cbNodosServicio, 1, 5);
-        gpNavegacionMapa.getChildren().add(cbNodosServicio);
-        GridPane.setConstraints(btnIrNodoServicio, 2, 5);
-        gpNavegacionMapa.getChildren().add(btnIrNodoServicio);
+        GridPane.setConstraints(cbServiceNodes, 1, 5);
+        gpNavegacionMapa.getChildren().add(cbServiceNodes);
+        GridPane.setConstraints(btnIrServiceNodes, 2, 5);
+        gpNavegacionMapa.getChildren().add(btnIrServiceNodes);
 
         if (!vBox.getChildren().contains(gpNavegacionMapa)) {
             vBox.getChildren().add(gpNavegacionMapa);
         }
 
-        establecerEventoBotonesIr(btnIrClientes, cbClientes);
-        establecerEventoBotonesIr(btnIrNodoServicio, cbNodosServicio);
-        establecerEventoBotonesIr(btnIrRecursos, cbRecursos);
-        establecerEventoBotonesIr(btnIrSwichtes, cbSwicthes);
+        setEventGoBtn(btnIrClients, cbClients);
+        setEventGoBtn(btnIrServiceNodes, cbServiceNodes);
+        setEventGoBtn(btnIrResources, cbResources);
+        setEventGoBtn(btnIrSwichtes, cbSwicthes);
 
     }
 
-    private void establecerEventoBotonesIr(Button goButton, final ChoiceBox chobNodes) {
+    private void setEventGoBtn(Button goButton, final ChoiceBox chobNodes) {
 
         goButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -630,10 +643,10 @@ public class IGU extends Scene implements Serializable {
     }
 
     public TablaPropiedadesDispositivo getPropiedadesDispositivoTbl() {
-        return tbPropiedadesDispositivo;
+        return tbDeviceProperties;
     }
 
-    private VBox crearElemsIndicadoresEjecucion() {
+    private VBox createExecuteIndicatorPane() {
 
         VBox vBoxCajaContenedoraIndicadores = new VBox(10);
         vBoxCajaContenedoraIndicadores.getStyleClass().add("barraDeHerramientas");
@@ -643,11 +656,11 @@ public class IGU extends Scene implements Serializable {
         Label lblIndicadoraEjec = new Label("Ejecución:");
         lblIndicadoraEjec.setFont(new Font("Arial Bold", 10));
 
-        prgBarBarraProgresoEjec = new ProgressBar(0);
-        prgBarBarraProgresoEjec.setPrefWidth(70);
-        prgBarBarraProgresoEjec.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
+        prgBarExecProgress = new ProgressBar(0);
+        prgBarExecProgress.setPrefWidth(150);
+        prgBarExecProgress.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
 
-        vBoxCajaContenedoraIndicadores.getChildren().addAll(lblIndicadoraEjec, prgBarBarraProgresoEjec);
+        vBoxCajaContenedoraIndicadores.getChildren().addAll(lblIndicadoraEjec, prgBarExecProgress);
 
         return vBoxCajaContenedoraIndicadores;
     }
@@ -659,7 +672,7 @@ public class IGU extends Scene implements Serializable {
         barraHerramientas.setDisable(false);
         barraHerramientas.setOpacity(1);
         //prgBarBarraProgresoEjec.setProgress(0);
-        prgBarBarraProgresoEjec.setVisible(false);
+        prgBarExecProgress.setVisible(false);
         grGrupoDeDiseño.getGroup().setOpacity(1);
     }
 
@@ -670,10 +683,10 @@ public class IGU extends Scene implements Serializable {
         IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
         grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.MANO.getImagenCursor());
 
-        prgBarBarraProgresoEjec.setVisible(true);
+        prgBarExecProgress.setVisible(true);
         barraHerramientas.setDisable(true);
         barraHerramientas.setOpacity(0.8);
-        prgBarBarraProgresoEjec.setProgress(-1);
+        prgBarExecProgress.setProgress(-1);
         grGrupoDeDiseño.getGroup().setOpacity(0.8);
     }
 
