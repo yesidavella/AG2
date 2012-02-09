@@ -13,6 +13,7 @@ import com.ag2.controlador.ResultsAbstractController;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Iterator;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
@@ -26,6 +27,7 @@ public class SimulacionBase implements Runnable, Serializable {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private AbsControllerAdminLink controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
+    public  String id;
 
     public static SimulacionBase getInstance() {
         if (simulacionBase == null) {
@@ -45,6 +47,7 @@ public class SimulacionBase implements Runnable, Serializable {
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulatorModel();
         simulacion.setSimulator(simulador);
+        id = new Date().toString(); 
 
 
     }
