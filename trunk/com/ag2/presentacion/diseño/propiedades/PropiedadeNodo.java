@@ -58,10 +58,10 @@ public class PropiedadeNodo {
                         String valor="_ON"; 
                         if(!checkBox.isSelected())
                         {    
-                            valor="OFF";                             
+                            valor="_OFF";                             
                         }
                         tablaPropiedadesDispositivo.updatePropiedad(subProperty,id+"_"+nombre,nombre+valor );
-                        checkBox.setDisable(true);
+                        //checkBox.setDisable(true);
                     }
                 });
                 break;

@@ -27,6 +27,9 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
 
     private NodoGrafico nodoGraficoSeleccionado;
 
+
+
+    
     @Override
     public Entity crearNodo(NodoGrafico nodoGrafico) {
 
@@ -141,7 +144,7 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
                         if (serviceNode.getID().equals(nodoGraficoService.getNombreOriginal()))
                         {
                             propiedadeNodo.setPrimerValor("true");
-                            propiedadeNodo.setDisable(true);
+                           // propiedadeNodo.setDisable(true);
                         }
                     }
                 }
@@ -348,8 +351,11 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
                     }
 
                 } else if (valor.contains("_OFF")) {
-                    if (entity != null && entity instanceof ServiceNode) {
+                    if (entity != null && entity instanceof ServiceNode) 
+                    {
                         ServiceNode serviceNode = (ServiceNode) entity;
+                        resource.removeServiceNode(serviceNode);
+                        
                     }
                 }
 

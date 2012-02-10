@@ -697,7 +697,10 @@ public class IGU extends Scene implements Serializable {
         barraHerramientas.setOpacity(0.8);
         prgBarExecProgress.setProgress(-1);
         grGrupoDeDiseño.getGroup().setOpacity(0.8);
+        if(!tpBox.getTabs().contains(tabResultadosHTML)){
         tpBox.getTabs().addAll(  tabResultadosHTML, tabResultados);
+        }
+        
         tpBox.getSelectionModel().select(tabResultados);
         
     }
