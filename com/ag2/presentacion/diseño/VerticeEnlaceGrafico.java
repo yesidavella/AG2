@@ -179,10 +179,7 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
         try 
         {
            inputStream.defaultReadObject();
-           initTransientObjects();
-           circle.setCenterX(centerX);
-           circle.setCenterY(centerY);
-           circle.setFill(Color.AQUAMARINE); 
+           
 
         } catch (Exception e) {
             e.printStackTrace();

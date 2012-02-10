@@ -11,10 +11,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +57,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     private ArrayList<AbsControllerAdminLink> ctrladoresRegistradosAdminEnlace;
     private double dragMouX = 0;
     private double dragMouY = 0;
+    private boolean serializableComplete = false;
 
     public GrupoDeDiseno() {
         initTransientObjects();
@@ -68,13 +66,18 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
     }
 
+    public boolean isSerializableComplete() {
+        return serializableComplete;
+    }
+    
+
     public void initTransientObjects() {
         group = new Group();
         group.setOnMousePressed(this);
         group.setOnMouseDragged(this);
         group.setOnMouseReleased(this);
         sclEscalaDeZoom = new Scale(1.44, -1.44);
-        group.getTransforms().add(sclEscalaDeZoom);        
+        group.getTransforms().add(sclEscalaDeZoom);
         listaClientes = FXCollections.observableArrayList();
         listaRecursos = FXCollections.observableArrayList();
         listaSwitches = FXCollections.observableArrayList();
@@ -201,38 +204,35 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             objectsSerializable.add((Serializable) node);
         }
     }
-    public void add(NodoGrafico nodoGrafico)
-    {
+
+    public void add(NodoGrafico nodoGrafico) {
         group.getChildren().add(nodoGrafico.getGroup());
         if (nodoGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) nodoGrafico);
         }
     }
-    public void add(VerticeEnlaceGrafico verticeEnlaceGrafico)
-    {
+
+    public void add(VerticeEnlaceGrafico verticeEnlaceGrafico) {
         group.getChildren().add(verticeEnlaceGrafico.getCircle());
         if (verticeEnlaceGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) verticeEnlaceGrafico);
         }
     }
-    
-    public void add(ArcoGrafico arcoGrafico)
-    {
+
+    public void add(ArcoGrafico arcoGrafico) {
         group.getChildren().add(arcoGrafico.getQuadCurve());
-        
-        if (arcoGrafico instanceof Serializable)
-        {
+
+        if (arcoGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) arcoGrafico);
         }
     }
-    public void remove(VerticeEnlaceGrafico verticeEnlaceGrafico)
-    {
+
+    public void remove(VerticeEnlaceGrafico verticeEnlaceGrafico) {
         group.getChildren().add(verticeEnlaceGrafico.getCircle());
-        if (verticeEnlaceGrafico instanceof Serializable)
-        {
+        if (verticeEnlaceGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) verticeEnlaceGrafico);
         }
-        
+
     }
 
     public void remove(Node node) {
@@ -243,15 +243,15 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     }
 
     public void remove(NodoGrafico nodoGrafico) {
-       
+
 
         group.getChildren().remove(nodoGrafico.getGroup());
         if (nodoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) nodoGrafico);
         }
     }
-    public void remove(ArcoGrafico arcoGrafico) 
-    {
+
+    public void remove(ArcoGrafico arcoGrafico) {
         group.getChildren().remove(arcoGrafico.getQuadCurve());
         if (arcoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) arcoGrafico);
@@ -299,57 +299,82 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
     }
 
-    private void readObject(ObjectInputStream inputStream) {
-        try 
-        {           
-            inputStream.defaultReadObject();
-            initTransientObjects();
-            
-            for(Serializable serializable: objectsSerializable)
-            {
-                if(serializable instanceof ArcoGrafico)
-                {
-                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable;
-                    group.getChildren().add(arcoGrafico.getQuadCurve());                                   
-                }           
-            }
-            for(Serializable serializable: objectsSerializable)
-            {
-                if(serializable instanceof VerticeEnlaceGrafico)
-                {
-                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) serializable;
-                    group.getChildren().add(verticeEnlaceGrafico.getCircle());                                   
-                }           
-            }                  
-            
-            for(Serializable serializable: objectsSerializable)
-            {
-                if(serializable instanceof NodoGrafico)
-                {
-                    NodoGrafico nodoGrafico = (NodoGrafico)serializable;
-                    group.getChildren().add(nodoGrafico.getGroup());      
-                    if(nodoGrafico instanceof NodoClienteGrafico)
-                    {
-                        listaClientes.add(nodoGrafico);
-                    }
-                    else if(nodoGrafico instanceof NodoDeRecursoGrafico)
-                    {
-                        listaRecursos.add(nodoGrafico);
-                    }
-                    else if(nodoGrafico instanceof EnrutadorGrafico)
-                    {
-                        listaSwitches.add(nodoGrafico);
-                    }
-                    else if(nodoGrafico instanceof  NodoDeServicioGrafico)
-                    {
-                        listaNodoServicio.add(nodoGrafico);
-                    }
-                }                
-            }
-            
+    private void writeObject(ObjectOutputStream objectOutputStream) {
+        try {
+            serializableComplete = false;
+            objectOutputStream.defaultWriteObject();
+
+            System.out.println("Write:" + " Grupo");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void readObject(ObjectInputStream inputStream) {
+        try {
+            inputStream.defaultReadObject();
+            initTransientObjects();
+
+
+            for (Serializable serializable : objectsSerializable) {
+                if (serializable instanceof ArcoGrafico) {
+                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable;
+
+                    arcoGrafico.initTransientObjects();
+
+                    arcoGrafico.getQuadCurve().setStartX(arcoGrafico.getStartX());
+                    arcoGrafico.getQuadCurve().setStartY(arcoGrafico.getStartY());
+
+                    arcoGrafico.getQuadCurve().setEndX(arcoGrafico.getEndX());
+                    arcoGrafico.getQuadCurve().setEndY(arcoGrafico.getEndY());
+
+                    arcoGrafico.getQuadCurve().setControlX(arcoGrafico.getControlX());
+                    arcoGrafico.getQuadCurve().setControlY(arcoGrafico.getControlY());
+                    group.getChildren().add(arcoGrafico.getQuadCurve());
+                }
+            }
+            for (Serializable serializable : objectsSerializable) {
+                if (serializable instanceof VerticeEnlaceGrafico) {
+                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) serializable;
+
+                    verticeEnlaceGrafico.initTransientObjects();
+                    verticeEnlaceGrafico.getCircle().setCenterX(verticeEnlaceGrafico.getCenterX());
+                    verticeEnlaceGrafico.getCircle().setCenterY(verticeEnlaceGrafico.getCenterY());
+                    verticeEnlaceGrafico.getCircle().setFill(Color.AQUAMARINE);
+                    group.getChildren().add(verticeEnlaceGrafico.getCircle());
+                }
+            }
+
+            for (Serializable serializable : objectsSerializable) {
+                if (serializable instanceof NodoGrafico) {
+                    NodoGrafico nodoGrafico = (NodoGrafico) serializable;
+                    //  group.getChildren().add(nodoGrafico.getGroup());  
+                    if (nodoGrafico.getNombre() != null) {
+
+
+                        nodoGrafico.initTransientObjects();
+                        nodoGrafico.getGroup().setLayoutX(nodoGrafico.getLayoutX());
+                        nodoGrafico.getGroup().setLayoutY(nodoGrafico.getLayoutY());
+                        nodoGrafico.seleccionar(false);
+                        group.getChildren().add(nodoGrafico.getGroup());
+                    }
+
+                    if (nodoGrafico instanceof NodoClienteGrafico) {
+                        listaClientes.add(nodoGrafico);
+                    } else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
+                        listaRecursos.add(nodoGrafico);
+                    } else if (nodoGrafico instanceof EnrutadorGrafico) {
+                        listaSwitches.add(nodoGrafico);
+                    } else if (nodoGrafico instanceof NodoDeServicioGrafico) {
+                        listaNodoServicio.add(nodoGrafico);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        serializableComplete = true;
     }
 
     public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
@@ -396,12 +421,12 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                         polygon = multiPolygon.getGeometryN(geometryI);
 
                         coords = polygon.getCoordinates();
-                        
+
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
                         path.setFill(Color.web("#B5B3AB"));//A0A5CE,B7B7B7
-                        
+
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 0; i < coords.length; i++) {

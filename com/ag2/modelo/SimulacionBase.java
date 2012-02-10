@@ -27,13 +27,17 @@ public class SimulacionBase implements Runnable, Serializable {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private AbsControllerAdminLink controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
-    public  String id;
+    private String id;
 
     public static SimulacionBase getInstance() {
         if (simulacionBase == null) {
             simulacionBase = new SimulacionBase();
         }
         return simulacionBase;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public static void loadInstance(SimulacionBase simulacionBase) {
@@ -62,6 +66,8 @@ public class SimulacionBase implements Runnable, Serializable {
 
     public void setOutputterModel(OutputterModel outputterModel) {
         this.outputterModel = outputterModel;
+        
+        
     }
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
@@ -99,7 +105,7 @@ public class SimulacionBase implements Runnable, Serializable {
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
-        objectOutputStream.defaultWriteObject();
+            objectOutputStream.defaultWriteObject();
 
     }
 
