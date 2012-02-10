@@ -139,7 +139,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
                 VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
-                    verticeGrafico.getCircle().setFill(Color.AQUAMARINE);
+                    verticeGrafico.getCircle().setFill(Color.LIGHTGREEN);
                     verticeGrafico.getCircle().toFront();
                 }
             }

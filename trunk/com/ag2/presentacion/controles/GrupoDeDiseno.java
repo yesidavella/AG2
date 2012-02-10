@@ -340,7 +340,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                     verticeEnlaceGrafico.initTransientObjects();
                     verticeEnlaceGrafico.getCircle().setCenterX(verticeEnlaceGrafico.getCenterX());
                     verticeEnlaceGrafico.getCircle().setCenterY(verticeEnlaceGrafico.getCenterY());
-                    verticeEnlaceGrafico.getCircle().setFill(Color.AQUAMARINE);
+                 
                     group.getChildren().add(verticeEnlaceGrafico.getCircle());
                 }
             }
@@ -425,7 +425,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-                        path.setFill(Color.web("#B5B3AB"));//A0A5CE,B7B7B7
+                        path.setFill(Color.web("#A4A4A4"));//A0A5CE,B7B7B7
 
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
