@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 public class Main extends Application implements Serializable {
 
     private transient Serializador serializador;
-    private ControladorAbstractoAdminNodo ctrlCreadorYAdministradorNodo;
-    private ExecuteAbstractController executeAbstractController;
+    private ControladorAdminNodo ctrlCreadorYAdministradorNodo;
+    private ExecuteController executeAbstractController;
     private ModeloCrearNodo modeloCrearNodo;
     private AbsControllerAdminLink ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
@@ -93,13 +93,14 @@ public class Main extends Application implements Serializable {
        
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulacionBase.getInstance().setResultsAbstractController(resultsController);
+       
     }
 
     public ResultsController getResultsController() {
         return resultsController;
     }
 
-    public ControladorAbstractoAdminNodo getCtrlCreadorYAdministradorNodo() {
+    public ControladorAdminNodo getCtrlCreadorYAdministradorNodo() {
         return ctrlCreadorYAdministradorNodo;
     }
 
@@ -107,7 +108,7 @@ public class Main extends Application implements Serializable {
         return ctrlCrearYAdminEnlace;
     }
 
-    public ExecuteAbstractController getExecuteAbstractController() {
+    public ExecuteController getExecuteAbstractController() {
         return executeAbstractController;
     }
 
