@@ -9,7 +9,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javax.swing.JOptionPane;
 
 public class Main extends Application implements Serializable {
 
@@ -26,7 +29,7 @@ public class Main extends Application implements Serializable {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("Modelo AG2- Simulador Grafico");
+        stage.setTitle("Modelo AG2- Simulador Grafico");       
         stage.setScene(IGU.getInstance());
         IGU.getInstance().setStage(stage);
         IGU.getInstance().setMain(this);
@@ -36,6 +39,24 @@ public class Main extends Application implements Serializable {
         inicializarModelosYContrladoresDeCreacionDeNodos();
         IGU.getInstance().inicializarEstadoDeIGU();
         serializador = new Serializador(this, stage);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+            @Override
+            public void handle(WindowEvent event) 
+            {
+                int result = JOptionPane.showConfirmDialog(
+                null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if (result == JOptionPane.NO_OPTION) {
+                    System.exit(0);
+                } else if (result == JOptionPane.YES_OPTION) {
+                    save(true);
+                }event.consume();
+
+
+            }
+        });
+        
 
     }
     

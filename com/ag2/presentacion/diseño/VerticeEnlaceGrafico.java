@@ -46,6 +46,7 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
         circle = new Circle(); 
          circle.setRadius(diametro);
          circle.toFront();
+         circle.setFill(Color.LIGHTGREEN);
         establecerEventoOnMouseEntered();
         establecerEventoOnMouseDragged();
         establecerEventoOnMouseClicked();

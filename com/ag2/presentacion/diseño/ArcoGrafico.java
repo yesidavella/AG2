@@ -73,7 +73,7 @@ public class ArcoGrafico  implements Serializable {
         quadCurve.setStroke(Color.LIGHTGREEN);
         
         DropShadow drpShdResplandorArco = new DropShadow();
-        drpShdResplandorArco.setColor(Color.LIGHTGREY);
+        drpShdResplandorArco.setColor(Color.WHITESMOKE);
         drpShdResplandorArco.setSpread(0.5);
         drpShdResplandorArco.setWidth(30);
         drpShdResplandorArco.setHeight(30);

@@ -46,12 +46,12 @@ TableView{
 }
 
 .arcoSeleccionado{
-    -fx-stroke:#44FF00;
+    -fx-stroke:#3ADF00;
     -fx-stroke-dash-array: 12 6 9 6;
 }
 
 .arcoNoSeleccionado{
-    -fx-stroke:#7FFFD4;
+    -fx-stroke:#90EE90;
     -fx-stroke-dash-array: 100%;
 }
 
