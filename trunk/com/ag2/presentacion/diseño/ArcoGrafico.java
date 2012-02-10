@@ -64,7 +64,7 @@ public class ArcoGrafico  implements Serializable {
     }
        
 
-    private void initTransientObjects()
+    public void initTransientObjects()
     {
         quadCurve = new QuadCurve(); 
         quadCurve.setFill(null);
@@ -318,16 +318,7 @@ public class ArcoGrafico  implements Serializable {
         try {
             
             inputStream.defaultReadObject();
-            initTransientObjects();
             
-            quadCurve.setStartX(startX);
-            quadCurve.setStartY(startY); 
-            
-            quadCurve.setEndX(endX);
-            quadCurve.setEndY(endY); 
-            
-            quadCurve.setControlX(controlX);
-            quadCurve.setControlY(controlY);
             
             
         } catch (Exception e) {
@@ -337,7 +328,9 @@ public class ArcoGrafico  implements Serializable {
     
     private void writeObject(ObjectOutputStream stream){
         try {
+            
             stream.defaultWriteObject();
+            System.out.println("Write : Arco" );
         } catch (IOException ex) {
             Logger.getLogger(ArcoGrafico.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -135,9 +135,10 @@ public class Main extends Application implements Serializable {
     {
         simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance(); 
         SimulacionBase.loadInstance(simulacionBase); 
-        grupoDeDiseno = main.getGrupoDeDiseno(); 
+        grupoDeDiseno = main.getGrupoDeDiseno();
+        
         IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
-       
+   
         ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
         ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
         executeAbstractController= main.getExecuteAbstractController();

@@ -41,6 +41,7 @@ public class Serializador {
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(main);
+                objectOutputStream.flush();
                 objectOutputStream.close();
             }
 

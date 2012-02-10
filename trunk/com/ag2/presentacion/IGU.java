@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
@@ -65,6 +66,9 @@ public class IGU extends Scene implements Serializable {
     private Boton btnPlusZoom;
     private Group grRoot = new Group();
     private VBox vbNavegation = new VBox();
+    private Tab tabSimulacion = new Tab();
+    private Tab tabResultados = new Tab();
+    private Tab tabResultadosHTML = new Tab();
 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
@@ -87,7 +91,8 @@ public class IGU extends Scene implements Serializable {
 
         grRoot.getChildren().remove(this.grGrupoDeDiseño.getGroup());
         this.grGrupoDeDiseño = grupoDeDiseño;
-        //exercutePane = new ExecutePane(grGrupoDeDiseño.getGroup());
+        grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
+        
         executePane.setGroup(grGrupoDeDiseño.getGroup());
         btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
@@ -95,7 +100,6 @@ public class IGU extends Scene implements Serializable {
         btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-
         btnCliente.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
@@ -104,8 +108,8 @@ public class IGU extends Scene implements Serializable {
         btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
         executePane.setGroup(grGrupoDeDiseño.getGroup());
-        grGrupoDeDiseño.setScrollPane(scPnWorld);
-        grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
+        grGrupoDeDiseño.setScrollPane(scPnWorld);       
+      
         crearPanelDeNavegacionMapa(vbNavegation);
         adicionarEventoDeTecladoAEscena(this);
     }
@@ -369,9 +373,7 @@ public class IGU extends Scene implements Serializable {
 
         TabPane cajaDetabs = new TabPane();
 
-        Tab tabSimulacion = new Tab();
-        Tab tabResultados = new Tab();
-        Tab tabResultadosHTML = new Tab();
+       
 
         tabSimulacion.setClosable(false);
         tabSimulacion.setText("Simulación");
