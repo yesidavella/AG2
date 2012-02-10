@@ -69,6 +69,7 @@ public class IGU extends Scene implements Serializable {
     private Tab tabSimulacion = new Tab();
     private Tab tabResultados = new Tab();
     private Tab tabResultadosHTML = new Tab();
+    private TabPane tpBox = new TabPane();
 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
@@ -137,8 +138,8 @@ public class IGU extends Scene implements Serializable {
         contenedorHerramietas.getChildren().addAll(executePane, barraHerramientas);
         layOutVentanaPrincipal.setLeft(contenedorHerramietas);
         //Diseño central
-        TabPane cajaDetabs = crearLienzoDeTabs();
-        layOutVentanaPrincipal.setCenter(cajaDetabs);
+        crearLienzoDeTabs();
+        layOutVentanaPrincipal.setCenter(tpBox);
         //Diseño inferior
         HBox cajaInferiorHor = createBottomDesign();
         layOutVentanaPrincipal.setBottom(cajaInferiorHor);
@@ -369,17 +370,21 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    private TabPane crearLienzoDeTabs() {
+    private void crearLienzoDeTabs() {
 
-        TabPane cajaDetabs = new TabPane();
+        
 
        
 
         tabSimulacion.setClosable(false);
         tabSimulacion.setText("Simulación");
+        tabSimulacion.setClosable(false);
         tabResultados.setText("Resultados Phosphorus");
+        tabResultados.setClosable(false);
+        
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
-
+        tabResultadosHTML.setClosable(false);
+        
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
@@ -391,9 +396,9 @@ public class IGU extends Scene implements Serializable {
         scPnWorld.setContent(grRoot);
         tabSimulacion.setContent(scPnWorld);
 
-        cajaDetabs.getTabs().addAll(tabSimulacion, tabResultados, tabResultadosHTML);
+        tpBox.getTabs().addAll(tabSimulacion);
 
-        return cajaDetabs;
+       
     }
 
     private HBox createBottomDesign() {
@@ -676,6 +681,8 @@ public class IGU extends Scene implements Serializable {
         //prgBarBarraProgresoEjec.setProgress(0);
         prgBarExecProgress.setVisible(false);
         grGrupoDeDiseño.getGroup().setOpacity(1);
+     
+        
     }
 
     public void deshabilitar() {
@@ -690,6 +697,9 @@ public class IGU extends Scene implements Serializable {
         barraHerramientas.setOpacity(0.8);
         prgBarExecProgress.setProgress(-1);
         grGrupoDeDiseño.getGroup().setOpacity(0.8);
+        tpBox.getTabs().addAll(  tabResultadosHTML, tabResultados);
+        tpBox.getSelectionModel().select(tabResultados);
+        
     }
 
     public ExecutePane getExecutePane() {

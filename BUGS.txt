@@ -8,7 +8,7 @@ barra de ejecucion encima.Yesid 1H..............................................
 6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Pendiente
 7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Pendiente
 8.No mostrar pestaña html antes de ejecutar. Los tabs no deben
-ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Pendiente
+ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Listo
 9.Cargar colores correctos al des-serializar, colocar escucha al 
 cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin ...........   Pendiente
 10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
