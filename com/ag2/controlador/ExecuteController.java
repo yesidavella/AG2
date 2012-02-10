@@ -39,7 +39,7 @@ public class ExecuteController extends ExecuteAbstractController {
         SimulationInstance simulacion = SimulacionBase.getInstance().getSimulacion();
         GridSimulator simulador = SimulacionBase.getInstance().getSimulador();
         
-        //Creo el modelo
+        //Hace las veces de modelo
         NetworkChecker networkChecker = new NetworkChecker(simulacion,simulador);
         
         networkChecker.check();
