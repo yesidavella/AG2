@@ -7,6 +7,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import Grid.Routing.RoutingViaJung;
+import Grid.Routing.ShortesPathRouting;
 import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
@@ -112,7 +113,7 @@ public class SimulacionBase implements Runnable, Serializable {
     public void initNetwork() {
         simulacion.stopEvent = false;
 
-        simulador.setRouting(new RoutingViaJung(simulador));
+        simulador.setRouting(new ShortesPathRouting(simulador));
         route();
     }
 
