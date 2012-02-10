@@ -152,8 +152,8 @@ public class NetworkChecker {
                 }
             }
         } else if (routing instanceof ShortesPathRouting) {
-            JOptionPane.showMessageDialog(null, "El enrutamiento se esta haciendo de una forma no esperada. El programa se cerrara.");
-            System.exit(1);
+            JOptionPane.showMessageDialog(null, "El enrutamiento se esta haciendo con ShortesPathRouting.");
+            //System.exit(1);
         }
     }
 
