@@ -70,6 +70,7 @@ public class IGU extends Scene implements Serializable {
     private Tab tabResultados = new Tab();
     private Tab tabResultadosHTML = new Tab();
     private TabPane tpBox = new TabPane();
+    private TableView<String> tbvSimulationProperties = new TableView<String>();
 
     public ScrollPane getScPnWorld() {
         return scPnWorld;
@@ -449,7 +450,7 @@ public class IGU extends Scene implements Serializable {
 
     private TableView<String> createTbSimulationProperties() {
 
-        TableView<String> tbVwPropSimulacion = new TableView<String>();
+     
 
         TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
         tbColPropNombre.setMinWidth(145);
@@ -463,16 +464,16 @@ public class IGU extends Scene implements Serializable {
 
         TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
-        tbVwPropSimulacion.getColumns().addAll(tbColTituloTbSim);
+        tbvSimulationProperties.getColumns().addAll(tbColTituloTbSim);
 
-        tbVwPropSimulacion.setItems(TipoDePropiedadesPhosphorus.getDatos());
+      
 
-        tbVwPropSimulacion.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
-        tbVwPropSimulacion.setPrefWidth(345);
+        tbvSimulationProperties.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
+        tbvSimulationProperties.setPrefWidth(345);
 
-        tbVwPropSimulacion.setPrefHeight(200);
+        tbvSimulationProperties.setPrefHeight(200);
 
-        return tbVwPropSimulacion;
+        return tbvSimulationProperties;
     }
 
     public void crearPanelDeNavegacionMapa(VBox vBox) {
@@ -712,20 +713,10 @@ public class IGU extends Scene implements Serializable {
     public ResultadosPhosphorus getResustadosPhosphorus() {
         return resultadosPhosphorus;
     }
-//    private void readObject(ObjectInputStream inputStream) {
-//        try 
-//        {
-//            inputStream.defaultReadObject();
-//            tbPropiedadesDispositivo = new TablaPropiedadesDispositivo();
-//            stPnCajaPropDispositivo = new StackPane();
-//            stPnCajaPropDispositivo.getChildren().add(tbPropiedadesDispositivo);
-//            scPnWorld = new ScrollPane(); 
-//            tgHerramientas = new ToggleGroup();
-//            gpNavegacionMapa = new GridPane();
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//        }
-//    }
+
+    public TableView<String> getTbvSimulationProperties() {
+        return tbvSimulationProperties;
+    }
+
+    
 }

@@ -1,5 +1,6 @@
 package com.ag2.config;
 
+import com.ag2.controlador.ExecuteAbstractController;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
@@ -9,11 +10,12 @@ public final class EditorPropiedades {
     private String nameArchivo = "ConfigInit.cfg";
     Properties properties = new Properties();
     private static EditorPropiedades editorPropiedades;  
+
     private EditorPropiedades()
     {
         leerArchivo();
     }   
-    
+   
     public static EditorPropiedades getUniqueInstance()
     {
         if(editorPropiedades == null)
@@ -48,6 +50,7 @@ public final class EditorPropiedades {
           properties.store(fileOutputStream,null);
           fileOutputStream.flush();
           fileOutputStream.close();
+     
             
         } catch (Exception ex) {
             
