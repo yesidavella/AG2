@@ -152,7 +152,7 @@ public class NetworkChecker {
                 }
             }
         } else if (routing instanceof ShortesPathRouting) {
-            JOptionPane.showMessageDialog(null, "El enrutamiento se esta haciendo con ShortesPathRouting.");
+       //     JOptionPane.showMessageDialog(null, "El enrutamiento se esta haciendo con ShortesPathRouting.");
             //System.exit(1);
         }
     }
