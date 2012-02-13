@@ -1,7 +1,7 @@
 Bugs                                                                                               Estado                                                  
 1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
-3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Pendiente
+3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Listo
 4. Bajar menus de navegacion y colocar titulo. COlocar
 barra de ejecucion encima.Yesid 1H..............................................................   Listones
 5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Pendiente
