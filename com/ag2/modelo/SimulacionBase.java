@@ -120,9 +120,11 @@ public class SimulacionBase implements Runnable, Serializable {
     @Override
     public void run() {
 
+     
         initEntities();
         simulacion.run();
 
+        
         for (SimBaseEntity entity : simulador.getEntities()) {
             if (entity instanceof ClientNode) {
                 outputterModel.printClient((ClientNode) entity);

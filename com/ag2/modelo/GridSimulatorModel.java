@@ -27,6 +27,10 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
 
     }
+    public void reloadTime()
+    {
+           simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
+    }
 
     public void setViewResultsPhosphorus(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
@@ -49,6 +53,7 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         SimBaseEntity entity = nextEvent.getTarget().getOwner();
         entity.receive(port, msg);
 
+        reloadTime(); 
         percentage = masterClock.getTime()*100 / simulationTime;
         percentageShort = Math.round((float) percentage);
         if(percentageShort!=percentageSwapShort)
