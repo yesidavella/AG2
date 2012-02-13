@@ -91,4 +91,9 @@ public class ExecuteController extends ExecuteAbstractController {
 
         return null;
     }
+
+    @Override
+    public void reLoadConfigFile() {
+       SimulationInstance.configuration.loadProperties();
+    }
 }

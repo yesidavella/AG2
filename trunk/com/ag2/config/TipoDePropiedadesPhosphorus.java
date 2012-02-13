@@ -1,5 +1,6 @@
 package com.ag2.config;
 
+import com.ag2.controlador.ExecuteController;
 import com.ag2.presentacion.IGU;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +33,12 @@ public enum TipoDePropiedadesPhosphorus {
     LINK_SPEED("linkSpeed", new TextField()),
     OUTPUT_FILE_NAME("outputFileName", new TextField());
 
+    ExecuteController executeController;
+
+    public void setExecuteController(ExecuteController executeController) {
+        this.executeController = executeController;
+    }
+    
     public Control getControl() {
         return control;
     }
@@ -97,6 +104,7 @@ public enum TipoDePropiedadesPhosphorus {
                 if (beforeStateFocus == true && currentStateFocus == false) {
                     String valor = textField.getText();
                     TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
+                    executeController.reLoadConfigFile();
                 }
             }
         });
@@ -111,7 +119,12 @@ public enum TipoDePropiedadesPhosphorus {
 
     }
 
-    public static ObservableList getDatos() {
+    public static ObservableList getDatos(ExecuteController executeController) 
+    {
+        for(TipoDePropiedadesPhosphorus propiedadesPhosphorus: values())
+        {
+            propiedadesPhosphorus.setExecuteController(executeController);
+        }
 
         ObservableList datosPropiedadesSimulacion = FXCollections.observableArrayList(TipoDePropiedadesPhosphorus.values());
         return datosPropiedadesSimulacion;

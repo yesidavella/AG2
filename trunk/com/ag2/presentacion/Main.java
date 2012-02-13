@@ -1,5 +1,6 @@
 package com.ag2.presentacion;
 
+import com.ag2.config.TipoDePropiedadesPhosphorus;
 import com.ag2.config.serializacion.Serializador;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
@@ -114,6 +115,8 @@ public class Main extends Application implements Serializable {
        
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulacionBase.getInstance().setResultsAbstractController(resultsController);
+        
+        IGU.getInstance().getTbvSimulationProperties().setItems(TipoDePropiedadesPhosphorus.getDatos(executeAbstractController));
        
     }
 
