@@ -75,6 +75,11 @@ public class IGU extends Scene implements Serializable {
     public ScrollPane getScPnWorld() {
         return scPnWorld;
     }
+
+    public TablaPropiedadesDispositivo getTbDeviceProperties() {
+        return tbDeviceProperties;
+    }
+    
     private transient Stage stgEscenario;
 
     public static IGU getInstance() {

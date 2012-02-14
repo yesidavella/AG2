@@ -63,6 +63,11 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         }
         setItems(datosPropiedades);       
     }
+    public void clearData()
+    {
+        ObservableList datosPropiedades = FXCollections.observableArrayList();
+         setItems(datosPropiedades); 
+    }
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) 
     {

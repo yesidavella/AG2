@@ -92,6 +92,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
     public void setObjetoGraficoSelecionado(ObjetoSeleccionable objetoGraficoSelecionado) {
         this.objetoGraficoSelecionado = objetoGraficoSelecionado;
+        
     }
 
     public Scale getSclEscalaDeZoom() {

@@ -371,6 +371,9 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
     }
 
     private void setValuesDistribution(DiscreteDistribution distribution, String value, String id) {
+        try 
+        {
+        
         if (id.contains("DDErlang")) {
 
             DDErlang dDErlang = (DDErlang) distribution;
@@ -432,6 +435,12 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
             if (id.contains("Constante")) {
                 constantDistribution.setConstant(Double.parseDouble(value));
             }
+        }
+        
+        }
+        catch(ClassCastException exception)
+        {
+            System.out.println( " Error class dd "+distribution+" value:  "+value+" id "+ id);
         }
 
     }

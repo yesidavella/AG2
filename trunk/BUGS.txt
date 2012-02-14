@@ -13,7 +13,7 @@ ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Fran
 cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin ...........   Listo
 10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
 visual en el combo. 2H Franklin ................................................................   Pendiente
-11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Pendiente
+11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Listo
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
