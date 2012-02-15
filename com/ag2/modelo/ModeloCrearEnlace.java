@@ -2,10 +2,10 @@ package com.ag2.modelo;
 
 import Grid.Entity;
 
-public class ModeloCrearEnlace extends ModeloAbstractoCrearEnlace {
+public class ModeloCrearEnlace extends LinkCreationAbstractModel {
 
     @Override
-    public EnlacePhosphorous crearEnlacePhosphorous(Entity nodoPhosA, Entity nodoPhosB) {
+    public PhosphorusLinkModel createPhosphorusLink(Entity nodoPhosA, Entity nodoPhosB) {
         return ModeloUtil.crearEnlaceBiDireccional(nodoPhosA,nodoPhosB);
     }
 }

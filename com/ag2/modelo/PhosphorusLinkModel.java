@@ -4,14 +4,14 @@ import Grid.Entity;
 import Grid.Port.GridOutPort;
 import java.io.Serializable;
 
-public class EnlacePhosphorous implements Serializable {
+public class PhosphorusLinkModel implements Serializable {
 
     private Entity nodoPhosphorousA;
     private GridOutPort puertoSalidaDeNodoPhosA;
     private Entity nodoPhosphorousB;
     private GridOutPort puertoSalidaDeNoodoPhosB;
 
-    public EnlacePhosphorous(Entity nodoPhosphorousA, GridOutPort puertoSalidaNodoPhosA,
+    public PhosphorusLinkModel(Entity nodoPhosphorousA, GridOutPort puertoSalidaNodoPhosA,
             Entity nodoPhosphorousB, GridOutPort puertoSalidaNodoPhosB) {
 
         this.nodoPhosphorousA = nodoPhosphorousA;

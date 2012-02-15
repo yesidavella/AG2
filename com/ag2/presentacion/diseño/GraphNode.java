@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.AbsControllerAdminLink;
+import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
@@ -46,7 +46,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private String urlDeImagen;
     private boolean arrastrando = false;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
-    private AbsControllerAdminLink controladorAdminEnlace;
+    private LinkAdminAbstractController controladorAdminEnlace;
     private short alto;
     private short ancho;
     private short cantidadDeEnlaces = 0;
@@ -59,7 +59,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
 
-    public GraphNode(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, AbsControllerAdminLink ctrlAbsAdminEnlace) {
+    public GraphNode(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, LinkAdminAbstractController ctrlAbsAdminEnlace) {
 
         this.grupoDeDiseno = grupoDeDiseno;
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;

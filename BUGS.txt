@@ -24,9 +24,19 @@ visual en el combo. 2H Franklin ................................................
 
 Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial) 
 
-Com.ag2.config 
+###### com.ag2.config 
 
 - PhosphorusPropertyEditor
 - PropertyPhosphorusTypeEnum
 
+###### com.ag2.config.serializacion
 
+-UtilSerializator
+
+###### com.ag2.modelo
+
+-LinkCreationAbstractModel
+
+###### com.ag2.controlador
+
+-MatchCoupleObjectContainer

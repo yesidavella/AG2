@@ -1,6 +1,6 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.AbsControllerAdminLink;
+import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
@@ -10,7 +10,7 @@ public class ClientGraphNode extends GraphNode{
     private static int contadorNodo = 0;
   
     
-    public ClientGraphNode(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
+    public ClientGraphNode(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace)
     {
         
         super(grupoDeDiseno,"Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
