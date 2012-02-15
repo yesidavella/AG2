@@ -21,7 +21,7 @@ public class PropiedadeNodo {
     private ArrayList<String> valorArrayList = new ArrayList<String>();
     private TipoDePropiedadNodo tipoDePropiedadNodo;
     protected transient Control control;
-    private TablaPropiedadesDispositivo tablaPropiedadesDispositivo;
+    private EntityPropertyTable tablaPropiedadesDispositivo;
     private boolean subProperty = false; 
     
     public void setDisable(boolean  isDisable)
@@ -135,11 +135,11 @@ public class PropiedadeNodo {
         return valorArrayList.get(0);
     }
 
-    public TablaPropiedadesDispositivo getTablaPropiedadesDispositivo() {
+    public EntityPropertyTable getTablaPropiedadesDispositivo() {
         return tablaPropiedadesDispositivo;
     }
 
-    public void setTablaPropiedadesDispositivo(TablaPropiedadesDispositivo tablaPropiedadesDispositivo) {
+    public void setTablaPropiedadesDispositivo(EntityPropertyTable tablaPropiedadesDispositivo) {
         this.tablaPropiedadesDispositivo = tablaPropiedadesDispositivo;
     }
     

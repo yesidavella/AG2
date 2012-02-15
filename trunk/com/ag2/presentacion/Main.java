@@ -106,9 +106,9 @@ public class Main extends Application implements Serializable {
 
         ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
         LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
-        ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
+        ctrlCrearYAdminEnlace.addModel(modeloCrearEnlace);
 
-        ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+        ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
 
@@ -175,7 +175,7 @@ public class Main extends Application implements Serializable {
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         
-        ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
+        ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         
         SimulacionBase.getInstance().setControladorAdminEnlace(ctrlCrearYAdminEnlace);

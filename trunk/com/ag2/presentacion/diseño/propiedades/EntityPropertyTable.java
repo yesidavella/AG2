@@ -16,7 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> implements VistaNodosGraficos, Serializable
+public class EntityPropertyTable extends TableView<PropiedadeNodo> implements VistaNodosGraficos, Serializable
 {
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
     private LinkAdminAbstractController controladorAdminEnlace;
@@ -30,7 +30,7 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
         this.controladorAdminEnlace = controladorAdminEnlace;
     }    
   
-    public TablaPropiedadesDispositivo()
+    public EntityPropertyTable()
     {   
         TableColumn tbColNombrePropDispositivo = new TableColumn("PROPIEDAD");
         tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, String>("nombre"));

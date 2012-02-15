@@ -41,7 +41,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
  
         properties = new HashMap<String, String>();
         determinarArcoInicialYFinal();
-        controladorAdminEnlace.crearEnlace(this);
+        controladorAdminEnlace.createLink(this);
         seleccionar(true);
         
     }
@@ -129,7 +129,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
             }
             
             grGrDeDiseño.setObjetoGraficoSelecionado(this);
-            adminLinkController.consultarPropiedades(this);
+            adminLinkController.queryProperty(this);
 
         }else{
             for(GraphArc arcoGrafico:arcos){

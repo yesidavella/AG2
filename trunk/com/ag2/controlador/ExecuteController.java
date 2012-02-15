@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
-    private Hashtable<GraphNode,Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObject();
+    private Hashtable<GraphNode,Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
 
     @Override
     public void initNetwork() {

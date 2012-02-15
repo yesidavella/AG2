@@ -12,7 +12,7 @@ public abstract class MatchCoupleObjectContainer implements Serializable{
     private static Hashtable<GraphNode,Entity> nodeMatchCoupleObjectContainer;
     private static Hashtable<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer;
     
-    public static Hashtable<GraphNode,Entity> getInstanceNodeMatchCoupleObject(){
+    public static Hashtable<GraphNode,Entity> getInstanceNodeMatchCoupleObjectContainer(){
     
         if(nodeMatchCoupleObjectContainer == null){
             nodeMatchCoupleObjectContainer = new Hashtable<GraphNode,Entity>();
@@ -20,7 +20,7 @@ public abstract class MatchCoupleObjectContainer implements Serializable{
         return nodeMatchCoupleObjectContainer;
     }
     
-    public static Hashtable getInstanceLinkMatchCoupleObject() {
+    public static Hashtable getInstanceLinkMatchCoupleObjectContainer() {
 
         if (linkMatchCoupleObjectContainer == null) {
             linkMatchCoupleObjectContainer = new Hashtable<GraphLink,PhosphorusLinkModel>();
