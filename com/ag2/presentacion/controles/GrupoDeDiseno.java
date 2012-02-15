@@ -79,6 +79,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         sclEscalaDeZoom = new Scale(1.44, -1.44);
         group.getTransforms().add(sclEscalaDeZoom);
         listaClientes = FXCollections.observableArrayList();
+     
         listaRecursos = FXCollections.observableArrayList();
         listaSwitches = FXCollections.observableArrayList();
         listaNodoServicio = FXCollections.observableArrayList();

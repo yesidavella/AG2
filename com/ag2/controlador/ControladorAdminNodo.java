@@ -9,6 +9,7 @@ import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switches.AbstractSwitch;
 import Grid.Port.GridOutPort;
 import com.ag2.modelo.*;
+import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.VistaNodosGraficos;
 import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.NodeRelationProperty;
@@ -275,6 +276,26 @@ public class ControladorAdminNodo extends ControladorAbstractoAdminNodo implemen
 
         if (id.equalsIgnoreCase("nombre")) {
             nodoGraficoSeleccionado.setNombre(valor);
+            if(nodoGraficoSeleccionado instanceof NodoClienteGrafico)
+            {
+                IGU.getInstance().getGrGrupoDeDiseño().getListaClientes().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getListaClientes().add(nodoGraficoSeleccionado);
+            }else if(nodoGraficoSeleccionado instanceof NodoDeRecursoGrafico)
+            {
+                IGU.getInstance().getGrGrupoDeDiseño().getListaRecursos().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getListaRecursos().add(nodoGraficoSeleccionado);
+            }
+            else if(nodoGraficoSeleccionado instanceof NodoDeServicioGrafico)
+            {
+                IGU.getInstance().getGrGrupoDeDiseño().getListaNodoServicio().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getListaNodoServicio().add(nodoGraficoSeleccionado);
+            }
+            else if(nodoGraficoSeleccionado instanceof EnrutadorGrafico)
+            {
+                IGU.getInstance().getGrGrupoDeDiseño().getListaSwitches().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getListaSwitches().add(nodoGraficoSeleccionado);
+            }
+            
         }
 
         if (nodoGraficoSeleccionado instanceof NodoClienteGrafico) {
