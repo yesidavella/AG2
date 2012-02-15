@@ -4,7 +4,7 @@
  */
 package com.ag2.presentacion.diseño.propiedades;
 
-import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.GraphNode;
 import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +34,7 @@ public class NodeRelationProperty extends PropiedadeNodo implements Serializable
         return observableListNodes;
     }
     
-    public void setPrimerValor(NodoGrafico nodoGrafico){
+    public void setPrimerValor(GraphNode nodoGrafico){
          ((ChoiceBox) control).getSelectionModel().select(nodoGrafico);
     }
 }

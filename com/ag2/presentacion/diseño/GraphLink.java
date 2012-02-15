@@ -9,18 +9,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.paint.Color;
 
-public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSeleccionable  {
+public class GraphLink implements NodeListener,Serializable,Selectable  {
 
-    private NodoGrafico nodoGraficoA;
-    private NodoGrafico nodoGraficoB;
-    private ArrayList<ArcoGrafico> arcos = new ArrayList<ArcoGrafico>();
-    private ArcoGrafico arcInicial,arcFinal;
+    private GraphNode nodoGraficoA;
+    private GraphNode nodoGraficoB;
+    private ArrayList<GraphArc> arcos = new ArrayList<GraphArc>();
+    private GraphArc arcInicial,arcFinal;
     private GrupoDeDiseno grGrDeDiseño;
     private AbsControllerAdminLink adminLinkController;
     private boolean isSeleccionado;
     private HashMap<String,String> properties;
 
-    public EnlaceGrafico(GrupoDeDiseno group, NodoGrafico nodoGraficoA, NodoGrafico nodoGraficoB,AbsControllerAdminLink controladorAdminEnlace) {
+    public GraphLink(GrupoDeDiseno group, GraphNode nodoGraficoA, GraphNode nodoGraficoB,AbsControllerAdminLink controladorAdminEnlace) {
         
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;
@@ -30,7 +30,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
         this.grGrDeDiseño = group;
 
-        arcInicial = new ArcoGrafico(this, grGrDeDiseño);
+        arcInicial = new GraphArc(this, grGrDeDiseño);
         
         arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
         arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
@@ -50,11 +50,11 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         grGrDeDiseño.add(arcInicial);
     }
 
-    public ArrayList<ArcoGrafico> getArcos() {
+    public ArrayList<GraphArc> getArcos() {
         return arcos;
     }
     
-    public NodoGrafico getNodoGraficoB() {
+    public GraphNode getNodoGraficoB() {
         return nodoGraficoB;
     }
 
@@ -66,7 +66,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         {
             if (nodoGraficoA.isEliminado() || nodoGraficoB.isEliminado()) {
 
-                for (ArcoGrafico arcoGrafico : arcos) 
+                for (GraphArc arcoGrafico : arcos) 
                 {
                     arcoGrafico.setEliminado(true);
                     arcoGrafico.updateArcoListeners();
@@ -88,7 +88,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         }
     }
 
-    public NodoGrafico getNodoGraficoA() {
+    public GraphNode getNodoGraficoA() {
         return nodoGraficoA;
     }
     
@@ -107,7 +107,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
 
     public void seleccionar(boolean isSeleccionado) {
         
-        ObjetoSeleccionable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
+        Selectable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
         
         if(objSeleccionado!=null && objSeleccionado!=this){
             objSeleccionado.seleccionar(false);
@@ -116,11 +116,11 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
         this.isSeleccionado = isSeleccionado;
         
         if(isSeleccionado){
-            for(ArcoGrafico arcoGrafico:arcos){
+            for(GraphArc arcoGrafico:arcos){
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoNoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoSeleccionado");
                 
-                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
+                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.web("#44FF00"));
@@ -132,11 +132,11 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
             adminLinkController.consultarPropiedades(this);
 
         }else{
-            for(ArcoGrafico arcoGrafico:arcos){
+            for(GraphArc arcoGrafico:arcos){
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
                 
-                VerticeEnlaceGrafico verticeGrafico = arcoGrafico.getVerticeGrafInicial();
+                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getVerticeGrafInicial();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.LIGHTGREEN);
@@ -154,7 +154,7 @@ public class EnlaceGrafico implements NodoListener,Serializable,ObjetoSelecciona
     
     public void determinarArcoInicialYFinal(){
 
-        for (ArcoGrafico arco : arcos) {
+        for (GraphArc arco : arcos) {
             /*Para saber por q esto se puede asegurar, vease ArcoGrafico metodo setOnMouseClicked
              * cuando el tipo de boton seleccionado es TiposDeBoton.ADICIONAR_VERTICE
             */

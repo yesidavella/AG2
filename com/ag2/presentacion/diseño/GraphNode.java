@@ -26,12 +26,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
+public abstract class GraphNode implements Selectable, Serializable {
 
     private static ImageView IMG_VW_DENY_LINK = new ImageView(
-            new Image(NodoGrafico.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
+            new Image(GraphNode.class.getResourceAsStream("../../../../recursos/imagenes/prohibido_enlace.png")));
     public static boolean inicioGeneracionDeEnlace = false;
-    private static NodoGrafico nodoAComodin = null;
+    private static GraphNode nodoAComodin = null;
     protected transient Image imagen = null;
     private transient Line enlaceComodin;
     private transient ImageView imageView;
@@ -40,7 +40,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     protected transient VBox cuadroExteriorResaltado;
     private transient Group group;
     private String nombre = null;
-    private ArrayList<NodoListener> nodosListener = new ArrayList<NodoListener>();
+    private ArrayList<NodeListener> nodosListener = new ArrayList<NodeListener>();
     private boolean estaEliminado = false;
     private boolean selecionado = false;
     private String urlDeImagen;
@@ -59,7 +59,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
     private double layoutX;
     private double layoutY;
 
-    public NodoGrafico(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, AbsControllerAdminLink ctrlAbsAdminEnlace) {
+    public GraphNode(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo, AbsControllerAdminLink ctrlAbsAdminEnlace) {
 
         this.grupoDeDiseno = grupoDeDiseno;
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
@@ -123,8 +123,8 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof NodoGrafico) {
-            NodoGrafico nodoGrafico = (NodoGrafico) obj;
+        if (obj instanceof GraphNode) {
+            GraphNode nodoGrafico = (GraphNode) obj;
             return nombreOriginal.equals(nodoGrafico.getNombreOriginal());
         }
         return false;
@@ -175,7 +175,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
             public void handle(MouseEvent mouseEvent) {
 
                 TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
-                NodoGrafico nodoGrafico = NodoGrafico.this;
+                GraphNode nodoGrafico = GraphNode.this;
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
                     group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
@@ -189,7 +189,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                 if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
 
-                    if (nodoAComodin != null && nodoAComodin != nodoGrafico && NodoGrafico.inicioGeneracionDeEnlace) {
+                    if (nodoAComodin != null && nodoAComodin != nodoGrafico && GraphNode.inicioGeneracionDeEnlace) {
 
                         if (nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
 
@@ -197,7 +197,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                             grupoDeDiseno.remove(enlaceComodin);
 
-                            EnlaceGrafico enlaceGrafico = new EnlaceGrafico(grupoDeDiseno, nodoAComodin, nodoGrafico, controladorAdminEnlace);
+                            GraphLink enlaceGrafico = new GraphLink(grupoDeDiseno, nodoAComodin, nodoGrafico, controladorAdminEnlace);
                             enlaceGrafico.addArcosInicialAlGrupo();
 
                             nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
@@ -228,7 +228,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
 
-                    NodoGrafico nodoGrafico = NodoGrafico.this;
+                    GraphNode nodoGrafico = GraphNode.this;
                     nodoAComodin = nodoGrafico;
 
                     double x = nodoGrafico.getLayoutX();
@@ -242,7 +242,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
                     nodoGrafico.group.toFront();
 
                     if (mouseEvent.isPrimaryButtonDown() && group.isHover()) {
-                        NodoGrafico.inicioGeneracionDeEnlace = true;
+                        GraphNode.inicioGeneracionDeEnlace = true;
                     }
                 }
                 group.setScaleX(1);
@@ -292,7 +292,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-                NodoGrafico nodoGrafico = NodoGrafico.this;
+                GraphNode nodoGrafico = GraphNode.this;
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
 
@@ -305,7 +305,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
 
-                    ObjetoSeleccionable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
+                    Selectable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
 
                     if (!arrastrando) {
                         if (objSeleccionado == nodoGrafico) {
@@ -349,7 +349,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
                 //System.out.println("Exit:" + getNombre());
 
                 if (!mouseEvent.isPrimaryButtonDown()) {
-                    NodoGrafico.inicioGeneracionDeEnlace = false;
+                    GraphNode.inicioGeneracionDeEnlace = false;
                     nodoAComodin = null;
                 }
 
@@ -357,11 +357,11 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         });
     }
 
-    public void addNodoListener(NodoListener listenerNodo) {
+    public void addNodoListener(NodeListener listenerNodo) {
         nodosListener.add(listenerNodo);
     }
 
-    public void removeNodoListener(NodoListener listenerNodo) {
+    public void removeNodoListener(NodeListener listenerNodo) {
         nodosListener.remove(listenerNodo);
     }
 
@@ -369,7 +369,7 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         layoutX = this.getLayoutX();
         layoutY = this.getLayoutY();
 
-        for (NodoListener nodoListener : nodosListener) {
+        for (NodeListener nodoListener : nodosListener) {
             nodoListener.update();
         }
     }
@@ -544,5 +544,5 @@ public abstract class NodoGrafico implements ObjetoSeleccionable, Serializable {
         });
     }
 
-    public abstract boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace);
+    public abstract boolean puedeGenerarEnlaceCon(GraphNode nodoInicioDelEnlace);
 }

@@ -49,7 +49,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     private transient ScrollPane scPnPanelWorld;
     private transient Scale sclEscalaDeZoom;
     private transient Group group;
-    private ObjetoSeleccionable objetoGraficoSelecionado;
+    private Selectable objetoGraficoSelecionado;
     private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
@@ -87,11 +87,11 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
     }
 
-    public ObjetoSeleccionable getObjetoGraficoSelecionado() {
+    public Selectable getObjetoGraficoSelecionado() {
         return objetoGraficoSelecionado;
     }
 
-    public void setObjetoGraficoSelecionado(ObjetoSeleccionable objetoGraficoSelecionado) {
+    public void setObjetoGraficoSelecionado(Selectable objetoGraficoSelecionado) {
         this.objetoGraficoSelecionado = objetoGraficoSelecionado;
         
     }
@@ -137,7 +137,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
-            NodoGrafico nuevoNodo = null;
+            GraphNode nuevoNodo = null;
             ControladorAbstractoAdminNodo controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
             AbsControllerAdminLink controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
             double posClcikX = mouEvent.getX();
@@ -148,27 +148,27 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
             } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
 
-                nuevoNodo = new NodoClienteGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new ClientGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
-                nuevoNodo = new NodoDeServicioGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new BrokerGrahpNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaNodoServicio.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
-                nuevoNodo = new EnrutadorOpticoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new OCS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new EnrutadorRafagaGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new OBS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new EnrutadorHibridoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new HybridSwitchGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
             } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
-                nuevoNodo = new NodoDeRecursoGrafico(this, controladorAdminNodo, controladorAdminEnlace);
+                nuevoNodo = new ResourceGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaRecursos.add(nuevoNodo);
             }
 
@@ -188,14 +188,14 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         }
     }
 
-    public void eliminarNodeListaNavegacion(NodoGrafico nodoGrafico) {
-        if (nodoGrafico instanceof NodoClienteGrafico) {
+    public void eliminarNodeListaNavegacion(GraphNode nodoGrafico) {
+        if (nodoGrafico instanceof ClientGraphNode) {
             listaClientes.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
+        } else if (nodoGrafico instanceof ResourceGraphNode) {
             listaRecursos.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof EnrutadorGrafico) {
+        } else if (nodoGrafico instanceof SwitchGraphNode) {
             listaSwitches.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof NodoDeServicioGrafico) {
+        } else if (nodoGrafico instanceof BrokerGrahpNode) {
             listaNodoServicio.remove(nodoGrafico);
         }
     }
@@ -207,21 +207,21 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         }
     }
 
-    public void add(NodoGrafico nodoGrafico) {
+    public void add(GraphNode nodoGrafico) {
         group.getChildren().add(nodoGrafico.getGroup());
         if (nodoGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) nodoGrafico);
         }
     }
 
-    public void add(VerticeEnlaceGrafico verticeEnlaceGrafico) {
+    public void add(GraphArcSeparatorPoint verticeEnlaceGrafico) {
         group.getChildren().add(verticeEnlaceGrafico.getCircle());
         if (verticeEnlaceGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) verticeEnlaceGrafico);
         }
     }
 
-    public void add(ArcoGrafico arcoGrafico) {
+    public void add(GraphArc arcoGrafico) {
         group.getChildren().add(arcoGrafico.getQuadCurve());
 
         if (arcoGrafico instanceof Serializable) {
@@ -229,7 +229,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         }
     }
 
-    public void remove(VerticeEnlaceGrafico verticeEnlaceGrafico) {
+    public void remove(GraphArcSeparatorPoint verticeEnlaceGrafico) {
         group.getChildren().add(verticeEnlaceGrafico.getCircle());
         if (verticeEnlaceGrafico instanceof Serializable) {
             objectsSerializable.add((Serializable) verticeEnlaceGrafico);
@@ -244,7 +244,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         }
     }
 
-    public void remove(NodoGrafico nodoGrafico) {
+    public void remove(GraphNode nodoGrafico) {
 
 
         group.getChildren().remove(nodoGrafico.getGroup());
@@ -253,14 +253,14 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         }
     }
 
-    public void remove(ArcoGrafico arcoGrafico) {
+    public void remove(GraphArc arcoGrafico) {
         group.getChildren().remove(arcoGrafico.getQuadCurve());
         if (arcoGrafico instanceof Serializable) {
             objectsSerializable.remove((Serializable) arcoGrafico);
         }
     }
 
-    private void dibujarNuevoNodoEnElMapa(NodoGrafico nuevoNodo, MouseEvent me) {
+    private void dibujarNuevoNodoEnElMapa(GraphNode nuevoNodo, MouseEvent me) {
 
         double posicionX = 0;
         double posicionY = 0;
@@ -319,8 +319,8 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
 
             for (Serializable serializable : objectsSerializable) {
-                if (serializable instanceof ArcoGrafico) {
-                    ArcoGrafico arcoGrafico = (ArcoGrafico) serializable;
+                if (serializable instanceof GraphArc) {
+                    GraphArc arcoGrafico = (GraphArc) serializable;
 
                     arcoGrafico.initTransientObjects();
 
@@ -336,8 +336,8 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                 }
             }
             for (Serializable serializable : objectsSerializable) {
-                if (serializable instanceof VerticeEnlaceGrafico) {
-                    VerticeEnlaceGrafico verticeEnlaceGrafico = (VerticeEnlaceGrafico) serializable;
+                if (serializable instanceof GraphArcSeparatorPoint) {
+                    GraphArcSeparatorPoint verticeEnlaceGrafico = (GraphArcSeparatorPoint) serializable;
 
                     verticeEnlaceGrafico.initTransientObjects();
                     verticeEnlaceGrafico.getCircle().setCenterX(verticeEnlaceGrafico.getCenterX());
@@ -348,8 +348,8 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
             }
 
             for (Serializable serializable : objectsSerializable) {
-                if (serializable instanceof NodoGrafico) {
-                    NodoGrafico nodoGrafico = (NodoGrafico) serializable;
+                if (serializable instanceof GraphNode) {
+                    GraphNode nodoGrafico = (GraphNode) serializable;
                     //  group.getChildren().add(nodoGrafico.getGroup());  
                     if (nodoGrafico.getNombre() != null) {
 
@@ -361,13 +361,13 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                         group.getChildren().add(nodoGrafico.getGroup());
                     }
 
-                    if (nodoGrafico instanceof NodoClienteGrafico) {
+                    if (nodoGrafico instanceof ClientGraphNode) {
                         listaClientes.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof NodoDeRecursoGrafico) {
+                    } else if (nodoGrafico instanceof ResourceGraphNode) {
                         listaRecursos.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof EnrutadorGrafico) {
+                    } else if (nodoGrafico instanceof SwitchGraphNode) {
                         listaSwitches.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof NodoDeServicioGrafico) {
+                    } else if (nodoGrafico instanceof BrokerGrahpNode) {
                         listaNodoServicio.add(nodoGrafico);
                     }
                 }

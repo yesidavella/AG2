@@ -4,9 +4,9 @@ import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 
-public  abstract class EnrutadorGrafico extends NodoGrafico{      
+public  abstract class SwitchGraphNode extends GraphNode{      
     
-    public EnrutadorGrafico(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
+    public SwitchGraphNode(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
     {        
         super(grupoDeDiseno,nombre, urlDeImagen, controladorAbstractoAdminNodo,ctrlAbsAdminEnlace); 
         setAlto((short)62);
@@ -16,9 +16,9 @@ public  abstract class EnrutadorGrafico extends NodoGrafico{
     }
 
     @Override
-    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoComienzoEnlace) {
+    public boolean puedeGenerarEnlaceCon(GraphNode nodoComienzoEnlace) {
         
-        if(nodoComienzoEnlace instanceof NodoClienteGrafico){
+        if(nodoComienzoEnlace instanceof ClientGraphNode){
             return (nodoComienzoEnlace.getCantidadDeEnlaces()>=1)?false:true;
         }
         

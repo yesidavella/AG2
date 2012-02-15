@@ -5,12 +5,12 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 
-public class NodoClienteGrafico extends NodoGrafico{
+public class ClientGraphNode extends GraphNode{
 
     private static int contadorNodo = 0;
   
     
-    public NodoClienteGrafico(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
+    public ClientGraphNode(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
     {
         
         super(grupoDeDiseno,"Cliente_"+(++contadorNodo), "../../../../recursos/imagenes/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
@@ -27,8 +27,8 @@ public class NodoClienteGrafico extends NodoGrafico{
     }
 
     @Override
-    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace) {
-        return (nodoInicioDelEnlace instanceof EnrutadorGrafico) && getCantidadDeEnlaces()<1;
+    public boolean puedeGenerarEnlaceCon(GraphNode nodoInicioDelEnlace) {
+        return (nodoInicioDelEnlace instanceof SwitchGraphNode) && getCantidadDeEnlaces()<1;
     }
  
     private void readObject(ObjectInputStream inputStream)

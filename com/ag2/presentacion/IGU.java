@@ -5,7 +5,7 @@ import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
-import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.GraphNode;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import java.io.Serializable;
 import javafx.application.Application;
@@ -565,7 +565,7 @@ public class IGU extends Scene implements Serializable {
         goButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
-                NodoGrafico selectedNode = (NodoGrafico) chobNodes.getSelectionModel().getSelectedItem();
+                GraphNode selectedNode = (GraphNode) chobNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
                     //selectedNode.seleccionar(true);

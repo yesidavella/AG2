@@ -5,10 +5,10 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 
-public class NodoDeServicioGrafico extends NodoGrafico{
+public class BrokerGrahpNode extends GraphNode{
 
     private   static short contadorNodo = 0;
-    public NodoDeServicioGrafico(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace) {
+    public BrokerGrahpNode(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace) {
         super(grupoDeDiseno, "Agentador_"+(++contadorNodo),"../../../../recursos/imagenes/nodo_servicio_mapa.png",controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
         setAlto((short)74);
         setAncho((short)61);
@@ -17,8 +17,8 @@ public class NodoDeServicioGrafico extends NodoGrafico{
     }
 
     @Override
-    public boolean puedeGenerarEnlaceCon(NodoGrafico nodoInicioDelEnlace) {
-        return (nodoInicioDelEnlace instanceof EnrutadorGrafico);
+    public boolean puedeGenerarEnlaceCon(GraphNode nodoInicioDelEnlace) {
+        return (nodoInicioDelEnlace instanceof SwitchGraphNode);
     }
      private void readObject(ObjectInputStream inputStream)
     {

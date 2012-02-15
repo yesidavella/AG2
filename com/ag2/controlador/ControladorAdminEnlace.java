@@ -7,8 +7,8 @@ import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
 import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.modelo.SimulacionBase;
-import com.ag2.presentacion.diseño.EnlaceGrafico;
-import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.GraphLink;
+import com.ag2.presentacion.diseño.GraphNode;
 import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -18,11 +18,11 @@ import simbase.SimBaseEntity;
 
 public class ControladorAdminEnlace extends AbsControllerAdminLink {
 
-    private Hashtable<EnlaceGrafico, EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
-    private Hashtable<NodoGrafico, Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
+    private Hashtable<GraphLink, EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
+    private Hashtable<GraphNode, Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
 
     @Override
-    public void crearEnlace(EnlaceGrafico enlaceGrafico) {
+    public void crearEnlace(GraphLink enlaceGrafico) {
 
         Entity nodoPhosphorousA;
         Entity nodoPhosphorousB;
@@ -31,8 +31,8 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
 
             if (modelo instanceof ModeloCrearEnlace) {
 
-                NodoGrafico nodoGraficoA = enlaceGrafico.getNodoGraficoA();
-                NodoGrafico nodoGraficoB = enlaceGrafico.getNodoGraficoB();
+                GraphNode nodoGraficoA = enlaceGrafico.getNodoGraficoA();
+                GraphNode nodoGraficoB = enlaceGrafico.getNodoGraficoB();
 
                 nodoPhosphorousA = (Entity) contenedorParejasNodosExistentes.get(nodoGraficoA);
                 nodoPhosphorousB = (Entity) contenedorParejasNodosExistentes.get(nodoGraficoB);
@@ -50,7 +50,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     }
 
     @Override
-    public void consultarPropiedades(EnlaceGrafico enlaceGrafico) {
+    public void consultarPropiedades(GraphLink enlaceGrafico) {
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
         EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous) contenedorParejasEnlacesExistentes.get(enlaceGrafico);
@@ -97,7 +97,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     }
 
     @Override
-    public void updatePropiedad(EnlaceGrafico enlaceGrafico, String id, String valor) {
+    public void updatePropiedad(GraphLink enlaceGrafico, String id, String valor) {
 
         enlaceGrafico.getProperties().put(id, valor);
 
@@ -119,11 +119,11 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     @Override
     public void reCreatePhosphorousLinks() {
 
-        for (EnlaceGrafico enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
+        for (GraphLink enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
             crearEnlace(enlaceGrafico);
         }
 
-        for (EnlaceGrafico enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
+        for (GraphLink enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
 
             for (String id : enlaceGrafico.getProperties().keySet()) {
                 updatePropiedad(enlaceGrafico, id, enlaceGrafico.getProperties().get(id));
@@ -132,7 +132,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     }
 
     @Override
-    public boolean removeLink(EnlaceGrafico graphLink) {
+    public boolean removeLink(GraphLink graphLink) {
 
         EnlacePhosphorous phosLink = contenedorParejasEnlacesExistentes.get(graphLink);
                 
