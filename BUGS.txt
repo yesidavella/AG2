@@ -22,4 +22,11 @@ visual en el combo. 2H Franklin ................................................
 
 
 
-Nota: no se guardo lo de markov ...
+Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial) 
+
+Com.ag2.config 
+
+- PhosphorusPropertyEditor
+- PropertyPhosphorusTypeEnum
+
+
