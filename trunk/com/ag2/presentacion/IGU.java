@@ -596,6 +596,14 @@ public class IGU extends Scene implements Serializable {
 
                     scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
                     scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
+                    
+                    if(grGrupoDeDiseño.getObjetoGraficoSelecionado()!=null)
+                    {    
+                        grGrupoDeDiseño.getObjetoGraficoSelecionado().seleccionar(false);
+                    }
+                    
+                    grGrupoDeDiseño.setObjetoGraficoSelecionado(selectedNode);
+                    selectedNode.seleccionar(true);
                 }
             }
         });
