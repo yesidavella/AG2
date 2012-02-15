@@ -1,12 +1,12 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.AbsControllerAdminLink;
+import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 
 public  abstract class SwitchGraphNode extends GraphNode{      
     
-    public SwitchGraphNode(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace)
+    public SwitchGraphNode(GrupoDeDiseno grupoDeDiseno,  String nombre, String urlDeImagen, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace)
     {        
         super(grupoDeDiseno,nombre, urlDeImagen, controladorAbstractoAdminNodo,ctrlAbsAdminEnlace); 
         setAlto((short)62);

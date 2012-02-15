@@ -17,27 +17,24 @@ import javax.swing.JOptionPane;
  *
  * @author Frank
  */
-public class Serializador {
+public class UtilSerializator {
 
-    Stage primaryStage;
-    FileChooser fileChooser = new FileChooser();
-    Main main;   
-    private static String NAME_BASE_FILE = "Base.ag2"; 
-            
-    public Serializador(Main main, final Stage primaryStage) 
-    {
-        this.main = main ; 
+    private Stage primaryStage;
+    private FileChooser fileChooser = new FileChooser();
+    private Main main;
+    private static String NAME_BASE_FILE = "Base.ag2";
+
+    public UtilSerializator(Main main, final Stage primaryStage) {
+        this.main = main;
         this.primaryStage = primaryStage;
-         fileChooser.getExtensionFilters().add(new ExtensionFilter("AG2 Document (*.ag2)", "*.ag2"));
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("AG2 Document (*.ag2)", "*.ag2"));
     }
 
-    public void guardar() {
-        try 
-        {           
-            File file = fileChooser.showSaveDialog(primaryStage); 
-            if(file!=null)
-            {
-                
+    public void OpenDialogToSave() {
+        try {
+            File file = fileChooser.showSaveDialog(primaryStage);
+            if (file != null) {
+
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(main);
@@ -46,56 +43,46 @@ public class Serializador {
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(Serializador.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilSerializator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public Main cargar() 
-    {
+    public Main OpenDialogToLoad() {
         File file = fileChooser.showOpenDialog(primaryStage);
-        try 
-        {
-            
-            if(file!=null)
-            {
+        try {
+
+            if (file != null) {
                 FileInputStream fileInputStream = new FileInputStream(file);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 Main mainToLoad = (Main) objectInputStream.readObject();
                 objectInputStream.close();
                 return mainToLoad;
             }
-            return  null; 
+            return null;
 
-        }
-        catch(InvalidClassException classException)
-        {
-             JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        catch (Exception e) {
+        } catch (InvalidClassException classException) {
+            JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
     public Main loadFileBaseSimulation() {
-        try 
-        {           
-           
+        try {
+
             FileInputStream fileInputStream = new FileInputStream(NAME_BASE_FILE);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Main mainToLoad = (Main) objectInputStream.readObject();
-            
+
             objectInputStream.close();
             return mainToLoad;
 
-        }
-        catch(InvalidClassException classException)
-        {
-             JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        catch (Exception e) {
+        } catch (InvalidClassException classException) {
+            JOptionPane.showMessageDialog(null, "La versión de archivo  no es compatible con el simulador ", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
 }

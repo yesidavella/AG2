@@ -3,8 +3,8 @@ package com.ag2.controlador;
 import Grid.Entity;
 import Grid.Port.GridInPort;
 import Grid.Port.GridOutPort;
-import com.ag2.modelo.EnlacePhosphorous;
-import com.ag2.modelo.ModeloAbstractoCrearEnlace;
+import com.ag2.modelo.PhosphorusLinkModel;
+import com.ag2.modelo.LinkCreationAbstractModel;
 import com.ag2.modelo.ModeloCrearEnlace;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.diseño.GraphLink;
@@ -16,10 +16,10 @@ import simbase.Port.SimBaseInPort;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
 
-public class ControladorAdminEnlace extends AbsControllerAdminLink {
+public class ControladorAdminEnlace extends LinkAdminAbstractController {
 
-    private Hashtable<GraphLink, EnlacePhosphorous> contenedorParejasEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
-    private Hashtable<GraphNode, Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
+    private Hashtable<GraphLink, PhosphorusLinkModel> contenedorParejasEnlacesExistentes = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject();
+    private Hashtable<GraphNode, Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObject();
 
     @Override
     public void crearEnlace(GraphLink enlaceGrafico) {
@@ -27,7 +27,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
         Entity nodoPhosphorousA;
         Entity nodoPhosphorousB;
 
-        for (ModeloAbstractoCrearEnlace modelo : registeredModels) {
+        for (LinkCreationAbstractModel modelo : registeredModels) {
 
             if (modelo instanceof ModeloCrearEnlace) {
 
@@ -38,7 +38,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
                 nodoPhosphorousB = (Entity) contenedorParejasNodosExistentes.get(nodoGraficoB);
 
                 if (nodoPhosphorousA != null && nodoPhosphorousB != null) {
-                    EnlacePhosphorous nuevoEnlacePhosphorous = modelo.crearEnlacePhosphorous(nodoPhosphorousA, nodoPhosphorousB);
+                    PhosphorusLinkModel nuevoEnlacePhosphorous = modelo.createPhosphorusLink(nodoPhosphorousA, nodoPhosphorousB);
                     contenedorParejasEnlacesExistentes.put(enlaceGrafico, nuevoEnlacePhosphorous);
                 } else {
                     System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
@@ -53,7 +53,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     public void consultarPropiedades(GraphLink enlaceGrafico) {
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
-        EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous) contenedorParejasEnlacesExistentes.get(enlaceGrafico);
+        PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) contenedorParejasEnlacesExistentes.get(enlaceGrafico);
         GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
         GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
         /*
@@ -101,7 +101,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
 
         enlaceGrafico.getProperties().put(id, valor);
 
-        EnlacePhosphorous enlacePhosSeleccionado = (EnlacePhosphorous) ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes().get(enlaceGrafico);
+        PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject().get(enlaceGrafico);
 
         if (id.equalsIgnoreCase("linkSpeedAB")) {
             enlacePhosSeleccionado.getPuertoSalidaNodoPhosA().setLinkSpeed(Double.valueOf(valor));
@@ -134,7 +134,7 @@ public class ControladorAdminEnlace extends AbsControllerAdminLink {
     @Override
     public boolean removeLink(GraphLink graphLink) {
 
-        EnlacePhosphorous phosLink = contenedorParejasEnlacesExistentes.get(graphLink);
+        PhosphorusLinkModel phosLink = contenedorParejasEnlacesExistentes.get(graphLink);
                 
         boolean canRemovePortsInPhosNodeA = removeInAndOutPort(phosLink.getPuertoSalidaNodoPhosA());
         boolean canRemovePortsInPhosNodeB = removeInAndOutPort(phosLink.getPuertoSalidaNodoPhosB());

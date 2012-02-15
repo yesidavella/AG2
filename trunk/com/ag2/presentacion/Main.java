@@ -1,7 +1,7 @@
 package com.ag2.presentacion;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
-import com.ag2.config.serializacion.Serializador;
+import com.ag2.config.serializacion.UtilSerializator;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
@@ -17,11 +17,11 @@ import javax.swing.JOptionPane;
 
 public class Main extends Application implements Serializable {
 
-    private transient Serializador serializador;
+    private transient UtilSerializator serializador;
     private ControladorAdminNodo ctrlCreadorYAdministradorNodo;
     private ExecuteController executeAbstractController;
     private ModeloCrearNodo modeloCrearNodo;
-    private AbsControllerAdminLink ctrlCrearYAdminEnlace;
+    private LinkAdminAbstractController ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
     private SimulacionBase simulacionBase =  SimulacionBase.getInstance(); 
     private ResultsController resultsController;
@@ -39,7 +39,7 @@ public class Main extends Application implements Serializable {
 
         inicializarModelosYContrladoresDeCreacionDeNodos();
         IGU.getInstance().inicializarEstadoDeIGU();
-        serializador = new Serializador(this, stage);
+        serializador = new UtilSerializator(this, stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
@@ -105,7 +105,7 @@ public class Main extends Application implements Serializable {
         ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
 
         ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
-        ModeloAbstractoCrearEnlace modeloCrearEnlace = new ModeloCrearEnlace();
+        LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
         ctrlCrearYAdminEnlace.addModelo(modeloCrearEnlace);
 
         ctrlCrearYAdminEnlace.setVistaEnlace(IGU.getInstance().getPropiedadesDispositivoTbl());
@@ -128,7 +128,7 @@ public class Main extends Application implements Serializable {
         return ctrlCreadorYAdministradorNodo;
     }
 
-    public AbsControllerAdminLink getCtrlCrearYAdminEnlace() {
+    public LinkAdminAbstractController getCtrlCrearYAdminEnlace() {
         return ctrlCrearYAdminEnlace;
     }
 
@@ -140,7 +140,7 @@ public class Main extends Application implements Serializable {
         return modeloCrearNodo;
     }
 
-    public Serializador getSerializador() {
+    public UtilSerializator getSerializador() {
         return serializador;
     }
 
@@ -187,7 +187,7 @@ public class Main extends Application implements Serializable {
     }
 
     public void save(boolean  thenClose) {
-        serializador.guardar();
+        serializador.OpenDialogToSave();
         if(thenClose)
         {
              System.exit(0);
@@ -203,7 +203,7 @@ public class Main extends Application implements Serializable {
 
     }
     public void load() {
-        Main main = serializador.cargar();
+        Main main = serializador.OpenDialogToLoad();
         if (main != null) 
         {
             loadControllers(main);

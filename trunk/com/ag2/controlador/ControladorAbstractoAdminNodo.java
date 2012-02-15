@@ -18,7 +18,7 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
-        parejasDeNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
+        parejasDeNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObject();
         SimulacionBase.getInstance().setControladorAbstractoAdminNodo(this);
     }
 

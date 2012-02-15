@@ -1,29 +1,29 @@
 package com.ag2.controlador;
 
-import com.ag2.modelo.EnlacePhosphorous;
-import com.ag2.modelo.ModeloAbstractoCrearEnlace;
+import com.ag2.modelo.PhosphorusLinkModel;
+import com.ag2.modelo.LinkCreationAbstractModel;
 import com.ag2.presentacion.diseño.GraphLink;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public abstract class AbsControllerAdminLink implements Serializable {
+public abstract class LinkAdminAbstractController implements Serializable {
 
-    protected ArrayList<ModeloAbstractoCrearEnlace> registeredModels;
+    protected ArrayList<LinkCreationAbstractModel> registeredModels;
     protected TablaPropiedadesDispositivo tblPropiedadesDispositivo;
-    protected Hashtable<GraphLink, EnlacePhosphorous> parejasDeEnlacesExistentes;
+    protected Hashtable<GraphLink, PhosphorusLinkModel> parejasDeEnlacesExistentes;
 
-    public AbsControllerAdminLink() {
-        registeredModels = new ArrayList<ModeloAbstractoCrearEnlace>();
-        parejasDeEnlacesExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeEnlacesExistentes();
+    public LinkAdminAbstractController() {
+        registeredModels = new ArrayList<LinkCreationAbstractModel>();
+        parejasDeEnlacesExistentes = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject();
     }
 
-    public boolean addModelo(ModeloAbstractoCrearEnlace modelo) {
+    public boolean addModelo(LinkCreationAbstractModel modelo) {
         return registeredModels.add(modelo) && modelo.addControlador(this);
     }
 
-    public boolean removeModelo(AbsControllerAdminLink controlador) {
+    public boolean removeModelo(LinkAdminAbstractController controlador) {
         return registeredModels.remove(controlador) && controlador.removeModelo(this);
     }
 

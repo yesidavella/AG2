@@ -8,7 +8,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import Grid.Routing.RoutingViaJung;
 import Grid.Routing.ShortesPathRouting;
-import com.ag2.controlador.AbsControllerAdminLink;
+import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.controlador.ResultsAbstractController;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class SimulacionBase implements Runnable, Serializable {
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
     private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
-    private AbsControllerAdminLink controladorAdminEnlace;
+    private LinkAdminAbstractController controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
     private String id;
 
@@ -146,7 +146,7 @@ public class SimulacionBase implements Runnable, Serializable {
         return simulador;
     }
 
-    public void setControladorAdminEnlace(AbsControllerAdminLink controladorAdminEnlace) {
+    public void setControladorAdminEnlace(LinkAdminAbstractController controladorAdminEnlace) {
         this.controladorAdminEnlace = controladorAdminEnlace;
     }
 }

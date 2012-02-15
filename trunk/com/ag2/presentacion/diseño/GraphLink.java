@@ -1,7 +1,7 @@
 package com.ag2.presentacion.diseño;
 
-import com.ag2.controlador.AbsControllerAdminLink;
-import com.ag2.controlador.ContenedorParejasObjetosExistentes;
+import com.ag2.controlador.LinkAdminAbstractController;
+import com.ag2.controlador.MatchCoupleObjectContainer;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -16,11 +16,11 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     private ArrayList<GraphArc> arcos = new ArrayList<GraphArc>();
     private GraphArc arcInicial,arcFinal;
     private GrupoDeDiseno grGrDeDiseño;
-    private AbsControllerAdminLink adminLinkController;
+    private LinkAdminAbstractController adminLinkController;
     private boolean isSeleccionado;
     private HashMap<String,String> properties;
 
-    public GraphLink(GrupoDeDiseno group, GraphNode nodoGraficoA, GraphNode nodoGraficoB,AbsControllerAdminLink controladorAdminEnlace) {
+    public GraphLink(GrupoDeDiseno group, GraphNode nodoGraficoA, GraphNode nodoGraficoB,LinkAdminAbstractController controladorAdminEnlace) {
         
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;

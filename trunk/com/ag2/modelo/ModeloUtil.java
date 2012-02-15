@@ -76,7 +76,7 @@ public class ModeloUtil extends Util {
         return customLinkSpeed;
     }
 
-    static EnlacePhosphorous crearEnlaceBiDireccional(Entity from, Entity to) {
+    static PhosphorusLinkModel crearEnlaceBiDireccional(Entity from, Entity to) {
         
         GridOutPort puertoSalidaNodoA = null;
         GridOutPort puertoSalidaNodoB = null;
@@ -89,7 +89,7 @@ public class ModeloUtil extends Util {
             System.exit(1);
         }
         
-        return new EnlacePhosphorous(from, puertoSalidaNodoA, to, puertoSalidaNodoB);
+        return new PhosphorusLinkModel(from, puertoSalidaNodoA, to, puertoSalidaNodoB);
     }
 
     /**
