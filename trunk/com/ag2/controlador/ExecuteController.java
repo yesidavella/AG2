@@ -5,14 +5,14 @@ import Grid.GridSimulator;
 import com.ag2.modelo.NetworkChecker;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.ErrorsView;
-import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.GraphNode;
 import java.util.*;
 import java.util.Map.Entry;
 import javafx.scene.text.Font;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
-    private Hashtable<NodoGrafico,Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
+    private Hashtable<GraphNode,Entity> contenedorParejasNodosExistentes = ContenedorParejasObjetosExistentes.getInstanciaParejasDeNodosExistentes();
 
     @Override
     public void initNetwork() {
@@ -66,7 +66,7 @@ public class ExecuteController extends ExecuteAbstractController {
             Map.Entry<Object,String> errorInfo = (Map.Entry<Object,String>)itListOfErrors.next();
             
             if(errorInfo.getKey() instanceof Entity){
-                NodoGrafico graphNode = findGraphNode(errorInfo.getKey());
+                GraphNode graphNode = findGraphNode(errorInfo.getKey());
                 
                 if(graphNode!= null){
                     errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getNombre().toUpperCase()+"\": "+errorInfo.getValue());
@@ -80,9 +80,9 @@ public class ExecuteController extends ExecuteAbstractController {
         }
     }
 
-    private NodoGrafico findGraphNode(Object phosNode) {
+    private GraphNode findGraphNode(Object phosNode) {
 
-        for(NodoGrafico grafNode:contenedorParejasNodosExistentes.keySet()){
+        for(GraphNode grafNode:contenedorParejasNodosExistentes.keySet()){
             
             if(contenedorParejasNodosExistentes.get(grafNode).equals(phosNode)){
                 return grafNode;

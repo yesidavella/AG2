@@ -12,13 +12,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
+public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
 
     
     private transient Circle circle; 
     
-    private ArcoGrafico arcoGraficoA;
-    private ArcoGrafico arcoGraficoB;
+    private GraphArc arcoGraficoA;
+    private GraphArc arcoGraficoB;
     private boolean eliminado = false; 
     private final double diametro = 3;
     private boolean arrastro;
@@ -26,7 +26,7 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
     private double centerY; 
     private GrupoDeDiseno grupoDeDiseno; 
     
-    public VerticeEnlaceGrafico(GrupoDeDiseno grupoDeDiseno,ArcoGrafico arcoGraficoA, ArcoGrafico arcoGraficoB, double posX, double posY) {
+    public GraphArcSeparatorPoint(GrupoDeDiseno grupoDeDiseno,GraphArc arcoGraficoA, GraphArc arcoGraficoB, double posX, double posY) {
        
         this.grupoDeDiseno = grupoDeDiseno; 
         this.arcoGraficoA = arcoGraficoA;
@@ -94,7 +94,7 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
             public void handle(MouseEvent mouseEvent) {
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
                     
-                    VerticeEnlaceGrafico verticeEnlaceGrafico = VerticeEnlaceGrafico.this; 
+                    GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this; 
 
                     double dragX = mouseEvent.getX();
                     double dragY = mouseEvent.getY();
@@ -123,7 +123,7 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
             public void handle(MouseEvent eventoDeRaton) {
 
                 if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
-                    VerticeEnlaceGrafico verticeGrafico = VerticeEnlaceGrafico.this; 
+                    GraphArcSeparatorPoint verticeGrafico = GraphArcSeparatorPoint.this; 
                     
                     if (!verticeGrafico.isArrastro()) {
 
@@ -140,19 +140,19 @@ public class VerticeEnlaceGrafico  implements ArcoListener,Serializable {
         });
     }
 
-    public ArcoGrafico getArcoGraficoA() {
+    public GraphArc getArcoGraficoA() {
         return arcoGraficoA;
     }
 
-    public ArcoGrafico getArcoGraficoB() {
+    public GraphArc getArcoGraficoB() {
         return arcoGraficoB;
     }
     
-    public void setArcoGraficoA(ArcoGrafico arcoGraficoA) {
+    public void setArcoGraficoA(GraphArc arcoGraficoA) {
         this.arcoGraficoA = arcoGraficoA;
     }
 
-    public void setArcoGraficoB(ArcoGrafico arcoGraficoB) {
+    public void setArcoGraficoB(GraphArc arcoGraficoB) {
         this.arcoGraficoB = arcoGraficoB;
     }
     

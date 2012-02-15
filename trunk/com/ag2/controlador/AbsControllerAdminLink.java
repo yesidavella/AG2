@@ -2,7 +2,7 @@ package com.ag2.controlador;
 
 import com.ag2.modelo.EnlacePhosphorous;
 import com.ag2.modelo.ModeloAbstractoCrearEnlace;
-import com.ag2.presentacion.diseño.EnlaceGrafico;
+import com.ag2.presentacion.diseño.GraphLink;
 import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public abstract class AbsControllerAdminLink implements Serializable {
 
     protected ArrayList<ModeloAbstractoCrearEnlace> registeredModels;
     protected TablaPropiedadesDispositivo tblPropiedadesDispositivo;
-    protected Hashtable<EnlaceGrafico, EnlacePhosphorous> parejasDeEnlacesExistentes;
+    protected Hashtable<GraphLink, EnlacePhosphorous> parejasDeEnlacesExistentes;
 
     public AbsControllerAdminLink() {
         registeredModels = new ArrayList<ModeloAbstractoCrearEnlace>();
@@ -31,13 +31,13 @@ public abstract class AbsControllerAdminLink implements Serializable {
         this.tblPropiedadesDispositivo = propiedadesDispositivoTbl;
     }
 
-    public abstract void crearEnlace(EnlaceGrafico enlaceGrafico);
+    public abstract void crearEnlace(GraphLink enlaceGrafico);
     
-    public abstract boolean removeLink(EnlaceGrafico graphLink);
+    public abstract boolean removeLink(GraphLink graphLink);
 
-    public abstract void consultarPropiedades(EnlaceGrafico enlaceGrafico);
+    public abstract void consultarPropiedades(GraphLink enlaceGrafico);
 
-    public abstract void updatePropiedad(EnlaceGrafico enlaceGrafico, String id, String valor);
+    public abstract void updatePropiedad(GraphLink enlaceGrafico, String id, String valor);
 
     public abstract void reCreatePhosphorousLinks();
 }

@@ -5,11 +5,11 @@ import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import java.io.ObjectInputStream;
 
-public class EnrutadorHibridoGrafico extends EnrutadorGrafico{
+public class HybridSwitchGraphNode extends SwitchGraphNode{
 
     private static short contadorNodo = 0;
     
-    public EnrutadorHibridoGrafico(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace) 
+    public HybridSwitchGraphNode(GrupoDeDiseno grupoDeDiseno, ControladorAbstractoAdminNodo controladorAbstractoAdminNodo,AbsControllerAdminLink ctrlAbsAdminEnlace) 
     {
         super(grupoDeDiseno,"Enrutador_Hibrido_"+(++contadorNodo) ,"../../../../recursos/imagenes/enrutador_hibrido_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
         

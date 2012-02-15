@@ -4,7 +4,7 @@ import Grid.Entity;
 import com.ag2.modelo.ModeloCrearNodo;
 import com.ag2.modelo.SimulacionBase;
 import com.ag2.presentacion.VistaNodosGraficos;
-import com.ag2.presentacion.diseño.NodoGrafico;
+import com.ag2.presentacion.diseño.GraphNode;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
 
     protected ArrayList<VistaNodosGraficos> listaVistaNodosGraficos = new ArrayList<VistaNodosGraficos>();
     protected ArrayList<ModeloCrearNodo> modelosRegistrados;
-    protected Hashtable<NodoGrafico, Entity> parejasDeNodosExistentes;
+    protected Hashtable<GraphNode, Entity> parejasDeNodosExistentes;
 
     public ControladorAbstractoAdminNodo() {
         modelosRegistrados = new ArrayList<ModeloCrearNodo>();
@@ -39,21 +39,21 @@ public abstract class ControladorAbstractoAdminNodo implements Serializable {
         return modelosRegistrados.remove(modeloCrearNodo);
     }
 
-    public void addNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico, Entity nodoPhosphorous) {
+    public void addNodoGraficoYNodoPhosphorous(GraphNode nodoGrafico, Entity nodoPhosphorous) {
         parejasDeNodosExistentes.put(nodoGrafico, nodoPhosphorous);
     }
 
-    public void removeNodoGraficoYNodoPhosphorous(NodoGrafico nodoGrafico) {
+    public void removeNodoGraficoYNodoPhosphorous(GraphNode nodoGrafico) {
         parejasDeNodosExistentes.remove(nodoGrafico);
     }
 
-    public abstract Entity crearNodo(NodoGrafico nodoGrafico);
+    public abstract Entity crearNodo(GraphNode nodoGrafico);
 
-    public abstract void consultarPropiedades(NodoGrafico nodoGrafico);
+    public abstract void consultarPropiedades(GraphNode nodoGrafico);
 
     public abstract void updatePropiedad(boolean isSubProperty, boolean conusultar, String id, String valor);
 
-    public abstract void removeNodo(NodoGrafico nodoGrafico);
+    public abstract void removeNodo(GraphNode nodoGrafico);
 
     public abstract void reCreatePhosphorousNodos();
 

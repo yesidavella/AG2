@@ -4,9 +4,9 @@ import com.ag2.controlador.AbsControllerAdminLink;
 import com.ag2.controlador.ControladorAbstractoAdminNodo;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.VistaNodosGraficos;
-import com.ag2.presentacion.diseño.EnlaceGrafico;
-import com.ag2.presentacion.diseño.NodoGrafico;
-import com.ag2.presentacion.diseño.ObjetoSeleccionable;
+import com.ag2.presentacion.diseño.GraphLink;
+import com.ag2.presentacion.diseño.GraphNode;
+import com.ag2.presentacion.diseño.Selectable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -71,13 +71,13 @@ public class TablaPropiedadesDispositivo extends TableView<PropiedadeNodo> imple
 
     public void updatePropiedad(boolean isSubProperty, String id, String valor) 
     {
-        ObjetoSeleccionable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
+        Selectable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
         
         if(objetoSeleccionado != null){
-            if (objetoSeleccionado instanceof NodoGrafico) {
+            if (objetoSeleccionado instanceof GraphNode) {
                 controladorAbstractoAdminNodo.updatePropiedad(isSubProperty,true,id, valor);
-            } else if (objetoSeleccionado instanceof EnlaceGrafico) {
-                controladorAdminEnlace.updatePropiedad((EnlaceGrafico)objetoSeleccionado,id, valor);
+            } else if (objetoSeleccionado instanceof GraphLink) {
+                controladorAdminEnlace.updatePropiedad((GraphLink)objetoSeleccionado,id, valor);
             }
         }
      }
