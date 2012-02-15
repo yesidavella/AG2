@@ -3,41 +3,41 @@ package com.ag2.controlador;
 import com.ag2.modelo.PhosphorusLinkModel;
 import com.ag2.modelo.LinkCreationAbstractModel;
 import com.ag2.presentacion.diseño.GraphLink;
-import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import com.ag2.presentacion.diseño.propiedades.EntityPropertyTable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public abstract class LinkAdminAbstractController implements Serializable {
 
-    protected ArrayList<LinkCreationAbstractModel> registeredModels;
-    protected TablaPropiedadesDispositivo tblPropiedadesDispositivo;
-    protected Hashtable<GraphLink, PhosphorusLinkModel> parejasDeEnlacesExistentes;
+    protected ArrayList<LinkCreationAbstractModel> linkCreationAbstractModels;
+    protected EntityPropertyTable entityPropertyTable;
+    protected Hashtable<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
 
     public LinkAdminAbstractController() {
-        registeredModels = new ArrayList<LinkCreationAbstractModel>();
-        parejasDeEnlacesExistentes = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject();
+        linkCreationAbstractModels = new ArrayList<LinkCreationAbstractModel>();
+        linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
     }
 
-    public boolean addModelo(LinkCreationAbstractModel modelo) {
-        return registeredModels.add(modelo) && modelo.addControlador(this);
+    public boolean addModel(LinkCreationAbstractModel linkCreationAbstractModel) {
+        return linkCreationAbstractModels.add(linkCreationAbstractModel) && linkCreationAbstractModel.addControlador(this);
     }
 
-    public boolean removeModelo(LinkAdminAbstractController controlador) {
-        return registeredModels.remove(controlador) && controlador.removeModelo(this);
+    public boolean removeModel(LinkAdminAbstractController linkAdminAbstractController) {
+        return linkCreationAbstractModels.remove(linkAdminAbstractController) && linkAdminAbstractController.removeModel(this);
     }
 
-    public void setVistaEnlace(TablaPropiedadesDispositivo propiedadesDispositivoTbl) {
-        this.tblPropiedadesDispositivo = propiedadesDispositivoTbl;
+    public void setLinkView(EntityPropertyTable entityPropertyTable) {
+        this.entityPropertyTable = entityPropertyTable;
     }
 
-    public abstract void crearEnlace(GraphLink enlaceGrafico);
+    public abstract void createLink(GraphLink graphLink);
     
     public abstract boolean removeLink(GraphLink graphLink);
 
-    public abstract void consultarPropiedades(GraphLink enlaceGrafico);
+    public abstract void queryProperty(GraphLink graphLink);
 
-    public abstract void updatePropiedad(GraphLink enlaceGrafico, String id, String valor);
+    public abstract void updatePropiedad(GraphLink graphLink ,String id, String value);
 
     public abstract void reCreatePhosphorousLinks();
 }

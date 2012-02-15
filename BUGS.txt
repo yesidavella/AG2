@@ -40,3 +40,4 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 ###### com.ag2.controlador
 
 -MatchCoupleObjectContainer
+-LinkAdminAbstractController

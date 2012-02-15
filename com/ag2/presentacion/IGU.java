@@ -6,7 +6,7 @@ import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.GraphNode;
-import com.ag2.presentacion.diseño.propiedades.TablaPropiedadesDispositivo;
+import com.ag2.presentacion.diseño.propiedades.EntityPropertyTable;
 import java.io.Serializable;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -48,7 +48,7 @@ public class IGU extends Scene implements Serializable {
     private Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
     private Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
     private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
-    private TablaPropiedadesDispositivo tbDeviceProperties;
+    private EntityPropertyTable tbDeviceProperties;
     private GridPane barraHerramientas;
     private ScrollPane scPnWorld;
     private ProgressBar prgBarExecProgress;
@@ -76,7 +76,7 @@ public class IGU extends Scene implements Serializable {
         return scPnWorld;
     }
 
-    public TablaPropiedadesDispositivo getTbDeviceProperties() {
+    public EntityPropertyTable getTbDeviceProperties() {
         return tbDeviceProperties;
     }
     
@@ -415,7 +415,7 @@ public class IGU extends Scene implements Serializable {
 
         TilePane tlPnLogos = createProjectsLogos();
 
-        tbDeviceProperties = new TablaPropiedadesDispositivo();
+        tbDeviceProperties = new EntityPropertyTable();
         stPnDeviceProperties.getChildren().add(tbDeviceProperties);
 
         TableView<String> tbSimulationProperties = createTbSimulationProperties();
@@ -663,7 +663,7 @@ public class IGU extends Scene implements Serializable {
         return grGrupoDeDiseño;
     }
 
-    public TablaPropiedadesDispositivo getPropiedadesDispositivoTbl() {
+    public EntityPropertyTable getPropiedadesDispositivoTbl() {
         return tbDeviceProperties;
     }
 

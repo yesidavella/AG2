@@ -18,16 +18,16 @@ import simbase.SimBaseEntity;
 
 public class ControladorAdminEnlace extends LinkAdminAbstractController {
 
-    private Hashtable<GraphLink, PhosphorusLinkModel> contenedorParejasEnlacesExistentes = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject();
-    private Hashtable<GraphNode, Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObject();
+    private Hashtable<GraphLink, PhosphorusLinkModel> contenedorParejasEnlacesExistentes = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+    private Hashtable<GraphNode, Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
 
     @Override
-    public void crearEnlace(GraphLink enlaceGrafico) {
+    public void createLink(GraphLink enlaceGrafico) {
 
         Entity nodoPhosphorousA;
         Entity nodoPhosphorousB;
 
-        for (LinkCreationAbstractModel modelo : registeredModels) {
+        for (LinkCreationAbstractModel modelo : linkCreationAbstractModels) {
 
             if (modelo instanceof ModeloCrearEnlace) {
 
@@ -50,7 +50,7 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
     }
 
     @Override
-    public void consultarPropiedades(GraphLink enlaceGrafico) {
+    public void queryProperty(GraphLink enlaceGrafico) {
 
         ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
         PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) contenedorParejasEnlacesExistentes.get(enlaceGrafico);
@@ -93,7 +93,7 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
         propWavelengths.setPrimerValor((puertoSalidaNodoA.getMaxNumberOfWavelengths() == puertoSalidaNodoB.getMaxNumberOfWavelengths()) ? Integer.toString(puertoSalidaNodoB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
         propiedadesDeEnlace.add(propWavelengths);
 
-        tblPropiedadesDispositivo.cargarPropiedades(propiedadesDeEnlace);
+        entityPropertyTable.cargarPropiedades(propiedadesDeEnlace);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
 
         enlaceGrafico.getProperties().put(id, valor);
 
-        PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObject().get(enlaceGrafico);
+        PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(enlaceGrafico);
 
         if (id.equalsIgnoreCase("linkSpeedAB")) {
             enlacePhosSeleccionado.getPuertoSalidaNodoPhosA().setLinkSpeed(Double.valueOf(valor));
@@ -119,11 +119,11 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
     @Override
     public void reCreatePhosphorousLinks() {
 
-        for (GraphLink enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
-            crearEnlace(enlaceGrafico);
+        for (GraphLink enlaceGrafico : linkMatchCoupleObjectContainer.keySet()) {
+            createLink(enlaceGrafico);
         }
 
-        for (GraphLink enlaceGrafico : parejasDeEnlacesExistentes.keySet()) {
+        for (GraphLink enlaceGrafico : linkMatchCoupleObjectContainer.keySet()) {
 
             for (String id : enlaceGrafico.getProperties().keySet()) {
                 updatePropiedad(enlaceGrafico, id, enlaceGrafico.getProperties().get(id));
