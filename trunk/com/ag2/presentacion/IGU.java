@@ -1,6 +1,6 @@
 package com.ag2.presentacion;
 
-import com.ag2.config.TipoDePropiedadesPhosphorus;
+import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentacion.controles.Boton;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
@@ -460,12 +460,12 @@ public class IGU extends Scene implements Serializable {
         TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
         tbColPropNombre.setMinWidth(145);
         tbColPropNombre.setPrefWidth(155);
-        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, String>("nombrePropiedad"));
+        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("nombrePropiedad"));
 
         TableColumn tbColPropValor = new TableColumn("VALOR");
         tbColPropValor.setMinWidth(150);
         tbColPropValor.setPrefWidth(185);
-        tbColPropValor.setCellValueFactory(new PropertyValueFactory<TipoDePropiedadesPhosphorus, Control>("control"));
+        tbColPropValor.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
         TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);

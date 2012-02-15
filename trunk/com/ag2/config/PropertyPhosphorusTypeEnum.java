@@ -13,7 +13,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public enum TipoDePropiedadesPhosphorus {
+public enum PropertyPhosphorusTypeEnum {
 
     SIMULATION_TIME("simulationTime", new TextField()),
     OUTPUT("output", new CheckBox()),
@@ -33,8 +33,23 @@ public enum TipoDePropiedadesPhosphorus {
     LINK_SPEED("linkSpeed", new TextField()),
     OUTPUT_FILE_NAME("outputFileName", new TextField());
 
-    ExecuteController executeController;
+    private ExecuteController executeController;
+    private String phosphorusPropertyName;
+    private Control control;
+    private PhosphorusPropertyEditor phosphorusPropertyEditor = PhosphorusPropertyEditor.getUniqueInstance();
 
+    
+    private PropertyPhosphorusTypeEnum(String nombre, Control control) {
+        phosphorusPropertyName = nombre;
+        this.control = control;
+        if (control instanceof TextField) {
+            setPropertyEvent((TextField) control);
+
+        } else if (control instanceof CheckBox) {
+            setEventProperty(((CheckBox) control));
+
+        }
+    }
     public void setExecuteController(ExecuteController executeController) {
         this.executeController = executeController;
     }
@@ -47,30 +62,18 @@ public enum TipoDePropiedadesPhosphorus {
         this.control = control;
 
     }
-    private String nombrePropiedadPhosphorus;
-    private Control control;
-    private EditorPropiedades editorPropiedades = EditorPropiedades.getUniqueInstance();
+    
 
-    public String getNombrePropiedad() {
+    public String getPropertyName() {
         return this.toString().replace("_", " ");
 
     }
 
-    private TipoDePropiedadesPhosphorus(String nombre, Control control) {
-        nombrePropiedadPhosphorus = nombre;
-        this.control = control;
-        if (control instanceof TextField) {
-            establecerEventoPropiedad((TextField) control);
+    
 
-        } else if (control instanceof CheckBox) {
-            establecerEventoPropiedad(((CheckBox) control));
+    private void setEventProperty(CheckBox checkBox) {
 
-        }
-    }
-
-    private void establecerEventoPropiedad(CheckBox checkBox) {
-
-        if (editorPropiedades.getValorPropiedad(this).equalsIgnoreCase("true")) {
+        if (phosphorusPropertyEditor.getPropertyValue(this).equalsIgnoreCase("true")) {
             checkBox.setSelected(true);
         }
         checkBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -78,17 +81,17 @@ public enum TipoDePropiedadesPhosphorus {
             public void handle(ActionEvent actionEvent) {
                 CheckBox checkBox = (CheckBox) actionEvent.getSource();
                 if (checkBox.isSelected()) {
-                    TipoDePropiedadesPhosphorus.this.escribirPropiedad(Boolean.TRUE.toString());
+                    PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.TRUE.toString());
                 } else {
-                    TipoDePropiedadesPhosphorus.this.escribirPropiedad(Boolean.FALSE.toString());
+                    PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.FALSE.toString());
                 }
             }
         });
     }
 
-    private void establecerEventoPropiedad(final TextField textField) {
+    private void setPropertyEvent(final TextField textField) {
 
-        textField.setText(editorPropiedades.getValorPropiedad(this));
+        textField.setText(phosphorusPropertyEditor.getPropertyValue(this));
 
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
@@ -102,8 +105,8 @@ public enum TipoDePropiedadesPhosphorus {
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
 
                 if (beforeStateFocus == true && currentStateFocus == false) {
-                    String valor = textField.getText();
-                    TipoDePropiedadesPhosphorus.this.escribirPropiedad(valor);
+                    String value = textField.getText();
+                    PropertyPhosphorusTypeEnum.this.writeProperty(value);
                     executeController.reLoadConfigFile();
                 }
             }
@@ -111,23 +114,23 @@ public enum TipoDePropiedadesPhosphorus {
     }
 
     public String getNombrePropiedadPhosphorus() {
-        return nombrePropiedadPhosphorus;
+        return phosphorusPropertyName;
     }
 
-    public void escribirPropiedad(String valor) {
-        editorPropiedades.setValorPropiedad(this, valor);
+    public void writeProperty(String valor) {
+        phosphorusPropertyEditor.setPropertyValue(this, valor);
 
     }
 
-    public static ObservableList getDatos(ExecuteController executeController) 
+    public static ObservableList getData(ExecuteController executeController) 
     {
-        for(TipoDePropiedadesPhosphorus propiedadesPhosphorus: values())
+        for(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum: values())
         {
-            propiedadesPhosphorus.setExecuteController(executeController);
+            propertyPhosphorusTypeEnum.setExecuteController(executeController);
         }
 
-        ObservableList datosPropiedadesSimulacion = FXCollections.observableArrayList(TipoDePropiedadesPhosphorus.values());
-        return datosPropiedadesSimulacion;
+        ObservableList observableList = FXCollections.observableArrayList(PropertyPhosphorusTypeEnum.values());
+        return observableList;
 
     }
 }
