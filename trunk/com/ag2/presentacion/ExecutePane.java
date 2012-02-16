@@ -29,7 +29,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
             public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
                     
-                    public void handle(MouseEvent mouEvent) {
+                    public void handle(MouseEvent mouEvent) {System.out.println ("Hola");
                         
                         Boton btnEjecutar = (Boton) mouEvent.getSource();
                         

@@ -7,7 +7,13 @@ import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.GraphNode;
 import com.ag2.presentacion.diseño.propiedades.EntityPropertyTable;
+import java.awt.Desktop;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,6 +36,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -413,7 +421,7 @@ public class IGU extends Scene implements Serializable {
         hboxAllBottom.getStyleClass().add("cajaInferior");
         hboxAllBottom.setSpacing(10);
 
-        TilePane tlPnLogos = createProjectsLogos();
+        VBox vbLogos = createProjectsLogos();
 
         tbDeviceProperties = new EntityPropertyTable();
         stPnDeviceProperties.getChildren().add(tbDeviceProperties);
@@ -431,26 +439,59 @@ public class IGU extends Scene implements Serializable {
         crearPanelDeNavegacionMapa(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
         
-        hboxAllBottom.getChildren().addAll(tlPnLogos, splPnPropertiesTbs, vbxBottomRight);
+        hboxAllBottom.getChildren().addAll(vbLogos, splPnPropertiesTbs, vbxBottomRight);
         return hboxAllBottom;
     }
 
-    private TilePane createProjectsLogos() {
+    private VBox createProjectsLogos() {
+       
+        ImageView ivAG2 = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/logoAG2.png")));
+        double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
+        ivAG2.setFitHeight(40);
+        ivAG2.setFitWidth(40*proportionXYAG2);
+        
+        ImageView ivPhosphorus = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/phosphorus.jpg")));
+        double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
+        ivPhosphorus.setFitHeight(45);
+        ivPhosphorus.setFitWidth(45*proportionXYphosphorus);
+        
+        ImageView ivDistritalUniv = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/escudo_udistrital.jpg")));
+        double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
+        ivDistritalUniv.setFitHeight(60);
+        ivDistritalUniv.setFitWidth(60*proportionXYdistritalUniv);
+        
+        Hyperlink linkAG2 = new Hyperlink();
+        Hyperlink linkPhosphorus = new Hyperlink();
+        Hyperlink linkDistritalUniv = new Hyperlink();
+        
+        linkAG2.setGraphic(ivAG2);
+        linkPhosphorus.setGraphic(ivPhosphorus);
+        linkDistritalUniv.setGraphic(ivDistritalUniv);
+        
+        setOnLunchBrowser(linkAG2,"http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
+        setOnLunchBrowser(linkPhosphorus,"http://www.ist-phosphorus.eu/");
+        setOnLunchBrowser(linkDistritalUniv,"www.udistrital.edu.co");
 
-        //Imagen proyecto AG2
-        ImageView imagenAG2 = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/logoAG2.png")));
-        //Imagen proyecto phophorus
-        ImageView imagenPhosphorus = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/phosphorus.jpg")));
-        imagenPhosphorus.setScaleX(1.4);
-        imagenPhosphorus.setScaleY(1.4);
+        VBox vbLogos = new VBox(10);
+        vbLogos.setAlignment(Pos.CENTER);
+        vbLogos.setPadding(new Insets(3,5,3,3));
+        vbLogos.getChildren().addAll(linkAG2, linkPhosphorus,linkDistritalUniv);
+        vbLogos.getStyleClass().add("cajaDeLogos");
+        return vbLogos;
+    }
 
-        TilePane tlPneLogos = new TilePane();
-        tlPneLogos.setPrefColumns(1);
-        tlPneLogos.setPadding(new Insets(5));
-        tlPneLogos.setVgap(15);
-        tlPneLogos.getChildren().addAll(imagenAG2, imagenPhosphorus);
-
-        return tlPneLogos;
+    private void setOnLunchBrowser(Hyperlink link,final String URLToGo) {
+        link.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                try { 
+                    Desktop.getDesktop().browse(new URI(URLToGo));
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);
+                }catch (IOException ex) {
+                    Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);}
+                }
+            });
     }
 
     private TableView<String> createTbSimulationProperties() {
@@ -678,6 +719,7 @@ public class IGU extends Scene implements Serializable {
         lblIndicadoraEjec.setFont(new Font("Arial Bold", 10));
 
         prgBarExecProgress = new ProgressBar(0);
+        prgBarExecProgress.getStyleClass().add("progress-bar");
         prgBarExecProgress.setPrefWidth(150);
         prgBarExecProgress.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
 
