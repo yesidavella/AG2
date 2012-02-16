@@ -20,10 +20,10 @@ public class Main extends Application implements Serializable {
     private transient UtilSerializator serializador;
     private ControladorAdminNodo ctrlCreadorYAdministradorNodo;
     private ExecuteController executeAbstractController;
-    private ModeloCrearNodo modeloCrearNodo;
+    private NodeCreationModel modeloCrearNodo;
     private LinkAdminAbstractController ctrlCrearYAdminEnlace;
     private GrupoDeDiseno grupoDeDiseno;
-    private SimulacionBase simulacionBase =  SimulacionBase.getInstance(); 
+    private SimulationBase simulacionBase =  SimulationBase.getInstance(); 
     private ResultsController resultsController;
     
 
@@ -62,7 +62,7 @@ public class Main extends Application implements Serializable {
     }
     
 
-    public SimulacionBase getSimulacionBase() {
+    public SimulationBase getSimulacionBase() {
         return simulacionBase;
     }
    
@@ -80,29 +80,29 @@ public class Main extends Application implements Serializable {
 
         IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
         
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
+        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
 
 
         modeloCrearNodo = new ModeloCrearCliente();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         modeloCrearNodo = new ModeloCrearNodoDeServicio();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         modeloCrearNodo = new ModeloCrearNodoDeRecurso();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         modeloCrearNodo = new ModeloCrearEnrutadorRafaga();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         modeloCrearNodo = new ModeloCrearEnrutadorOptico();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
-        ctrlCreadorYAdministradorNodo.addModelo(modeloCrearNodo);
+        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
         ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
         LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
@@ -114,7 +114,7 @@ public class Main extends Application implements Serializable {
 
        
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
-        SimulacionBase.getInstance().setResultsAbstractController(resultsController);
+        SimulationBase.getInstance().setResultsAbstractController(resultsController);
         
         IGU.getInstance().getTbvSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeAbstractController));
        
@@ -136,7 +136,7 @@ public class Main extends Application implements Serializable {
         return executeAbstractController;
     }
 
-    public ModeloCrearNodo getModeloCrearNodo() {
+    public NodeCreationModel getModeloCrearNodo() {
         return modeloCrearNodo;
     }
 
@@ -159,7 +159,7 @@ public class Main extends Application implements Serializable {
     private void loadControllers(Main main) 
     {
         simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance(); 
-        SimulacionBase.loadInstance(simulacionBase); 
+        SimulationBase.loadInstance(simulacionBase); 
         grupoDeDiseno = main.getGrupoDeDiseno();
         
         IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
@@ -178,10 +178,10 @@ public class Main extends Application implements Serializable {
         ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         
-        SimulacionBase.getInstance().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        SimulationBase.getInstance().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getGrGrupoDeDiseño());
-        ctrlCreadorYAdministradorNodo.addVistaGraficaNodoses(IGU.getInstance().getPropiedadesDispositivoTbl());
+        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
+        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
       //  executeAbstractController.stop();
     }
@@ -197,7 +197,7 @@ public class Main extends Application implements Serializable {
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException 
     {
         
-        simulacionBase = SimulacionBase.getInstance(); 
+        simulacionBase = SimulationBase.getInstance(); 
         simulacionBase.getSimulador().getEntities(); 
         objectOutputStream.defaultWriteObject();
 

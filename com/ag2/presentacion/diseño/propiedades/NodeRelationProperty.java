@@ -14,7 +14,7 @@ import javafx.scene.control.ChoiceBox;
  *
  * @author Frank
  */
-public class NodeRelationProperty extends PropiedadeNodo implements Serializable{
+public class NodeRelationProperty extends EntityProperty implements Serializable{
 
     private transient ObservableList observableListNodes = FXCollections.observableArrayList();
     private String nombre;

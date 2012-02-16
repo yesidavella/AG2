@@ -11,7 +11,7 @@ import javafx.scene.control.ChoiceBox;
  *
  * @author Frank
  */
-public class PropiedadNodoDistribuciones extends PropiedadeNodo {
+public class PropiedadNodoDistribuciones extends EntityProperty {
 
     public enum TipoDeDistribucion {
 

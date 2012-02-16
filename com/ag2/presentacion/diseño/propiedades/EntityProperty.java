@@ -1,7 +1,7 @@
 package com.ag2.presentacion.diseño.propiedades;
 
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo.TipoDePropiedadNodo;
+import com.ag2.presentacion.diseño.propiedades.EntityProperty.TipoDePropiedadNodo;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,7 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-public class PropiedadeNodo {
+public class EntityProperty {
 
     public enum TipoDePropiedadNodo 
     {
@@ -37,7 +37,7 @@ public class PropiedadeNodo {
         this.subProperty = subProperty;
     }
 
-    public PropiedadeNodo(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo, boolean isSubProperty) 
+    public EntityProperty(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo, boolean isSubProperty) 
     {
         
         this.nombre = nombre;
@@ -60,7 +60,7 @@ public class PropiedadeNodo {
                         {    
                             valor="_OFF";                             
                         }
-                        tablaPropiedadesDispositivo.updatePropiedad(subProperty,id+"_"+nombre,nombre+valor );
+                        tablaPropiedadesDispositivo.updateProperty(subProperty,id+"_"+nombre,nombre+valor );
                         //checkBox.setDisable(true);
                     }
                 });
@@ -74,7 +74,7 @@ public class PropiedadeNodo {
                         ChoiceBox choiceBox = (ChoiceBox) control;
                         choiceBox.getSelectionModel().getSelectedItem().toString();
                         if (tablaPropiedadesDispositivo != null) {
-                            tablaPropiedadesDispositivo.updatePropiedad(subProperty, id, choiceBox.getSelectionModel().getSelectedItem().toString());
+                            tablaPropiedadesDispositivo.updateProperty(subProperty, id, choiceBox.getSelectionModel().getSelectedItem().toString());
                         }
                     }
                 });
@@ -157,7 +157,7 @@ public class PropiedadeNodo {
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
 
                 if (beforeStateFocus == true && currentStateFocus == false) {
-                    tablaPropiedadesDispositivo.updatePropiedad(subProperty, id, textField.getText());
+                    tablaPropiedadesDispositivo.updateProperty(subProperty, id, textField.getText());
                 }
             }
         });

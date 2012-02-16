@@ -5,7 +5,7 @@
 package com.ag2.controlador;
 
 import com.ag2.modelo.OutputterModel;
-import com.ag2.modelo.SimulacionBase;
+import com.ag2.modelo.SimulationBase;
 import com.ag2.presentacion.controles.ViewResultsPhosphorus;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public abstract class ResultsAbstractController  implements Serializable
 {
    protected  ViewResultsPhosphorus viewResultsPhosphorus;
-   protected  OutputterModel outputterModel = new OutputterModel(SimulacionBase.getInstance().getSimulador()); 
+   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getSimulador()); 
     
     public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) 
     {

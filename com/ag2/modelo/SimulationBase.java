@@ -9,7 +9,7 @@ import Grid.Interfaces.Switch;
 import Grid.Routing.RoutingViaJung;
 import Grid.Routing.ShortesPathRouting;
 import com.ag2.controlador.LinkAdminAbstractController;
-import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.controlador.NodeAdminAbstractController;
 import com.ag2.controlador.ResultsAbstractController;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -19,20 +19,20 @@ import java.util.Iterator;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
-public class SimulacionBase implements Runnable, Serializable {
+public class SimulationBase implements Runnable, Serializable {
 
-    private static SimulacionBase simulacionBase;
+    private static SimulationBase simulacionBase;
     private GridSimulatorModel simulador;
     private SimulationInstance simulacion;
     private OutputterModel outputterModel;
-    private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
+    private NodeAdminAbstractController controladorAbstractoAdminNodo;
     private LinkAdminAbstractController controladorAdminEnlace;
     private ResultsAbstractController resultsAbstractController;
     private String id;
 
-    public static SimulacionBase getInstance() {
+    public static SimulationBase getInstance() {
         if (simulacionBase == null) {
-            simulacionBase = new SimulacionBase();
+            simulacionBase = new SimulationBase();
         }
         return simulacionBase;
     }
@@ -41,13 +41,13 @@ public class SimulacionBase implements Runnable, Serializable {
         return id;
     }
 
-    public static void loadInstance(SimulacionBase simulacionBase) {
+    public static void loadInstance(SimulationBase simulacionBase) {
 
-        SimulacionBase.simulacionBase = simulacionBase;
+        SimulationBase.simulacionBase = simulacionBase;
 
     }
 
-    private SimulacionBase() {
+    private SimulationBase() {
 
         simulacion = new GridSimulation("ConfigInit.cfg");
         simulador = new GridSimulatorModel();
@@ -61,8 +61,8 @@ public class SimulacionBase implements Runnable, Serializable {
         return resultsAbstractController;
     }
 
-    public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo) {
-        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
+    public void setNodeAdminAbstractController(NodeAdminAbstractController nodeAdminAbstractController) {
+        this.controladorAbstractoAdminNodo = nodeAdminAbstractController;
     }
 
     public void setOutputterModel(OutputterModel outputterModel) {
@@ -89,7 +89,7 @@ public class SimulacionBase implements Runnable, Serializable {
     public void stop() {
 
         simulacion.stopEvent = true;
-        simulacionBase = new SimulacionBase();
+        simulacionBase = new SimulationBase();
 
 
         OutputterModel outputterModelNew = new OutputterModel(simulacionBase.getSimulador());
@@ -98,7 +98,7 @@ public class SimulacionBase implements Runnable, Serializable {
         //outputterModelNew.setResultsAbstractController(resultsAbstractController);
 
 
-        simulacionBase.setControladorAbstractoAdminNodo(controladorAbstractoAdminNodo);
+        simulacionBase.setNodeAdminAbstractController(controladorAbstractoAdminNodo);
         simulacionBase.setControladorAdminEnlace(controladorAdminEnlace);
         controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
         controladorAdminEnlace.reCreatePhosphorousLinks();
