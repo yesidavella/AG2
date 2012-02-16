@@ -457,12 +457,16 @@ public class IGU extends Scene implements Serializable {
         
         ImageView ivDistritalUniv = new ImageView(new Image(getClass().getResourceAsStream("../../../recursos/imagenes/escudo_udistrital.jpg")));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
-        ivDistritalUniv.setFitHeight(60);
-        ivDistritalUniv.setFitWidth(60*proportionXYdistritalUniv);
+        ivDistritalUniv.setFitHeight(55);
+        ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
         
         Hyperlink linkAG2 = new Hyperlink();
         Hyperlink linkPhosphorus = new Hyperlink();
         Hyperlink linkDistritalUniv = new Hyperlink();
+        
+        linkAG2.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación \"Internet Inteligente\""));
+        linkPhosphorus.setTooltip(new Tooltip("Visite la página web del proyecto \"Fósforo\""));
+        linkDistritalUniv.setTooltip(new Tooltip("Visite la página web de la \"Universidad Distrital FJC\""));
         
         linkAG2.setGraphic(ivAG2);
         linkPhosphorus.setGraphic(ivPhosphorus);
