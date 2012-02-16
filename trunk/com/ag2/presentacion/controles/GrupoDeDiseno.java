@@ -1,12 +1,12 @@
 package com.ag2.presentacion.controles;
 
 import com.ag2.controlador.LinkAdminAbstractController;
-import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.controlador.NodeAdminAbstractController;
 import com.ag2.presentacion.IGU;
 import com.ag2.presentacion.TiposDeBoton;
-import com.ag2.presentacion.VistaNodosGraficos;
+import com.ag2.presentacion.GraphNodesView;
 import com.ag2.presentacion.diseño.*;
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
+import com.ag2.presentacion.diseño.propiedades.EntityProperty;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -40,7 +40,7 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, VistaNodosGraficos {
+public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, GraphNodesView {
 
     private transient ObservableList listaClientes;
     private transient ObservableList listaRecursos;
@@ -53,7 +53,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
     private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
-    private ArrayList<ControladorAbstractoAdminNodo> ctrladoresRegistradosAdminNodo;
+    private ArrayList<NodeAdminAbstractController> ctrladoresRegistradosAdminNodo;
     private ArrayList<LinkAdminAbstractController> ctrladoresRegistradosAdminEnlace;
     private double dragMouX = 0;
     private double dragMouY = 0;
@@ -61,7 +61,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
 
     public GrupoDeDiseno() {
         initTransientObjects();
-        ctrladoresRegistradosAdminNodo = new ArrayList<ControladorAbstractoAdminNodo>();
+        ctrladoresRegistradosAdminNodo = new ArrayList<NodeAdminAbstractController>();
         ctrladoresRegistradosAdminEnlace = new ArrayList<LinkAdminAbstractController>();
 
     }
@@ -138,7 +138,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
 
             GraphNode nuevoNodo = null;
-            ControladorAbstractoAdminNodo controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
+            NodeAdminAbstractController controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
             LinkAdminAbstractController controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
             double posClcikX = mouEvent.getX();
             double posClcikY = mouEvent.getY();
@@ -180,8 +180,8 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
                 objetoGraficoSelecionado = nuevoNodo;
 
-                for (ControladorAbstractoAdminNodo controladorRegistrado : ctrladoresRegistradosAdminNodo) {
-                    controladorRegistrado.crearNodo(nuevoNodo);
+                for (NodeAdminAbstractController controladorRegistrado : ctrladoresRegistradosAdminNodo) {
+                    controladorRegistrado.createNode(nuevoNodo);
                 }
                 nuevoNodo.seleccionar(true);
             }
@@ -297,7 +297,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         return listaSwitches;
     }
 
-    public void addControladorCrearNodo(ControladorAbstractoAdminNodo ctrlCrearNodo) {
+    public void addControladorCrearNodo(NodeAdminAbstractController ctrlCrearNodo) {
         ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
     }
 
@@ -379,7 +379,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         serializableComplete = true;
     }
 
-    public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
+    public void loadProperties(ArrayList<EntityProperty> propiedadeNodos) {
     }
 
     public void addControladorCrearEnlace(LinkAdminAbstractController ctrlCrearYAdminEnlace) {
@@ -511,6 +511,6 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Vi
         IGU.getInstance().getExecutePane().habilitar();
     }
 
-    public void updatePropiedad(boolean isSubProperty, String id, String valor) {
+    public void updateProperty(boolean isSubProperty, String id, String valor) {
     }
 }

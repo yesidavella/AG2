@@ -6,10 +6,10 @@ import Grid.Port.GridOutPort;
 import com.ag2.modelo.PhosphorusLinkModel;
 import com.ag2.modelo.LinkCreationAbstractModel;
 import com.ag2.modelo.ModeloCrearEnlace;
-import com.ag2.modelo.SimulacionBase;
+import com.ag2.modelo.SimulationBase;
 import com.ag2.presentacion.diseño.GraphLink;
 import com.ag2.presentacion.diseño.GraphNode;
-import com.ag2.presentacion.diseño.propiedades.PropiedadeNodo;
+import com.ag2.presentacion.diseño.propiedades.EntityProperty;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import simbase.Port.SimBaseInPort;
@@ -46,13 +46,13 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
             }
         }
 
-        SimulacionBase.getInstance().setControladorAdminEnlace(this);
+        SimulationBase.getInstance().setControladorAdminEnlace(this);
     }
 
     @Override
     public void queryProperty(GraphLink enlaceGrafico) {
 
-        ArrayList<PropiedadeNodo> propiedadesDeEnlace = new ArrayList<PropiedadeNodo>();
+        ArrayList<EntityProperty> propiedadesDeEnlace = new ArrayList<EntityProperty>();
         PhosphorusLinkModel enlacePhosSeleccionado = (PhosphorusLinkModel) contenedorParejasEnlacesExistentes.get(enlaceGrafico);
         GridOutPort puertoSalidaNodoA = enlacePhosSeleccionado.getPuertoSalidaNodoPhosA();
         GridOutPort puertoSalidaNodoB = enlacePhosSeleccionado.getPuertoSalidaNodoPhosB();
@@ -60,11 +60,11 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
          **Enlace de nodo Phosphorous de A hacia B (A->B)
          */
         //===========================================================================================================
-        PropiedadeNodo propNombreDireccionCanalAB = new PropiedadeNodo("direcciónCanalAB", "Dirección del Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA, false);
+        EntityProperty propNombreDireccionCanalAB = new EntityProperty("direcciónCanalAB", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
         propNombreDireccionCanalAB.setPrimerValor(enlaceGrafico.getNodoGraficoA().getNombre() + "-->" + enlaceGrafico.getNodoGraficoB().getNombre());
         propiedadesDeEnlace.add(propNombreDireccionCanalAB);
 
-        PropiedadeNodo propVelEnlaceAB = new PropiedadeNodo("linkSpeedAB", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO, false);
+        EntityProperty propVelEnlaceAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
         propVelEnlaceAB.setPrimerValor(Double.toString(puertoSalidaNodoA.getLinkSpeed()));
         propiedadesDeEnlace.add(propVelEnlaceAB);
         //===========================================================================================================
@@ -73,11 +73,11 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
          **Enlace de nodo Phosphorous de B hacia A (B->A)
          */
         //===========================================================================================================
-        PropiedadeNodo propNombreDireccionCanalBA = new PropiedadeNodo("direcciónCanalBA", "Dirección del Canal:", PropiedadeNodo.TipoDePropiedadNodo.ETIQUETA, false);
+        EntityProperty propNombreDireccionCanalBA = new EntityProperty("direcciónCanalBA", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
         propNombreDireccionCanalBA.setPrimerValor(enlaceGrafico.getNodoGraficoB().getNombre() + "-->" + enlaceGrafico.getNodoGraficoA().getNombre());
         propiedadesDeEnlace.add(propNombreDireccionCanalBA);
 
-        PropiedadeNodo propVelEnlaceBA = new PropiedadeNodo("linkSpeedBA", "Vel. del Enlace:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO, false);
+        EntityProperty propVelEnlaceBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
         propVelEnlaceBA.setPrimerValor(Double.toString(puertoSalidaNodoB.getLinkSpeed()));
         propiedadesDeEnlace.add(propVelEnlaceBA);
         //===========================================================================================================
@@ -85,15 +85,15 @@ public class ControladorAdminEnlace extends LinkAdminAbstractController {
         /*
          **Propiedades comunes en ambas direcciones del canal.
          */
-        PropiedadeNodo propVelConmutacion = new PropiedadeNodo("switchingSpeed", "Vel. de Conmutación:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO, false);
+        EntityProperty propVelConmutacion = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
         propVelConmutacion.setPrimerValor((puertoSalidaNodoA.getSwitchingSpeed() == puertoSalidaNodoB.getSwitchingSpeed()) ? Double.toString(puertoSalidaNodoB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
         propiedadesDeEnlace.add(propVelConmutacion);
 
-        PropiedadeNodo propWavelengths = new PropiedadeNodo("defaultWavelengths", "Cantidad de λs:", PropiedadeNodo.TipoDePropiedadNodo.NUMERO, false);
+        EntityProperty propWavelengths = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
         propWavelengths.setPrimerValor((puertoSalidaNodoA.getMaxNumberOfWavelengths() == puertoSalidaNodoB.getMaxNumberOfWavelengths()) ? Integer.toString(puertoSalidaNodoB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
         propiedadesDeEnlace.add(propWavelengths);
 
-        entityPropertyTable.cargarPropiedades(propiedadesDeEnlace);
+        entityPropertyTable.loadProperties(propiedadesDeEnlace);
     }
 
     @Override

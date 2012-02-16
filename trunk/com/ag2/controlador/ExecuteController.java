@@ -3,7 +3,7 @@ package com.ag2.controlador;
 import Grid.Entity;
 import Grid.GridSimulator;
 import com.ag2.modelo.NetworkChecker;
-import com.ag2.modelo.SimulacionBase;
+import com.ag2.modelo.SimulationBase;
 import com.ag2.presentacion.ErrorsView;
 import com.ag2.presentacion.diseño.GraphNode;
 import java.util.*;
@@ -16,13 +16,13 @@ public class ExecuteController extends ExecuteAbstractController {
 
     @Override
     public void initNetwork() {
-        SimulacionBase.getInstance().initNetwork();
+        SimulationBase.getInstance().initNetwork();
     }
 
     @Override
     public void run() {
 
-        Thread thread = new Thread(SimulacionBase.getInstance());
+        Thread thread = new Thread(SimulationBase.getInstance());
         thread.start();
         System.out.println("###########----  RUN ----####################################################");
 
@@ -30,14 +30,14 @@ public class ExecuteController extends ExecuteAbstractController {
 
     @Override
     public void stop() {
-        SimulacionBase.getInstance().stop();
+        SimulationBase.getInstance().stop();
     }
 
     @Override
     public boolean isWellFormedNetwork() {
         
-        SimulationInstance simulacion = SimulacionBase.getInstance().getSimulacion();
-        GridSimulator simulador = SimulacionBase.getInstance().getSimulador();
+        SimulationInstance simulacion = SimulationBase.getInstance().getSimulacion();
+        GridSimulator simulador = SimulationBase.getInstance().getSimulador();
         
         //Hace las veces de modelo
         NetworkChecker networkChecker = new NetworkChecker(simulacion,simulador);

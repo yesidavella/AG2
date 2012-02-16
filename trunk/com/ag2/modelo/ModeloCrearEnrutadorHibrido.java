@@ -3,7 +3,7 @@ package com.ag2.modelo;
 import Grid.Entity;
 import com.ag2.presentacion.Main;
 
-public class ModeloCrearEnrutadorHibrido extends ModeloCrearNodo{
+public class ModeloCrearEnrutadorHibrido extends NodeCreationModel{
 
     @Override
     public Entity crearNodoPhophorous(String nombreNodoGrafico) {

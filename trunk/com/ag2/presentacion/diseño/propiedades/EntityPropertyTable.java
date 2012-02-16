@@ -1,9 +1,9 @@
 package com.ag2.presentacion.diseño.propiedades;
 
 import com.ag2.controlador.LinkAdminAbstractController;
-import com.ag2.controlador.ControladorAbstractoAdminNodo;
+import com.ag2.controlador.NodeAdminAbstractController;
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.VistaNodosGraficos;
+import com.ag2.presentacion.GraphNodesView;
 import com.ag2.presentacion.diseño.GraphLink;
 import com.ag2.presentacion.diseño.GraphNode;
 import com.ag2.presentacion.diseño.Selectable;
@@ -16,12 +16,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class EntityPropertyTable extends TableView<PropiedadeNodo> implements VistaNodosGraficos, Serializable
+public class EntityPropertyTable extends TableView<EntityProperty> implements GraphNodesView, Serializable
 {
-    private ControladorAbstractoAdminNodo controladorAbstractoAdminNodo;
+    private NodeAdminAbstractController controladorAbstractoAdminNodo;
     private LinkAdminAbstractController controladorAdminEnlace;
     
-    public void setControladorAbstractoAdminNodo(ControladorAbstractoAdminNodo controladorAbstractoAdminNodo)
+    public void setControladorAbstractoAdminNodo(NodeAdminAbstractController controladorAbstractoAdminNodo)
     {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
     }
@@ -33,12 +33,12 @@ public class EntityPropertyTable extends TableView<PropiedadeNodo> implements Vi
     public EntityPropertyTable()
     {   
         TableColumn tbColNombrePropDispositivo = new TableColumn("PROPIEDAD");
-        tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, String>("nombre"));
+        tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("nombre"));
         tbColNombrePropDispositivo.setMinWidth(110);
         tbColNombrePropDispositivo.setPrefWidth(175);
         
         TableColumn tbColValorPropDispositivo = new TableColumn("VALOR");
-        tbColValorPropDispositivo.setCellValueFactory(new PropertyValueFactory<PropiedadeNodo, Control>("control"));
+        tbColValorPropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
         tbColValorPropDispositivo.setMinWidth(200);
         tbColValorPropDispositivo.setPrefWidth(215);
         
@@ -53,11 +53,11 @@ public class EntityPropertyTable extends TableView<PropiedadeNodo> implements Vi
         setPrefHeight(200);
     }
 
-    public void cargarPropiedades(ArrayList<PropiedadeNodo> propiedadeNodos) {
+    public void loadProperties(ArrayList<EntityProperty> propiedadeNodos) {
         
         ObservableList datosPropiedades = FXCollections.observableArrayList();
         
-        for(PropiedadeNodo propiedadeNodo : propiedadeNodos){ 
+        for(EntityProperty propiedadeNodo : propiedadeNodos){ 
            propiedadeNodo.setTablaPropiedadesDispositivo(this);
            datosPropiedades.add(propiedadeNodo);
         }
@@ -69,13 +69,13 @@ public class EntityPropertyTable extends TableView<PropiedadeNodo> implements Vi
          setItems(datosPropiedades); 
     }
 
-    public void updatePropiedad(boolean isSubProperty, String id, String valor) 
+    public void updateProperty(boolean isSubProperty, String id, String valor) 
     {
         Selectable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
         
         if(objetoSeleccionado != null){
             if (objetoSeleccionado instanceof GraphNode) {
-                controladorAbstractoAdminNodo.updatePropiedad(isSubProperty,true,id, valor);
+                controladorAbstractoAdminNodo.updateProperty(isSubProperty,true,id, valor);
             } else if (objetoSeleccionado instanceof GraphLink) {
                 controladorAdminEnlace.updatePropiedad((GraphLink)objetoSeleccionado,id, valor);
             }

@@ -41,3 +41,9 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 
 -MatchCoupleObjectContainer
 -LinkAdminAbstractController
+-NodeAdminAbstractController
+
+
+##### com.ag2.presentacion
+
+-GraphNodesView

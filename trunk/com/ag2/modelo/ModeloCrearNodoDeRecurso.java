@@ -3,7 +3,7 @@ package com.ag2.modelo;
 import Grid.Entity;
 import com.ag2.presentacion.Main;
 
-public class ModeloCrearNodoDeRecurso extends ModeloCrearNodo{
+public class ModeloCrearNodoDeRecurso extends NodeCreationModel{
 
     @Override
     public Entity crearNodoPhophorous(String nombreNodoGrafico) {
