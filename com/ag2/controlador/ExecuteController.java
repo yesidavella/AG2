@@ -6,13 +6,13 @@ import com.ag2.modelo.NetworkChecker;
 import com.ag2.modelo.SimulationBase;
 import com.ag2.presentacion.ErrorsView;
 import com.ag2.presentacion.diseño.GraphNode;
-import java.util.*;
-import java.util.Map.Entry;
-import javafx.scene.text.Font;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
-    private Hashtable<GraphNode,Entity> contenedorParejasNodosExistentes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    private Hashtable<GraphNode,Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
 
     @Override
     public void initNetwork() {
@@ -80,12 +80,12 @@ public class ExecuteController extends ExecuteAbstractController {
         }
     }
 
-    private GraphNode findGraphNode(Object phosNode) {
+    private GraphNode findGraphNode(Object object) {
 
-        for(GraphNode grafNode:contenedorParejasNodosExistentes.keySet()){
+        for(GraphNode graphNode:nodeMatchCoupleObjectContainer.keySet()){
             
-            if(contenedorParejasNodosExistentes.get(grafNode).equals(phosNode)){
-                return grafNode;
+            if(nodeMatchCoupleObjectContainer.get(graphNode).equals(object)){
+                return graphNode;
             }
         }
 

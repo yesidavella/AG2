@@ -6,49 +6,49 @@ import java.io.Serializable;
 
 public class PhosphorusLinkModel implements Serializable {
 
-    private Entity nodoPhosphorousA;
-    private GridOutPort puertoSalidaDeNodoPhosA;
-    private Entity nodoPhosphorousB;
-    private GridOutPort puertoSalidaDeNoodoPhosB;
+    private Entity phosphorusNodeA ;
+    private GridOutPort gridOutPortA;
+    private Entity phosphorusNodeB;
+    private GridOutPort gridOutPortB;
 
-    public PhosphorusLinkModel(Entity nodoPhosphorousA, GridOutPort puertoSalidaNodoPhosA,
-            Entity nodoPhosphorousB, GridOutPort puertoSalidaNodoPhosB) {
+    public PhosphorusLinkModel(Entity phosphorusNodeA, GridOutPort gridOutPortA,
+            Entity phosphorusNodeB, GridOutPort gridOutPortB) {
 
-        this.nodoPhosphorousA = nodoPhosphorousA;
-        this.puertoSalidaDeNodoPhosA = puertoSalidaNodoPhosA;
-        this.nodoPhosphorousB = nodoPhosphorousB;
-        this.puertoSalidaDeNoodoPhosB = puertoSalidaNodoPhosB;
+        this.phosphorusNodeA  = phosphorusNodeA;
+        this.gridOutPortA = gridOutPortA;
+        this.phosphorusNodeB = phosphorusNodeB;
+        this.gridOutPortB = gridOutPortB;
     }
 
-    public GridOutPort getPuertoSalidaNodoPhosA() {
-        return puertoSalidaDeNodoPhosA;
+    public GridOutPort getGridOutPortA() {
+        return gridOutPortA;
     }
 
-    public GridOutPort getPuertoSalidaNodoPhosB() {
-        return puertoSalidaDeNoodoPhosB;
+    public GridOutPort getGridOutPortB() {
+        return gridOutPortB;
     }
 
-    public Entity getNodoPhosphorousA() {
-        return nodoPhosphorousA;
+    public Entity getPhosphorusNodeA() {
+        return phosphorusNodeA ;
     }
 
-    public void setNodoPhosphorousA(Entity nodoPhosphorousA) {
-        this.nodoPhosphorousA = nodoPhosphorousA;
+    public void setPhosphorusNodeA(Entity phosphorusNodeA) {
+        this.phosphorusNodeA  = phosphorusNodeA;
     }
 
-    public Entity getNodoPhosphorousB() {
-        return nodoPhosphorousB;
+    public Entity getPhosphorusNodeB() {
+        return phosphorusNodeB;
     }
 
-    public void setNodoPhosphorousB(Entity nodoPhosphorousB) {
-        this.nodoPhosphorousB = nodoPhosphorousB;
+    public void setPhosphorusNodeB(Entity phosphorusNodeB) {
+        this.phosphorusNodeB = phosphorusNodeB;
     }
 
-    public void setPuertoSalidaDeNodoPhosA(GridOutPort puertoSalidaDeNodoPhosA) {
-        this.puertoSalidaDeNodoPhosA = puertoSalidaDeNodoPhosA;
+    public void setGridOutPortA(GridOutPort gridOutPortA) {
+        this.gridOutPortA = gridOutPortA;
     }
 
-    public void setPuertoSalidaDeNoodoPhosB(GridOutPort puertoSalidaDeNoodoPhosB) {
-        this.puertoSalidaDeNoodoPhosB = puertoSalidaDeNoodoPhosB;
+    public void setGridOutPortB(GridOutPort gridOutPortB) {
+        this.gridOutPortB = gridOutPortB;
     }
 }

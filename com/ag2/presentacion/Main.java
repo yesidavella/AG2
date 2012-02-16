@@ -1,7 +1,7 @@
 package com.ag2.presentacion;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
-import com.ag2.config.serializacion.UtilSerializator;
+import com.ag2.config.serialization.UtilSerializator;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
 import com.ag2.presentacion.controles.GrupoDeDiseno;
@@ -104,7 +104,7 @@ public class Main extends Application implements Serializable {
         modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
         ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
 
-        ctrlCrearYAdminEnlace = new ControladorAdminEnlace();
+        ctrlCrearYAdminEnlace = new LinkAdminController();
         LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
         ctrlCrearYAdminEnlace.addModel(modeloCrearEnlace);
 
@@ -178,7 +178,7 @@ public class Main extends Application implements Serializable {
         ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
         
-        SimulationBase.getInstance().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
+        SimulationBase.getInstance().setLinkAdminAbstractController(ctrlCrearYAdminEnlace);
         
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());

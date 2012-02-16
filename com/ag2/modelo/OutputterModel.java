@@ -35,7 +35,7 @@ public class OutputterModel extends Outputter
      public void printClient(ClientNode client) 
      {
                        
-         resultsAbstractController.adicionarResultadoCliente(
+         resultsAbstractController.addClientResult(
                  returnStringWithAsterix(client), 
                  " "+sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT), 
                  " "+ sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
