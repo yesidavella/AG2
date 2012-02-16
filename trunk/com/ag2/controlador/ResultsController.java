@@ -12,7 +12,7 @@ public class ResultsController  extends ResultsAbstractController
 {
 
     @Override
-    public void adicionarResultadoCliente(String tcCliente, String tcPeticionesEnviadas, String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
+    public void addClientResult(String tcCliente, String tcPeticionesEnviadas, String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
         
         if(viewResultsPhosphorus!=null)
         {

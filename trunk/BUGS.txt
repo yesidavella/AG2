@@ -29,19 +29,23 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 - PhosphorusPropertyEditor
 - PropertyPhosphorusTypeEnum
 
-###### com.ag2.config.serializacion
+###### com.ag2.config.serialization
 
 -UtilSerializator
 
 ###### com.ag2.modelo
 
 -LinkCreationAbstractModel
+-PhosphorusLinkModel
 
 ###### com.ag2.controlador
 
 -MatchCoupleObjectContainer
 -LinkAdminAbstractController
 -NodeAdminAbstractController
+-ExecuteAbstractController
+-ExecuteController
+
 
 
 ##### com.ag2.presentacion

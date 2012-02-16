@@ -39,7 +39,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient DropShadow dropShadow;
     protected transient VBox cuadroExteriorResaltado;
     private transient Group group;
-    private String nombre = null;
+    private String name = null;
     private ArrayList<NodeListener> nodosListener = new ArrayList<NodeListener>();
     private boolean estaEliminado = false;
     private boolean selecionado = false;
@@ -65,7 +65,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
         this.controladorAdminEnlace = ctrlAbsAdminEnlace;
         this.urlDeImagen = urlDeImagen;
-        this.nombre = nombre;
+        this.name = nombre;
         this.nombreOriginal = nombre;
         propertiesNode = new HashMap<String, String>();
         subPropertiesNode = new HashMap<String, String>();
@@ -80,7 +80,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         group = new Group();
         dropShadow = new DropShadow();
         group.setEffect(dropShadow);
-        lblNombre = new Label(nombre);
+        lblNombre = new Label(name);
         lblNombre.setTextFill(Color.BLACK);
         lblNombre.setTextAlignment(TextAlignment.CENTER);
         lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
@@ -166,7 +166,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     @Override
     public String toString() {
-        return nombre;
+        return name;
     }
 
     private void establecerEventoOnMouseEntered() {
@@ -387,18 +387,18 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        return name;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.name = nombre;
         lblNombre.setText(formatearNombreConSaltoDeLineas(nombre));
     }
 
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
-            System.out.println("read :" + nombre);
+            System.out.println("read :" + name);
             if (grupoDeDiseno.isSerializableComplete()) 
             {
                 initTransientObjects();
@@ -406,7 +406,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 getGroup().setLayoutY(getLayoutY());
                 seleccionar(false);
                 grupoDeDiseno.getGroup().getChildren().add(getGroup());
-                System.out.println("read load post :" + nombre);
+                System.out.println("read load post :" + name);
             }
 
         } catch (Exception e) {
@@ -417,7 +417,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void writeObject(ObjectOutputStream objectOutputStream) {
         try {
             objectOutputStream.defaultWriteObject();
-            System.out.println("write :" + nombre);
+            System.out.println("write :" + name);
         } catch (Exception e) {
             e.printStackTrace();
         }

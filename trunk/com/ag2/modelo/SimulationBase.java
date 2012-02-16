@@ -99,7 +99,7 @@ public class SimulationBase implements Runnable, Serializable {
 
 
         simulacionBase.setNodeAdminAbstractController(controladorAbstractoAdminNodo);
-        simulacionBase.setControladorAdminEnlace(controladorAdminEnlace);
+        simulacionBase.setLinkAdminAbstractController(controladorAdminEnlace);
         controladorAbstractoAdminNodo.reCreatePhosphorousNodos();
         controladorAdminEnlace.reCreatePhosphorousLinks();
 
@@ -146,7 +146,7 @@ public class SimulationBase implements Runnable, Serializable {
         return simulador;
     }
 
-    public void setControladorAdminEnlace(LinkAdminAbstractController controladorAdminEnlace) {
+    public void setLinkAdminAbstractController(LinkAdminAbstractController controladorAdminEnlace) {
         this.controladorAdminEnlace = controladorAdminEnlace;
     }
 }
