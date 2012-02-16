@@ -1,9 +1,9 @@
-package com.ag2.presentacion.controles;
+package com.ag2.presentacion.diseño;
 
 import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.NodeAdminAbstractController;
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.TiposDeBoton;
+import com.ag2.presentacion.ActionTypeEmun;
 import com.ag2.presentacion.GraphNodesView;
 import com.ag2.presentacion.diseño.*;
 import com.ag2.presentacion.diseño.propiedades.EntityProperty;
@@ -40,7 +40,7 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, GraphNodesView {
+public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable, GraphNodesView {
 
     private transient ObservableList listaClientes;
     private transient ObservableList listaRecursos;
@@ -59,7 +59,7 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Gr
     private double dragMouY = 0;
     private boolean serializableComplete = false;
 
-    public GrupoDeDiseno() {
+    public GraphDesignGroup() {
         initTransientObjects();
         ctrladoresRegistradosAdminNodo = new ArrayList<NodeAdminAbstractController>();
         ctrladoresRegistradosAdminEnlace = new ArrayList<LinkAdminAbstractController>();
@@ -103,24 +103,24 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Gr
     public void handle(MouseEvent mouEvent) {
 
         EventType tipoDeEvento = mouEvent.getEventType();
-        TiposDeBoton botonSeleccionado = IGU.getEstadoTipoBoton();
+        ActionTypeEmun botonSeleccionado = IGU.getEstadoTipoBoton();
 
         if (tipoDeEvento == MouseEvent.MOUSE_PRESSED) {
 
-            if (botonSeleccionado == TiposDeBoton.MANO) {
-                group.setCursor(TiposDeBoton.MANO.getImagenSobreObjetoCursor());
+            if (botonSeleccionado == ActionTypeEmun.MANO) {
+                group.setCursor(ActionTypeEmun.MANO.getImagenSobreObjetoCursor());
                 dragMouX = mouEvent.getX();
                 dragMouY = mouEvent.getY();
 
-            } else if (botonSeleccionado == TiposDeBoton.ZOOM_MINUS) {
+            } else if (botonSeleccionado == ActionTypeEmun.ZOOM_MINUS) {
                 zoom(1 / PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
-            } else if (botonSeleccionado == TiposDeBoton.ZOOM_PLUS) {
+            } else if (botonSeleccionado == ActionTypeEmun.ZOOM_PLUS) {
                 zoom(PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
             }
 
         } else if (tipoDeEvento == MouseEvent.MOUSE_DRAGGED) {
 
-            if (botonSeleccionado == TiposDeBoton.MANO) {
+            if (botonSeleccionado == ActionTypeEmun.MANO) {
 
                 double currentWidth = group.getBoundsInParent().getWidth();
                 double distanceMovedX = dragMouX - mouEvent.getX();
@@ -143,31 +143,31 @@ public class GrupoDeDiseno implements EventHandler<MouseEvent>, Serializable, Gr
             double posClcikX = mouEvent.getX();
             double posClcikY = mouEvent.getY();
 
-            if (botonSeleccionado == TiposDeBoton.MANO) {
-                group.setCursor(TiposDeBoton.MANO.getImagenCursor());
+            if (botonSeleccionado == ActionTypeEmun.MANO) {
+                group.setCursor(ActionTypeEmun.MANO.getImagenCursor());
 
-            } else if (botonSeleccionado == TiposDeBoton.CLIENTE) {
+            } else if (botonSeleccionado == ActionTypeEmun.CLIENTE) {
 
                 nuevoNodo = new ClientGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaClientes.add(nuevoNodo);
 
-            } else if (botonSeleccionado == TiposDeBoton.NODO_DE_SERVICIO) {
+            } else if (botonSeleccionado == ActionTypeEmun.NODO_DE_SERVICIO) {
                 nuevoNodo = new BrokerGrahpNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaNodoServicio.add(nuevoNodo);
 
-            } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_OPTICO) {
+            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_OPTICO) {
                 nuevoNodo = new OCS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
-            } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_RAFAGA) {
+            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_RAFAGA) {
                 nuevoNodo = new OBS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
-            } else if (botonSeleccionado == TiposDeBoton.ENRUTADOR_HIBRIDO) {
+            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_HIBRIDO) {
                 nuevoNodo = new HybridSwitchGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaSwitches.add(nuevoNodo);
 
-            } else if (botonSeleccionado == TiposDeBoton.RECURSO) {
+            } else if (botonSeleccionado == ActionTypeEmun.RECURSO) {
                 nuevoNodo = new ResourceGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
                 listaRecursos.add(nuevoNodo);
             }

@@ -1,8 +1,7 @@
 package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.TiposDeBoton;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.ag2.presentacion.ActionTypeEmun;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,7 +21,7 @@ public class GraphArc  implements Serializable {
 
     private transient QuadCurve quadCurve;
     
-    private GrupoDeDiseno grGrDeDiseño;
+    private GraphDesignGroup grGrDeDiseño;
     private GraphNode nodoGraficoB;
     private ArrayList<ArcListener> arcoListeners = new ArrayList<ArcListener>();
     private boolean eliminado = false;
@@ -36,7 +35,7 @@ public class GraphArc  implements Serializable {
   
     private GraphArcSeparatorPoint verticeGrafInicial,verticeGrafFinal;
 
-    public GraphArc(GraphLink enlaceGrafico, GrupoDeDiseno grGrDeDiseño)
+    public GraphArc(GraphLink enlaceGrafico, GraphDesignGroup grGrDeDiseño)
     {
         this.grGrDeDiseño = grGrDeDiseño;
         this.enlaceGrafico = enlaceGrafico;
@@ -108,11 +107,11 @@ public class GraphArc  implements Serializable {
                 GraphArc quadCurveFuente = GraphArc.this;
                 
 
-                TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
+                ActionTypeEmun tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
 
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ADICIONAR_VERTICE || tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
+                if (tipoDeBotonSeleccionado == ActionTypeEmun.ADICIONAR_VERTICE || tipoDeBotonSeleccionado == ActionTypeEmun.ELIMINAR) {
                     quadCurveFuente.getQuadCurve().setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
-                } else if (tipoDeBotonSeleccionado == TiposDeBoton.PUNTERO) {
+                } else if (tipoDeBotonSeleccionado == ActionTypeEmun.PUNTERO) {
                     quadCurveFuente.getQuadCurve().setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 }
             }
@@ -123,7 +122,7 @@ public class GraphArc  implements Serializable {
         quadCurve.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent me) {
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
                     double dragX = me.getX();
                     double dragY = me.getY();
                     GraphArc arcoGrafico = GraphArc.this ;
@@ -147,7 +146,7 @@ public class GraphArc  implements Serializable {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
 
-                if(IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO){
+                if(IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO){
                     if(!enlaceGrafico.getSeleccionado()){
                         enlaceGrafico.seleccionar(true);
                     }else{
@@ -155,7 +154,7 @@ public class GraphArc  implements Serializable {
                     }
                 }
                 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ADICIONAR_VERTICE) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ADICIONAR_VERTICE) {
                     
                     GraphArc arcGrafFuente = GraphArc.this;
                     GraphArc arcGrafNuevo = new GraphArc(arcGrafFuente.getEnlaceGrafico(), arcGrafFuente.getGroup());
@@ -190,7 +189,7 @@ public class GraphArc  implements Serializable {
                     
                     enlaceGrafico.seleccionar(true);
                     
-                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
+                } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ELIMINAR) {
 
                     GraphNode nodoA = enlaceGrafico.getNodoGraficoA();
                     GraphNode nodoB = enlaceGrafico.getNodoGraficoB();
@@ -243,7 +242,7 @@ public class GraphArc  implements Serializable {
         }
     }
 
-    public GrupoDeDiseno getGroup() {
+    public GraphDesignGroup getGroup() {
         return grGrDeDiseño;
     }
 

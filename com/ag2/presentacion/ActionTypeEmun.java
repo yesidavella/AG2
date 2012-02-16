@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
-    public enum TiposDeBoton {
+    public enum ActionTypeEmun {
         EJECUTAR("ejecutar"),
         PARAR("parar"),
         
@@ -28,13 +28,13 @@ import javafx.scene.image.Image;
     private ImageCursor imagenSobreObjetoCursor;
     private Point2D posicionImagenDeCursorEnXyY;
     
-        private TiposDeBoton(String nombreImagenBoton)
+        private ActionTypeEmun(String nombreImagenBoton)
         {
             posicionImagenDeCursorEnXyY = new Point2D(0,0);
             imagenBoton = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/" + nombreImagenBoton + ".png"));
         }
 
-        private TiposDeBoton(String nombreImagenBoton, String nombreImagenCursor, double posicionImgX, double posicionImgY) {
+        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor, double posicionImgX, double posicionImgY) {
             
             imagenBoton = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/" + nombreImagenBoton + ".png"));
 
@@ -45,7 +45,7 @@ import javafx.scene.image.Image;
             }
         }
         
-        private TiposDeBoton(String nombreImagenBoton, String nombreImagenCursor,double posicionImgX,double posicionImgY,String nombreImagenSobreObjetoCursor,double posicionImg2X,double posicionImg2Y) {
+        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor,double posicionImgX,double posicionImgY,String nombreImagenSobreObjetoCursor,double posicionImg2X,double posicionImg2Y) {
             
             imagenBoton = new Image(getClass().getResourceAsStream("../../../recursos/imagenes/" + nombreImagenBoton + ".png"));
 
