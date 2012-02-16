@@ -3,8 +3,7 @@ package com.ag2.presentacion.diseño;
 import com.ag2.controlador.LinkAdminAbstractController;
 import com.ag2.controlador.NodeAdminAbstractController;
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.TiposDeBoton;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.ag2.presentacion.ActionTypeEmun;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -55,11 +54,11 @@ public abstract class GraphNode implements Selectable, Serializable {
     private short altoInicial = 0;
     private HashMap<String, String> propertiesNode;
     private HashMap<String, String> subPropertiesNode;
-    private GrupoDeDiseno grupoDeDiseno;
+    private GraphDesignGroup grupoDeDiseno;
     private double layoutX;
     private double layoutY;
 
-    public GraphNode(GrupoDeDiseno grupoDeDiseno, String nombre, String urlDeImagen, NodeAdminAbstractController controladorAbstractoAdminNodo, LinkAdminAbstractController ctrlAbsAdminEnlace) {
+    public GraphNode(GraphDesignGroup grupoDeDiseno, String nombre, String urlDeImagen, NodeAdminAbstractController controladorAbstractoAdminNodo, LinkAdminAbstractController ctrlAbsAdminEnlace) {
 
         this.grupoDeDiseno = grupoDeDiseno;
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
@@ -174,10 +173,10 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-                TiposDeBoton tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
+                ActionTypeEmun tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
                 GraphNode nodoGrafico = GraphNode.this;
 
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
+                if (tipoDeBotonSeleccionado == ActionTypeEmun.ENLACE) {
                     group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 } else {
                     group.setCursor(tipoDeBotonSeleccionado.getImagenCursor());
@@ -187,7 +186,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     nodoAComodin = null;
                 }
 
-                if (tipoDeBotonSeleccionado == TiposDeBoton.ENLACE) {
+                if (tipoDeBotonSeleccionado == ActionTypeEmun.ENLACE) {
 
                     if (nodoAComodin != null && nodoAComodin != nodoGrafico && GraphNode.inicioGeneracionDeEnlace) {
 
@@ -210,7 +209,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                         }
                     }
 
-                } else if (tipoDeBotonSeleccionado == TiposDeBoton.ELIMINAR) {
+                } else if (tipoDeBotonSeleccionado == ActionTypeEmun.ELIMINAR) {
                     group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
                 }
                 nodoAComodin = null;
@@ -226,7 +225,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 setAncho((short) cuadroExteriorResaltado.getWidth());
                 setAlto((short) cuadroExteriorResaltado.getHeight());
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
 
                     GraphNode nodoGrafico = GraphNode.this;
                     nodoAComodin = nodoGrafico;
@@ -257,11 +256,11 @@ public abstract class GraphNode implements Selectable, Serializable {
             public void handle(MouseEvent mouseEvent) {
 
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
                     updateNodoListener();
-                } else if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
                     arrastrando = true;
                     enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
                     enlaceComodin.setEndY(getLayoutY() + alto - (mouseEvent.getY()));
@@ -278,7 +277,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ENLACE) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
 
                     grupoDeDiseno.remove(enlaceComodin);
 
@@ -294,7 +293,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 GraphNode nodoGrafico = GraphNode.this;
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.ELIMINAR) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ELIMINAR) {
 
                     nodoGrafico.setEliminado(true);
                     grupoDeDiseno.remove(nodoGrafico);
@@ -303,7 +302,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 }
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
 
                     Selectable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
 

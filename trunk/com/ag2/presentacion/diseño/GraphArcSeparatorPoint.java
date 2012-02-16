@@ -1,8 +1,7 @@
 package com.ag2.presentacion.diseño;
 
 import com.ag2.presentacion.IGU;
-import com.ag2.presentacion.TiposDeBoton;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.ag2.presentacion.ActionTypeEmun;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import javafx.event.EventHandler;
@@ -24,9 +23,9 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
     private boolean arrastro;
     private double centerX; 
     private double centerY; 
-    private GrupoDeDiseno grupoDeDiseno; 
+    private GraphDesignGroup grupoDeDiseno; 
     
-    public GraphArcSeparatorPoint(GrupoDeDiseno grupoDeDiseno,GraphArc arcoGraficoA, GraphArc arcoGraficoB, double posX, double posY) {
+    public GraphArcSeparatorPoint(GraphDesignGroup grupoDeDiseno,GraphArc arcoGraficoA, GraphArc arcoGraficoB, double posX, double posY) {
        
         this.grupoDeDiseno = grupoDeDiseno; 
         this.arcoGraficoA = arcoGraficoA;
@@ -81,7 +80,7 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
 
             public void handle(MouseEvent t) {
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
                     circle.setCursor(Cursor.MOVE);
                 }
             }
@@ -92,7 +91,7 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
                     
                     GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this; 
 
@@ -122,7 +121,7 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
 
             public void handle(MouseEvent eventoDeRaton) {
 
-                if (IGU.getEstadoTipoBoton() == TiposDeBoton.PUNTERO) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
                     GraphArcSeparatorPoint verticeGrafico = GraphArcSeparatorPoint.this; 
                     
                     if (!verticeGrafico.isArrastro()) {

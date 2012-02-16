@@ -1,7 +1,7 @@
 package com.ag2.presentacion;
 
 import com.ag2.controlador.ExecuteAbstractController;
-import com.ag2.presentacion.controles.Boton;
+import com.ag2.presentacion.controles.ToggleButtonAg2;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import javafx.event.EventHandler;
@@ -14,8 +14,8 @@ import javafx.scene.layout.TilePane;
 
 public class ExecutePane extends TilePane implements ExecuteView {
     
-    private Boton btnEjecutar;
-    private Boton btnParar;
+    private ToggleButtonAg2 btnEjecutar;
+    private ToggleButtonAg2 btnParar;
     private ToggleGroup tgEjecucion = new ToggleGroup();
     private ResultadosPhosphorousHTML resultadosPhosphorousHTML;
     ResultadosPhosphorus resultadosPhosphorus;
@@ -23,15 +23,15 @@ public class ExecutePane extends TilePane implements ExecuteView {
     
     public ExecutePane() {
         
-        btnEjecutar = new Boton(TiposDeBoton.EJECUTAR) {
+        btnEjecutar = new ToggleButtonAg2(ActionTypeEmun.EJECUTAR) {
             
             @Override
-            public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
+            public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
                     
                     public void handle(MouseEvent mouEvent) {System.out.println ("Hola");
                         
-                        Boton btnEjecutar = (Boton) mouEvent.getSource();
+                        ToggleButtonAg2 btnEjecutar = (ToggleButtonAg2) mouEvent.getSource();
                         
                         if (executeController != null) {
                             if (resultadosPhosphorousHTML != null) {
@@ -59,15 +59,15 @@ public class ExecutePane extends TilePane implements ExecuteView {
             }
         };
         
-        btnParar = new Boton(TiposDeBoton.PARAR) {
+        btnParar = new ToggleButtonAg2(ActionTypeEmun.PARAR) {
             
             @Override
-            public void setGrupoDeDiseño(final Group grGrupoDeDiseño) {
+            public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
                     
                     public void handle(MouseEvent mouEvent) {
                         
-                        Boton btnParar = (Boton) mouEvent.getSource();
+                        ToggleButtonAg2 btnParar = (ToggleButtonAg2) mouEvent.getSource();
                         IGU.getInstance().habilitar();
                         habilitar();
                         executeController.stop();
@@ -118,8 +118,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
     }
     
     public void setGroup(Group group) {
-        btnEjecutar.setGrupoDeDiseño(group);
-        btnParar.setGrupoDeDiseño(group);
+        btnEjecutar.setGraphDesignGroup(group);
+        btnParar.setGraphDesignGroup(group);
         
         
         

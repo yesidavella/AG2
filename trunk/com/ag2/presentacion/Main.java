@@ -4,7 +4,7 @@ import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
 import com.ag2.controlador.*;
 import com.ag2.modelo.*;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.ag2.presentacion.diseño.GraphDesignGroup;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public class Main extends Application implements Serializable {
     private ExecuteController executeAbstractController;
     private NodeCreationModel modeloCrearNodo;
     private LinkAdminAbstractController ctrlCrearYAdminEnlace;
-    private GrupoDeDiseno grupoDeDiseno;
+    private GraphDesignGroup grupoDeDiseno;
     private SimulationBase simulacionBase =  SimulationBase.getInstance(); 
     private ResultsController resultsController;
     
@@ -144,7 +144,7 @@ public class Main extends Application implements Serializable {
         return serializador;
     }
 
-    public GrupoDeDiseno getGrupoDeDiseno() {
+    public GraphDesignGroup getGrupoDeDiseno() {
         return grupoDeDiseno;
     }
     public void loadFileBaseSimulation()

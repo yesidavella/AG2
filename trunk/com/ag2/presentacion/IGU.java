@@ -1,8 +1,8 @@
 package com.ag2.presentacion;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
-import com.ag2.presentacion.controles.Boton;
-import com.ag2.presentacion.controles.GrupoDeDiseno;
+import com.ag2.presentacion.controles.ToggleButtonAg2;
+import com.ag2.presentacion.diseño.GraphDesignGroup;
 import com.ag2.presentacion.controles.ResultadosPhosphorousHTML;
 import com.ag2.presentacion.controles.ResultadosPhosphorus;
 import com.ag2.presentacion.diseño.GraphNode;
@@ -43,35 +43,35 @@ import javax.swing.JOptionPane;
 
 public class IGU extends Scene implements Serializable {
 
-    private GrupoDeDiseno grGrupoDeDiseño = new GrupoDeDiseno();
+    private GraphDesignGroup grGrupoDeDiseño = new GraphDesignGroup();
     private ToggleGroup tgHerramientas;
     private GridPane gpNavegacionMapa;
     private ExecutePane executePane;
-    private Boton btnMoverEscena;
-    private Boton btnCliente = new Boton(TiposDeBoton.CLIENTE);
-    private Boton btnNodoDeServicio = new Boton(TiposDeBoton.NODO_DE_SERVICIO);
-    private Boton btnEnrutadorOptico = new Boton(TiposDeBoton.ENRUTADOR_OPTICO);
-    private Boton btnEnrutadorDeRafaga = new Boton(TiposDeBoton.ENRUTADOR_RAFAGA);
-    private Boton btnEnrutadorHibrido = new Boton(TiposDeBoton.ENRUTADOR_HIBRIDO);
-    private Boton btnRecurso = new Boton(TiposDeBoton.RECURSO);
-    private Boton btnEnlace = new Boton(TiposDeBoton.ENLACE);
-    private static TiposDeBoton estadoTipoBoton = TiposDeBoton.PUNTERO;
+    private ToggleButtonAg2 btnMoverEscena;
+    private ToggleButtonAg2 btnCliente = new ToggleButtonAg2(ActionTypeEmun.CLIENTE);
+    private ToggleButtonAg2 btnNodoDeServicio = new ToggleButtonAg2(ActionTypeEmun.NODO_DE_SERVICIO);
+    private ToggleButtonAg2 btnEnrutadorOptico = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_OPTICO);
+    private ToggleButtonAg2 btnEnrutadorDeRafaga = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_RAFAGA);
+    private ToggleButtonAg2 btnEnrutadorHibrido = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_HIBRIDO);
+    private ToggleButtonAg2 btnRecurso = new ToggleButtonAg2(ActionTypeEmun.RECURSO);
+    private ToggleButtonAg2 btnEnlace = new ToggleButtonAg2(ActionTypeEmun.ENLACE);
+    private static ActionTypeEmun estadoTipoBoton = ActionTypeEmun.PUNTERO;
     private EntityPropertyTable tbDeviceProperties;
     private GridPane barraHerramientas;
     private ScrollPane scPnWorld;
     private ProgressBar prgBarExecProgress;
     private boolean estaTeclaPrincipalOprimida = false;
-    private TiposDeBoton estadoAnteriorDeBtnAEvento;
+    private ActionTypeEmun estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEvento;
     private ResultadosPhosphorus resultadosPhosphorus;
     private static IGU iguAG2;
     private Main main;
     private StackPane stPnDeviceProperties = new StackPane();
-    private Boton btnSeleccion;
-    private Boton btnDividirEnlaceCuadrado;
-    private Boton btnEliminar;
-    private Boton btnMinusZoom;
-    private Boton btnPlusZoom;
+    private ToggleButtonAg2 btnSeleccion;
+    private ToggleButtonAg2 btnDividirEnlaceCuadrado;
+    private ToggleButtonAg2 btnEliminar;
+    private ToggleButtonAg2 btnMinusZoom;
+    private ToggleButtonAg2 btnPlusZoom;
     private Group grRoot = new Group();
     private VBox vbNavegation = new VBox();
     private Tab tabSimulacion = new Tab();
@@ -102,26 +102,26 @@ public class IGU extends Scene implements Serializable {
         this.main = main;
     }
 
-    public void loadGrupoDeDiseno(GrupoDeDiseno grupoDeDiseño) {
+    public void loadGrupoDeDiseno(GraphDesignGroup grupoDeDiseño) {
 
         grRoot.getChildren().remove(this.grGrupoDeDiseño.getGroup());
         this.grGrupoDeDiseño = grupoDeDiseño;
         grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
         
         executePane.setGroup(grGrupoDeDiseño.getGroup());
-        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnMoverEscena.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnSeleccion.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnDividirEnlaceCuadrado.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEliminar.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnMinusZoom.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnPlusZoom.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnCliente.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnNodoDeServicio.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorOptico.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorDeRafaga.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorHibrido.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnRecurso.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnlace.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
         executePane.setGroup(grGrupoDeDiseño.getGroup());
         grGrupoDeDiseño.setScrollPane(scPnWorld);       
       
@@ -165,14 +165,14 @@ public class IGU extends Scene implements Serializable {
         this.stgEscenario = stage;
     }
 
-    public static TiposDeBoton getEstadoTipoBoton() {
+    public static ActionTypeEmun getEstadoTipoBoton() {
         if (estadoTipoBoton == null) {
-            estadoTipoBoton = TiposDeBoton.PUNTERO;
+            estadoTipoBoton = ActionTypeEmun.PUNTERO;
         }
         return estadoTipoBoton;
     }
 
-    public static void setEstadoTipoBoton(TiposDeBoton tiposDeBoton) {
+    public static void setEstadoTipoBoton(ActionTypeEmun tiposDeBoton) {
         estadoTipoBoton = tiposDeBoton;
     }
 
@@ -278,19 +278,19 @@ public class IGU extends Scene implements Serializable {
 
     private void creacionDeBtnsDeUtilidades(GridPane grdPnBarraHerramientas) {
 
-        btnMoverEscena = new Boton(TiposDeBoton.MANO);
-        btnSeleccion = new Boton(TiposDeBoton.PUNTERO);
-        btnDividirEnlaceCuadrado = new Boton(TiposDeBoton.ADICIONAR_VERTICE);
-        btnEliminar = new Boton(TiposDeBoton.ELIMINAR);
-        btnMinusZoom = new Boton(TiposDeBoton.ZOOM_MINUS);
-        btnPlusZoom = new Boton(TiposDeBoton.ZOOM_PLUS);
+        btnMoverEscena = new ToggleButtonAg2(ActionTypeEmun.MANO);
+        btnSeleccion = new ToggleButtonAg2(ActionTypeEmun.PUNTERO);
+        btnDividirEnlaceCuadrado = new ToggleButtonAg2(ActionTypeEmun.ADICIONAR_VERTICE);
+        btnEliminar = new ToggleButtonAg2(ActionTypeEmun.ELIMINAR);
+        btnMinusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_MINUS);
+        btnPlusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_PLUS);
 
-        btnMoverEscena.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnSeleccion.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnDividirEnlaceCuadrado.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEliminar.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnMinusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnPlusZoom.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnMoverEscena.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnSeleccion.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnDividirEnlaceCuadrado.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEliminar.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnMinusZoom.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnPlusZoom.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
 
         btnMoverEscena.setToggleGroup(tgHerramientas);
         btnSeleccion.setToggleGroup(tgHerramientas);
@@ -345,13 +345,13 @@ public class IGU extends Scene implements Serializable {
         btnRecurso.setToggleGroup(tgHerramientas);
         btnEnlace.setToggleGroup(tgHerramientas);
 
-        btnCliente.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnNodoDeServicio.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorOptico.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorDeRafaga.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnrutadorHibrido.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnRecurso.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
-        btnEnlace.setGrupoDeDiseño(grGrupoDeDiseño.getGroup());
+        btnCliente.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnNodoDeServicio.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorOptico.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorDeRafaga.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnrutadorHibrido.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnRecurso.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
+        btnEnlace.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
 
         btnCliente.setTooltip(new Tooltip("Nodo cliente"));
         btnNodoDeServicio.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
@@ -668,14 +668,14 @@ public class IGU extends Scene implements Serializable {
                     cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
                     if (event.isAltDown()) {
-                        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.MANO.getImagenCursor());
+                        IGU.setEstadoTipoBoton(ActionTypeEmun.MANO);
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.MANO.getImagenCursor());
                     } else if (event.isShiftDown()) {
-                        IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_PLUS);
-                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.ZOOM_PLUS.getImagenCursor());
+                        IGU.setEstadoTipoBoton(ActionTypeEmun.ZOOM_PLUS);
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_PLUS.getImagenCursor());
                     } else if (event.isControlDown()) {
-                        IGU.setEstadoTipoBoton(TiposDeBoton.ZOOM_MINUS);
-                        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.ZOOM_MINUS.getImagenCursor());
+                        IGU.setEstadoTipoBoton(ActionTypeEmun.ZOOM_MINUS);
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_MINUS.getImagenCursor());
                     }
                 }
             }
@@ -697,14 +697,14 @@ public class IGU extends Scene implements Serializable {
     public void inicializarEstadoDeIGU() {
 
         btnCliente.setSelected(true);
-        IGU.setEstadoTipoBoton(TiposDeBoton.CLIENTE);
-        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.CLIENTE.getImagenCursor());
+        IGU.setEstadoTipoBoton(ActionTypeEmun.CLIENTE);
+        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.CLIENTE.getImagenCursor());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
 
     }
 
-    public GrupoDeDiseno getGrGrupoDeDiseño() {
+    public GraphDesignGroup getGrGrupoDeDiseño() {
         return grGrupoDeDiseño;
     }
 
@@ -749,8 +749,8 @@ public class IGU extends Scene implements Serializable {
         estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
         cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
-        IGU.setEstadoTipoBoton(TiposDeBoton.MANO);
-        grGrupoDeDiseño.getGroup().setCursor(TiposDeBoton.MANO.getImagenCursor());
+        IGU.setEstadoTipoBoton(ActionTypeEmun.MANO);
+        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.MANO.getImagenCursor());
 
         prgBarExecProgress.setVisible(true);
         barraHerramientas.setDisable(true);
