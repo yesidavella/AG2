@@ -108,7 +108,7 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
                     verticeEnlaceGrafico.getArcoGraficoB().setStartY(dragY);
                     
                     if(!verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()){
-                        verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(true);
+                        verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().select(true);
                     }
                     verticeEnlaceGrafico.setArrastro(true);
                 }
@@ -127,9 +127,9 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
                     if (!verticeGrafico.isArrastro()) {
 
                         if (verticeGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()) {
-                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(false);
+                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().select(false);
                         } else {
-                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().seleccionar(true);
+                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().select(true);
                         }
                     }
                     
@@ -163,7 +163,7 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
         this.arrastro = arrastro;
     }
 
-    public void updateArco() {
+    public void updateArc() {
         if (  !eliminado && (arcoGraficoA.isEliminado() || arcoGraficoB.isEliminado() )) 
         {
             eliminado= true; 

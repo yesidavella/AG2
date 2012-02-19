@@ -69,7 +69,7 @@ public class ExecuteController extends ExecuteAbstractController {
                 GraphNode graphNode = findGraphNode(errorInfo.getKey());
                 
                 if(graphNode!= null){
-                    errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getNombre().toUpperCase()+"\": "+errorInfo.getValue());
+                    errorWindow.addErrorToShow(errorCounter+". El nodo con nombre \""+graphNode.getName().toUpperCase()+"\": "+errorInfo.getValue());
                 }
                 
             }else{

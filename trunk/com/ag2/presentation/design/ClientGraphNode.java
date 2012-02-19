@@ -6,27 +6,27 @@ import java.io.ObjectInputStream;
 
 public class ClientGraphNode extends GraphNode{
 
-    private static int contadorNodo = 0;
+    private static int nodeCounter = 0;
   
     
     public ClientGraphNode(GraphDesignGroup grupoDeDiseno, NodeAdminAbstractController controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace)
     {
         
-        super(grupoDeDiseno,"Cliente_"+(++contadorNodo), "../../../../resource/image/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
+        super(grupoDeDiseno,"Cliente_"+(++nodeCounter), "../../../../resource/image/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
         
-        setAlto((short)50);
+        setHeight((short)50);
 
-        if(contadorNodo<10){
-            setAncho((short)40);
+        if(nodeCounter<10){
+            setWidth((short)40);
         }else{
-            setAncho((short)44);
+            setWidth((short)44);
         }
         
-        pasoDeSaltoLinea = 9;
+        lineBreakStep = 9;
     }
 
     @Override
-    public boolean puedeGenerarEnlaceCon(GraphNode nodoInicioDelEnlace) {
+    public boolean isEnableToCreateLInk(GraphNode nodoInicioDelEnlace) {
         return (nodoInicioDelEnlace instanceof SwitchGraphNode) && getCantidadDeEnlaces()<1;
     }
  
@@ -35,7 +35,7 @@ public class ClientGraphNode extends GraphNode{
         try
         {
            inputStream.defaultReadObject();
-           contadorNodo++; 
+           nodeCounter++; 
             
         } 
         catch (Exception e) 

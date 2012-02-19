@@ -59,7 +59,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
          */
         //===========================================================================================================
         EntityProperty propNombreDireccionCanalAB = new EntityProperty("direcciónCanalAB", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalAB.setPrimerValor(graphLink.getNodoGraficoA().getNombre() + "-->" + graphLink.getNodoGraficoB().getNombre());
+        propNombreDireccionCanalAB.setPrimerValor(graphLink.getNodoGraficoA().getName() + "-->" + graphLink.getNodoGraficoB().getName());
         entityPropertys.add(propNombreDireccionCanalAB);
 
         EntityProperty propVelEnlaceAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
@@ -72,7 +72,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
          */
         //===========================================================================================================
         EntityProperty propNombreDireccionCanalBA = new EntityProperty("direcciónCanalBA", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalBA.setPrimerValor(graphLink.getNodoGraficoB().getNombre() + "-->" + graphLink.getNodoGraficoA().getNombre());
+        propNombreDireccionCanalBA.setPrimerValor(graphLink.getNodoGraficoB().getName() + "-->" + graphLink.getNodoGraficoA().getName());
         entityPropertys.add(propNombreDireccionCanalBA);
 
         EntityProperty propVelEnlaceBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);

@@ -130,7 +130,7 @@ public class GraphArc  implements Serializable {
                     arcoGrafico.setControlY(dragY);
                     
                     if(!enlaceGrafico.getSeleccionado()){
-                        enlaceGrafico.seleccionar(true);
+                        enlaceGrafico.select(true);
                     }
                     
                 }
@@ -148,9 +148,9 @@ public class GraphArc  implements Serializable {
 
                 if(IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO){
                     if(!enlaceGrafico.getSeleccionado()){
-                        enlaceGrafico.seleccionar(true);
+                        enlaceGrafico.select(true);
                     }else{
-                        enlaceGrafico.seleccionar(false);
+                        enlaceGrafico.select(false);
                     }
                 }
                 
@@ -187,15 +187,15 @@ public class GraphArc  implements Serializable {
                     enlaceGrafico.getArcos().add(arcGrafNuevo);
                     enlaceGrafico.determinarArcoInicialYFinal();
                     
-                    enlaceGrafico.seleccionar(true);
+                    enlaceGrafico.select(true);
                     
                 } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ELIMINAR) {
 
                     GraphNode nodoA = enlaceGrafico.getNodoGraficoA();
                     GraphNode nodoB = enlaceGrafico.getNodoGraficoB();
 
-                    nodoA.removeNodoListener(enlaceGrafico);
-                    nodoB.removeNodoListener(enlaceGrafico);
+                    nodoA.removeNodeListener(enlaceGrafico);
+                    nodoB.removeNodeListener(enlaceGrafico);
 
                     nodoA.setCantidadDeEnlaces((short) (nodoA.getCantidadDeEnlaces() - 1));
                     nodoB.setCantidadDeEnlaces((short) (nodoB.getCantidadDeEnlaces() - 1));
@@ -238,7 +238,7 @@ public class GraphArc  implements Serializable {
 
     public void updateArcoListeners() {
         for (ArcListener arcoListener : arcoListeners) {
-            arcoListener.updateArco();
+            arcoListener.updateArc();
         }
     }
 

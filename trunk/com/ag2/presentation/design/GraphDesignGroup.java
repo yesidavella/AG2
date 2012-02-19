@@ -173,7 +173,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
             if (nuevoNodo != null) {
                 if (objetoGraficoSelecionado != null) {
-                    objetoGraficoSelecionado.seleccionar(false);
+                    objetoGraficoSelecionado.select(false);
                 }
 
                 dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
@@ -182,7 +182,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 for (NodeAdminAbstractController controladorRegistrado : ctrladoresRegistradosAdminNodo) {
                     controladorRegistrado.createNode(nuevoNodo);
                 }
-                nuevoNodo.seleccionar(true);
+                nuevoNodo.select(true);
             }
         }
     }
@@ -266,8 +266,8 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         if (nuevoNodo != null) {
 
-            posicionX = me.getX() - nuevoNodo.getAnchoActual() / 2;
-            posicionY = me.getY() - nuevoNodo.getAltoActual() / 2;
+            posicionX = me.getX() - nuevoNodo.getWidth() / 2;
+            posicionY = me.getY() - nuevoNodo.getHeight() / 2;
 
             nuevoNodo.setLayoutX(posicionX);
             nuevoNodo.setLayoutY(posicionY);
@@ -350,13 +350,13 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 if (serializable instanceof GraphNode) {
                     GraphNode nodoGrafico = (GraphNode) serializable;
                     //  group.getChildren().add(nodoGrafico.getGroup());  
-                    if (nodoGrafico.getNombre() != null) {
+                    if (nodoGrafico.getName() != null) {
 
 
                         nodoGrafico.initTransientObjects();
                         nodoGrafico.getGroup().setLayoutX(nodoGrafico.getLayoutX());
                         nodoGrafico.getGroup().setLayoutY(nodoGrafico.getLayoutY());
-                        nodoGrafico.seleccionar(false);
+                        nodoGrafico.select(false);
                         group.getChildren().add(nodoGrafico.getGroup());
                     }
 

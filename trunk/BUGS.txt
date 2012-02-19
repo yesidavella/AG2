@@ -55,3 +55,9 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 ##### com.ag2.presentacion
 
 -GraphNodesView
+
+##### com.ag2.presentation.design;
+
+-ArcListener
+-GraphNode
+-BrokerGrahpNode

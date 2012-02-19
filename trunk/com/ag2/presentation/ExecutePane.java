@@ -44,7 +44,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             executeController.initNetwork();
                             
                             if (executeController.isWellFormedNetwork()) {
-                                IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado().seleccionar(false);
+                                IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado().select(false);
                                 IGU.getInstance().getGrGrupoDeDiseño().setObjetoGraficoSelecionado(null);
                                 IGU.getInstance().getTbDeviceProperties().clearData();
                                 IGU.getInstance().deshabilitar();

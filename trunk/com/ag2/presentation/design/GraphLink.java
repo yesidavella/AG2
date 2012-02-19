@@ -24,24 +24,24 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;
         this.adminLinkController = controladorAdminEnlace;
-        this.nodoGraficoA.addNodoListener(this);
-        this.nodoGraficoB.addNodoListener(this);
+        this.nodoGraficoA.addNodeListener(this);
+        this.nodoGraficoB.addNodeListener(this);
 
         this.grGrDeDiseño = group;
 
         arcInicial = new GraphArc(this, grGrDeDiseño);
         
-        arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
-        arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getAltoActual()/2);
-        arcInicial.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
-        arcInicial.setEndY(nodoGraficoB.getLayoutY() + nodoGraficoB.getAltoActual()/2);
+        arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getWidth()/2);
+        arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getHeight()/2);
+        arcInicial.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getWidth()/2);
+        arcInicial.setEndY(nodoGraficoB.getLayoutY() + nodoGraficoB.getHeight()/2);
         arcInicial.calcularCentroXY();
         arcos.add(arcInicial);
  
         properties = new HashMap<String, String>();
         determinarArcoInicialYFinal();
         controladorAdminEnlace.createLink(this);
-        seleccionar(true);
+        select(true);
         
     }
 
@@ -63,7 +63,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     {
         if (nodoGraficoA != null && nodoGraficoB != null) 
         {
-            if (nodoGraficoA.isEliminado() || nodoGraficoB.isEliminado()) {
+            if (nodoGraficoA.isDeleted() || nodoGraficoB.isDeleted()) {
 
                 for (GraphArc arcoGrafico : arcos) 
                 {
@@ -78,11 +78,11 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
             }else{
                 
-                arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getAnchoActual()/2);
-                arcInicial.setStartY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getAltoActual() - nodoGraficoA.getAltoInicial()/4);
+                arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getWidth()/2);
+                arcInicial.setStartY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getHeight() - nodoGraficoA.getInitialHeight()/4);
 
-                arcFinal.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getAnchoActual()/2);
-                arcFinal.setEndY(nodoGraficoB.getLayoutY() + 0.75*nodoGraficoB.getAltoActual()- nodoGraficoB.getAltoInicial()/4);
+                arcFinal.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getWidth()/2);
+                arcFinal.setEndY(nodoGraficoB.getLayoutY() + 0.75*nodoGraficoB.getHeight()- nodoGraficoB.getInitialHeight()/4);
             }
         }
     }
@@ -104,12 +104,12 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
     }
 
-    public void seleccionar(boolean isSeleccionado) {
+    public void select(boolean isSeleccionado) {
         
         Selectable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
         
         if(objSeleccionado!=null && objSeleccionado!=this){
-            objSeleccionado.seleccionar(false);
+            objSeleccionado.select(false);
         }
         
         this.isSeleccionado = isSeleccionado;

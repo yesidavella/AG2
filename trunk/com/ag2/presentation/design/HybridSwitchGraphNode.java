@@ -6,14 +6,14 @@ import java.io.ObjectInputStream;
 
 public class HybridSwitchGraphNode extends SwitchGraphNode{
 
-    private static short contadorNodo = 0;
+    private static short nodeCounter = 0;
     
     public HybridSwitchGraphNode(GraphDesignGroup grupoDeDiseno, NodeAdminAbstractController controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace) 
     {
-        super(grupoDeDiseno,"Enrutador_Hibrido_"+(++contadorNodo) ,"../../../../resource/image/enrutador_hibrido_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
+        super(grupoDeDiseno,"Enrutador_Hibrido_"+(++nodeCounter) ,"../../../../resource/image/enrutador_hibrido_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
         
-        if(contadorNodo>9){
-            setAncho((short)46);
+        if(nodeCounter>9){
+            setWidth((short)46);
         }
     }
     
@@ -22,7 +22,7 @@ public class HybridSwitchGraphNode extends SwitchGraphNode{
         try
         {
            inputStream.defaultReadObject();
-           contadorNodo++; 
+           nodeCounter++; 
             
         } 
         catch (Exception e) 
