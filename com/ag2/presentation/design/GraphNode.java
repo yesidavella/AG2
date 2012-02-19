@@ -2,8 +2,8 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
-import com.ag2.presentation.IGU;
 import com.ag2.presentation.ActionTypeEmun;
+import com.ag2.presentation.IGU;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -29,49 +29,46 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private static ImageView IMG_VW_DENY_LINK = new ImageView(
             new Image(GraphNode.class.getResourceAsStream("../../../../resource/image/prohibido_enlace.png")));
-    public static boolean inicioGeneracionDeEnlace = false;
-    private static GraphNode nodoAComodin = null;
-    protected transient Image imagen = null;
-    private transient Line enlaceComodin;
+    public static boolean linkBegin = false;
+    private static GraphNode wildcardNodeA = null;
+    protected transient Image image = null;
+    private transient Line wildcardLink;
     private transient ImageView imageView;
-    protected transient Label lblNombre;
+    protected transient Label lblName;
     private transient DropShadow dropShadow;
-    protected transient VBox cuadroExteriorResaltado;
+    protected transient VBox vBoxWrapper;
     private transient Group group;
     private String name = null;
-    private ArrayList<NodeListener> nodosListener = new ArrayList<NodeListener>();
-    private boolean estaEliminado = false;
-    private boolean selecionado = false;
-    private String urlDeImagen;
-    private boolean arrastrando = false;
-    private NodeAdminAbstractController controladorAbstractoAdminNodo;
-    private LinkAdminAbstractController controladorAdminEnlace;
-    private short alto;
-    private short ancho;
-    private short cantidadDeEnlaces = 0;
-    private String nombreOriginal;
-    protected short pasoDeSaltoLinea;
-    private short altoInicial = 0;
+    private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
+    private boolean deleted = false;
+    private boolean selected = false;
+    private String imageURL;
+    private boolean dragging = false;
+    private NodeAdminAbstractController nodeAdminAbstractController;
+    private LinkAdminAbstractController linkAdminAbstractController;
+    private short height;
+    private short width;
+    private short linkCounter = 0;
+    private String originalName;
+    protected short lineBreakStep;
+    private short initialHeight = 0;
     private HashMap<String, String> propertiesNode;
     private HashMap<String, String> subPropertiesNode;
-    private GraphDesignGroup grupoDeDiseno;
+    private GraphDesignGroup graphDesignGroup;
     private double layoutX;
     private double layoutY;
 
-    public GraphNode(GraphDesignGroup grupoDeDiseno, String nombre, String urlDeImagen, NodeAdminAbstractController controladorAbstractoAdminNodo, LinkAdminAbstractController ctrlAbsAdminEnlace) {
+    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, NodeAdminAbstractController nodeAdminAbstractController, LinkAdminAbstractController linkAdminAbstractController) {
 
-        this.grupoDeDiseno = grupoDeDiseno;
-        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
-        this.controladorAdminEnlace = ctrlAbsAdminEnlace;
-        this.urlDeImagen = urlDeImagen;
-        this.name = nombre;
-        this.nombreOriginal = nombre;
+        this.graphDesignGroup = graphDesignGroup;
+        this.nodeAdminAbstractController = nodeAdminAbstractController;
+        this.linkAdminAbstractController = linkAdminAbstractController;
+        this.imageURL = imageURL;
+        this.name = name;
+        this.originalName = name;
         propertiesNode = new HashMap<String, String>();
         subPropertiesNode = new HashMap<String, String>();
-
         initTransientObjects();
-
-
     }
 
     public void initTransientObjects() {
@@ -79,52 +76,51 @@ public abstract class GraphNode implements Selectable, Serializable {
         group = new Group();
         dropShadow = new DropShadow();
         group.setEffect(dropShadow);
-        lblNombre = new Label(name);
-        lblNombre.setTextFill(Color.BLACK);
-        lblNombre.setTextAlignment(TextAlignment.CENTER);
-        lblNombre.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
+        lblName = new Label(formatearNombre(name));
+        lblName.setTextFill(Color.BLACK);
+        lblName.setTextAlignment(TextAlignment.CENTER);
+        lblName.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
 
+        wildcardLink = new Line();
+        vBoxWrapper = new VBox();
+        image = new Image(getClass().getResourceAsStream(imageURL));
+        imageView = new ImageView(image);
+        vBoxWrapper.setAlignment(Pos.CENTER);
+        vBoxWrapper.getChildren().addAll(imageView, lblName);
 
-        enlaceComodin = new Line();
-        cuadroExteriorResaltado = new VBox();
-        imagen = new Image(getClass().getResourceAsStream(urlDeImagen));
-        imageView = new ImageView(imagen);
-        cuadroExteriorResaltado.setAlignment(Pos.CENTER);
-        cuadroExteriorResaltado.getChildren().addAll(imageView, lblNombre);
-
-        group.getChildren().addAll(cuadroExteriorResaltado);
+        group.getChildren().addAll(vBoxWrapper);
         group.setScaleX(0.5);
         group.setScaleY(-0.5);
 
-        establecerEventoOnMouseClicked();
-        establecerEventoOnMousePressed();
-        establecerEventoOnMouseDragged();
-        establecerEventoOnMouseReleased();
-        establecerEventoOnMouseEntered();
-        establecerEventoOnMouseExit();
+        establishEventOnMouseClicked();
+        establishEventOnMousePressed();
+        establishEventOnMouseDragged();
+        establishEventOnMouseReleased();
+        establishEventOnMouseEntered();
+        establishEventOnMouseExit();
     }
 
     public HashMap<String, String> getNodeProperties() {
         return propertiesNode;
     }
 
-    public void setAltoInicial(short altoInicial) {
-        this.altoInicial = altoInicial;
+    public void setInitialHeight(short initialHeight) {
+        this.initialHeight = initialHeight;
     }
 
-    public short getAltoInicial() {
-        return altoInicial;
+    public short getInitialHeight() {
+        return initialHeight;
     }
 
-    public String getNombreOriginal() {
-        return nombreOriginal;
+    public String getOriginalName() {
+        return originalName;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof GraphNode) {
-            GraphNode nodoGrafico = (GraphNode) obj;
-            return nombreOriginal.equals(nodoGrafico.getNombreOriginal());
+            GraphNode graphNode = (GraphNode) obj;
+            return originalName.equals(graphNode.getOriginalName());
         }
         return false;
     }
@@ -132,28 +128,29 @@ public abstract class GraphNode implements Selectable, Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + (this.nombreOriginal != null ? this.nombreOriginal.hashCode() : 0);
+        hash = 41 * hash + (this.originalName != null ? this.originalName.hashCode() : 0);
         return hash;
     }
 
-    public boolean isSelecionado() {
-        return selecionado;
+    public boolean isSelected() {
+        return selected;
     }
 
-    public void seleccionar(boolean selecionado) {
-        this.selecionado = selecionado;
-        if (!selecionado) {
+    @Override
+    public void select(boolean selected) {
+        this.selected = selected;
+        if (!selected) {
             dropShadow.setColor(Color.WHITESMOKE);
             dropShadow.setSpread(.2);
             dropShadow.setWidth(20);
             dropShadow.setHeight(20);
 
-            cuadroExteriorResaltado.getStyleClass().remove("nodoSeleccionado");
-            cuadroExteriorResaltado.getStyleClass().add("nodoNoSeleccionado");
+            vBoxWrapper.getStyleClass().remove("nodoSeleccionado");
+            vBoxWrapper.getStyleClass().add("nodoNoSeleccionado");
         } else {
-            controladorAbstractoAdminNodo.queryProperties(this);
-            cuadroExteriorResaltado.getStyleClass().remove("nodoNoSeleccionado");
-            cuadroExteriorResaltado.getStyleClass().add("nodoSeleccionado");
+            nodeAdminAbstractController.queryProperties(this);
+            vBoxWrapper.getStyleClass().remove("nodoNoSeleccionado");
+            vBoxWrapper.getStyleClass().add("nodoSeleccionado");
 
             group.toFront();
             dropShadow.setColor(Color.web("#44FF00"));
@@ -168,80 +165,77 @@ public abstract class GraphNode implements Selectable, Serializable {
         return name;
     }
 
-    private void establecerEventoOnMouseEntered() {
+    private void establishEventOnMouseEntered() {
         group.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
-                ActionTypeEmun tipoDeBotonSeleccionado = IGU.getEstadoTipoBoton();
-                GraphNode nodoGrafico = GraphNode.this;
+                ActionTypeEmun actionTypeEmun = IGU.getEstadoTipoBoton();
+                GraphNode graphNode = GraphNode.this;
 
-                if (tipoDeBotonSeleccionado == ActionTypeEmun.ENLACE) {
-                    group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                if (actionTypeEmun == ActionTypeEmun.ENLACE) {
+                    group.setCursor(actionTypeEmun.getImagenSobreObjetoCursor());
                 } else {
-                    group.setCursor(tipoDeBotonSeleccionado.getImagenCursor());
+                    group.setCursor(actionTypeEmun.getImagenCursor());
                 }
 
-                if (inicioGeneracionDeEnlace == false) {
-                    nodoAComodin = null;
+                if (linkBegin == false) {
+                    wildcardNodeA = null;
                 }
 
-                if (tipoDeBotonSeleccionado == ActionTypeEmun.ENLACE) {
+                if (actionTypeEmun == ActionTypeEmun.ENLACE) {
 
-                    if (nodoAComodin != null && nodoAComodin != nodoGrafico && GraphNode.inicioGeneracionDeEnlace) {
+                    if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
 
-                        if (nodoGrafico.puedeGenerarEnlaceCon(nodoAComodin)) {
+                        if (graphNode.isEnableToCreateLInk(wildcardNodeA)) {
+                            graphDesignGroup.remove(wildcardLink);
 
-
-
-                            grupoDeDiseno.remove(enlaceComodin);
-
-                            GraphLink enlaceGrafico = new GraphLink(grupoDeDiseno, nodoAComodin, nodoGrafico, controladorAdminEnlace);
+                            GraphLink enlaceGrafico = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
                             enlaceGrafico.addArcosInicialAlGrupo();
 
-                            nodoAComodin.setCantidadDeEnlaces((short) (nodoAComodin.getCantidadDeEnlaces() + 1));
-                            nodoGrafico.setCantidadDeEnlaces((short) (nodoGrafico.getCantidadDeEnlaces() + 1));
+                            wildcardNodeA.setCantidadDeEnlaces((short) (wildcardNodeA.getCantidadDeEnlaces() + 1));
+                            graphNode.setCantidadDeEnlaces((short) (graphNode.getCantidadDeEnlaces() + 1));
 
-                            nodoAComodin.getGroup().toFront();
-                            nodoGrafico.getGroup().toFront();
+                            wildcardNodeA.getGroup().toFront();
+                            graphNode.getGroup().toFront();
                         } else {
-                            nodoGrafico.playDenyLinkAnimation();
+                            graphNode.playDenyLinkAnimation();
                         }
                     }
 
-                } else if (tipoDeBotonSeleccionado == ActionTypeEmun.ELIMINAR) {
-                    group.setCursor(tipoDeBotonSeleccionado.getImagenSobreObjetoCursor());
+                } else if (actionTypeEmun == ActionTypeEmun.ELIMINAR) {
+                    group.setCursor(actionTypeEmun.getImagenSobreObjetoCursor());
                 }
-                nodoAComodin = null;
+                wildcardNodeA = null;
             }
         });
     }
 
-    private void establecerEventoOnMousePressed() {
+    private void establishEventOnMousePressed() {
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
-                setAncho((short) cuadroExteriorResaltado.getWidth());
-                setAlto((short) cuadroExteriorResaltado.getHeight());
+                setWidth((short) vBoxWrapper.getWidth());
+                setHeight((short) vBoxWrapper.getHeight());
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
 
-                    GraphNode nodoGrafico = GraphNode.this;
-                    nodoAComodin = nodoGrafico;
+                    GraphNode graphNode = GraphNode.this;
+                    wildcardNodeA = graphNode;
 
-                    double x = nodoGrafico.getLayoutX();
-                    double y = nodoGrafico.getLayoutY();
-                    enlaceComodin.setStartX(x + ancho / 2);
-                    enlaceComodin.setStartY(y + alto / 2);
-                    enlaceComodin.setEndX(x + ancho / 2);
-                    enlaceComodin.setEndY(y + alto / 2);
-                    grupoDeDiseno.add(enlaceComodin);
-                    enlaceComodin.toFront();
-                    nodoGrafico.group.toFront();
+                    double x = graphNode.getLayoutX();
+                    double y = graphNode.getLayoutY();
+                    wildcardLink.setStartX(x + width / 2);
+                    wildcardLink.setStartY(y + height / 2);
+                    wildcardLink.setEndX(x + width / 2);
+                    wildcardLink.setEndY(y + height / 2);
+                    graphDesignGroup.add(wildcardLink);
+                    wildcardLink.toFront();
+                    graphNode.group.toFront();
 
                     if (mouseEvent.isPrimaryButtonDown() && group.isHover()) {
-                        GraphNode.inicioGeneracionDeEnlace = true;
+                        GraphNode.linkBegin = true;
                     }
                 }
                 group.setScaleX(1);
@@ -250,161 +244,154 @@ public abstract class GraphNode implements Selectable, Serializable {
         });
     }
 
-    private void establecerEventoOnMouseDragged() {
+    private void establishEventOnMouseDragged() {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
-                    setLayoutX(getLayoutX() + mouseEvent.getX() - ancho / 2);
-                    setLayoutY(getLayoutY() - (mouseEvent.getY() - alto / 2));
-                    updateNodoListener();
+                    setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
+                    setLayoutY(getLayoutY() - (mouseEvent.getY() - height / 2));
+                    updateNodeListener();
                 } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
-                    arrastrando = true;
-                    enlaceComodin.setEndX(getLayoutX() + (mouseEvent.getX()));
-                    enlaceComodin.setEndY(getLayoutY() + alto - (mouseEvent.getY()));
+                    dragging = true;
+                    wildcardLink.setEndX(getLayoutX() + (mouseEvent.getX()));
+                    wildcardLink.setEndY(getLayoutY() + height - (mouseEvent.getY()));
                 }
             }
         });
     }
 
-    private void establecerEventoOnMouseReleased() {
+    private void establishEventOnMouseReleased() {
         group.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-
+                
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
-
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
-
-                    grupoDeDiseno.remove(enlaceComodin);
-
+                    graphDesignGroup.remove(wildcardLink);
                 }
             }
         });
     }
 
-    private void establecerEventoOnMouseClicked() {
+    private void establishEventOnMouseClicked() {
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
 
-                GraphNode nodoGrafico = GraphNode.this;
+                GraphNode graphNode = GraphNode.this;
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ELIMINAR) {
 
-                    nodoGrafico.setEliminado(true);
-                    grupoDeDiseno.remove(nodoGrafico);
-                    grupoDeDiseno.eliminarNodeListaNavegacion(nodoGrafico);
-                    controladorAbstractoAdminNodo.removeNode(nodoGrafico);
+                    graphNode.setDeleted(true);
+                    graphDesignGroup.remove(graphNode);
+                    graphDesignGroup.eliminarNodeListaNavegacion(graphNode);
+                    nodeAdminAbstractController.removeNode(graphNode);
 
                 }
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
 
-                    Selectable objSeleccionado = grupoDeDiseno.getObjetoGraficoSelecionado();
+                    Selectable objSeleccionado = graphDesignGroup.getObjetoGraficoSelecionado();
 
-                    if (!arrastrando) {
-                        if (objSeleccionado == nodoGrafico) {
-                            objSeleccionado.seleccionar(false);
-                            grupoDeDiseno.setObjetoGraficoSelecionado(null);
+                    if (!dragging) {
+                        if (objSeleccionado == graphNode) {
+                            objSeleccionado.select(false);
+                            graphDesignGroup.setObjetoGraficoSelecionado(null);
                         } else {
                             if (objSeleccionado == null) {
-                                nodoGrafico.seleccionar(true);
-                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
+                                graphNode.select(true);
+                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
                             } else {
-                                objSeleccionado.seleccionar(false);
-                                nodoGrafico.seleccionar(true);
-                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
+                                objSeleccionado.select(false);
+                                graphNode.select(true);
+                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
                             }
                         }
 
                     } else {
-                        if (nodoGrafico != objSeleccionado) {
+                        if (graphNode != objSeleccionado) {
                             if (objSeleccionado == null) {
-                                nodoGrafico.seleccionar(true);
-                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
+                                graphNode.select(true);
+                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
                             } else {
-                                objSeleccionado.seleccionar(false);
-                                nodoGrafico.seleccionar(true);
-                                grupoDeDiseno.setObjetoGraficoSelecionado(nodoGrafico);
+                                objSeleccionado.select(false);
+                                graphNode.select(true);
+                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
                             }
                         }
                     }
-                    arrastrando = false;
+                    dragging = false;
                 }
-                updateNodoListener();
+                updateNodeListener();
             }
         });
     }
 
-    private void establecerEventoOnMouseExit() {
-
+    private void establishEventOnMouseExit() {
         group.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {
-                //System.out.println("Exit:" + getNombre());
-
+            public void handle(MouseEvent mouseEvent) {             
                 if (!mouseEvent.isPrimaryButtonDown()) {
-                    GraphNode.inicioGeneracionDeEnlace = false;
-                    nodoAComodin = null;
+                    GraphNode.linkBegin = false;
+                    wildcardNodeA = null;
                 }
-
             }
         });
     }
 
-    public void addNodoListener(NodeListener listenerNodo) {
-        nodosListener.add(listenerNodo);
+    public void addNodeListener(NodeListener nodeListener) {
+        nodeListeners.add(nodeListener);
     }
 
-    public void removeNodoListener(NodeListener listenerNodo) {
-        nodosListener.remove(listenerNodo);
+    public void removeNodeListener(NodeListener nodeListener) {
+        nodeListeners.remove(nodeListener);
     }
 
-    public void updateNodoListener() {
+    public void updateNodeListener() {
         layoutX = this.getLayoutX();
         layoutY = this.getLayoutY();
 
-        for (NodeListener nodoListener : nodosListener) {
-            nodoListener.update();
+        for (NodeListener nodeListener : nodeListeners) {
+            nodeListener.update();
         }
     }
 
-    public Image getImagen() {
-        return imagen;
+    public Image getImage() {
+        return image;
     }
 
-    public boolean isEliminado() {
-        return estaEliminado;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setEliminado(boolean eliminado) {
-        this.estaEliminado = eliminado;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
-    public String getNombre() {
+    public String getName() {
         return name;
     }
 
-    public void setNombre(String nombre) {
-        this.name = nombre;
-        lblNombre.setText(formatearNombreConSaltoDeLineas(nombre));
+    public void setName(String name) {
+        this.name = name;
+        lblName.setText(formatearNombreConSaltoDeLineas(name));
     }
 
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
             System.out.println("read :" + name);
-            if (grupoDeDiseno.isSerializableComplete()) 
+            if (graphDesignGroup.isSerializableComplete()) 
             {
                 initTransientObjects();
                 getGroup().setLayoutX(getLayoutX());
                 getGroup().setLayoutY(getLayoutY());
-                seleccionar(false);
-                grupoDeDiseno.getGroup().getChildren().add(getGroup());
+                select(false);
+                graphDesignGroup.getGroup().getChildren().add(getGroup());
                 System.out.println("read load post :" + name);
             }
 
@@ -422,48 +409,47 @@ public abstract class GraphNode implements Selectable, Serializable {
         }
     }
 
-    public short getAltoActual() {
-        return alto;
+    public short getHeight() {
+        return height;
     }
 
-    public void setAlto(short alto) {
+    public void setHeight(short height) {
 
-        if (altoInicial == 0) {
-            setAltoInicial(alto);
+        if (initialHeight == 0) {
+            setInitialHeight(height);
         }
-
-        this.alto = alto;
+        this.height = height;
     }
 
-    public short getAnchoActual() {
-        return ancho;
+    public short getWidth() {
+        return width;
     }
 
-    public void setAncho(short ancho) {
-        this.ancho = ancho;
+    public void setWidth(short ancho) {
+        this.width = ancho;
     }
 
-//    private String formatearNombre(String nombre) {
-//
-//        if (nombre.startsWith("Enrutador")) {
-//            return nombre.substring(0, "Enrutador".length()) + "\n" + nombre.substring("Enrutador".length() + 1, nombre.length());
-//        }
-//        return nombre;
-//    }
+    private String formatearNombre(String nombre) {
+
+        if (nombre.startsWith("Enrutador")) {
+            return nombre.substring(0, "Enrutador".length()) + "\n" + nombre.substring("Enrutador".length() + 1, nombre.length());
+        }
+        return nombre;
+    }
     public short getCantidadDeEnlaces() {
-        return cantidadDeEnlaces;
+        return linkCounter;
     }
 
     public void setCantidadDeEnlaces(short cantidadDeEnlaces) {
-        this.cantidadDeEnlaces = cantidadDeEnlaces;
+        this.linkCounter = cantidadDeEnlaces;
     }
 
     public boolean isInicioGeneracionDeEnlace() {
-        return inicioGeneracionDeEnlace;
+        return linkBegin;
     }
 
     public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
-        this.inicioGeneracionDeEnlace = inicioGeneracionDeEnlace;
+        this.linkBegin = inicioGeneracionDeEnlace;
     }
 
     public String formatearNombreConSaltoDeLineas(String nombre) {
@@ -474,26 +460,26 @@ public abstract class GraphNode implements Selectable, Serializable {
         int tamaño = nombre.length();
         int i = 0;
 
-        while (tamaño >= pasoDeSaltoLinea) {
+        while (tamaño >= lineBreakStep) {
 
-            nombreModificado.append(nombre.substring(i * pasoDeSaltoLinea, (i * pasoDeSaltoLinea) + pasoDeSaltoLinea)).append("\n");
+            nombreModificado.append(nombre.substring(i * lineBreakStep, (i * lineBreakStep) + lineBreakStep)).append("\n");
 
-            tamaño = nombre.substring(((i * pasoDeSaltoLinea) + pasoDeSaltoLinea)).length();
+            tamaño = nombre.substring(((i * lineBreakStep) + lineBreakStep)).length();
 
-            if (tamaño > 0 && tamaño < pasoDeSaltoLinea) {
-                nombreModificado.append(nombre.substring(((i * pasoDeSaltoLinea) + pasoDeSaltoLinea)));
+            if (tamaño > 0 && tamaño < lineBreakStep) {
+                nombreModificado.append(nombre.substring(((i * lineBreakStep) + lineBreakStep)));
             }
 
             i++;
         }
-        setAlto((short) cuadroExteriorResaltado.getHeight());
-        setAncho((short) cuadroExteriorResaltado.getWidth());
-        updateNodoListener();
+        setHeight((short) vBoxWrapper.getHeight());
+        setWidth((short) vBoxWrapper.getWidth());
+        updateNodeListener();
         return (nombreModificado.length() == 0) ? nombre : nombreModificado.toString();
     }
 
     public Line getEnlaceComodin() {
-        return enlaceComodin;
+        return wildcardLink;
     }
 
     public HashMap<String, String> getSubPropertiesNode() {
@@ -524,11 +510,11 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void playDenyLinkAnimation() {
 
-        IMG_VW_DENY_LINK.setLayoutX(getLayoutX() + getAnchoActual() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
-        IMG_VW_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getAltoActual() - (getAltoInicial() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
+        IMG_VW_DENY_LINK.setLayoutX(getLayoutX() + getWidth() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
+        IMG_VW_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getHeight() - (getInitialHeight() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
 
 
-        grupoDeDiseno.add(IMG_VW_DENY_LINK);
+        graphDesignGroup.add(IMG_VW_DENY_LINK);
 
         FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
         fadeImgDenyLink.setFromValue(1.0);
@@ -538,10 +524,10 @@ public abstract class GraphNode implements Selectable, Serializable {
         fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent arg0) {
-                grupoDeDiseno.remove(IMG_VW_DENY_LINK);
+                graphDesignGroup.remove(IMG_VW_DENY_LINK);
             }
         });
     }
 
-    public abstract boolean puedeGenerarEnlaceCon(GraphNode nodoInicioDelEnlace);
+    public abstract boolean isEnableToCreateLInk(GraphNode graphNode);
 }

@@ -613,7 +613,7 @@ public class IGU extends Scene implements Serializable {
                 GraphNode selectedNode = (GraphNode) chobNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
-                    //selectedNode.seleccionar(true);
+                    //selectedNode.select(true);
 
                     Scale sclEscalaDeZoom = grGrupoDeDiseño.getSclEscalaDeZoom();
                     sclEscalaDeZoom.setX(1.5);
@@ -636,19 +636,19 @@ public class IGU extends Scene implements Serializable {
                     double funcToCalculateYError = (-2 * maxErrorInY * posYInPercentage) + maxErrorInY;
                     double percentageYError = funcToCalculateYError / worldHeight;
 
-                    double percentImgHeightCorrecX = (selectedNode.getAnchoActual()) / worldWidth;
-                    double percentImgHeightCorrecY = (selectedNode.getAltoActual()) / worldHeight;
+                    double percentImgHeightCorrecX = (selectedNode.getWidth()) / worldWidth;
+                    double percentImgHeightCorrecY = (selectedNode.getHeight()) / worldHeight;
 
                     scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
                     scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
                     
                     if(grGrupoDeDiseño.getObjetoGraficoSelecionado()!=null)
                     {    
-                        grGrupoDeDiseño.getObjetoGraficoSelecionado().seleccionar(false);
+                        grGrupoDeDiseño.getObjetoGraficoSelecionado().select(false);
                     }
                     
                     grGrupoDeDiseño.setObjetoGraficoSelecionado(selectedNode);
-                    selectedNode.seleccionar(true);
+                    selectedNode.select(true);
                 }
             }
         });
