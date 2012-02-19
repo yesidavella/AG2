@@ -1,7 +1,7 @@
 package com.ag2.config;
 
-import com.ag2.controlador.ExecuteController;
-import com.ag2.presentacion.IGU;
+import com.ag2.controller.ExecuteController;
+import com.ag2.presentation.IGU;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
