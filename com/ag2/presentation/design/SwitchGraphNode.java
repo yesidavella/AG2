@@ -18,7 +18,7 @@ public  abstract class SwitchGraphNode extends GraphNode{
     public boolean isEnableToCreateLInk(GraphNode nodoComienzoEnlace) {
         
         if(nodoComienzoEnlace instanceof ClientGraphNode){
-            return (nodoComienzoEnlace.getCantidadDeEnlaces()>=1)?false:true;
+            return (nodoComienzoEnlace.getLinkCounter()>=1)?false:true;
         }
         
         return true;
