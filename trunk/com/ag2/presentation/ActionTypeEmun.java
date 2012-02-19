@@ -1,0 +1,80 @@
+package com.ag2.presentation;
+
+import javafx.geometry.Point2D;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
+
+    public enum ActionTypeEmun {
+        EJECUTAR("ejecutar"),
+        PARAR("parar"),
+        
+        PUNTERO("puntero",null,0,0,"puntero_sobre_enlace",1,21),
+        MANO("mano","mano_abierta_cursor",0,0,"mano_cerrada_cursor",0,0),
+        ADICIONAR_VERTICE("adicionar_vertice","adicionar_vertice_cursor",3,3,"adicionar_vertice_sobre_elemento_cursor",3,5),
+        ELIMINAR("eliminar","eliminar_cursor",0,0,"eliminar_sobre_elemento_cursor",0,0),
+        ZOOM_PLUS("lupa_mas","lupa_mas_cursor",10,10),
+        ZOOM_MINUS("lupa_menos","lupa_menos_cursor",10,10),
+        
+        CLIENTE("cliente","cliente_cursor",14,14),
+        ENRUTADOR_OPTICO("enrutador_optico","enrutador_optico_cursor",10,13),
+        ENRUTADOR_RAFAGA("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
+        ENRUTADOR_HIBRIDO("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
+        NODO_DE_SERVICIO("nodo_servicio","nodo_servicio_cursor",15,16),
+        RECURSO("recurso","recurso_cursor",13,16),
+        ENLACE("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
+    
+    private Image imagenBoton;
+    private ImageCursor imagenCursor;
+    private ImageCursor imagenSobreObjetoCursor;
+    private Point2D posicionImagenDeCursorEnXyY;
+    
+        private ActionTypeEmun(String nombreImagenBoton)
+        {
+            posicionImagenDeCursorEnXyY = new Point2D(0,0);
+            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
+        }
+
+        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor, double posicionImgX, double posicionImgY) {
+            
+            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
+
+            if (nombreImagenCursor != null) {
+                Image imgCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenCursor + ".png"));
+                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
+                imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
+            }
+        }
+        
+        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor,double posicionImgX,double posicionImgY,String nombreImagenSobreObjetoCursor,double posicionImg2X,double posicionImg2Y) {
+            
+            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
+
+            if (nombreImagenCursor != null) {
+                Image imgCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenCursor + ".png"));
+                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
+                imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
+            }
+            
+            if (nombreImagenSobreObjetoCursor != null) {
+                Image imgSobreObjetoCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenSobreObjetoCursor + ".png"));
+                imagenSobreObjetoCursor = new ImageCursor(imgSobreObjetoCursor,posicionImg2X,posicionImg2Y);
+            }    
+        }
+        
+        public Image getImagenBoton() {
+            return imagenBoton;
+        }
+
+        public ImageCursor getImagenCursor() {
+            return imagenCursor;
+        }
+        
+        public ImageCursor getImagenSobreObjetoCursor() {
+            return imagenSobreObjetoCursor;
+        }
+       
+        public Point2D getPosicionImagenDeCursorEnXyY() {
+            return posicionImagenDeCursorEnXyY;
+        }
+
+    };

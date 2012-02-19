@@ -4,7 +4,7 @@
  */
 package com.ag2.config.serialization;
 
-import com.ag2.presentacion.Main;
+import com.ag2.presentation.Main;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;

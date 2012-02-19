@@ -33,12 +33,12 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 
 -UtilSerializator
 
-###### com.ag2.modelo
+###### com.ag2.model
 
 -LinkCreationAbstractModel
 -PhosphorusLinkModel
 
-###### com.ag2.controlador
+###### com.ag2.controller
 
 -MatchCoupleObjectContainer
 -LinkAdminAbstractController
@@ -46,7 +46,7 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -ExecuteAbstractController
 -ExecuteController
 
-###### com.ag2.presentacion.controles;
+###### com.ag2.presentation.control;
 
 -ToggleButtonAg2
 
