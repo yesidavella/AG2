@@ -9,11 +9,10 @@ public class ClientGraphNode extends GraphNode{
     private static int nodeCounter = 0;
   
     
-    public ClientGraphNode(GraphDesignGroup grupoDeDiseno, NodeAdminAbstractController controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace)
+    public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController)
     {
         
-        super(grupoDeDiseno,"Cliente_"+(++nodeCounter), "../../../../resource/image/cliente_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
-        
+        super(graphDesignGroup,"Cliente_"+(++nodeCounter), "../../../../resource/image/cliente_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);        
         setHeight((short)50);
 
         if(nodeCounter<10){
@@ -26,8 +25,8 @@ public class ClientGraphNode extends GraphNode{
     }
 
     @Override
-    public boolean isEnableToCreateLInk(GraphNode nodoInicioDelEnlace) {
-        return (nodoInicioDelEnlace instanceof SwitchGraphNode) && getCantidadDeEnlaces()<1;
+    public boolean isEnableToCreateLInk(GraphNode graphNode) {
+        return (graphNode instanceof SwitchGraphNode) && getLinkCounter()<1;
     }
  
     private void readObject(ObjectInputStream inputStream)

@@ -52,8 +52,8 @@ public abstract class GraphNode implements Selectable, Serializable {
     private String originalName;
     protected short lineBreakStep;
     private short initialHeight = 0;
-    private HashMap<String, String> propertiesNode;
-    private HashMap<String, String> subPropertiesNode;
+    private HashMap<String, String> nodeProperties;
+    private HashMap<String, String> subNodeProperties;
     private GraphDesignGroup graphDesignGroup;
     private double layoutX;
     private double layoutY;
@@ -66,8 +66,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         this.imageURL = imageURL;
         this.name = name;
         this.originalName = name;
-        propertiesNode = new HashMap<String, String>();
-        subPropertiesNode = new HashMap<String, String>();
+        nodeProperties = new HashMap<String, String>();
+        subNodeProperties = new HashMap<String, String>();
         initTransientObjects();
     }
 
@@ -101,7 +101,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public HashMap<String, String> getNodeProperties() {
-        return propertiesNode;
+        return nodeProperties;
     }
 
     public void setInitialHeight(short initialHeight) {
@@ -193,8 +193,8 @@ public abstract class GraphNode implements Selectable, Serializable {
                             GraphLink enlaceGrafico = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
                             enlaceGrafico.addArcosInicialAlGrupo();
 
-                            wildcardNodeA.setCantidadDeEnlaces((short) (wildcardNodeA.getCantidadDeEnlaces() + 1));
-                            graphNode.setCantidadDeEnlaces((short) (graphNode.getCantidadDeEnlaces() + 1));
+                            wildcardNodeA.setLinkCounter((short) (wildcardNodeA.getLinkCounter() + 1));
+                            graphNode.setLinkCounter((short) (graphNode.getLinkCounter() + 1));
 
                             wildcardNodeA.getGroup().toFront();
                             graphNode.getGroup().toFront();
@@ -378,7 +378,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public void setName(String name) {
         this.name = name;
-        lblName.setText(formatearNombreConSaltoDeLineas(name));
+        lblName.setText(formatNameWithBreakSpaces(name));
     }
 
     private void readObject(ObjectInputStream inputStream) {
@@ -436,38 +436,38 @@ public abstract class GraphNode implements Selectable, Serializable {
         }
         return nombre;
     }
-    public short getCantidadDeEnlaces() {
+    public short getLinkCounter() {
         return linkCounter;
     }
 
-    public void setCantidadDeEnlaces(short cantidadDeEnlaces) {
-        this.linkCounter = cantidadDeEnlaces;
+    public void setLinkCounter(short linkCounter) {
+        this.linkCounter = linkCounter;
     }
 
-    public boolean isInicioGeneracionDeEnlace() {
+    public boolean isLinkBegin() {
         return linkBegin;
     }
 
-    public void setinicioGeneracionDeEnlace(boolean inicioGeneracionDeEnlace) {
-        this.linkBegin = inicioGeneracionDeEnlace;
+    public void setLinkBegin(boolean linkBegin) {
+        this.linkBegin = linkBegin;
     }
 
-    public String formatearNombreConSaltoDeLineas(String nombre) {
+    public String formatNameWithBreakSpaces(String nameToFormat) {
 
-        StringBuilder nombreModificado = new StringBuilder();
+        StringBuilder alterName = new StringBuilder();
 
-        nombre = nombre.trim();
-        int tamaño = nombre.length();
+        nameToFormat = nameToFormat.trim();
+        int tamaño = nameToFormat.length();
         int i = 0;
 
         while (tamaño >= lineBreakStep) {
 
-            nombreModificado.append(nombre.substring(i * lineBreakStep, (i * lineBreakStep) + lineBreakStep)).append("\n");
+            alterName.append(nameToFormat.substring(i * lineBreakStep, (i * lineBreakStep) + lineBreakStep)).append("\n");
 
-            tamaño = nombre.substring(((i * lineBreakStep) + lineBreakStep)).length();
+            tamaño = nameToFormat.substring(((i * lineBreakStep) + lineBreakStep)).length();
 
             if (tamaño > 0 && tamaño < lineBreakStep) {
-                nombreModificado.append(nombre.substring(((i * lineBreakStep) + lineBreakStep)));
+                alterName.append(nameToFormat.substring(((i * lineBreakStep) + lineBreakStep)));
             }
 
             i++;
@@ -475,15 +475,15 @@ public abstract class GraphNode implements Selectable, Serializable {
         setHeight((short) vBoxWrapper.getHeight());
         setWidth((short) vBoxWrapper.getWidth());
         updateNodeListener();
-        return (nombreModificado.length() == 0) ? nombre : nombreModificado.toString();
+        return (alterName.length() == 0) ? nameToFormat : alterName.toString();
     }
 
-    public Line getEnlaceComodin() {
+    public Line getWildcardLink() {
         return wildcardLink;
     }
 
     public HashMap<String, String> getSubPropertiesNode() {
-        return subPropertiesNode;
+        return subNodeProperties;
     }
 
     public Group getGroup() {

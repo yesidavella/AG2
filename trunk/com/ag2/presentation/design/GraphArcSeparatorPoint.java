@@ -35,8 +35,8 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
         setCenterX(posX);
         setCenterY(posY); 
         
-        this.arcoGraficoA.addNodoListener(this);
-        this.arcoGraficoB.addNodoListener(this);
+        this.arcoGraficoA.addNodeListener(this);
+        this.arcoGraficoB.addNodeListener(this);
         
         
     }
@@ -107,8 +107,8 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
                     verticeEnlaceGrafico.getArcoGraficoB().setStartX(dragX);
                     verticeEnlaceGrafico.getArcoGraficoB().setStartY(dragY);
                     
-                    if(!verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()){
-                        verticeEnlaceGrafico.getArcoGraficoA().getEnlaceGrafico().select(true);
+                    if(!verticeEnlaceGrafico.getArcoGraficoA().getGraphLink().getSeleccionado()){
+                        verticeEnlaceGrafico.getArcoGraficoA().getGraphLink().select(true);
                     }
                     verticeEnlaceGrafico.setArrastro(true);
                 }
@@ -126,10 +126,10 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
                     
                     if (!verticeGrafico.isArrastro()) {
 
-                        if (verticeGrafico.getArcoGraficoA().getEnlaceGrafico().getSeleccionado()) {
-                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().select(false);
+                        if (verticeGrafico.getArcoGraficoA().getGraphLink().getSeleccionado()) {
+                            verticeGrafico.getArcoGraficoA().getGraphLink().select(false);
                         } else {
-                            verticeGrafico.getArcoGraficoA().getEnlaceGrafico().select(true);
+                            verticeGrafico.getArcoGraficoA().getGraphLink().select(true);
                         }
                     }
                     
@@ -164,13 +164,13 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
     }
 
     public void updateArc() {
-        if (  !eliminado && (arcoGraficoA.isEliminado() || arcoGraficoB.isEliminado() )) 
+        if (  !eliminado && (arcoGraficoA.isDeleted() || arcoGraficoB.isDeleted() )) 
         {
             eliminado= true; 
             arcoGraficoA=null; 
             arcoGraficoB=null; 
-            arcoGraficoA.revomeNodoListener(this); 
-            arcoGraficoB.revomeNodoListener(this);             
+            arcoGraficoA.revomeNodeListener(this); 
+            arcoGraficoB.revomeNodeListener(this);             
             grupoDeDiseno.remove(this);
         }
     }

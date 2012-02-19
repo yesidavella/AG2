@@ -35,7 +35,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getHeight()/2);
         arcInicial.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getWidth()/2);
         arcInicial.setEndY(nodoGraficoB.getLayoutY() + nodoGraficoB.getHeight()/2);
-        arcInicial.calcularCentroXY();
+        arcInicial.calculateCenter();
         arcos.add(arcInicial);
  
         properties = new HashMap<String, String>();
@@ -67,8 +67,8 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
                 for (GraphArc arcoGrafico : arcos) 
                 {
-                    arcoGrafico.setEliminado(true);
-                    arcoGrafico.updateArcoListeners();
+                    arcoGrafico.setDeleted(true);
+                    arcoGrafico.updateArcListeners();
                     grGrDeDiseño.remove(arcoGrafico);
                 }
                 nodoGraficoA = null;
@@ -119,7 +119,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoNoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoSeleccionado");
                 
-                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getVerticeGrafInicial();
+                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getInitialGraphArcSeparatorPoint();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.web("#44FF00"));
@@ -135,7 +135,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
                 
-                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getVerticeGrafInicial();
+                GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getInitialGraphArcSeparatorPoint();
                 
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.LIGHTGREEN);
@@ -157,11 +157,11 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
             /*Para saber por q esto se puede asegurar, vease ArcoGrafico metodo setOnMouseClicked
              * cuando el tipo de boton seleccionado es TiposDeBoton.ADICIONAR_VERTICE
             */
-            if (arco.getVerticeGrafInicial() == null) {
+            if (arco.getInitialGraphArcSeparatorPoint() == null) {
                 arcInicial = arco;
             }
             
-            if (arco.getVerticeGrafFinal() == null) {
+            if (arco.getFinalGraphArcSeparatorPoint() == null) {
                 arcFinal = arco;
             }
         }
