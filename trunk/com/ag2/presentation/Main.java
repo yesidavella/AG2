@@ -1,6 +1,6 @@
 package com.ag2.presentation;
 
-import com.ag2.model.ModeloCrearNodoDeServicio;
+import com.ag2.model.BrokerCreationModel;
 import com.ag2.model.ModeloCrearEnrutadorHibrido;
 import com.ag2.model.ModeloCrearCliente;
 import com.ag2.model.LinkCreationAbstractModel;
@@ -13,7 +13,7 @@ import com.ag2.model.ModeloCrearNodoDeRecurso;
 import com.ag2.controller.LinkAdminController;
 import com.ag2.controller.ExecuteController;
 import com.ag2.controller.LinkAdminAbstractController;
-import com.ag2.controller.ControladorAdminNodo;
+import com.ag2.controller.NodeAdminController;
 import com.ag2.controller.ResultsController;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
@@ -30,13 +30,13 @@ import javax.swing.JOptionPane;
 
 public class Main extends Application implements Serializable {
 
-    private transient UtilSerializator serializador;
-    private ControladorAdminNodo ctrlCreadorYAdministradorNodo;
-    private ExecuteController executeAbstractController;
-    private NodeCreationModel modeloCrearNodo;
-    private LinkAdminAbstractController ctrlCrearYAdminEnlace;
-    private GraphDesignGroup grupoDeDiseno;
-    private SimulationBase simulacionBase =  SimulationBase.getInstance();
+    private transient UtilSerializator utilSerializator;
+    private NodeAdminController nodeAdminController;
+    private ExecuteController executeController;
+    private NodeCreationModel nodeCreationModel;
+    private LinkAdminAbstractController linkAdminAbstractController;
+    private GraphDesignGroup graphDesignGroup;
+    private SimulationBase simulationBase =  SimulationBase.getInstance();
     private ResultsController resultsController;
 
 
@@ -48,11 +48,11 @@ public class Main extends Application implements Serializable {
         IGU.getInstance().setStage(stage);
         IGU.getInstance().setMain(this);
         stage.show();
-        grupoDeDiseno = IGU.getInstance().getGrGrupoDeDiseño();
+        graphDesignGroup = IGU.getInstance().getGrGrupoDeDiseño();
 
-        inicializarModelosYContrladoresDeCreacionDeNodos();
+        initModelsAndControllers();
         IGU.getInstance().inicializarEstadoDeIGU();
-        serializador = new UtilSerializator(this, stage);
+        utilSerializator = new UtilSerializator(this, stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
@@ -75,8 +75,8 @@ public class Main extends Application implements Serializable {
     }
 
 
-    public SimulationBase getSimulacionBase() {
-        return simulacionBase;
+    public SimulationBase getSimulationBase() {
+        return simulationBase;
     }
 
 
@@ -84,52 +84,52 @@ public class Main extends Application implements Serializable {
         Application.launch(args);
     }
 
-    private void inicializarModelosYContrladoresDeCreacionDeNodos() {
+    private void initModelsAndControllers() {
 
         //Controladores y Modelos
-        ctrlCreadorYAdministradorNodo = new ControladorAdminNodo();
-        executeAbstractController = new ExecuteController();
+        nodeAdminController = new NodeAdminController();
+        executeController = new ExecuteController();
         resultsController = new ResultsController();
 
-        IGU.getInstance().getGrGrupoDeDiseño().addNodeAdminAbstractControllers(ctrlCreadorYAdministradorNodo);
+        IGU.getInstance().getGrGrupoDeDiseño().addNodeAdminAbstractControllers(nodeAdminController);
 
-        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
-        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
-        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
+        nodeAdminController.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
+        nodeAdminController.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(nodeAdminController);
+        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeController);
 
 
-        modeloCrearNodo = new ModeloCrearCliente();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new ModeloCrearCliente();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        modeloCrearNodo = new ModeloCrearNodoDeServicio();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new BrokerCreationModel();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        modeloCrearNodo = new ModeloCrearNodoDeRecurso();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new ModeloCrearNodoDeRecurso();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        modeloCrearNodo = new ModeloCrearEnrutadorRafaga();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new ModeloCrearEnrutadorRafaga();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        modeloCrearNodo = new ModeloCrearEnrutadorOptico();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new ModeloCrearEnrutadorOptico();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        modeloCrearNodo = new ModeloCrearEnrutadorHibrido();
-        ctrlCreadorYAdministradorNodo.addModel(modeloCrearNodo);
+        nodeCreationModel = new ModeloCrearEnrutadorHibrido();
+        nodeAdminController.addModel(nodeCreationModel);
 
-        ctrlCrearYAdminEnlace = new LinkAdminController();
+        linkAdminAbstractController = new LinkAdminController();
         LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
-        ctrlCrearYAdminEnlace.addModel(modeloCrearEnlace);
+        linkAdminAbstractController.addModel(modeloCrearEnlace);
 
-        ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().setLinkAdminAbstractController(ctrlCrearYAdminEnlace);
-        IGU.getInstance().getGrGrupoDeDiseño().addLinkAdminAbstractControllers(ctrlCrearYAdminEnlace);
+        linkAdminAbstractController.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setLinkAdminAbstractController(linkAdminAbstractController);
+        IGU.getInstance().getGrGrupoDeDiseño().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
 
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
-        IGU.getInstance().getTbvSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeAbstractController));
+        IGU.getInstance().getTbvSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
 
     }
 
@@ -137,32 +137,32 @@ public class Main extends Application implements Serializable {
         return resultsController;
     }
 
-    public ControladorAdminNodo getCtrlCreadorYAdministradorNodo() {
-        return ctrlCreadorYAdministradorNodo;
+    public NodeAdminController getNodeAdminController() {
+        return nodeAdminController;
     }
 
-    public LinkAdminAbstractController getCtrlCrearYAdminEnlace() {
-        return ctrlCrearYAdminEnlace;
+    public LinkAdminAbstractController getLinkAdminAbstractController() {
+        return linkAdminAbstractController;
     }
 
     public ExecuteController getExecuteAbstractController() {
-        return executeAbstractController;
+        return executeController;
     }
 
-    public NodeCreationModel getModeloCrearNodo() {
-        return modeloCrearNodo;
+    public NodeCreationModel getNodeCreationModel() {
+        return nodeCreationModel;
     }
 
-    public UtilSerializator getSerializador() {
-        return serializador;
+    public UtilSerializator getUtilSerializator() {
+        return utilSerializator;
     }
 
-    public GraphDesignGroup getGrupoDeDiseno() {
-        return grupoDeDiseno;
+    public GraphDesignGroup getGraphDesignGroup() {
+        return graphDesignGroup;
     }
     public void loadFileBaseSimulation()
     {
-        Main main = serializador.loadFileBaseSimulation();
+        Main main = utilSerializator.loadFileBaseSimulation();
         if (main != null)
         {
             loadControllers(main);
@@ -171,36 +171,36 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main)
     {
-        simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance();
-        SimulationBase.loadInstance(simulacionBase);
-        grupoDeDiseno = main.getGrupoDeDiseno();
+        simulationBase =   main.getSimulationBase();  ///SimulacionBase.getInstance();
+        SimulationBase.loadInstance(simulationBase);
+        graphDesignGroup = main.getGraphDesignGroup();
 
-        IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
+        IGU.getInstance().loadGrupoDeDiseno(graphDesignGroup);
 
-        ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
-        ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace();
-        executeAbstractController= main.getExecuteAbstractController();
+        nodeAdminController = main.getNodeAdminController();
+        linkAdminAbstractController = main.getLinkAdminAbstractController();
+        executeController= main.getExecuteAbstractController();
         resultsController = main.getResultsController();
 
-        modeloCrearNodo = main.getModeloCrearNodo();
+        nodeCreationModel = main.getNodeCreationModel();
 
 
-        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
+        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeController);
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
 
-        ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().setLinkAdminAbstractController(ctrlCrearYAdminEnlace);
+        linkAdminAbstractController.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setLinkAdminAbstractController(linkAdminAbstractController);
 
-        SimulationBase.getInstance().setLinkAdminAbstractController(ctrlCrearYAdminEnlace);
+        SimulationBase.getInstance().setLinkAdminAbstractController(linkAdminAbstractController);
 
-        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
-        ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
-        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
+        nodeAdminController.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
+        nodeAdminController.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
+        IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(nodeAdminController);
       //  executeAbstractController.stop();
     }
 
     public void save(boolean  thenClose) {
-        serializador.OpenDialogToSave();
+        utilSerializator.OpenDialogToSave();
         if(thenClose)
         {
              System.exit(0);
@@ -210,13 +210,13 @@ public class Main extends Application implements Serializable {
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException
     {
 
-        simulacionBase = SimulationBase.getInstance();
-        simulacionBase.getSimulador().getEntities();
+        simulationBase = SimulationBase.getInstance();
+        simulationBase.getSimulador().getEntities();
         objectOutputStream.defaultWriteObject();
 
     }
     public void load() {
-        Main main = serializador.OpenDialogToLoad();
+        Main main = utilSerializator.OpenDialogToLoad();
         if (main != null)
         {
             loadControllers(main);

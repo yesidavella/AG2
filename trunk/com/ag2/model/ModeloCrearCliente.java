@@ -5,9 +5,9 @@ import Grid.Entity;
 public class ModeloCrearCliente extends NodeCreationModel{
 
     @Override
-    public Entity crearNodoPhophorous(String nombreNodoGrafico) {
+    public Entity createPhosphorusNode(String nombreNodoGrafico) {
         //System.out.println("Creo Cliente con monbre:"+nombreNodoGrafico);
-        return Grid.Utilities.Util.createHybridClient(nombreNodoGrafico,simulacionBase.getSimulador());
+        return Grid.Utilities.Util.createHybridClient(nombreNodoGrafico,simulationBase.getSimulador());
     }
-    
+
 }

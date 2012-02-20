@@ -6,8 +6,8 @@ import com.ag2.presentation.Main;
 public class ModeloCrearEnrutadorHibrido extends NodeCreationModel{
 
     @Override
-    public Entity crearNodoPhophorous(String nombreNodoGrafico) {
+    public Entity createPhosphorusNode(String nombreNodoGrafico) {
         //System.out.println("Creo Enrutador Hibrido con monbre:"+nombreNodoGrafico);
-        return Grid.Utilities.Util.createHybridSwitch(nombreNodoGrafico, simulacionBase.getSimulador());
+        return Grid.Utilities.Util.createHybridSwitch(nombreNodoGrafico, simulationBase.getSimulador());
     }
 }

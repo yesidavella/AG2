@@ -37,6 +37,8 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 
 -LinkCreationAbstractModel
 -PhosphorusLinkModel
+-NodeCreationModel
+-BrokerCreationModel
 
 ###### com.ag2.controller
 
@@ -56,6 +58,8 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 ##### com.ag2.presentacion
 
 -ActionTypeEmun
+-ErrorsView
+-Main
 
 ##### com.ag2.presentation.design;
 

@@ -32,7 +32,7 @@ public abstract class NodeAdminAbstractController implements Serializable {
 
     public boolean addModel(NodeCreationModel nodeCreationModel) {
         return nodeCreationModels.add(nodeCreationModel)
-                && nodeCreationModel.addControladorCrearNodo(this);
+                && nodeCreationModel.addNodeAdminController(this);
     }
 
     public boolean removeModel(NodeCreationModel nodeCreationModel) {
@@ -59,9 +59,9 @@ public abstract class NodeAdminAbstractController implements Serializable {
 
     private void readObject(ObjectInputStream inputStream) {
         try {
-            inputStream.defaultReadObject();        
+            inputStream.defaultReadObject();
             for (int i = 0; i < graphNodesViews.size(); i++) {
-                graphNodesViews.remove(0);                
+                graphNodesViews.remove(0);
             }
         } catch (Exception e) {
 
