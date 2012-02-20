@@ -10,31 +10,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 
-/**
- *
- * @author Frank
- */
 public class NodeRelationProperty extends EntityProperty implements Serializable{
 
-    private transient ObservableList observableListNodes = FXCollections.observableArrayList();
-    private String nombre;
+    private transient ObservableList nodesObservableList = FXCollections.observableArrayList();
+    private String name;
 
-    public NodeRelationProperty(String id, String nombre) {
-        super(id, nombre, PropertyType.TEXT_LIST, false);
+    public NodeRelationProperty(String id, String name) {
+        super(id, name, PropertyType.TEXT_LIST, false);
         ChoiceBox  choiceBox =  ((ChoiceBox) control);
-        choiceBox.setItems(observableListNodes);
+        choiceBox.setItems(nodesObservableList);
     }
 
     public String toString() {
-        return nombre.toString();
+        return name.toString();
     }
 
     public ObservableList getObservableListNodes()
     {
-        return observableListNodes;
+        return nodesObservableList;
     }
 
-    public void setPrimerValor(GraphNode nodoGrafico){
-         ((ChoiceBox) control).getSelectionModel().select(nodoGrafico);
+    public void setFirstValue(GraphNode graphNode){
+         ((ChoiceBox) control).getSelectionModel().select(graphNode);
     }
 }

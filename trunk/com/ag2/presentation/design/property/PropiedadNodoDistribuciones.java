@@ -1,16 +1,10 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
+
 package com.ag2.presentation.design.property;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ChoiceBox;
 
-/**
- *
- * @author Frank
- */
+
 public class PropiedadNodoDistribuciones extends EntityProperty {
 
     public enum TipoDeDistribucion {
