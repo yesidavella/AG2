@@ -1,7 +1,7 @@
 package com.ag2.config;
 
 import com.ag2.controller.ExecuteController;
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -96,7 +96,7 @@ public enum PropertyPhosphorusTypeEnum {
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                IGU.getInstance().getGraphDesignGroup().getGroup().requestFocus();
+                GUI.getInstance().getGraphDesignGroup().getGroup().requestFocus();
             }
         });
 

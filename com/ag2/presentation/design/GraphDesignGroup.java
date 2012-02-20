@@ -4,7 +4,7 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GraphNodesView;
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.design.property.EntityProperty;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -106,7 +106,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public void handle(MouseEvent mouseEvent) {
 
         EventType eventType = mouseEvent.getEventType();
-        ActionTypeEmun actionTypeEmun = IGU.getActionTypeEmun();
+        ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
 
         if (eventType == MouseEvent.MOUSE_PRESSED) {
 
@@ -505,8 +505,8 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     }
 
     public void enableDisign() {
-        IGU.getInstance().enable();
-        IGU.getInstance().getExecutePane().enable();
+        GUI.getInstance().enable();
+        GUI.getInstance().getExecutePane().enable();
     }
 
     public void updateProperty(boolean isSubProperty, String id, String valor) {

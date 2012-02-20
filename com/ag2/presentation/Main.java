@@ -44,14 +44,14 @@ public class Main extends Application implements Serializable {
     public void start(final Stage stage) {
 
         stage.setTitle("Modelo AG2- Simulador Grafico");
-        stage.setScene(IGU.getInstance());
-        IGU.getInstance().setStage(stage);
-        IGU.getInstance().setMain(this);
+        stage.setScene(GUI.getInstance());
+        GUI.getInstance().setStage(stage);
+        GUI.getInstance().setMain(this);
         stage.show();
-        graphDesignGroup = IGU.getInstance().getGraphDesignGroup();
+        graphDesignGroup = GUI.getInstance().getGraphDesignGroup();
 
         initModelsAndControllers();
-        IGU.getInstance().initStateIGU();
+        GUI.getInstance().initStateIGU();
         utilSerializator = new UtilSerializator(this, stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -91,12 +91,12 @@ public class Main extends Application implements Serializable {
         executeController = new ExecuteController();
         resultsController = new ResultsController();
 
-        IGU.getInstance().getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
+        GUI.getInstance().getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
 
-        nodeAdminController.addGraphNodesView(IGU.getInstance().getGraphDesignGroup());
-        nodeAdminController.addGraphNodesView(IGU.getInstance().getEntityPropertyTb());
-        IGU.getInstance().getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
-        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeController);
+        nodeAdminController.addGraphNodesView(GUI.getInstance().getGraphDesignGroup());
+        nodeAdminController.addGraphNodesView(GUI.getInstance().getEntityPropertyTb());
+        GUI.getInstance().getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
+        GUI.getInstance().getExecutePane().setExecuteAbstractController(executeController);
 
 
         nodeCreationModel = new ModeloCrearCliente();
@@ -121,15 +121,15 @@ public class Main extends Application implements Serializable {
         LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
         linkAdminAbstractController.addModel(modeloCrearEnlace);
 
-        linkAdminAbstractController.setLinkView(IGU.getInstance().getEntityPropertyTb());
-        IGU.getInstance().getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
-        IGU.getInstance().getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
+        linkAdminAbstractController.setLinkView(GUI.getInstance().getEntityPropertyTb());
+        GUI.getInstance().getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
+        GUI.getInstance().getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
 
-        resultsController.setViewResultsPhosphorus(IGU.getInstance().getPhosphosrusResults());
+        resultsController.setViewResultsPhosphorus(GUI.getInstance().getPhosphosrusResults());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
-        IGU.getInstance().getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
+        GUI.getInstance().getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
 
     }
 
@@ -175,7 +175,7 @@ public class Main extends Application implements Serializable {
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();
 
-        IGU.getInstance().loadGraphDesignGroup(graphDesignGroup);
+        GUI.getInstance().loadGraphDesignGroup(graphDesignGroup);
 
         nodeAdminController = main.getNodeAdminController();
         linkAdminAbstractController = main.getLinkAdminAbstractController();
@@ -185,17 +185,17 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = main.getNodeCreationModel();
 
 
-        IGU.getInstance().getExecutePane().setExecuteAbstractController(executeController);
-        resultsController.setViewResultsPhosphorus(IGU.getInstance().getPhosphosrusResults());
+        GUI.getInstance().getExecutePane().setExecuteAbstractController(executeController);
+        resultsController.setViewResultsPhosphorus(GUI.getInstance().getPhosphosrusResults());
 
-        linkAdminAbstractController.setLinkView(IGU.getInstance().getEntityPropertyTb());
-        IGU.getInstance().getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
+        linkAdminAbstractController.setLinkView(GUI.getInstance().getEntityPropertyTb());
+        GUI.getInstance().getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
 
         SimulationBase.getInstance().setLinkAdminAbstractController(linkAdminAbstractController);
 
-        nodeAdminController.addGraphNodesView(IGU.getInstance().getGraphDesignGroup());
-        nodeAdminController.addGraphNodesView(IGU.getInstance().getEntityPropertyTb());
-        IGU.getInstance().getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
+        nodeAdminController.addGraphNodesView(GUI.getInstance().getGraphDesignGroup());
+        nodeAdminController.addGraphNodesView(GUI.getInstance().getEntityPropertyTb());
+        GUI.getInstance().getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
       //  executeAbstractController.stop();
     }
 

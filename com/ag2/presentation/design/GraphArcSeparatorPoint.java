@@ -1,6 +1,6 @@
 package com.ag2.presentation.design;
 
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -77,7 +77,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
             public void handle(MouseEvent t) {
 
-                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
                     circle.setCursor(Cursor.MOVE);
                 }
             }
@@ -88,7 +88,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
 
                     GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this;
 
@@ -118,7 +118,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
             public void handle(MouseEvent eventoDeRaton) {
 
-                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
                     GraphArcSeparatorPoint graphArcSeparatorPoint = GraphArcSeparatorPoint.this;
 
                     if (!graphArcSeparatorPoint.isDragged()) {

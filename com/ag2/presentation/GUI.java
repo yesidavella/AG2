@@ -41,7 +41,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-public class IGU extends Scene implements Serializable {
+public class GUI extends Scene implements Serializable {
 
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.DEFAULT;
 
@@ -65,7 +65,7 @@ public class IGU extends Scene implements Serializable {
     private ActionTypeEmun beforeActionTypeEmun;
     private Cursor beforeEventCursor;
     private PhosphosrusResults phosphosrusResults;
-    private static IGU iguAG2;
+    private static GUI iguAG2;
     private Main main;
     private StackPane stPnDeviceProperties = new StackPane();
     private ToggleButtonAg2 btnSelection;
@@ -82,7 +82,7 @@ public class IGU extends Scene implements Serializable {
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private transient Stage stgEscenario;
 
-     private IGU(BorderPane borderPane, double width, double height) {
+     private GUI(BorderPane borderPane, double width, double height) {
         super(borderPane, width, height);
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
@@ -91,7 +91,7 @@ public class IGU extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
 
         addScene(this);
-        getStylesheets().add(IGU.class.getResource("../../../resource/css/IGUPrincipal.css").toExternalForm());
+        getStylesheets().add(GUI.class.getResource("../../../resource/css/IGUPrincipal.css").toExternalForm());
 
         borderPane.getStyleClass().add("ventanaPrincipal");
 
@@ -113,10 +113,10 @@ public class IGU extends Scene implements Serializable {
 
 //        inicializarEstadoDeIGU();
     }
-        public static IGU getInstance() {
+        public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new IGU(new BorderPane(), 1100, 700);
+            iguAG2 = new GUI(new BorderPane(), 1100, 700);
         }
         return iguAG2;
     }
@@ -485,9 +485,9 @@ public class IGU extends Scene implements Serializable {
                 try {
                     Desktop.getDesktop().browse(new URI(URLToGo));
                 } catch (URISyntaxException ex) {
-                    Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }catch (IOException ex) {
-                    Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);}
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);}
                 }
             });
     }
@@ -654,17 +654,17 @@ public class IGU extends Scene implements Serializable {
                         && isPrincipalKeyPressed == false && graphDesignGroup.getGroup().isHover()) {
 
                     isPrincipalKeyPressed = true;
-                    beforeActionTypeEmun = IGU.getActionTypeEmun();
+                    beforeActionTypeEmun = GUI.getActionTypeEmun();
                     beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
                     if (event.isAltDown()) {
-                        IGU.setActionTypeEmun(ActionTypeEmun.HAND);
+                        GUI.setActionTypeEmun(ActionTypeEmun.HAND);
                         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
                     } else if (event.isShiftDown()) {
-                        IGU.setActionTypeEmun(ActionTypeEmun.ZOOM_PLUS);
+                        GUI.setActionTypeEmun(ActionTypeEmun.ZOOM_PLUS);
                         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.ZOOM_PLUS.getCursorImage());
                     } else if (event.isControlDown()) {
-                        IGU.setActionTypeEmun(ActionTypeEmun.ZOOM_MINUS);
+                        GUI.setActionTypeEmun(ActionTypeEmun.ZOOM_MINUS);
                         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.ZOOM_MINUS.getCursorImage());
                     }
                 }
@@ -677,7 +677,7 @@ public class IGU extends Scene implements Serializable {
 
                 if (isPrincipalKeyPressed == true) {
                     isPrincipalKeyPressed = false;
-                    IGU.setActionTypeEmun(beforeActionTypeEmun);
+                    GUI.setActionTypeEmun(beforeActionTypeEmun);
                     graphDesignGroup.getGroup().setCursor(beforeEventCursor);
                 }
             }
@@ -687,7 +687,7 @@ public class IGU extends Scene implements Serializable {
     public void initStateIGU() {
 
         btnClient.setSelected(true);
-        IGU.setActionTypeEmun(ActionTypeEmun.CLIENT);
+        GUI.setActionTypeEmun(ActionTypeEmun.CLIENT);
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
@@ -724,7 +724,7 @@ public class IGU extends Scene implements Serializable {
 
     public void enable() {
 
-        IGU.setActionTypeEmun(beforeActionTypeEmun);
+        GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
         gpTools.setDisable(false);
         gpTools.setOpacity(1);
@@ -736,10 +736,10 @@ public class IGU extends Scene implements Serializable {
     }
 
     public void disable() {
-        beforeActionTypeEmun = IGU.getActionTypeEmun();
+        beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
-        IGU.setActionTypeEmun(ActionTypeEmun.HAND);
+        GUI.setActionTypeEmun(ActionTypeEmun.HAND);
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
 
         pgBrExecutionProgress.setVisible(true);

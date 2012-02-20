@@ -24,7 +24,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switches.AbstractSwitch;
 import Grid.Port.GridOutPort;
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.design.property.NodeRelationProperty;
 import com.ag2.presentation.design.property.NodeDistributionProperty;
@@ -292,22 +292,22 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodoGraficoSeleccionado.setName(valor);
             if(nodoGraficoSeleccionado instanceof ClientGraphNode)
             {
-                IGU.getInstance().getGraphDesignGroup().getClientsObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGraphDesignGroup().getClientsObservableList().add(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().remove(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().add(nodoGraficoSeleccionado);
             }else if(nodoGraficoSeleccionado instanceof ResourceGraphNode)
             {
-                IGU.getInstance().getGraphDesignGroup().getResourcesObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGraphDesignGroup().getResourcesObservableList().add(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().remove(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof BrokerGrahpNode)
             {
-                IGU.getInstance().getGraphDesignGroup().getBrokersObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGraphDesignGroup().getBrokersObservableList().add(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().remove(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof SwitchGraphNode)
             {
-                IGU.getInstance().getGraphDesignGroup().getSwitchesObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGraphDesignGroup().getSwitchesObservableList().add(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().remove(nodoGraficoSeleccionado);
+                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().add(nodoGraficoSeleccionado);
             }
 
         }

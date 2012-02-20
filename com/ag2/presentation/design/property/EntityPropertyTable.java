@@ -2,7 +2,7 @@ package com.ag2.presentation.design.property;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
@@ -74,7 +74,7 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
 
     public void updateProperty(boolean isSubProperty, String id, String value)
     {
-        Selectable selectable = IGU.getInstance().getGraphDesignGroup().getSelectable();
+        Selectable selectable = GUI.getInstance().getGraphDesignGroup().getSelectable();
 
         if(selectable != null){
             if (selectable instanceof GraphNode) {

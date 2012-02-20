@@ -1,6 +1,6 @@
 package com.ag2.presentation.design;
 
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -104,7 +104,7 @@ public class GraphArc  implements Serializable {
             public void handle(MouseEvent mouseEvent) {
                 GraphArc quadCurveFuente = GraphArc.this;
 
-                ActionTypeEmun actionTypeEmun = IGU.getActionTypeEmun();
+                ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
 
                 if (actionTypeEmun == ActionTypeEmun.ADD_LINK_SEPARATOR || actionTypeEmun == ActionTypeEmun.DELETED) {
                     quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
@@ -119,7 +119,7 @@ public class GraphArc  implements Serializable {
         quadCurve.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent me) {
-                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
                     double dragX = me.getX();
                     double dragY = me.getY();
                     GraphArc graphArc = GraphArc.this ;
@@ -143,7 +143,7 @@ public class GraphArc  implements Serializable {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
 
-                if(IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT){
+                if(GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT){
                     if(!graphLink.isSelected()){
                         graphLink.select(true);
                     }else{
@@ -151,7 +151,7 @@ public class GraphArc  implements Serializable {
                     }
                 }
 
-                if (IGU.getActionTypeEmun() == ActionTypeEmun.ADD_LINK_SEPARATOR) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.ADD_LINK_SEPARATOR) {
 
                     GraphArc graphArc = GraphArc.this;
                     GraphArc arcGrafNuevo = new GraphArc(graphArc.getGraphLink(), graphArc.getGroup());
@@ -186,7 +186,7 @@ public class GraphArc  implements Serializable {
 
                     graphLink.select(true);
 
-                } else if (IGU.getActionTypeEmun() == ActionTypeEmun.DELETED) {
+                } else if (GUI.getActionTypeEmun() == ActionTypeEmun.DELETED) {
 
                     GraphNode nodeA = graphLink.getGraphNodeA();
                     GraphNode nodeB = graphLink.getGraphNodeB();

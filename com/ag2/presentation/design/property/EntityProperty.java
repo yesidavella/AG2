@@ -1,6 +1,6 @@
 package com.ag2.presentation.design.property;
 
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.design.property.EntityProperty.PropertyType;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
@@ -148,7 +148,7 @@ public class EntityProperty {
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                IGU.getInstance().getGraphDesignGroup().getGroup().requestFocus();
+                GUI.getInstance().getGraphDesignGroup().getGroup().requestFocus();
             }
         });
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
