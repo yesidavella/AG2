@@ -71,3 +71,6 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -Selectable
 -SwitchGraphNode
 
+##### com.ag2.presentation.design.property
+
+-EntityProperty

@@ -1,7 +1,7 @@
 package com.ag2.presentation.design.property;
 
 import com.ag2.presentation.IGU;
-import com.ag2.presentation.design.property.EntityProperty.TipoDePropiedadNodo;
+import com.ag2.presentation.design.property.EntityProperty.PropertyType;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,18 +12,18 @@ import javafx.scene.input.MouseEvent;
 
 public class EntityProperty {
 
-    public enum TipoDePropiedadNodo 
+    public enum PropertyType
     {
-        TEXTO, NUMERO, BOLEANO, LISTA_TEXTO, ETIQUETA
+        TEXT, NUMBER, BOOLEAN, TEXT_LIST, LABEL
     };
     private String id;
-    private String nombre;
-    private ArrayList<String> valorArrayList = new ArrayList<String>();
-    private TipoDePropiedadNodo tipoDePropiedadNodo;
+    private String name;
+    private ArrayList<String> valueArrayList = new ArrayList<String>();
+    private PropertyType propertyType;
     protected transient Control control;
-    private EntityPropertyTable tablaPropiedadesDispositivo;
-    private boolean subProperty = false; 
-    
+    private EntityPropertyTable entityPropertyTable;
+    private boolean subProperty = false;
+
     public void setDisable(boolean  isDisable)
     {
         control.setDisable(isDisable);
@@ -37,56 +37,55 @@ public class EntityProperty {
         this.subProperty = subProperty;
     }
 
-    public EntityProperty(final String id, final String nombre, TipoDePropiedadNodo tipoDePropiedadNodo, boolean isSubProperty) 
+    public EntityProperty(final String id, final String name, PropertyType propertyType, boolean isSubProperty)
     {
-        
-        this.nombre = nombre;
-        this.tipoDePropiedadNodo = tipoDePropiedadNodo;
-        this.id = id;
-        this.subProperty = isSubProperty; 
 
-        switch (tipoDePropiedadNodo) 
+        this.name = name;
+        this.propertyType = propertyType;
+        this.id = id;
+        this.subProperty = isSubProperty;
+
+        switch (propertyType)
         {
-            case BOLEANO: {
+            case BOOLEAN: {
                 control = new CheckBox();
                 ((CheckBox) control).setOnAction(new EventHandler<ActionEvent>() {
 
-                    public void handle(ActionEvent actionEvent) 
+                    public void handle(ActionEvent actionEvent)
                     {
-                        CheckBox checkBox = (CheckBox)actionEvent.getSource(); 
-                      
-                        String valor="_ON"; 
+                        CheckBox checkBox = (CheckBox)actionEvent.getSource();
+
+                        String valor="_ON";
                         if(!checkBox.isSelected())
-                        {    
-                            valor="_OFF";                             
+                        {
+                            valor="_OFF";
                         }
-                        tablaPropiedadesDispositivo.updateProperty(subProperty,id+"_"+nombre,nombre+valor );
-                        //checkBox.setDisable(true);
+                        entityPropertyTable.updateProperty(subProperty,id+"_"+name,name+valor );
                     }
                 });
                 break;
             }
-            case LISTA_TEXTO: {
+            case TEXT_LIST: {
                 control = new ChoiceBox<String>();
                 ((ChoiceBox) control).getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
                     public void changed(ObservableValue ov, Object t, Object t1) {
                         ChoiceBox choiceBox = (ChoiceBox) control;
                         choiceBox.getSelectionModel().getSelectedItem().toString();
-                        if (tablaPropiedadesDispositivo != null) {
-                            tablaPropiedadesDispositivo.updateProperty(subProperty, id, choiceBox.getSelectionModel().getSelectedItem().toString());
+                        if (entityPropertyTable != null) {
+                            entityPropertyTable.updateProperty(subProperty, id, choiceBox.getSelectionModel().getSelectedItem().toString());
                         }
                     }
                 });
                 break;
             }
-            case ETIQUETA: {
+            case LABEL: {
                 control = new Label();
                 break;
             }
-            case NUMERO:case TEXTO : {
+            case NUMBER:case TEXT : {
                 control = new TextField();
-                establecerEventoOnKeyTyped(id);
+                establishEventOnKeyTyped(id);
             }
         }
     }
@@ -95,55 +94,55 @@ public class EntityProperty {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String nombre) {
+        this.name = nombre;
     }
 
-    public ArrayList<String> getValorArrayList() {
-        return valorArrayList;
+    public ArrayList<String> getValueArrayList() {
+        return valueArrayList;
     }
 
-    public void setPrimerValor(String valor) {
+    public void setFirstValue(String value) {
 
-        switch (tipoDePropiedadNodo) 
+        switch (propertyType)
         {
-            case BOLEANO:
+            case BOOLEAN:
             {
-                if (valor.equalsIgnoreCase("true")) {
+                if (value.equalsIgnoreCase("true")) {
                     ((CheckBox) control).setSelected(true);
                 }
                 break;
             }
-            case ETIQUETA:
-                ((Label)control).setText(valor);
+            case LABEL:
+                ((Label)control).setText(value);
                 break;
-            case NUMERO:
-            case TEXTO:
+            case NUMBER:
+            case TEXT:
             {
-                ((TextField) control).setText(valor);
+                ((TextField) control).setText(value);
                 break;
             }
         }
-        valorArrayList.add(0, valor);
+        valueArrayList.add(0, value);
     }
 
-    public String setPrimerValor() {
-        return valorArrayList.get(0);
+    public String getFirstValue() {
+        return valueArrayList.get(0);
     }
 
-    public EntityPropertyTable getTablaPropiedadesDispositivo() {
-        return tablaPropiedadesDispositivo;
+    public EntityPropertyTable getEntityPropertyTable() {
+        return entityPropertyTable;
     }
 
-    public void setTablaPropiedadesDispositivo(EntityPropertyTable tablaPropiedadesDispositivo) {
-        this.tablaPropiedadesDispositivo = tablaPropiedadesDispositivo;
+    public void setEntityPropertyTable(EntityPropertyTable entityPropertyTable) {
+        this.entityPropertyTable = entityPropertyTable;
     }
-    
-    private void establecerEventoOnKeyTyped(final String id) {
+
+    private void establishEventOnKeyTyped(final String id) {
         final TextField textField = ((TextField) control);
 
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -157,12 +156,12 @@ public class EntityProperty {
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
 
                 if (beforeStateFocus == true && currentStateFocus == false) {
-                    tablaPropiedadesDispositivo.updateProperty(subProperty, id, textField.getText());
+                    entityPropertyTable.updateProperty(subProperty, id, textField.getText());
                 }
             }
         });
     }
-    
+
     public Control getControl() {
         return control;
     }

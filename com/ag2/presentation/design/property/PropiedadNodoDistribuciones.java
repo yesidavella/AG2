@@ -23,7 +23,7 @@ public class PropiedadNodoDistribuciones extends EntityProperty {
         POISSON_PROCESS("Possion"),
         UNMIFORM("Uniforme");
         private String nombre;
-     
+
 
         private TipoDeDistribucion(String nombre) {
             this.nombre = nombre;
@@ -37,7 +37,7 @@ public class PropiedadNodoDistribuciones extends EntityProperty {
     };
 
     public PropiedadNodoDistribuciones(String id, String nombre) {
-        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO, false );
+        super(id, nombre, PropertyType.TEXT_LIST, false );
         ((ChoiceBox) control).setItems(FXCollections.observableArrayList(TipoDeDistribucion.values()));
     }
 

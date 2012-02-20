@@ -18,22 +18,22 @@ public class NodeRelationProperty extends EntityProperty implements Serializable
 
     private transient ObservableList observableListNodes = FXCollections.observableArrayList();
     private String nombre;
-    
+
     public NodeRelationProperty(String id, String nombre) {
-        super(id, nombre, TipoDePropiedadNodo.LISTA_TEXTO, false);        
-        ChoiceBox  choiceBox =  ((ChoiceBox) control); 
-        choiceBox.setItems(observableListNodes);            
+        super(id, nombre, PropertyType.TEXT_LIST, false);
+        ChoiceBox  choiceBox =  ((ChoiceBox) control);
+        choiceBox.setItems(observableListNodes);
     }
-    
+
     public String toString() {
         return nombre.toString();
     }
 
-    public ObservableList getObservableListNodes() 
+    public ObservableList getObservableListNodes()
     {
         return observableListNodes;
     }
-    
+
     public void setPrimerValor(GraphNode nodoGrafico){
          ((ChoiceBox) control).getSelectionModel().select(nodoGrafico);
     }

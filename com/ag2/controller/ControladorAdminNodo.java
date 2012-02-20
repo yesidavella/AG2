@@ -78,8 +78,8 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             ArrayList<EntityProperty> propiedadesDeNodo = new ArrayList<EntityProperty>();
 
         //===========================================================================================================
-        EntityProperty propiedadNodoNombre = new EntityProperty("nombre", "Nombre", EntityProperty.TipoDePropiedadNodo.TEXTO, false);
-        propiedadNodoNombre.setPrimerValor(nodoGraficoSeleccionado.getName());
+        EntityProperty propiedadNodoNombre = new EntityProperty("nombre", "Nombre", EntityProperty.PropertyType.TEXT, false);
+        propiedadNodoNombre.setFirstValue(nodoGraficoSeleccionado.getName());
         propiedadesDeNodo.add(propiedadNodoNombre);
         //===========================================================================================================
 
@@ -127,24 +127,24 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             ResourceNode resource = (ResourceNode) nodeMatchCoupleObjectContainer.get(nodoGrafico);
 
 
-            EntityProperty propiedadCpuCapacity = new EntityProperty("CpuCapacity", "Cpu Capacity", EntityProperty.TipoDePropiedadNodo.TEXTO, false);
+            EntityProperty propiedadCpuCapacity = new EntityProperty("CpuCapacity", "Cpu Capacity", EntityProperty.PropertyType.TEXT, false);
             CPU cpu = (CPU) resource.getCpuSet().get(0);
             if (cpu != null) {
 
-                propiedadCpuCapacity.setPrimerValor(String.valueOf(cpu.getCpuCapacity()));
+                propiedadCpuCapacity.setFirstValue(String.valueOf(cpu.getCpuCapacity()));
             } else {
-                propiedadCpuCapacity.setPrimerValor("0");
+                propiedadCpuCapacity.setFirstValue("0");
             }
             propiedadesDeNodo.add(propiedadCpuCapacity);
 
             //===========================================================================================================
-            EntityProperty propiedadQueueSize = new EntityProperty("QueueSize", "Queue Size", EntityProperty.TipoDePropiedadNodo.TEXTO,false);
-            propiedadQueueSize.setPrimerValor(String.valueOf(resource.getMaxQueueSize()));
+            EntityProperty propiedadQueueSize = new EntityProperty("QueueSize", "Queue Size", EntityProperty.PropertyType.TEXT,false);
+            propiedadQueueSize.setFirstValue(String.valueOf(resource.getMaxQueueSize()));
             propiedadesDeNodo.add(propiedadQueueSize);
 
             //===========================================================================================================
-            EntityProperty propiedadCpuCount = new EntityProperty("CpuCount", "Cpu Count", EntityProperty.TipoDePropiedadNodo.TEXTO, false);
-            propiedadCpuCount.setPrimerValor(String.valueOf(resource.getCpuCount()));
+            EntityProperty propiedadCpuCount = new EntityProperty("CpuCount", "Cpu Count", EntityProperty.PropertyType.TEXT, false);
+            propiedadCpuCount.setFirstValue(String.valueOf(resource.getCpuCount()));
             propiedadesDeNodo.add(propiedadCpuCount);
             //============================================================================================================
 
@@ -152,13 +152,13 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
                 if (nodoGraficoService instanceof BrokerGrahpNode) {
-                    EntityProperty propiedadeNodo = new EntityProperty("RelationshipResouceAndServiceNodo", nodoGraficoService.getName(), EntityProperty.TipoDePropiedadNodo.BOLEANO, false);
+                    EntityProperty propiedadeNodo = new EntityProperty("RelationshipResouceAndServiceNodo", nodoGraficoService.getName(), EntityProperty.PropertyType.BOOLEAN, false);
                     propiedadesDeNodo.add(propiedadeNodo);
                     for (ServiceNode serviceNode : resource.getServiceNodes())
                     {
                         if (serviceNode.getID().equals(nodoGraficoService.getOriginalName()))
                         {
-                            propiedadeNodo.setPrimerValor("true");
+                            propiedadeNodo.setFirstValue("true");
                            // propiedadeNodo.setDisable(true);
                         }
                     }
@@ -171,8 +171,8 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(nodoGrafico);
 
             //===========================================================================================================
-            EntityProperty propiedadHandleDelay = new EntityProperty("HandleDelay", "Handle Delay", EntityProperty.TipoDePropiedadNodo.TEXTO, false);
-            propiedadHandleDelay.setPrimerValor(String.valueOf(abstractSwitch.getHandleDelay().getTime()));
+            EntityProperty propiedadHandleDelay = new EntityProperty("HandleDelay", "Handle Delay", EntityProperty.PropertyType.TEXT, false);
+            propiedadHandleDelay.setFirstValue(String.valueOf(abstractSwitch.getHandleDelay().getTime()));
             propiedadesDeNodo.add(propiedadHandleDelay);
         }
 
@@ -192,12 +192,12 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
             DDErlang dDErlang = (DDErlang) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDErlang_Orden", "Orden", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaA.setPrimerValor(String.valueOf(dDErlang.getN()));
+            EntityProperty propiedaA = new EntityProperty(id + "_DDErlang_Orden", "Orden", EntityProperty.PropertyType.NUMBER,true);
+            propiedaA.setFirstValue(String.valueOf(dDErlang.getN()));
             propiedadeNodos.add(propiedaA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDErlang_Promedio", "Promedio", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaB.setPrimerValor(String.valueOf(dDErlang.getAvg()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDErlang_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
+            propiedaB.setFirstValue(String.valueOf(dDErlang.getAvg()));
             propiedadeNodos.add(propiedaB);
 
 
@@ -205,19 +205,19 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lamdas", "Lamdas", EntityProperty.TipoDePropiedadNodo.TEXTO,true);
-            propiedaA.setPrimerValor(getStringArrayDoubles(dDHyperExp.getLambdas()));
+            EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lamdas", "Lamdas", EntityProperty.PropertyType.TEXT,true);
+            propiedaA.setFirstValue(getStringArrayDoubles(dDHyperExp.getLambdas()));
             propiedadeNodos.add(propiedaA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "Oportunidades", EntityProperty.TipoDePropiedadNodo.TEXTO,true);
-            propiedaB.setPrimerValor(getStringArrayDoubles(dDHyperExp.getChances()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "Oportunidades", EntityProperty.PropertyType.TEXT,true);
+            propiedaB.setFirstValue(getStringArrayDoubles(dDHyperExp.getChances()));
             propiedadeNodos.add(propiedaB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
-            EntityProperty propiedaB = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaB.setPrimerValor(String.valueOf(dDNegExp.getAvg()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
+            propiedaB.setFirstValue(String.valueOf(dDNegExp.getAvg()));
             propiedadeNodos.add(propiedaB);
 
 
@@ -225,12 +225,12 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estandar", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaA.setPrimerValor(String.valueOf(dDNormal.getDev()));
+            EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estandar", EntityProperty.PropertyType.NUMBER,true);
+            propiedaA.setFirstValue(String.valueOf(dDNormal.getDev()));
             propiedadeNodos.add(propiedaA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDNormal_Promedio", "Promedio", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaB.setPrimerValor(String.valueOf(dDNormal.getAvg()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDNormal_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
+            propiedaB.setFirstValue(String.valueOf(dDNormal.getAvg()));
             propiedadeNodos.add(propiedaB);
 
 
@@ -238,8 +238,8 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
-            EntityProperty propiedaB = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaB.setPrimerValor(String.valueOf(dDPoissonProcess.getAverage()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
+            propiedaB.setFirstValue(String.valueOf(dDPoissonProcess.getAverage()));
             propiedadeNodos.add(propiedaB);
 
 
@@ -247,12 +247,12 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Minimo", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaA.setPrimerValor(String.valueOf(dDUniform.getMin()));
+            EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Minimo", EntityProperty.PropertyType.NUMBER,true);
+            propiedaA.setFirstValue(String.valueOf(dDUniform.getMin()));
             propiedadeNodos.add(propiedaA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDUniform_Maximo", "Maximo", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaB.setPrimerValor(String.valueOf(dDUniform.getMax()));
+            EntityProperty propiedaB = new EntityProperty(id + "_DDUniform_Maximo", "Maximo", EntityProperty.PropertyType.NUMBER,true);
+            propiedaB.setFirstValue(String.valueOf(dDUniform.getMax()));
             propiedadeNodos.add(propiedaB);
 
 
@@ -260,8 +260,8 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.TipoDePropiedadNodo.NUMERO,true);
-            propiedaA.setPrimerValor(String.valueOf(constantDistribution.getConstant()));
+            EntityProperty propiedaA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.PropertyType.NUMBER,true);
+            propiedaA.setFirstValue(String.valueOf(constantDistribution.getConstant()));
             propiedadeNodos.add(propiedaA);
         }
     }

@@ -58,7 +58,7 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
         ObservableList datosPropiedades = FXCollections.observableArrayList();
 
         for(EntityProperty propiedadeNodo : propiedadeNodos){
-           propiedadeNodo.setTablaPropiedadesDispositivo(this);
+           propiedadeNodo.setEntityPropertyTable(this);
            datosPropiedades.add(propiedadeNodo);
         }
         setItems(datosPropiedades);

@@ -58,12 +58,12 @@ public class LinkAdminController extends LinkAdminAbstractController {
          **Enlace de nodo Phosphorous de A hacia B (A->B)
          */
         //===========================================================================================================
-        EntityProperty propNombreDireccionCanalAB = new EntityProperty("direcciónCanalAB", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalAB.setPrimerValor(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
+        EntityProperty propNombreDireccionCanalAB = new EntityProperty("direcciónCanalAB", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
+        propNombreDireccionCanalAB.setFirstValue(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
         entityPropertys.add(propNombreDireccionCanalAB);
 
-        EntityProperty propVelEnlaceAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
-        propVelEnlaceAB.setPrimerValor(Double.toString(gridOutPortA.getLinkSpeed()));
+        EntityProperty propVelEnlaceAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        propVelEnlaceAB.setFirstValue(Double.toString(gridOutPortA.getLinkSpeed()));
         entityPropertys.add(propVelEnlaceAB);
         //===========================================================================================================
 
@@ -71,24 +71,24 @@ public class LinkAdminController extends LinkAdminAbstractController {
          **Enlace de nodo Phosphorous de B hacia A (B->A)
          */
         //===========================================================================================================
-        EntityProperty propNombreDireccionCanalBA = new EntityProperty("direcciónCanalBA", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalBA.setPrimerValor(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
+        EntityProperty propNombreDireccionCanalBA = new EntityProperty("direcciónCanalBA", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
+        propNombreDireccionCanalBA.setFirstValue(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
         entityPropertys.add(propNombreDireccionCanalBA);
 
-        EntityProperty propVelEnlaceBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
-        propVelEnlaceBA.setPrimerValor(Double.toString(gridOutPortB.getLinkSpeed()));
+        EntityProperty propVelEnlaceBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        propVelEnlaceBA.setFirstValue(Double.toString(gridOutPortB.getLinkSpeed()));
         entityPropertys.add(propVelEnlaceBA);
         //===========================================================================================================
 
         /*
          **Propiedades comunes en ambas direcciones del canal.
          */
-        EntityProperty propVelConmutacion = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
-        propVelConmutacion.setPrimerValor((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
+        EntityProperty propVelConmutacion = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.PropertyType.NUMBER, false);
+        propVelConmutacion.setFirstValue((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
         entityPropertys.add(propVelConmutacion);
 
-        EntityProperty propWavelengths = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
-        propWavelengths.setPrimerValor((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
+        EntityProperty propWavelengths = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.PropertyType.NUMBER, false);
+        propWavelengths.setFirstValue((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
         entityPropertys.add(propWavelengths);
 
         entityPropertyTable.loadProperties(entityPropertys);
