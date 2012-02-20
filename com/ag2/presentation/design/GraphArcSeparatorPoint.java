@@ -104,7 +104,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
                     verticeEnlaceGrafico.getGraphArcB().setStartX(dragX);
                     verticeEnlaceGrafico.getGraphArcB().setStartY(dragY);
 
-                    if (!verticeEnlaceGrafico.getGraphArcA().getGraphLink().getSeleccionado()) {
+                    if (!verticeEnlaceGrafico.getGraphArcA().getGraphLink().isSelected()) {
                         verticeEnlaceGrafico.getGraphArcA().getGraphLink().select(true);
                     }
                     verticeEnlaceGrafico.setDragged(true);
@@ -123,7 +123,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
                     if (!graphArcSeparatorPoint.isDragged()) {
 
-                        if (graphArcSeparatorPoint.getGraphArcA().getGraphLink().getSeleccionado()) {
+                        if (graphArcSeparatorPoint.getGraphArcA().getGraphLink().isSelected()) {
                             graphArcSeparatorPoint.getGraphArcA().getGraphLink().select(false);
                         } else {
                             graphArcSeparatorPoint.getGraphArcA().getGraphLink().select(true);
