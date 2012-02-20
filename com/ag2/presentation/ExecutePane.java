@@ -14,31 +14,31 @@ import javafx.scene.layout.TilePane;
 
 public class ExecutePane extends TilePane implements ExecuteView {
 
-    private ToggleButtonAg2 btnEjecutar;
-    private ToggleButtonAg2 btnParar;
-    private ToggleGroup tgEjecucion = new ToggleGroup();
-    private PhosphosrusHTMLResults resultadosPhosphorousHTML;
-    PhosphosrusResults resultadosPhosphorus;
-    ExecuteAbstractController executeController;
+    private ToggleButtonAg2 btnRun;
+    private ToggleButtonAg2 btnStop;
+    private ToggleGroup tgRun = new ToggleGroup();
+    private PhosphosrusHTMLResults phosphosrusHTMLResults;
+    private PhosphosrusResults phosphosrusResults;
+    private ExecuteAbstractController executeController;
 
     public ExecutePane() {
 
-        btnEjecutar = new ToggleButtonAg2(ActionTypeEmun.RUN) {
+        btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
 
             @Override
-            public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
+            public void setGraphDesignGroup(final Group group) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-                    public void handle(MouseEvent mouEvent) {System.out.println ("Hola");
+                    public void handle(MouseEvent mouEvent) {
 
-                        ToggleButtonAg2 btnEjecutar = (ToggleButtonAg2) mouEvent.getSource();
+                        ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
 
                         if (executeController != null) {
-                            if (resultadosPhosphorousHTML != null) {
-                                resultadosPhosphorousHTML.lookToNextExecution();
+                            if (phosphosrusHTMLResults != null) {
+                                phosphosrusHTMLResults.lookToNextExecution();
                             }
-                            if (resultadosPhosphorus != null) {
-                                resultadosPhosphorus.looktToNextExecution();
+                            if (phosphosrusResults != null) {
+                                phosphosrusResults.looktToNextExecution();
                             }
 
                             executeController.initNetwork();
@@ -48,10 +48,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 IGU.getInstance().getGrGrupoDeDiseño().setSelectable(null);
                                 IGU.getInstance().getTbDeviceProperties().clearData();
                                 IGU.getInstance().deshabilitar();
-                                btnEjecutar.setSelected(true);
+                                toggleButtonAg2.setSelected(true);
                                 executeController.run();
                             } else {
-                                btnParar.setSelected(true);
+                                btnStop.setSelected(true);
                             }
                         }
                     }
@@ -59,7 +59,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
             }
         };
 
-        btnParar = new ToggleButtonAg2(ActionTypeEmun.STOP) {
+        btnStop = new ToggleButtonAg2(ActionTypeEmun.STOP) {
 
             @Override
             public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
@@ -67,9 +67,9 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
                     public void handle(MouseEvent mouEvent) {
 
-                        ToggleButtonAg2 btnParar = (ToggleButtonAg2) mouEvent.getSource();
+                        ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
                         IGU.getInstance().habilitar();
-                        habilitar();
+                        enable();
                         executeController.stop();
                     }
                 });
@@ -82,10 +82,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
         setPrefColumns(2);
 
         Tooltip tTipBtnEjecutar = new Tooltip("Ejecutar simulación");
-        btnEjecutar.setTooltip(tTipBtnEjecutar);
-        btnEjecutar.setToggleGroup(tgEjecucion);
+        btnRun.setTooltip(tTipBtnEjecutar);
+        btnRun.setToggleGroup(tgRun);
 
-        btnEjecutar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        btnRun.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
             }
@@ -93,10 +93,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
         Tooltip tTipBtnParar = new Tooltip("Parar simulación");
 
-        btnParar.setTooltip(tTipBtnParar);
-        btnParar.setToggleGroup(tgEjecucion);
-        btnParar.setSelected(true);
-        getChildren().addAll(btnEjecutar, btnParar);
+        btnStop.setTooltip(tTipBtnParar);
+        btnStop.setToggleGroup(tgRun);
+        btnStop.setSelected(true);
+        getChildren().addAll(btnRun, btnStop);
     }
 
     public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
@@ -104,27 +104,21 @@ public class ExecutePane extends TilePane implements ExecuteView {
         executeAbstractController.setExecuteView(this);
     }
 
-    public void setResultadosPhosphorousHTML(PhosphosrusHTMLResults resultadosPhosphorousHTML) {
-        this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
+    public void setPhosphosrusHTMLResults(PhosphosrusHTMLResults phosphosrusHTMLResults) {
+        this.phosphosrusHTMLResults = phosphosrusHTMLResults;
     }
 
-    public void setResultadosPhosphorus(PhosphosrusResults resultadosPhosphorus) {
-        this.resultadosPhosphorus = resultadosPhosphorus;
+    public void setPhosphosrusResults(PhosphosrusResults phosphosrusResults) {
+        this.phosphosrusResults = phosphosrusResults;
     }
 
-    public void habilitar() {
-        btnParar.setSelected(true);
+    public void enable() {
+        btnStop.setSelected(true);
 
     }
 
     public void setGroup(Group group) {
-        btnEjecutar.setGraphDesignGroup(group);
-        btnParar.setGraphDesignGroup(group);
-
-
-
-
-
-
+        btnRun.setGraphDesignGroup(group);
+        btnStop.setGraphDesignGroup(group);
     }
 }

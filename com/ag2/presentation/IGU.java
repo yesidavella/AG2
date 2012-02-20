@@ -401,8 +401,8 @@ public class IGU extends Scene implements Serializable {
 
         resultadosPhosphorus = new PhosphosrusResults(tabResultados);
         PhosphosrusHTMLResults resultadosPhosphorousHTML = new PhosphosrusHTMLResults(tabResultadosHTML);
-        executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
-        executePane.setResultadosPhosphorus(resultadosPhosphorus);
+        executePane.setPhosphosrusHTMLResults(resultadosPhosphorousHTML);
+        executePane.setPhosphosrusResults(resultadosPhosphorus);
 
         grGrupoDeDiseño.setScrollPane(scPnWorld);
 
