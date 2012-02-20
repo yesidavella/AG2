@@ -1,6 +1,6 @@
 package com.ag2.presentation.control;
 
-import com.ag2.presentation.IGU;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -43,7 +43,7 @@ public class ToggleButtonAg2 extends ToggleButton {
 
                 if (toggleButtonAg2.isSelected()) {
 
-                    IGU.setActionTypeEmun(toggleButtonAg2.getActionTypeEmun());
+                    GUI.setActionTypeEmun(toggleButtonAg2.getActionTypeEmun());
 
 
                     if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.DEFAULT) {
