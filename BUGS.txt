@@ -39,6 +39,11 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -PhosphorusLinkModel
 -NodeCreationModel
 -BrokerCreationModel
+-GridSimulatorModel
+-LinkCreationAbstractModel
+-ClientCreationModel
+-LinkCreationModel
+-HybridSwitchCreationModel
 
 ###### com.ag2.controller
 
@@ -62,6 +67,7 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -Main
 -ExecutePane
 -GraphNodesView
+-ExecuteView
 -GUI
 
 ##### com.ag2.presentation.design;

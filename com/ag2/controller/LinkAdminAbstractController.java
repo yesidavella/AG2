@@ -20,7 +20,7 @@ public abstract class LinkAdminAbstractController implements Serializable {
     }
 
     public boolean addModel(LinkCreationAbstractModel linkCreationAbstractModel) {
-        return linkCreationAbstractModels.add(linkCreationAbstractModel) && linkCreationAbstractModel.addControlador(this);
+        return linkCreationAbstractModels.add(linkCreationAbstractModel) && linkCreationAbstractModel.addController(this);
     }
 
     public boolean removeModel(LinkAdminAbstractController linkAdminAbstractController) {
