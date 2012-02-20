@@ -50,11 +50,11 @@ public final class PhosphorusPropertyEditor {
     }
 
     public String getPropertyValue(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum) {
-        return properties.getProperty(propertyPhosphorusTypeEnum.getNombrePropiedadPhosphorus());
+        return properties.getProperty(propertyPhosphorusTypeEnum.getPhosphorusPropertyName());
     }
 
     public void setPropertyValue(PropertyPhosphorusTypeEnum propiedadePhosphorus, String valor) {
-        properties.setProperty(propiedadePhosphorus.getNombrePropiedadPhosphorus(), valor);
+        properties.setProperty(propiedadePhosphorus.getPhosphorusPropertyName(), valor);
         writeFile();
     }
 }

@@ -113,7 +113,7 @@ public enum PropertyPhosphorusTypeEnum {
         });
     }
 
-    public String getNombrePropiedadPhosphorus() {
+    public String getPhosphorusPropertyName() {
         return phosphorusPropertyName;
     }
 
