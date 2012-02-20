@@ -55,7 +55,7 @@ public class IGU extends Scene implements Serializable {
     private ToggleButtonAg2 btnEnrutadorHibrido = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnRecurso = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnEnlace = new ToggleButtonAg2(ActionTypeEmun.LINK);
-    private static ActionTypeEmun estadoTipoBoton = ActionTypeEmun.PUNTERO;
+    private static ActionTypeEmun estadoTipoBoton = ActionTypeEmun.DEFAULT;
     private EntityPropertyTable tbDeviceProperties;
     private GridPane barraHerramientas;
     private ScrollPane scPnWorld;
@@ -167,7 +167,7 @@ public class IGU extends Scene implements Serializable {
 
     public static ActionTypeEmun getEstadoTipoBoton() {
         if (estadoTipoBoton == null) {
-            estadoTipoBoton = ActionTypeEmun.PUNTERO;
+            estadoTipoBoton = ActionTypeEmun.DEFAULT;
         }
         return estadoTipoBoton;
     }
@@ -279,7 +279,7 @@ public class IGU extends Scene implements Serializable {
     private void creacionDeBtnsDeUtilidades(GridPane grdPnBarraHerramientas) {
 
         btnMoverEscena = new ToggleButtonAg2(ActionTypeEmun.HAND);
-        btnSeleccion = new ToggleButtonAg2(ActionTypeEmun.PUNTERO);
+        btnSeleccion = new ToggleButtonAg2(ActionTypeEmun.DEFAULT);
         btnDividirEnlaceCuadrado = new ToggleButtonAg2(ActionTypeEmun.ADD_LINK_SEPARATOR);
         btnEliminar = new ToggleButtonAg2(ActionTypeEmun.DELETED);
         btnMinusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_MINUS);
