@@ -27,7 +27,7 @@ import Grid.Port.GridOutPort;
 import com.ag2.presentation.IGU;
 import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.design.property.NodeRelationProperty;
-import com.ag2.presentation.design.property.PropiedadNodoDistribuciones;
+import com.ag2.presentation.design.property.NodeDistributionProperty;
 import com.ag2.presentation.design.property.EntityProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -104,22 +104,22 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadesDeNodo.add(nodeRelationProperty);
 
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTrabajos = new PropiedadNodoDistribuciones("generacionTrabajos", "Generación de trabajos");
+            NodeDistributionProperty distribucionesTrabajos = new NodeDistributionProperty("generacionTrabajos", "Generación de trabajos");
             crearPropiedadDistriducion(clientNode.getState().getJobInterArrival(), propiedadesDeNodo, distribucionesTrabajos, "generacionTrabajos");
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesFlops = new PropiedadNodoDistribuciones("generacionFlops", "Generación de flops por trabajo");
+            NodeDistributionProperty distribucionesFlops = new NodeDistributionProperty("generacionFlops", "Generación de flops por trabajo");
             crearPropiedadDistriducion(clientNode.getState().getFlops(), propiedadesDeNodo, distribucionesFlops, "generacionFlops");
 
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesMaximoRetraso = new PropiedadNodoDistribuciones("generacionMaximoRetraso", "Generación de intervalo maximo de retraso");
+            NodeDistributionProperty distribucionesMaximoRetraso = new NodeDistributionProperty("generacionMaximoRetraso", "Generación de intervalo maximo de retraso");
             crearPropiedadDistriducion(clientNode.getState().getMaxDelayInterval(), propiedadesDeNodo, distribucionesMaximoRetraso, "generacionMaximoRetraso");
 
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTamanoTrabajo = new PropiedadNodoDistribuciones("generacionTamañoTrabajo", "Generación del tamaño del trabajo");
+            NodeDistributionProperty distribucionesTamanoTrabajo = new NodeDistributionProperty("generacionTamañoTrabajo", "Generación del tamaño del trabajo");
             crearPropiedadDistriducion(clientNode.getState().getSizeDistribution(), propiedadesDeNodo, distribucionesTamanoTrabajo, "generacionTamañoTrabajo");
 
             //===========================================================================================================
-            PropiedadNodoDistribuciones distribucionesTamanoRespuesta = new PropiedadNodoDistribuciones("generacionTamañoRespuesta", "Generación del tamaño de la respuesta");
+            NodeDistributionProperty distribucionesTamanoRespuesta = new NodeDistributionProperty("generacionTamañoRespuesta", "Generación del tamaño de la respuesta");
             crearPropiedadDistriducion(clientNode.getState().getAckSizeDistribution(), propiedadesDeNodo, distribucionesTamanoRespuesta, "generacionTamañoRespuesta");
 
 
@@ -182,13 +182,13 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
     }
 
-    private void crearPropiedadDistriducion(DiscreteDistribution discreteDistribution, ArrayList<EntityProperty> propiedadeNodos, PropiedadNodoDistribuciones propiedadNodoDistribuciones, String id) {
+    private void crearPropiedadDistriducion(DiscreteDistribution discreteDistribution, ArrayList<EntityProperty> propiedadeNodos, NodeDistributionProperty propiedadNodoDistribuciones, String id) {
 
         propiedadeNodos.add(propiedadNodoDistribuciones);
 
         if (discreteDistribution instanceof DDErlang) {
 
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.ER_LANG);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.ER_LANG);
 
             DDErlang dDErlang = (DDErlang) discreteDistribution;
 
@@ -202,7 +202,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
         } else if (discreteDistribution instanceof DDHyperExp) {
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.HYPER_EXPONENTIAL);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
             EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lamdas", "Lamdas", EntityProperty.PropertyType.TEXT,true);
@@ -214,7 +214,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             propiedadeNodos.add(propiedaB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NEGATIVE_EXPONENTIAL);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
             EntityProperty propiedaB = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
             propiedaB.setFirstValue(String.valueOf(dDNegExp.getAvg()));
@@ -222,7 +222,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
         } else if (discreteDistribution instanceof DDNormal) {
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.NORMAL);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
             EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estandar", EntityProperty.PropertyType.NUMBER,true);
@@ -236,7 +236,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
         } else if (discreteDistribution instanceof DDPoissonProcess) {
 
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.POISSON_PROCESS);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
             EntityProperty propiedaB = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER,true);
             propiedaB.setFirstValue(String.valueOf(dDPoissonProcess.getAverage()));
@@ -244,7 +244,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
         } else if (discreteDistribution instanceof DDUniform) {
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.UNMIFORM);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
             EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Minimo", EntityProperty.PropertyType.NUMBER,true);
@@ -257,7 +257,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
         } else if (discreteDistribution instanceof ConstantDistribution) {
-            propiedadNodoDistribuciones.setPrimerValor(PropiedadNodoDistribuciones.TipoDeDistribucion.CONSTANT);
+            propiedadNodoDistribuciones.setFirstValue(NodeDistributionProperty.DistributionType.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
             EntityProperty propiedaA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.PropertyType.NUMBER,true);
