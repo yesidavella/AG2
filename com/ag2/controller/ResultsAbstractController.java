@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public abstract class ResultsAbstractController  implements Serializable
 {
    protected  ViewResultsPhosphorus viewResultsPhosphorus;
-   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getSimulador());
+   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getGridSimulatorModel());
 
     public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus)
     {

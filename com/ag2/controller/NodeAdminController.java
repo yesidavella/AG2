@@ -11,8 +11,8 @@ import com.ag2.presentation.design.GraphNode;
 import com.ag2.model.BrokerCreationModel;
 import com.ag2.model.HybridSwitchCreationModel;
 import com.ag2.model.ClientCreationModel;
-import com.ag2.model.ModeloCrearEnrutadorRafaga;
-import com.ag2.model.ModeloCrearEnrutadorOptico;
+import com.ag2.model.OBS_SwitchCreationModel;
+import com.ag2.model.OCS_SwitchCreationModel;
 import com.ag2.model.NodeCreationModel;
 import com.ag2.model.ModeloCrearNodoDeRecurso;
 import com.ag2.model.SimulationBase;
@@ -58,10 +58,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 nuevoNodoPhophorous = ((BrokerCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearNodoDeRecurso && nodoGrafico instanceof ResourceGraphNode) {
                 nuevoNodoPhophorous = ((ModeloCrearNodoDeRecurso) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
-            } else if (modeloRegistrado instanceof ModeloCrearEnrutadorRafaga && nodoGrafico instanceof OBS_SwicthGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorRafaga) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
-            } else if (modeloRegistrado instanceof ModeloCrearEnrutadorOptico && nodoGrafico instanceof OCS_SwicthGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorOptico) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
+            } else if (modeloRegistrado instanceof OBS_SwitchCreationModel && nodoGrafico instanceof OBS_SwicthGraphNode) {
+                nuevoNodoPhophorous = ((OBS_SwitchCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
+            } else if (modeloRegistrado instanceof OCS_SwitchCreationModel && nodoGrafico instanceof OCS_SwicthGraphNode) {
+                nuevoNodoPhophorous = ((OCS_SwitchCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof HybridSwitchCreationModel && nodoGrafico instanceof HybridSwitchGraphNode) {
                 nuevoNodoPhophorous = ((HybridSwitchCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             }
@@ -482,7 +482,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     private DiscreteDistribution getDistributionByText(String value)
     {
-        SimBaseSimulator baseSimulator = SimulationBase.getInstance().getSimulador();
+        SimBaseSimulator baseSimulator = SimulationBase.getInstance().getGridSimulatorModel();
         if (value.equals("Uniforme")) {
             return new DDUniform(baseSimulator,10, 20);
         } else if (value.equals("Constante")) {
@@ -524,7 +524,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     public void removeNode(GraphNode nodoGrafico)
     {
         Entity phosNodeRemoved = nodeMatchCoupleObjectContainer.remove(nodoGrafico);
-        SimulationBase.getInstance().getSimulador().unRegister(phosNodeRemoved);
+        SimulationBase.getInstance().getGridSimulatorModel().unRegister(phosNodeRemoved);
     }
 
     @Override
