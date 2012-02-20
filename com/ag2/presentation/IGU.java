@@ -3,7 +3,7 @@ package com.ag2.presentation;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.design.GraphDesignGroup;
-import com.ag2.presentation.control.ResultadosPhosphorousHTML;
+import com.ag2.presentation.control.PhosphosrusHTMLResults;
 import com.ag2.presentation.control.ResultadosPhosphorus;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTable;
@@ -400,7 +400,7 @@ public class IGU extends Scene implements Serializable {
         tabResultadosHTML.setClosable(false);
 
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
-        ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
+        PhosphosrusHTMLResults resultadosPhosphorousHTML = new PhosphosrusHTMLResults(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
         executePane.setResultadosPhosphorus(resultadosPhosphorus);
 
