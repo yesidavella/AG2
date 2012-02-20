@@ -292,22 +292,22 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodoGraficoSeleccionado.setName(valor);
             if(nodoGraficoSeleccionado instanceof ClientGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getClientsObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getClientsObservableList().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getClientsObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getClientsObservableList().add(nodoGraficoSeleccionado);
             }else if(nodoGraficoSeleccionado instanceof ResourceGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getResourcesObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getResourcesObservableList().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getResourcesObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getResourcesObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof BrokerGrahpNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getBrokersObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getBrokersObservableList().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getBrokersObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getBrokersObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof SwitchGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getSwitchesObservableList().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getSwitchesObservableList().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getSwitchesObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGraphDesignGroup().getSwitchesObservableList().add(nodoGraficoSeleccionado);
             }
 
         }

@@ -38,7 +38,7 @@ public enum PropertyPhosphorusTypeEnum {
     private Control control;
     private PhosphorusPropertyEditor phosphorusPropertyEditor = PhosphorusPropertyEditor.getUniqueInstance();
 
-    
+
     private PropertyPhosphorusTypeEnum(String nombre, Control control) {
         phosphorusPropertyName = nombre;
         this.control = control;
@@ -53,7 +53,7 @@ public enum PropertyPhosphorusTypeEnum {
     public void setExecuteController(ExecuteController executeController) {
         this.executeController = executeController;
     }
-    
+
     public Control getControl() {
         return control;
     }
@@ -62,14 +62,14 @@ public enum PropertyPhosphorusTypeEnum {
         this.control = control;
 
     }
-    
+
 
     public String getPropertyName() {
         return this.toString().replace("_", " ");
 
     }
 
-    
+
 
     private void setEventProperty(CheckBox checkBox) {
 
@@ -96,10 +96,10 @@ public enum PropertyPhosphorusTypeEnum {
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                IGU.getInstance().getGrGrupoDeDiseño().getGroup().requestFocus();
+                IGU.getInstance().getGraphDesignGroup().getGroup().requestFocus();
             }
         });
-        
+
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
@@ -122,7 +122,7 @@ public enum PropertyPhosphorusTypeEnum {
 
     }
 
-    public static ObservableList getData(ExecuteController executeController) 
+    public static ObservableList getData(ExecuteController executeController)
     {
         for(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum: values())
         {
