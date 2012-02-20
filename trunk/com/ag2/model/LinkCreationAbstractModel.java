@@ -13,11 +13,11 @@ public abstract class LinkCreationAbstractModel implements Serializable{
         linkAdminAbstractControllers = new ArrayList<LinkAdminAbstractController>();
     }
     
-    public boolean addControlador(LinkAdminAbstractController linkAdminAbstractController){
+    public boolean addController(LinkAdminAbstractController linkAdminAbstractController){
         return linkAdminAbstractControllers.add(linkAdminAbstractController);
     }
     
-    public boolean removeControlador(LinkAdminAbstractController linkAdminAbstractController){
+    public boolean removeController(LinkAdminAbstractController linkAdminAbstractController){
         return linkAdminAbstractControllers.remove(linkAdminAbstractController);
     }
     

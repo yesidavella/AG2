@@ -9,8 +9,8 @@ import com.ag2.presentation.design.BrokerGrahpNode;
 import com.ag2.presentation.design.OBS_SwicthGraphNode;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.model.BrokerCreationModel;
-import com.ag2.model.ModeloCrearEnrutadorHibrido;
-import com.ag2.model.ModeloCrearCliente;
+import com.ag2.model.HybridSwitchCreationModel;
+import com.ag2.model.ClientCreationModel;
 import com.ag2.model.ModeloCrearEnrutadorRafaga;
 import com.ag2.model.ModeloCrearEnrutadorOptico;
 import com.ag2.model.NodeCreationModel;
@@ -52,8 +52,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         for (NodeCreationModel modeloRegistrado : nodeCreationModels) {
 
 
-            if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof ClientGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
+            if (modeloRegistrado instanceof ClientCreationModel && nodoGrafico instanceof ClientGraphNode) {
+                nuevoNodoPhophorous = ((ClientCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof BrokerCreationModel && nodoGrafico instanceof BrokerGrahpNode) {
                 nuevoNodoPhophorous = ((BrokerCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearNodoDeRecurso && nodoGrafico instanceof ResourceGraphNode) {
@@ -62,8 +62,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 nuevoNodoPhophorous = ((ModeloCrearEnrutadorRafaga) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearEnrutadorOptico && nodoGrafico instanceof OCS_SwicthGraphNode) {
                 nuevoNodoPhophorous = ((ModeloCrearEnrutadorOptico) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
-            } else if (modeloRegistrado instanceof ModeloCrearEnrutadorHibrido && nodoGrafico instanceof HybridSwitchGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorHibrido) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
+            } else if (modeloRegistrado instanceof HybridSwitchCreationModel && nodoGrafico instanceof HybridSwitchGraphNode) {
+                nuevoNodoPhophorous = ((HybridSwitchCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             }
             if (nuevoNodoPhophorous != null) {
                 addNodeMatchCouple(nodoGrafico, nuevoNodoPhophorous);

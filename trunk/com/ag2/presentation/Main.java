@@ -1,10 +1,10 @@
 package com.ag2.presentation;
 
 import com.ag2.model.BrokerCreationModel;
-import com.ag2.model.ModeloCrearEnrutadorHibrido;
-import com.ag2.model.ModeloCrearCliente;
+import com.ag2.model.HybridSwitchCreationModel;
+import com.ag2.model.ClientCreationModel;
 import com.ag2.model.LinkCreationAbstractModel;
-import com.ag2.model.ModeloCrearEnlace;
+import com.ag2.model.LinkCreationModel;
 import com.ag2.model.ModeloCrearEnrutadorRafaga;
 import com.ag2.model.ModeloCrearEnrutadorOptico;
 import com.ag2.model.NodeCreationModel;
@@ -99,7 +99,7 @@ public class Main extends Application implements Serializable {
         GUI.getInstance().getExecutePane().setExecuteAbstractController(executeController);
 
 
-        nodeCreationModel = new ModeloCrearCliente();
+        nodeCreationModel = new ClientCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
         nodeCreationModel = new BrokerCreationModel();
@@ -114,11 +114,11 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new ModeloCrearEnrutadorOptico();
         nodeAdminController.addModel(nodeCreationModel);
 
-        nodeCreationModel = new ModeloCrearEnrutadorHibrido();
+        nodeCreationModel = new HybridSwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
         linkAdminAbstractController = new LinkAdminController();
-        LinkCreationAbstractModel modeloCrearEnlace = new ModeloCrearEnlace();
+        LinkCreationAbstractModel modeloCrearEnlace = new LinkCreationModel();
         linkAdminAbstractController.addModel(modeloCrearEnlace);
 
         linkAdminAbstractController.setLinkView(GUI.getInstance().getEntityPropertyTb());
