@@ -18,71 +18,73 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EntityPropertyTable extends TableView<EntityProperty> implements GraphNodesView, Serializable
 {
-    private NodeAdminAbstractController controladorAbstractoAdminNodo;
-    private LinkAdminAbstractController controladorAdminEnlace;
+    private NodeAdminAbstractController nodeAdminAbstractController;
+    private LinkAdminAbstractController linkAdminAbstractController;
 
-    public void setControladorAbstractoAdminNodo(NodeAdminAbstractController controladorAbstractoAdminNodo)
+
+     public EntityPropertyTable()
     {
-        this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
-    }
+        TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
+        propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("nombre"));
+        propertyTableColumn.setMinWidth(110);
+        propertyTableColumn.setPrefWidth(175);
 
-    public void setControladorAdminEnlace(LinkAdminAbstractController controladorAdminEnlace){
-        this.controladorAdminEnlace = controladorAdminEnlace;
-    }
+        TableColumn valueTableColumn = new TableColumn("VALOR");
+        valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
+        valueTableColumn.setMinWidth(200);
+        valueTableColumn.setPrefWidth(215);
 
-    public EntityPropertyTable()
-    {
-        TableColumn tbColNombrePropDispositivo = new TableColumn("PROPIEDAD");
-        tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("nombre"));
-        tbColNombrePropDispositivo.setMinWidth(110);
-        tbColNombrePropDispositivo.setPrefWidth(175);
+        TableColumn titleTableColumn = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
+        titleTableColumn.getColumns().addAll(propertyTableColumn, valueTableColumn);
 
-        TableColumn tbColValorPropDispositivo = new TableColumn("VALOR");
-        tbColValorPropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
-        tbColValorPropDispositivo.setMinWidth(200);
-        tbColValorPropDispositivo.setPrefWidth(215);
+        getColumns().add(titleTableColumn);
 
-        TableColumn tbColTituloTbDispositivo = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
-        tbColTituloTbDispositivo.getColumns().addAll(tbColNombrePropDispositivo, tbColValorPropDispositivo);
-
-        getColumns().add(tbColTituloTbDispositivo);
-
-        setMinWidth(tbColTituloTbDispositivo.getMinWidth());
+        setMinWidth(titleTableColumn.getMinWidth());
         setPrefWidth(435);
 
         setPrefHeight(200);
     }
 
-    public void loadProperties(ArrayList<EntityProperty> propiedadeNodos) {
+    public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController)
+    {
+        this.nodeAdminAbstractController = nodeAdminAbstractController;
+    }
 
-        ObservableList datosPropiedades = FXCollections.observableArrayList();
+    public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminAbstractController){
+        this.linkAdminAbstractController = linkAdminAbstractController;
+    }
 
-        for(EntityProperty propiedadeNodo : propiedadeNodos){
-           propiedadeNodo.setEntityPropertyTable(this);
-           datosPropiedades.add(propiedadeNodo);
+
+
+    public void loadProperties(ArrayList<EntityProperty> entityPropertys) {
+
+        ObservableList dataObservableList = FXCollections.observableArrayList();
+
+        for(EntityProperty entityProperty : entityPropertys){
+           entityProperty.setEntityPropertyTable(this);
+           dataObservableList.add(entityProperty);
         }
-        setItems(datosPropiedades);
+        setItems(dataObservableList);
     }
     public void clearData()
     {
-        ObservableList datosPropiedades = FXCollections.observableArrayList();
-         setItems(datosPropiedades);
+        ObservableList dataObservableList = FXCollections.observableArrayList();
+         setItems(dataObservableList);
     }
 
-    public void updateProperty(boolean isSubProperty, String id, String valor)
+    public void updateProperty(boolean isSubProperty, String id, String value)
     {
-        Selectable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getSelectable();
+        Selectable selectable = IGU.getInstance().getGrGrupoDeDiseño().getSelectable();
 
-        if(objetoSeleccionado != null){
-            if (objetoSeleccionado instanceof GraphNode) {
-                controladorAbstractoAdminNodo.updateProperty(isSubProperty,true,id, valor);
-            } else if (objetoSeleccionado instanceof GraphLink) {
-                controladorAdminEnlace.updatePropiedad((GraphLink)objetoSeleccionado,id, valor);
+        if(selectable != null){
+            if (selectable instanceof GraphNode) {
+                nodeAdminAbstractController.updateProperty(isSubProperty,true,id, value);
+            } else if (selectable instanceof GraphLink) {
+                linkAdminAbstractController.updatePropiedad((GraphLink)selectable,id, value);
             }
         }
      }
 
     public void enableDisign() {
-//        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
