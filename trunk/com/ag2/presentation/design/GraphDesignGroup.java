@@ -506,7 +506,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
     public void enableDisign() {
         IGU.getInstance().habilitar();
-        IGU.getInstance().getExecutePane().habilitar();
+        IGU.getInstance().getExecutePane().enable();
     }
 
     public void updateProperty(boolean isSubProperty, String id, String valor) {

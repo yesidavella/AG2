@@ -60,6 +60,7 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -ActionTypeEmun
 -ErrorsView
 -Main
+-ExecutePane
 
 ##### com.ag2.presentation.design;
 
