@@ -76,3 +76,4 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -EntityProperty
 -EntityPropertyTable
 -NodeRelationProperty
+-NodeDistributionProperty
