@@ -51,7 +51,7 @@ public class Main extends Application implements Serializable {
         graphDesignGroup = GUI.getInstance().getGraphDesignGroup();
 
         initModelsAndControllers();
-        GUI.getInstance().initStateIGU();
+        GUI.getInstance().initStateGUI();
         utilSerializator = new UtilSerializator(this, stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
