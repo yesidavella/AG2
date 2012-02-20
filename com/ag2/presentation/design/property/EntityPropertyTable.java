@@ -74,7 +74,7 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
 
     public void updateProperty(boolean isSubProperty, String id, String value)
     {
-        Selectable selectable = IGU.getInstance().getGrGrupoDeDiseño().getSelectable();
+        Selectable selectable = IGU.getInstance().getGraphDesignGroup().getSelectable();
 
         if(selectable != null){
             if (selectable instanceof GraphNode) {

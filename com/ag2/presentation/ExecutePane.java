@@ -44,10 +44,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             executeController.initNetwork();
 
                             if (executeController.isWellFormedNetwork()) {
-                                IGU.getInstance().getGrGrupoDeDiseño().getSelectable().select(false);
-                                IGU.getInstance().getGrGrupoDeDiseño().setSelectable(null);
+                                IGU.getInstance().getGraphDesignGroup().getSelectable().select(false);
+                                IGU.getInstance().getGraphDesignGroup().setSelectable(null);
                                 IGU.getInstance().getEntityPropertyTable().clearData();
-                                IGU.getInstance().deshabilitar();
+                                IGU.getInstance().disable();
                                 toggleButtonAg2.setSelected(true);
                                 executeController.run();
                             } else {
@@ -68,7 +68,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                     public void handle(MouseEvent mouEvent) {
 
                         ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
-                        IGU.getInstance().habilitar();
+                        IGU.getInstance().enable();
                         enable();
                         executeController.stop();
                     }

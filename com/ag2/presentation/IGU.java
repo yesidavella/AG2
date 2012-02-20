@@ -90,7 +90,7 @@ public class IGU extends Scene implements Serializable {
         executePane = new ExecutePane();
         executePane.setGroup(graphDesignGroup.getGroup());
 
-        adicionarEventoDeTecladoAEscena(this);
+        addScene(this);
         getStylesheets().add(IGU.class.getResource("../../../resource/css/IGUPrincipal.css").toExternalForm());
 
         borderPane.getStyleClass().add("ventanaPrincipal");
@@ -99,13 +99,13 @@ public class IGU extends Scene implements Serializable {
         creationMenuBar(borderPane, stgEscenario);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
-        gpTools = creacionBarraDeHerramientas();
+        gpTools = createToolsBar();
 
         VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.getChildren().addAll(executePane, gpTools);
         borderPane.setLeft(contenedorHerramietas);
         //Diseño central
-        crearLienzoDeTabs();
+        createTabs();
         borderPane.setCenter(tpBox);
         //Diseño inferior
         HBox cajaInferiorHor = createBottomDesign();
@@ -133,7 +133,7 @@ public class IGU extends Scene implements Serializable {
         this.main = main;
     }
 
-    public void loadGrupoDeDiseno(GraphDesignGroup graphDesignGroup) {
+    public void loadGraphDesignGroup(GraphDesignGroup graphDesignGroup) {
 
         grRoot.getChildren().remove(this.graphDesignGroup.getGroup());
         this.graphDesignGroup = graphDesignGroup;
@@ -156,8 +156,8 @@ public class IGU extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
         graphDesignGroup.setScrollPane(scPnWorld);
 
-        crearPanelDeNavegacionMapa(vbNavegation);
-        adicionarEventoDeTecladoAEscena(this);
+        createMapNavigationPanel(vbNavegation);
+        addScene(this);
     }
 
 
@@ -261,21 +261,20 @@ public class IGU extends Scene implements Serializable {
         borderPane.setTop(hBox);
     }
 
-    private GridPane creacionBarraDeHerramientas() {
+    private GridPane createToolsBar() {
 
-        GridPane grdPnBarraDeHerramientas = new GridPane();
-        grdPnBarraDeHerramientas.setPadding(new Insets(10, 10, 10, 10));
-        grdPnBarraDeHerramientas.setVgap(5);
-        grdPnBarraDeHerramientas.setHgap(4);
-        grdPnBarraDeHerramientas.getStyleClass().add("barraDeHerramientas");
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setVgap(5);
+        gridPane.setHgap(4);
+        gridPane.getStyleClass().add("barraDeHerramientas");
+        createUtilButtons(gridPane);
+        createNodeButtons(gridPane);
 
-        creacionDeBtnsDeUtilidades(grdPnBarraDeHerramientas);
-        creacionBtnsDeNodos(grdPnBarraDeHerramientas);
-
-        return grdPnBarraDeHerramientas;
+        return gridPane;
     }
 
-    private void creacionDeBtnsDeUtilidades(GridPane grdPnBarraHerramientas) {
+    private void createUtilButtons(GridPane grdPnBarraHerramientas) {
 
         btnHand = new ToggleButtonAg2(ActionTypeEmun.HAND);
         btnSelection = new ToggleButtonAg2(ActionTypeEmun.DEFAULT);
@@ -334,7 +333,7 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    private void creacionBtnsDeNodos(GridPane grdPnBarraHerramientas) {
+    private void createNodeButtons(GridPane grdPnBarraHerramientas) {
 
         btnClient.setToggleGroup(tgTools);
         btnBroker.setToggleGroup(tgTools);
@@ -383,11 +382,7 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    private void crearLienzoDeTabs() {
-
-
-
-
+    private void createTabs() {
 
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
@@ -425,7 +420,7 @@ public class IGU extends Scene implements Serializable {
         entityPropertyTable = new EntityPropertyTable();
         stPnDeviceProperties.getChildren().add(entityPropertyTable);
 
-        TableView<String> tbSimulationProperties = createTbSimulationProperties();
+        TableView<String> tbSimulationProperties = createSimulationPropertiesTab();
         StackPane stPnSimulationProperties = new StackPane();
         stPnSimulationProperties.getChildren().add(tbSimulationProperties);
 
@@ -435,7 +430,7 @@ public class IGU extends Scene implements Serializable {
 
         VBox vbxBottomRight = new VBox(10);
         VBox vbxExecuteIndicatorPane = createExecuteIndicatorPane();
-        crearPanelDeNavegacionMapa(vbNavegation);
+        createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
 
         hboxAllBottom.getChildren().addAll(vbLogos, splPnPropertiesTbs, vbxBottomRight);
@@ -497,9 +492,7 @@ public class IGU extends Scene implements Serializable {
             });
     }
 
-    private TableView<String> createTbSimulationProperties() {
-
-
+    private TableView<String> createSimulationPropertiesTab() {
 
         TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
         tbColPropNombre.setMinWidth(145);
@@ -515,8 +508,6 @@ public class IGU extends Scene implements Serializable {
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
         tbwSimulationProperties.getColumns().addAll(tbColTituloTbSim);
 
-
-
         tbwSimulationProperties.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
         tbwSimulationProperties.setPrefWidth(345);
 
@@ -525,7 +516,7 @@ public class IGU extends Scene implements Serializable {
         return tbwSimulationProperties;
     }
 
-    public void crearPanelDeNavegacionMapa(VBox vBox) {
+    public void createMapNavigationPanel(VBox vBox) {
 
         gpMapNavegation.setPadding(new Insets(10, 10, 10, 10));
         gpMapNavegation.setVgap(5);
@@ -604,12 +595,12 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    private void setEventGoBtn(Button goButton, final ChoiceBox chobNodes) {
+    private void setEventGoBtn(Button goButton, final ChoiceBox cbxbNodes) {
 
         goButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
-                GraphNode selectedNode = (GraphNode) chobNodes.getSelectionModel().getSelectedItem();
+                GraphNode selectedNode = (GraphNode) cbxbNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
                     //selectedNode.select(true);
@@ -653,7 +644,7 @@ public class IGU extends Scene implements Serializable {
         });
     }
 
-    private void adicionarEventoDeTecladoAEscena(final Scene escena) {
+    private void addScene(final Scene escena) {
 
         escena.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -693,7 +684,7 @@ public class IGU extends Scene implements Serializable {
         });
     }
 
-    public void inicializarEstadoDeIGU() {
+    public void initStateIGU() {
 
         btnClient.setSelected(true);
         IGU.setActionTypeEmun(ActionTypeEmun.CLIENT);
@@ -703,11 +694,11 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    public GraphDesignGroup getGrGrupoDeDiseño() {
+    public GraphDesignGroup getGraphDesignGroup() {
         return graphDesignGroup;
     }
 
-    public EntityPropertyTable getPropiedadesDispositivoTbl() {
+    public EntityPropertyTable getEntityPropertyTb() {
         return entityPropertyTable;
     }
 
@@ -731,7 +722,7 @@ public class IGU extends Scene implements Serializable {
         return vBoxCajaContenedoraIndicadores;
     }
 
-    public void habilitar() {
+    public void enable() {
 
         IGU.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
@@ -744,7 +735,7 @@ public class IGU extends Scene implements Serializable {
 
     }
 
-    public void deshabilitar() {
+    public void disable() {
         beforeActionTypeEmun = IGU.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
@@ -768,11 +759,11 @@ public class IGU extends Scene implements Serializable {
         return executePane;
     }
 
-    public PhosphosrusResults getResustadosPhosphorus() {
+    public PhosphosrusResults getPhosphosrusResults() {
         return phosphosrusResults;
     }
 
-    public TableView<String> getTbvSimulationProperties() {
+    public TableView<String> getTbwSimulationProperties() {
         return tbwSimulationProperties;
     }
 
