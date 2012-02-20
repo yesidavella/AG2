@@ -43,7 +43,7 @@ import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
 
-    private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.DEFAULT;
+    private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.DEFAULT_1;
 
     private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();
     private ToggleGroup tgTools;
@@ -168,13 +168,13 @@ public class GUI extends Scene implements Serializable {
 
     public static ActionTypeEmun getActionTypeEmun() {
         if (actionTypeEmun == null) {
-            actionTypeEmun = ActionTypeEmun.DEFAULT;
+            actionTypeEmun = ActionTypeEmun.DEFAULT_1;
         }
         return actionTypeEmun;
     }
 
     public static void setActionTypeEmun(ActionTypeEmun actionTypeEmun) {
-        actionTypeEmun = actionTypeEmun;
+        GUI.actionTypeEmun = actionTypeEmun;
     }
 
     private void creationMenuBar(BorderPane borderPane, final Stage stage) {
@@ -277,7 +277,7 @@ public class GUI extends Scene implements Serializable {
     private void createUtilButtons(GridPane grdPnBarraHerramientas) {
 
         btnHand = new ToggleButtonAg2(ActionTypeEmun.HAND);
-        btnSelection = new ToggleButtonAg2(ActionTypeEmun.DEFAULT);
+        btnSelection = new ToggleButtonAg2(ActionTypeEmun.DEFAULT_1);
         btnPointSeparator = new ToggleButtonAg2(ActionTypeEmun.ADD_LINK_SEPARATOR);
         btnDeleted = new ToggleButtonAg2(ActionTypeEmun.DELETED);
         btnMinusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_MINUS);

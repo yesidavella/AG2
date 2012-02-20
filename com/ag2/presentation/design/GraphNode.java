@@ -250,7 +250,7 @@ public abstract class GraphNode implements Selectable, Serializable {
             public void handle(MouseEvent mouseEvent) {
 
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - height / 2));
                     updateNodeListener();
@@ -293,7 +293,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 }
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
 
                     Selectable objSeleccionado = graphDesignGroup.getSelectable();
 

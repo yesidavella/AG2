@@ -108,7 +108,7 @@ public class GraphArc  implements Serializable {
 
                 if (actionTypeEmun == ActionTypeEmun.ADD_LINK_SEPARATOR || actionTypeEmun == ActionTypeEmun.DELETED) {
                     quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
-                } else if (actionTypeEmun == ActionTypeEmun.DEFAULT) {
+                } else if (actionTypeEmun == ActionTypeEmun.DEFAULT_1) {
                     quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
                 }
             }
@@ -119,7 +119,7 @@ public class GraphArc  implements Serializable {
         quadCurve.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent me) {
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
                     double dragX = me.getX();
                     double dragY = me.getY();
                     GraphArc graphArc = GraphArc.this ;
@@ -143,7 +143,7 @@ public class GraphArc  implements Serializable {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
 
-                if(GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT){
+                if(GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1){
                     if(!graphLink.isSelected()){
                         graphLink.select(true);
                     }else{
