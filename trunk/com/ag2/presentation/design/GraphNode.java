@@ -191,7 +191,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                             graphDesignGroup.remove(wildcardLink);
 
                             GraphLink enlaceGrafico = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
-                            enlaceGrafico.addArcosInicialAlGrupo();
+                            enlaceGrafico.addInitialGraphArc();
 
                             wildcardNodeA.setLinkCounter((short) (wildcardNodeA.getLinkCounter() + 1));
                             graphNode.setLinkCounter((short) (graphNode.getLinkCounter() + 1));

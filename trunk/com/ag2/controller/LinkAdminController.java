@@ -29,8 +29,8 @@ public class LinkAdminController extends LinkAdminAbstractController {
 
             if (model instanceof ModeloCrearEnlace) {
 
-                GraphNode graphNodeA = graphLink.getNodoGraficoA();
-                GraphNode graphNodeB = graphLink.getNodoGraficoB();
+                GraphNode graphNodeA = graphLink.getGraphNodeA();
+                GraphNode graphNodeB = graphLink.getGraphNodeB();
 
                 phosphorusNodeA = (Entity) nodeMatchCoupleObjectContainer.get(graphNodeA);
                 phosphorusNodeB = (Entity) nodeMatchCoupleObjectContainer.get(graphNodeB);
@@ -59,7 +59,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
          */
         //===========================================================================================================
         EntityProperty propNombreDireccionCanalAB = new EntityProperty("direcciónCanalAB", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalAB.setPrimerValor(graphLink.getNodoGraficoA().getName() + "-->" + graphLink.getNodoGraficoB().getName());
+        propNombreDireccionCanalAB.setPrimerValor(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
         entityPropertys.add(propNombreDireccionCanalAB);
 
         EntityProperty propVelEnlaceAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
@@ -72,7 +72,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
          */
         //===========================================================================================================
         EntityProperty propNombreDireccionCanalBA = new EntityProperty("direcciónCanalBA", "Dirección del Canal:", EntityProperty.TipoDePropiedadNodo.ETIQUETA, false);
-        propNombreDireccionCanalBA.setPrimerValor(graphLink.getNodoGraficoB().getName() + "-->" + graphLink.getNodoGraficoA().getName());
+        propNombreDireccionCanalBA.setPrimerValor(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
         entityPropertys.add(propNombreDireccionCanalBA);
 
         EntityProperty propVelEnlaceBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.TipoDePropiedadNodo.NUMERO, false);
@@ -133,7 +133,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
     public boolean removeLink(GraphLink graphLink) {
 
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.get(graphLink);
-                
+
         boolean canRemovePortsInPhosNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
         boolean canRemovePortsInPhosNodeB = removeInAndOutPort(phosLink.getGridOutPortB());
 
@@ -145,7 +145,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
     private boolean removeInAndOutPort(GridOutPort outPort) {
         //Remuevo el puerto de salida y de entrada
         SimBaseInPort inPort = outPort.getTarget();
-        
+
         SimBaseEntity source = outPort.getOwner();
         SimBaseEntity target = inPort.getOwner();
 

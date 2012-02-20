@@ -63,3 +63,4 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -GraphArc
 -GraphArcSeparatorPoint
 -GraphDesignGroup
+-GraphLink
