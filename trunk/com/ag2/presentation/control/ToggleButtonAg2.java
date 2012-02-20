@@ -46,7 +46,7 @@ public class ToggleButtonAg2 extends ToggleButton {
                     IGU.setEstadoTipoBoton(toggleButtonAg2.getActionTypeEmun());
 
 
-                    if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.PUNTERO) {
+                    if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.DEFAULT) {
                         group.setCursor(Cursor.DEFAULT);
                     } else {
                         if (actionTypeEmun.getCursorImage() != null) {
