@@ -21,11 +21,11 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
     private boolean dragged;
     private double centerX;
     private double centerY;
-    private GraphDesignGroup designGroup;
+    private GraphDesignGroup graphDesignGroup;
 
     public GraphArcSeparatorPoint(GraphDesignGroup graphDesignGroup, GraphArc graphArcA, GraphArc graphArcB, double posX, double posY) {
 
-        this.designGroup = graphDesignGroup;
+        this.graphDesignGroup = graphDesignGroup;
         this.graphArcA = graphArcA;
         this.graphArcB = graphArcB;
 
@@ -167,7 +167,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
             graphArcB = null;
             graphArcA.revomeNodeListener(this);
             graphArcB.revomeNodeListener(this);
-            designGroup.remove(this);
+            graphDesignGroup.remove(this);
         }
     }
 
