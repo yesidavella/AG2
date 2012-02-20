@@ -25,7 +25,7 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
      public EntityPropertyTable()
     {
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
-        propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("nombre"));
+        propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
         propertyTableColumn.setMinWidth(110);
         propertyTableColumn.setPrefWidth(175);
 
