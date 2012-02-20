@@ -170,7 +170,7 @@ public class GraphArc  implements Serializable {
                     GraphArcSeparatorPoint graphArcSeparatorPointNew = new GraphArcSeparatorPoint(graphDesignGroup, graphArc, arcGrafNuevo, clickX, clickY);
                     
                     if( graphArc.getFinalGraphArcSeparatorPoint()!=null){
-                        graphArc.getFinalGraphArcSeparatorPoint().setArcoGraficoA(arcGrafNuevo);
+                        graphArc.getFinalGraphArcSeparatorPoint().setGraphArcA(arcGrafNuevo);
                         arcGrafNuevo.setFinalGraphArcSeparatorPoint(graphArc.getFinalGraphArcSeparatorPoint());
                     }
                     

@@ -11,44 +11,43 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
+public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
-    
-    private transient Circle circle; 
-    
-    private GraphArc arcoGraficoA;
-    private GraphArc arcoGraficoB;
-    private boolean eliminado = false; 
-    private final double diametro = 3;
-    private boolean arrastro;
-    private double centerX; 
-    private double centerY; 
-    private GraphDesignGroup grupoDeDiseno; 
-    
-    public GraphArcSeparatorPoint(GraphDesignGroup grupoDeDiseno,GraphArc arcoGraficoA, GraphArc arcoGraficoB, double posX, double posY) {
-       
-        this.grupoDeDiseno = grupoDeDiseno; 
-        this.arcoGraficoA = arcoGraficoA;
-        this.arcoGraficoB = arcoGraficoB;      
-        
-        initTransientObjects();      
+    private transient Circle circle;
+    private GraphArc graphArcA;
+    private GraphArc graphArcB;
+    private boolean deleted = false;
+    private final double diameter = 3;
+    private boolean dragged;
+    private double centerX;
+    private double centerY;
+    private GraphDesignGroup designGroup;
+
+    public GraphArcSeparatorPoint(GraphDesignGroup graphDesignGroup, GraphArc graphArcA, GraphArc graphArcB, double posX, double posY) {
+
+        this.designGroup = graphDesignGroup;
+        this.graphArcA = graphArcA;
+        this.graphArcB = graphArcB;
+
+        initTransientObjects();
         setCenterX(posX);
-        setCenterY(posY); 
-        
-        this.arcoGraficoA.addNodeListener(this);
-        this.arcoGraficoB.addNodeListener(this);
-        
-        
+        setCenterY(posY);
+
+        this.graphArcA.addNodeListener(this);
+        this.graphArcB.addNodeListener(this);
+
+
     }
+
     public void initTransientObjects() {
-        
-        circle = new Circle(); 
-         circle.setRadius(diametro);
-         circle.toFront();
-         circle.setFill(Color.LIGHTGREEN);
-        establecerEventoOnMouseEntered();
-        establecerEventoOnMouseDragged();
-        establecerEventoOnMouseClicked();
+
+        circle = new Circle();
+        circle.setRadius(diameter);
+        circle.toFront();
+        circle.setFill(Color.LIGHTGREEN);
+        establishEventOnMouseEntered();
+        establishEventOnMouseDragged();
+        establishEventOnMouseClicked();
     }
 
     public double getCenterX() {
@@ -73,10 +72,8 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
         return circle;
     }
 
-   
-
-    private void establecerEventoOnMouseEntered() {
-      circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+    private void establishEventOnMouseEntered() {
+        circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
 
@@ -87,13 +84,13 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
         });
     }
 
-    private void establecerEventoOnMouseDragged() {
+    private void establishEventOnMouseDragged() {
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
-                    
-                    GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this; 
+
+                    GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this;
 
                     double dragX = mouseEvent.getX();
                     double dragY = mouseEvent.getY();
@@ -101,85 +98,82 @@ public class GraphArcSeparatorPoint  implements ArcListener,Serializable {
                     verticeEnlaceGrafico.setCenterX(dragX);
                     verticeEnlaceGrafico.setCenterY(dragY);
 
-                    verticeEnlaceGrafico.getArcoGraficoA().setEndX(dragX);
-                    verticeEnlaceGrafico.getArcoGraficoA().setEndY(dragY);
+                    verticeEnlaceGrafico.getGraphArcA().setEndX(dragX);
+                    verticeEnlaceGrafico.getGraphArcA().setEndY(dragY);
 
-                    verticeEnlaceGrafico.getArcoGraficoB().setStartX(dragX);
-                    verticeEnlaceGrafico.getArcoGraficoB().setStartY(dragY);
-                    
-                    if(!verticeEnlaceGrafico.getArcoGraficoA().getGraphLink().getSeleccionado()){
-                        verticeEnlaceGrafico.getArcoGraficoA().getGraphLink().select(true);
+                    verticeEnlaceGrafico.getGraphArcB().setStartX(dragX);
+                    verticeEnlaceGrafico.getGraphArcB().setStartY(dragY);
+
+                    if (!verticeEnlaceGrafico.getGraphArcA().getGraphLink().getSeleccionado()) {
+                        verticeEnlaceGrafico.getGraphArcA().getGraphLink().select(true);
                     }
-                    verticeEnlaceGrafico.setArrastro(true);
+                    verticeEnlaceGrafico.setDragged(true);
                 }
             }
         });
     }
-    
-    private void establecerEventoOnMouseClicked() {
+
+    private void establishEventOnMouseClicked() {
         circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent eventoDeRaton) {
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
-                    GraphArcSeparatorPoint verticeGrafico = GraphArcSeparatorPoint.this; 
-                    
-                    if (!verticeGrafico.isArrastro()) {
+                    GraphArcSeparatorPoint graphArcSeparatorPoint = GraphArcSeparatorPoint.this;
 
-                        if (verticeGrafico.getArcoGraficoA().getGraphLink().getSeleccionado()) {
-                            verticeGrafico.getArcoGraficoA().getGraphLink().select(false);
+                    if (!graphArcSeparatorPoint.isDragged()) {
+
+                        if (graphArcSeparatorPoint.getGraphArcA().getGraphLink().getSeleccionado()) {
+                            graphArcSeparatorPoint.getGraphArcA().getGraphLink().select(false);
                         } else {
-                            verticeGrafico.getArcoGraficoA().getGraphLink().select(true);
+                            graphArcSeparatorPoint.getGraphArcA().getGraphLink().select(true);
                         }
                     }
-                    
-                    verticeGrafico.setArrastro(false);
+
+                    graphArcSeparatorPoint.setDragged(false);
                 }
             }
         });
     }
 
-    public GraphArc getArcoGraficoA() {
-        return arcoGraficoA;
+    public GraphArc getGraphArcA() {
+        return graphArcA;
     }
 
-    public GraphArc getArcoGraficoB() {
-        return arcoGraficoB;
-    }
-    
-    public void setArcoGraficoA(GraphArc arcoGraficoA) {
-        this.arcoGraficoA = arcoGraficoA;
+    public GraphArc getGraphArcB() {
+        return graphArcB;
     }
 
-    public void setArcoGraficoB(GraphArc arcoGraficoB) {
-        this.arcoGraficoB = arcoGraficoB;
-    }
-    
-    public boolean isArrastro() {
-        return arrastro;
+    public void setGraphArcA(GraphArc graphArcA) {
+        this.graphArcA = graphArcA;
     }
 
-    public void setArrastro(boolean arrastro) {
-        this.arrastro = arrastro;
+    public void setGraphArcB(GraphArc graphArcB) {
+        this.graphArcB = graphArcB;
+    }
+
+    public boolean isDragged() {
+        return dragged;
+    }
+
+    public void setDragged(boolean dragged) {
+        this.dragged = dragged;
     }
 
     public void updateArc() {
-        if (  !eliminado && (arcoGraficoA.isDeleted() || arcoGraficoB.isDeleted() )) 
-        {
-            eliminado= true; 
-            arcoGraficoA=null; 
-            arcoGraficoB=null; 
-            arcoGraficoA.revomeNodeListener(this); 
-            arcoGraficoB.revomeNodeListener(this);             
-            grupoDeDiseno.remove(this);
+        if (!deleted && (graphArcA.isDeleted() || graphArcB.isDeleted())) {
+            deleted = true;
+            graphArcA = null;
+            graphArcB = null;
+            graphArcA.revomeNodeListener(this);
+            graphArcB.revomeNodeListener(this);
+            designGroup.remove(this);
         }
     }
-    
+
     private void readObject(ObjectInputStream inputStream) {
-        try 
-        {
-           inputStream.defaultReadObject();
-           
+        try {
+            inputStream.defaultReadObject();
 
         } catch (Exception e) {
             e.printStackTrace();
