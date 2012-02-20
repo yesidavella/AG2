@@ -62,6 +62,7 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -Main
 -ExecutePane
 -GraphNodesView
+-GUI
 
 ##### com.ag2.presentation.design;
 
