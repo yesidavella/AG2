@@ -4,31 +4,31 @@ import Grid.Entity;
 import com.ag2.controller.NodeAdminAbstractController;
 import java.io.Serializable;
 
-public abstract class NodeCreationModel implements Serializable 
+public abstract class NodeCreationModel implements Serializable
 {
-    
+
     private NodeAdminAbstractController nodeAdminAbstractController;
-    protected SimulationBase simulacionBase; 
-    
+    protected SimulationBase simulationBase;
+
     public NodeCreationModel()
     {
        loadSimulacionBase();
     }
     public  void loadSimulacionBase(){
-         simulacionBase=  SimulationBase.getInstance();
+         simulationBase=  simulationBase.getInstance();
     }
-            
-    
-    public boolean addControladorCrearNodo(NodeAdminAbstractController ctrlCrearNodo){
-        this.nodeAdminAbstractController = ctrlCrearNodo;
-        
+
+
+    public boolean addNodeAdminController(NodeAdminAbstractController nodeAdminAbstractController){
+        this.nodeAdminAbstractController = nodeAdminAbstractController;
+
         if(this.nodeAdminAbstractController!=null){
             return true;
         }else{
             return false;
         }
     }
-    
-    public abstract Entity crearNodoPhophorous(String nombreNodoGrafico);
+
+    public abstract Entity createPhosphorusNode(String id);
 
 }

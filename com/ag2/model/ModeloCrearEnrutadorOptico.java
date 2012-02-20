@@ -6,8 +6,8 @@ import com.ag2.presentation.Main;
 public class ModeloCrearEnrutadorOptico extends NodeCreationModel{
 
     @Override
-    public Entity crearNodoPhophorous(String nombreNodoGrafico) {
+    public Entity createPhosphorusNode(String nombreNodoGrafico) {
         //System.out.println("Creo Enrutador Optico con monbre:"+nombreNodoGrafico);
-        return Grid.Utilities.Util.createOCSSwitch(nombreNodoGrafico, simulacionBase.getSimulador(), 10);
+        return Grid.Utilities.Util.createOCSSwitch(nombreNodoGrafico, simulationBase.getSimulador(), 10);
     }
 }

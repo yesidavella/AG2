@@ -8,7 +8,7 @@ import com.ag2.presentation.design.ResourceGraphNode;
 import com.ag2.presentation.design.BrokerGrahpNode;
 import com.ag2.presentation.design.OBS_SwicthGraphNode;
 import com.ag2.presentation.design.GraphNode;
-import com.ag2.model.ModeloCrearNodoDeServicio;
+import com.ag2.model.BrokerCreationModel;
 import com.ag2.model.ModeloCrearEnrutadorHibrido;
 import com.ag2.model.ModeloCrearCliente;
 import com.ag2.model.ModeloCrearEnrutadorRafaga;
@@ -38,7 +38,7 @@ import simbase.SimBaseEntity;
 import simbase.SimBaseSimulator;
 import simbase.Time;
 
-public class ControladorAdminNodo extends NodeAdminAbstractController implements Serializable{
+public class NodeAdminController extends NodeAdminAbstractController implements Serializable{
 
     private GraphNode nodoGraficoSeleccionado;
 
@@ -53,17 +53,17 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
             if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof ClientGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
-            } else if (modeloRegistrado instanceof ModeloCrearNodoDeServicio && nodoGrafico instanceof BrokerGrahpNode) {
-                nuevoNodoPhophorous = ((ModeloCrearNodoDeServicio) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
+                nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
+            } else if (modeloRegistrado instanceof BrokerCreationModel && nodoGrafico instanceof BrokerGrahpNode) {
+                nuevoNodoPhophorous = ((BrokerCreationModel) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearNodoDeRecurso && nodoGrafico instanceof ResourceGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearNodoDeRecurso) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
+                nuevoNodoPhophorous = ((ModeloCrearNodoDeRecurso) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearEnrutadorRafaga && nodoGrafico instanceof OBS_SwicthGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorRafaga) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
+                nuevoNodoPhophorous = ((ModeloCrearEnrutadorRafaga) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearEnrutadorOptico && nodoGrafico instanceof OCS_SwicthGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorOptico) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
+                nuevoNodoPhophorous = ((ModeloCrearEnrutadorOptico) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             } else if (modeloRegistrado instanceof ModeloCrearEnrutadorHibrido && nodoGrafico instanceof HybridSwitchGraphNode) {
-                nuevoNodoPhophorous = ((ModeloCrearEnrutadorHibrido) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
+                nuevoNodoPhophorous = ((ModeloCrearEnrutadorHibrido) modeloRegistrado).createPhosphorusNode(nodoGrafico.getName());
             }
             if (nuevoNodoPhophorous != null) {
                 addNodeMatchCouple(nodoGrafico, nuevoNodoPhophorous);
