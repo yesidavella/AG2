@@ -20,59 +20,59 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
 {
     private NodeAdminAbstractController controladorAbstractoAdminNodo;
     private LinkAdminAbstractController controladorAdminEnlace;
-    
+
     public void setControladorAbstractoAdminNodo(NodeAdminAbstractController controladorAbstractoAdminNodo)
     {
         this.controladorAbstractoAdminNodo = controladorAbstractoAdminNodo;
     }
-    
+
     public void setControladorAdminEnlace(LinkAdminAbstractController controladorAdminEnlace){
         this.controladorAdminEnlace = controladorAdminEnlace;
-    }    
-  
+    }
+
     public EntityPropertyTable()
-    {   
+    {
         TableColumn tbColNombrePropDispositivo = new TableColumn("PROPIEDAD");
         tbColNombrePropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("nombre"));
         tbColNombrePropDispositivo.setMinWidth(110);
         tbColNombrePropDispositivo.setPrefWidth(175);
-        
+
         TableColumn tbColValorPropDispositivo = new TableColumn("VALOR");
         tbColValorPropDispositivo.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
         tbColValorPropDispositivo.setMinWidth(200);
         tbColValorPropDispositivo.setPrefWidth(215);
-        
+
         TableColumn tbColTituloTbDispositivo = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
         tbColTituloTbDispositivo.getColumns().addAll(tbColNombrePropDispositivo, tbColValorPropDispositivo);
 
         getColumns().add(tbColTituloTbDispositivo);
-        
+
         setMinWidth(tbColTituloTbDispositivo.getMinWidth());
         setPrefWidth(435);
-        
+
         setPrefHeight(200);
     }
 
     public void loadProperties(ArrayList<EntityProperty> propiedadeNodos) {
-        
+
         ObservableList datosPropiedades = FXCollections.observableArrayList();
-        
-        for(EntityProperty propiedadeNodo : propiedadeNodos){ 
+
+        for(EntityProperty propiedadeNodo : propiedadeNodos){
            propiedadeNodo.setTablaPropiedadesDispositivo(this);
            datosPropiedades.add(propiedadeNodo);
         }
-        setItems(datosPropiedades);       
+        setItems(datosPropiedades);
     }
     public void clearData()
     {
         ObservableList datosPropiedades = FXCollections.observableArrayList();
-         setItems(datosPropiedades); 
+         setItems(datosPropiedades);
     }
 
-    public void updateProperty(boolean isSubProperty, String id, String valor) 
+    public void updateProperty(boolean isSubProperty, String id, String valor)
     {
-        Selectable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getObjetoGraficoSelecionado();
-        
+        Selectable objetoSeleccionado = IGU.getInstance().getGrGrupoDeDiseño().getSelectable();
+
         if(objetoSeleccionado != null){
             if (objetoSeleccionado instanceof GraphNode) {
                 controladorAbstractoAdminNodo.updateProperty(isSubProperty,true,id, valor);

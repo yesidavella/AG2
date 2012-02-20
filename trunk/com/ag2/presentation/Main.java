@@ -36,18 +36,18 @@ public class Main extends Application implements Serializable {
     private NodeCreationModel modeloCrearNodo;
     private LinkAdminAbstractController ctrlCrearYAdminEnlace;
     private GraphDesignGroup grupoDeDiseno;
-    private SimulationBase simulacionBase =  SimulationBase.getInstance(); 
+    private SimulationBase simulacionBase =  SimulationBase.getInstance();
     private ResultsController resultsController;
-    
+
 
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("Modelo AG2- Simulador Grafico");       
+        stage.setTitle("Modelo AG2- Simulador Grafico");
         stage.setScene(IGU.getInstance());
         IGU.getInstance().setStage(stage);
         IGU.getInstance().setMain(this);
-        stage.show();        
+        stage.show();
         grupoDeDiseno = IGU.getInstance().getGrGrupoDeDiseño();
 
         inicializarModelosYContrladoresDeCreacionDeNodos();
@@ -56,7 +56,7 @@ public class Main extends Application implements Serializable {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
-            public void handle(WindowEvent event) 
+            public void handle(WindowEvent event)
             {
                 int result = JOptionPane.showConfirmDialog(
                 null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
@@ -70,15 +70,15 @@ public class Main extends Application implements Serializable {
 
             }
         });
-        
+
 
     }
-    
+
 
     public SimulationBase getSimulacionBase() {
         return simulacionBase;
     }
-   
+
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -91,8 +91,8 @@ public class Main extends Application implements Serializable {
         executeAbstractController = new ExecuteController();
         resultsController = new ResultsController();
 
-        IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearNodo(ctrlCreadorYAdministradorNodo);
-        
+        IGU.getInstance().getGrGrupoDeDiseño().addNodeAdminAbstractControllers(ctrlCreadorYAdministradorNodo);
+
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
@@ -123,14 +123,14 @@ public class Main extends Application implements Serializable {
 
         ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
-        IGU.getInstance().getGrGrupoDeDiseño().addControladorCrearEnlace(ctrlCrearYAdminEnlace);
+        IGU.getInstance().getGrGrupoDeDiseño().addLinkAdminAbstractControllers(ctrlCrearYAdminEnlace);
 
-       
+
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
-        
+
         IGU.getInstance().getTbvSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeAbstractController));
-       
+
     }
 
     public ResultsController getResultsController() {
@@ -163,36 +163,36 @@ public class Main extends Application implements Serializable {
     public void loadFileBaseSimulation()
     {
         Main main = serializador.loadFileBaseSimulation();
-        if (main != null) 
+        if (main != null)
         {
             loadControllers(main);
         }
     }
 
-    private void loadControllers(Main main) 
+    private void loadControllers(Main main)
     {
-        simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance(); 
-        SimulationBase.loadInstance(simulacionBase); 
+        simulacionBase =   main.getSimulacionBase();  ///SimulacionBase.getInstance();
+        SimulationBase.loadInstance(simulacionBase);
         grupoDeDiseno = main.getGrupoDeDiseno();
-        
+
         IGU.getInstance().loadGrupoDeDiseno(grupoDeDiseno);
-   
+
         ctrlCreadorYAdministradorNodo = main.getCtrlCreadorYAdministradorNodo();
-        ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace(); 
+        ctrlCrearYAdminEnlace = main.getCtrlCrearYAdminEnlace();
         executeAbstractController= main.getExecuteAbstractController();
-        resultsController = main.getResultsController(); 
-       
-        modeloCrearNodo = main.getModeloCrearNodo(); 
-        
-        
+        resultsController = main.getResultsController();
+
+        modeloCrearNodo = main.getModeloCrearNodo();
+
+
         IGU.getInstance().getExecutePane().setExecuteAbstractController(executeAbstractController);
         resultsController.setViewResultsPhosphorus(IGU.getInstance().getResustadosPhosphorus());
-        
+
         ctrlCrearYAdminEnlace.setLinkView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAdminEnlace(ctrlCrearYAdminEnlace);
-        
+
         SimulationBase.getInstance().setLinkAdminAbstractController(ctrlCrearYAdminEnlace);
-        
+
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getGrGrupoDeDiseño());
         ctrlCreadorYAdministradorNodo.addGraphNodesView(IGU.getInstance().getPropiedadesDispositivoTbl());
         IGU.getInstance().getPropiedadesDispositivoTbl().setControladorAbstractoAdminNodo(ctrlCreadorYAdministradorNodo);
@@ -205,19 +205,19 @@ public class Main extends Application implements Serializable {
         {
              System.exit(0);
         }
-    }   
+    }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException 
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException
     {
-        
-        simulacionBase = SimulationBase.getInstance(); 
-        simulacionBase.getSimulador().getEntities(); 
+
+        simulacionBase = SimulationBase.getInstance();
+        simulacionBase.getSimulador().getEntities();
         objectOutputStream.defaultWriteObject();
 
     }
     public void load() {
         Main main = serializador.OpenDialogToLoad();
-        if (main != null) 
+        if (main != null)
         {
             loadControllers(main);
 

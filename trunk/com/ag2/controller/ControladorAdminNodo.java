@@ -44,13 +44,13 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
 
 
-    
+
     @Override
     public Entity createNode(GraphNode nodoGrafico) {
 
          Entity nuevoNodoPhophorous = null;
         for (NodeCreationModel modeloRegistrado : nodeCreationModels) {
-        
+
 
             if (modeloRegistrado instanceof ModeloCrearCliente && nodoGrafico instanceof ClientGraphNode) {
                 nuevoNodoPhophorous = ((ModeloCrearCliente) modeloRegistrado).crearNodoPhophorous(nodoGrafico.getName());
@@ -69,7 +69,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
                 addNodeMatchCouple(nodoGrafico, nuevoNodoPhophorous);
             }
         }
-        return  nuevoNodoPhophorous; 
+        return  nuevoNodoPhophorous;
     }
 
     public void queryProperties(GraphNode nodoGrafico) {
@@ -277,39 +277,39 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
     }
 
     @Override
-    public void updateProperty(boolean isSubProperty,  boolean conusultar, String id, String valor) 
+    public void updateProperty(boolean isSubProperty,  boolean conusultar, String id, String valor)
     {
         if(isSubProperty)
-        {    
-            nodoGraficoSeleccionado.getSubPropertiesNode().put(id, valor); 
+        {
+            nodoGraficoSeleccionado.getSubPropertiesNode().put(id, valor);
         }
         else
         {
-            nodoGraficoSeleccionado.getNodeProperties().put(id, valor); 
+            nodoGraficoSeleccionado.getNodeProperties().put(id, valor);
         }
 
         if (id.equalsIgnoreCase("nombre")) {
             nodoGraficoSeleccionado.setName(valor);
             if(nodoGraficoSeleccionado instanceof ClientGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getListaClientes().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getListaClientes().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getClientsObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getClientsObservableList().add(nodoGraficoSeleccionado);
             }else if(nodoGraficoSeleccionado instanceof ResourceGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getListaRecursos().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getListaRecursos().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getResourcesObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getResourcesObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof BrokerGrahpNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getListaNodoServicio().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getListaNodoServicio().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getBrokersObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getBrokersObservableList().add(nodoGraficoSeleccionado);
             }
             else if(nodoGraficoSeleccionado instanceof SwitchGraphNode)
             {
-                IGU.getInstance().getGrGrupoDeDiseño().getListaSwitches().remove(nodoGraficoSeleccionado);
-                IGU.getInstance().getGrGrupoDeDiseño().getListaSwitches().add(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getSwitchesObservableList().remove(nodoGraficoSeleccionado);
+                IGU.getInstance().getGrGrupoDeDiseño().getSwitchesObservableList().add(nodoGraficoSeleccionado);
             }
-            
+
         }
 
         if (nodoGraficoSeleccionado instanceof ClientGraphNode) {
@@ -379,18 +379,18 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
                 }
                 Entity entity = nodeMatchCoupleObjectContainer.get(nodoGrafico);
                 if (valor.contains("_ON")) {
-                    if (entity != null && entity instanceof ServiceNode) 
+                    if (entity != null && entity instanceof ServiceNode)
                     {
                         ServiceNode serviceNode = (ServiceNode) entity;
-                        resource.addServiceNode(serviceNode);                  
+                        resource.addServiceNode(serviceNode);
                     }
 
                 } else if (valor.contains("_OFF")) {
-                    if (entity != null && entity instanceof ServiceNode) 
+                    if (entity != null && entity instanceof ServiceNode)
                     {
                         ServiceNode serviceNode = (ServiceNode) entity;
                         resource.removeServiceNode(serviceNode);
-                        
+
                     }
                 }
 
@@ -406,9 +406,9 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
     }
 
     private void setValuesDistribution(DiscreteDistribution distribution, String value, String id) {
-        try 
+        try
         {
-        
+
         if (id.contains("DDErlang")) {
 
             DDErlang dDErlang = (DDErlang) distribution;
@@ -471,7 +471,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
                 constantDistribution.setConstant(Double.parseDouble(value));
             }
         }
-        
+
         }
         catch(ClassCastException exception)
         {
@@ -480,9 +480,9 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
 
     }
 
-    private DiscreteDistribution getDistributionByText(String value) 
+    private DiscreteDistribution getDistributionByText(String value)
     {
-        SimBaseSimulator baseSimulator = SimulationBase.getInstance().getSimulador(); 
+        SimBaseSimulator baseSimulator = SimulationBase.getInstance().getSimulador();
         if (value.equals("Uniforme")) {
             return new DDUniform(baseSimulator,10, 20);
         } else if (value.equals("Constante")) {
@@ -521,41 +521,41 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
     }
 
     @Override
-    public void removeNode(GraphNode nodoGrafico) 
+    public void removeNode(GraphNode nodoGrafico)
     {
         Entity phosNodeRemoved = nodeMatchCoupleObjectContainer.remove(nodoGrafico);
         SimulationBase.getInstance().getSimulador().unRegister(phosNodeRemoved);
     }
 
     @Override
-    public void reCreatePhosphorousNodos() 
+    public void reCreatePhosphorousNodos()
     {
         for (NodeCreationModel modeloRegistrado : nodeCreationModels)
         {
             modeloRegistrado.loadSimulacionBase();
-        }        
-        
+        }
+
         for(GraphNode nodoGrafico : nodeMatchCoupleObjectContainer.keySet())
         {
            createNode(nodoGrafico);
-               
+
         }
         for(GraphNode nodoGrafico : nodeMatchCoupleObjectContainer.keySet())
         {
             for(String id: nodoGrafico.getNodeProperties().keySet())
            {
-               nodoGraficoSeleccionado = nodoGrafico; 
+               nodoGraficoSeleccionado = nodoGrafico;
                updateProperty(false,false, id, nodoGrafico.getNodeProperties().get(id));
-           } 
+           }
            for(String id: nodoGrafico.getSubPropertiesNode().keySet())
            {
-               nodoGraficoSeleccionado = nodoGrafico; 
+               nodoGraficoSeleccionado = nodoGrafico;
                updateProperty(true,false, id, nodoGrafico.getSubPropertiesNode().get(id));
            }
-            
-            
+
+
         }
-        
+
         for (GraphNodesView vistaNodosGraficos : graphNodesViews) {
             vistaNodosGraficos.enableDisign();
         }

@@ -20,7 +20,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     private HashMap<String,String> properties;
 
     public GraphLink(GraphDesignGroup group, GraphNode nodoGraficoA, GraphNode nodoGraficoB,LinkAdminAbstractController controladorAdminEnlace) {
-        
+
         this.nodoGraficoA = nodoGraficoA;
         this.nodoGraficoB = nodoGraficoB;
         this.adminLinkController = controladorAdminEnlace;
@@ -30,19 +30,19 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         this.grGrDeDiseño = group;
 
         arcInicial = new GraphArc(this, grGrDeDiseño);
-        
+
         arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getWidth()/2);
         arcInicial.setStartY(nodoGraficoA.getLayoutY() + nodoGraficoA.getHeight()/2);
         arcInicial.setEndX(nodoGraficoB.getLayoutX() + nodoGraficoB.getWidth()/2);
         arcInicial.setEndY(nodoGraficoB.getLayoutY() + nodoGraficoB.getHeight()/2);
         arcInicial.calculateCenter();
         arcos.add(arcInicial);
- 
+
         properties = new HashMap<String, String>();
         determinarArcoInicialYFinal();
         controladorAdminEnlace.createLink(this);
         select(true);
-        
+
     }
 
     public void addArcosInicialAlGrupo() {
@@ -52,20 +52,20 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     public ArrayList<GraphArc> getArcos() {
         return arcos;
     }
-    
+
     public GraphNode getNodoGraficoB() {
         return nodoGraficoB;
     }
 
-    
+
     @Override
     public void update()
     {
-        if (nodoGraficoA != null && nodoGraficoB != null) 
+        if (nodoGraficoA != null && nodoGraficoB != null)
         {
             if (nodoGraficoA.isDeleted() || nodoGraficoB.isDeleted()) {
 
-                for (GraphArc arcoGrafico : arcos) 
+                for (GraphArc arcoGrafico : arcos)
                 {
                     arcoGrafico.setDeleted(true);
                     arcoGrafico.updateArcListeners();
@@ -77,7 +77,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
                 removeGraphLink();
 
             }else{
-                
+
                 arcInicial.setStartX(nodoGraficoA.getLayoutX() + nodoGraficoA.getWidth()/2);
                 arcInicial.setStartY(nodoGraficoA.getLayoutY() + 0.75*nodoGraficoA.getHeight() - nodoGraficoA.getInitialHeight()/4);
 
@@ -90,14 +90,14 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     public GraphNode getNodoGraficoA() {
         return nodoGraficoA;
     }
-    
-    
+
+
     private void readObject(ObjectInputStream inputStream) {
-        try 
+        try
         {
-            inputStream.defaultReadObject(); 
-        
-            
+            inputStream.defaultReadObject();
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -105,52 +105,52 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
     }
 
     public void select(boolean isSeleccionado) {
-        
-        Selectable objSeleccionado = grGrDeDiseño.getObjetoGraficoSelecionado();
-        
+
+        Selectable objSeleccionado = grGrDeDiseño.getSelectable();
+
         if(objSeleccionado!=null && objSeleccionado!=this){
             objSeleccionado.select(false);
         }
-        
+
         this.isSeleccionado = isSeleccionado;
-        
+
         if(isSeleccionado){
             for(GraphArc arcoGrafico:arcos){
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoNoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoSeleccionado");
-                
+
                 GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getInitialGraphArcSeparatorPoint();
-                
+
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.web("#44FF00"));
                     verticeGrafico.getCircle().toFront();
                 }
             }
-            
-            grGrDeDiseño.setObjetoGraficoSelecionado(this);
+
+            grGrDeDiseño.setSelectable(this);
             adminLinkController.queryProperty(this);
 
         }else{
             for(GraphArc arcoGrafico:arcos){
                 arcoGrafico.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
                 arcoGrafico.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
-                
+
                 GraphArcSeparatorPoint verticeGrafico = arcoGrafico.getInitialGraphArcSeparatorPoint();
-                
+
                 if(verticeGrafico!= null){
                     verticeGrafico.getCircle().setFill(Color.LIGHTGREEN);
                     verticeGrafico.getCircle().toFront();
                 }
             }
-            grGrDeDiseño.setObjetoGraficoSelecionado(null);
+            grGrDeDiseño.setSelectable(null);
         }
-        
+
     }
-    
+
     public boolean getSeleccionado(){
         return isSeleccionado;
     }
-    
+
     public void determinarArcoInicialYFinal(){
 
         for (GraphArc arco : arcos) {
@@ -160,17 +160,17 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
             if (arco.getInitialGraphArcSeparatorPoint() == null) {
                 arcInicial = arco;
             }
-            
+
             if (arco.getFinalGraphArcSeparatorPoint() == null) {
                 arcFinal = arco;
             }
         }
     }
-    
+
     public HashMap<String, String> getProperties() {
         return properties;
     }
-    
+
     public boolean removeGraphLink(){
         return adminLinkController.removeLink(this);
     }

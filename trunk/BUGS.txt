@@ -1,4 +1,4 @@
-Bugs                                                                                               Estado                                                  
+Bugs                                                                                               Estado
 1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Listo
@@ -9,7 +9,7 @@ barra de ejecucion encima.Yesid 1H..............................................
 7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Pendiente
 8.No mostrar pestaña html antes de ejecutar. Los tabs no deben
 ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Listo
-9.Cargar colores correctos al des-serializar, colocar escucha al 
+9.Cargar colores correctos al des-serializar, colocar escucha al
 cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin ...........   Listo
 10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
 visual en el combo. 2H Franklin ................................................................   Listo
@@ -22,9 +22,9 @@ visual en el combo. 2H Franklin ................................................
 
 
 
-Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial) 
+Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
 
-###### com.ag2.config 
+###### com.ag2.config
 
 - PhosphorusPropertyEditor
 - PropertyPhosphorusTypeEnum
@@ -62,3 +62,4 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -ClientGraphNode
 -GraphArc
 -GraphArcSeparatorPoint
+-GraphDesignGroup
