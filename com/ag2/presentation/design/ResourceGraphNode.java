@@ -7,27 +7,27 @@ import java.io.ObjectInputStream;
 public class ResourceGraphNode extends GraphNode{
 
     private   static short nodeCounter = 0;
-    public ResourceGraphNode(GraphDesignGroup grupoDeDiseno,NodeAdminAbstractController controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace) {
-        super(grupoDeDiseno, "Cluster_"+(++nodeCounter),"../../../../resource/image/recurso_cursor_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
+    public ResourceGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController) {
+        super(graphDesignGroup, "Cluster_"+(++nodeCounter),"../../../../resource/image/recurso_cursor_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
         setHeight((short)67);
         setWidth((short)49);
-                
+
         lineBreakStep = 11;
     }
 
     @Override
-    public boolean isEnableToCreateLInk(GraphNode nodoComienzoEnlace) {
-        return (nodoComienzoEnlace instanceof SwitchGraphNode) ;
+    public boolean isEnableToCreateLInk(GraphNode graphNode) {
+        return (graphNode instanceof SwitchGraphNode) ;
     }
      private void readObject(ObjectInputStream inputStream)
     {
         try
         {
            inputStream.defaultReadObject();
-           nodeCounter++; 
-            
-        } 
-        catch (Exception e) 
+           nodeCounter++;
+
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
