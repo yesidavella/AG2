@@ -63,7 +63,6 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -GraphNodesView
 -PhosphosrusHTMLResults
 
-
 ##### com.ag2.presentacion
 
 -ActionTypeEmun

@@ -46,7 +46,7 @@ public class ToggleButtonAg2 extends ToggleButton {
                     GUI.setActionTypeEmun(toggleButtonAg2.getActionTypeEmun());
 
 
-                    if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.DEFAULT) {
+                    if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.DEFAULT_1) {
                         group.setCursor(Cursor.DEFAULT);
                     } else {
                         if (actionTypeEmun.getCursorImage() != null) {
