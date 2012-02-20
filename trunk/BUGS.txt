@@ -64,3 +64,10 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -GraphArcSeparatorPoint
 -GraphDesignGroup
 -GraphLink
+-HybridSwitchGraphNode
+-OBS_SwicthGraphNode
+-OCS_SwicthGraphNode
+-ResourceGraphNode
+-Selectable
+-SwitchGraphNode
+

@@ -7,18 +7,18 @@ import java.io.ObjectInputStream;
 public class OBS_SwicthGraphNode extends SwitchGraphNode
 {
     private   static short nodeCounter = 0;
-    public OBS_SwicthGraphNode(GraphDesignGroup grupoDeDiseno,NodeAdminAbstractController controladorAbstractoAdminNodo,LinkAdminAbstractController ctrlAbsAdminEnlace) {
-        super(grupoDeDiseno,"Enrutador_Rafaga_"+(++nodeCounter), "../../../../resource/image/enrutador_rafaga_mapa.png", controladorAbstractoAdminNodo,ctrlAbsAdminEnlace);
+    public OBS_SwicthGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController) {
+        super(graphDesignGroup,"Enrutador_Rafaga_"+(++nodeCounter), "../../../../resource/image/enrutador_rafaga_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
     }
     private void readObject(ObjectInputStream inputStream)
     {
         try
         {
            inputStream.defaultReadObject();
-           nodeCounter++; 
-            
-        } 
-        catch (Exception e) 
+           nodeCounter++;
+
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
