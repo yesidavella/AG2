@@ -108,7 +108,7 @@ public class GUI extends Scene implements Serializable {
         createTabs();
         borderPane.setCenter(tpBox);
         //Diseño inferior
-        HBox cajaInferiorHor = createBottomDesign();
+        HBox cajaInferiorHor = createDesignButtons();
         borderPane.setBottom(cajaInferiorHor);
 
 //        inicializarEstadoDeIGU();
@@ -409,7 +409,7 @@ public class GUI extends Scene implements Serializable {
 
     }
 
-    private HBox createBottomDesign() {
+    private HBox createDesignButtons() {
 
         HBox hboxAllBottom = new HBox();
         hboxAllBottom.getStyleClass().add("cajaInferior");
@@ -684,7 +684,7 @@ public class GUI extends Scene implements Serializable {
         });
     }
 
-    public void initStateIGU() {
+    public void initStateGUI() {
 
         btnClient.setSelected(true);
         GUI.setActionTypeEmun(ActionTypeEmun.CLIENT);
