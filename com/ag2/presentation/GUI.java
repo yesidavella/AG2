@@ -497,7 +497,7 @@ public class GUI extends Scene implements Serializable {
         TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
         tbColPropNombre.setMinWidth(145);
         tbColPropNombre.setPrefWidth(155);
-        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("nombrePropiedad"));
+        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("phosphorusPropertyName"));
 
         TableColumn tbColPropValor = new TableColumn("VALOR");
         tbColPropValor.setMinWidth(150);
