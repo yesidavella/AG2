@@ -5,8 +5,8 @@ import com.ag2.model.HybridSwitchCreationModel;
 import com.ag2.model.ClientCreationModel;
 import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.LinkCreationModel;
-import com.ag2.model.ModeloCrearEnrutadorRafaga;
-import com.ag2.model.ModeloCrearEnrutadorOptico;
+import com.ag2.model.OBS_SwitchCreationModel;
+import com.ag2.model.OCS_SwitchCreationModel;
 import com.ag2.model.NodeCreationModel;
 import com.ag2.model.SimulationBase;
 import com.ag2.model.ModeloCrearNodoDeRecurso;
@@ -108,10 +108,10 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new ModeloCrearNodoDeRecurso();
         nodeAdminController.addModel(nodeCreationModel);
 
-        nodeCreationModel = new ModeloCrearEnrutadorRafaga();
+        nodeCreationModel = new OBS_SwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
-        nodeCreationModel = new ModeloCrearEnrutadorOptico();
+        nodeCreationModel = new OCS_SwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
         nodeCreationModel = new HybridSwitchCreationModel();
@@ -211,7 +211,7 @@ public class Main extends Application implements Serializable {
     {
 
         simulationBase = SimulationBase.getInstance();
-        simulationBase.getSimulador().getEntities();
+        simulationBase.getGridSimulatorModel().getEntities();
         objectOutputStream.defaultWriteObject();
 
     }

@@ -44,6 +44,10 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -ClientCreationModel
 -LinkCreationModel
 -HybridSwitchCreationModel
+-OCS_SwitchCreationModel
+-OBS_SwitchCreationModel
+-OutputterModel
+-SimulationBase
 
 ###### com.ag2.controller
 

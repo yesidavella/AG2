@@ -10,7 +10,6 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import Grid.Outputter;
 import com.ag2.controller.ResultsAbstractController;
-import java.io.PrintStream;
 import simbase.Stats.SimBaseStats;
 
 /**
@@ -26,9 +25,9 @@ public class OutputterModel extends Outputter
         this.resultsAbstractController = resultsAbstractController;
     }   
     
-    public OutputterModel(GridSimulator sim)
+    public OutputterModel(GridSimulator gridSimulator)
     {
-        super(sim); 
+        super(gridSimulator); 
        SimulationBase.getInstance().setOutputterModel(this);
     }
     @Override
@@ -45,38 +44,38 @@ public class OutputterModel extends Outputter
           
     }
     @Override
-    public void printResource(ResourceNode res) 
+    public void printResource(ResourceNode resourceNode) 
     {         
         resultsAbstractController.adicionarResultadoRecurso(
-                " " + returnStringWithAsterix(res), 
-                " " + sim.getStat(res, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED), 
-                " " + sim.getStat(res, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE), 
-                " " + sim.getStat(res, SimBaseStats.Stat.RESOURCE_SENDING_FAILED));
+                " " + returnStringWithAsterix(resourceNode), 
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED), 
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE), 
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED));
 
     }
     @Override
-     public void printSwitch(Switch sw) 
+     public void printSwitch(Switch switch1) 
      {
       
-        double fail_resultMessage = sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED);
-        double switchedResultMessages = sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED);
+        double fail_resultMessage = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED);
+        double switchedResultMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED);
         double resultRelative = fail_resultMessage / (fail_resultMessage + switchedResultMessages);
 
-        double switchedJobMessages = sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED);
-        double droppedJobMessages = sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED);
+        double switchedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED);
+        double droppedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED);
         double jobRelative = droppedJobMessages / (switchedJobMessages + droppedJobMessages);
 
-        double messagesDropped = sim.getStat(sw, SimBaseStats.Stat.SWITCH_MESSAGE_DROPPED);
-        double messagesSwitched = sim.getStat(sw, SimBaseStats.Stat.SWITCH_MESSAGE_SWITCHED);
+        double messagesDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_DROPPED);
+        double messagesSwitched = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_SWITCHED);
         double relative = messagesDropped / (messagesDropped + messagesSwitched);
               
         
         resultsAbstractController.adicionarResultadoConmutador(
-                returnStringWithAsterix(sw), 
-                "" + sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
-                "" + sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED), 
-                "" + sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
-                "" + sim.getStat(sw, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
+                returnStringWithAsterix(switch1), 
+                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
+                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED), 
+                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
+                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
                 ""+jobRelative,
                 ""+resultRelative, 
                 "" + relative);

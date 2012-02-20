@@ -8,6 +8,6 @@ public class ModeloCrearNodoDeRecurso extends NodeCreationModel{
     @Override
     public Entity createPhosphorusNode(String nombreNodoGrafico) {
         //System.out.println("Creo Nodo de Recurso con monbre:"+nombreNodoGrafico);
-        return Grid.Utilities.Util.createHyridResourceNode(nombreNodoGrafico,simulationBase.getSimulador());
+        return Grid.Utilities.Util.createHyridResourceNode(nombreNodoGrafico,simulationBase.getGridSimulatorModel());
     }
 }
