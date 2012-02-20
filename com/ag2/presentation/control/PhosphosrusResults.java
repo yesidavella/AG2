@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 
-public class ResultadosPhosphorus implements ViewResultsPhosphorus, Serializable{
+public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
 
     private transient Tab tab;
     private transient TableView tvResultadosClientePhosphorus = new TableView();
@@ -30,7 +30,7 @@ public class ResultadosPhosphorus implements ViewResultsPhosphorus, Serializable
     private transient VBox vBox = new VBox();
     private transient ProgressIndicator progressIndicator = new ProgressIndicator(0);
 
-    public ResultadosPhosphorus(Tab tab) {
+    public PhosphosrusResults(Tab tab) {
         this.tab = tab;
         progressIndicator.setMinSize(1, 1);
         progressIndicator.setVisible(false);

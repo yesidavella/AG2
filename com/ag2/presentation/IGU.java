@@ -4,7 +4,7 @@ import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
-import com.ag2.presentation.control.ResultadosPhosphorus;
+import com.ag2.presentation.control.PhosphosrusResults;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTable;
 import java.awt.Desktop;
@@ -48,13 +48,13 @@ public class IGU extends Scene implements Serializable {
     private GridPane gpNavegacionMapa;
     private ExecutePane executePane;
     private ToggleButtonAg2 btnMoverEscena;
-    private ToggleButtonAg2 btnCliente = new ToggleButtonAg2(ActionTypeEmun.CLIENTE);
-    private ToggleButtonAg2 btnNodoDeServicio = new ToggleButtonAg2(ActionTypeEmun.NODO_DE_SERVICIO);
-    private ToggleButtonAg2 btnEnrutadorOptico = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_OPTICO);
-    private ToggleButtonAg2 btnEnrutadorDeRafaga = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_RAFAGA);
-    private ToggleButtonAg2 btnEnrutadorHibrido = new ToggleButtonAg2(ActionTypeEmun.ENRUTADOR_HIBRIDO);
-    private ToggleButtonAg2 btnRecurso = new ToggleButtonAg2(ActionTypeEmun.RECURSO);
-    private ToggleButtonAg2 btnEnlace = new ToggleButtonAg2(ActionTypeEmun.ENLACE);
+    private ToggleButtonAg2 btnCliente = new ToggleButtonAg2(ActionTypeEmun.CLIENT);
+    private ToggleButtonAg2 btnNodoDeServicio = new ToggleButtonAg2(ActionTypeEmun.BROKER);
+    private ToggleButtonAg2 btnEnrutadorOptico = new ToggleButtonAg2(ActionTypeEmun.OCS_SWITCH);
+    private ToggleButtonAg2 btnEnrutadorDeRafaga = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
+    private ToggleButtonAg2 btnEnrutadorHibrido = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
+    private ToggleButtonAg2 btnRecurso = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
+    private ToggleButtonAg2 btnEnlace = new ToggleButtonAg2(ActionTypeEmun.LINK);
     private static ActionTypeEmun estadoTipoBoton = ActionTypeEmun.PUNTERO;
     private EntityPropertyTable tbDeviceProperties;
     private GridPane barraHerramientas;
@@ -63,7 +63,7 @@ public class IGU extends Scene implements Serializable {
     private boolean estaTeclaPrincipalOprimida = false;
     private ActionTypeEmun estadoAnteriorDeBtnAEvento;
     private Cursor cursorAnteriorAEvento;
-    private ResultadosPhosphorus resultadosPhosphorus;
+    private PhosphosrusResults resultadosPhosphorus;
     private static IGU iguAG2;
     private Main main;
     private StackPane stPnDeviceProperties = new StackPane();
@@ -278,10 +278,10 @@ public class IGU extends Scene implements Serializable {
 
     private void creacionDeBtnsDeUtilidades(GridPane grdPnBarraHerramientas) {
 
-        btnMoverEscena = new ToggleButtonAg2(ActionTypeEmun.MANO);
+        btnMoverEscena = new ToggleButtonAg2(ActionTypeEmun.HAND);
         btnSeleccion = new ToggleButtonAg2(ActionTypeEmun.PUNTERO);
-        btnDividirEnlaceCuadrado = new ToggleButtonAg2(ActionTypeEmun.ADICIONAR_VERTICE);
-        btnEliminar = new ToggleButtonAg2(ActionTypeEmun.ELIMINAR);
+        btnDividirEnlaceCuadrado = new ToggleButtonAg2(ActionTypeEmun.ADD_LINK_SEPARATOR);
+        btnEliminar = new ToggleButtonAg2(ActionTypeEmun.DELETED);
         btnMinusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_MINUS);
         btnPlusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_PLUS);
 
@@ -399,7 +399,7 @@ public class IGU extends Scene implements Serializable {
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
         tabResultadosHTML.setClosable(false);
 
-        resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
+        resultadosPhosphorus = new PhosphosrusResults(tabResultados);
         PhosphosrusHTMLResults resultadosPhosphorousHTML = new PhosphosrusHTMLResults(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
         executePane.setResultadosPhosphorus(resultadosPhosphorus);
@@ -668,14 +668,14 @@ public class IGU extends Scene implements Serializable {
                     cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
                     if (event.isAltDown()) {
-                        IGU.setEstadoTipoBoton(ActionTypeEmun.MANO);
-                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.MANO.getImagenCursor());
+                        IGU.setEstadoTipoBoton(ActionTypeEmun.HAND);
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
                     } else if (event.isShiftDown()) {
                         IGU.setEstadoTipoBoton(ActionTypeEmun.ZOOM_PLUS);
-                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_PLUS.getImagenCursor());
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_PLUS.getCursorImage());
                     } else if (event.isControlDown()) {
                         IGU.setEstadoTipoBoton(ActionTypeEmun.ZOOM_MINUS);
-                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_MINUS.getImagenCursor());
+                        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.ZOOM_MINUS.getCursorImage());
                     }
                 }
             }
@@ -697,8 +697,8 @@ public class IGU extends Scene implements Serializable {
     public void inicializarEstadoDeIGU() {
 
         btnCliente.setSelected(true);
-        IGU.setEstadoTipoBoton(ActionTypeEmun.CLIENTE);
-        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.CLIENTE.getImagenCursor());
+        IGU.setEstadoTipoBoton(ActionTypeEmun.CLIENT);
+        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
 
@@ -749,8 +749,8 @@ public class IGU extends Scene implements Serializable {
         estadoAnteriorDeBtnAEvento = IGU.getEstadoTipoBoton();
         cursorAnteriorAEvento = grGrupoDeDiseño.getGroup().getCursor();
 
-        IGU.setEstadoTipoBoton(ActionTypeEmun.MANO);
-        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.MANO.getImagenCursor());
+        IGU.setEstadoTipoBoton(ActionTypeEmun.HAND);
+        grGrupoDeDiseño.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
 
         prgBarExecProgress.setVisible(true);
         barraHerramientas.setDisable(true);
@@ -769,7 +769,7 @@ public class IGU extends Scene implements Serializable {
         return executePane;
     }
 
-    public ResultadosPhosphorus getResustadosPhosphorus() {
+    public PhosphosrusResults getResustadosPhosphorus() {
         return resultadosPhosphorus;
     }
 
