@@ -87,7 +87,7 @@ public class IGU extends Scene implements Serializable {
     public EntityPropertyTable getTbDeviceProperties() {
         return tbDeviceProperties;
     }
-    
+
     private transient Stage stgEscenario;
 
     public static IGU getInstance() {
@@ -107,7 +107,7 @@ public class IGU extends Scene implements Serializable {
         grRoot.getChildren().remove(this.grGrupoDeDiseño.getGroup());
         this.grGrupoDeDiseño = grupoDeDiseño;
         grRoot.getChildren().add(grGrupoDeDiseño.getGroup());
-        
+
         executePane.setGroup(grGrupoDeDiseño.getGroup());
         btnMoverEscena.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
         btnSeleccion.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
@@ -123,8 +123,8 @@ public class IGU extends Scene implements Serializable {
         btnRecurso.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
         btnEnlace.setGraphDesignGroup(grGrupoDeDiseño.getGroup());
         executePane.setGroup(grGrupoDeDiseño.getGroup());
-        grGrupoDeDiseño.setScrollPane(scPnWorld);       
-      
+        grGrupoDeDiseño.setScrollPane(scPnWorld);
+
         crearPanelDeNavegacionMapa(vbNavegation);
         adicionarEventoDeTecladoAEscena(this);
     }
@@ -220,17 +220,17 @@ public class IGU extends Scene implements Serializable {
                 int result = JOptionPane.showConfirmDialog(
                         null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
-                if (result == JOptionPane.NO_OPTION) 
+                if (result == JOptionPane.NO_OPTION)
                 {
                    main.loadFileBaseSimulation();
-                } 
+                }
                 else if (result == JOptionPane.YES_OPTION)
                 {
                     main.save(false);
                     main.loadFileBaseSimulation();
                 }
 
-               
+
 
             }
         });
@@ -248,7 +248,7 @@ public class IGU extends Scene implements Serializable {
                     main.save(true);
                 }
 
-               
+
 
             }
         });
@@ -386,19 +386,19 @@ public class IGU extends Scene implements Serializable {
 
     private void crearLienzoDeTabs() {
 
-        
 
-       
+
+
 
         tabSimulacion.setClosable(false);
         tabSimulacion.setText("Simulación");
         tabSimulacion.setClosable(false);
         tabResultados.setText("Resultados Phosphorus");
         tabResultados.setClosable(false);
-        
+
         tabResultadosHTML.setText("Resultado Phosphorus HTML");
         tabResultadosHTML.setClosable(false);
-        
+
         resultadosPhosphorus = new ResultadosPhosphorus(tabResultados);
         ResultadosPhosphorousHTML resultadosPhosphorousHTML = new ResultadosPhosphorousHTML(tabResultadosHTML);
         executePane.setResultadosPhosphorousHTML(resultadosPhosphorousHTML);
@@ -412,7 +412,7 @@ public class IGU extends Scene implements Serializable {
 
         tpBox.getTabs().addAll(tabSimulacion);
 
-       
+
     }
 
     private HBox createBottomDesign() {
@@ -433,45 +433,45 @@ public class IGU extends Scene implements Serializable {
         SplitPane splPnPropertiesTbs = new SplitPane();
         splPnPropertiesTbs.getItems().addAll(stPnDeviceProperties, stPnSimulationProperties);
         splPnPropertiesTbs.setDividerPositions(0.525f);
-        
+
         VBox vbxBottomRight = new VBox(10);
         VBox vbxExecuteIndicatorPane = createExecuteIndicatorPane();
         crearPanelDeNavegacionMapa(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
-        
+
         hboxAllBottom.getChildren().addAll(vbLogos, splPnPropertiesTbs, vbxBottomRight);
         return hboxAllBottom;
     }
 
     private VBox createProjectsLogos() {
-       
+
         ImageView ivAG2 = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/logoAG2.png")));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
         ivAG2.setFitWidth(40*proportionXYAG2);
-        
+
         ImageView ivPhosphorus = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/phosphorus.jpg")));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
         ivPhosphorus.setFitHeight(45);
         ivPhosphorus.setFitWidth(45*proportionXYphosphorus);
-        
+
         ImageView ivDistritalUniv = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/escudo_udistrital.jpg")));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
         ivDistritalUniv.setFitHeight(55);
         ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
-        
+
         Hyperlink linkAG2 = new Hyperlink();
         Hyperlink linkPhosphorus = new Hyperlink();
         Hyperlink linkDistritalUniv = new Hyperlink();
-        
+
         linkAG2.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación \"Internet Inteligente\""));
         linkPhosphorus.setTooltip(new Tooltip("Visite la página web del proyecto \"Fósforo\""));
         linkDistritalUniv.setTooltip(new Tooltip("Visite la página web de la \"Universidad Distrital FJC\""));
-        
+
         linkAG2.setGraphic(ivAG2);
         linkPhosphorus.setGraphic(ivPhosphorus);
         linkDistritalUniv.setGraphic(ivDistritalUniv);
-        
+
         setOnLunchBrowser(linkAG2,"http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
         setOnLunchBrowser(linkPhosphorus,"http://www.ist-phosphorus.eu/");
         setOnLunchBrowser(linkDistritalUniv,"www.udistrital.edu.co");
@@ -488,7 +488,7 @@ public class IGU extends Scene implements Serializable {
         link.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                try { 
+                try {
                     Desktop.getDesktop().browse(new URI(URLToGo));
                 } catch (URISyntaxException ex) {
                     Logger.getLogger(IGU.class.getName()).log(Level.SEVERE, null, ex);
@@ -500,7 +500,7 @@ public class IGU extends Scene implements Serializable {
 
     private TableView<String> createTbSimulationProperties() {
 
-     
+
 
         TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
         tbColPropNombre.setMinWidth(145);
@@ -516,7 +516,7 @@ public class IGU extends Scene implements Serializable {
         tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
         tbvSimulationProperties.getColumns().addAll(tbColTituloTbSim);
 
-      
+
 
         tbvSimulationProperties.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
         tbvSimulationProperties.setPrefWidth(345);
@@ -532,14 +532,14 @@ public class IGU extends Scene implements Serializable {
         gpNavegacionMapa.setVgap(5);
         gpNavegacionMapa.setHgap(4);
         gpNavegacionMapa.getStyleClass().add("barraDeHerramientas");
-        
+
         Label lbTitle = new Label("LISTAS DE NAVEGACIÓN");
         lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 14));
 
-        final ChoiceBox cbClients = new ChoiceBox(grGrupoDeDiseño.getListaClientes());
-        final ChoiceBox cbResources = new ChoiceBox(grGrupoDeDiseño.getListaRecursos());
-        final ChoiceBox cbSwicthes = new ChoiceBox(grGrupoDeDiseño.getListaSwitches());
-        final ChoiceBox cbServiceNodes = new ChoiceBox(grGrupoDeDiseño.getListaNodoServicio());
+        final ChoiceBox cbClients = new ChoiceBox(grGrupoDeDiseño.getClientsObservableList());
+        final ChoiceBox cbResources = new ChoiceBox(grGrupoDeDiseño.getResourcesObservableList());
+        final ChoiceBox cbSwicthes = new ChoiceBox(grGrupoDeDiseño.getSwitchesObservableList());
+        final ChoiceBox cbServiceNodes = new ChoiceBox(grGrupoDeDiseño.getBrokersObservableList());
 
         cbClients.setMinWidth(100);
         cbResources.setMinWidth(100);
@@ -555,7 +555,7 @@ public class IGU extends Scene implements Serializable {
         Label lbClientes = new Label("Clientes");
         Label lbRecursos = new Label("Recursos");
         Label lbNodosServicio = new Label("Agendadores");
-        
+
         lbRouters.setMinWidth(80);
         lbClientes.setMinWidth(80);
         lbRecursos.setMinWidth(80);
@@ -564,8 +564,8 @@ public class IGU extends Scene implements Serializable {
         GridPane.setConstraints(lbTitle, 0, 1);
         GridPane.setColumnSpan(lbTitle, 3);
         GridPane.setHalignment(lbTitle, HPos.CENTER);
-        gpNavegacionMapa.getChildren().add(lbTitle);        
-                
+        gpNavegacionMapa.getChildren().add(lbTitle);
+
         GridPane.setConstraints(lbClientes, 0, 2);
         gpNavegacionMapa.getChildren().add(lbClientes);
         GridPane.setConstraints(cbClients, 1, 2);
@@ -615,7 +615,7 @@ public class IGU extends Scene implements Serializable {
                 if (selectedNode != null) {
                     //selectedNode.select(true);
 
-                    Scale sclEscalaDeZoom = grGrupoDeDiseño.getSclEscalaDeZoom();
+                    Scale sclEscalaDeZoom = grGrupoDeDiseño.getScZoom();
                     sclEscalaDeZoom.setX(1.5);
                     sclEscalaDeZoom.setY(-1.5);
 
@@ -641,13 +641,13 @@ public class IGU extends Scene implements Serializable {
 
                     scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
                     scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
-                    
-                    if(grGrupoDeDiseño.getObjetoGraficoSelecionado()!=null)
-                    {    
-                        grGrupoDeDiseño.getObjetoGraficoSelecionado().select(false);
+
+                    if(grGrupoDeDiseño.getSelectable()!=null)
+                    {
+                        grGrupoDeDiseño.getSelectable().select(false);
                     }
-                    
-                    grGrupoDeDiseño.setObjetoGraficoSelecionado(selectedNode);
+
+                    grGrupoDeDiseño.setSelectable(selectedNode);
                     selectedNode.select(true);
                 }
             }
@@ -741,8 +741,8 @@ public class IGU extends Scene implements Serializable {
         //prgBarBarraProgresoEjec.setProgress(0);
         prgBarExecProgress.setVisible(false);
         grGrupoDeDiseño.getGroup().setOpacity(1);
-     
-        
+
+
     }
 
     public void deshabilitar() {
@@ -760,9 +760,9 @@ public class IGU extends Scene implements Serializable {
         if(!tpBox.getTabs().contains(tabResultadosHTML)){
         tpBox.getTabs().addAll(  tabResultadosHTML, tabResultados);
         }
-        
+
         tpBox.getSelectionModel().select(tabResultados);
-        
+
     }
 
     public ExecutePane getExecutePane() {
@@ -777,5 +777,5 @@ public class IGU extends Scene implements Serializable {
         return tbvSimulationProperties;
     }
 
-    
+
 }

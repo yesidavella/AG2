@@ -267,7 +267,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         group.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                
+
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ENLACE) {
@@ -288,27 +288,27 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                     graphNode.setDeleted(true);
                     graphDesignGroup.remove(graphNode);
-                    graphDesignGroup.eliminarNodeListaNavegacion(graphNode);
+                    graphDesignGroup.deleteNodeFromGoList(graphNode);
                     nodeAdminAbstractController.removeNode(graphNode);
 
                 }
 
                 if (IGU.getEstadoTipoBoton() == ActionTypeEmun.PUNTERO) {
 
-                    Selectable objSeleccionado = graphDesignGroup.getObjetoGraficoSelecionado();
+                    Selectable objSeleccionado = graphDesignGroup.getSelectable();
 
                     if (!dragging) {
                         if (objSeleccionado == graphNode) {
                             objSeleccionado.select(false);
-                            graphDesignGroup.setObjetoGraficoSelecionado(null);
+                            graphDesignGroup.setSelectable(null);
                         } else {
                             if (objSeleccionado == null) {
                                 graphNode.select(true);
-                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
+                                graphDesignGroup.setSelectable(graphNode);
                             } else {
                                 objSeleccionado.select(false);
                                 graphNode.select(true);
-                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
+                                graphDesignGroup.setSelectable(graphNode);
                             }
                         }
 
@@ -316,11 +316,11 @@ public abstract class GraphNode implements Selectable, Serializable {
                         if (graphNode != objSeleccionado) {
                             if (objSeleccionado == null) {
                                 graphNode.select(true);
-                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
+                                graphDesignGroup.setSelectable(graphNode);
                             } else {
                                 objSeleccionado.select(false);
                                 graphNode.select(true);
-                                graphDesignGroup.setObjetoGraficoSelecionado(graphNode);
+                                graphDesignGroup.setSelectable(graphNode);
                             }
                         }
                     }
@@ -334,7 +334,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void establishEventOnMouseExit() {
         group.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {             
+            public void handle(MouseEvent mouseEvent) {
                 if (!mouseEvent.isPrimaryButtonDown()) {
                     GraphNode.linkBegin = false;
                     wildcardNodeA = null;
@@ -385,7 +385,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         try {
             inputStream.defaultReadObject();
             System.out.println("read :" + name);
-            if (graphDesignGroup.isSerializableComplete()) 
+            if (graphDesignGroup.isSerializableComplete())
             {
                 initTransientObjects();
                 getGroup().setLayoutX(getLayoutX());

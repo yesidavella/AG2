@@ -2,9 +2,9 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
-import com.ag2.presentation.IGU;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GraphNodesView;
+import com.ag2.presentation.IGU;
 import com.ag2.presentation.design.property.EntityProperty;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -27,7 +27,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.*;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -41,197 +44,196 @@ import org.opengis.feature.simple.SimpleFeature;
 
 public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable, GraphNodesView {
 
-    private transient ObservableList listaClientes;
-    private transient ObservableList listaRecursos;
-    private transient ObservableList listaSwitches;
-    private transient ObservableList listaNodoServicio;
-    private transient ScrollPane scPnPanelWorld;
-    private transient Scale sclEscalaDeZoom;
+    private transient ObservableList clientsObservableList;
+    private transient ObservableList resourcesObservableList;
+    private transient ObservableList switchesObservableList;
+    private transient ObservableList brokersObservableList;
+    private transient ScrollPane scPnWorld;
+    private transient Scale scZoom;
     private transient Group group;
-    private Selectable objetoGraficoSelecionado;
-    private ArrayList<Serializable> objectsSerializable = new ArrayList<Serializable>();
+    private Selectable selectable;
+    private ArrayList<Serializable> serializableObjects = new ArrayList<Serializable>();
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
-    private ArrayList<NodeAdminAbstractController> ctrladoresRegistradosAdminNodo;
-    private ArrayList<LinkAdminAbstractController> ctrladoresRegistradosAdminEnlace;
-    private double dragMouX = 0;
-    private double dragMouY = 0;
+    private ArrayList<NodeAdminAbstractController> nodeAdminAbstractControllers;
+    private ArrayList<LinkAdminAbstractController> linkAdminAbstractControllers;
+    private double dragMouseX = 0;
+    private double dragMouseY = 0;
     private boolean serializableComplete = false;
 
     public GraphDesignGroup() {
         initTransientObjects();
-        ctrladoresRegistradosAdminNodo = new ArrayList<NodeAdminAbstractController>();
-        ctrladoresRegistradosAdminEnlace = new ArrayList<LinkAdminAbstractController>();
+        nodeAdminAbstractControllers = new ArrayList<NodeAdminAbstractController>();
+        linkAdminAbstractControllers = new ArrayList<LinkAdminAbstractController>();
 
     }
 
     public boolean isSerializableComplete() {
         return serializableComplete;
     }
-    
+
 
     public void initTransientObjects() {
         group = new Group();
         group.setOnMousePressed(this);
         group.setOnMouseDragged(this);
         group.setOnMouseReleased(this);
-        sclEscalaDeZoom = new Scale(1.44, -1.44);
-        group.getTransforms().add(sclEscalaDeZoom);
-        listaClientes = FXCollections.observableArrayList();
-     
-        listaRecursos = FXCollections.observableArrayList();
-        listaSwitches = FXCollections.observableArrayList();
-        listaNodoServicio = FXCollections.observableArrayList();
+        scZoom = new Scale(1.44, -1.44);
+        group.getTransforms().add(scZoom);
+        clientsObservableList = FXCollections.observableArrayList();
+
+        resourcesObservableList = FXCollections.observableArrayList();
+        switchesObservableList = FXCollections.observableArrayList();
+        brokersObservableList = FXCollections.observableArrayList();
         loadGeoMap();
 
     }
 
-    public Selectable getObjetoGraficoSelecionado() {
-        return objetoGraficoSelecionado;
+    public Selectable getSelectable() {
+        return selectable;
     }
 
-    public void setObjetoGraficoSelecionado(Selectable objetoGraficoSelecionado) {
-        this.objetoGraficoSelecionado = objetoGraficoSelecionado;
-        
+    public void setSelectable(Selectable selectable) {
+        this.selectable = selectable;
+
     }
 
-    public Scale getSclEscalaDeZoom() {
-        return sclEscalaDeZoom;
+    public Scale getScZoom() {
+        return scZoom;
     }
 
-    public void handle(MouseEvent mouEvent) {
+    @Override
+    public void handle(MouseEvent mouseEvent) {
 
-        EventType tipoDeEvento = mouEvent.getEventType();
-        ActionTypeEmun botonSeleccionado = IGU.getEstadoTipoBoton();
+        EventType eventType = mouseEvent.getEventType();
+        ActionTypeEmun actionTypeEmun = IGU.getEstadoTipoBoton();
 
-        if (tipoDeEvento == MouseEvent.MOUSE_PRESSED) {
+        if (eventType == MouseEvent.MOUSE_PRESSED) {
 
-            if (botonSeleccionado == ActionTypeEmun.MANO) {
+            if (actionTypeEmun == ActionTypeEmun.MANO) {
                 group.setCursor(ActionTypeEmun.MANO.getImagenSobreObjetoCursor());
-                dragMouX = mouEvent.getX();
-                dragMouY = mouEvent.getY();
+                dragMouseX = mouseEvent.getX();
+                dragMouseY = mouseEvent.getY();
 
-            } else if (botonSeleccionado == ActionTypeEmun.ZOOM_MINUS) {
-                zoom(1 / PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
-            } else if (botonSeleccionado == ActionTypeEmun.ZOOM_PLUS) {
-                zoom(PERCENT_ZOOM, mouEvent.getX() * sclEscalaDeZoom.getX(), mouEvent.getY() * sclEscalaDeZoom.getY());
+            } else if (actionTypeEmun == ActionTypeEmun.ZOOM_MINUS) {
+                zoom(1 / PERCENT_ZOOM, mouseEvent.getX() * scZoom.getX(), mouseEvent.getY() * scZoom.getY());
+            } else if (actionTypeEmun == ActionTypeEmun.ZOOM_PLUS) {
+                zoom(PERCENT_ZOOM, mouseEvent.getX() * scZoom.getX(), mouseEvent.getY() * scZoom.getY());
             }
 
-        } else if (tipoDeEvento == MouseEvent.MOUSE_DRAGGED) {
+        } else if (eventType == MouseEvent.MOUSE_DRAGGED) {
 
-            if (botonSeleccionado == ActionTypeEmun.MANO) {
+            if (actionTypeEmun == ActionTypeEmun.MANO) {
 
                 double currentWidth = group.getBoundsInParent().getWidth();
-                double distanceMovedX = dragMouX - mouEvent.getX();
+                double distanceMovedX = dragMouseX - mouseEvent.getX();
                 double percentToMoveX = distanceMovedX / currentWidth;
 
-                scPnPanelWorld.setHvalue(scPnPanelWorld.getHvalue() + percentToMoveX);
+                scPnWorld.setHvalue(scPnWorld.getHvalue() + percentToMoveX);
 
                 double currentHeight = group.getBoundsInParent().getHeight();
-                double distanceMovedY = dragMouY - mouEvent.getY();
+                double distanceMovedY = dragMouseY - mouseEvent.getY();
                 double percentToMoveY = distanceMovedY / currentHeight;
 
-                scPnPanelWorld.setVvalue(scPnPanelWorld.getVvalue() - percentToMoveY);
+                scPnWorld.setVvalue(scPnWorld.getVvalue() - percentToMoveY);
             }
 
-        } else if (tipoDeEvento == MouseEvent.MOUSE_RELEASED) {
+        } else if (eventType == MouseEvent.MOUSE_RELEASED) {
 
-            GraphNode nuevoNodo = null;
-            NodeAdminAbstractController controladorAdminNodo = ctrladoresRegistradosAdminNodo.get(0);
-            LinkAdminAbstractController controladorAdminEnlace = ctrladoresRegistradosAdminEnlace.get(0);
-            double posClcikX = mouEvent.getX();
-            double posClcikY = mouEvent.getY();
+            GraphNode graphNode = null;
+            NodeAdminAbstractController nodeAdminAbstractController = nodeAdminAbstractControllers.get(0);
+            LinkAdminAbstractController linkAdminAbstractController = linkAdminAbstractControllers.get(0);
 
-            if (botonSeleccionado == ActionTypeEmun.MANO) {
+            if (actionTypeEmun == ActionTypeEmun.MANO) {
                 group.setCursor(ActionTypeEmun.MANO.getImagenCursor());
 
-            } else if (botonSeleccionado == ActionTypeEmun.CLIENTE) {
+            } else if (actionTypeEmun == ActionTypeEmun.CLIENTE) {
 
-                nuevoNodo = new ClientGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaClientes.add(nuevoNodo);
+                graphNode = new ClientGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                clientsObservableList.add(graphNode);
 
-            } else if (botonSeleccionado == ActionTypeEmun.NODO_DE_SERVICIO) {
-                nuevoNodo = new BrokerGrahpNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaNodoServicio.add(nuevoNodo);
+            } else if (actionTypeEmun == ActionTypeEmun.NODO_DE_SERVICIO) {
+                graphNode = new BrokerGrahpNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                brokersObservableList.add(graphNode);
 
-            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_OPTICO) {
-                nuevoNodo = new OCS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaSwitches.add(nuevoNodo);
+            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_OPTICO) {
+                graphNode = new OCS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                switchesObservableList.add(graphNode);
 
-            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_RAFAGA) {
-                nuevoNodo = new OBS_SwicthGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaSwitches.add(nuevoNodo);
+            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_RAFAGA) {
+                graphNode = new OBS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                switchesObservableList.add(graphNode);
 
-            } else if (botonSeleccionado == ActionTypeEmun.ENRUTADOR_HIBRIDO) {
-                nuevoNodo = new HybridSwitchGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaSwitches.add(nuevoNodo);
+            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_HIBRIDO) {
+                graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                switchesObservableList.add(graphNode);
 
-            } else if (botonSeleccionado == ActionTypeEmun.RECURSO) {
-                nuevoNodo = new ResourceGraphNode(this, controladorAdminNodo, controladorAdminEnlace);
-                listaRecursos.add(nuevoNodo);
+            } else if (actionTypeEmun == ActionTypeEmun.RECURSO) {
+                graphNode = new ResourceGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                resourcesObservableList.add(graphNode);
             }
 
-            if (nuevoNodo != null) {
-                if (objetoGraficoSelecionado != null) {
-                    objetoGraficoSelecionado.select(false);
+            if (graphNode != null) {
+                if (selectable != null) {
+                    selectable.select(false);
                 }
 
-                dibujarNuevoNodoEnElMapa(nuevoNodo, mouEvent);
-                objetoGraficoSelecionado = nuevoNodo;
+                addNodeOnMap(graphNode, mouseEvent);
+                selectable = graphNode;
 
-                for (NodeAdminAbstractController controladorRegistrado : ctrladoresRegistradosAdminNodo) {
-                    controladorRegistrado.createNode(nuevoNodo);
+                for (NodeAdminAbstractController controladorRegistrado : nodeAdminAbstractControllers) {
+                    controladorRegistrado.createNode(graphNode);
                 }
-                nuevoNodo.select(true);
+                graphNode.select(true);
             }
         }
     }
 
-    public void eliminarNodeListaNavegacion(GraphNode nodoGrafico) {
-        if (nodoGrafico instanceof ClientGraphNode) {
-            listaClientes.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof ResourceGraphNode) {
-            listaRecursos.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof SwitchGraphNode) {
-            listaSwitches.remove(nodoGrafico);
-        } else if (nodoGrafico instanceof BrokerGrahpNode) {
-            listaNodoServicio.remove(nodoGrafico);
+    public void deleteNodeFromGoList(GraphNode graphNode) {
+        if (graphNode instanceof ClientGraphNode) {
+            clientsObservableList.remove(graphNode);
+        } else if (graphNode instanceof ResourceGraphNode) {
+            resourcesObservableList.remove(graphNode);
+        } else if (graphNode instanceof SwitchGraphNode) {
+            switchesObservableList.remove(graphNode);
+        } else if (graphNode instanceof BrokerGrahpNode) {
+            brokersObservableList.remove(graphNode);
         }
     }
 
     public void add(Node node) {
         group.getChildren().add(node);
         if (node instanceof Serializable) {
-            objectsSerializable.add((Serializable) node);
+            serializableObjects.add((Serializable) node);
         }
     }
 
-    public void add(GraphNode nodoGrafico) {
-        group.getChildren().add(nodoGrafico.getGroup());
-        if (nodoGrafico instanceof Serializable) {
-            objectsSerializable.add((Serializable) nodoGrafico);
+    public void add(GraphNode graphNode) {
+        group.getChildren().add(graphNode.getGroup());
+        if (graphNode instanceof Serializable) {
+            serializableObjects.add((Serializable) graphNode);
         }
     }
 
-    public void add(GraphArcSeparatorPoint verticeEnlaceGrafico) {
-        group.getChildren().add(verticeEnlaceGrafico.getCircle());
-        if (verticeEnlaceGrafico instanceof Serializable) {
-            objectsSerializable.add((Serializable) verticeEnlaceGrafico);
+    public void add(GraphArcSeparatorPoint graphArcSeparatorPoint) {
+        group.getChildren().add(graphArcSeparatorPoint.getCircle());
+        if (graphArcSeparatorPoint instanceof Serializable) {
+            serializableObjects.add((Serializable) graphArcSeparatorPoint);
         }
     }
 
-    public void add(GraphArc arcoGrafico) {
-        group.getChildren().add(arcoGrafico.getQuadCurve());
+    public void add(GraphArc graphArc) {
+        group.getChildren().add(graphArc.getQuadCurve());
 
-        if (arcoGrafico instanceof Serializable) {
-            objectsSerializable.add((Serializable) arcoGrafico);
+        if (graphArc instanceof Serializable) {
+            serializableObjects.add((Serializable) graphArc);
         }
     }
 
-    public void remove(GraphArcSeparatorPoint verticeEnlaceGrafico) {
-        group.getChildren().add(verticeEnlaceGrafico.getCircle());
-        if (verticeEnlaceGrafico instanceof Serializable) {
-            objectsSerializable.add((Serializable) verticeEnlaceGrafico);
+    public void remove(GraphArcSeparatorPoint graphArcSeparatorPoint) {
+        group.getChildren().add(graphArcSeparatorPoint.getCircle());
+        if (graphArcSeparatorPoint instanceof Serializable) {
+            serializableObjects.add((Serializable) graphArcSeparatorPoint);
         }
 
     }
@@ -239,39 +241,38 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public void remove(Node node) {
         group.getChildren().remove(node);
         if (node instanceof Serializable) {
-            objectsSerializable.remove((Serializable) node);
+            serializableObjects.remove((Serializable) node);
         }
     }
 
-    public void remove(GraphNode nodoGrafico) {
+    public void remove(GraphNode graphNode) {
 
-
-        group.getChildren().remove(nodoGrafico.getGroup());
-        if (nodoGrafico instanceof Serializable) {
-            objectsSerializable.remove((Serializable) nodoGrafico);
+        group.getChildren().remove(graphNode.getGroup());
+        if (graphNode instanceof Serializable) {
+            serializableObjects.remove((Serializable) graphNode);
         }
     }
 
-    public void remove(GraphArc arcoGrafico) {
-        group.getChildren().remove(arcoGrafico.getQuadCurve());
-        if (arcoGrafico instanceof Serializable) {
-            objectsSerializable.remove((Serializable) arcoGrafico);
+    public void remove(GraphArc graphArc) {
+        group.getChildren().remove(graphArc.getQuadCurve());
+        if (graphArc instanceof Serializable) {
+            serializableObjects.remove((Serializable) graphArc);
         }
     }
 
-    private void dibujarNuevoNodoEnElMapa(GraphNode nuevoNodo, MouseEvent me) {
+    private void addNodeOnMap(GraphNode graphNode, MouseEvent mouseEvent) {
 
         double posicionX = 0;
         double posicionY = 0;
 
-        if (nuevoNodo != null) {
+        if (graphNode != null) {
 
-            posicionX = me.getX() - nuevoNodo.getWidth() / 2;
-            posicionY = me.getY() - nuevoNodo.getHeight() / 2;
+            posicionX = mouseEvent.getX() - graphNode.getWidth() / 2;
+            posicionY = mouseEvent.getY() - graphNode.getHeight() / 2;
 
-            nuevoNodo.setLayoutX(posicionX);
-            nuevoNodo.setLayoutY(posicionY);
-            add(nuevoNodo);
+            graphNode.setLayoutX(posicionX);
+            graphNode.setLayoutY(posicionY);
+            add(graphNode);
 
         }
     }
@@ -280,24 +281,24 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         return group;
     }
 
-    public ObservableList getListaClientes() {
-        return listaClientes;
+    public ObservableList getClientsObservableList() {
+        return clientsObservableList;
     }
 
-    public ObservableList getListaNodoServicio() {
-        return listaNodoServicio;
+    public ObservableList getBrokersObservableList() {
+        return brokersObservableList;
     }
 
-    public ObservableList getListaRecursos() {
-        return listaRecursos;
+    public ObservableList getResourcesObservableList() {
+        return resourcesObservableList;
     }
 
-    public ObservableList getListaSwitches() {
-        return listaSwitches;
+    public ObservableList getSwitchesObservableList() {
+        return switchesObservableList;
     }
 
-    public void addControladorCrearNodo(NodeAdminAbstractController ctrlCrearNodo) {
-        ctrladoresRegistradosAdminNodo.add(ctrlCrearNodo);
+    public void addNodeAdminAbstractControllers(NodeAdminAbstractController nodeAdminAbstractController) {
+        nodeAdminAbstractControllers.add(nodeAdminAbstractController);
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) {
@@ -317,57 +318,55 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             initTransientObjects();
 
 
-            for (Serializable serializable : objectsSerializable) {
+            for (Serializable serializable : serializableObjects) {
                 if (serializable instanceof GraphArc) {
-                    GraphArc arcoGrafico = (GraphArc) serializable;
+                    GraphArc graphArc = (GraphArc) serializable;
 
-                    arcoGrafico.initTransientObjects();
+                    graphArc.initTransientObjects();
 
-                    arcoGrafico.getQuadCurve().setStartX(arcoGrafico.getStartX());
-                    arcoGrafico.getQuadCurve().setStartY(arcoGrafico.getStartY());
+                    graphArc.getQuadCurve().setStartX(graphArc.getStartX());
+                    graphArc.getQuadCurve().setStartY(graphArc.getStartY());
 
-                    arcoGrafico.getQuadCurve().setEndX(arcoGrafico.getEndX());
-                    arcoGrafico.getQuadCurve().setEndY(arcoGrafico.getEndY());
+                    graphArc.getQuadCurve().setEndX(graphArc.getEndX());
+                    graphArc.getQuadCurve().setEndY(graphArc.getEndY());
 
-                    arcoGrafico.getQuadCurve().setControlX(arcoGrafico.getControlX());
-                    arcoGrafico.getQuadCurve().setControlY(arcoGrafico.getControlY());
-                    group.getChildren().add(arcoGrafico.getQuadCurve());
+                    graphArc.getQuadCurve().setControlX(graphArc.getControlX());
+                    graphArc.getQuadCurve().setControlY(graphArc.getControlY());
+                    group.getChildren().add(graphArc.getQuadCurve());
                 }
             }
-            for (Serializable serializable : objectsSerializable) {
+            for (Serializable serializable : serializableObjects) {
                 if (serializable instanceof GraphArcSeparatorPoint) {
-                    GraphArcSeparatorPoint verticeEnlaceGrafico = (GraphArcSeparatorPoint) serializable;
+                    GraphArcSeparatorPoint graphArcSeparatorPoint = (GraphArcSeparatorPoint) serializable;
 
-                    verticeEnlaceGrafico.initTransientObjects();
-                    verticeEnlaceGrafico.getCircle().setCenterX(verticeEnlaceGrafico.getCenterX());
-                    verticeEnlaceGrafico.getCircle().setCenterY(verticeEnlaceGrafico.getCenterY());
-                 
-                    group.getChildren().add(verticeEnlaceGrafico.getCircle());
+                    graphArcSeparatorPoint.initTransientObjects();
+                    graphArcSeparatorPoint.getCircle().setCenterX(graphArcSeparatorPoint.getCenterX());
+                    graphArcSeparatorPoint.getCircle().setCenterY(graphArcSeparatorPoint.getCenterY());
+
+                    group.getChildren().add(graphArcSeparatorPoint.getCircle());
                 }
             }
 
-            for (Serializable serializable : objectsSerializable) {
+            for (Serializable serializable : serializableObjects) {
                 if (serializable instanceof GraphNode) {
-                    GraphNode nodoGrafico = (GraphNode) serializable;
-                    //  group.getChildren().add(nodoGrafico.getGroup());  
-                    if (nodoGrafico.getName() != null) {
+                    GraphNode graphNode = (GraphNode) serializable;
 
-
-                        nodoGrafico.initTransientObjects();
-                        nodoGrafico.getGroup().setLayoutX(nodoGrafico.getLayoutX());
-                        nodoGrafico.getGroup().setLayoutY(nodoGrafico.getLayoutY());
-                        nodoGrafico.select(false);
-                        group.getChildren().add(nodoGrafico.getGroup());
+                    if (graphNode.getName() != null) {
+                        graphNode.initTransientObjects();
+                        graphNode.getGroup().setLayoutX(graphNode.getLayoutX());
+                        graphNode.getGroup().setLayoutY(graphNode.getLayoutY());
+                        graphNode.select(false);
+                        group.getChildren().add(graphNode.getGroup());
                     }
 
-                    if (nodoGrafico instanceof ClientGraphNode) {
-                        listaClientes.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof ResourceGraphNode) {
-                        listaRecursos.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof SwitchGraphNode) {
-                        listaSwitches.add(nodoGrafico);
-                    } else if (nodoGrafico instanceof BrokerGrahpNode) {
-                        listaNodoServicio.add(nodoGrafico);
+                    if (graphNode instanceof ClientGraphNode) {
+                        clientsObservableList.add(graphNode);
+                    } else if (graphNode instanceof ResourceGraphNode) {
+                        resourcesObservableList.add(graphNode);
+                    } else if (graphNode instanceof SwitchGraphNode) {
+                        switchesObservableList.add(graphNode);
+                    } else if (graphNode instanceof BrokerGrahpNode) {
+                        brokersObservableList.add(graphNode);
                     }
                 }
             }
@@ -378,11 +377,11 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         serializableComplete = true;
     }
 
-    public void loadProperties(ArrayList<EntityProperty> propiedadeNodos) {
+    public void loadProperties(ArrayList<EntityProperty> entityPropertys) {
     }
 
-    public void addControladorCrearEnlace(LinkAdminAbstractController ctrlCrearYAdminEnlace) {
-        ctrladoresRegistradosAdminEnlace.add(ctrlCrearYAdminEnlace);
+    public void addLinkAdminAbstractControllers(LinkAdminAbstractController linkAdminAbstractController) {
+        linkAdminAbstractControllers.add(linkAdminAbstractController);
     }
 
     private void loadGeoMap() {
@@ -465,44 +464,44 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         }
     }
 
-    public void zoom(final double percentZoom, double puntoPivoteX, double puntoPivoteY) {
+    public void zoom(final double percentZoom, double pivotPointX, double pivotPointY) {
 
-        sclEscalaDeZoom.setPivotX(puntoPivoteX);
-        sclEscalaDeZoom.setPivotY(puntoPivoteY);
-        sclEscalaDeZoom.setX(sclEscalaDeZoom.getX() * percentZoom);
-        sclEscalaDeZoom.setY(sclEscalaDeZoom.getY() * percentZoom);
+        scZoom.setPivotX(pivotPointX);
+        scZoom.setPivotY(pivotPointY);
+        scZoom.setX(scZoom.getX() * percentZoom);
+        scZoom.setY(scZoom.getY() * percentZoom);
 
-        double anchoActual = group.getBoundsInParent().getWidth();
-        double altoActual = group.getBoundsInParent().getHeight();
+        double currentWidth = group.getBoundsInParent().getWidth();
+        double currentHeight = group.getBoundsInParent().getHeight();
 
-        double corrimientoX = anchoActual / 2;
-        double corrimientoY = altoActual / 2;
+        double corrimientoX = currentWidth / 2;
+        double corrimientoY = currentHeight / 2;
 
-        double coorAbsClickX = corrimientoX + puntoPivoteX * percentZoom;
-        double coorAbsClickY = corrimientoY + puntoPivoteY * percentZoom;
+        double coorAbsClickX = corrimientoX + pivotPointX * percentZoom;
+        double coorAbsClickY = corrimientoY + pivotPointY * percentZoom;
 
-        double porcentajeClickX = coorAbsClickX / anchoActual;
-        double porcentajeClickY = coorAbsClickY / altoActual;
+        double percentageClickX = coorAbsClickX / currentWidth;
+        double percentageClickY = coorAbsClickY / currentHeight;
 
-        double desfaceMaxEnX = scPnPanelWorld.getViewportBounds().getWidth() / 2;
-        double funcDeDesfaceEnX = (-2 * desfaceMaxEnX * (porcentajeClickX)) + desfaceMaxEnX;
+        double desfaceMaxX = scPnWorld.getViewportBounds().getWidth() / 2;
+        double functionDesfaceX = (-2 * desfaceMaxX * (percentageClickX)) + desfaceMaxX;
 
-        double desfaceMaxEnY = scPnPanelWorld.getViewportBounds().getHeight() / 2;
-        double funcDeDesfaceEnY = (-2 * (desfaceMaxEnY) * (porcentajeClickY)) + desfaceMaxEnY;
+        double desfaceMaxY = scPnWorld.getViewportBounds().getHeight() / 2;
+        double functionDesfaceY = (-2 * (desfaceMaxY) * (percentageClickY)) + desfaceMaxY;
         /*
          * Convercion de pixeles a porcentaje del resultado de la funcion de
          * desface.
          */
-        double porcCorreccionX = funcDeDesfaceEnX / anchoActual;
-        double porcCorreccionY = funcDeDesfaceEnY / altoActual;
+        double percentageCorrectionX = functionDesfaceX / currentWidth;
+        double percentageCorrectionY = functionDesfaceY / currentHeight;
 
-        scPnPanelWorld.setVvalue(porcentajeClickY - porcCorreccionY);
-        scPnPanelWorld.setHvalue(porcentajeClickX - porcCorreccionX);
+        scPnWorld.setVvalue(percentageClickY - percentageCorrectionY);
+        scPnWorld.setHvalue(percentageClickX - percentageCorrectionX);
 
     }
 
     public void setScrollPane(ScrollPane scPnPanelWorld) {
-        this.scPnPanelWorld = scPnPanelWorld;
+        this.scPnWorld = scPnPanelWorld;
     }
 
     public void enableDisign() {
