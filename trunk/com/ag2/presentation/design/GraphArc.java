@@ -39,7 +39,7 @@ public class GraphArc  implements Serializable {
     {
         this.graphDesignGroup = graphDesignGroup;
         this.graphLink = graphLink;
-        this.graphNodeB = this.graphLink.GraphLink.super.getGraphNodeB();
+        this.graphNodeB = this.graphLink.getGraphNodeB();
         initTransientObjects();
 
     }
