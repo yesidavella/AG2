@@ -170,7 +170,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-                ActionTypeEmun actionTypeEmun = IGU.getEstadoTipoBoton();
+                ActionTypeEmun actionTypeEmun = IGU.getActionTypeEmun();
                 GraphNode graphNode = GraphNode.this;
 
                 if (actionTypeEmun == ActionTypeEmun.LINK) {
@@ -219,7 +219,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 setWidth((short) vBoxWrapper.getWidth());
                 setHeight((short) vBoxWrapper.getHeight());
 
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.LINK) {
+                if (IGU.getActionTypeEmun() == ActionTypeEmun.LINK) {
 
                     GraphNode graphNode = GraphNode.this;
                     wildcardNodeA = graphNode;
@@ -250,11 +250,11 @@ public abstract class GraphNode implements Selectable, Serializable {
             public void handle(MouseEvent mouseEvent) {
 
 
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.DEFAULT) {
+                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - height / 2));
                     updateNodeListener();
-                } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.LINK) {
+                } else if (IGU.getActionTypeEmun() == ActionTypeEmun.LINK) {
                     dragging = true;
                     wildcardLink.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardLink.setEndY(getLayoutY() + height - (mouseEvent.getY()));
@@ -270,7 +270,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.LINK) {
+                if (IGU.getActionTypeEmun() == ActionTypeEmun.LINK) {
                     graphDesignGroup.remove(wildcardLink);
                 }
             }
@@ -284,7 +284,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 GraphNode graphNode = GraphNode.this;
 
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.DELETED) {
+                if (IGU.getActionTypeEmun() == ActionTypeEmun.DELETED) {
 
                     graphNode.setDeleted(true);
                     graphDesignGroup.remove(graphNode);
@@ -293,7 +293,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 }
 
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.DEFAULT) {
+                if (IGU.getActionTypeEmun() == ActionTypeEmun.DEFAULT) {
 
                     Selectable objSeleccionado = graphDesignGroup.getSelectable();
 

@@ -43,7 +43,7 @@ public class ToggleButtonAg2 extends ToggleButton {
 
                 if (toggleButtonAg2.isSelected()) {
 
-                    IGU.setEstadoTipoBoton(toggleButtonAg2.getActionTypeEmun());
+                    IGU.setActionTypeEmun(toggleButtonAg2.getActionTypeEmun());
 
 
                     if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.DEFAULT) {

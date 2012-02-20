@@ -106,7 +106,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public void handle(MouseEvent mouseEvent) {
 
         EventType eventType = mouseEvent.getEventType();
-        ActionTypeEmun actionTypeEmun = IGU.getEstadoTipoBoton();
+        ActionTypeEmun actionTypeEmun = IGU.getActionTypeEmun();
 
         if (eventType == MouseEvent.MOUSE_PRESSED) {
 
