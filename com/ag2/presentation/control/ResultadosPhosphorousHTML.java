@@ -23,10 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-/**
- *
- * @author Frank
- */
 public class ResultadosPhosphorousHTML {
 
     private ImageView ivIzqFin = new ImageView(new Image(getClass().getResourceAsStream("../../../../resource/image/mini_izquierda_fin.png")));
@@ -36,7 +32,7 @@ public class ResultadosPhosphorousHTML {
     private Button btnIzqFin = new Button();
     private Button btnIzq = new Button();
     private Button btnDer = new Button();
-    private Button btnDerFin = new Button();   
+    private Button btnDerFin = new Button();
     private TextField txtPagina = new TextField();
     private String CARPETA_RESULTADOS = "Results_HTML";
     private int paginasTotales = 0;
@@ -47,15 +43,15 @@ public class ResultadosPhosphorousHTML {
     private String directorioResultados;
     private VBox vBox = new VBox();
     private HBox hBox = new HBox();
-    //private int countExecutions = 0; 
+    //private int countExecutions = 0;
 
     public void lookToNextExecution()
     {
-        //countExecutions++; 
+        //countExecutions++;
     }
     public ResultadosPhosphorousHTML(final Tab tab)
     {
-        
+
         btnIzqFin.setGraphic(ivIzqFin);
         btnIzq.setGraphic(ivIzq);
         btnDer.setGraphic(ivDer);
@@ -80,7 +76,7 @@ public class ResultadosPhosphorousHTML {
 
     }
 
-   
+
     private void loadFilesHTMLs(Tab tab) {
 
 

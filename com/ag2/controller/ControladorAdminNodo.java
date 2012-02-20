@@ -98,7 +98,7 @@ public class ControladorAdminNodo extends NodeAdminAbstractController implements
             if (clientNode.getServiceNode() != null) {
                 GraphNode nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), nodeMatchCoupleObjectContainer);
                 if (nodoServiceSelected != null) {
-                    nodeRelationProperty.setPrimerValor(nodoServiceSelected);
+                    nodeRelationProperty.setFirstValue(nodoServiceSelected);
                 }
             }
             propiedadesDeNodo.add(nodeRelationProperty);

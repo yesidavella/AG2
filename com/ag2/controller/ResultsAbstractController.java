@@ -13,42 +13,38 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Frank
- */
 public abstract class ResultsAbstractController  implements Serializable
 {
    protected  ViewResultsPhosphorus viewResultsPhosphorus;
-   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getSimulador()); 
-    
-    public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) 
+   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getSimulador());
+
+    public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus)
     {
         this.viewResultsPhosphorus = viewResultsPhosphorus;
-    }       
-    
-   public abstract  void addClientResult(String tcCliente, String tcPeticionesEnviadas , 
-            String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, 
+    }
+
+   public abstract  void addClientResult(String tcCliente, String tcPeticionesEnviadas ,
+            String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
             String tcPorcentajeResultadosRecibidos );
-   
+
    public abstract void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos,
-           String tcFallasNoEspacio, String tcFallasEnviadas ); 
-   
+           String tcFallasNoEspacio, String tcFallasEnviadas );
+
    public abstract void adicionarResultadoConmutador(
                                             String tcConmutador,
                                             String tcMensajesTrabajoConmutados,
                                             String tcMensajesTrabajoNoConmutados,
-                                            String tcMensajesResultadosConmutados, 
+                                            String tcMensajesResultadosConmutados,
                                             String tcMensajesResultadosNoConmutados,
-                                            String relDropJob, 
+                                            String relDropJob,
                                             String relDropRes,
-                                            String reltotDrop); 
-   
-    public abstract void setExecutionPercentage(double Percentage); 
-    
-    
-     
-            
-    
-    
+                                            String reltotDrop);
+
+    public abstract void setExecutionPercentage(double Percentage);
+
+
+
+
+
+
 }

@@ -13,10 +13,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Frank
- */
+
 public class UtilSerializator {
 
     private Stage primaryStage;
