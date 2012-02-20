@@ -46,7 +46,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             if (executeController.isWellFormedNetwork()) {
                                 IGU.getInstance().getGrGrupoDeDiseño().getSelectable().select(false);
                                 IGU.getInstance().getGrGrupoDeDiseño().setSelectable(null);
-                                IGU.getInstance().getTbDeviceProperties().clearData();
+                                IGU.getInstance().getEntityPropertyTable().clearData();
                                 IGU.getInstance().deshabilitar();
                                 toggleButtonAg2.setSelected(true);
                                 executeController.run();
