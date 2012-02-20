@@ -5,76 +5,76 @@ import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
     public enum ActionTypeEmun {
-        EJECUTAR("ejecutar"),
-        PARAR("parar"),
-        
+        RUN("ejecutar"),
+        STOP("parar"),
+
         PUNTERO("puntero",null,0,0,"puntero_sobre_enlace",1,21),
-        MANO("mano","mano_abierta_cursor",0,0,"mano_cerrada_cursor",0,0),
-        ADICIONAR_VERTICE("adicionar_vertice","adicionar_vertice_cursor",3,3,"adicionar_vertice_sobre_elemento_cursor",3,5),
-        ELIMINAR("eliminar","eliminar_cursor",0,0,"eliminar_sobre_elemento_cursor",0,0),
+        HAND("mano","mano_abierta_cursor",0,0,"mano_cerrada_cursor",0,0),
+        ADD_LINK_SEPARATOR("adicionar_vertice","adicionar_vertice_cursor",3,3,"adicionar_vertice_sobre_elemento_cursor",3,5),
+        DELETED("eliminar","eliminar_cursor",0,0,"eliminar_sobre_elemento_cursor",0,0),
         ZOOM_PLUS("lupa_mas","lupa_mas_cursor",10,10),
         ZOOM_MINUS("lupa_menos","lupa_menos_cursor",10,10),
-        
-        CLIENTE("cliente","cliente_cursor",14,14),
-        ENRUTADOR_OPTICO("enrutador_optico","enrutador_optico_cursor",10,13),
-        ENRUTADOR_RAFAGA("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
-        ENRUTADOR_HIBRIDO("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
-        NODO_DE_SERVICIO("nodo_servicio","nodo_servicio_cursor",15,16),
-        RECURSO("recurso","recurso_cursor",13,16),
-        ENLACE("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
-    
-    private Image imagenBoton;
-    private ImageCursor imagenCursor;
-    private ImageCursor imagenSobreObjetoCursor;
-    private Point2D posicionImagenDeCursorEnXyY;
-    
-        private ActionTypeEmun(String nombreImagenBoton)
+
+        CLIENT("cliente","cliente_cursor",14,14),
+        OCS_SWITCH("enrutador_optico","enrutador_optico_cursor",10,13),
+        OBS_SWITCH("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
+        HRYDRID_SWITCH("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
+        BROKER("nodo_servicio","nodo_servicio_cursor",15,16),
+        RESOURCE("recurso","recurso_cursor",13,16),
+        LINK("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
+
+    private Image buttonImage;
+    private ImageCursor cursorImage;
+    private ImageCursor overCursorImage;
+    private Point2D point2D;
+
+        private ActionTypeEmun(String imageName)
         {
-            posicionImagenDeCursorEnXyY = new Point2D(0,0);
-            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
+            point2D = new Point2D(0,0);
+            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imageName + ".png"));
         }
 
-        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor, double posicionImgX, double posicionImgY) {
-            
-            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
+        private ActionTypeEmun(String imagenBotonName, String cursorImageName, double posImageX, double posImageY) {
 
-            if (nombreImagenCursor != null) {
-                Image imgCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenCursor + ".png"));
-                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
-                imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
+            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imagenBotonName + ".png"));
+
+            if (cursorImageName != null) {
+                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + cursorImageName + ".png"));
+                point2D = new Point2D(posImageX, posImageY);
+                cursorImage = new ImageCursor(image,posImageX,posImageY);
             }
         }
-        
-        private ActionTypeEmun(String nombreImagenBoton, String nombreImagenCursor,double posicionImgX,double posicionImgY,String nombreImagenSobreObjetoCursor,double posicionImg2X,double posicionImg2Y) {
-            
-            imagenBoton = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenBoton + ".png"));
 
-            if (nombreImagenCursor != null) {
-                Image imgCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenCursor + ".png"));
-                posicionImagenDeCursorEnXyY = new Point2D(posicionImgX, posicionImgY);
-                imagenCursor = new ImageCursor(imgCursor,posicionImgX,posicionImgY);
+        private ActionTypeEmun(String imagenBotonName, String cursorImageName,double posImageX,double posImageY,String overCursorImageName,double posImage2X,double posImage2Y) {
+
+            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imagenBotonName + ".png"));
+
+            if (cursorImageName != null) {
+                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + cursorImageName + ".png"));
+                point2D = new Point2D(posImageX, posImageY);
+                cursorImage = new ImageCursor(image,posImageX,posImageY);
             }
-            
-            if (nombreImagenSobreObjetoCursor != null) {
-                Image imgSobreObjetoCursor = new Image(getClass().getResourceAsStream("../../../resource/image/" + nombreImagenSobreObjetoCursor + ".png"));
-                imagenSobreObjetoCursor = new ImageCursor(imgSobreObjetoCursor,posicionImg2X,posicionImg2Y);
-            }    
-        }
-        
-        public Image getImagenBoton() {
-            return imagenBoton;
+
+            if (overCursorImageName != null) {
+                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + overCursorImageName + ".png"));
+                overCursorImage = new ImageCursor(image,posImage2X,posImage2Y);
+            }
         }
 
-        public ImageCursor getImagenCursor() {
-            return imagenCursor;
+        public Image getButtonImage() {
+            return buttonImage;
         }
-        
-        public ImageCursor getImagenSobreObjetoCursor() {
-            return imagenSobreObjetoCursor;
+
+        public ImageCursor getCursorImage() {
+            return cursorImage;
         }
-       
-        public Point2D getPosicionImagenDeCursorEnXyY() {
-            return posicionImagenDeCursorEnXyY;
+
+        public ImageCursor getOverCursorImage() {
+            return overCursorImage;
+        }
+
+        public Point2D getPoint2D() {
+            return point2D;
         }
 
     };

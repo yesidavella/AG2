@@ -49,11 +49,13 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 ###### com.ag2.presentation.control;
 
 -ToggleButtonAg2
+-GraphNodesView
+-PhosphosrusHTMLResults
+
 
 ##### com.ag2.presentacion
 
--GraphNodesView
--PhosphosrusHTMLResults
+-ActionTypeEmun
 
 ##### com.ag2.presentation.design;
 

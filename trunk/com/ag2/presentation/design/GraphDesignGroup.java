@@ -110,8 +110,8 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         if (eventType == MouseEvent.MOUSE_PRESSED) {
 
-            if (actionTypeEmun == ActionTypeEmun.MANO) {
-                group.setCursor(ActionTypeEmun.MANO.getImagenSobreObjetoCursor());
+            if (actionTypeEmun == ActionTypeEmun.HAND) {
+                group.setCursor(ActionTypeEmun.HAND.getOverCursorImage());
                 dragMouseX = mouseEvent.getX();
                 dragMouseY = mouseEvent.getY();
 
@@ -123,7 +123,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         } else if (eventType == MouseEvent.MOUSE_DRAGGED) {
 
-            if (actionTypeEmun == ActionTypeEmun.MANO) {
+            if (actionTypeEmun == ActionTypeEmun.HAND) {
 
                 double currentWidth = group.getBoundsInParent().getWidth();
                 double distanceMovedX = dragMouseX - mouseEvent.getX();
@@ -144,31 +144,31 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             NodeAdminAbstractController nodeAdminAbstractController = nodeAdminAbstractControllers.get(0);
             LinkAdminAbstractController linkAdminAbstractController = linkAdminAbstractControllers.get(0);
 
-            if (actionTypeEmun == ActionTypeEmun.MANO) {
-                group.setCursor(ActionTypeEmun.MANO.getImagenCursor());
+            if (actionTypeEmun == ActionTypeEmun.HAND) {
+                group.setCursor(ActionTypeEmun.HAND.getCursorImage());
 
-            } else if (actionTypeEmun == ActionTypeEmun.CLIENTE) {
+            } else if (actionTypeEmun == ActionTypeEmun.CLIENT) {
 
                 graphNode = new ClientGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 clientsObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.NODO_DE_SERVICIO) {
+            } else if (actionTypeEmun == ActionTypeEmun.BROKER) {
                 graphNode = new BrokerGrahpNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 brokersObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_OPTICO) {
+            } else if (actionTypeEmun == ActionTypeEmun.OCS_SWITCH) {
                 graphNode = new OCS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 switchesObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_RAFAGA) {
+            } else if (actionTypeEmun == ActionTypeEmun.OBS_SWITCH) {
                 graphNode = new OBS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 switchesObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.ENRUTADOR_HIBRIDO) {
+            } else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
                 graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 switchesObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.RECURSO) {
+            } else if (actionTypeEmun == ActionTypeEmun.RESOURCE) {
                 graphNode = new ResourceGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 resourcesObservableList.add(graphNode);
             }

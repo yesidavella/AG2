@@ -3,7 +3,7 @@ package com.ag2.presentation;
 import com.ag2.controller.ExecuteAbstractController;
 import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
-import com.ag2.presentation.control.ResultadosPhosphorus;
+import com.ag2.presentation.control.PhosphosrusResults;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -18,12 +18,12 @@ public class ExecutePane extends TilePane implements ExecuteView {
     private ToggleButtonAg2 btnParar;
     private ToggleGroup tgEjecucion = new ToggleGroup();
     private PhosphosrusHTMLResults resultadosPhosphorousHTML;
-    ResultadosPhosphorus resultadosPhosphorus;
+    PhosphosrusResults resultadosPhosphorus;
     ExecuteAbstractController executeController;
 
     public ExecutePane() {
 
-        btnEjecutar = new ToggleButtonAg2(ActionTypeEmun.EJECUTAR) {
+        btnEjecutar = new ToggleButtonAg2(ActionTypeEmun.RUN) {
 
             @Override
             public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
@@ -59,7 +59,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
             }
         };
 
-        btnParar = new ToggleButtonAg2(ActionTypeEmun.PARAR) {
+        btnParar = new ToggleButtonAg2(ActionTypeEmun.STOP) {
 
             @Override
             public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
@@ -108,7 +108,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
         this.resultadosPhosphorousHTML = resultadosPhosphorousHTML;
     }
 
-    public void setResultadosPhosphorus(ResultadosPhosphorus resultadosPhosphorus) {
+    public void setResultadosPhosphorus(PhosphosrusResults resultadosPhosphorus) {
         this.resultadosPhosphorus = resultadosPhosphorus;
     }
 

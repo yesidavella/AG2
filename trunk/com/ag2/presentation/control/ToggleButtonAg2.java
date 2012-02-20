@@ -19,7 +19,7 @@ public class ToggleButtonAg2 extends ToggleButton {
 
         this.actionTypeEmun = actionTypeEmun;
 
-        ImageView imageView = new ImageView(actionTypeEmun.getImagenBoton());
+        ImageView imageView = new ImageView(actionTypeEmun.getButtonImage());
         setGraphic(imageView);
         setMaxWidth(WIDTH);
         setMaxHeight(HEIGHT);
@@ -49,8 +49,8 @@ public class ToggleButtonAg2 extends ToggleButton {
                     if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.PUNTERO) {
                         group.setCursor(Cursor.DEFAULT);
                     } else {
-                        if (actionTypeEmun.getImagenCursor() != null) {
-                            group.setCursor(actionTypeEmun.getImagenCursor());
+                        if (actionTypeEmun.getCursorImage() != null) {
+                            group.setCursor(actionTypeEmun.getCursorImage());
                         } else {
                             group.setCursor(Cursor.DEFAULT);
                         }

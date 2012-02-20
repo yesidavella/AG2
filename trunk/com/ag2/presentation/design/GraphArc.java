@@ -106,10 +106,10 @@ public class GraphArc  implements Serializable {
 
                 ActionTypeEmun actionTypeEmun = IGU.getEstadoTipoBoton();
 
-                if (actionTypeEmun == ActionTypeEmun.ADICIONAR_VERTICE || actionTypeEmun == ActionTypeEmun.ELIMINAR) {
-                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getImagenSobreObjetoCursor());
+                if (actionTypeEmun == ActionTypeEmun.ADD_LINK_SEPARATOR || actionTypeEmun == ActionTypeEmun.DELETED) {
+                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
                 } else if (actionTypeEmun == ActionTypeEmun.PUNTERO) {
-                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getImagenSobreObjetoCursor());
+                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
                 }
             }
         });
@@ -151,7 +151,7 @@ public class GraphArc  implements Serializable {
                     }
                 }
 
-                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ADICIONAR_VERTICE) {
+                if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ADD_LINK_SEPARATOR) {
 
                     GraphArc graphArc = GraphArc.this;
                     GraphArc arcGrafNuevo = new GraphArc(graphArc.getGraphLink(), graphArc.getGroup());
@@ -186,7 +186,7 @@ public class GraphArc  implements Serializable {
 
                     graphLink.select(true);
 
-                } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.ELIMINAR) {
+                } else if (IGU.getEstadoTipoBoton() == ActionTypeEmun.DELETED) {
 
                     GraphNode nodeA = graphLink.getGraphNodeA();
                     GraphNode nodeB = graphLink.getGraphNodeB();
