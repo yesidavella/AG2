@@ -4,7 +4,7 @@ import Grid.Entity;
 import Grid.GridSimulator;
 import com.ag2.model.NetworkChecker;
 import com.ag2.model.SimulationBase;
-import com.ag2.presentation.ErrorsView;
+import com.ag2.presentation.NetworkErrorsReporter;
 import com.ag2.presentation.design.GraphNode;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -46,7 +46,7 @@ public class ExecuteController extends ExecuteAbstractController {
         
         if(!networkChecker.passCheck()){
             
-            ErrorsView errorWindow = new ErrorsView();
+            NetworkErrorsReporter errorWindow = new NetworkErrorsReporter();
             chargeErrorsListToShow(networkChecker, errorWindow);
             errorWindow.showReport();
             
@@ -56,7 +56,7 @@ public class ExecuteController extends ExecuteAbstractController {
         return true;
     }
 
-    private void chargeErrorsListToShow(NetworkChecker networkChecker, ErrorsView errorWindow) {
+    private void chargeErrorsListToShow(NetworkChecker networkChecker, NetworkErrorsReporter errorWindow) {
         
         Iterator itListOfErrors = networkChecker.getListOfErrors().entrySet().iterator();
         

@@ -6,7 +6,6 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
-import Grid.Port.GridOutPort;
 import Grid.Routing.GridVertex;
 import Grid.Routing.Routing;
 import Grid.Routing.RoutingViaJung;
@@ -14,7 +13,6 @@ import Grid.Routing.ShortesPathRouting;
 import edu.uci.ics.jung.graph.Graph;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.swing.JOptionPane;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
@@ -139,8 +137,8 @@ public class NetworkChecker {
             Graph networkRoutingGraph = ((RoutingViaJung) (simulator.getRouting())).getHybridNetwork();
             GridVertex pivotVertex = null;
 
-            for (Iterator itVertexes = networkRoutingGraph.getVertices().iterator(); itVertexes.hasNext() && !foundIsolatedNetworks;) {
-                GridVertex vertex = (GridVertex) itVertexes.next();
+            for (Iterator<GridVertex> itVertexes = networkRoutingGraph.getVertices().iterator(); itVertexes.hasNext() && !foundIsolatedNetworks;) {
+                GridVertex vertex = itVertexes.next();
 
                 if (pivotVertex == null) {
                     pivotVertex = vertex;
