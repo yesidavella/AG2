@@ -1,10 +1,10 @@
 package com.ag2.presentation;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
-import com.ag2.presentation.control.ToggleButtonAg2;
-import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
 import com.ag2.presentation.control.PhosphosrusResults;
+import com.ag2.presentation.control.ToggleButtonAg2;
+import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTable;
 import java.awt.Desktop;
@@ -14,14 +14,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -32,12 +27,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -91,7 +83,7 @@ public class GUI extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
 
         addScene(this);
-        getStylesheets().add(GUI.class.getResource("../../../resource/css/IGUPrincipal.css").toExternalForm());
+        getStylesheets().add(GUI.class.getResource("../../../resource/css/MainGUI.css").toExternalForm());
 
         borderPane.getStyleClass().add("ventanaPrincipal");
 
@@ -443,6 +435,11 @@ public class GUI extends Scene implements Serializable {
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
         ivAG2.setFitWidth(40*proportionXYAG2);
+        
+        ImageView ivInternetIntel = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/logoInterInt.png")));
+        double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth()/ivInternetIntel.getBoundsInParent().getHeight();
+        ivInternetIntel.setFitHeight(35);
+        ivInternetIntel.setFitWidth(35*proportionXYInternetIn);
 
         ImageView ivPhosphorus = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/phosphorus.jpg")));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
@@ -455,26 +452,30 @@ public class GUI extends Scene implements Serializable {
         ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
 
         Hyperlink linkAG2 = new Hyperlink();
+        Hyperlink linkInterIntel = new Hyperlink();
         Hyperlink linkPhosphorus = new Hyperlink();
         Hyperlink linkDistritalUniv = new Hyperlink();
 
-        linkAG2.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación \"Internet Inteligente\""));
+        linkAG2.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación en \"Colciencias\""));
+        linkInterIntel.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación \"Internet Inteligente\""));
         linkPhosphorus.setTooltip(new Tooltip("Visite la página web del proyecto \"Fósforo\""));
         linkDistritalUniv.setTooltip(new Tooltip("Visite la página web de la \"Universidad Distrital FJC\""));
 
         linkAG2.setGraphic(ivAG2);
+        linkInterIntel.setGraphic(ivInternetIntel);
         linkPhosphorus.setGraphic(ivPhosphorus);
         linkDistritalUniv.setGraphic(ivDistritalUniv);
 
-        setOnLunchBrowser(linkAG2,"http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
+        setOnLunchBrowser(linkAG2,"http://201.234.78.173:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003328");
+        setOnLunchBrowser(linkInterIntel,"http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
         setOnLunchBrowser(linkPhosphorus,"http://www.ist-phosphorus.eu/");
         setOnLunchBrowser(linkDistritalUniv,"www.udistrital.edu.co");
 
         VBox vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3,5,3,3));
-        vbLogos.getChildren().addAll(linkAG2, linkPhosphorus,linkDistritalUniv);
-        vbLogos.getStyleClass().add("cajaDeLogos");
+        vbLogos.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
+        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
         return vbLogos;
     }
 
@@ -521,7 +522,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.setPadding(new Insets(10, 10, 10, 10));
         gpMapNavegation.setVgap(5);
         gpMapNavegation.setHgap(4);
-        gpMapNavegation.getStyleClass().add("barraDeHerramientas");
+        gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
 
         Label lbTitle = new Label("LISTAS DE NAVEGACIÓN");
         lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 14));
@@ -542,9 +543,13 @@ public class GUI extends Scene implements Serializable {
         Button btnIrServiceNodes = new Button("ir");
 
         Label lbRouters = new Label("Enrutadores");
+        lbRouters.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
         Label lbClientes = new Label("Clientes");
+        lbClientes.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
         Label lbRecursos = new Label("Recursos");
+        lbRecursos.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
         Label lbNodosServicio = new Label("Agendadores");
+        lbNodosServicio.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
 
         lbRouters.setMinWidth(80);
         lbClientes.setMinWidth(80);
@@ -705,7 +710,7 @@ public class GUI extends Scene implements Serializable {
     private VBox createExecuteIndicatorPane() {
 
         VBox vBoxCajaContenedoraIndicadores = new VBox(10);
-        vBoxCajaContenedoraIndicadores.getStyleClass().add("barraDeHerramientas");
+        vBoxCajaContenedoraIndicadores.getStyleClass().add("boxLogosVerticalGradient");
         vBoxCajaContenedoraIndicadores.setPadding(new Insets(10, 10, 10, 10));
         vBoxCajaContenedoraIndicadores.setAlignment(Pos.CENTER);
 
