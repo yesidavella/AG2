@@ -10,22 +10,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ErrorsView extends Stage {
+public class NetworkErrorsReporter extends Stage {
 
     private Button btnAccept;
     private ArrayList<Text> errosToShow;
     private BorderPane brPnWindowsLayout;
 
-    public ErrorsView() {
+    public NetworkErrorsReporter() {
         super(StageStyle.UTILITY);
         setResizable(true);
         errosToShow = new ArrayList<Text>();
@@ -34,18 +39,38 @@ public class ErrorsView extends Stage {
 
         brPnWindowsLayout = new BorderPane();
         brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));
-        Scene reportScene = new Scene(brPnWindowsLayout, 510, 400, Color.LIGHTSTEELBLUE);//#FFEB8C
+        
+        Scene reportScene = new Scene(brPnWindowsLayout, 510, 400);//#FFEB8C
+        setGradientEffect(reportScene);
+        
         setScene(reportScene);
-
         configWindow();
     }
 
+    private void setGradientEffect(Scene reportScene) {
+        Stop[] stops = new Stop[] { 
+            new Stop(0.2, Color.LIGHTSTEELBLUE),
+            new Stop(0.5, Color.WHITESMOKE),
+            new Stop(0.8, Color.LIGHTSTEELBLUE)
+        };
+        LinearGradient linearGradient = new LinearGradient(0,0,1,0.25, true, CycleMethod.NO_CYCLE, stops);
+        reportScene.setFill(linearGradient);
+    }
+
     private void configWindow() {
+        final int WARNING_WIDTH = 60;
         HBox hbTitle = new HBox();
         hbTitle.setPadding(new Insets(0, 0, 10, 0));
         hbTitle.setAlignment(Pos.CENTER);
+        
+        ImageView ivWarning = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/warning.jpg")));
+        double proportionXYivWarning = ivWarning.getBoundsInParent().getWidth()/ivWarning.getBoundsInParent().getHeight();
+        ivWarning.setFitHeight(WARNING_WIDTH);
+        ivWarning.setFitWidth(WARNING_WIDTH*proportionXYivWarning);
+        
         Label lbTitle = LabelBuilder.create().text("LOS ERRORES ENCONTRADOS EN LA CONFIGURACIÓN DE LA RED:").
-                font(Font.font("Cambria", FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).build();
+                font(Font.font("Cambria", FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).
+                graphic(ivWarning).graphicTextGap(-60).build();
         lbTitle.setWrapText(true);
         lbTitle.setPrefWidth(480);
 
@@ -65,7 +90,7 @@ public class ErrorsView extends Stage {
 
             @Override
             public void handle(ActionEvent arg0) {
-                ErrorsView.this.close();
+                NetworkErrorsReporter.this.close();
             }
         });
     }
