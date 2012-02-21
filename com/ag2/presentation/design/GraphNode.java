@@ -29,8 +29,9 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private static ImageView IMG_VW_DENY_LINK = new ImageView(
             new Image(GraphNode.class.getResourceAsStream("../../../../resource/image/prohibido_enlace.png")));
-    public static boolean linkBegin = false;
+    public static boolean linkBegin = false;        
     private static GraphNode wildcardNodeA = null;
+    
     protected transient Image image = null;
     private transient Line wildcardLink;
     private transient ImageView imageView;
@@ -38,6 +39,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient DropShadow dropShadow;
     protected transient VBox vBoxWrapper;
     private transient Group group;
+    
     private String name = null;
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
     private boolean deleted = false;
@@ -190,8 +192,8 @@ public abstract class GraphNode implements Selectable, Serializable {
                         if (graphNode.isEnableToCreateLInk(wildcardNodeA)) {
                             graphDesignGroup.remove(wildcardLink);
 
-                            GraphLink enlaceGrafico = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
-                            enlaceGrafico.addInitialGraphArc();
+                            GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
+                            graphLink.addInitialGraphArc();
 
                             wildcardNodeA.setLinkCounter((short) (wildcardNodeA.getLinkCounter() + 1));
                             graphNode.setLinkCounter((short) (graphNode.getLinkCounter() + 1));
@@ -250,7 +252,7 @@ public abstract class GraphNode implements Selectable, Serializable {
             public void handle(MouseEvent mouseEvent) {
 
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - height / 2));
                     updateNodeListener();
@@ -293,7 +295,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 }
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
 
                     Selectable objSeleccionado = graphDesignGroup.getSelectable();
 
@@ -428,7 +430,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     public void setWidth(short ancho) {
         this.width = ancho;
     }
-
+//FIXME:Eliminar este y dejar el generico y mira q enrutado no descuadre
     private String formatearNombre(String nombre) {
 
         if (nombre.startsWith("Enrutador")) {

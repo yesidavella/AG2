@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
+
 public class Main extends Application implements Serializable {
 
     private transient UtilSerializator utilSerializator;
@@ -171,6 +172,7 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main)
     {
+ 
         simulationBase =   main.getSimulationBase();  ///SimulacionBase.getInstance();
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();

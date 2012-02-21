@@ -77,7 +77,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
             public void handle(MouseEvent t) {
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     circle.setCursor(Cursor.MOVE);
                 }
             }
@@ -88,7 +88,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
 
                     GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this;
 
@@ -118,7 +118,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
             public void handle(MouseEvent eventoDeRaton) {
 
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.DEFAULT_1) {
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     GraphArcSeparatorPoint graphArcSeparatorPoint = GraphArcSeparatorPoint.this;
 
                     if (!graphArcSeparatorPoint.isDragged()) {

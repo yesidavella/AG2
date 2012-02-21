@@ -31,6 +31,7 @@ public abstract class ModalAG2window extends Stage {
         
         Scene scene = new Scene(brPnWindowsLayout, 510, 400);//#FFEB8C
         setGradientEffect(scene);
+        
         btnAccept = new Button("Aceptar");
         btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 
