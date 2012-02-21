@@ -16,6 +16,7 @@ import java.util.Iterator;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
+import trs.core.Network;
 
 public class NetworkChecker {
 
@@ -134,7 +135,7 @@ public class NetworkChecker {
         if (routing instanceof RoutingViaJung) {
 
             Boolean foundIsolatedNetworks = false;
-            Graph networkRoutingGraph = ((RoutingViaJung) (simulator.getRouting())).getHybridNetwork();
+            Graph networkRoutingGraph = ((RoutingViaJung)routing).getHybridNetwork();
             GridVertex pivotVertex = null;
 
             for (Iterator<GridVertex> itVertexes = networkRoutingGraph.getVertices().iterator(); itVertexes.hasNext() && !foundIsolatedNetworks;) {
@@ -150,8 +151,10 @@ public class NetworkChecker {
                 }
             }
         } else if (routing instanceof ShortesPathRouting) {
-       //     JOptionPane.showMessageDialog(null, "El enrutamiento se esta haciendo con ShortesPathRouting.");
-            //System.exit(1);
+            
+            Boolean foundIsolatedNetworks = false;
+            Network net = ((ShortesPathRouting)routing).getHyrbidNetwork();
+            System.out.println("");
         }
     }
 

@@ -222,7 +222,13 @@ public class GUI extends Scene implements Serializable {
                     main.save(false);
                     main.loadFileBaseSimulation();
                 }
-
+            }
+        });
+        
+        aboutMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                AboutAG2project aboutAG2project = new AboutAG2project();
+                aboutAG2project.show();
             }
         });
 
@@ -238,9 +244,6 @@ public class GUI extends Scene implements Serializable {
                 } else if (result == JOptionPane.YES_OPTION) {
                     main.save(true);
                 }
-
-
-
             }
         });
 
@@ -479,7 +482,7 @@ public class GUI extends Scene implements Serializable {
         return vbLogos;
     }
 
-    private void setOnLunchBrowser(Hyperlink link,final String URLToGo) {
+    public void setOnLunchBrowser(Hyperlink link,final String URLToGo) {
         link.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
