@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
 
-    private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.DEFAULT_1;
+    private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
 
     private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();
     private ToggleGroup tgTools;
@@ -102,8 +102,7 @@ public class GUI extends Scene implements Serializable {
         //Diseño inferior
         HBox cajaInferiorHor = createDesignButtons();
         borderPane.setBottom(cajaInferiorHor);
-
-//        inicializarEstadoDeIGU();
+        
     }
         public static GUI getInstance() {
 
@@ -160,7 +159,7 @@ public class GUI extends Scene implements Serializable {
 
     public static ActionTypeEmun getActionTypeEmun() {
         if (actionTypeEmun == null) {
-            actionTypeEmun = ActionTypeEmun.DEFAULT_1;
+            actionTypeEmun = ActionTypeEmun.POINTER;
         }
         return actionTypeEmun;
     }
@@ -272,7 +271,7 @@ public class GUI extends Scene implements Serializable {
     private void createUtilButtons(GridPane grdPnBarraHerramientas) {
 
         btnHand = new ToggleButtonAg2(ActionTypeEmun.HAND);
-        btnSelection = new ToggleButtonAg2(ActionTypeEmun.DEFAULT_1);
+        btnSelection = new ToggleButtonAg2(ActionTypeEmun.POINTER);
         btnPointSeparator = new ToggleButtonAg2(ActionTypeEmun.ADD_LINK_SEPARATOR);
         btnDeleted = new ToggleButtonAg2(ActionTypeEmun.DELETED);
         btnMinusZoom = new ToggleButtonAg2(ActionTypeEmun.ZOOM_MINUS);
@@ -699,6 +698,7 @@ public class GUI extends Scene implements Serializable {
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
+        ModalAG2window a = new AboutAG2project();
 
     }
 

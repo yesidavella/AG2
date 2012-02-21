@@ -1,5 +1,6 @@
 package com.ag2.model;
 
+import Distributions.NetworkProxy;
 import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
@@ -16,7 +17,8 @@ import java.util.Iterator;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
-import trs.core.Network;
+
+
 
 public class NetworkChecker {
 
@@ -25,10 +27,12 @@ public class NetworkChecker {
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 
+    
     public NetworkChecker(SimulationInstance simulation, GridSimulator simulator) {
         this.simulation = simulation;
         this.simulator = simulator;
         listOfErrors = new HashMap<Object, String>();
+    
     }
 
     public void check() {
@@ -128,6 +132,7 @@ public class NetworkChecker {
      * Verifica que no hayan partes de red aisladas. Todos los nodos deben estar
      * conectados a una misma red.
      */
+
     private void checkIsolatedNetworks() {
 
         Routing routing = simulator.getRouting();
@@ -153,8 +158,15 @@ public class NetworkChecker {
         } else if (routing instanceof ShortesPathRouting) {
             
             Boolean foundIsolatedNetworks = false;
-            Network net = ((ShortesPathRouting)routing).getHyrbidNetwork();
-            System.out.println("");
+            NetworkProxy networkProxy = new NetworkProxy(); 
+            
+            networkProxy.setHyrbidNetwork( ((ShortesPathRouting)routing).getHyrbidNetwork()   );
+            
+            for (Iterator it = networkProxy.getNodeIDs().iterator(); it.hasNext();) {
+                String a = (String) it.next();
+                
+            System.out.println("aja"+a);
+            }
         }
     }
 
