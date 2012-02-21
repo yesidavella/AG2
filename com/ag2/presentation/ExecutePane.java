@@ -44,8 +44,12 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             executeController.initNetwork();
 
                             if (executeController.isWellFormedNetwork()) {
-                                GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
-                                GUI.getInstance().getGraphDesignGroup().setSelectable(null);
+                                if( GUI.getInstance().getGraphDesignGroup().getSelectable()!=null)
+                                {    
+                                    GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
+                                    GUI.getInstance().getGraphDesignGroup().setSelectable(null);
+                                }
+                                
                                 GUI.getInstance().getEntityPropertyTable().clearData();
                                 GUI.getInstance().disable();
                                 toggleButtonAg2.setSelected(true);
