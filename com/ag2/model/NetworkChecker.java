@@ -1,6 +1,6 @@
 package com.ag2.model;
 
-import Distributions.NetworkProxy;
+import Grid.Routing.NetworkProxy;
 import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
@@ -17,8 +17,8 @@ import java.util.Iterator;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
-
-
+import trs.core.Connection;
+import trs.core.NetworkRouting;
 
 public class NetworkChecker {
 
@@ -27,12 +27,11 @@ public class NetworkChecker {
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 
-    
     public NetworkChecker(SimulationInstance simulation, GridSimulator simulator) {
         this.simulation = simulation;
         this.simulator = simulator;
         listOfErrors = new HashMap<Object, String>();
-    
+
     }
 
     public void check() {
@@ -102,27 +101,27 @@ public class NetworkChecker {
     private void checkSwitchesWithWellLinked() {
 
         for (SimBaseEntity oneSwitch : simulator.getEntitiesOfType(Switch.class)) {
-            
+
             if (oneSwitch.getOutPorts().size() == 1) {
-                addError((Switch)oneSwitch, " \n►Solo tiene un enlace, debe tener almenos otro.");
-            }else if (oneSwitch.getOutPorts().size() > 1){
-                
+                addError((Switch) oneSwitch, " \n►Solo tiene un enlace, debe tener almenos otro.");
+            } else if (oneSwitch.getOutPorts().size() > 1) {
+
                 SimBaseEntity targetNode = null;
                 boolean foundDiffTargets = false;
-                
-                for(SimBaseOutPort oneOutPort:oneSwitch.getOutPorts()){
-                    
-                    if(targetNode == null){
+
+                for (SimBaseOutPort oneOutPort : oneSwitch.getOutPorts()) {
+
+                    if (targetNode == null) {
                         targetNode = oneOutPort.getTarget().getOwner();
-                    }else{
-                        if(!targetNode.equals(oneOutPort.getTarget().getOwner())){
-                            foundDiffTargets=true;
+                    } else {
+                        if (!targetNode.equals(oneOutPort.getTarget().getOwner())) {
+                            foundDiffTargets = true;
                         }
                     }
                 }
-                
-                if(!foundDiffTargets){
-                    addError((Switch)oneSwitch," \n►Tiene varios enlaces pero todos van dirigidos al mismo nodo. Genere un enlace con otro nodo.");
+
+                if (!foundDiffTargets) {
+                    addError((Switch) oneSwitch, " \n►Tiene varios enlaces pero todos van dirigidos al mismo nodo. Genere un enlace con otro nodo.");
                 }
             }
         }
@@ -132,40 +131,58 @@ public class NetworkChecker {
      * Verifica que no hayan partes de red aisladas. Todos los nodos deben estar
      * conectados a una misma red.
      */
-
     private void checkIsolatedNetworks() {
 
         Routing routing = simulator.getRouting();
+        Boolean foundIsolatedNetworks = false;
 
         if (routing instanceof RoutingViaJung) {
 
-            Boolean foundIsolatedNetworks = false;
-            Graph networkRoutingGraph = ((RoutingViaJung)routing).getHybridNetwork();
+            Graph networkRoutingGraph = ((RoutingViaJung) routing).getHybridNetwork();
             GridVertex pivotVertex = null;
 
-            for (Iterator<GridVertex> itVertexes = networkRoutingGraph.getVertices().iterator(); itVertexes.hasNext() && !foundIsolatedNetworks;) {
+            Iterator<GridVertex> itVertexes = networkRoutingGraph.getVertices().iterator();
+            while ( itVertexes.hasNext() && !foundIsolatedNetworks) {
                 GridVertex vertex = itVertexes.next();
 
                 if (pivotVertex == null) {
                     pivotVertex = vertex;
+                    continue;
                 }
 
-                if (pivotVertex != vertex && pivotVertex.getTheEntity().getHopCount(vertex.getTheEntity()) == -1) {
+                if (pivotVertex.getTheEntity().getHopCount(vertex.getTheEntity()) == -1) {
                     addError(simulator, " \n►Contiene redes disconexas.");
                     foundIsolatedNetworks = true;
                 }
             }
         } else if (routing instanceof ShortesPathRouting) {
-            
-            Boolean foundIsolatedNetworks = false;
-            NetworkProxy networkProxy = new NetworkProxy(); 
-            
-            networkProxy.setHyrbidNetwork( ((ShortesPathRouting)routing).getHyrbidNetwork()   );
-            
-            for (Iterator it = networkProxy.getNodeIDs().iterator(); it.hasNext();) {
-                String a = (String) it.next();
+
+            NetworkProxy networkProxy = new NetworkProxy();
+            networkProxy.setHyrbidNetwork(((ShortesPathRouting) routing).getHyrbidNetwork());
+            NetworkRouting networkRouting = ((ShortesPathRouting) routing).getHybridNetworkRouting();
+
+            String pivotVertexID = null;
+
+            Iterator<String> itVertexesID = networkProxy.getNodeIDs().iterator();
+            while (itVertexesID.hasNext() && !foundIsolatedNetworks) {
                 
-            System.out.println("aja"+a);
+                String vertexID = itVertexesID.next();
+
+                if (pivotVertexID == null) {
+                    pivotVertexID = vertexID;
+                    continue;
+                }
+
+                Iterator<Connection> itConns = networkRouting.findConnections(pivotVertexID, vertexID).iterator();
+
+                while (itConns.hasNext()) {
+                    Connection conn = itConns.next();
+
+                    if (conn.getRoute() == null) {
+                        addError(simulator, " \n►Contiene redes disconexas.");
+                        foundIsolatedNetworks = true;
+                    }
+                }
             }
         }
     }
@@ -179,7 +196,7 @@ public class NetworkChecker {
         if (simulator.getEntitiesOfType(ResourceNode.class).size() == 0) {
             addError(simulator, " \n►Debe haber por lo menos un \"Nodo de Recurso\".");
         }
-        
+
         if (simulator.getEntitiesOfType(ServiceNode.class).size() == 0) {
             addError(simulator, " \n►Debe haber por lo menos un \"Nodo de Servicio\".");
         }
