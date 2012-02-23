@@ -30,7 +30,7 @@ public class AboutAG2project extends ModalAG2window {
         btnAccept = getBtnAccept();
 
         setWidth(600);
-        setHeight(630);
+        setHeight(635);
 
         topDesing();
         centerDesing();
@@ -43,7 +43,7 @@ public class AboutAG2project extends ModalAG2window {
 
         HBox hbxTop = new HBox();
         Label lbTitle = new Label("Acerca del Proyecto AG2...");
-        lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 16));
+        lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         lbTitle.setWrapText(true);
         hbxTop.getChildren().add(lbTitle);
         hbxTop.setAlignment(Pos.CENTER);
@@ -217,7 +217,8 @@ public class AboutAG2project extends ModalAG2window {
                 }
                 case PHOSPHORUS: {
                     lbName.setText("Proyecto Fosforo.");
-                    lbBriefDescription.setText("Fuentes tomadas del simulador optico desarrollado por este proyecto.");
+                    lbBriefDescription.setText("Fuentes tomadas del marco de trabajo(framework) de simulación para "
+                            + "infraestructura en grilla optica desarrollado por Fosforo.");
                     hlinkWebPage.setText("http://www.ist-phosphorus.eu");
                     GUI.getInstance().setOnLunchBrowser(hlinkWebPage,"http://www.ist-phosphorus.eu");
                     break;
@@ -231,7 +232,6 @@ public class AboutAG2project extends ModalAG2window {
                     break;
                 }
             }
-
         }
     }
 }
