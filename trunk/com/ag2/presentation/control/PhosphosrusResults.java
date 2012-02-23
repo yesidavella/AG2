@@ -252,6 +252,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
     }
 
     public void setExecutionPercentage(double Percentage) {
+        //FIXME:esto se esta reventando apenas se ejecuta la simulacion aveces
         progressIndicator.setProgress(Percentage / 100);
 
     }

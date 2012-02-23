@@ -79,13 +79,6 @@ TableView{
     -fx-background-color:linear-gradient(to top, derive(-fx-base,-5%) 0%, derive(-fx-base,90%) 50%, derive(-fx-base,-5%) 100%);
 }
 
-.descriptionProject{
-    -fx-border-radius: 5;
-    -fx-border-color:gray;
-    -fx-border-width:2px;
-    -fx-background-color:whitesmoke;
-}
-
 ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: linear-gradient(to top left, transparent,lime);
 }
