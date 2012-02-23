@@ -25,7 +25,7 @@ root {
 }
 
 TableView{
-/*    -fx-base: #b6e7c9;*/
+    /*    -fx-base: #b6e7c9;*/
     -fx-border-radius: 5;
     -fx-border-width: 2;
 }
@@ -56,9 +56,9 @@ TableView{
 }
 
 .nodoSeleccionado{
-   -fx-border-color: #44FF00;
-   -fx-border-width: 2;
-   -fx-border-style: dashed;
+    -fx-border-color: #44FF00;
+    -fx-border-width: 2;
+    -fx-border-style: dashed;
 }
 
 .nodoNoSeleccionado{
@@ -77,6 +77,13 @@ TableView{
     -fx-border-color:gray;
     -fx-border-width:2px;
     -fx-background-color:linear-gradient(to top, derive(-fx-base,-5%) 0%, derive(-fx-base,90%) 50%, derive(-fx-base,-5%) 100%);
+}
+
+.descriptionProject{
+    -fx-border-radius: 5;
+    -fx-border-color:gray;
+    -fx-border-width:2px;
+    -fx-background-color:whitesmoke;
 }
 
 ProgressBar progress-bar:indeterminate .bar {

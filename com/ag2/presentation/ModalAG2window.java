@@ -22,9 +22,8 @@ public abstract class ModalAG2window extends Stage {
     public ModalAG2window(String title) {
         super(StageStyle.UTILITY);
         setTitle(title);
-        setResizable(false);
         initModality(Modality.APPLICATION_MODAL);
-        setResizable(false);
+        setResizable(true);
 
         brPnWindowsLayout = new BorderPane();
         brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));

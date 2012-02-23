@@ -698,7 +698,7 @@ public class GUI extends Scene implements Serializable {
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
-        ModalAG2window a = new AboutAG2project();
+        new AboutAG2project();
 
     }
 

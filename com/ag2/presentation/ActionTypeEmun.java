@@ -77,4 +77,4 @@ import javafx.scene.image.Image;
             return point2D;
         }
 
-    };
+    }
