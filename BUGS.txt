@@ -5,8 +5,8 @@ Bugs                                                                            
 4. Bajar menus de navegacion y colocar titulo. COlocar
 barra de ejecucion encima.Yesid 1H..............................................................   Listones
 5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Pendiente
-6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Pendiente
-7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Pendiente
+6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Listones
+7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Listones
 8.No mostrar pestaña html antes de ejecutar. Los tabs no deben
 ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Listo
 9.Cargar colores correctos al des-serializar, colocar escucha al
