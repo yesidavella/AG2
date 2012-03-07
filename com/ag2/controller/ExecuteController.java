@@ -36,19 +36,18 @@ public class ExecuteController extends ExecuteAbstractController {
     @Override
     public boolean isWellFormedNetwork() {
         
-        SimulationInstance simulacion = SimulationBase.getInstance().getSimulationInstance();
         GridSimulator simulador = SimulationBase.getInstance().getGridSimulatorModel();
         
         //Hace las veces de modelo
-        NetworkChecker networkChecker = new NetworkChecker(simulacion,simulador);
+        NetworkChecker networkChecker = new NetworkChecker(simulador);
         
         networkChecker.check();
         
         if(!networkChecker.passCheck()){
             
-            NetworkErrorsReporter errorWindow = new NetworkErrorsReporter();
-            chargeErrorsListToShow(networkChecker, errorWindow);
-            errorWindow.showReport();
+            NetworkErrorsReporter netErrorsReporter = new NetworkErrorsReporter();
+            chargeErrorsListToShow(networkChecker, netErrorsReporter);
+            netErrorsReporter.showReport();
             
             return false;
         }

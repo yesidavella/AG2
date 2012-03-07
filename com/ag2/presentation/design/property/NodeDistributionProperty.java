@@ -4,7 +4,6 @@ package com.ag2.presentation.design.property;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ChoiceBox;
 
-
 public class NodeDistributionProperty extends EntityProperty {
 
     public enum DistributionType {
@@ -20,7 +19,6 @@ public class NodeDistributionProperty extends EntityProperty {
 
         private DistributionType(String name) {
             this.name = name;
-
         }
 
         @Override

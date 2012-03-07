@@ -1,6 +1,5 @@
 Bugs                                                                                               Estado
 1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
-2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Listo
 4. Bajar menus de navegacion y colocar titulo. COlocar
 barra de ejecucion encima.Yesid 1H..............................................................   Listones
@@ -14,13 +13,14 @@ cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H fran
 10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
 visual en el combo. 2H Franklin ................................................................   Listo
 11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Listo
+15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Listo (temporal)
+16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
+16.Los archivos HTML, siempre la 1ra pag no tiene nada de info. Franklin........................   Pendiente
+
+2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
-15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Listo (temporal)
-16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
-
-
 
 Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
 

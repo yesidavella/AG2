@@ -22,13 +22,13 @@ public class ModeloUtil extends Util {
      */
     public static void createLink(Entity from, Entity to) throws IllegalEdgeException {
         if (from.supportsOBS() == to.supportsOBS() && from.supportsOCS() == to.supportsOCS()) {
-            
+
             StringBuffer buffer = new StringBuffer(from.getId());
             buffer.append("-");
             buffer.append(to.getId());
-            
+
             double customLinkSpeed = getCustomLinkSpeed(from);
-            
+
             GridOutPort out = new GridOutPort(buffer.toString(), from,
                     GridSimulation.configuration.getDoubleProperty(
                     Config.ConfigEnum.switchingSpeed),
@@ -40,15 +40,16 @@ public class ModeloUtil extends Util {
             in.setSource(out);
             from.addOutPort(out);
             to.addInPort(in);
-            
+
         } else {
             throw new IllegalEdgeException("Cannot connect two entities which do not share the same swithcing protocols "
                     + from.getId() + " -->" + to.getId());
         }
     }
-    
+
     /**
      * Create a bi directional link between from and to
+     *
      * @param from The first end of the link
      * @param to The second end of the link.
      */
@@ -63,13 +64,13 @@ public class ModeloUtil extends Util {
     }
 
     private static double getCustomLinkSpeed(Entity from) {
-        
+
         double currenteLinkSpeed = GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.linkSpeed);
         double customLinkSpeed = -1;
-        
-        if(from instanceof ClientNode || from instanceof ResourceNode || from instanceof ServiceNode){
-            customLinkSpeed = currenteLinkSpeed/2;
-        }else{
+
+        if (from instanceof ClientNode || from instanceof ResourceNode || from instanceof ServiceNode) {
+            customLinkSpeed = currenteLinkSpeed / 2;
+        } else {
             customLinkSpeed = currenteLinkSpeed;
         }
 
@@ -77,10 +78,10 @@ public class ModeloUtil extends Util {
     }
 
     static PhosphorusLinkModel crearEnlaceBiDireccional(Entity from, Entity to) {
-        
+
         GridOutPort puertoSalidaNodoA = null;
         GridOutPort puertoSalidaNodoB = null;
-        
+
         try {
             puertoSalidaNodoA = ModeloUtil.crearEnlace(from, to);
             puertoSalidaNodoB = ModeloUtil.crearEnlace(to, from);
@@ -88,7 +89,7 @@ public class ModeloUtil extends Util {
             System.err.println(e.getMessage());
             System.exit(1);
         }
-        
+
         return new PhosphorusLinkModel(from, puertoSalidaNodoA, to, puertoSalidaNodoB);
     }
 
@@ -101,13 +102,13 @@ public class ModeloUtil extends Util {
      */
     public static GridOutPort crearEnlace(Entity from, Entity to) throws IllegalEdgeException {
         if (from.supportsOBS() == to.supportsOBS() && from.supportsOCS() == to.supportsOCS()) {
-            
+
             StringBuffer buffer = new StringBuffer(from.getId());
             buffer.append("-");
             buffer.append(to.getId());
-            
+
             double customLinkSpeed = getCustomLinkSpeed(from);
-            
+
             GridOutPort out = new GridOutPort(buffer.toString(), from,
                     GridSimulation.configuration.getDoubleProperty(
                     Config.ConfigEnum.switchingSpeed),
@@ -119,9 +120,9 @@ public class ModeloUtil extends Util {
             in.setSource(out);
             from.addOutPort(out);
             to.addInPort(in);
-            
+
             return out;
-            
+
         } else {
             throw new IllegalEdgeException("Cannot connect two entities which do not share the same swithcing protocols "
                     + from.getId() + " -->" + to.getId());

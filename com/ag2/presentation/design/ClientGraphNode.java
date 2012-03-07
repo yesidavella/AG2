@@ -8,12 +8,12 @@ import java.io.ObjectInputStream;
 public class ClientGraphNode extends GraphNode{
 
     private static int nodeCounter = 0;
-  
     
-    public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController)
-    {
+    public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
+            LinkAdminAbstractController linkAdminAbstractController) {
         
-        super(graphDesignGroup,"Cliente_"+(++nodeCounter), ResourcesPath.ABS_PATH_IMGS+"cliente_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);        
+        super(graphDesignGroup,"Cliente_"+(++nodeCounter), ResourcesPath.ABS_PATH_IMGS+"cliente_mapa.png", 
+                nodeAdminAbstractController,linkAdminAbstractController);        
         setHeight((short)50);
 
         if(nodeCounter<10){
@@ -35,8 +35,7 @@ public class ClientGraphNode extends GraphNode{
         try
         {
            inputStream.defaultReadObject();
-           nodeCounter++; 
-            
+           nodeCounter++;
         } 
         catch (Exception e) 
         {

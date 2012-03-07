@@ -1,12 +1,11 @@
 package com.ag2.presentation.design;
 
-import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
+import com.ag2.presentation.GUI;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -35,7 +34,6 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
 
         this.graphArcA.addNodeListener(this);
         this.graphArcB.addNodeListener(this);
-
 
     }
 

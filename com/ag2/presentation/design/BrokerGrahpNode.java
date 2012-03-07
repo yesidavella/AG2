@@ -9,8 +9,11 @@ public class BrokerGrahpNode extends GraphNode {
 
     private static short nodeCounter = 0;
 
-    public BrokerGrahpNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController, LinkAdminAbstractController linkAdminAbstractController) {
-        super(graphDesignGroup, "Agentador_" + (++nodeCounter), ResourcesPath.ABS_PATH_IMGS+"nodo_servicio_mapa.png", nodeAdminAbstractController, linkAdminAbstractController);
+    public BrokerGrahpNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
+            LinkAdminAbstractController linkAdminAbstractController) {
+
+        super(graphDesignGroup, "Agentador_" + (++nodeCounter), ResourcesPath.ABS_PATH_IMGS + "nodo_servicio_mapa.png",
+                nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 74);
         setWidth((short) 61);
         lineBreakStep = 12;

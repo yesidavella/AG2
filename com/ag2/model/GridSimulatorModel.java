@@ -1,35 +1,28 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.model;
 
 import Grid.Utilities.Config;
 import com.ag2.controller.ResultsAbstractController;
-import com.ag2.presentation.control.ViewResultsPhosphorus;
-import simbase.*;
 import simbase.Exceptions.StopException;
 import simbase.Port.SimBaseInPort;
+import simbase.SimBaseEntity;
+import simbase.SimBaseEvent;
+import simbase.SimBaseMessage;
+import simbase.SimulationInstance;
 
-/**
- *
- * @author Frank
- */
 public class GridSimulatorModel extends Grid.GridSimulator {
 
     private double simulationTime = 0;
     private double percentage = 0;
     private int percentageShort = 0;
     private int percentageSwapShort = 0;
-    private ResultsAbstractController resultsAbstractController; 
-    
+    private ResultsAbstractController resultsAbstractController;
+
     public GridSimulatorModel() {
         simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
-
     }
-    public void reloadTime()
-    {
-           simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
+
+    public void reloadTime() {
+        simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
     }
 
     public void setViewResultsPhosphorus(ResultsAbstractController resultsAbstractController) {
@@ -37,10 +30,8 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     }
 
     @Override
-    public boolean runNextEvent() throws StopException 
-    {
-        if (events.isEmpty()) 
-        {
+    public boolean runNextEvent() throws StopException {
+        if (events.isEmpty()) {
             throw new StopException("There are no events to execute anymore");
         }
         eventCount++;
@@ -53,16 +44,14 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         SimBaseEntity entity = nextEvent.getTarget().getOwner();
         entity.receive(port, msg);
 
-        reloadTime(); 
-        percentage = masterClock.getTime()*100 / simulationTime;
+        reloadTime();
+        percentage = masterClock.getTime() * 100 / simulationTime;
         percentageShort = Math.round((float) percentage);
-        if(percentageShort!=percentageSwapShort)
-        {
-            percentageSwapShort=percentageShort; 
+        if (percentageShort != percentageSwapShort) {
+            percentageSwapShort = percentageShort;
             resultsAbstractController.setExecutionPercentage(percentage);
-           
-        }     
-        return true;
 
+        }
+        return true;
     }
 }
