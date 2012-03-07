@@ -1,0 +1,9 @@
+/* AUTOMATICALLY GENERATED ON Wed Feb 29 17:53:49 COT 2012*/
+/* DO NOT EDIT */
+/*En el archivo C:\Program Files (x86)\Java\jre7\lib\security\java.policy*/
+/*agregar el permiso  permission java.security.AllPermission;*/
+
+grant {
+  permission java.security.AllPermission;
+};
+
