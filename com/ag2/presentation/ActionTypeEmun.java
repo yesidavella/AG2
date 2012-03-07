@@ -1,5 +1,6 @@
 package com.ag2.presentation;
 
+import com.ag2.util.ResourcesPath;
 import javafx.geometry.Point2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
@@ -26,20 +27,20 @@ import javafx.scene.image.Image;
     private Image buttonImage;
     private ImageCursor cursorImage;
     private ImageCursor overCursorImage;
-    private Point2D point2D;
+    private Point2D point2D; 
 
         private ActionTypeEmun(String imageName)
         {
             point2D = new Point2D(0,0);
-            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imageName + ".png"));
+            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS + imageName + ".png");
         }
 
         private ActionTypeEmun(String imagenBotonName, String cursorImageName, double posImageX, double posImageY) {
 
-            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imagenBotonName + ".png"));
+            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ imagenBotonName + ".png");
 
             if (cursorImageName != null) {
-                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + cursorImageName + ".png"));
+                Image image = new Image(ResourcesPath.ABS_PATH_IMGS+ cursorImageName + ".png");
                 point2D = new Point2D(posImageX, posImageY);
                 cursorImage = new ImageCursor(image,posImageX,posImageY);
             }
@@ -47,16 +48,16 @@ import javafx.scene.image.Image;
 
         private ActionTypeEmun(String imagenBotonName, String cursorImageName,double posImageX,double posImageY,String overCursorImageName,double posImage2X,double posImage2Y) {
 
-            buttonImage = new Image(getClass().getResourceAsStream("../../../resource/image/" + imagenBotonName + ".png"));
+            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ imagenBotonName + ".png");
 
             if (cursorImageName != null) {
-                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + cursorImageName + ".png"));
+                Image image = new Image(ResourcesPath.ABS_PATH_IMGS + cursorImageName + ".png");
                 point2D = new Point2D(posImageX, posImageY);
                 cursorImage = new ImageCursor(image,posImageX,posImageY);
             }
 
             if (overCursorImageName != null) {
-                Image image = new Image(getClass().getResourceAsStream("../../../resource/image/" + overCursorImageName + ".png"));
+                Image image = new Image(ResourcesPath.ABS_PATH_IMGS+ overCursorImageName + ".png");
                 overCursorImage = new ImageCursor(image,posImage2X,posImage2Y);
             }
         }

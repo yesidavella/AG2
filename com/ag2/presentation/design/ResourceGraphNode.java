@@ -2,13 +2,14 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
+import com.ag2.util.ResourcesPath;
 import java.io.ObjectInputStream;
 
 public class ResourceGraphNode extends GraphNode{
 
     private   static short nodeCounter = 0;
     public ResourceGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController) {
-        super(graphDesignGroup, "Cluster_"+(++nodeCounter),"../../../../resource/image/recurso_cursor_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
+        super(graphDesignGroup, "Cluster_"+(++nodeCounter),ResourcesPath.ABS_PATH_IMGS+"recurso_cursor_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
         setHeight((short)67);
         setWidth((short)49);
 

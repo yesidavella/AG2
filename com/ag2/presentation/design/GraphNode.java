@@ -4,6 +4,9 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
+import com.ag2.util.ResourcesPath;
+import com.sun.deploy.util.URLUtil;
+import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -26,9 +29,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
-
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(
-            new Image(GraphNode.class.getResourceAsStream("../../../../resource/image/prohibido_enlace.png")));
+ 
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"prohibido_enlace.png"));
     public static boolean linkBegin = false;        
     private static GraphNode wildcardNodeA = null;
     
@@ -85,7 +87,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
         wildcardLink = new Line();
         vBoxWrapper = new VBox();
-        image = new Image(getClass().getResourceAsStream(imageURL));
+        image = new Image(imageURL);
         imageView = new ImageView(image);
         vBoxWrapper.setAlignment(Pos.CENTER);
         vBoxWrapper.getChildren().addAll(imageView, lblName);

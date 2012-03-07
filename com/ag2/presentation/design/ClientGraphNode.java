@@ -2,6 +2,7 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
+import com.ag2.util.ResourcesPath;
 import java.io.ObjectInputStream;
 
 public class ClientGraphNode extends GraphNode{
@@ -12,7 +13,7 @@ public class ClientGraphNode extends GraphNode{
     public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController)
     {
         
-        super(graphDesignGroup,"Cliente_"+(++nodeCounter), "../../../../resource/image/cliente_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);        
+        super(graphDesignGroup,"Cliente_"+(++nodeCounter), ResourcesPath.ABS_PATH_IMGS+"cliente_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);        
         setHeight((short)50);
 
         if(nodeCounter<10){
