@@ -65,13 +65,11 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         initTransientObjects();
         nodeAdminAbstractControllers = new ArrayList<NodeAdminAbstractController>();
         linkAdminAbstractControllers = new ArrayList<LinkAdminAbstractController>();
-
     }
 
     public boolean isSerializableComplete() {
         return serializableComplete;
     }
-
 
     public void initTransientObjects() {
         group = new Group();
@@ -86,7 +84,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         switchesObservableList = FXCollections.observableArrayList();
         brokersObservableList = FXCollections.observableArrayList();
         loadGeoMap();
-
     }
 
     public Selectable getSelectable() {
@@ -390,7 +387,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         try {
 
-            File file = new File("resources\\maps\\110m_admin_0_countries.shp");
+            File file = new File("resources/maps/110m_admin_0_countries.shp");
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
             SimpleFeatureSource featureSource = store.getFeatureSource();
             SimpleFeatureCollection c = featureSource.getFeatures();

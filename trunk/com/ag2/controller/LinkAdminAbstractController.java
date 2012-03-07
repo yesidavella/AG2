@@ -1,7 +1,7 @@
 package com.ag2.controller;
 
-import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.LinkCreationAbstractModel;
+import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.property.EntityPropertyTable;
 import java.io.Serializable;

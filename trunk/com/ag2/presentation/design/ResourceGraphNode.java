@@ -33,5 +33,4 @@ public class ResourceGraphNode extends GraphNode{
             e.printStackTrace();
         }
     }
-
 }

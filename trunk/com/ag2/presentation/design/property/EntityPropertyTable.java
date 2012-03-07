@@ -16,14 +16,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class EntityPropertyTable extends TableView<EntityProperty> implements GraphNodesView, Serializable
-{
+public class EntityPropertyTable extends TableView<EntityProperty> implements GraphNodesView, Serializable {
+
     private NodeAdminAbstractController nodeAdminAbstractController;
     private LinkAdminAbstractController linkAdminAbstractController;
 
-
-     public EntityPropertyTable()
-    {
+    public EntityPropertyTable() {
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
         propertyTableColumn.setMinWidth(110);
@@ -45,45 +43,41 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
         setPrefHeight(200);
     }
 
-    public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController)
-    {
+    public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController) {
         this.nodeAdminAbstractController = nodeAdminAbstractController;
     }
 
-    public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminAbstractController){
+    public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminAbstractController) {
         this.linkAdminAbstractController = linkAdminAbstractController;
     }
-
-
 
     public void loadProperties(ArrayList<EntityProperty> entityPropertys) {
 
         ObservableList dataObservableList = FXCollections.observableArrayList();
 
-        for(EntityProperty entityProperty : entityPropertys){
-           entityProperty.setEntityPropertyTable(this);
-           dataObservableList.add(entityProperty);
+        for (EntityProperty entityProperty : entityPropertys) {
+            entityProperty.setEntityPropertyTable(this);
+            dataObservableList.add(entityProperty);
         }
         setItems(dataObservableList);
     }
-    public void clearData()
-    {
+
+    public void clearData() {
         ObservableList dataObservableList = FXCollections.observableArrayList();
-         setItems(dataObservableList);
+        setItems(dataObservableList);
     }
 
-    public void updateProperty(boolean isSubProperty, String id, String value)
-    {
+    public void updateProperty(boolean isSubProperty, String id, String value) {
         Selectable selectable = GUI.getInstance().getGraphDesignGroup().getSelectable();
 
-        if(selectable != null){
+        if (selectable != null) {
             if (selectable instanceof GraphNode) {
-                nodeAdminAbstractController.updateProperty(isSubProperty,true,id, value);
+                nodeAdminAbstractController.updateProperty(isSubProperty, true, id, value);
             } else if (selectable instanceof GraphLink) {
-                linkAdminAbstractController.updatePropiedad((GraphLink)selectable,id, value);
+                linkAdminAbstractController.updatePropiedad((GraphLink) selectable, id, value);
             }
         }
-     }
+    }
 
     public void enableDisign() {
     }

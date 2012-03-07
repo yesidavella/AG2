@@ -1,9 +1,8 @@
 
 package com.ag2.presentation.control;
 
-
-public interface  ViewResultsPhosphorus
-{
+public interface  ViewResultsPhosphorus {
+    
    public abstract  void adicionarResultadoCliente(String tcCliente, String tcPeticionesEnviadas ,
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
             String tcPorcentajeResultadosRecibidos );
@@ -22,10 +21,4 @@ public interface  ViewResultsPhosphorus
                                             String reltotDrop);
 
    public void setExecutionPercentage(double Percentage);
-
-
-
-
-
-
 }

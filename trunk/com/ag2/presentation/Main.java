@@ -1,33 +1,18 @@
 package com.ag2.presentation;
 
-import com.ag2.model.BrokerCreationModel;
-import com.ag2.model.HybridSwitchCreationModel;
-import com.ag2.model.ClientCreationModel;
-import com.ag2.model.LinkCreationAbstractModel;
-import com.ag2.model.LinkCreationModel;
-import com.ag2.model.OBS_SwitchCreationModel;
-import com.ag2.model.OCS_SwitchCreationModel;
-import com.ag2.model.NodeCreationModel;
-import com.ag2.model.SimulationBase;
-import com.ag2.model.ModeloCrearNodoDeRecurso;
-import com.ag2.controller.LinkAdminController;
-import com.ag2.controller.ExecuteController;
-import com.ag2.controller.LinkAdminAbstractController;
-import com.ag2.controller.NodeAdminController;
-import com.ag2.controller.ResultsController;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
+import com.ag2.controller.*;
+import com.ag2.model.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Date;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
-
 
 public class Main extends Application implements Serializable {
 
@@ -37,9 +22,8 @@ public class Main extends Application implements Serializable {
     private NodeCreationModel nodeCreationModel;
     private LinkAdminAbstractController linkAdminAbstractController;
     private GraphDesignGroup graphDesignGroup;
-    private SimulationBase simulationBase =  SimulationBase.getInstance();
+    private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
-
 
     @Override
     public void start(final Stage stage) {
@@ -57,16 +41,16 @@ public class Main extends Application implements Serializable {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
-            public void handle(WindowEvent event)
-            {
+            public void handle(WindowEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     System.exit(0);
                 } else if (result == JOptionPane.YES_OPTION) {
                     save(true);
-                }event.consume();
+                }
+                event.consume();
             }
         });
     }
@@ -155,19 +139,17 @@ public class Main extends Application implements Serializable {
     public GraphDesignGroup getGraphDesignGroup() {
         return graphDesignGroup;
     }
-    public void loadFileBaseSimulation()
-    {
+
+    public void loadFileBaseSimulation() {
         Main main = utilSerializator.loadFileBaseSimulation();
-        if (main != null)
-        {
+        if (main != null) {
             loadControllers(main);
         }
     }
 
-    private void loadControllers(Main main)
-    {
- 
-        simulationBase =   main.getSimulationBase();  ///SimulacionBase.getInstance();
+    private void loadControllers(Main main) {
+
+        simulationBase = main.getSimulationBase();  ///SimulacionBase.getInstance();
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();
 
@@ -175,7 +157,7 @@ public class Main extends Application implements Serializable {
 
         nodeAdminController = main.getNodeAdminController();
         linkAdminAbstractController = main.getLinkAdminAbstractController();
-        executeController= main.getExecuteAbstractController();
+        executeController = main.getExecuteAbstractController();
         resultsController = main.getResultsController();
 
         nodeCreationModel = main.getNodeCreationModel();
@@ -192,29 +174,25 @@ public class Main extends Application implements Serializable {
         nodeAdminController.addGraphNodesView(GUI.getInstance().getGraphDesignGroup());
         nodeAdminController.addGraphNodesView(GUI.getInstance().getEntityPropertyTb());
         GUI.getInstance().getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
-      //  executeAbstractController.stop();
+        //  executeAbstractController.stop();
     }
 
-    public void save(boolean  thenClose) {
+    public void save(boolean thenClose) {
         utilSerializator.OpenDialogToSave();
-        if(thenClose)
-        {
-             System.exit(0);
+        if (thenClose) {
+            System.exit(0);
         }
     }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException
-    {
-
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         simulationBase = SimulationBase.getInstance();
         simulationBase.getGridSimulatorModel().getEntities();
         objectOutputStream.defaultWriteObject();
-
     }
+
     public void load() {
         Main main = utilSerializator.OpenDialogToLoad();
-        if (main != null)
-        {
+        if (main != null) {
             loadControllers(main);
 
         }

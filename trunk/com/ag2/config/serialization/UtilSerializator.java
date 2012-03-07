@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.config.serialization;
 
 import com.ag2.presentation.Main;
@@ -12,7 +8,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-
 
 public class UtilSerializator {
 

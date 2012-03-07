@@ -1,9 +1,9 @@
 package com.ag2.presentation;
 
 import com.ag2.controller.ExecuteAbstractController;
-import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
 import com.ag2.presentation.control.PhosphosrusResults;
+import com.ag2.presentation.control.ToggleButtonAg2;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -85,19 +85,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
         setHgap(4);
         setPrefColumns(2);
 
-        Tooltip tTipBtnEjecutar = new Tooltip("Ejecutar simulación");
-        btnRun.setTooltip(tTipBtnEjecutar);
+        btnRun.setTooltip(new Tooltip("Ejecutar simulación"));
         btnRun.setToggleGroup(tgRun);
 
-        btnRun.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent t) {
-            }
-        });
-
-        Tooltip tTipBtnParar = new Tooltip("Parar simulación");
-
-        btnStop.setTooltip(tTipBtnParar);
+        btnStop.setTooltip(new Tooltip("Parar simulación"));
         btnStop.setToggleGroup(tgRun);
         btnStop.setSelected(true);
         getChildren().addAll(btnRun, btnStop);

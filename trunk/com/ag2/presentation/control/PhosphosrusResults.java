@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
+
 package com.ag2.presentation.control;
 
 import java.io.Serializable;
@@ -44,7 +41,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
         creartvResultadosConmutadores();
         vBox.getChildren().addAll(progressIndicator, lbCliente, tvResultadosClientePhosphorus, lbRecurso, tvResultadosRecursoPhosphorus, lbConmutador, tvResultadosConmutadorPhosphorus);
         tab.setContent(vBox);
-
 
     }
 

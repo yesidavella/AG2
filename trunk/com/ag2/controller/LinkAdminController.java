@@ -2,9 +2,9 @@ package com.ag2.controller;
 
 import Grid.Entity;
 import Grid.Port.GridOutPort;
-import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.LinkCreationModel;
+import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.SimulationBase;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;

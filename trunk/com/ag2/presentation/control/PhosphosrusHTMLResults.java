@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.presentation.control;
 
 import Grid.Utilities.HtmlWriter;
+import com.ag2.util.ResourcesPath;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,10 +22,10 @@ import javafx.scene.web.WebView;
 
 public class PhosphosrusHTMLResults {
 
-    private ImageView leftEndImageView = new ImageView(new Image(getClass().getResourceAsStream("../../../../resource/image/mini_izquierda_fin.png")));
-    private ImageView leftImageView = new ImageView(new Image(getClass().getResourceAsStream("../../../../resource/image/mini_izquierda.png")));
-    private ImageView rightImageView = new ImageView(new Image(getClass().getResourceAsStream("../../../../resource/image/mini_derecha.png")));
-    private ImageView rightEndImageView = new ImageView(new Image(getClass().getResourceAsStream("../../../../resource/image/mini_derecha_fin.png")));
+    private ImageView leftEndImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_izquierda_fin.png"));
+    private ImageView leftImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_izquierda.png"));
+    private ImageView rightImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_derecha.png"));
+    private ImageView rightEndImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_derecha_fin.png"));
     private Button btnLeftEnd = new Button();
     private Button btnLeft = new Button();
     private Button btnRight = new Button();
@@ -44,9 +41,7 @@ public class PhosphosrusHTMLResults {
     private VBox vBox = new VBox();
     private HBox hBox = new HBox();
 
-
-    public PhosphosrusHTMLResults(final Tab tab)
-    {
+    public PhosphosrusHTMLResults(final Tab tab) {
 
         btnLeftEnd.setGraphic(leftEndImageView);
         btnLeft.setGraphic(leftImageView);
@@ -71,16 +66,15 @@ public class PhosphosrusHTMLResults {
         });
 
     }
-     public void lookToNextExecution()
-    {
 
+    public void lookToNextExecution() {
     }
 
     private void loadFilesHTMLs(Tab tab) {
 
 
         String currentFolder = new File("").getAbsolutePath();
-        nameFolder = currentFolder + File.separator + RESULTS_FOLDER+"_"+(HtmlWriter.countObject-2);
+        nameFolder = currentFolder + File.separator + RESULTS_FOLDER + "_" + (HtmlWriter.countObject - 2);
         File file = new File(nameFolder);
 
         if (file.exists()) {

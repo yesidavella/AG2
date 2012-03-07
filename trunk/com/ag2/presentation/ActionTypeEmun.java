@@ -35,9 +35,9 @@ import javafx.scene.image.Image;
             buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS + imageName + ".png");
         }
 
-        private ActionTypeEmun(String imagenBotonName, String cursorImageName, double posImageX, double posImageY) {
+        private ActionTypeEmun(String buttonImageName, String cursorImageName, double posImageX, double posImageY) {
 
-            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ imagenBotonName + ".png");
+            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ buttonImageName + ".png");
 
             if (cursorImageName != null) {
                 Image image = new Image(ResourcesPath.ABS_PATH_IMGS+ cursorImageName + ".png");
@@ -46,9 +46,9 @@ import javafx.scene.image.Image;
             }
         }
 
-        private ActionTypeEmun(String imagenBotonName, String cursorImageName,double posImageX,double posImageY,String overCursorImageName,double posImage2X,double posImage2Y) {
+        private ActionTypeEmun(String buttonImageName, String cursorImageName,double posImageX,double posImageY,String overCursorImageName,double posImage2X,double posImage2Y) {
 
-            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ imagenBotonName + ".png");
+            buttonImage = new Image(ResourcesPath.ABS_PATH_IMGS+ buttonImageName + ".png");
 
             if (cursorImageName != null) {
                 Image image = new Image(ResourcesPath.ABS_PATH_IMGS + cursorImageName + ".png");
@@ -77,5 +77,4 @@ import javafx.scene.image.Image;
         public Point2D getPoint2D() {
             return point2D;
         }
-
     }

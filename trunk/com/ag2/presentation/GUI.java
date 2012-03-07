@@ -154,8 +154,6 @@ public class GUI extends Scene implements Serializable {
         addScene(this);
     }
 
-
-
     public void setStage(Stage stage) {
         this.stgEscenario = stage;
     }
@@ -202,12 +200,14 @@ public class GUI extends Scene implements Serializable {
 
             }
         });
+        
         openMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
                 main.load();
             }
         });
+        
         newNenuItem.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -250,11 +250,11 @@ public class GUI extends Scene implements Serializable {
         });
 
         //La barra de menus
-        MenuBar mnuBarBarraDeMenus = new MenuBar();
-        mnuBarBarraDeMenus.getMenus().addAll(fileMenu, helpFile);
-        mnuBarBarraDeMenus.getStyleClass().add("barraDeMenus");
+        MenuBar mbarMainMenuBar = new MenuBar();
+        mbarMainMenuBar.getMenus().addAll(fileMenu, helpFile);
+        mbarMainMenuBar.getStyleClass().add("barraDeMenus");
 
-        hBox.getChildren().add(mnuBarBarraDeMenus);
+        hBox.getChildren().add(mbarMainMenuBar);
         borderPane.setTop(hBox);
     }
 
@@ -271,7 +271,7 @@ public class GUI extends Scene implements Serializable {
         return gridPane;
     }
 
-    private void createUtilButtons(GridPane grdPnBarraHerramientas) {
+    private void createUtilButtons(GridPane grdPnToolsBar) {
 
         btnHand = new ToggleButtonAg2(ActionTypeEmun.HAND);
         btnSelection = new ToggleButtonAg2(ActionTypeEmun.POINTER);
@@ -302,22 +302,22 @@ public class GUI extends Scene implements Serializable {
         btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (Selección rapida:Shift)"));
 
         GridPane.setConstraints(btnSelection, 0, 0);
-        grdPnBarraHerramientas.getChildren().add(btnSelection);
+        grdPnToolsBar.getChildren().add(btnSelection);
 
         GridPane.setConstraints(btnHand, 1, 0);
-        grdPnBarraHerramientas.getChildren().add(btnHand);
+        grdPnToolsBar.getChildren().add(btnHand);
 
         GridPane.setConstraints(btnPointSeparator, 0, 1);
-        grdPnBarraHerramientas.getChildren().add(btnPointSeparator);
+        grdPnToolsBar.getChildren().add(btnPointSeparator);
 
         GridPane.setConstraints(btnDeleted, 1, 1);
-        grdPnBarraHerramientas.getChildren().add(btnDeleted);
+        grdPnToolsBar.getChildren().add(btnDeleted);
 
         GridPane.setConstraints(btnMinusZoom, 0, 2);
-        grdPnBarraHerramientas.getChildren().add(btnMinusZoom);
+        grdPnToolsBar.getChildren().add(btnMinusZoom);
 
         GridPane.setConstraints(btnPlusZoom, 1, 2);
-        grdPnBarraHerramientas.getChildren().add(btnPlusZoom);
+        grdPnToolsBar.getChildren().add(btnPlusZoom);
 
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
         separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
@@ -326,11 +326,11 @@ public class GUI extends Scene implements Serializable {
         separadorHerramientas.setValignment(VPos.CENTER);
 
         GridPane.setColumnSpan(separadorHerramientas, 2);
-        grdPnBarraHerramientas.getChildren().add(separadorHerramientas);
+        grdPnToolsBar.getChildren().add(separadorHerramientas);
 
     }
 
-    private void createNodeButtons(GridPane grdPnBarraHerramientas) {
+    private void createNodeButtons(GridPane grdPnToolsBar) {
 
         btnClient.setToggleGroup(tgTools);
         btnBroker.setToggleGroup(tgTools);
@@ -357,25 +357,25 @@ public class GUI extends Scene implements Serializable {
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
 
         GridPane.setConstraints(btnClient, 0, 4);
-        grdPnBarraHerramientas.getChildren().add(btnClient);
+        grdPnToolsBar.getChildren().add(btnClient);
 
         GridPane.setConstraints(btnBroker, 1, 4);
-        grdPnBarraHerramientas.getChildren().add(btnBroker);
+        grdPnToolsBar.getChildren().add(btnBroker);
 
         GridPane.setConstraints(btnOCS_Switch, 0, 5);
-        grdPnBarraHerramientas.getChildren().add(btnOCS_Switch);
+        grdPnToolsBar.getChildren().add(btnOCS_Switch);
 
         GridPane.setConstraints(btnOBS_Switch, 1, 5);
-        grdPnBarraHerramientas.getChildren().add(btnOBS_Switch);
+        grdPnToolsBar.getChildren().add(btnOBS_Switch);
 
         GridPane.setConstraints(btnHybridSwitch, 0, 6);
-        grdPnBarraHerramientas.getChildren().add(btnHybridSwitch);
+        grdPnToolsBar.getChildren().add(btnHybridSwitch);
 
         GridPane.setConstraints(btnResource, 1, 6);
-        grdPnBarraHerramientas.getChildren().add(btnResource);
+        grdPnToolsBar.getChildren().add(btnResource);
 
         GridPane.setConstraints(btnLink, 0, 7);
-        grdPnBarraHerramientas.getChildren().add(btnLink);
+        grdPnToolsBar.getChildren().add(btnLink);
 
     }
 
@@ -391,8 +391,8 @@ public class GUI extends Scene implements Serializable {
         tabResultsHTML.setClosable(false);
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
-        PhosphosrusHTMLResults resultadosPhosphorousHTML = new PhosphosrusHTMLResults(tabResultsHTML);
-        executePane.setPhosphosrusHTMLResults(resultadosPhosphorousHTML);
+        PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
+        executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
         executePane.setPhosphosrusResults(phosphosrusResults);
 
         graphDesignGroup.setScrollPane(scPnWorld);
@@ -402,8 +402,6 @@ public class GUI extends Scene implements Serializable {
         tabSimulation.setContent(scPnWorld);
 
         tpBox.getTabs().addAll(tabSimulation);
-
-
     }
 
     private HBox createDesignButtons() {
@@ -435,25 +433,23 @@ public class GUI extends Scene implements Serializable {
     }
 
     private VBox createProjectsLogos() {
-
-        final String absPathImgs = URLUtil.fileToURL(new File("resources/images/")).toString();
         
-        ImageView ivAG2 = new ImageView(new Image(absPathImgs+"logoAG2.png"));
+        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
         ivAG2.setFitWidth(40*proportionXYAG2);
         
-        ImageView ivInternetIntel = new ImageView(new Image(absPathImgs+"logoInterInt.png"));
+        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth()/ivInternetIntel.getBoundsInParent().getHeight();
         ivInternetIntel.setFitHeight(35);
         ivInternetIntel.setFitWidth(35*proportionXYInternetIn);
 
-        ImageView ivPhosphorus = new ImageView(new Image(absPathImgs+"phosphorus.jpg"));
+        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"phosphorus.jpg"));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
         ivPhosphorus.setFitHeight(45);
         ivPhosphorus.setFitWidth(45*proportionXYphosphorus);
 
-        ImageView ivDistritalUniv = new ImageView(new Image(absPathImgs+"escudo_udistrital.jpg"));
+        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"escudo_udistrital.jpg"));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
         ivDistritalUniv.setFitHeight(55);
         ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
@@ -656,9 +652,9 @@ public class GUI extends Scene implements Serializable {
         });
     }
 
-    private void addScene(final Scene escena) {
+    private void addScene(final Scene scene) {
 
-        escena.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             public void handle(KeyEvent event) {
 
@@ -683,7 +679,7 @@ public class GUI extends Scene implements Serializable {
             }
         });
 
-        escena.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             public void handle(KeyEvent event) {
 
@@ -704,7 +700,6 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
         new AboutAG2project();
-
     }
 
     public GraphDesignGroup getGraphDesignGroup() {
@@ -777,6 +772,4 @@ public class GUI extends Scene implements Serializable {
     public TableView<String> getTbwSimulationProperties() {
         return tbwSimulationProperties;
     }
-
-
 }

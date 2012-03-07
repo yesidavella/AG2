@@ -1,17 +1,9 @@
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 package com.ag2.controller;
 
 import com.ag2.model.OutputterModel;
 import com.ag2.model.SimulationBase;
 import com.ag2.presentation.control.ViewResultsPhosphorus;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class ResultsAbstractController  implements Serializable
 {
@@ -41,10 +33,4 @@ public abstract class ResultsAbstractController  implements Serializable
                                             String reltotDrop);
 
     public abstract void setExecutionPercentage(double Percentage);
-
-
-
-
-
-
 }

@@ -60,7 +60,6 @@ public class GraphArc  implements Serializable {
         this.finalGraphArcSeparatorPoint = finalGraphArcSeparatorPoint;
     }
 
-
     public void initTransientObjects()
     {
         quadCurve = new QuadCurve();
@@ -154,34 +153,34 @@ public class GraphArc  implements Serializable {
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.ADD_LINK_SEPARATOR) {
 
                     GraphArc graphArc = GraphArc.this;
-                    GraphArc arcGrafNuevo = new GraphArc(graphArc.getGraphLink(), graphArc.getGroup());
+                    GraphArc newGraphArc = new GraphArc(graphArc.getGraphLink(), graphArc.getGroup());
 
-                    arcGrafNuevo.setStartX(clickX);
-                    arcGrafNuevo.setStartY(clickY);
-                    arcGrafNuevo.setEndX(graphArc.getEndX());
-                    arcGrafNuevo.setEndY(graphArc.getEndY());
+                    newGraphArc.setStartX(clickX);
+                    newGraphArc.setStartY(clickY);
+                    newGraphArc.setEndX(graphArc.getEndX());
+                    newGraphArc.setEndY(graphArc.getEndY());
 
                     graphArc.setEndX(clickX);
                     graphArc.setEndY(clickY);
 
                     graphArc.calculateCenter();
-                    arcGrafNuevo.calculateCenter();
+                    newGraphArc.calculateCenter();
 
-                    GraphArcSeparatorPoint graphArcSeparatorPointNew = new GraphArcSeparatorPoint(graphDesignGroup, graphArc, arcGrafNuevo, clickX, clickY);
+                    GraphArcSeparatorPoint graphArcSeparatorPointNew = new GraphArcSeparatorPoint(graphDesignGroup, graphArc, newGraphArc, clickX, clickY);
 
                     if( graphArc.getFinalGraphArcSeparatorPoint()!=null){
-                        graphArc.getFinalGraphArcSeparatorPoint().setGraphArcA(arcGrafNuevo);
-                        arcGrafNuevo.setFinalGraphArcSeparatorPoint(graphArc.getFinalGraphArcSeparatorPoint());
+                        graphArc.getFinalGraphArcSeparatorPoint().setGraphArcA(newGraphArc);
+                        newGraphArc.setFinalGraphArcSeparatorPoint(graphArc.getFinalGraphArcSeparatorPoint());
                     }
 
-                    arcGrafNuevo.setInitialGraphArcSeparatorPoint(graphArcSeparatorPointNew);
+                    newGraphArc.setInitialGraphArcSeparatorPoint(graphArcSeparatorPointNew);
                     graphArc.setFinalGraphArcSeparatorPoint(graphArcSeparatorPointNew);
 
-                    graphDesignGroup.add(arcGrafNuevo);
+                    graphDesignGroup.add(newGraphArc);
                     graphDesignGroup.add(graphArcSeparatorPointNew);
                     graphNodeB.getGroup().toFront();
 
-                    graphLink.getGraphArcs().add(arcGrafNuevo);
+                    graphLink.getGraphArcs().add(newGraphArc);
                     graphLink.findOutInitialAndFinalArc();
 
                     graphLink.select(true);
@@ -322,11 +321,10 @@ public class GraphArc  implements Serializable {
     private void writeObject(ObjectOutputStream stream){
         try {
             stream.defaultWriteObject();
-            System.out.println("Write : Arco" );
+//            System.out.println("Write : Arco" );
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
 }

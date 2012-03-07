@@ -1,25 +1,24 @@
 package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
-import com.ag2.controller.MatchCoupleObjectContainer;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.paint.Color;
 
-public class GraphLink implements NodeListener,Serializable,Selectable  {
+public class GraphLink implements NodeListener, Serializable, Selectable {
 
     private GraphNode graphNodeA;
     private GraphNode graphNodeB;
     private ArrayList<GraphArc> graphArcs = new ArrayList<GraphArc>();
-    private GraphArc initialGraphArc,finalGraphArc;
+    private GraphArc initialGraphArc, finalGraphArc;
     private GraphDesignGroup graphDesignGroup;
     private LinkAdminAbstractController linkAdminAbstractController;
     private boolean isSelected;
-    private HashMap<String,String> properties;
+    private HashMap<String, String> properties;
 
-    public GraphLink(GraphDesignGroup graphDesignGroup, GraphNode graphNodeA, GraphNode graphNodeB,LinkAdminAbstractController linkAdminAbstractController) {
+    public GraphLink(GraphDesignGroup graphDesignGroup, GraphNode graphNodeA, GraphNode graphNodeB, LinkAdminAbstractController linkAdminAbstractController) {
 
         this.graphNodeA = graphNodeA;
         this.graphNodeB = graphNodeB;
@@ -31,10 +30,10 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
         initialGraphArc = new GraphArc(this, graphDesignGroup);
 
-        initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth()/2);
-        initialGraphArc.setStartY(graphNodeA.getLayoutY() + graphNodeA.getHeight()/2);
-        initialGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth()/2);
-        initialGraphArc.setEndY(graphNodeB.getLayoutY() + graphNodeB.getHeight()/2);
+        initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
+        initialGraphArc.setStartY(graphNodeA.getLayoutY() + graphNodeA.getHeight() / 2);
+        initialGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
+        initialGraphArc.setEndY(graphNodeB.getLayoutY() + graphNodeB.getHeight() / 2);
         initialGraphArc.calculateCenter();
         graphArcs.add(initialGraphArc);
 
@@ -57,16 +56,12 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         return graphNodeB;
     }
 
-
     @Override
-    public void update()
-    {
-        if (graphNodeA != null && graphNodeB != null)
-        {
+    public void update() {
+        if (graphNodeA != null && graphNodeB != null) {
             if (graphNodeA.isDeleted() || graphNodeB.isDeleted()) {
 
-                for (GraphArc graphArc : graphArcs)
-                {
+                for (GraphArc graphArc : graphArcs) {
                     graphArc.setDeleted(true);
                     graphArc.updateArcListeners();
                     graphDesignGroup.remove(graphArc);
@@ -76,13 +71,13 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
                 removeGraphLink();
 
-            }else{
+            } else {
 
-                initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth()/2);
-                initialGraphArc.setStartY(graphNodeA.getLayoutY() + 0.75*graphNodeA.getHeight() - graphNodeA.getInitialHeight()/4);
+                initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
+                initialGraphArc.setStartY(graphNodeA.getLayoutY() + 0.75 * graphNodeA.getHeight() - graphNodeA.getInitialHeight() / 4);
 
-                finalGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth()/2);
-                finalGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75*graphNodeB.getHeight()- graphNodeB.getInitialHeight()/4);
+                finalGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
+                finalGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75 * graphNodeB.getHeight() - graphNodeB.getInitialHeight() / 4);
             }
         }
     }
@@ -91,37 +86,33 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         return graphNodeA;
     }
 
-
     private void readObject(ObjectInputStream inputStream) {
-        try
-        {
+        try {
             inputStream.defaultReadObject();
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void select(boolean isSelected) {
 
         Selectable selectable = graphDesignGroup.getSelectable();
 
-        if(selectable!=null && selectable!=this){
+        if (selectable != null && selectable != this) {
             selectable.select(false);
         }
 
         this.isSelected = isSelected;
 
-        if(isSelected){
-            for(GraphArc graphArc:graphArcs){
+        if (isSelected) {
+            for (GraphArc graphArc : graphArcs) {
                 graphArc.getQuadCurve().getStyleClass().remove("arcoNoSeleccionado");
                 graphArc.getQuadCurve().getStyleClass().add("arcoSeleccionado");
 
                 GraphArcSeparatorPoint verticeGrafico = graphArc.getInitialGraphArcSeparatorPoint();
 
-                if(verticeGrafico!= null){
+                if (verticeGrafico != null) {
                     verticeGrafico.getCircle().setFill(Color.web("#44FF00"));
                     verticeGrafico.getCircle().toFront();
                 }
@@ -129,14 +120,14 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
             graphDesignGroup.setSelectable(this);
             linkAdminAbstractController.queryProperty(this);
 
-        }else{
-            for(GraphArc graphArc:graphArcs){
+        } else {
+            for (GraphArc graphArc : graphArcs) {
                 graphArc.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
                 graphArc.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
 
                 GraphArcSeparatorPoint graphArcSeparatorPoint = graphArc.getInitialGraphArcSeparatorPoint();
 
-                if(graphArcSeparatorPoint!= null){
+                if (graphArcSeparatorPoint != null) {
                     graphArcSeparatorPoint.getCircle().setFill(Color.LIGHTGREEN);
                     graphArcSeparatorPoint.getCircle().toFront();
                 }
@@ -146,16 +137,18 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
 
     }
 
-    public boolean isSelected(){
+    public boolean isSelected() {
         return isSelected;
     }
 
-    public void findOutInitialAndFinalArc(){
+    public void findOutInitialAndFinalArc() {
 
         for (GraphArc graphArc : graphArcs) {
-            /*Para saber por q esto se puede asegurar, vease ArcoGrafico metodo setOnMouseClicked
-             * cuando el tipo de boton seleccionado es TiposDeBoton.ADICIONAR_VERTICE
-            */
+            /*
+             * Para saber por q esto se puede asegurar, vease ArcoGrafico metodo
+             * setOnMouseClicked cuando el tipo de boton seleccionado es
+             * TiposDeBoton.ADICIONAR_VERTICE
+             */
             if (graphArc.getInitialGraphArcSeparatorPoint() == null) {
                 initialGraphArc = graphArc;
             }
@@ -170,7 +163,7 @@ public class GraphLink implements NodeListener,Serializable,Selectable  {
         return properties;
     }
 
-    public boolean removeGraphLink(){
+    public boolean removeGraphLink() {
         return linkAdminAbstractController.removeLink(this);
     }
 }

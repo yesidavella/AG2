@@ -8,8 +8,11 @@ import java.io.ObjectInputStream;
 public class OCS_SwicthGraphNode extends SwitchGraphNode{
 
    private   static short nodeCounter = 0;
-    public OCS_SwicthGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController) {
-        super(graphDesignGroup,"Enrutador_Optico_"+(++nodeCounter),ResourcesPath.ABS_PATH_IMGS+"enrutador_optico_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
+    public OCS_SwicthGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,
+            LinkAdminAbstractController linkAdminAbstractController) {
+        
+        super(graphDesignGroup,"Enrutador_Optico_"+(++nodeCounter),ResourcesPath.ABS_PATH_IMGS+"enrutador_optico_mapa.png",
+                nodeAdminAbstractController,linkAdminAbstractController);
     }
      private void readObject(ObjectInputStream inputStream)
     {

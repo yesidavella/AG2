@@ -1,7 +1,7 @@
 package com.ag2.presentation.control;
 
-import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
+import com.ag2.presentation.GUI;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;

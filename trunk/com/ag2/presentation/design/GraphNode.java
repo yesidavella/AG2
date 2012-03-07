@@ -5,8 +5,6 @@ import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
 import com.ag2.util.ResourcesPath;
-import com.sun.deploy.util.URLUtil;
-import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -432,7 +430,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     public void setWidth(short ancho) {
         this.width = ancho;
     }
-//FIXME:Eliminar este y dejar el generico y mira q enrutado no descuadre
+//FIXME:Eliminar este y dejar el generico y mira q enrutador no descuadre
     private String formatearNombre(String nombre) {
 
         if (nombre.startsWith("Enrutador")) {

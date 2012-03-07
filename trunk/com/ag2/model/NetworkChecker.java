@@ -1,37 +1,29 @@
 package com.ag2.model;
 
-import Grid.Routing.NetworkProxy;
 import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
-import Grid.Routing.GridVertex;
-import Grid.Routing.Routing;
-import Grid.Routing.RoutingViaJung;
-import Grid.Routing.ShortesPathRouting;
+import Grid.Routing.*;
 import edu.uci.ics.jung.graph.Graph;
 import java.util.HashMap;
 import java.util.Iterator;
 import simbase.Port.SimBaseOutPort;
 import simbase.SimBaseEntity;
-import simbase.SimulationInstance;
 import trs.core.Connection;
 import trs.core.NetworkRouting;
 
 public class NetworkChecker {
 
-    private SimulationInstance simulation;
     private GridSimulator simulator;
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 
-    public NetworkChecker(SimulationInstance simulation, GridSimulator simulator) {
-        this.simulation = simulation;
+    public NetworkChecker(GridSimulator simulator) {
         this.simulator = simulator;
         listOfErrors = new HashMap<Object, String>();
-
     }
 
     public void check() {
@@ -40,7 +32,7 @@ public class NetworkChecker {
         checkNecessaryNodes();
         checkLinksBetweenNodes();
         checkCorrectNodesWithBroker();
-        checkSwitchesWithWellLinked();
+        checkSwitchesWellLinked();
     }
 
     public HashMap<Object, String> getListOfErrors() {
@@ -98,7 +90,7 @@ public class NetworkChecker {
         listOfErrors.put(node, previousDescription.append(description).toString());
     }
 
-    private void checkSwitchesWithWellLinked() {
+    private void checkSwitchesWellLinked() {
 
         for (SimBaseEntity oneSwitch : simulator.getEntitiesOfType(Switch.class)) {
 

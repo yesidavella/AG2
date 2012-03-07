@@ -19,7 +19,7 @@ import simbase.SimulationInstance;
 
 public class SimulationBase implements Runnable, Serializable {
 
-    private static SimulationBase simulacionBase;
+    private static SimulationBase simulationBase;
     private GridSimulatorModel gridSimulatorModel;
     private SimulationInstance simulationInstance;
     private OutputterModel outputterModel;
@@ -37,18 +37,18 @@ public class SimulationBase implements Runnable, Serializable {
     }
 
     public static SimulationBase getInstance() {
-        if (simulacionBase == null) {
-            simulacionBase = new SimulationBase();
+        if (simulationBase == null) {
+            simulationBase = new SimulationBase();
         }
-        return simulacionBase;
+        return simulationBase;
     }
 
     public String getId() {
         return id;
     }
 
-    public static void loadInstance(SimulationBase simulacionBase) {
-        SimulationBase.simulacionBase = simulacionBase;
+    public static void loadInstance(SimulationBase simulationBase) {
+        SimulationBase.simulationBase = simulationBase;
     }
 
     public ResultsAbstractController getResultsAbstractController() {
@@ -61,7 +61,6 @@ public class SimulationBase implements Runnable, Serializable {
 
     public void setOutputterModel(OutputterModel outputterModel) {
         this.outputterModel = outputterModel;
-
     }
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
@@ -81,20 +80,18 @@ public class SimulationBase implements Runnable, Serializable {
     public void stop() {
 
         simulationInstance.stopEvent = true;
-        simulacionBase = new SimulationBase();
-        OutputterModel outputterModelNew = new OutputterModel(simulacionBase.getGridSimulatorModel());
-        simulacionBase.setResultsAbstractController(resultsAbstractController);
-        simulacionBase.setOutputterModel(outputterModelNew);
-        simulacionBase.setNodeAdminAbstractController(nodeAdminAbstractController);
-        simulacionBase.setLinkAdminAbstractController(linkAdminAbstractController);
+        simulationBase = new SimulationBase();
+        OutputterModel outputterModelNew = new OutputterModel(simulationBase.getGridSimulatorModel());
+        simulationBase.setResultsAbstractController(resultsAbstractController);
+        simulationBase.setOutputterModel(outputterModelNew);
+        simulationBase.setNodeAdminAbstractController(nodeAdminAbstractController);
+        simulationBase.setLinkAdminAbstractController(linkAdminAbstractController);
         nodeAdminAbstractController.reCreatePhosphorousNodos();
         linkAdminAbstractController.reCreatePhosphorousLinks();
-
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
-
     }
 
     public void initNetwork() {
@@ -109,7 +106,6 @@ public class SimulationBase implements Runnable, Serializable {
         initEntities();
         simulationInstance.run();
 
-
         for (SimBaseEntity entity : gridSimulatorModel.getEntities()) {
             if (entity instanceof ClientNode) {
                 outputterModel.printClient((ClientNode) entity);
@@ -120,7 +116,6 @@ public class SimulationBase implements Runnable, Serializable {
             }
         }
         stop();
-
     }
 
     public SimulationInstance getSimulationInstance() {
@@ -131,7 +126,7 @@ public class SimulationBase implements Runnable, Serializable {
         return gridSimulatorModel;
     }
 
-    public void setLinkAdminAbstractController(LinkAdminAbstractController controladorAdminEnlace) {
-        this.linkAdminAbstractController = controladorAdminEnlace;
+    public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminController) {
+        this.linkAdminAbstractController = linkAdminController;
     }
 }

@@ -9,5 +9,4 @@ public class ClientCreationModel extends NodeCreationModel{
         
         return Grid.Utilities.Util.createHybridClient(id,simulationBase.getGridSimulatorModel());
     }
-
 }
