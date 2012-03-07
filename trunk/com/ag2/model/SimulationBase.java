@@ -9,6 +9,7 @@ import Grid.Routing.ShortesPathRouting;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.controller.ResultsAbstractController;
+import com.ag2.util.ResourcesPath;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -29,7 +30,7 @@ public class SimulationBase implements Runnable, Serializable {
 
     private SimulationBase() {
 
-        simulationInstance = new GridSimulation("ConfigInit.cfg");
+        simulationInstance = new GridSimulation(ResourcesPath.ABS_PATH_CONFIG_AG2+"ConfigInitAG2.cfg");
         gridSimulatorModel = new GridSimulatorModel();
         simulationInstance.setSimulator(gridSimulatorModel);
         id = new Date().toString();

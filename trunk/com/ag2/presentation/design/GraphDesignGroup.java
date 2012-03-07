@@ -390,7 +390,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         try {
 
-            File file = new File("src\\maps\\110m_admin_0_countries.shp");
+            File file = new File("resources\\maps\\110m_admin_0_countries.shp");
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
             SimpleFeatureSource featureSource = store.getFeatureSource();
             SimpleFeatureCollection c = featureSource.getFeatures();
@@ -425,8 +425,8 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-                        path.setFill(Color.web("#A4A4A4"));//A0A5CE,B7B7B7
-
+                        path.setFill(Color.web("#C1BBB1"));//A0A5CE,B7B7B7,A4A4A4
+                        //Si le va cambiar el color por lo menos deje el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 0; i < coords.length; i++) {

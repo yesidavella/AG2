@@ -67,19 +67,13 @@ public class Main extends Application implements Serializable {
                 } else if (result == JOptionPane.YES_OPTION) {
                     save(true);
                 }event.consume();
-
-
             }
         });
-
-
     }
-
 
     public SimulationBase getSimulationBase() {
         return simulationBase;
     }
-
 
     public static void main(String[] args) {
         Application.launch(args);

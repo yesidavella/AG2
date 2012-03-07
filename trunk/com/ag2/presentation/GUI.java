@@ -7,7 +7,10 @@ import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTable;
+import com.ag2.util.ResourcesPath;
+import com.sun.deploy.util.URLUtil;
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
@@ -82,8 +85,8 @@ public class GUI extends Scene implements Serializable {
         executePane = new ExecutePane();
         executePane.setGroup(graphDesignGroup.getGroup());
 
-        addScene(this);
-        getStylesheets().add(GUI.class.getResource("../../../resource/css/MainGUI.css").toExternalForm());
+        addScene(this); 
+        getStylesheets().add(ResourcesPath.ABS_PATH_CSS+"MainGUI.css");
 
         borderPane.getStyleClass().add("ventanaPrincipal");
 
@@ -433,22 +436,24 @@ public class GUI extends Scene implements Serializable {
 
     private VBox createProjectsLogos() {
 
-        ImageView ivAG2 = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/logoAG2.png")));
+        final String absPathImgs = URLUtil.fileToURL(new File("resources/images/")).toString();
+        
+        ImageView ivAG2 = new ImageView(new Image(absPathImgs+"logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
         ivAG2.setFitWidth(40*proportionXYAG2);
         
-        ImageView ivInternetIntel = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/logoInterInt.png")));
+        ImageView ivInternetIntel = new ImageView(new Image(absPathImgs+"logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth()/ivInternetIntel.getBoundsInParent().getHeight();
         ivInternetIntel.setFitHeight(35);
         ivInternetIntel.setFitWidth(35*proportionXYInternetIn);
 
-        ImageView ivPhosphorus = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/phosphorus.jpg")));
+        ImageView ivPhosphorus = new ImageView(new Image(absPathImgs+"phosphorus.jpg"));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
         ivPhosphorus.setFitHeight(45);
         ivPhosphorus.setFitWidth(45*proportionXYphosphorus);
 
-        ImageView ivDistritalUniv = new ImageView(new Image(getClass().getResourceAsStream("../../../resource/image/escudo_udistrital.jpg")));
+        ImageView ivDistritalUniv = new ImageView(new Image(absPathImgs+"escudo_udistrital.jpg"));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
         ivDistritalUniv.setFitHeight(55);
         ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
@@ -739,8 +744,6 @@ public class GUI extends Scene implements Serializable {
         //prgBarBarraProgresoEjec.setProgress(0);
         pgBrExecutionProgress.setVisible(false);
         graphDesignGroup.getGroup().setOpacity(1);
-
-
     }
 
     public void disable() {
