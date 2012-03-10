@@ -17,8 +17,8 @@ import javafx.scene.image.Image;
         ZOOM_MINUS("lupa_menos","lupa_menos_cursor",10,10),
 
         CLIENT("cliente","cliente_cursor",14,14),
-        OCS_SWITCH("enrutador_optico","enrutador_optico_cursor",10,13),
-        OBS_SWITCH("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
+        PCE_SWITCH("PCE","PCE_cursor",10,13),
+        //OBS_SWITCH("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
         HRYDRID_SWITCH("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
         BROKER("nodo_servicio","nodo_servicio_cursor",15,16),
         RESOURCE("recurso","recurso_cursor",13,16),
