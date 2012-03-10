@@ -1,8 +1,6 @@
 package com.ag2.presentation;
 
 import com.ag2.util.ResourcesPath;
-import com.sun.deploy.util.URLUtil;
-import java.io.File;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
