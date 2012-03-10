@@ -8,7 +8,7 @@ import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTable;
 import com.ag2.util.ResourcesPath;
-import com.sun.deploy.util.URLUtil;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
