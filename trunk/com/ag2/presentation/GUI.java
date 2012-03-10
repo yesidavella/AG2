@@ -47,8 +47,8 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnHand;
     private ToggleButtonAg2 btnClient = new ToggleButtonAg2(ActionTypeEmun.CLIENT);
     private ToggleButtonAg2 btnBroker = new ToggleButtonAg2(ActionTypeEmun.BROKER);
-    private ToggleButtonAg2 btnOCS_Switch = new ToggleButtonAg2(ActionTypeEmun.OCS_SWITCH);
-    private ToggleButtonAg2 btnOBS_Switch = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
+    private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);
+  //  private ToggleButtonAg2 btnOBS_Switch = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
     private ToggleButtonAg2 btnHybridSwitch = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnResource = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
@@ -142,8 +142,8 @@ public class GUI extends Scene implements Serializable {
         btnPlusZoom.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnClient.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnBroker.setGraphDesignGroup(graphDesignGroup.getGroup());
-        btnOCS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
-        btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+        btnPCE_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+       // btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
@@ -334,24 +334,24 @@ public class GUI extends Scene implements Serializable {
 
         btnClient.setToggleGroup(tgTools);
         btnBroker.setToggleGroup(tgTools);
-        btnOCS_Switch.setToggleGroup(tgTools);
-        btnOBS_Switch.setToggleGroup(tgTools);
+        btnPCE_Switch.setToggleGroup(tgTools);
+    //    btnOBS_Switch.setToggleGroup(tgTools);
         btnHybridSwitch.setToggleGroup(tgTools);
         btnResource.setToggleGroup(tgTools);
         btnLink.setToggleGroup(tgTools);
 
         btnClient.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnBroker.setGraphDesignGroup(graphDesignGroup.getGroup());
-        btnOCS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
-        btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+        btnPCE_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+     //   btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
 
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
-        btnOCS_Switch.setTooltip(new Tooltip("Enrutador Optico"));
-        btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
+        btnPCE_Switch.setTooltip(new Tooltip("PCE"));
+   //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
         btnResource.setTooltip(new Tooltip("Clúster (Recurso de almacenamiento y procesamiento) "));
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
@@ -362,19 +362,19 @@ public class GUI extends Scene implements Serializable {
         GridPane.setConstraints(btnBroker, 1, 4);
         grdPnToolsBar.getChildren().add(btnBroker);
 
-        GridPane.setConstraints(btnOCS_Switch, 0, 5);
-        grdPnToolsBar.getChildren().add(btnOCS_Switch);
+        GridPane.setConstraints(btnPCE_Switch, 0, 5);
+        grdPnToolsBar.getChildren().add(btnPCE_Switch);
 
-        GridPane.setConstraints(btnOBS_Switch, 1, 5);
-        grdPnToolsBar.getChildren().add(btnOBS_Switch);
+//        GridPane.setConstraints(btnOBS_Switch, 1, 5);
+//        grdPnToolsBar.getChildren().add(btnOBS_Switch);
 
-        GridPane.setConstraints(btnHybridSwitch, 0, 6);
+        GridPane.setConstraints(btnHybridSwitch, 1, 5);
         grdPnToolsBar.getChildren().add(btnHybridSwitch);
 
-        GridPane.setConstraints(btnResource, 1, 6);
+        GridPane.setConstraints(btnResource, 0, 6);
         grdPnToolsBar.getChildren().add(btnResource);
 
-        GridPane.setConstraints(btnLink, 0, 7);
+        GridPane.setConstraints(btnLink, 1, 6);
         grdPnToolsBar.getChildren().add(btnLink);
 
     }

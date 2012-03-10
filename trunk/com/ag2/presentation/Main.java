@@ -87,10 +87,10 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new ModeloCrearNodoDeRecurso();
         nodeAdminController.addModel(nodeCreationModel);
 
-        nodeCreationModel = new OBS_SwitchCreationModel();
+      
         nodeAdminController.addModel(nodeCreationModel);
 
-        nodeCreationModel = new OCS_SwitchCreationModel();
+        nodeCreationModel = new PCE_SwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
         nodeCreationModel = new HybridSwitchCreationModel();

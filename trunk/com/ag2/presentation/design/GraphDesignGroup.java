@@ -153,15 +153,11 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 graphNode = new BrokerGrahpNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 brokersObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.OCS_SWITCH) {
-                graphNode = new OCS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+            } else if (actionTypeEmun == ActionTypeEmun.PCE_SWITCH) {
+                graphNode = new PCE_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 switchesObservableList.add(graphNode);
 
-            } else if (actionTypeEmun == ActionTypeEmun.OBS_SWITCH) {
-                graphNode = new OBS_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
-                switchesObservableList.add(graphNode);
-
-            } else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
+            }  else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
                 graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
                 switchesObservableList.add(graphNode);
 
