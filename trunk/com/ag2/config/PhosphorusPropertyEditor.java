@@ -1,12 +1,13 @@
 package com.ag2.config;
 
+import Grid.Utilities.Config;
 import com.ag2.util.ResourcesPath;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
 public final class PhosphorusPropertyEditor {
-    
+
     private final String FILE_NAME = "ConfigInitAG2.cfg";
     private Properties properties = new Properties();
     private static PhosphorusPropertyEditor phosphorusPropertyEditor;
@@ -26,19 +27,19 @@ public final class PhosphorusPropertyEditor {
     public void readFile() {
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(ResourcesPath.ABS_PATH_CONFIG_AG2+FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME);
             properties.load(fileInputStream);
             fileInputStream.close();
 
         } catch (Exception ex) {
-            System.out.println("Failed to read from "+ResourcesPath.ABS_PATH_CONFIG_AG2+FILE_NAME+" file. Due to :" + ex.toString());
+            System.out.println("Failed to read from " + ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
 
     }
 
     public void writeFile() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(ResourcesPath.ABS_PATH_CONFIG_AG2+FILE_NAME);
+            FileOutputStream fileOutputStream = new FileOutputStream(ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME);
             properties.store(fileOutputStream, null);
             fileOutputStream.flush();
             fileOutputStream.close();
@@ -57,5 +58,9 @@ public final class PhosphorusPropertyEditor {
     public void setPropertyValue(PropertyPhosphorusTypeEnum propiedadePhosphorus, String valor) {
         properties.setProperty(propiedadePhosphorus.getPhosphorusPropertyName(), valor);
         writeFile();
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 }

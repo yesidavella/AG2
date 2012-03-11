@@ -6,6 +6,6 @@ public class HybridSwitchCreationModel extends NodeCreationModel{
 
     @Override
     public Entity createPhosphorusNode(String id) {
-        return Grid.Utilities.Util.createHybridSwitch(id, simulationBase.getGridSimulatorModel());
+        return UtilModel.createHybridSwitch(id, simulationBase.getGridSimulatorModel());
     }
 }

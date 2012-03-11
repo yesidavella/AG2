@@ -16,12 +16,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class EntityPropertyTable extends TableView<EntityProperty> implements GraphNodesView, Serializable {
+public class EntityPropertyTableView extends TableView<EntityProperty> implements GraphNodesView, Serializable {
 
     private NodeAdminAbstractController nodeAdminAbstractController;
     private LinkAdminAbstractController linkAdminAbstractController;
 
-    public EntityPropertyTable() {
+    public EntityPropertyTableView() {
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
         propertyTableColumn.setMinWidth(110);
@@ -51,11 +51,12 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
         this.linkAdminAbstractController = linkAdminAbstractController;
     }
 
-    public void loadProperties(ArrayList<EntityProperty> entityPropertys) {
+    @Override
+    public void loadProperties(ArrayList<EntityProperty> entityProperties) {
 
         ObservableList dataObservableList = FXCollections.observableArrayList();
 
-        for (EntityProperty entityProperty : entityPropertys) {
+        for (EntityProperty entityProperty : entityProperties) {
             entityProperty.setEntityPropertyTable(this);
             dataObservableList.add(entityProperty);
         }
@@ -67,6 +68,7 @@ public class EntityPropertyTable extends TableView<EntityProperty> implements Gr
         setItems(dataObservableList);
     }
 
+    @Override
     public void updateProperty(boolean isSubProperty, String id, String value) {
         Selectable selectable = GUI.getInstance().getGraphDesignGroup().getSelectable();
 

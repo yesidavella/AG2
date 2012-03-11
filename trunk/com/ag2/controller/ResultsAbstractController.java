@@ -15,7 +15,7 @@ public abstract class ResultsAbstractController  implements Serializable
         this.viewResultsPhosphorus = viewResultsPhosphorus;
     }
 
-   public abstract  void addClientResult(String tcCliente, String tcPeticionesEnviadas ,
+   public abstract  void addClientResult(String tcCliente, String tcPeticionesEnviadas,
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
             String tcPorcentajeResultadosRecibidos );
 

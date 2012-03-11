@@ -55,7 +55,7 @@ public abstract class NodeAdminAbstractController implements Serializable {
 
     public abstract void removeNode(GraphNode graphNode);
 
-    public abstract void reCreatePhosphorousNodos();
+    public abstract void reCreatePhosphorousNodes();
 
     private void readObject(ObjectInputStream inputStream) {
         try {
@@ -64,7 +64,6 @@ public abstract class NodeAdminAbstractController implements Serializable {
                 graphNodesViews.remove(0);
             }
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }

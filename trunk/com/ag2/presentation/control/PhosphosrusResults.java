@@ -1,4 +1,3 @@
-
 package com.ag2.presentation.control;
 
 import java.io.Serializable;
@@ -10,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
 
 public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
 
@@ -59,11 +57,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
         }
 
         showProgressIndicator();
-
-
-
-
     }
+    
     public void showProgressIndicator()
     {
         progressIndicator.setMinSize(250, 250);
@@ -208,8 +203,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
         cpp.setProperty6(tcPorcentajeResultadosRecibidos);
         dataCliente.add(cpp);
 
-
-
     }
 
     public void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos, String tcFallasNoEspacio, String tcFallasEnviadas) {
@@ -233,7 +226,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
             String relDropRes,
             String reltotDrop) {
 
-
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(tcConmutador);
         cpp.setProperty2(tcMensajesTrabajoConmutados);
@@ -248,7 +240,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
     }
 
     public void setExecutionPercentage(double Percentage) {
-        //FIXME:esto se esta reventando apenas se ejecuta la simulacion aveces
+        //FIXME:esto se esta reventando apenas se ejecuta la  aveces
         progressIndicator.setProgress(Percentage / 100);
 
     }

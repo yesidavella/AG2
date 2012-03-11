@@ -28,7 +28,7 @@ public class Main extends Application implements Serializable {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("Modelo AG2- Simulador Grafico");
+        stage.setTitle("Modelo AG2 - Simulador Grafico");
         stage.setScene(GUI.getInstance());
         GUI.getInstance().setStage(stage);
         GUI.getInstance().setMain(this);

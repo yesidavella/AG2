@@ -1,6 +1,6 @@
 Bugs                                                                                               Estado
 1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
-3.Guardar porpiedades de la simulacion en tiempo real. 2H Franklin..............................   Listo
+3.Guardar porpiedades de la  en tiempo real. 2H Franklin..............................   Listo
 4. Bajar menus de navegacion y colocar titulo. COlocar
 barra de ejecucion encima.Yesid 1H..............................................................   Listones
 5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Listo
@@ -19,7 +19,7 @@ visual en el combo. 2H Franklin ................................................
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
-
+ Tabla prop  boton routing via jung o via shortespath
 
 Segundo bloque de Bugs
 
@@ -117,3 +117,10 @@ Migracion de clases completas: (traduccion al ingles, todos los atributos privat
 -EntityPropertyTable
 -NodeRelationProperty
 -NodeDistributionProperty
+
+
+
+
+Cambios despues de entrega de documento:
+
+1. Pruebas de estres y validacion (ejecutar, parar,ejecutar...etc)

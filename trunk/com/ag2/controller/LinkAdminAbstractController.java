@@ -3,7 +3,7 @@ package com.ag2.controller;
 import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.presentation.design.GraphLink;
-import com.ag2.presentation.design.property.EntityPropertyTable;
+import com.ag2.presentation.design.property.EntityPropertyTableView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -11,7 +11,7 @@ import java.util.Hashtable;
 public abstract class LinkAdminAbstractController implements Serializable {
 
     protected ArrayList<LinkCreationAbstractModel> linkCreationAbstractModels;
-    protected EntityPropertyTable entityPropertyTable;
+    protected EntityPropertyTableView entityPropertyTable;
     protected Hashtable<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
 
     public LinkAdminAbstractController() {
@@ -27,7 +27,7 @@ public abstract class LinkAdminAbstractController implements Serializable {
         return linkCreationAbstractModels.remove(linkAdminAbstractController) && linkAdminAbstractController.removeModel(this);
     }
 
-    public void setLinkView(EntityPropertyTable entityPropertyTable) {
+    public void setLinkView(EntityPropertyTableView entityPropertyTable) {
         this.entityPropertyTable = entityPropertyTable;
     }
 
