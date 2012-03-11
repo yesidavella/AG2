@@ -28,7 +28,7 @@ Segundo bloque de Bugs
 3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
   GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun 
   corresponda(Yesid)............................................................................   Pendiente
-
+4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)......................   Pendiente
 
 
 
