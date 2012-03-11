@@ -6,11 +6,10 @@ import com.ag2.presentation.control.PhosphosrusResults;
 import com.ag2.presentation.control.ToggleButtonAg2;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
-import com.ag2.presentation.design.property.EntityPropertyTable;
+import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.ResourcesPath;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
@@ -52,7 +51,7 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnHybridSwitch = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnResource = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
-    private EntityPropertyTable entityPropertyTable;
+    private EntityPropertyTableView entityPropertyTable;
     private GridPane gpTools;
     private ScrollPane scPnWorld;
     private ProgressBar pgBrExecutionProgress;
@@ -86,7 +85,7 @@ public class GUI extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
 
         addScene(this); 
-        getStylesheets().add(ResourcesPath.ABS_PATH_CSS+"MainGUI.css");
+        getStylesheets().add(ResourcesPath.ABS_PATH_CSS+"cssAG2.css");
 
         borderPane.getStyleClass().add("ventanaPrincipal");
 
@@ -119,7 +118,7 @@ public class GUI extends Scene implements Serializable {
         return scPnWorld;
     }
 
-    public EntityPropertyTable getEntityPropertyTable() {
+    public EntityPropertyTableView getEntityPropertyTable() {
         return entityPropertyTable;
     }
 
@@ -412,7 +411,7 @@ public class GUI extends Scene implements Serializable {
 
         VBox vbLogos = createProjectsLogos();
 
-        entityPropertyTable = new EntityPropertyTable();
+        entityPropertyTable = new EntityPropertyTableView();
         stPnDeviceProperties.getChildren().add(entityPropertyTable);
 
         TableView<String> tbSimulationProperties = createSimulationPropertiesTab();
@@ -498,21 +497,21 @@ public class GUI extends Scene implements Serializable {
 
     private TableView<String> createSimulationPropertiesTab() {
 
-        TableColumn tbColPropNombre = new TableColumn("PROPIEDAD");
-        tbColPropNombre.setMinWidth(145);
-        tbColPropNombre.setPrefWidth(155);
-        tbColPropNombre.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("phosphorusPropertyName"));
+        TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
+        tbcolPropName.setMinWidth(145);
+        tbcolPropName.setPrefWidth(155);
+        tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("phosphorusPropertyName"));
 
-        TableColumn tbColPropValor = new TableColumn("VALOR");
-        tbColPropValor.setMinWidth(150);
-        tbColPropValor.setPrefWidth(185);
-        tbColPropValor.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
+        TableColumn tbcolPropValue = new TableColumn("VALOR");
+        tbcolPropValue.setMinWidth(150);
+        tbcolPropValue.setPrefWidth(185);
+        tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        TableColumn tbColTituloTbSim = new TableColumn("PROPIEDADES SIMULACIÓN");
-        tbColTituloTbSim.getColumns().addAll(tbColPropNombre, tbColPropValor);
-        tbwSimulationProperties.getColumns().addAll(tbColTituloTbSim);
+        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÓN");
+        tbcolSimTableTitle.getColumns().addAll(tbcolPropName, tbcolPropValue);
+        tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
 
-        tbwSimulationProperties.setMinWidth(tbColTituloTbSim.getMinWidth() + 13);
+        tbwSimulationProperties.setMinWidth(tbcolSimTableTitle.getMinWidth() + 13);
         tbwSimulationProperties.setPrefWidth(345);
 
         tbwSimulationProperties.setPrefHeight(200);
@@ -706,7 +705,7 @@ public class GUI extends Scene implements Serializable {
         return graphDesignGroup;
     }
 
-    public EntityPropertyTable getEntityPropertyTb() {
+    public EntityPropertyTableView getEntityPropertyTb() {
         return entityPropertyTable;
     }
 

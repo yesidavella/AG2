@@ -6,6 +6,6 @@ public class LinkCreationModel extends LinkCreationAbstractModel {
 
     @Override
     public PhosphorusLinkModel createPhosphorusLink(Entity entityA, Entity entityB) {
-        return ModeloUtil.crearEnlaceBiDireccional(entityA,entityB);
+        return UtilModel.crearEnlaceBiDireccional(entityA,entityB);
     }
 }

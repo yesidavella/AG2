@@ -1,7 +1,7 @@
 
 package com.ag2.controller;
 
-public class ResultsController  extends ResultsAbstractController
+public class ResultsController extends ResultsAbstractController
 {
 
     @Override

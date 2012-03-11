@@ -1,7 +1,9 @@
 package com.ag2.config;
 
+import Grid.Utilities.Config;
 import com.ag2.controller.ExecuteController;
 import com.ag2.presentation.GUI;
+import java.util.Properties;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,14 +15,29 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Carga el archivo .cfg con el valor de las constantes de la simulación.
+ *
+ * @author Yesid :D
+ */
 public enum PropertyPhosphorusTypeEnum {
 
+    /**
+     * Tiempo de simulacion en milisegundos.
+     */
     SIMULATION_TIME("simulationTime", new TextField()),
+    /**
+     * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
+     */
     OUTPUT("output", new CheckBox()),
     STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", new TextField()),
     DEFAULT_LINK_SPEED("defaultLinkSpeed", new TextField()),
     DEFAULT_WAVELENGTHS("defaultWavelengths", new TextField()),
     ACK_SIZE("ACKsize", new TextField()),
+    /**
+     * Coef. de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
+     * conmutadores hibridos. Esto es la propiedad HandleDelay.
+     */
     OBS_HANDLE_TIME("OBSHandleTime", new TextField()),
     DEFAULT_CAPACITY("defaultCapacity", new TextField()),
     DEFAULT_CPU_COUNT("defaultCPUCount", new TextField()),
@@ -34,12 +51,10 @@ public enum PropertyPhosphorusTypeEnum {
     OUTPUT_FILE_NAME("outputFileName", new TextField()),
     ROUTED_VIA_JUNG("routedViaJUNG", new TextField());
     
-
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;
     private PhosphorusPropertyEditor phosphorusPropertyEditor = PhosphorusPropertyEditor.getUniqueInstance();
-
 
     private PropertyPhosphorusTypeEnum(String nombre, Control control) {
         phosphorusPropertyName = nombre;
@@ -49,9 +64,9 @@ public enum PropertyPhosphorusTypeEnum {
 
         } else if (control instanceof CheckBox) {
             setEventProperty(((CheckBox) control));
-
         }
     }
+
     public void setExecuteController(ExecuteController executeController) {
         this.executeController = executeController;
     }
@@ -62,16 +77,11 @@ public enum PropertyPhosphorusTypeEnum {
 
     public void setControl(Control control) {
         this.control = control;
-
     }
-
 
     public String getPropertyName() {
         return this.toString().replace("_", " ");
-
     }
-
-
 
     private void setEventProperty(CheckBox checkBox) {
 
@@ -121,18 +131,41 @@ public enum PropertyPhosphorusTypeEnum {
 
     public void writeProperty(String valor) {
         phosphorusPropertyEditor.setPropertyValue(this, valor);
-
     }
 
-    public static ObservableList getData(ExecuteController executeController)
-    {
-        for(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum: values())
-        {
+    public static ObservableList getData(ExecuteController executeController) {
+        for (PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum : values()) {
             propertyPhosphorusTypeEnum.setExecuteController(executeController);
         }
 
         ObservableList observableList = FXCollections.observableArrayList(PropertyPhosphorusTypeEnum.values());
         return observableList;
+    }
 
+    public static double getDoubleProperty(PropertyPhosphorusTypeEnum key) {
+        PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
+        String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
+        if (propertie == null) {
+            throw new IllegalArgumentException(key.toString() + " no esta en el archivo de configuración.");
+        }
+        return Double.parseDouble(propertie);
+    }
+
+    public boolean getBooleanProperty(PropertyPhosphorusTypeEnum key) {
+        PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
+        String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
+        return Boolean.parseBoolean(propertie);
+    }
+
+    public long getLongProperty(PropertyPhosphorusTypeEnum key) {
+        PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
+        String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
+        return Long.parseLong(propertie);
+    }
+
+    public int getIntProperty(PropertyPhosphorusTypeEnum key) {
+        PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
+        String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
+        return Integer.parseInt(propertie);
     }
 }

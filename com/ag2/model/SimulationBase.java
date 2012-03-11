@@ -86,7 +86,7 @@ public class SimulationBase implements Runnable, Serializable {
         simulationBase.setOutputterModel(outputterModelNew);
         simulationBase.setNodeAdminAbstractController(nodeAdminAbstractController);
         simulationBase.setLinkAdminAbstractController(linkAdminAbstractController);
-        nodeAdminAbstractController.reCreatePhosphorousNodos();
+        nodeAdminAbstractController.reCreatePhosphorousNodes();
         linkAdminAbstractController.reCreatePhosphorousLinks();
     }
 

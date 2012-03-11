@@ -12,7 +12,7 @@ public abstract class ExecuteAbstractController implements Serializable {
     }
 
     /**
-     * Verifica que la red si este bien configurada para ejecutar la simulacion.
+     * Verifica que la red si este bien configurada para ejecutar la .
      */
     public abstract boolean isWellFormedNetwork();
 
