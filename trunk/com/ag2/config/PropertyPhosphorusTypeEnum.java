@@ -49,7 +49,7 @@ public enum PropertyPhosphorusTypeEnum {
     SWITCHING_SPEED("switchingSpeed", new TextField()),
     LINK_SPEED("linkSpeed", new TextField()),
     OUTPUT_FILE_NAME("outputFileName", new TextField()),
-    ROUTED_VIA_JUNG("routedViaJUNG", new TextField());
+    ROUTED_VIA_JUNG("routedViaJUNG", new CheckBox());
     
     private ExecuteController executeController;
     private String phosphorusPropertyName;
