@@ -87,9 +87,6 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new ModeloCrearNodoDeRecurso();
         nodeAdminController.addModel(nodeCreationModel);
 
-      
-        nodeAdminController.addModel(nodeCreationModel);
-
         nodeCreationModel = new PCE_SwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
