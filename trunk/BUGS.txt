@@ -15,12 +15,21 @@ visual en el combo. 2H Franklin ................................................
 11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Listo
 15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Listo (temporal)
 16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
-16.Los archivos HTML, siempre la 1ra pag no tiene nada de info. Franklin........................   Pendiente
-
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
+
+
+Segundo bloque de Bugs
+
+1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Pendiente
+2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Pendiente
+3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
+  GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun 
+  corresponda(Yesid)............................................................................   Pendiente
+
+
 
 Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
 
