@@ -31,6 +31,18 @@ Segundo bloque de Bugs
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
 
 ###### com.ag2.config
