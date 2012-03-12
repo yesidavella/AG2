@@ -91,7 +91,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             createDistributionProperty(clientNode.getState().getFlops(), nodeProperties, flopsDistribution, "flopsDistribution");
 
             //===========================================================================================================
-            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Generación de intervalo maximo de retraso:");
+            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Generación de intervalo máximo de retraso:");
             createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
 
             //===========================================================================================================
@@ -181,7 +181,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lamdas", "Lamdas", EntityProperty.PropertyType.TEXT, true);
+            EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lambdas", "Lambdas", EntityProperty.PropertyType.TEXT, true);
             propiedaA.setFirstValue(getStringArrayDoubles(dDHyperExp.getLambdas()));
             nodeProperties.add(propiedaA);
 
@@ -200,7 +200,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estandar", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estándar", EntityProperty.PropertyType.NUMBER, true);
             propiedaA.setFirstValue(String.valueOf(dDNormal.getDev()));
             nodeProperties.add(propiedaA);
 
@@ -220,11 +220,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Minimo", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Mínimo", EntityProperty.PropertyType.NUMBER, true);
             propiedaA.setFirstValue(String.valueOf(dDUniform.getMin()));
             nodeProperties.add(propiedaA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDUniform_Maximo", "Maximo", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propiedaB = new EntityProperty(id + "_DDUniform_Maximo", "Máximo", EntityProperty.PropertyType.NUMBER, true);
             propiedaB.setFirstValue(String.valueOf(dDUniform.getMax()));
             nodeProperties.add(propiedaB);
 
@@ -394,7 +394,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     valuesDoubles[i] = Double.parseDouble(values[i]);
                 }
 
-                if (id.contains("Lamdas")) {
+                if (id.contains("Lambdas")) {
                     dDHyperExp.setLambdas(valuesDoubles);
 
                 } else if (id.contains("Oportunidades")) {
@@ -425,9 +425,9 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             } else if (id.contains("DDUniform")) {
                 DDUniform dDUniform = (DDUniform) distribution;
 
-                if (id.contains("Minimo")) {
+                if (id.contains("Mínimo")) {
                     dDUniform.setMin(Double.parseDouble(value));
-                } else if (id.contains("Maximo")) {
+                } else if (id.contains("Máximo")) {
                     dDUniform.setMax(Double.parseDouble(value));
                 }
 

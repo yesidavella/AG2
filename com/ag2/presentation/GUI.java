@@ -414,7 +414,7 @@ public class GUI extends Scene implements Serializable {
         entityPropertyTable = new EntityPropertyTableView();
         stPnDeviceProperties.getChildren().add(entityPropertyTable);
 
-        TableView<String> tbSimulationProperties = createSimulationPropertiesTab();
+        TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
         StackPane stPnSimulationProperties = new StackPane();
         stPnSimulationProperties.getChildren().add(tbSimulationProperties);
 
@@ -495,12 +495,12 @@ public class GUI extends Scene implements Serializable {
             });
     }
 
-    private TableView<String> createSimulationPropertiesTab() {
+    private TableView<String> createSimulationPropertiesTb() {
 
         TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
-        tbcolPropName.setMinWidth(145);
-        tbcolPropName.setPrefWidth(155);
-        tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("phosphorusPropertyName"));
+        tbcolPropName.setMinWidth(175);
+        tbcolPropName.setPrefWidth(185);
+        tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");
         tbcolPropValue.setMinWidth(150);

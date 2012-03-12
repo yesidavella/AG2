@@ -1,13 +1,13 @@
 package com.ag2.model;
 
-import Grid.Utilities.Config;
+import Grid.GridSimulation;
+import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import simbase.Exceptions.StopException;
 import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
 import simbase.SimBaseEvent;
 import simbase.SimBaseMessage;
-import simbase.SimulationInstance;
 
 public class GridSimulatorModel extends Grid.GridSimulator {
 
@@ -18,11 +18,11 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private ResultsAbstractController resultsAbstractController;
 
     public GridSimulatorModel() {
-        simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
+        simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
     }
 
     public void reloadTime() {
-        simulationTime = SimulationInstance.configuration.getDoubleProperty(Config.ConfigEnum.simulationTime);
+        simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
     }
 
     public void setViewResultsPhosphorus(ResultsAbstractController resultsAbstractController) {

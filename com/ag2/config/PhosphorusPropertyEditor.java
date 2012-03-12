@@ -1,6 +1,5 @@
 package com.ag2.config;
 
-import Grid.Utilities.Config;
 import com.ag2.util.ResourcesPath;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
