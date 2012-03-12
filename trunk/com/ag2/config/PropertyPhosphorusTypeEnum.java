@@ -1,9 +1,7 @@
 package com.ag2.config;
 
-import Grid.Utilities.Config;
 import com.ag2.controller.ExecuteController;
 import com.ag2.presentation.GUI;
-import java.util.Properties;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,38 +23,44 @@ public enum PropertyPhosphorusTypeEnum {
     /**
      * Tiempo de simulacion en milisegundos.
      */
-    SIMULATION_TIME("simulationTime", new TextField()),
+    SIMULATION_TIME("simulationTime","Tiempo de Simulación(ms):", new TextField()),
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
-    OUTPUT("output", new CheckBox()),
-    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", new TextField()),
-    DEFAULT_LINK_SPEED("defaultLinkSpeed", new TextField()),
-    DEFAULT_WAVELENGTHS("defaultWavelengths", new TextField()),
-    ACK_SIZE("ACKsize", new TextField()),
+    OUTPUT("output","output(Franklin)", new CheckBox()),
+    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
+    DEFAULT_LINK_SPEED("defaultLinkSpeed","a", new TextField()),
+    DEFAULT_WAVELENGTHS("defaultWavelengths","Numero de lambdas:", new TextField()),
+    ACK_SIZE("ACKsize","ACKsize:", new TextField()),
     /**
      * Coef. de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
      * conmutadores hibridos. Esto es la propiedad HandleDelay.
      */
-    OBS_HANDLE_TIME("OBSHandleTime", new TextField()),
-    DEFAULT_CAPACITY("defaultCapacity", new TextField()),
-    DEFAULT_CPU_COUNT("defaultCPUCount", new TextField()),
-    DEFAULT_QUEUE_SIZE("defaultQueueSize", new TextField()),
-    DEFAULT_FLOP_SIZE("defaultFlopSize", new TextField()),
-    DEFAULT_DATA_SIZE("defaultDataSize", new TextField()),
-    DEFAULT_JOB_IAT("defaultJobIAT", new TextField()),
-    MAX_DELAY("maxDelay", new TextField()),
-    SWITCHING_SPEED("switchingSpeed", new TextField()),
-    LINK_SPEED("linkSpeed", new TextField()),
-    OUTPUT_FILE_NAME("outputFileName", new TextField()),
-    ROUTED_VIA_JUNG("routedViaJUNG", new CheckBox());
+    OBS_HANDLE_TIME("OBSHandleTime","Tiempo de retardo al conmutar:", new TextField()),
+    DEFAULT_CAPACITY("defaultCapacity","defaultCapacity", new TextField()),
+    DEFAULT_CPU_COUNT("defaultCPUCount","Número de CPUs/clúster:", new TextField()),
+    DEFAULT_QUEUE_SIZE("defaultQueueSize","a", new TextField()),
+    DEFAULT_FLOP_SIZE("defaultFlopSize","a", new TextField()),
+    DEFAULT_DATA_SIZE("defaultDataSize","a", new TextField()),
+    DEFAULT_JOB_IAT("defaultJobIAT","a", new TextField()),
+    MAX_DELAY("maxDelay","a", new TextField()),
+    SWITCHING_SPEED("switchingSpeed","Vel. de conmutación:", new TextField()),
+    LINK_SPEED("linkSpeed","Vel. del enlace:", new TextField()),
+    OUTPUT_FILE_NAME("outputFileName","Nombre del archivo de traza:", new TextField()),
+    ROUTED_VIA_JUNG("routedViaJUNG","Enrutar via:(T)Jung (F)ShortesPath", new CheckBox());
     
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;
     private PhosphorusPropertyEditor phosphorusPropertyEditor = PhosphorusPropertyEditor.getUniqueInstance();
-
-    private PropertyPhosphorusTypeEnum(String nombre, Control control) {
+    private String visualNameOnTb;
+    
+    public String getVisualNameOnTb() {
+        return visualNameOnTb;
+    }
+    
+    private PropertyPhosphorusTypeEnum(String nombre,String visualNameOnTb, Control control) {
+        this.visualNameOnTb = visualNameOnTb;
         phosphorusPropertyName = nombre;
         this.control = control;
         if (control instanceof TextField) {
@@ -151,19 +155,19 @@ public enum PropertyPhosphorusTypeEnum {
         return Double.parseDouble(propertie);
     }
 
-    public boolean getBooleanProperty(PropertyPhosphorusTypeEnum key) {
+    public static boolean getBooleanProperty(PropertyPhosphorusTypeEnum key) {
         PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
         String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
         return Boolean.parseBoolean(propertie);
     }
 
-    public long getLongProperty(PropertyPhosphorusTypeEnum key) {
+    public static long getLongProperty(PropertyPhosphorusTypeEnum key) {
         PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
         String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
         return Long.parseLong(propertie);
     }
 
-    public int getIntProperty(PropertyPhosphorusTypeEnum key) {
+    public static int getIntProperty(PropertyPhosphorusTypeEnum key) {
         PhosphorusPropertyEditor phosPropEditor = PhosphorusPropertyEditor.getUniqueInstance();
         String propertie = phosPropEditor.getProperties().getProperty(key.getPhosphorusPropertyName());
         return Integer.parseInt(propertie);

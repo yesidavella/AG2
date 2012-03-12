@@ -3,7 +3,6 @@ package com.ag2.model;
 import Distributions.ConstantDistribution;
 import Distributions.DDNegExp;
 import Grid.Entity;
-import Grid.GridSimulation;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
@@ -13,10 +12,8 @@ import Grid.Nodes.Hybrid.Parallel.*;
 import Grid.Nodes.OutputResourceNode;
 import Grid.Port.GridInPort;
 import Grid.Port.GridOutPort;
-import Grid.Utilities.Config;
 import Grid.Utilities.IllegalEdgeException;
 import Grid.Utilities.Util;
-import com.ag2.config.PhosphorusPropertyEditor;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import simbase.SimBaseSimulator;
 import simbase.Time;
@@ -25,15 +22,15 @@ public class UtilModel extends Util {
 
     private static void insertOptionsForClient(ClientNode client, GridSimulator simulator) {
         client.getState().setJobInterArrival(new DDNegExp(simulator,
-                GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.defaultJobIAT)));
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_JOB_IAT)));
         client.getState().setFlops(new DDNegExp(simulator,
-                GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.defaultFlopSize)));
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_FLOP_SIZE)));
         client.getState().setMaxDelayInterval(new DDNegExp(simulator,
-                GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.maxDelay)));
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
 
         client.getState().setSizeDistribution(new DDNegExp(simulator,
-                GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.defaultDataSize)));
-        double ackSize = GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.ACKsize);
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_DATA_SIZE)));
+        double ackSize = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.ACK_SIZE);
         if (ackSize == 0) {
             client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         } else {
@@ -57,15 +54,15 @@ public class UtilModel extends Util {
     }
 
     private static void insertOptionsForResource(ResourceNode resource, GridSimulator simulator) {
-        resource.setCpuCapacity(GridSimulation.configuration.getDoubleProperty(
-                Config.ConfigEnum.defaultCapacity));
-        resource.setQueueSize(GridSimulation.configuration.getIntProperty(
-                Config.ConfigEnum.defaultQueueSize));
-        resource.setCpuCount(GridSimulation.configuration.getIntProperty(
-                Config.ConfigEnum.defaultCPUCount), GridSimulation.configuration.getDoubleProperty(
-                Config.ConfigEnum.defaultCapacity));
-        resource.setCpuCapacity(GridSimulation.configuration.getDoubleProperty(
-                Config.ConfigEnum.defaultCapacity));
+        resource.setCpuCapacity(PropertyPhosphorusTypeEnum.getDoubleProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
+        resource.setQueueSize(PropertyPhosphorusTypeEnum.getIntProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_QUEUE_SIZE));
+        resource.setCpuCount(PropertyPhosphorusTypeEnum.getIntProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_CPU_COUNT), PropertyPhosphorusTypeEnum.getDoubleProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
+        resource.setCpuCapacity(PropertyPhosphorusTypeEnum.getDoubleProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
     }
 
     public static ResourceNode createHyridResourceNode(String id, GridSimulator simulator) {
@@ -94,7 +91,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridOutputSwitch(String id, GridSimulator simulator) {
         Switch sw = new OuputSwitchForHybridCase(id, simulator);
-        sw.setHandleDelay(new Time(GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.OBSHandleTime)));
+        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
@@ -137,11 +134,10 @@ public class UtilModel extends Util {
             double customLinkSpeed = getCustomLinkSpeed(from);
 
             GridOutPort out = new GridOutPort(buffer.toString(), from,
-                    GridSimulation.configuration.getDoubleProperty(
-                    Config.ConfigEnum.switchingSpeed),
+                    PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SWITCHING_SPEED),
                     customLinkSpeed,
-                    GridSimulation.configuration.getIntProperty(
-                    Config.ConfigEnum.defaultWavelengths));
+                    PropertyPhosphorusTypeEnum.getIntProperty(
+                    PropertyPhosphorusTypeEnum.DEFAULT_WAVELENGTHS));
             GridInPort in = new GridInPort(buffer.toString(), to);
             out.setTarget(in);
             in.setSource(out);
@@ -172,7 +168,7 @@ public class UtilModel extends Util {
 
     private static double getCustomLinkSpeed(Entity from) {
 
-        double currenteLinkSpeed = GridSimulation.configuration.getDoubleProperty(Config.ConfigEnum.linkSpeed);
+        double currenteLinkSpeed = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.LINK_SPEED);
         double customLinkSpeed = -1;
 
         if (from instanceof ClientNode || from instanceof ResourceNode || from instanceof ServiceNode) {
@@ -217,11 +213,11 @@ public class UtilModel extends Util {
             double customLinkSpeed = getCustomLinkSpeed(from);
 
             GridOutPort out = new GridOutPort(buffer.toString(), from,
-                    GridSimulation.configuration.getDoubleProperty(
-                    Config.ConfigEnum.switchingSpeed),
+                    PropertyPhosphorusTypeEnum.getDoubleProperty(
+                    PropertyPhosphorusTypeEnum.SWITCHING_SPEED),
                     customLinkSpeed,
-                    GridSimulation.configuration.getIntProperty(
-                    Config.ConfigEnum.defaultWavelengths));
+                    PropertyPhosphorusTypeEnum.getIntProperty(
+                    PropertyPhosphorusTypeEnum.DEFAULT_WAVELENGTHS));
             GridInPort in = new GridInPort(buffer.toString(), to);
             out.setTarget(in);
             in.setSource(out);

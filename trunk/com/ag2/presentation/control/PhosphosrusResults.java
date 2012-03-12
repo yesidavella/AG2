@@ -240,7 +240,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable{
     }
 
     public void setExecutionPercentage(double Percentage) {
-        //FIXME:esto se esta reventando apenas se ejecuta la  aveces
+        //XXX:Esto se revienta aveces.
         progressIndicator.setProgress(Percentage / 100);
 
     }

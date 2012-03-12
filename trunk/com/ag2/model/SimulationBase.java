@@ -5,8 +5,6 @@ import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
-import Grid.Routing.RoutingViaJung;
-import Grid.Routing.ShortesPathRouting;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.controller.ResultsAbstractController;
@@ -97,7 +95,7 @@ public class SimulationBase implements Runnable, Serializable {
 
     public void initNetwork() {
         simulationInstance.stopEvent = false;
-        gridSimulatorModel.setRouting(new ShortesPathRouting(gridSimulatorModel));
+        gridSimulatorModel.getRouting().clear();
         route();
     }
 
