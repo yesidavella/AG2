@@ -55,14 +55,12 @@ public class UtilModel extends Util {
 
     private static void insertOptionsForResource(ResourceNode resource, GridSimulator simulator) {
         resource.setCpuCapacity(PropertyPhosphorusTypeEnum.getDoubleProperty(
-                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
+                PropertyPhosphorusTypeEnum.DEFAULT_CPU_CAPACITY));
         resource.setQueueSize(PropertyPhosphorusTypeEnum.getIntProperty(
                 PropertyPhosphorusTypeEnum.DEFAULT_QUEUE_SIZE));
         resource.setCpuCount(PropertyPhosphorusTypeEnum.getIntProperty(
                 PropertyPhosphorusTypeEnum.DEFAULT_CPU_COUNT), PropertyPhosphorusTypeEnum.getDoubleProperty(
-                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
-        resource.setCpuCapacity(PropertyPhosphorusTypeEnum.getDoubleProperty(
-                PropertyPhosphorusTypeEnum.DEFAULT_CAPACITY));
+                PropertyPhosphorusTypeEnum.DEFAULT_CPU_CAPACITY));
     }
 
     public static ResourceNode createHyridResourceNode(String id, GridSimulator simulator) {
@@ -81,7 +79,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridSwitch(String id, GridSimulator simulator) {
         Switch sw = new HybridSwitchImpl(id, simulator);
-        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+        //sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
@@ -91,7 +89,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridOutputSwitch(String id, GridSimulator simulator) {
         Switch sw = new OuputSwitchForHybridCase(id, simulator);
-        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+        //sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }

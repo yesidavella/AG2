@@ -23,43 +23,60 @@ public enum PropertyPhosphorusTypeEnum {
     /**
      * Tiempo de simulacion en milisegundos.
      */
-    SIMULATION_TIME("simulationTime","Tiempo de Simulación(ms):", new TextField()),
+    SIMULATION_TIME("simulationTime", "Tiempo de Simulación(ms):", new TextField()),
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
-    OUTPUT("output","output(Franklin)", new CheckBox()),
-    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
-    DEFAULT_LINK_SPEED("defaultLinkSpeed","a", new TextField()),
-    DEFAULT_WAVELENGTHS("defaultWavelengths","Numero de lambdas:", new TextField()),
-    ACK_SIZE("ACKsize","ACKsize:", new TextField()),
+    OUTPUT("output", "output(Franklin)", new CheckBox()),
+    //STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
+    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación:", new TextField()),
     /**
-     * Coef. de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
+     * Cantidad de lambdas en la fibra optica.
+     */
+    DEFAULT_WAVELENGTHS("defaultWavelengths", "Numero de lambdas:", new TextField()),
+    //The size of control messages. If control messages are 0, the are being send immediately
+    ACK_SIZE("ACKsize", "ACKsize franklin:", new TextField()),
+    /**
+     * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
      * conmutadores hibridos. Esto es la propiedad HandleDelay.
      */
-    OBS_HANDLE_TIME("OBSHandleTime","Tiempo de retardo al conmutar:", new TextField()),
-    DEFAULT_CAPACITY("defaultCapacity","defaultCapacity", new TextField()),
-    DEFAULT_CPU_COUNT("defaultCPUCount","Número de CPUs/clúster:", new TextField()),
-    DEFAULT_QUEUE_SIZE("defaultQueueSize","a", new TextField()),
-    DEFAULT_FLOP_SIZE("defaultFlopSize","a", new TextField()),
-    DEFAULT_DATA_SIZE("defaultDataSize","a", new TextField()),
-    DEFAULT_JOB_IAT("defaultJobIAT","a", new TextField()),
-    MAX_DELAY("maxDelay","a", new TextField()),
-    SWITCHING_SPEED("switchingSpeed","Vel. de conmutación:", new TextField()),
-    LINK_SPEED("linkSpeed","Vel. del enlace:", new TextField()),
-    OUTPUT_FILE_NAME("outputFileName","Nombre del archivo de traza:", new TextField()),
-    ROUTED_VIA_JUNG("routedViaJUNG","Enrutar via:(T)Jung (F)ShortesPath", new CheckBox());
-    
+    //OBS_HANDLE_TIME("OBSHandleTime", "Tiempo de retardo al conmutar:", new TextField()),
+    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster:", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
+    DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs/clúster:", new TextField()),
+    /**
+     * Cantidad de trabajos a encolar en el buffer del nodo recurso
+     */
+    DEFAULT_QUEUE_SIZE("defaultQueueSize", "Buffer de Trabajos/cluster:", new TextField()),
+    DEFAULT_FLOP_SIZE("defaultFlopSize", "a", new TextField()),
+    DEFAULT_DATA_SIZE("defaultDataSize", "a", new TextField()),
+    DEFAULT_JOB_IAT("defaultJobIAT", "a", new TextField()),
+    /**
+     * Promedio de la exp. neg. del retraso maximo en la solicitud del trabajo
+     * Al parecer nunca se utiliza. Yo diria q no esta implementado.
+     */
+    MAX_DELAY("maxDelay", "Prom. Retraso máx/Trab_Req:", new TextField()),
+    OUTPUT_FILE_NAME("outputFileName", "Nombre del archivo de traza:", new TextField()),
+    /**
+     * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el OCSEndSender. 
+     */
+    OCS_SETUP_HANDLE_TIME("OCSSetupHandleTime", "Tiempo crear/eliminar un OCS(ms):", new TextField()),
+    /**
+     * Tiempo necesario en alcanzar la otra punta del enlace de un mensaje.
+     */
+    LINK_SPEED("linkSpeed", "Vel. del enlace(ms):", new TextField()),
+    //DEFAULT_LINK_SPEED("defaultLinkSpeed", "a", new TextField()),
+    ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox());
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;
     private PhosphorusPropertyEditor phosphorusPropertyEditor = PhosphorusPropertyEditor.getUniqueInstance();
     private String visualNameOnTb;
-    
+
     public String getVisualNameOnTb() {
         return visualNameOnTb;
     }
-    
-    private PropertyPhosphorusTypeEnum(String nombre,String visualNameOnTb, Control control) {
+
+    private PropertyPhosphorusTypeEnum(String nombre, String visualNameOnTb, Control control) {
         this.visualNameOnTb = visualNameOnTb;
         phosphorusPropertyName = nombre;
         this.control = control;
