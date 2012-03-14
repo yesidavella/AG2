@@ -29,35 +29,48 @@ public enum PropertyPhosphorusTypeEnum {
      */
     OUTPUT("output", "output(Franklin)", new CheckBox()),
     //STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
-    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación:", new TextField()),
+    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(B/ms):", new TextField()),
     /**
      * Cantidad de lambdas en la fibra optica.
      */
     DEFAULT_WAVELENGTHS("defaultWavelengths", "Numero de lambdas:", new TextField()),
     //The size of control messages. If control messages are 0, the are being send immediately
-    ACK_SIZE("ACKsize", "ACKsize franklin:", new TextField()),
+    ACK_SIZE("ACKsize", "Prom. Tamaño AKC(B):", new TextField()),
     /**
      * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
      * conmutadores hibridos. Esto es la propiedad HandleDelay.
      */
     //OBS_HANDLE_TIME("OBSHandleTime", "Tiempo de retardo al conmutar:", new TextField()),
-    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster:", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
+    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster(B/ms):", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
     DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs/clúster:", new TextField()),
     /**
      * Cantidad de trabajos a encolar en el buffer del nodo recurso
      */
     DEFAULT_QUEUE_SIZE("defaultQueueSize", "Buffer de Trabajos/cluster:", new TextField()),
-    DEFAULT_FLOP_SIZE("defaultFlopSize", "a", new TextField()),
-    DEFAULT_DATA_SIZE("defaultDataSize", "a", new TextField()),
-    DEFAULT_JOB_IAT("defaultJobIAT", "a", new TextField()),
+    /**
+     * Determina el tiempo q tarde ejecutando un trabajo en el Nodo de recurso
+     * segun su capacidad. double executionTime = job.getMsg().getFlops() /
+     * cpu.getCpuCapacity();
+     */
+    DEFAULT_FLOP_SIZE("defaultFlopSize", "Prom. de FLOPS/Trabajo(B*ms):", new TextField()),
+    /**
+     * Promedio del tamaño de cada trabajo.
+     */
+    DEFAULT_DATA_SIZE("defaultDataSize", "Prom. del tamaño/Trabajo(B):", new TextField()),
+    /**
+     * Promedio de la exp. neg. de duracion del Intervalo sin q lleguen trabajos
+     */
+    DEFAULT_JOB_IAT("defaultJobIAT", "Prom. Inter LLegada/Trabajo(ms):", new TextField()),
     /**
      * Promedio de la exp. neg. del retraso maximo en la solicitud del trabajo
-     * Al parecer nunca se utiliza. Yo diria q no esta implementado.
+     * Al parecer nunca se utiliza en serio.SOlo se utiliza en getMaxEndTime(),
+     * pero este ultimo metodo nunca es utilizado.
      */
-    MAX_DELAY("maxDelay", "Prom. Retraso máx/Trab_Req:", new TextField()),
+    MAX_DELAY("maxDelay", "Prom. Retraso máx/Trab_Req(ms):", new TextField()),
     OUTPUT_FILE_NAME("outputFileName", "Nombre del archivo de traza:", new TextField()),
     /**
-     * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el OCSEndSender. 
+     * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el
+     * OCSEndSender.
      */
     OCS_SETUP_HANDLE_TIME("OCSSetupHandleTime", "Tiempo crear/eliminar un OCS(ms):", new TextField()),
     /**

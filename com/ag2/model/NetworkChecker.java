@@ -129,7 +129,7 @@ public class NetworkChecker {
         Boolean foundIsolatedNetworks = false;
 
         if (routing instanceof RoutingViaJung) {
-
+System.out.println("Entro a:RoutingViaJung");
             Graph networkRoutingGraph = ((RoutingViaJung) routing).getHybridNetwork();
             GridVertex pivotVertex = null;
 
@@ -148,7 +148,7 @@ public class NetworkChecker {
                 }
             }
         } else if (routing instanceof ShortesPathRouting) {
-
+            System.out.println("Entro a:ShortesPathRouting");
             NetworkProxy networkProxy = new NetworkProxy();
             networkProxy.setHyrbidNetwork(((ShortesPathRouting) routing).getHyrbidNetwork());
             NetworkRouting networkRouting = ((ShortesPathRouting) routing).getHybridNetworkRouting();
