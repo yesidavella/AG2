@@ -17,7 +17,7 @@ visual en el combo. 2H Franklin ................................................
 16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
-13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Pendiente
+13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Parcial(Los valores coherentes no estan todavia)
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
  Tabla prop  boton routing via jung o via shortespath
 
@@ -27,12 +27,12 @@ Segundo bloque de Bugs
 2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Pendiente
 3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
   GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun 
-  corresponda(Yesid)............................................................................   Pendiente
+  corresponda(Yesid)............................................................................   Listo
 4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)................   Pendiente
 5.Cuando se corre la simulacion, la GUI no se activa si no se mueve el mouse por encima de algun
   elemento de la interfaz grafica (Yesid).......................................................   Pendiente
 6.Adicionar evento al checkbox del tipo de enrutamiento para q haga un setRouting segun toque con
-  Jung o shortest (Yesid).......................................................                    Pendiente
+  Jung o shortest (Yesid).......................................................                   Listo
 
 
 

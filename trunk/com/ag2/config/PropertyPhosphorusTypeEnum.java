@@ -1,13 +1,19 @@
 package com.ag2.config;
 
+import Grid.Routing.Routing;
+import Grid.Routing.RoutingViaJung;
+import Grid.Routing.ShortesPathRouting;
 import com.ag2.controller.ExecuteController;
+import com.ag2.model.SimulationBase;
 import com.ag2.presentation.GUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
@@ -122,6 +128,7 @@ public enum PropertyPhosphorusTypeEnum {
         if (phosphorusPropertyEditor.getPropertyValue(this).equalsIgnoreCase("true")) {
             checkBox.setSelected(true);
         }
+        
         checkBox.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent actionEvent) {
@@ -130,6 +137,17 @@ public enum PropertyPhosphorusTypeEnum {
                     PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.TRUE.toString());
                 } else {
                     PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.FALSE.toString());
+                }
+                
+                if(getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")){
+                    Routing routing;
+                    if(checkBox.isSelected()){
+                        routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel());
+                    }else{
+                        routing = new ShortesPathRouting(SimulationBase.getInstance().getGridSimulatorModel());
+                    }
+                    
+                    SimulationBase.getInstance().getGridSimulatorModel().setRouting(routing);
                 }
             }
         });
