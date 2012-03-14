@@ -102,7 +102,7 @@ public class GUI extends Scene implements Serializable {
         createTabs();
         borderPane.setCenter(tpBox);
         //Diseño inferior
-        HBox cajaInferiorHor = createDesignButtons();
+        HBox cajaInferiorHor = createDesignBottom();
         borderPane.setBottom(cajaInferiorHor);
         
     }
@@ -403,7 +403,7 @@ public class GUI extends Scene implements Serializable {
         tpBox.getTabs().addAll(tabSimulation);
     }
 
-    private HBox createDesignButtons() {
+    private HBox createDesignBottom() {
 
         HBox hboxAllBottom = new HBox();
         hboxAllBottom.getStyleClass().add("cajaInferior");
@@ -498,8 +498,8 @@ public class GUI extends Scene implements Serializable {
     private TableView<String> createSimulationPropertiesTb() {
 
         TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
-        tbcolPropName.setMinWidth(175);
-        tbcolPropName.setPrefWidth(185);
+        tbcolPropName.setMinWidth(185);
+        tbcolPropName.setPrefWidth(195);
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");

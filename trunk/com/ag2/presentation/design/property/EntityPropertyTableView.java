@@ -24,13 +24,13 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
     public EntityPropertyTableView() {
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
-        propertyTableColumn.setMinWidth(110);
-        propertyTableColumn.setPrefWidth(175);
+        propertyTableColumn.setMinWidth(120);
+        propertyTableColumn.setPrefWidth(215);
 
         TableColumn valueTableColumn = new TableColumn("VALOR");
         valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
-        valueTableColumn.setMinWidth(200);
-        valueTableColumn.setPrefWidth(215);
+        valueTableColumn.setMinWidth(160);
+        valueTableColumn.setPrefWidth(170);
 
         TableColumn titleTableColumn = new TableColumn("PROPIEDADES DE DISPOSITIVO SELECCIONADO");
         titleTableColumn.getColumns().addAll(propertyTableColumn, valueTableColumn);

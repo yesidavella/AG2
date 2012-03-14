@@ -1,6 +1,7 @@
 package com.ag2.model;
 
-import Grid.GridSimulation;
+import Grid.Routing.RoutingViaJung;
+import Grid.Routing.ShortesPathRouting;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import simbase.Exceptions.StopException;
@@ -18,6 +19,13 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private ResultsAbstractController resultsAbstractController;
 
     public GridSimulatorModel() {
+        
+        if(PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)){
+            super.setRouting(new RoutingViaJung(this));
+        }else{
+            super.setRouting(new ShortesPathRouting(this));
+        }
+                
         simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
     }
 
