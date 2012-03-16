@@ -19,7 +19,6 @@ visual en el combo. 2H Franklin ................................................
 12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Parcial(Los valores coherentes no estan todavia)
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
- Tabla prop  boton routing via jung o via shortespath
 
 Segundo bloque de Bugs
 
