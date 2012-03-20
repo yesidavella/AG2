@@ -349,7 +349,7 @@ public class GUI extends Scene implements Serializable {
 
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
-        btnPCE_Switch.setTooltip(new Tooltip("PCE"));
+        btnPCE_Switch.setTooltip(new Tooltip("PCE (Path Computation Element)"));
    //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
         btnResource.setTooltip(new Tooltip("Clúster (Recurso de almacenamiento y procesamiento) "));

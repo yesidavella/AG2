@@ -29,7 +29,7 @@ public class NetworkErrorsReporter extends ModalAG2window {
         hbTitle.setPadding(new Insets(0, 0, 10, 0));
         hbTitle.setAlignment(Pos.CENTER);
         
-        ImageView ivWarning = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"warning.jpg"));
+        ImageView ivWarning = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"warning.png"));
         double proportionXYivWarning = ivWarning.getBoundsInParent().getWidth()/ivWarning.getBoundsInParent().getHeight();
         ivWarning.setFitHeight(WARNING_WIDTH);
         ivWarning.setFitWidth(WARNING_WIDTH*proportionXYivWarning);
