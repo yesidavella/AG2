@@ -22,7 +22,7 @@ visual en el combo. 2H Franklin ................................................
 
 Segundo bloque de Bugs
 
-1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Pendiente
+1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Listo
 2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Listo
 3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
   GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun
