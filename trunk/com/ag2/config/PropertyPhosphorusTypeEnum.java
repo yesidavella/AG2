@@ -26,14 +26,14 @@ import javafx.scene.input.MouseEvent;
  */
 public enum PropertyPhosphorusTypeEnum {
 
-    /**
+    /*
      * Tiempo de simulacion en milisegundos.
      */
     SIMULATION_TIME("simulationTime", "Tiempo de Simulación(ms):", new TextField()),
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
-    OUTPUT("output", "output(Franklin)", new CheckBox()),
+   /// OUTPUT("output", "output(Franklin)", new CheckBox()),
     //STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
     SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(B/ms):", new TextField()),
     /**
@@ -128,7 +128,7 @@ public enum PropertyPhosphorusTypeEnum {
         if (phosphorusPropertyEditor.getPropertyValue(this).equalsIgnoreCase("true")) {
             checkBox.setSelected(true);
         }
-        
+
         checkBox.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent actionEvent) {
@@ -138,7 +138,7 @@ public enum PropertyPhosphorusTypeEnum {
                 } else {
                     PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.FALSE.toString());
                 }
-                
+
                 if(getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")){
                     Routing routing;
                     if(checkBox.isSelected()){
@@ -146,7 +146,7 @@ public enum PropertyPhosphorusTypeEnum {
                     }else{
                         routing = new ShortesPathRouting(SimulationBase.getInstance().getGridSimulatorModel());
                     }
-                    
+
                     SimulationBase.getInstance().getGridSimulatorModel().setRouting(routing);
                 }
             }
