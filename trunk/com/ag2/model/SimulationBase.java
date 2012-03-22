@@ -5,6 +5,7 @@ import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
+import Grid.Utilities.HtmlWriter;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.controller.ResultsAbstractController;
@@ -87,6 +88,7 @@ public class SimulationBase implements Runnable, Serializable {
         simulationBase.setLinkAdminAbstractController(linkAdminAbstractController);
         nodeAdminAbstractController.reCreatePhosphorousNodes();
         linkAdminAbstractController.reCreatePhosphorousLinks();
+        HtmlWriter.getInstance().incrementFolderCount();
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
