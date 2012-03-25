@@ -82,6 +82,7 @@ public class GUI extends Scene implements Serializable {
         tgTools = new ToggleGroup();
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
+       // executePane.setMaxWidth(120);
         executePane.setGroup(graphDesignGroup.getGroup());
 
         addScene(this); 
@@ -96,6 +97,7 @@ public class GUI extends Scene implements Serializable {
         gpTools = createToolsBar();
 
         VBox contenedorHerramietas = new VBox();
+        contenedorHerramietas.setMaxWidth(130);
         contenedorHerramietas.getChildren().addAll(executePane, gpTools);
         borderPane.setLeft(contenedorHerramietas);
         //Diseño central
@@ -260,6 +262,7 @@ public class GUI extends Scene implements Serializable {
     private GridPane createToolsBar() {
 
         GridPane gridPane = new GridPane();
+       // gridPane.setMaxWidth(120);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(4);
@@ -375,6 +378,7 @@ public class GUI extends Scene implements Serializable {
 
         GridPane.setConstraints(btnLink, 1, 6);
         grdPnToolsBar.getChildren().add(btnLink);
+        
 
     }
 
