@@ -13,7 +13,7 @@ public class ResourcesPath {
 
     static {
         try {
-            ABS_PATH_CONFIG_AG2 = new File("resources/").toURL().toString().replaceFirst("file:/", "");
+            ABS_PATH_CONFIG_AG2 = new File("resources/").toURL().toString().replaceFirst("file:", "");
             ABS_PATH_IMGS = new File("resources/images/").toURL().toString();
             ABS_PATH_CSS = new File("resources/css/").toURL().toString();
 
