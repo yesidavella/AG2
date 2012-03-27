@@ -29,7 +29,7 @@ Segundo bloque de Bugs
   corresponda(Yesid)............................................................................   Listo
 4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)................   Listo
 5.Cuando se corre la simulacion, la GUI no se activa si no se mueve el mouse por encima de algun
-  elemento de la interfaz grafica (Yesid).......................................................   Pendiente
+  elemento de la interfaz grafica (Yesid).......................................................   No BUG
 6.Adicionar evento al checkbox del tipo de enrutamiento para q haga un setRouting segun toque con
   Jung o shortest (Yesid).......................................................                   Listo
 
