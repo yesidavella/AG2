@@ -20,7 +20,8 @@ visual en el combo. 2H Franklin ................................................
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Parcial(Los valores coherentes no estan todavia)
 14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
 
-Segundo bloque de Bugs
+
+#####  Segundo bloque de Bugs  ###############################################################################################################
 
 1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Listo
 2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Listo
@@ -35,91 +36,7 @@ Segundo bloque de Bugs
 
 
 
-
-
-
-
-
-
-
-
-
-Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
-
-###### com.ag2.config
-
-- PhosphorusPropertyEditor
-- PropertyPhosphorusTypeEnum
-
-###### com.ag2.config.serialization
-
--UtilSerializator
-
-###### com.ag2.model
-
--LinkCreationAbstractModel
--PhosphorusLinkModel
--NodeCreationModel
--BrokerCreationModel
--GridSimulatorModel
--LinkCreationAbstractModel
--ClientCreationModel
--LinkCreationModel
--HybridSwitchCreationModel
--OCS_SwitchCreationModel
--OBS_SwitchCreationModel
--OutputterModel
--SimulationBase
-
-###### com.ag2.controller
-
--MatchCoupleObjectContainer
--LinkAdminAbstractController
--NodeAdminAbstractController
--ExecuteAbstractController
--ExecuteController
-
-###### com.ag2.presentation.control;
-
--ToggleButtonAg2
--GraphNodesView
--PhosphosrusHTMLResults
-
-##### com.ag2.presentacion
-
--ActionTypeEmun
--ErrorsView
--Main
--ExecutePane
--GraphNodesView
--ExecuteView
--GUI
-
-##### com.ag2.presentation.design;
-
--ArcListener
--GraphNode
--BrokerGrahpNode
--ClientGraphNode
--GraphArc
--GraphArcSeparatorPoint
--GraphDesignGroup
--GraphLink
--HybridSwitchGraphNode
--OBS_SwicthGraphNode
--OCS_SwicthGraphNode
--ResourceGraphNode
--Selectable
--SwitchGraphNode
-
-##### com.ag2.presentation.design.property
-
--EntityProperty
--EntityPropertyTable
--NodeRelationProperty
--NodeDistributionProperty
-
-
+#####  Cambios despues de entrega de documento  ###############################################################################################################
 
 
 Cambios despues de entrega de documento:

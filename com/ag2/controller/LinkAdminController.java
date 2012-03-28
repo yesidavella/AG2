@@ -10,14 +10,14 @@ import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityProperty;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
 
 public class LinkAdminController extends LinkAdminAbstractController {
 
-  //  private Hashtable<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-    private Hashtable<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+  
+    private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
 
     @Override
     public void createLink(GraphLink graphLink) {
@@ -58,38 +58,38 @@ public class LinkAdminController extends LinkAdminAbstractController {
          **Enlace de nodo Phosphorous de A hacia B (A->B)
          */
         //===========================================================================================================
-        EntityProperty propNameDirectionChannelAB = new EntityProperty("channelDirectionAB", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
-        propNameDirectionChannelAB.setFirstValue(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
-        entityPropertys.add(propNameDirectionChannelAB);
+        EntityProperty linkAB_NameProperty = new EntityProperty("channelDirectionAB", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
+        linkAB_NameProperty.setFirstValue(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
+        entityPropertys.add(linkAB_NameProperty);
 
-        EntityProperty propLinkSpeedAB = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
-        propLinkSpeedAB.setFirstValue(Double.toString(gridOutPortA.getLinkSpeed()));
-        entityPropertys.add(propLinkSpeedAB);
+        EntityProperty linkABSpeedProperty = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        linkABSpeedProperty.setFirstValue(Double.toString(gridOutPortA.getLinkSpeed()));
+        entityPropertys.add(linkABSpeedProperty);
         //===========================================================================================================
 
         /*
          **Enlace de nodo Phosphorous de B hacia A (B->A)
          */
         //===========================================================================================================
-        EntityProperty propNameDirectionChannelBA = new EntityProperty("channelDirectionBA", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
-        propNameDirectionChannelBA.setFirstValue(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
-        entityPropertys.add(propNameDirectionChannelBA);
+        EntityProperty linkBA_NameProperty = new EntityProperty("channelDirectionBA", "Dirección del Canal:", EntityProperty.PropertyType.LABEL, false);
+        linkBA_NameProperty.setFirstValue(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
+        entityPropertys.add(linkBA_NameProperty);
 
-        EntityProperty propLinkSpeedBA = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
-        propLinkSpeedBA.setFirstValue(Double.toString(gridOutPortB.getLinkSpeed()));
-        entityPropertys.add(propLinkSpeedBA);
+        EntityProperty linkBASpeedProperty = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        linkBASpeedProperty.setFirstValue(Double.toString(gridOutPortB.getLinkSpeed()));
+        entityPropertys.add(linkBASpeedProperty);
         //===========================================================================================================
 
         /*
          **Propiedades comunes en ambas direcciones del canal.
          */
-        EntityProperty propSwitchingSpeed = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.PropertyType.NUMBER, false);
-        propSwitchingSpeed.setFirstValue((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
-        entityPropertys.add(propSwitchingSpeed);
+        EntityProperty switchingSpeedProperty = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.PropertyType.NUMBER, false);
+        switchingSpeedProperty.setFirstValue((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
+        entityPropertys.add(switchingSpeedProperty);
 
-        EntityProperty propWavelengths = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.PropertyType.NUMBER, false);
-        propWavelengths.setFirstValue((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
-        entityPropertys.add(propWavelengths);
+        EntityProperty wavelengthsProperty = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.PropertyType.NUMBER, false);
+        wavelengthsProperty.setFirstValue((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
+        entityPropertys.add(wavelengthsProperty);
 
         entityPropertyTable.loadProperties(entityPropertys);
     }
@@ -99,18 +99,18 @@ public class LinkAdminController extends LinkAdminAbstractController {
 
         graphLink.getProperties().put(id, valor);
 
-        PhosphorusLinkModel selectedPhosphorusLink = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(graphLink);
+        PhosphorusLinkModel phosphorusLinkModelSelected = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(graphLink);
 
         if (id.equalsIgnoreCase("linkSpeedAB")) {
-            selectedPhosphorusLink.getGridOutPortA().setLinkSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setLinkSpeed(Double.valueOf(valor));
         } else if (id.equalsIgnoreCase("linkSpeedBA")) {
-            selectedPhosphorusLink.getGridOutPortB().setLinkSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortB().setLinkSpeed(Double.valueOf(valor));
         } else if (id.equalsIgnoreCase("switchingSpeed")) {
-            selectedPhosphorusLink.getGridOutPortA().setSwitchingSpeed(Double.valueOf(valor));
-            selectedPhosphorusLink.getGridOutPortB().setSwitchingSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setSwitchingSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortB().setSwitchingSpeed(Double.valueOf(valor));
         } else if (id.equalsIgnoreCase("defaultWavelengths")) {
-            selectedPhosphorusLink.getGridOutPortA().setMaxNumberOfWavelengths(Integer.parseInt(valor));
-            selectedPhosphorusLink.getGridOutPortB().setMaxNumberOfWavelengths(Integer.parseInt(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setMaxNumberOfWavelengths(Integer.parseInt(valor));
+            phosphorusLinkModelSelected.getGridOutPortB().setMaxNumberOfWavelengths(Integer.parseInt(valor));
         }
     }
 
@@ -134,12 +134,12 @@ public class LinkAdminController extends LinkAdminAbstractController {
 
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.get(graphLink);
 
-        boolean canRemovePortsInPhosNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
-        boolean canRemovePortsInPhosNodeB = removeInAndOutPort(phosLink.getGridOutPortB());
+        boolean canRemovePortsInNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
+        boolean canRemovePortsInNodeB = removeInAndOutPort(phosLink.getGridOutPortB());
 
         linkMatchCoupleObjectContainer.remove(graphLink);
 
-        return (canRemovePortsInPhosNodeA && canRemovePortsInPhosNodeB);
+        return (canRemovePortsInNodeA && canRemovePortsInNodeB);
     }
 
     private boolean removeInAndOutPort(GridOutPort outPort) {

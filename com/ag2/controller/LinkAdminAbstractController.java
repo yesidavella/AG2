@@ -6,13 +6,13 @@ import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public abstract class LinkAdminAbstractController implements Serializable {
 
     protected ArrayList<LinkCreationAbstractModel> linkCreationAbstractModels;
     protected EntityPropertyTableView entityPropertyTable;
-    protected Hashtable<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
+    protected HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
 
     public LinkAdminAbstractController() {
         linkCreationAbstractModels = new ArrayList<LinkCreationAbstractModel>();

@@ -6,13 +6,14 @@ import com.ag2.model.NetworkChecker;
 import com.ag2.model.SimulationBase;
 import com.ag2.presentation.NetworkErrorsReporter;
 import com.ag2.presentation.design.GraphNode;
-import java.util.Hashtable;
+import java.util.HashMap;
+
 import java.util.Iterator;
 import java.util.Map;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
-    private Hashtable<GraphNode,Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    private HashMap<GraphNode,Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
 
     @Override
     public void initNetwork() {

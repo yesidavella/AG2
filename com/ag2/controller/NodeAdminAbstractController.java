@@ -8,13 +8,13 @@ import com.ag2.presentation.design.GraphNode;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public abstract class NodeAdminAbstractController implements Serializable {
 
     protected ArrayList<GraphNodesView>  graphNodesViews = new ArrayList<GraphNodesView>();
     protected ArrayList<NodeCreationModel>   nodeCreationModels;
-    protected Hashtable<GraphNode, Entity> nodeMatchCoupleObjectContainer;
+    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer;
 
     public NodeAdminAbstractController() {
         nodeCreationModels = new ArrayList<NodeCreationModel>();

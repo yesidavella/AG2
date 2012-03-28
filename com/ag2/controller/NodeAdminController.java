@@ -6,7 +6,6 @@ import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
-import Grid.Interfaces.Switches.AbstractSwitch;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
@@ -17,9 +16,9 @@ import com.ag2.presentation.design.property.NodeRelationProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Set;
 import simbase.SimBaseSimulator;
-import simbase.Time;
 
 public class NodeAdminController extends NodeAdminAbstractController implements Serializable {
 
@@ -29,18 +28,18 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     public Entity createNode(GraphNode graphNode) {
 
         Entity newPhosphorusNode = null;
-        for (NodeCreationModel modeloRegistrado : nodeCreationModels) {
+        for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
 
-            if (modeloRegistrado instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
-                newPhosphorusNode = ((ClientCreationModel) modeloRegistrado).createPhosphorusNode(graphNode.getName());
-            } else if (modeloRegistrado instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode) {
-                newPhosphorusNode = ((BrokerCreationModel) modeloRegistrado).createPhosphorusNode(graphNode.getName());
-            } else if (modeloRegistrado instanceof ModeloCrearNodoDeRecurso && graphNode instanceof ResourceGraphNode) {
-                newPhosphorusNode = ((ModeloCrearNodoDeRecurso) modeloRegistrado).createPhosphorusNode(graphNode.getName());
-            } else if (modeloRegistrado instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) {
-                newPhosphorusNode = ((PCE_SwitchCreationModel) modeloRegistrado).createPhosphorusNode(graphNode.getName());
-            } else if (modeloRegistrado instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
-                newPhosphorusNode = ((HybridSwitchCreationModel) modeloRegistrado).createPhosphorusNode(graphNode.getName());
+            if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
+                newPhosphorusNode = ((ClientCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
+            } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode) {
+                newPhosphorusNode = ((BrokerCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
+            } else if (nodeCreationModel instanceof ModeloCrearNodoDeRecurso && graphNode instanceof ResourceGraphNode) {
+                newPhosphorusNode = ((ModeloCrearNodoDeRecurso) nodeCreationModel).createPhosphorusNode(graphNode.getName());
+            } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) {
+                newPhosphorusNode = ((PCE_SwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
+            } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
+                newPhosphorusNode = ((HybridSwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
             }
             
             if (newPhosphorusNode != null) {
@@ -52,15 +51,16 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         return newPhosphorusNode;
     }
 
+    @Override
     public void queryProperties(GraphNode graphNode) {
 
         selectedGraphNode = graphNode;
         ArrayList<EntityProperty> nodeProperties = new ArrayList<EntityProperty>();
 
         //===========================================================================================================
-        EntityProperty propNodeName = new EntityProperty("name", "Nombre:", EntityProperty.PropertyType.TEXT, false);
-        propNodeName.setFirstValue(selectedGraphNode.getName());
-        nodeProperties.add(propNodeName);
+        EntityProperty nodeNamePropperty = new EntityProperty("name", "Nombre:", EntityProperty.PropertyType.TEXT, false);
+        nodeNamePropperty.setFirstValue(selectedGraphNode.getName());
+        nodeProperties.add(nodeNamePropperty);
         //===========================================================================================================
 
         if (graphNode instanceof ClientGraphNode) {
@@ -107,36 +107,36 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             ResourceNode resource = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
 
 
-            EntityProperty propCpuCapacity = new EntityProperty("CpuCapacity", "Capacidad de cada CPU:", EntityProperty.PropertyType.TEXT, false);
+            EntityProperty cpuCapacityProperty = new EntityProperty("CpuCapacity", "Capacidad de cada CPU:", EntityProperty.PropertyType.TEXT, false);
             CPU cpu = (CPU) resource.getCpuSet().get(0);
 
             if (cpu != null) {
 
-                propCpuCapacity.setFirstValue(String.valueOf(cpu.getCpuCapacity()));
+                cpuCapacityProperty.setFirstValue(String.valueOf(cpu.getCpuCapacity()));
             } else {
-                propCpuCapacity.setFirstValue("0");
+                cpuCapacityProperty.setFirstValue("0");
             }
-            nodeProperties.add(propCpuCapacity);
+            nodeProperties.add(cpuCapacityProperty);
 
             //===========================================================================================================
-            EntityProperty propertyCpuCount = new EntityProperty("CpuCount", "Cantidad de CPUs:", EntityProperty.PropertyType.TEXT, false);
-            propertyCpuCount.setFirstValue(String.valueOf(resource.getCpuCount()));
-            nodeProperties.add(propertyCpuCount);
+            EntityProperty cpuCountProperty = new EntityProperty("CpuCount", "Cantidad de CPUs:", EntityProperty.PropertyType.TEXT, false);
+            cpuCountProperty.setFirstValue(String.valueOf(resource.getCpuCount()));
+            nodeProperties.add(cpuCountProperty);
             //============================================================================================================
 
             //===========================================================================================================
-            EntityProperty propertyQueueSize = new EntityProperty("QueueSize", "Tamaño de Buffer:", EntityProperty.PropertyType.TEXT, false);
-            propertyQueueSize.setFirstValue(String.valueOf(resource.getMaxQueueSize()));
-            nodeProperties.add(propertyQueueSize);
+            EntityProperty queueSizeProperty = new EntityProperty("QueueSize", "Tamaño de Buffer:", EntityProperty.PropertyType.TEXT, false);
+            queueSizeProperty.setFirstValue(String.valueOf(resource.getMaxQueueSize()));
+            nodeProperties.add(queueSizeProperty);
 
             for (GraphNode brokerGrahpNode : nodeMatchCoupleObjectContainer.keySet()) {
 
                 if (brokerGrahpNode instanceof BrokerGrahpNode) {
-                    EntityProperty propiedadeNodo = new EntityProperty("RelationshipResouceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
-                    nodeProperties.add(propiedadeNodo);
+                    EntityProperty entityProperty = new EntityProperty("RelationshipResouceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
+                    nodeProperties.add(entityProperty);
                     for (ServiceNode serviceNode : resource.getServiceNodes()) {
                         if (serviceNode.getID().equals(brokerGrahpNode.getOriginalName())) {
-                            propiedadeNodo.setFirstValue("true");
+                            entityProperty.setFirstValue("true");
                             // propiedadeNodo.setDisable(true);
                         }
                     }
@@ -155,8 +155,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 //            nodeProperties.add(propertyHandleDelay);
 //        }
 
-        for (GraphNodesView vistaNodosGraficos : graphNodesViews) {
-            vistaNodosGraficos.loadProperties(nodeProperties);
+        for (GraphNodesView graphNodesView : graphNodesViews) {
+            graphNodesView.loadProperties(nodeProperties);
         }
     }
 
@@ -181,60 +181,60 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDHyperExp_Lambdas", "Lambdas", EntityProperty.PropertyType.TEXT, true);
-            propiedaA.setFirstValue(getStringArrayDoubles(dDHyperExp.getLambdas()));
-            nodeProperties.add(propiedaA);
+            EntityProperty propertyA = new EntityProperty(id + "_DDHyperExp_Lambdas", "Lambdas", EntityProperty.PropertyType.TEXT, true);
+            propertyA.setFirstValue(getStringArrayDoubles(dDHyperExp.getLambdas()));
+            nodeProperties.add(propertyA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "Oportunidades", EntityProperty.PropertyType.TEXT, true);
-            propiedaB.setFirstValue(getStringArrayDoubles(dDHyperExp.getChances()));
-            nodeProperties.add(propiedaB);
+            EntityProperty propertyB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "Oportunidades", EntityProperty.PropertyType.TEXT, true);
+            propertyB.setFirstValue(getStringArrayDoubles(dDHyperExp.getChances()));
+            nodeProperties.add(propertyB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
-            EntityProperty propiedaB = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
-            propiedaB.setFirstValue(String.valueOf(dDNegExp.getAvg()));
-            nodeProperties.add(propiedaB);
+            EntityProperty propertyA = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            propertyA.setFirstValue(String.valueOf(dDNegExp.getAvg()));
+            nodeProperties.add(propertyA);
 
         } else if (discreteDistribution instanceof DDNormal) {
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estándar", EntityProperty.PropertyType.NUMBER, true);
-            propiedaA.setFirstValue(String.valueOf(dDNormal.getDev()));
-            nodeProperties.add(propiedaA);
+            EntityProperty propertyA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estándar", EntityProperty.PropertyType.NUMBER, true);
+            propertyA.setFirstValue(String.valueOf(dDNormal.getDev()));
+            nodeProperties.add(propertyA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDNormal_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
-            propiedaB.setFirstValue(String.valueOf(dDNormal.getAvg()));
-            nodeProperties.add(propiedaB);
+            EntityProperty propertyB = new EntityProperty(id + "_DDNormal_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            propertyB.setFirstValue(String.valueOf(dDNormal.getAvg()));
+            nodeProperties.add(propertyB);
 
         } else if (discreteDistribution instanceof DDPoissonProcess) {
 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
-            EntityProperty propiedaB = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
-            propiedaB.setFirstValue(String.valueOf(dDPoissonProcess.getAverage()));
-            nodeProperties.add(propiedaB);
+            EntityProperty propertyA = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            propertyA.setFirstValue(String.valueOf(dDPoissonProcess.getAverage()));
+            nodeProperties.add(propertyA);
 
         } else if (discreteDistribution instanceof DDUniform) {
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_DDUniform_Minimo", "Mínimo", EntityProperty.PropertyType.NUMBER, true);
-            propiedaA.setFirstValue(String.valueOf(dDUniform.getMin()));
-            nodeProperties.add(propiedaA);
+            EntityProperty propertyA = new EntityProperty(id + "_DDUniform_Minimo", "Mínimo", EntityProperty.PropertyType.NUMBER, true);
+            propertyA.setFirstValue(String.valueOf(dDUniform.getMin()));
+            nodeProperties.add(propertyA);
 
-            EntityProperty propiedaB = new EntityProperty(id + "_DDUniform_Maximo", "Máximo", EntityProperty.PropertyType.NUMBER, true);
-            propiedaB.setFirstValue(String.valueOf(dDUniform.getMax()));
-            nodeProperties.add(propiedaB);
+            EntityProperty propertyB = new EntityProperty(id + "_DDUniform_Maximo", "Máximo", EntityProperty.PropertyType.NUMBER, true);
+            propertyB.setFirstValue(String.valueOf(dDUniform.getMax()));
+            nodeProperties.add(propertyB);
 
         } else if (discreteDistribution instanceof ConstantDistribution) {
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
-            EntityProperty propiedaA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.PropertyType.NUMBER, true);
-            propiedaA.setFirstValue(String.valueOf(constantDistribution.getConstant()));
-            nodeProperties.add(propiedaA);
+            EntityProperty propertyA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.PropertyType.NUMBER, true);
+            propertyA.setFirstValue(String.valueOf(constantDistribution.getConstant()));
+            nodeProperties.add(propertyA);
         }
     }
 
@@ -341,10 +341,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             } else if (id.contains("RelationshipResouceAndServiceNodo")) {
                 String serviceNodeName = value.replace("_ON", "").replace("_OFF", "");
 
-                Enumeration<GraphNode> enumeration = nodeMatchCoupleObjectContainer.keys();
-                GraphNode nodoGrafico;
-                while ((nodoGrafico = enumeration.nextElement()) != null) {
-                    if (nodoGrafico.getName().equals(serviceNodeName)) {
+                Set<GraphNode> graphNodes = nodeMatchCoupleObjectContainer.keySet();
+                GraphNode nodoGrafico=null;
+                for (GraphNode nodoGraficoAux: graphNodes) {
+                    if (nodoGraficoAux.getName().equals(serviceNodeName)) {
+                        nodoGrafico =nodoGraficoAux;
                         break;
                     }
                 }
@@ -446,37 +447,38 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     }
 
     private DiscreteDistribution getDistributionByText(String value) {
-        SimBaseSimulator baseSimulator = SimulationBase.getInstance().getGridSimulatorModel();
+        SimBaseSimulator simBaseSimulator = SimulationBase.getInstance().getGridSimulatorModel();
         if (value.equals("Uniforme")) {
-            return new DDUniform(baseSimulator, 10, 20);
+            return new DDUniform(simBaseSimulator, 10, 20);
         } else if (value.equals("Constante")) {
             return new ConstantDistribution(10);
         } else if (value.equals("Erlang")) {
-            return new DDErlang(baseSimulator, 1, 2);
+            return new DDErlang(simBaseSimulator, 1, 2);
         } else if (value.equals("Hiper-exponencial")) {
-            return new DDHyperExp(baseSimulator, new double[]{1, 2, 3}, new double[]{1, 2, 3});
+            return new DDHyperExp(simBaseSimulator, new double[]{1, 2, 3}, new double[]{1, 2, 3});
         } else if (value.equals("Exponencial-negativa")) {
-            return new DDNegExp(baseSimulator, 2);
+            return new DDNegExp(simBaseSimulator, 2);
         } else if (value.equals("Normal")) {
-            return new DDNormal(baseSimulator, 2, 3);
+            return new DDNormal(simBaseSimulator, 2, 3);
         } else if (value.equals("Possion")) {
-            return new DDPoissonProcess(baseSimulator, 2);
+            return new DDPoissonProcess(simBaseSimulator, 2);
         }
         return null;
 
     }
 
-    public GraphNode findKeyNodeByValueNode(Entity entity, Hashtable<GraphNode, Entity> hashtable) {
-        for (GraphNode nodoGrafico : hashtable.keySet()) {
-            if (hashtable.get(nodoGrafico) == entity) {
+    public GraphNode findKeyNodeByValueNode(Entity entity, HashMap<GraphNode, Entity> hashMap) 
+    {
+        for (GraphNode nodoGrafico : hashMap.keySet()) {
+            if (hashMap.get(nodoGrafico) == entity) {
                 return nodoGrafico;
             }
         }
         return null;
     }
 
-    public GraphNode findNodoGraficoByName(String name, Hashtable<GraphNode, Entity> hashtable) {
-        for (GraphNode nodoGrafico : hashtable.keySet()) {
+    public GraphNode findNodoGraficoByName(String name, HashMap<GraphNode, Entity> hashMap) {
+        for (GraphNode nodoGrafico : hashMap.keySet()) {
             if (nodoGrafico.getName().equals(name)) {
                 return nodoGrafico;
             }
