@@ -24,13 +24,14 @@ public abstract class ModalAG2window extends Stage {
         setTitle(title);
         initModality(Modality.APPLICATION_MODAL);
         setResizable(true);
-
+        initStyle(StageStyle.UNDECORATED);
         brPnWindowsLayout = new BorderPane();
+
         brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));
-        
+
         Scene scene = new Scene(brPnWindowsLayout, 510, 400);//#FFEB8C
         setGradientEffect(scene);
-        
+
         btnAccept = new Button("Aceptar");
         btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -39,13 +40,13 @@ public abstract class ModalAG2window extends Stage {
                 ModalAG2window.this.close();
             }
         });
-        
+
         setScene(scene);
         configWindow();
     }
 
     private void setGradientEffect(Scene reportScene) {
-        Stop[] stops = new Stop[] { 
+        Stop[] stops = new Stop[] {
             new Stop(0.2, Color.LIGHTSTEELBLUE),
             new Stop(0.5, Color.WHITESMOKE),
             new Stop(0.8, Color.LIGHTSTEELBLUE)
@@ -53,7 +54,7 @@ public abstract class ModalAG2window extends Stage {
         LinearGradient linearGradient = new LinearGradient(0,0,1,0.25, true, CycleMethod.NO_CYCLE, stops);
         reportScene.setFill(linearGradient);
     }
-    
+
     public BorderPane getBrPnWindowsLayout() {
         return brPnWindowsLayout;
     }

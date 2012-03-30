@@ -25,10 +25,12 @@ public class Main extends Application implements Serializable {
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
 
+
     @Override
     public void start(final Stage stage) {
 
         stage.setTitle("Modelo AG2 - Simulador Grafico");
+        GUI.setStage(stage);
         stage.setScene(GUI.getInstance());
         GUI.getInstance().setStage(stage);
         GUI.getInstance().setMain(this);
