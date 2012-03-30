@@ -44,7 +44,7 @@ Cambios despues de entrega de documento:
 1. Pruebas de estres y validacion (ejecutar, parar,ejecutar...etc)
 
 
-Grupo 1 de pruebas de Simulacion 
+Grupo 1 de pruebas de Simulacion
 
     a) Red y grilla con muchismos nodos.
     b) Poner el tiempo de ejecucion en valores extremos.
@@ -53,7 +53,7 @@ Grupo 1 de pruebas de Simulacion
     e) Ejecutar, guardar, ejecutar, guardar...n veces. (alternando con cambios en todas las propidades de la nodos y de elances).
     f) Ejecutar, guardar, ejecutar, guardar...n veces. (alternando con eliminacion y adicion de nodos).
     g) Prubas sobre redes errraticas (Pruba de validaciones).
-  
+
 Grupo 2 de pruebas de compotamiento grfico.
 
     a) Probar bajo multiples resoluciones.
@@ -66,10 +66,12 @@ Grupo 3 de pruebas de tipos de datos de entreda
 
 Resultados
 
-Grupo 1 
+Grupo 1
     a) Ningun problema  (aprox 100 routers, 70 clientes, 50 clusteres, red semi malla)-------------------------------------------- (Listo)
 
 Grupo 2
+
+    b) Problema corregido ya no se puede cambiar el tamanio.---------------------------------------------------------------------- (Listo)
     -Los enlaces estan quedando encima de los nodos.
     -Cuando arranca y es muy pesado la simluacion arranca en 100% la torta de progreso debe arrancar en cero. -------------------- (Listo)
     -Mostrar cuadno tiempo lleva de simulacion en tiempo de relativo phosphorus y timepo de real.(al lado de la pelota)----------- (Listo)
