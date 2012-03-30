@@ -38,9 +38,7 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
         getColumns().add(titleTableColumn);
 
         setMinWidth(titleTableColumn.getMinWidth());
-        setPrefWidth(435);
-
-        setPrefHeight(200);
+        
     }
 
     public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController) {
