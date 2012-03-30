@@ -69,7 +69,7 @@ Resultados
 Grupo 1 
     a) Ningun problema  (aprox 100 routers, 70 clientes, 50 clusteres, red semi malla)-------------------------------------------- (Listo)
 
-Grupo 3
+Grupo 2
     -Los enlaces estan quedando encima de los nodos.
     -Cuando arranca y es muy pesado la simluacion arranca en 100% la torta de progreso debe arrancar en cero. -------------------- (Listo)
     -Mostrar cuadno tiempo lleva de simulacion en tiempo de relativo phosphorus y timepo de real.(al lado de la pelota)----------- (Listo)
