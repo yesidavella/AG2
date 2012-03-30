@@ -32,6 +32,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
@@ -42,7 +43,7 @@ import javax.swing.JOptionPane;
 public class GUI extends Scene implements Serializable {
 
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
-
+    private VBox vbLogos = createProjectsLogos();
     private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();
     private ToggleGroup tgTools;
     private GridPane gpMapNavegation;
@@ -76,12 +77,13 @@ public class GUI extends Scene implements Serializable {
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
     private Tab tabResultsHTML = new Tab();
-    private TabPane tpBox = new TabPane();
+    private TabPane tabPane = new TabPane();
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
     private transient ToolBar tlbWindow;
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
+    private SplitPane splitPane;
 
 
 
@@ -89,6 +91,8 @@ public class GUI extends Scene implements Serializable {
         super(borderPane, width, height);
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
+        splitPane =  new SplitPane();
+        splitPane.setOrientation(Orientation.HORIZONTAL);
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
 
@@ -107,14 +111,20 @@ public class GUI extends Scene implements Serializable {
 
         VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.setMaxWidth(130);
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, vbLogos);
         borderPane.setLeft(contenedorHerramietas);
         //Diseño central
         createTabs();
-        borderPane.setCenter(tpBox);
+        ScrollPane scpnProperties = createDesignBottom();
+        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        splitPane.setDividerPosition(0, 0.80);
+        splitPane.setOrientation(Orientation.VERTICAL);
+          splitPane.getItems().addAll( tabPane, scpnProperties);
+        borderPane.setCenter(splitPane);
+
         //Diseño inferior
-        HBox cajaInferiorHor = createDesignBottom();
-        borderPane.setBottom(cajaInferiorHor);
+
+//        borderPane.setBottom(cajaInferiorHor);
 
     }
         public static GUI getInstance() {
@@ -152,9 +162,7 @@ public class GUI extends Scene implements Serializable {
          final WindowButtons windowButtons = new WindowButtons(stage);
 
             tlbWindow.getItems().add(windowButtons);
-//            windowButtons.impl_traverse(Direction.RIGHT);
-         //   windowButtons.setRotate(90);
-            // add window header double clicking
+
             tlbWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent event) {
                     if (event.getClickCount() == 2) {
@@ -474,16 +482,17 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setContent(grRoot);
         tabSimulation.setContent(scPnWorld);
 
-        tpBox.getTabs().addAll(tabSimulation);
+        tabPane.getTabs().addAll(tabSimulation);
     }
 
-    private HBox createDesignBottom() {
+    private ScrollPane createDesignBottom() {
 
+        ScrollPane scrollPane =new ScrollPane();
         HBox hboxAllBottom = new HBox();
-        hboxAllBottom.getStyleClass().add("cajaInferior");
+        scrollPane.getStyleClass().add("cajaInferior");
         hboxAllBottom.setSpacing(10);
 
-        VBox vbLogos = createProjectsLogos();
+
 
         entityPropertyTable = new EntityPropertyTableView();
         stPnDeviceProperties.getChildren().add(entityPropertyTable);
@@ -501,8 +510,9 @@ public class GUI extends Scene implements Serializable {
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
 
-        hboxAllBottom.getChildren().addAll(vbLogos, splPnPropertiesTbs, vbxBottomRight);
-        return hboxAllBottom;
+        hboxAllBottom.getChildren().addAll( splPnPropertiesTbs, vbxBottomRight);
+        scrollPane.setContent(hboxAllBottom);
+                return scrollPane;
     }
 
     private VBox createProjectsLogos() {
@@ -586,9 +596,9 @@ public class GUI extends Scene implements Serializable {
         tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
 
         tbwSimulationProperties.setMinWidth(tbcolSimTableTitle.getMinWidth() + 13);
-        tbwSimulationProperties.setPrefWidth(345);
-
-        tbwSimulationProperties.setPrefHeight(200);
+//        tbwSimulationProperties.setPrefWidth(345);
+//
+//        tbwSimulationProperties.setPrefHeight(200);
 
         return tbwSimulationProperties;
     }
@@ -826,11 +836,11 @@ public class GUI extends Scene implements Serializable {
         gpTools.setOpacity(0.8);
         pgBrExecutionProgress.setProgress(-1);
         graphDesignGroup.getGroup().setOpacity(0.8);
-        if(!tpBox.getTabs().contains(tabResultsHTML)){
-        tpBox.getTabs().addAll(  tabResultsHTML, tabResults);
+        if(!tabPane.getTabs().contains(tabResultsHTML)){
+        tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
         }
 
-        tpBox.getSelectionModel().select(tabResults);
+        tabPane.getSelectionModel().select(tabResults);
 
     }
 
