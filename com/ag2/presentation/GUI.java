@@ -25,6 +25,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -130,17 +132,22 @@ public class GUI extends Scene implements Serializable {
         tlbWindow = new ToolBar();
         tlbWindow.setId("mainToolBar");
 
+       final DropShadow dropShadow = new DropShadow();
+        Label lblTitle = new Label("Simulador de infraestructura de grillas opticas");
+        lblTitle.setFont(Font.font("Cambria", FontWeight.LIGHT, 14));
+        lblTitle.setEffect(dropShadow);
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        tlbWindow.getItems().add(spacer);
+        tlbWindow.getItems().addAll(lblTitle,spacer);
 
         Region spacer2 = new Region();
         HBox.setHgrow(spacer2, Priority.ALWAYS);
         tlbWindow.getItems().add(spacer2);
 
-        tlbWindow.setPrefHeight(20);
-        tlbWindow.setMinHeight(20);
-        tlbWindow.setMaxHeight(20);
+        tlbWindow.setPrefHeight(30);
+        tlbWindow.setMinHeight(30);
+        tlbWindow.setMaxHeight(30);
         stage.initStyle(StageStyle.UNDECORATED);
          final WindowButtons windowButtons = new WindowButtons(stage);
 
