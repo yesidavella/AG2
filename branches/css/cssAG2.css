@@ -1,5 +1,5 @@
 
-root { 
+root {
     display: block;
 }
 
@@ -60,6 +60,10 @@ TableView{
     -fx-border-width: 2;
     -fx-border-style: dashed;
 }
+.marcoVentana{
+    -fx-border-color: gray;
+    -fx-border-width: 2;
+}
 
 .nodoNoSeleccionado{
     -fx-border-width: 0;
@@ -81,4 +85,19 @@ TableView{
 
 ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: linear-gradient(to top left, transparent,lime);
+}
+#window-close {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-padding: 6 6 4 6;
+}
+#window-min {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-padding: 6 6 4 6;
+}
+#window-max {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-padding: 6 6 4 6;
 }
