@@ -29,6 +29,7 @@ public class AboutAG2project extends ModalAG2window {
     public void configWindow() {
         brPnWindowsLayout = getBrPnWindowsLayout();
         btnAccept = getBtnAccept();
+      
 
         setWidth(600);
         setHeight(635);
@@ -73,7 +74,7 @@ public class AboutAG2project extends ModalAG2window {
     }
 
     private void createLogosAndDescriptions(GridPane grpLogosAndDescription) {
-        
+
         final int AG2_HEIGHT = 80;
         final int INTER_INTEL_HEIGHT = 70;
         final int PHOSPHORUS_HEIGHT = 80;
@@ -174,26 +175,26 @@ public class AboutAG2project extends ModalAG2window {
             HBox hbxName = new HBox(3);
             HBox hbxBriefDescrpt = new HBox(3);
             HBox hbxWebPage = new HBox(3);
-            
+
             final int WIDTH_TITLE = 80;
             Label lbTitleName = LabelBuilder.create().text("Nombre:").font(Font.font("Arial", FontWeight.BOLD, 12)).minWidth(WIDTH_TITLE).alignment(Pos.CENTER_RIGHT).build();
             Label lbTitleBriefDescription = LabelBuilder.create().text("Descripción:").font(Font.font("Arial", FontWeight.BOLD, 12)).minWidth(WIDTH_TITLE).alignment(Pos.CENTER_RIGHT).build();
             Label lbTitleWebPage = LabelBuilder.create().text("Pagina Web:").font(Font.font("Arial", FontWeight.BOLD, 12)).minWidth(WIDTH_TITLE).alignment(Pos.CENTER_RIGHT).build();
-                        
+
             Label lbName = LabelBuilder.create().textAlignment(TextAlignment.JUSTIFY).build();
             Label lbBriefDescription = LabelBuilder.create().textAlignment(TextAlignment.JUSTIFY).build();
             Hyperlink hlinkWebPage = HyperlinkBuilder.create().textAlignment(TextAlignment.JUSTIFY).build();
-            
+
             hbxName.getChildren().addAll(lbTitleName,lbName);
             hbxBriefDescrpt.getChildren().addAll(lbTitleBriefDescription,lbBriefDescription);
             hbxWebPage.getChildren().addAll(lbTitleWebPage,hlinkWebPage);
-            
+
             getChildren().addAll(hbxName,hbxBriefDescrpt,hbxWebPage);
 
             lbName.setPrefWidth(300);
             lbBriefDescription.setPrefWidth(300);
             hlinkWebPage.setPrefWidth(300);
-            
+
             lbName.setWrapText(true);
             lbBriefDescription.setWrapText(true);
             hlinkWebPage.setWrapText(true);

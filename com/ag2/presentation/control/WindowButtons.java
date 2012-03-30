@@ -31,12 +31,15 @@
  */
 package com.ag2.presentation.control;
 
+import com.ag2.util.ResourcesPath;
 import com.sun.javafx.Utils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -56,14 +59,22 @@ public class WindowButtons extends HBox{
         // create buttons
         VBox buttonBox = new VBox(4);
         Button closeBtn = new Button();
+        setScaleX(1.3);
+        setScaleY(1.3);
+        closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-close.png")));
         closeBtn.setId("window-close");
+        closeBtn.setMaxWidth(4);
+
         closeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 Platform.exit();
             }
         });
+
         Button minBtn = new Button();
+        minBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-min.png")));
         minBtn.setId("window-min");
+         minBtn.setMaxWidth(4);
         minBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 stage.setIconified(true);
@@ -71,6 +82,9 @@ public class WindowButtons extends HBox{
         });
         Button maxBtn = new Button();
         maxBtn.setId("window-max");
+        maxBtn.setMaxWidth(4);
+        maxBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-expand.png")));
+
         maxBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 toogleMaximized();
