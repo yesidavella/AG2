@@ -4,6 +4,7 @@ import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
 import com.ag2.presentation.control.PhosphosrusResults;
 import com.ag2.presentation.control.ToggleButtonAg2;
+import com.ag2.presentation.control.WindowButtons;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
@@ -33,6 +34,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
@@ -74,7 +76,12 @@ public class GUI extends Scene implements Serializable {
     private Tab tabResultsHTML = new Tab();
     private TabPane tpBox = new TabPane();
     private TableView<String> tbwSimulationProperties = new TableView<String>();
-    private transient Stage stgEscenario;
+    private static Stage stage;
+    private transient ToolBar tlbWindow;
+    private double mouseDragOffsetX = 0;
+    private double mouseDragOffsetY = 0;
+
+
 
      private GUI(BorderPane borderPane, double width, double height) {
         super(borderPane, width, height);
@@ -82,16 +89,16 @@ public class GUI extends Scene implements Serializable {
         tgTools = new ToggleGroup();
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
-       // executePane.setMaxWidth(120);
+
         executePane.setGroup(graphDesignGroup.getGroup());
 
-        addScene(this); 
+        addScene(this);
         getStylesheets().add(ResourcesPath.ABS_PATH_CSS+"cssAG2.css");
 
         borderPane.getStyleClass().add("ventanaPrincipal");
 
         //Diseño superior
-        creationMenuBar(borderPane, stgEscenario);
+        creationMenuBar(borderPane);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         gpTools = createToolsBar();
@@ -106,7 +113,7 @@ public class GUI extends Scene implements Serializable {
         //Diseño inferior
         HBox cajaInferiorHor = createDesignBottom();
         borderPane.setBottom(cajaInferiorHor);
-        
+
     }
         public static GUI getInstance() {
 
@@ -114,6 +121,56 @@ public class GUI extends Scene implements Serializable {
             iguAG2 = new GUI(new BorderPane(), 1100, 700);
         }
         return iguAG2;
+    }
+
+
+
+    private void createToolWindow()
+    {
+        tlbWindow = new ToolBar();
+        tlbWindow.setId("mainToolBar");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        tlbWindow.getItems().add(spacer);
+
+        Region spacer2 = new Region();
+        HBox.setHgrow(spacer2, Priority.ALWAYS);
+        tlbWindow.getItems().add(spacer2);
+
+        tlbWindow.setPrefHeight(20);
+        tlbWindow.setMinHeight(20);
+        tlbWindow.setMaxHeight(20);
+        stage.initStyle(StageStyle.UNDECORATED);
+         final WindowButtons windowButtons = new WindowButtons(stage);
+
+            tlbWindow.getItems().add(windowButtons);
+//            windowButtons.impl_traverse(Direction.RIGHT);
+         //   windowButtons.setRotate(90);
+            // add window header double clicking
+            tlbWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2) {
+                        windowButtons.toogleMaximized();
+                    }
+                }
+            });
+            // add window dragging
+            tlbWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent event) {
+                    mouseDragOffsetX = event.getSceneX();
+                    mouseDragOffsetY = event.getSceneY();
+                }
+            });
+            tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent event) {
+                    if(!windowButtons.isMaximized()) {
+                        stage.setX(event.getScreenX()-mouseDragOffsetX);
+                        stage.setY(event.getScreenY()-mouseDragOffsetY);
+                    }
+                }
+            });
+
     }
 
     public ScrollPane getScPnWorld() {
@@ -155,8 +212,8 @@ public class GUI extends Scene implements Serializable {
         addScene(this);
     }
 
-    public void setStage(Stage stage) {
-        this.stgEscenario = stage;
+    public static void setStage(Stage stage) {
+         GUI.stage = stage;
     }
 
     public static ActionTypeEmun getActionTypeEmun() {
@@ -170,9 +227,13 @@ public class GUI extends Scene implements Serializable {
         GUI.actionTypeEmun = actionTypeEmun;
     }
 
-    private void creationMenuBar(BorderPane borderPane, final Stage stage) {
+    private void creationMenuBar(BorderPane borderPane) {
 
         //Panel de menus
+        VBox vBoxMainBar = new  VBox();
+        createToolWindow();
+        vBoxMainBar.getChildren().add(tlbWindow);
+
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(3, 0, 3, 3));
         hBox.getStyleClass().add("contenedorDeMenus");
@@ -201,14 +262,14 @@ public class GUI extends Scene implements Serializable {
 
             }
         });
-        
+
         openMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent t) {
                 main.load();
             }
         });
-        
+
         newNenuItem.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -227,7 +288,7 @@ public class GUI extends Scene implements Serializable {
                 }
             }
         });
-        
+
         aboutMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 AboutAG2project aboutAG2project = new AboutAG2project();
@@ -256,7 +317,9 @@ public class GUI extends Scene implements Serializable {
         mbarMainMenuBar.getStyleClass().add("barraDeMenus");
 
         hBox.getChildren().add(mbarMainMenuBar);
-        borderPane.setTop(hBox);
+
+        vBoxMainBar.getChildren().add(hBox);
+        borderPane.setTop(vBoxMainBar);
     }
 
     private GridPane createToolsBar() {
@@ -378,7 +441,7 @@ public class GUI extends Scene implements Serializable {
 
         GridPane.setConstraints(btnLink, 1, 6);
         grdPnToolsBar.getChildren().add(btnLink);
-        
+
 
     }
 
@@ -436,12 +499,12 @@ public class GUI extends Scene implements Serializable {
     }
 
     private VBox createProjectsLogos() {
-        
+
         ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
         ivAG2.setFitWidth(40*proportionXYAG2);
-        
+
         ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth()/ivInternetIntel.getBoundsInParent().getHeight();
         ivInternetIntel.setFitHeight(35);
