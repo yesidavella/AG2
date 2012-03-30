@@ -26,7 +26,6 @@ public abstract class ModalAG2window extends Stage {
         setResizable(true);
         initStyle(StageStyle.UNDECORATED);
         brPnWindowsLayout = new BorderPane();
-
         brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));
 
         Scene scene = new Scene(brPnWindowsLayout, 510, 400);//#FFEB8C
@@ -53,6 +52,7 @@ public abstract class ModalAG2window extends Stage {
         };
         LinearGradient linearGradient = new LinearGradient(0,0,1,0.25, true, CycleMethod.NO_CYCLE, stops);
         reportScene.setFill(linearGradient);
+
     }
 
     public BorderPane getBrPnWindowsLayout() {
