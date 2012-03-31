@@ -31,6 +31,7 @@
  */
 package com.ag2.presentation.control;
 
+import com.ag2.presentation.Main;
 import com.ag2.util.ResourcesPath;
 import com.sun.javafx.Utils;
 import javafx.application.Platform;
@@ -44,49 +45,74 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * Vertical box with 3 small buttons for window close, minimize and maximize.
  */
-public class WindowButtons extends HBox{
+public class WindowButtons extends HBox {
+
     private Stage stage;
     private Rectangle2D backupWindowBounds = null;
     private boolean maximized = false;
+    private Main main;
+    Button closeBtn = new Button();
+
+    public void setMain(Main main) {
+        this.main = main;
+        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+                int result = JOptionPane.showConfirmDialog(
+                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if (result == JOptionPane.NO_OPTION) {
+                    System.exit(0);
+                } else if (result == JOptionPane.YES_OPTION) {
+                    WindowButtons.this.main.save(true);
+                }
+
+                //Platform.exit();
+            }
+        });
+    }
 
     public WindowButtons(final Stage stage) {
         super(4);
         this.stage = stage;
         // create buttons
         VBox buttonBox = new VBox(4);
-        Button closeBtn = new Button();
+
         setScaleX(1.3);
         setScaleY(1.3);
-        closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-close.png")));
+        closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-close.png")));
         closeBtn.setId("window-close");
         closeBtn.setMaxWidth(4);
 
-        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent actionEvent) {
-                Platform.exit();
-            }
-        });
+
 
         Button minBtn = new Button();
-        minBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-min.png")));
+        minBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-min.png")));
         minBtn.setId("window-min");
-         minBtn.setMaxWidth(4);
+        minBtn.setMaxWidth(4);
         minBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent actionEvent) {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 stage.setIconified(true);
             }
         });
         Button maxBtn = new Button();
         maxBtn.setId("window-max");
         maxBtn.setMaxWidth(4);
-        maxBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+ "window-expand.png")));
+        maxBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-expand.png")));
 
         maxBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent actionEvent) {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 toogleMaximized();
             }
         });

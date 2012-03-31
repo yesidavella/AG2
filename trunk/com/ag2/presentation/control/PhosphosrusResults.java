@@ -37,12 +37,12 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
         
-        lblCliente.setFont(Font.font("Cambria", FontWeight.BOLD, 16));
-        lbRecurso.setFont(Font.font("Cambria", FontWeight.BOLD, 16));
-        lbConmutador.setFont(Font.font("Cambria", FontWeight.BOLD, 16));
+        lblCliente.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lbRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lbConmutador.setFont(Font.font("Arial", FontWeight.BOLD, 16));
                 
         scPnResults = new ScrollPane();
-        scPnResults.setPrefHeight(500);
+        
         hBoxProgress = new HBox();
         vBoxDataProgress = new VBox();
         vBoxImageProgress = new VBox();
@@ -64,7 +64,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         hBoxProgress.setAlignment(Pos.CENTER);
         
         Label lbTitle = new Label(" Progreso ");
-        lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 16));
+        lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         
         Label lblSimulationTime = new Label("Tiempo de la simulación");
         setFont(lblSimulationTime);        
@@ -115,6 +115,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         
         vBoxMain.setSpacing(7);
         vBoxMain.setPadding(new Insets(8, 8, 8, 8));
+        vBoxMain.setPrefSize(1200, 900);
         vBoxMain.setAlignment(Pos.CENTER);
         
         creartvResultadosCliente();
@@ -129,12 +130,13 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         
         vBoxMain.getChildren().addAll(hBoxProgress, lblCliente, tvResultadosClientePhosphorus, lbRecurso, tvResultadosRecursoPhosphorus, lbConmutador, tvResultadosConmutadorPhosphorus);
         scPnResults.setContent(vBoxMain);
+        scPnResults.setFitToWidth(true);
         tab.setContent(scPnResults);
         
     }
 
     private void setFont(Label label) {
-        label.setFont(Font.font("Cambria", FontWeight.NORMAL, 16));
+        label.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
     }
     
     public void looktToNextExecution() {

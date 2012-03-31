@@ -35,7 +35,7 @@ public class NetworkErrorsReporter extends ModalAG2window {
         ivWarning.setFitWidth(WARNING_WIDTH*proportionXYivWarning);
         
         Label lbTitle = LabelBuilder.create().text("LOS ERRORES ENCONTRADOS EN LA CONFIGURACIÓN DE LA RED:").
-                font(Font.font("Cambria", FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).
+                font(Font.font("Arial", FontWeight.BOLD, 20)).textAlignment(TextAlignment.CENTER).
                 graphic(ivWarning).graphicTextGap(-60).build();
         lbTitle.setWrapText(true);
         lbTitle.setPrefWidth(480);
@@ -44,7 +44,7 @@ public class NetworkErrorsReporter extends ModalAG2window {
         getBrPnWindowsLayout().setTop(hbTitle);
 
         Label lbAdvise = LabelBuilder.create().text("¡¡¡Soluciones estos errores y vuelva a intentarlo!!!").
-                font(Font.font("Cambria", FontWeight.BOLD,FontPosture.ITALIC, 12)).build();
+                font(Font.font("Arial", FontWeight.BOLD,FontPosture.ITALIC, 12)).build();
         HBox hbBottom = new HBox(10);
         hbBottom.setPadding(new Insets(10, 0, 0, 0));
         hbBottom.setAlignment(Pos.CENTER_RIGHT);
