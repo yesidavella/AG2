@@ -297,6 +297,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
 
         progressIndicator.setProgress(1);
+        lblSimulationTimePercentageValue.setText("100%");
         //  hideProgressIndicator();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
@@ -353,7 +354,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             @Override
             public void run() {
                 try {
-                    lblSimulationTimePercentageValue.setText(Percentage + " %");
+                    String value = String.valueOf(Percentage).substring(0, 4);
+                    lblSimulationTimePercentageValue.setText(value + " %");
                 } catch (Exception d) 
                 {
                     System.out.println(d);
