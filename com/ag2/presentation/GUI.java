@@ -84,6 +84,7 @@ public class GUI extends Scene implements Serializable {
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
     private SplitPane splitPane;
+    private WindowButtons windowButtons;
 
 
 
@@ -144,7 +145,7 @@ public class GUI extends Scene implements Serializable {
 
        final DropShadow dropShadow = new DropShadow();
         Label lblTitle = new Label("Simulador de infraestructura de grillas opticas");
-        lblTitle.setFont(Font.font("Cambria", FontWeight.LIGHT, 14));
+        lblTitle.setFont(Font.font("Arial", FontWeight.LIGHT, 14));
         lblTitle.setEffect(dropShadow);
 
         Region spacer = new Region();
@@ -159,7 +160,7 @@ public class GUI extends Scene implements Serializable {
         tlbWindow.setMinHeight(30);
         tlbWindow.setMaxHeight(30);
         stage.initStyle(StageStyle.UNDECORATED);
-         final WindowButtons windowButtons = new WindowButtons(stage);
+        windowButtons = new WindowButtons(stage);
 
             tlbWindow.getItems().add(windowButtons);
 
@@ -198,6 +199,7 @@ public class GUI extends Scene implements Serializable {
 
     public void setMain(Main main) {
         this.main = main;
+        windowButtons.setMain(main);
     }
 
     public void loadGraphDesignGroup(GraphDesignGroup graphDesignGroup) {
@@ -482,6 +484,7 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setContent(grRoot);
         tabSimulation.setContent(scPnWorld);
 
+         tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
         tabPane.getTabs().addAll(tabSimulation);
     }
 
@@ -500,7 +503,7 @@ public class GUI extends Scene implements Serializable {
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
         StackPane stPnSimulationProperties = new StackPane();
         stPnSimulationProperties.getChildren().add(tbSimulationProperties);
-
+stPnSimulationProperties.setMinWidth(400);
         SplitPane splPnPropertiesTbs = new SplitPane();
         splPnPropertiesTbs.getItems().addAll(stPnDeviceProperties, stPnSimulationProperties);
         splPnPropertiesTbs.setDividerPositions(0.525f);
@@ -582,13 +585,13 @@ public class GUI extends Scene implements Serializable {
     private TableView<String> createSimulationPropertiesTb() {
 
         TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
-        tbcolPropName.setMinWidth(185);
-        tbcolPropName.setPrefWidth(195);
+        tbcolPropName.setMinWidth(200);
+        tbcolPropName.setPrefWidth(200);
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");
-        tbcolPropValue.setMinWidth(150);
-        tbcolPropValue.setPrefWidth(185);
+        tbcolPropValue.setMinWidth(180);
+        tbcolPropValue.setPrefWidth(180);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
         TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÓN");
@@ -611,7 +614,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
 
         Label lbTitle = new Label("LISTAS DE NAVEGACIÓN");
-        lbTitle.setFont(Font.font("Cambria", FontWeight.BOLD, 14));
+        lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
         final ChoiceBox cbClients = new ChoiceBox(graphDesignGroup.getClientsObservableList());
         final ChoiceBox cbResources = new ChoiceBox(graphDesignGroup.getResourcesObservableList());
@@ -629,13 +632,13 @@ public class GUI extends Scene implements Serializable {
         Button btnIrServiceNodes = new Button("ir");
 
         Label lbRouters = new Label("Enrutadores");
-        lbRouters.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
+        lbRouters.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         Label lbClientes = new Label("Clientes");
-        lbClientes.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
+        lbClientes.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         Label lbRecursos = new Label("Recursos");
-        lbRecursos.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
+        lbRecursos.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         Label lbNodosServicio = new Label("Agendadores");
-        lbNodosServicio.setFont(Font.font("Cambria", FontWeight.BOLD, 12));
+        lbNodosServicio.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
         lbRouters.setMinWidth(80);
         lbClientes.setMinWidth(80);
