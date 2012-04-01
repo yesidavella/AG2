@@ -1,41 +1,57 @@
-
 package com.ag2.controller;
 
-public class ResultsController extends ResultsAbstractController
-{
+import javafx.application.Platform;
+
+public class ResultsController extends ResultsAbstractController {
 
     @Override
-    public void addClientResult(String tcCliente, String tcPeticionesEnviadas, String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
+    public void addClientResult(final String tcCliente, final String tcPeticionesEnviadas, final String tcTrabajosEnviados, final String tcResultadosRecibidos, final String tcPeticionesFallidas, final String tcPorcentajeResultadosRecibidos) {
 
-        if(viewResultsPhosphorus!=null)
-        {
-            viewResultsPhosphorus.adicionarResultadoCliente(tcCliente, tcPeticionesEnviadas, tcTrabajosEnviados, tcResultadosRecibidos, tcPeticionesFallidas, tcPorcentajeResultadosRecibidos);
-        }
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                viewResultsPhosphorus.adicionarResultadoCliente(tcCliente, tcPeticionesEnviadas, tcTrabajosEnviados, tcResultadosRecibidos, tcPeticionesFallidas, tcPorcentajeResultadosRecibidos);
+            }
+        };
+        Platform.runLater(runnable);
+    }
+
+    @Override
+    public void adicionarResultadoRecurso(final String tcRecurso, final String tcTrabajosRecibidos, final String tcFallasNoEspacio, final String tcFallasEnviadas) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                viewResultsPhosphorus.adicionarResultadoRecurso(tcRecurso, tcTrabajosRecibidos, tcFallasNoEspacio, tcFallasEnviadas);
+            }
+        };
+        Platform.runLater(runnable);
 
     }
 
     @Override
-    public void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos, String tcFallasNoEspacio, String tcFallasEnviadas)
-    {
-        if(viewResultsPhosphorus!=null)
-        {
-            viewResultsPhosphorus.adicionarResultadoRecurso(tcRecurso, tcTrabajosRecibidos, tcFallasNoEspacio, tcFallasEnviadas);
-        }
-    }
-
-        @Override
-    public void adicionarResultadoConmutador(String tcConmutador, String tcMensajesTrabajoConmutados, String tcMensajesTrabajoNoConmutados, String tcMensajesResultadosConmutados, String tcMensajesResultadosNoConmutados, String relDropJob, String relDropRes, String reltotDrop)
-    {
-        if(viewResultsPhosphorus!=null)
-        {
-            viewResultsPhosphorus.adicionarResultadoConmutador(tcConmutador, tcMensajesTrabajoConmutados, tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados, relDropJob, relDropRes, reltotDrop);
-        }
-
+    public void adicionarResultadoConmutador(final String tcConmutador, final String tcMensajesTrabajoConmutados, final String tcMensajesTrabajoNoConmutados, final String tcMensajesResultadosConmutados, final String tcMensajesResultadosNoConmutados, final String relDropJob, final String relDropRes, final String reltotDrop) {
+       
+          Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+               viewResultsPhosphorus.adicionarResultadoConmutador(tcConmutador, tcMensajesTrabajoConmutados, tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados, relDropJob, relDropRes, reltotDrop);
+            }
+        };
+        Platform.runLater(runnable);
     }
 
     @Override
-    public void setExecutionPercentage(double Percentage)
+    public void setExecutionPercentage(final double Percentage) 
     {
-        viewResultsPhosphorus.setExecutionPercentage(Percentage);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                viewResultsPhosphorus.setExecutionPercentage(Percentage);
+            }
+        };
+
+        Platform.runLater(runnable);
     }
 }

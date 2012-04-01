@@ -170,35 +170,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         progressIndicator.setProgress(0);
     }
 
-//    public void showProgressIndicator() {
-//        hBoxProgress.setVisible(true);
-//        hBoxProgress.layout();
-//        progressIndicator.setProgress(0);         
-//        progressIndicator.setMinSize(250, 250);
-//        progressIndicator.setVisible(true);
-//        lbCliente.setVisible(false);
-//        tvResultadosClientePhosphorus.setVisible(false);
-//        lbRecurso.setVisible(false);
-//        tvResultadosRecursoPhosphorus.setVisible(false);
-//        lbConmutador.setVisible(false);
-//        tvResultadosConmutadorPhosphorus.setVisible(false);
-//        
-//    }
-//    public void hideProgressIndicator() {
-//        if (hBoxProgress.isVisible()) {
-////            progressIndicator.setMaxSize(1, 1);
-////            progressIndicator.setMinSize(1, 1);
-////           progressIndicator.setVisible(false);
-//            hBoxProgress.setVisible(false);
-//            hBoxProgress.layout();
-//            lbCliente.setVisible(true);
-//            tvResultadosClientePhosphorus.setVisible(true);
-//            lbRecurso.setVisible(true);
-//            tvResultadosRecursoPhosphorus.setVisible(true);
-//            lbConmutador.setVisible(true);
-//            tvResultadosConmutadorPhosphorus.setVisible(true);
-//        }
-//    }
     private void creartvResultadosConmutadores() {
 
         TableColumn tcConmutador = new TableColumn("Conmutador Optico");
@@ -296,6 +267,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     public void adicionarResultadoCliente(String tcCliente, String tcPeticionesEnviadas,
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
 
+
         progressIndicator.setProgress(1);
         lblSimulationTimePercentageValue.setText("100%");
         //  hideProgressIndicator();
@@ -345,25 +317,14 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     }
 
+    @Override
     public void setExecutionPercentage(final double Percentage) {
         //XXX:Esto se revienta aveces.
+
         progressIndicator.setProgress(Percentage / 100);
+        String value = String.valueOf(Percentage).substring(0, 5);
+        lblSimulationTimePercentageValue.setText(value + " %");
 
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    String value = String.valueOf(Percentage).substring(0, 4);
-                    lblSimulationTimePercentageValue.setText(value + " %");
-                } catch (Exception d) 
-                {
-                    System.out.println(d);
-                }
-            }
-        };
-       
-        Platform.runLater(runnable);
 
     }
 
