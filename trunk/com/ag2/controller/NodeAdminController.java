@@ -459,7 +459,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         } else if (value.equals("Exponencial-negativa")) {
             return new DDNegExp(simBaseSimulator, 2);
         } else if (value.equals("Normal")) {
-            return new DDNormal(simBaseSimulator, 2, 3);
+            return new DDNormal(simBaseSimulator, 5, 2);
         } else if (value.equals("Possion")) {
             return new DDPoissonProcess(simBaseSimulator, 2);
         }
