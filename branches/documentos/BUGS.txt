@@ -23,20 +23,18 @@ visual en el combo. 2H Franklin ................................................
 
 #####  Segundo bloque de Bugs  ###############################################################################################################
 
-1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Listo
-2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Listo
+1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................       Listo
+2.Crea imagenes del nodo  PCE (Yesid) ..........................................................       Listo
 3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
   GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun
-  corresponda(Yesid)............................................................................   Listo
-4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)................   Listo
+  corresponda(Yesid)............................................................................       Listo
+4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)................       Listo
 5.Cuando se corre la simulacion, la GUI no se activa si no se mueve el mouse por encima de algun
-  elemento de la interfaz grafica (Yesid).......................................................   No BUG
+  elemento de la interfaz grafica (Yesid).......................................................       No BUG
 6.Adicionar evento al checkbox del tipo de enrutamiento para q haga un setRouting segun toque con
-  Jung o shortest (Yesid).......................................................                   Listo
+  Jung o shortest (Yesid).......................................................                       Listo
+7. Poner  letra Cambria sin q se lanze exeption (se cambio a Arial temporalmente se ve feo) Franklin   Perndiente
 
-
-
-#####  Cambios despues de entrega de documento  ###############################################################################################################
 
 
 Cambios despues de entrega de documento:
@@ -76,4 +74,7 @@ Grupo 2
     -Cuando arranca y es muy pesado la simluacion arranca en 100% la torta de progreso debe arrancar en cero. -------------------- (Listo)
     -Mostrar cuadno tiempo lleva de simulacion en tiempo de relativo phosphorus y timepo de real.(al lado de la pelota)----------- (Listo)
     -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor
+
+
+#####  Cambios despues de entrega de documento  ###############################################################################################################
 
