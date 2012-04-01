@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.animation.KeyFrame;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
 //FIME: Traducir esta clase
 public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
@@ -44,7 +49,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Label lblSimulationTimePercentageValue = new Label("00%");
     private transient Label lblRealTimeValue = new Label("00.00");
     private transient Label lblPageHTMLCountValue = new Label("0");
-
+    private Timeline time = new Timeline();
+    private long tiempoInicial = System.currentTimeMillis();
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -146,38 +152,32 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         scPnResults.setContent(vBoxMain);
         scPnResults.setFitToWidth(true);
         tab.setContent(scPnResults);
-        
-//           final long  tiempoInicial = System.currentTimeMillis();
-//        Runnable runnable = new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                Calendar tiempo = Calendar.getInstance();
-//                while (true) {
-//                    try {
-//                        Thread.sleep(1000);
-//                        tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
-//                        lblRealTimeValue.setText(tiempo.get(Calendar.MINUTE)+ ":"+ tiempo.get(Calendar.SECOND)+ ":"+ tiempo.get(Calendar.MILLISECOND));
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(PhosphosrusResults.class.getName()).log(Level.SEVERE, null, ex);
-//                    }               
-//                }
-//            }
-//        
-//        };
-// 
-//        Thread thread = new Thread(runnable) ;
-//        thread.start();
 
-     
+        time.setCycleCount(Timeline.INDEFINITE);
+
+
+        tiempoInicial = System.currentTimeMillis();
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                Calendar tiempo = Calendar.getInstance();
+                tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
+                lblRealTimeValue.setText( (tiempo.get(Calendar.HOUR)-7) + ":" + tiempo.get(Calendar.MINUTE) + ":" + tiempo.get(Calendar.SECOND) );
+            }
+        });
+        time.getKeyFrames().add(keyFrame);
+      
+         
     }
-    
 
     private void setFont(Label label) {
         label.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
     }
 
-    public void looktToNextExecution() {
+    public void lookToNextExecution() 
+    {
+        tiempoInicial = System.currentTimeMillis();
+        time.play();
         int sizeClients = dataCliente.size();
         for (int i = 0; i < sizeClients; i++) {
             dataCliente.remove(0);
@@ -191,7 +191,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             dataRecurso.remove(0);
         }
 
-     
         showProgressIndicator();
     }
 
@@ -299,6 +298,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
         progressIndicator.setProgress(1);
         lblSimulationTimePercentageValue.setText("100%");
+        time.stop();
         //  hideProgressIndicator();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
@@ -354,8 +354,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
 
         lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
-        
-        
+
+
     }
 
     public static class ConjuntoProiedadesPhosphorus {

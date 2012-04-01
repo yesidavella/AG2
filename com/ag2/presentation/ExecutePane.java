@@ -38,7 +38,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 phosphosrusHTMLResults.lookToNextExecution();
                             }
                             if (phosphosrusResults != null) {
-                                phosphosrusResults.looktToNextExecution();
+                                phosphosrusResults.lookToNextExecution();
                             }
 
                             executeController.initNetwork();
