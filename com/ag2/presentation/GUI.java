@@ -484,7 +484,7 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setContent(grRoot);
         tabSimulation.setContent(scPnWorld);
 
-         tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
+        // tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
         tabPane.getTabs().addAll(tabSimulation);
     }
 

@@ -1,16 +1,15 @@
 package com.ag2.presentation.control;
 
 import Grid.Utilities.HtmlWriter;
-import com.ag2.model.SimulationBase;
-import com.sun.javafx.runnable.Runnable0;
+import com.ag2.config.PropertyPhosphorusTypeEnum;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,9 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.animation.KeyFrame;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.util.Duration;
 //FIME: Traducir esta clase
 public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
@@ -49,8 +45,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Label lblSimulationTimePercentageValue = new Label("00%");
     private transient Label lblRealTimeValue = new Label("00.00");
     private transient Label lblPageHTMLCountValue = new Label("0");
-    private Timeline time = new Timeline();
-    private long tiempoInicial = System.currentTimeMillis();
+    private transient Timeline time = new Timeline();
+    private transient long tiempoInicial = System.currentTimeMillis();
+
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -162,20 +159,32 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             public void handle(ActionEvent event) {
                 Calendar tiempo = Calendar.getInstance();
                 tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
-                lblRealTimeValue.setText( (tiempo.get(Calendar.HOUR)-7) + ":" + tiempo.get(Calendar.MINUTE) + ":" + tiempo.get(Calendar.SECOND) );
+                String hour = String.valueOf((tiempo.get(Calendar.HOUR) - 7));
+                String minute = String.valueOf(tiempo.get(Calendar.MINUTE));
+                String second = String.valueOf(tiempo.get(Calendar.SECOND));
+
+                if (hour.length() == 1) {
+                    hour = "0" + hour;
+                }
+                if (minute.length() == 1) {
+                    minute = "0" + minute;
+                }
+                if (second.length() == 1) {
+                    second = "0" + second;
+                }
+                lblRealTimeValue.setText(hour + ":" + minute + ":" + second);
             }
         });
         time.getKeyFrames().add(keyFrame);
-      
-         
+
+
     }
 
     private void setFont(Label label) {
         label.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
     }
 
-    public void lookToNextExecution() 
-    {
+    public void lookToNextExecution() {
         tiempoInicial = System.currentTimeMillis();
         time.play();
         int sizeClients = dataCliente.size();
@@ -292,6 +301,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tvResultadosClientePhosphorus.setItems(dataCliente);
     }
 
+    @Override
     public void adicionarResultadoCliente(String tcCliente, String tcPeticionesEnviadas,
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
 
@@ -299,6 +309,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         progressIndicator.setProgress(1);
         lblSimulationTimePercentageValue.setText("100%");
         time.stop();
+        lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME)+" ms (Finalizado) ");
+        
         //  hideProgressIndicator();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
@@ -349,13 +361,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     @Override
     public void setExecutionPercentage(final double Percentage, double simulationTime) {
         progressIndicator.setProgress(Percentage / 100);
-        String valuePercentage = String.valueOf(Percentage).substring(0, 2);
+        String valuePercentage = String.valueOf(Math.round(Percentage));
         lblSimulationTimePercentageValue.setText(valuePercentage + " %");
         lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
-
         lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
-
-
     }
 
     public static class ConjuntoProiedadesPhosphorus {

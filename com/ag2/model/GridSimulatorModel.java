@@ -16,6 +16,7 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private double percentage = 0;
     private int percentageShort = 0;
     private int percentageSwapShort = 0;
+    private long countEventToAdvise = 0;
     private ResultsAbstractController resultsAbstractController;
 
     public GridSimulatorModel() {
@@ -54,6 +55,15 @@ public class GridSimulatorModel extends Grid.GridSimulator {
 
         reloadTime();
         percentage = masterClock.getTime() * 100 / simulationTime;
+        
+        countEventToAdvise++;
+       
+        if(countEventToAdvise>10)
+        {
+            countEventToAdvise=0;
+            resultsAbstractController.setExecutionPercentage(percentage,masterClock.getTime());
+        }        
+        
         percentageShort = Math.round((float) percentage);
         if (percentageShort != percentageSwapShort) {
             percentageSwapShort = percentageShort;
