@@ -1,8 +1,12 @@
 package com.ag2.presentation.control;
 
+import Grid.Utilities.HtmlWriter;
 import com.ag2.model.SimulationBase;
 import com.sun.javafx.runnable.Runnable0;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,7 +76,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
         Label lbTitle = new Label(" Progreso ");
         lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
+        lblSimulationTimeValue.setMinWidth(250);
         Label lblSimulationTime = new Label("Tiempo de la simulación");
         setFont(lblSimulationTime);
         Label lblSimulationTimePercentage = new Label("% Tiempo de la simulación");
@@ -142,8 +146,32 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         scPnResults.setContent(vBoxMain);
         scPnResults.setFitToWidth(true);
         tab.setContent(scPnResults);
+        
+           final long  tiempoInicial = System.currentTimeMillis();
+        Runnable runnable = new Runnable() {
 
+            @Override
+            public void run() {
+                Calendar tiempo = Calendar.getInstance();
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
+                        lblRealTimeValue.setText(tiempo.get(Calendar.MINUTE)+ ":"+ tiempo.get(Calendar.SECOND)+ ":"+ tiempo.get(Calendar.MILLISECOND));
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PhosphosrusResults.class.getName()).log(Level.SEVERE, null, ex);
+                    }               
+                }
+            }
+        
+        };
+ 
+        Thread thread = new Thread(runnable) ;
+        thread.start();
+
+     
     }
+    
 
     private void setFont(Label label) {
         label.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
@@ -163,6 +191,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             dataRecurso.remove(0);
         }
 
+     
         showProgressIndicator();
     }
 
@@ -318,14 +347,15 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     }
 
     @Override
-    public void setExecutionPercentage(final double Percentage) {
-        //XXX:Esto se revienta aveces.
-
+    public void setExecutionPercentage(final double Percentage, double simulationTime) {
         progressIndicator.setProgress(Percentage / 100);
-        String value = String.valueOf(Percentage).substring(0, 5);
-        lblSimulationTimePercentageValue.setText(value + " %");
+        String valuePercentage = String.valueOf(Percentage).substring(0, 2);
+        lblSimulationTimePercentageValue.setText(valuePercentage + " %");
+        lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
 
-
+        lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
+        
+        
     }
 
     public static class ConjuntoProiedadesPhosphorus {
