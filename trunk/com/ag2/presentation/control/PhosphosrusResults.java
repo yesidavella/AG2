@@ -147,27 +147,27 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         scPnResults.setFitToWidth(true);
         tab.setContent(scPnResults);
         
-           final long  tiempoInicial = System.currentTimeMillis();
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                Calendar tiempo = Calendar.getInstance();
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                        tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
-                        lblRealTimeValue.setText(tiempo.get(Calendar.MINUTE)+ ":"+ tiempo.get(Calendar.SECOND)+ ":"+ tiempo.get(Calendar.MILLISECOND));
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(PhosphosrusResults.class.getName()).log(Level.SEVERE, null, ex);
-                    }               
-                }
-            }
-        
-        };
- 
-        Thread thread = new Thread(runnable) ;
-        thread.start();
+//           final long  tiempoInicial = System.currentTimeMillis();
+//        Runnable runnable = new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                Calendar tiempo = Calendar.getInstance();
+//                while (true) {
+//                    try {
+//                        Thread.sleep(1000);
+//                        tiempo.setTimeInMillis(System.currentTimeMillis() - tiempoInicial);
+//                        lblRealTimeValue.setText(tiempo.get(Calendar.MINUTE)+ ":"+ tiempo.get(Calendar.SECOND)+ ":"+ tiempo.get(Calendar.MILLISECOND));
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(PhosphosrusResults.class.getName()).log(Level.SEVERE, null, ex);
+//                    }               
+//                }
+//            }
+//        
+//        };
+// 
+//        Thread thread = new Thread(runnable) ;
+//        thread.start();
 
      
     }
