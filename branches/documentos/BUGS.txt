@@ -52,12 +52,9 @@ Grupo 1 de pruebas de Simulacion
     f) Ejecutar, guardar, ejecutar, guardar...n veces. (alternando con eliminacion y adicion de nodos).
     g) Prubas sobre redes errraticas (Pruba de validaciones).
 
-Grupo 2 de pruebas de compotamiento grfico.
 
-    a) Probar bajo multiples resoluciones.
-    b) Encojer y abrir  multiples veces.
 
-Grupo 3 de pruebas de tipos de datos de entreda
+Grupo 2 de pruebas de tipos de datos de entreda
 
     a)  XXXXX pendiente XXXX
 
@@ -65,15 +62,21 @@ Grupo 3 de pruebas de tipos de datos de entreda
 Resultados
 
 Grupo 1
-    a) Ningun problema  (aprox 100 routers, 70 clientes, 50 clusteres, red semi malla)-------------------------------------------- (Listo)
+    a) Emergente problema de  hilos  (1/80)(aprox 100 routers, 70 clientes, 50 clusteres, red semi malla)-------------------------(Listo)
+    b) Ningun problema  (Tiempo minito 0 max 9E19 ms, Tiempo 1 hora, 8000 paginas html)
+    c1) Ningun problema, cuando se abre y se cierra el programa
+    c2) Problema cuando se deja la session y se guarda y abre varias veces se duplican los nods y da error----------------------- (Pendiente)
+    d) Ningun problema----------------------------------------------------------------------------------------------------------  (Listo) 
+    e) Ningun problema. (excepto cuando se poner valores locos en las propiedades (sobretodo en la dis.normal) )----------------- (Listo)
+    -No sirve el stop. luedo de haber parado la simulacion dice que existen resdes disconexsas.-----------------------------------(Pendiente)
+    g) Cuadno se eliminan los nodos de servcio y ser agregan otros, los validadores permten la ejecucion.
+        No se valida que el cliente ni que el clusten hayan quedado sin broker---------------------------------------------------- (Pendiente)
 
-Grupo 2
-
-    b) Problema corregido ya no se puede cambiar el tamanio.---------------------------------------------------------------------- (Listo)
-    -Los enlaces estan quedando encima de los nodos.
+Otros problemas
+    
     -Cuando arranca y es muy pesado la simluacion arranca en 100% la torta de progreso debe arrancar en cero. -------------------- (Listo)
     -Mostrar cuadno tiempo lleva de simulacion en tiempo de relativo phosphorus y timepo de real.(al lado de la pelota)----------- (Listo)
-    -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor
+    -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor------------------------------------------------- (Pendiente)
 
 
 #####  Cambios despues de entrega de documento  ###############################################################################################################
