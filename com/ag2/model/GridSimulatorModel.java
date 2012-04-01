@@ -57,7 +57,7 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         percentageShort = Math.round((float) percentage);
         if (percentageShort != percentageSwapShort) {
             percentageSwapShort = percentageShort;
-            resultsAbstractController.setExecutionPercentage(percentage);
+            resultsAbstractController.setExecutionPercentage(percentage,masterClock.getTime());
 
         }
         return true;

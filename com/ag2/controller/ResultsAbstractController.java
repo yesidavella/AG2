@@ -32,5 +32,5 @@ public abstract class ResultsAbstractController  implements Serializable
                                             String relDropRes,
                                             String reltotDrop);
 
-    public abstract void setExecutionPercentage(double Percentage);
+    public abstract void setExecutionPercentage(double Percentage,double simulationTime);
 }

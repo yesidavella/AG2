@@ -43,12 +43,12 @@ public class ResultsController extends ResultsAbstractController {
     }
 
     @Override
-    public void setExecutionPercentage(final double Percentage) 
+    public void setExecutionPercentage(final double Percentage,final double simulationTime) 
     {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                viewResultsPhosphorus.setExecutionPercentage(Percentage);
+                viewResultsPhosphorus.setExecutionPercentage(Percentage,simulationTime);
             }
         };
 
