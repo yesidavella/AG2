@@ -112,7 +112,12 @@ public class GUI extends Scene implements Serializable {
 
         VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.setMaxWidth(130);
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, vbLogos);
+        
+        contenedorHerramietas.setAlignment(Pos.CENTER);
+        Region region = new Region();
+        VBox.setVgrow(region, Priority.NEVER);
+        region.setPrefHeight(100);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools,region,vbLogos);
         borderPane.setLeft(contenedorHerramietas);
         //Diseño central
         createTabs();
@@ -560,11 +565,11 @@ stPnSimulationProperties.setMinWidth(400);
         setOnLunchBrowser(linkPhosphorus,"http://www.ist-phosphorus.eu/");
         setOnLunchBrowser(linkDistritalUniv,"www.udistrital.edu.co");
 
-        VBox vbLogos = new VBox(10);
+        vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3,5,3,3));
         vbLogos.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
-        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
+//        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
         return vbLogos;
     }
 
@@ -590,8 +595,8 @@ stPnSimulationProperties.setMinWidth(400);
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");
-        tbcolPropValue.setMinWidth(180);
-        tbcolPropValue.setPrefWidth(180);
+        tbcolPropValue.setMinWidth(195);
+        tbcolPropValue.setPrefWidth(195);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
         TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÓN");
@@ -599,6 +604,7 @@ stPnSimulationProperties.setMinWidth(400);
         tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
 
         tbwSimulationProperties.setMinWidth(tbcolSimTableTitle.getMinWidth() + 13);
+        tbwSimulationProperties.setMinHeight(469);
 //        tbwSimulationProperties.setPrefWidth(345);
 //
 //        tbwSimulationProperties.setPrefHeight(200);
