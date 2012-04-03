@@ -76,7 +76,7 @@ Otros problemas
     
     -Cuando arranca y es muy pesado la simluacion arranca en 100% la torta de progreso debe arrancar en cero. -------------------- (Listo)
     -Mostrar cuadno tiempo lleva de simulacion en tiempo de relativo phosphorus y timepo de real.(al lado de la pelota)----------- (Listo)
-    -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor(yesid)------------------------------------------------- (Pendiente)
+    -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor(yesid)------------------------------------------ (Pendiente)
 
 
 #####  Cambios despues de entrega de documento  ###############################################################################################################
