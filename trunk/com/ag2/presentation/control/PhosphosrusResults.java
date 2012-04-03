@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,10 +68,14 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         gpnDataProgress.setVgap(5);
         gpnDataProgress.setHgap(11);
 
-        scPnResults.getStyleClass().addAll("boxLogosVerticalGradient");
+//        scPnResults.getStyleClass().addAll("boxLogosVerticalGradient");
+        
+        DropShadow dropShadow = new DropShadow();
+        
         gpnDataProgress.getStyleClass().addAll("boxLogosVerticalGradient");
         vBoxImageProgress.getStyleClass().addAll("boxLogosVerticalGradient");
-
+        gpnDataProgress.setEffect(dropShadow);
+        vBoxImageProgress.setEffect(dropShadow);
 
         hBoxProgress.setPadding(new Insets(20, 20, 20, 20));
         hBoxProgress.setSpacing(20);
