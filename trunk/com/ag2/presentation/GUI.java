@@ -1,10 +1,7 @@
 package com.ag2.presentation;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
-import com.ag2.presentation.control.PhosphosrusHTMLResults;
-import com.ag2.presentation.control.PhosphosrusResults;
-import com.ag2.presentation.control.ToggleButtonAg2;
-import com.ag2.presentation.control.WindowButtons;
+import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
@@ -17,6 +14,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
@@ -41,6 +41,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
@@ -143,7 +144,7 @@ public class GUI extends Scene implements Serializable {
         public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new BorderPane(), 1400, 700);
+            iguAG2 = new GUI(new BorderPane(), 1100, 600);
         }
         return iguAG2;
     }
@@ -573,7 +574,28 @@ stPnSimulationProperties.setMinWidth(400);
         vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3,5,3,3));
-        vbLogos.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
+        vbLogos.setMinHeight(160);
+                
+        Group group = new  Group();
+        
+        linkAG2.setLayoutY(0);
+        linkInterIntel.setLayoutY(50);
+        linkPhosphorus.setLayoutY(100);
+        linkDistritalUniv.setLayoutY(150);
+        
+        Image[] images = new Image[4];
+        images[3] = new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png");
+        images[2] = new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png");
+        images[1] = new Image(ResourcesPath.ABS_PATH_IMGS+"phosphorus.jpg");
+        images[0] = new Image(ResourcesPath.ABS_PATH_IMGS+"escudo_udistrital.jpg");
+        
+        DisplayShelf displayShelf = new DisplayShelf(images);
+        displayShelf.setMaxSize(120,120);
+        //group.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
+        
+        vbLogos.getChildren().addAll(displayShelf);
+        
+        
 //        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
         return vbLogos;
     }
