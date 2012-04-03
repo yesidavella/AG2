@@ -1,0 +1,127 @@
+Bugs                                                                                               Estado
+1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
+3.Guardar porpiedades de la  en tiempo real. 2H Franklin..............................   Listo
+4. Bajar menus de navegacion y colocar titulo. COlocar
+barra de ejecucion encima.Yesid 1H..............................................................   Listones
+5.Ejecutar aplicativo fuera de netbeans. 3H Yesid ..............................................   Listo
+6.Hacer Acerca de... y al abrir app lanzar acerca de.. 4H Yesid.................................   Listones
+7.iconos mas peqeuños y colocar icono udistri. 1H Yesid ........................................   Listones
+8.No mostrar pestaña html antes de ejecutar. Los tabs no deben
+ser cerrables. Al ejecutar poner al usuarion en pestaña de phosphorous. 1H Franlin .............   Listo
+9.Cargar colores correctos al des-serializar, colocar escucha al
+cerrar ventana app y cuadrar color en general de los enlaces o del mapa. 2H franllin ...........   Listo
+10. En menu navegacion colocar el nodo como seleccionado y recargar nombre
+visual en el combo. 2H Franklin ................................................................   Listo
+11.Error al cambiar distrbuciones del cliente. 2H Franklin .....................................   Listo
+15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Listo (temporal)
+16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
+2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
+12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
+13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Parcial(Los valores coherentes no estan todavia)
+14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
+
+Segundo bloque de Bugs
+
+1.Los archivos HTML, siempre la 1ra pag no tiene nada de info.(Franklin)........................   Listo
+2.Crea imagenes del nodo  PCE (Yesid) ..........................................................   Listo
+3.leer la propiedad routedViaJUNG y se puede leer de de la siguiente forma:
+  GridSimulation.configuration.getBooleanProperty(Config.ConfigEnum.routedViaJUNG) y enrutar segun
+  corresponda(Yesid)............................................................................   Listo
+4. Siempre imprimir Html y quitar propieda del props de la simulacion(Franklins)................   Listo
+5.Cuando se corre la simulacion, la GUI no se activa si no se mueve el mouse por encima de algun
+  elemento de la interfaz grafica (Yesid).......................................................   Pendiente
+6.Adicionar evento al checkbox del tipo de enrutamiento para q haga un setRouting segun toque con
+  Jung o shortest (Yesid).......................................................................   Listo
+
+
+
+
+
+
+
+
+
+
+
+
+Migracion de clases completas: (traduccion al ingles, todos los atributos private, y constructor en la parte inicial)
+
+###### com.ag2.config
+
+- PhosphorusPropertyEditor
+- PropertyPhosphorusTypeEnum
+
+###### com.ag2.config.serialization
+
+-UtilSerializator
+
+###### com.ag2.model
+
+-LinkCreationAbstractModel
+-PhosphorusLinkModel
+-NodeCreationModel
+-BrokerCreationModel
+-GridSimulatorModel
+-LinkCreationAbstractModel
+-ClientCreationModel
+-LinkCreationModel
+-HybridSwitchCreationModel
+-OCS_SwitchCreationModel
+-OBS_SwitchCreationModel
+-OutputterModel
+-SimulationBase
+
+###### com.ag2.controller
+
+-MatchCoupleObjectContainer
+-LinkAdminAbstractController
+-NodeAdminAbstractController
+-ExecuteAbstractController
+-ExecuteController
+
+###### com.ag2.presentation.control;
+
+-ToggleButtonAg2
+-GraphNodesView
+-PhosphosrusHTMLResults
+
+##### com.ag2.presentacion
+
+-ActionTypeEmun
+-ErrorsView
+-Main
+-ExecutePane
+-GraphNodesView
+-ExecuteView
+-GUI
+
+##### com.ag2.presentation.design;
+
+-ArcListener
+-GraphNode
+-BrokerGrahpNode
+-ClientGraphNode
+-GraphArc
+-GraphArcSeparatorPoint
+-GraphDesignGroup
+-GraphLink
+-HybridSwitchGraphNode
+-OBS_SwicthGraphNode
+-OCS_SwicthGraphNode
+-ResourceGraphNode
+-Selectable
+-SwitchGraphNode
+
+##### com.ag2.presentation.design.property
+
+-EntityProperty
+-EntityPropertyTable
+-NodeRelationProperty
+-NodeDistributionProperty
+
+
+
+
+Cambios despues de entrega de documento:
+
+1. Pruebas de estres y validacion (ejecutar, parar,ejecutar...etc)

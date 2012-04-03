@@ -32,7 +32,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
@@ -89,7 +92,7 @@ public class GUI extends Scene implements Serializable {
 
 
      private GUI(BorderPane borderPane, double width, double height) {
-        super(borderPane, width, height);
+        super(borderPane, width, height);        
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
         splitPane =  new SplitPane();
@@ -131,17 +134,19 @@ public class GUI extends Scene implements Serializable {
         //Diseño inferior
 
 //        borderPane.setBottom(cajaInferiorHor);
-
+        
+//        Rectangle r =new Rectangle(30, 30);
+//        
+//        borderPane.getChildren().add(r);
+        
     }
         public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new BorderPane(), 1100, 700);
+            iguAG2 = new GUI(new BorderPane(), 1400, 700);
         }
         return iguAG2;
     }
-
-
 
     private void createToolWindow()
     {
@@ -161,9 +166,9 @@ public class GUI extends Scene implements Serializable {
         HBox.setHgrow(spacer2, Priority.ALWAYS);
         tlbWindow.getItems().add(spacer2);
 
-        tlbWindow.setPrefHeight(30);
-        tlbWindow.setMinHeight(30);
-        tlbWindow.setMaxHeight(30);
+        tlbWindow.setPrefHeight(60);
+        tlbWindow.setMinHeight(60);
+        tlbWindow.setMaxHeight(60);
         stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage);
 
