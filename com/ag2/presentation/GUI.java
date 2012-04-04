@@ -14,14 +14,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,7 +55,7 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnClient = new ToggleButtonAg2(ActionTypeEmun.CLIENT);
     private ToggleButtonAg2 btnBroker = new ToggleButtonAg2(ActionTypeEmun.BROKER);
     private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);
-  //  private ToggleButtonAg2 btnOBS_Switch = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
+    //  private ToggleButtonAg2 btnOBS_Switch = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
     private ToggleButtonAg2 btnHybridSwitch = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnResource = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
@@ -89,79 +88,87 @@ public class GUI extends Scene implements Serializable {
     private double mouseDragOffsetY = 0;
     private SplitPane splitPane;
     private WindowButtons windowButtons;
+    private StackPane layerPane;
+    private BorderPane brpRoot;
+    private StackPane modalDimmer;
 
+    private GUI(StackPane layerPane, double width, double height) {
+        super(layerPane, width, height);
+        this.layerPane = layerPane;
 
-
-     private GUI(BorderPane borderPane, double width, double height) {
-        super(borderPane, width, height);        
+        brpRoot = new BorderPane();
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
-        splitPane =  new SplitPane();
+        splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
 
+        layerPane.getChildren().add(brpRoot);
         executePane.setGroup(graphDesignGroup.getGroup());
 
         addScene(this);
-        getStylesheets().add(ResourcesPath.ABS_PATH_CSS+"cssAG2.css");
-
-        borderPane.getStyleClass().add("ventanaPrincipal");
+        getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
+        brpRoot.getStyleClass().add("ventanaPrincipal");
 
         //Diseño superior
-        creationMenuBar(borderPane);
+        creationMenuBar(brpRoot);
 
         //Diseño izquierdo(contenedor de Ejecucion y herramientas)
         gpTools = createToolsBar();
 
         VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.setMaxWidth(130);
-        
+
         contenedorHerramietas.setAlignment(Pos.CENTER);
         Region region = new Region();
         VBox.setVgrow(region, Priority.NEVER);
         region.setPrefHeight(100);
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools,region,vbLogos);
-        borderPane.setLeft(contenedorHerramietas);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, region, vbLogos);
+        brpRoot.setLeft(contenedorHerramietas);
         //Diseño central
         createTabs();
         ScrollPane scpnProperties = createDesignBottom();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         splitPane.setDividerPosition(0, 0.80);
         splitPane.setOrientation(Orientation.VERTICAL);
-          splitPane.getItems().addAll( tabPane, scpnProperties);
-        borderPane.setCenter(splitPane);
+        splitPane.getItems().addAll(tabPane, scpnProperties);
+        brpRoot.setCenter(splitPane);
 
         //Diseño inferior
 
 //        borderPane.setBottom(cajaInferiorHor);
-        
+
 //        Rectangle r =new Rectangle(30, 30);
 //        
 //        borderPane.getChildren().add(r);
-        
+        modalDimmer = new StackPane();
+        modalDimmer.setId("ModalDimmer");
+        modalDimmer.setVisible(false);
+        layerPane.getChildren().add(modalDimmer);
     }
-        public static GUI getInstance() {
+
+    public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new BorderPane(), 1100, 600);
+            iguAG2 = new GUI(new StackPane(), 1040, 720);//new BorderPane()
         }
         return iguAG2;
     }
 
-    private void createToolWindow()
-    {
+    private void createToolWindow() {
         tlbWindow = new ToolBar();
         tlbWindow.setId("mainToolBar");
 
-       final DropShadow dropShadow = new DropShadow();
+
+        final DropShadow dropShadow = new DropShadow();
         Label lblTitle = new Label("Simulador de infraestructura de grillas opticas");
         lblTitle.setFont(Font.font("Arial", FontWeight.LIGHT, 14));
         lblTitle.setEffect(dropShadow);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        tlbWindow.getItems().addAll(lblTitle,spacer);
+        tlbWindow.getItems().addAll(lblTitle, spacer);
 
         Region spacer2 = new Region();
         HBox.setHgrow(spacer2, Priority.ALWAYS);
@@ -173,30 +180,36 @@ public class GUI extends Scene implements Serializable {
         stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage);
 
-            tlbWindow.getItems().add(windowButtons);
+        tlbWindow.getItems().add(windowButtons);
 
-            tlbWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2) {
-                        windowButtons.toogleMaximized();
-                    }
+        tlbWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    windowButtons.toogleMaximized();
                 }
-            });
-            // add window dragging
-            tlbWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent event) {
-                    mouseDragOffsetX = event.getSceneX();
-                    mouseDragOffsetY = event.getSceneY();
+            }
+        });
+        // add window dragging
+        tlbWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mouseDragOffsetX = event.getSceneX();
+                mouseDragOffsetY = event.getSceneY();
+            }
+        });
+        tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (!windowButtons.isMaximized()) {
+                    stage.setX(event.getScreenX() - mouseDragOffsetX);
+                    stage.setY(event.getScreenY() - mouseDragOffsetY);
                 }
-            });
-            tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent event) {
-                    if(!windowButtons.isMaximized()) {
-                        stage.setX(event.getScreenX()-mouseDragOffsetX);
-                        stage.setY(event.getScreenY()-mouseDragOffsetY);
-                    }
-                }
-            });
+            }
+        });
 
     }
 
@@ -229,7 +242,7 @@ public class GUI extends Scene implements Serializable {
         btnClient.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnBroker.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnPCE_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
-       // btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+        // btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
@@ -241,7 +254,7 @@ public class GUI extends Scene implements Serializable {
     }
 
     public static void setStage(Stage stage) {
-         GUI.stage = stage;
+        GUI.stage = stage;
     }
 
     public static ActionTypeEmun getActionTypeEmun() {
@@ -258,7 +271,7 @@ public class GUI extends Scene implements Serializable {
     private void creationMenuBar(BorderPane borderPane) {
 
         //Panel de menus
-        VBox vBoxMainBar = new  VBox();
+        VBox vBoxMainBar = new VBox();
         createToolWindow();
         vBoxMainBar.getChildren().add(tlbWindow);
 
@@ -305,12 +318,9 @@ public class GUI extends Scene implements Serializable {
                 int result = JOptionPane.showConfirmDialog(
                         null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
-                if (result == JOptionPane.NO_OPTION)
-                {
-                   main.loadFileBaseSimulation();
-                }
-                else if (result == JOptionPane.YES_OPTION)
-                {
+                if (result == JOptionPane.NO_OPTION) {
+                    main.loadFileBaseSimulation();
+                } else if (result == JOptionPane.YES_OPTION) {
                     main.save(false);
                     main.loadFileBaseSimulation();
                 }
@@ -318,6 +328,7 @@ public class GUI extends Scene implements Serializable {
         });
 
         aboutMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+
             public void handle(ActionEvent t) {
                 AboutAG2project aboutAG2project = new AboutAG2project();
                 aboutAG2project.show();
@@ -353,7 +364,7 @@ public class GUI extends Scene implements Serializable {
     private GridPane createToolsBar() {
 
         GridPane gridPane = new GridPane();
-       // gridPane.setMaxWidth(120);
+        // gridPane.setMaxWidth(120);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(4);
@@ -428,7 +439,7 @@ public class GUI extends Scene implements Serializable {
         btnClient.setToggleGroup(tgTools);
         btnBroker.setToggleGroup(tgTools);
         btnPCE_Switch.setToggleGroup(tgTools);
-    //    btnOBS_Switch.setToggleGroup(tgTools);
+        //    btnOBS_Switch.setToggleGroup(tgTools);
         btnHybridSwitch.setToggleGroup(tgTools);
         btnResource.setToggleGroup(tgTools);
         btnLink.setToggleGroup(tgTools);
@@ -436,7 +447,7 @@ public class GUI extends Scene implements Serializable {
         btnClient.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnBroker.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnPCE_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
-     //   btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
+        //   btnOBS_Switch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
@@ -444,7 +455,7 @@ public class GUI extends Scene implements Serializable {
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
         btnPCE_Switch.setTooltip(new Tooltip("PCE (Path Computation Element)"));
-   //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
+        //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
         btnResource.setTooltip(new Tooltip("Clúster (Recurso de almacenamiento y procesamiento) "));
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
@@ -501,7 +512,7 @@ public class GUI extends Scene implements Serializable {
 
     private ScrollPane createDesignBottom() {
 
-        ScrollPane scrollPane =new ScrollPane();
+        ScrollPane scrollPane = new ScrollPane();
         HBox hboxAllBottom = new HBox();
         scrollPane.getStyleClass().add("cajaInferior");
         hboxAllBottom.setSpacing(10);
@@ -514,7 +525,7 @@ public class GUI extends Scene implements Serializable {
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
         StackPane stPnSimulationProperties = new StackPane();
         stPnSimulationProperties.getChildren().add(tbSimulationProperties);
-stPnSimulationProperties.setMinWidth(400);
+        stPnSimulationProperties.setMinWidth(400);
         SplitPane splPnPropertiesTbs = new SplitPane();
         splPnPropertiesTbs.getItems().addAll(stPnDeviceProperties, stPnSimulationProperties);
         splPnPropertiesTbs.setDividerPositions(0.525f);
@@ -522,34 +533,34 @@ stPnSimulationProperties.setMinWidth(400);
         VBox vbxBottomRight = new VBox(10);
         VBox vbxExecuteIndicatorPane = createExecuteIndicatorPane();
         createMapNavigationPanel(vbNavegation);
-        vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane,vbNavegation);
+        vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane, vbNavegation);
 
-        hboxAllBottom.getChildren().addAll( splPnPropertiesTbs, vbxBottomRight);
+        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight);
         scrollPane.setContent(hboxAllBottom);
-                return scrollPane;
+        return scrollPane;
     }
 
     private VBox createProjectsLogos() {
 
-        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png"));
-        double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth()/ivAG2.getBoundsInParent().getHeight();
+        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png"));
+        double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(40);
-        ivAG2.setFitWidth(40*proportionXYAG2);
+        ivAG2.setFitWidth(40 * proportionXYAG2);
 
-        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png"));
-        double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth()/ivInternetIntel.getBoundsInParent().getHeight();
+        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png"));
+        double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
         ivInternetIntel.setFitHeight(35);
-        ivInternetIntel.setFitWidth(35*proportionXYInternetIn);
+        ivInternetIntel.setFitWidth(35 * proportionXYInternetIn);
 
-        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"phosphorus.jpg"));
-        double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth()/ivPhosphorus.getBoundsInParent().getHeight();
+        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg"));
+        double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth() / ivPhosphorus.getBoundsInParent().getHeight();
         ivPhosphorus.setFitHeight(45);
-        ivPhosphorus.setFitWidth(45*proportionXYphosphorus);
+        ivPhosphorus.setFitWidth(45 * proportionXYphosphorus);
 
-        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"escudo_udistrital.jpg"));
-        double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth()/ivDistritalUniv.getBoundsInParent().getHeight();
+        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg"));
+        double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth() / ivDistritalUniv.getBoundsInParent().getHeight();
         ivDistritalUniv.setFitHeight(55);
-        ivDistritalUniv.setFitWidth(55*proportionXYdistritalUniv);
+        ivDistritalUniv.setFitWidth(55 * proportionXYdistritalUniv);
 
         Hyperlink linkAG2 = new Hyperlink();
         Hyperlink linkInterIntel = new Hyperlink();
@@ -566,52 +577,54 @@ stPnSimulationProperties.setMinWidth(400);
         linkPhosphorus.setGraphic(ivPhosphorus);
         linkDistritalUniv.setGraphic(ivDistritalUniv);
 
-        setOnLunchBrowser(linkAG2,"http://201.234.78.173:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003328");
-        setOnLunchBrowser(linkInterIntel,"http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
-        setOnLunchBrowser(linkPhosphorus,"http://www.ist-phosphorus.eu/");
-        setOnLunchBrowser(linkDistritalUniv,"www.udistrital.edu.co");
+        setOnLunchBrowser(linkAG2, "http://201.234.78.173:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003328");
+        setOnLunchBrowser(linkInterIntel, "http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
+        setOnLunchBrowser(linkPhosphorus, "http://www.ist-phosphorus.eu/");
+        setOnLunchBrowser(linkDistritalUniv, "www.udistrital.edu.co");
 
         vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
-        vbLogos.setPadding(new Insets(3,5,3,3));
+        vbLogos.setPadding(new Insets(3, 5, 3, 3));
         vbLogos.setMinHeight(160);
-                
-        Group group = new  Group();
-        
+
+        Group group = new Group();
+
         linkAG2.setLayoutY(0);
         linkInterIntel.setLayoutY(50);
         linkPhosphorus.setLayoutY(100);
         linkDistritalUniv.setLayoutY(150);
-        
+
         Image[] images = new Image[4];
-        images[3] = new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png");
-        images[2] = new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png");
-        images[1] = new Image(ResourcesPath.ABS_PATH_IMGS+"phosphorus.jpg");
-        images[0] = new Image(ResourcesPath.ABS_PATH_IMGS+"escudo_udistrital.jpg");
-        
+        images[3] = new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png");
+        images[2] = new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png");
+        images[1] = new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg");
+        images[0] = new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg");
+
         DisplayShelf displayShelf = new DisplayShelf(images);
-        displayShelf.setMaxSize(120,120);
+        displayShelf.setMaxSize(120, 120);
         //group.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
-        
+
         vbLogos.getChildren().addAll(displayShelf);
-        
-        
+
+
 //        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
         return vbLogos;
     }
 
-    public void setOnLunchBrowser(Hyperlink link,final String URLToGo) {
+    public void setOnLunchBrowser(Hyperlink link, final String URLToGo) {
         link.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
+
+            @Override
+            public void handle(ActionEvent e) {
                 try {
                     Desktop.getDesktop().browse(new URI(URLToGo));
                 } catch (URISyntaxException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                }catch (IOException ex) {
-                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);}
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            });
+            }
+        });
     }
 
     private TableView<String> createSimulationPropertiesTb() {
@@ -759,8 +772,7 @@ stPnSimulationProperties.setMinWidth(400);
                     scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
                     scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
 
-                    if(graphDesignGroup.getSelectable()!=null)
-                    {
+                    if (graphDesignGroup.getSelectable() != null) {
                         graphDesignGroup.getSelectable().select(false);
                     }
 
@@ -872,8 +884,8 @@ stPnSimulationProperties.setMinWidth(400);
         gpTools.setOpacity(0.8);
         pgBrExecutionProgress.setProgress(-1);
         graphDesignGroup.getGroup().setOpacity(0.8);
-        if(!tabPane.getTabs().contains(tabResultsHTML)){
-        tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
+        if (!tabPane.getTabs().contains(tabResultsHTML)) {
+            tabPane.getTabs().addAll(tabResultsHTML, tabResults);
         }
 
         tabPane.getSelectionModel().select(tabResults);
@@ -890,5 +902,9 @@ stPnSimulationProperties.setMinWidth(400);
 
     public TableView<String> getTbwSimulationProperties() {
         return tbwSimulationProperties;
+    }
+
+    public StackPane getModalDimmer() {
+        return modalDimmer;
     }
 }
