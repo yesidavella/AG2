@@ -585,29 +585,15 @@ public class GUI extends Scene implements Serializable {
         vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 5, 3, 3));
-        vbLogos.setMinHeight(160);
-
-        Group group = new Group();
-
-        linkAG2.setLayoutY(0);
-        linkInterIntel.setLayoutY(50);
-        linkPhosphorus.setLayoutY(100);
-        linkDistritalUniv.setLayoutY(150);
-
-        Image[] images = new Image[4];
-        images[3] = new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png");
-        images[2] = new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png");
-        images[1] = new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg");
-        images[0] = new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg");
-
-        DisplayShelf displayShelf = new DisplayShelf(images);
-        displayShelf.setMaxSize(120, 120);
-        //group.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);
-
-        vbLogos.getChildren().addAll(displayShelf);
+        
+        vbLogos.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);     
 
 
-//        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
+        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
+        
+        DropShadow dropShadow = new DropShadow();
+        vbLogos.setEffect(dropShadow);
+                
         return vbLogos;
     }
 
