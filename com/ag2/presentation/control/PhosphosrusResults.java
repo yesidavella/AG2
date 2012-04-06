@@ -70,10 +70,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         gpnDataProgress.setHgap(11);
 
 //        scPnResults.getStyleClass().addAll("boxLogosVerticalGradient");
-        
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setColor(Color.web("#FFD779"));
-        
+
         gpnDataProgress.getStyleClass().add("data-progress-box");
 //        vBoxImageProgress.getStyleClass().add("progress-indicator-box");
         gpnDataProgress.setEffect(dropShadow);
@@ -100,7 +100,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         setFont(lblSimulationTimePercentageValue);
         setFont(lblRealTimeValue);
         setFont(lblPageHTMLCountValue);
-        
+
         GridPane.setConstraints(lbTitle, 0, 0);
         GridPane.setColumnSpan(lbTitle, 3);
         GridPane.setHalignment(lbTitle, HPos.CENTER);
@@ -309,12 +309,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas, String tcPorcentajeResultadosRecibidos) {
 
 
-        progressIndicator.setProgress(1);
-        lblSimulationTimePercentageValue.setText("100%");
+
+
         time.stop();
-        lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME)+" ms (Finalizado) ");
-        
-        //  hideProgressIndicator();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(tcCliente);
@@ -368,6 +365,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         lblSimulationTimePercentageValue.setText(valuePercentage + " %");
         lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
         lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
+        if (Math.round(Percentage) == 100) {
+            progressIndicator.setProgress(1);
+            lblSimulationTimePercentageValue.setText("100%");
+            lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " ms (Finalizado) ");
+        }
     }
 
     public static class ConjuntoProiedadesPhosphorus {
