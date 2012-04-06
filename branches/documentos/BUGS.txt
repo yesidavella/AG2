@@ -65,9 +65,10 @@ Grupo 1
     a) Emergente problema de  hilos  (1/80)(aprox 100 routers, 70 clientes, 50 clusteres, red semi malla)-------------------------(Listo)
     b) Ningun problema  (Tiempo minito 0 max 9E19 ms, Tiempo 1 hora, 8000 paginas html)
     c1) Ningun problema, cuando se abre y se cierra el programa
+    c2) Problema cuando se deja la session y se guarda y abre varias veces se duplican los nods y da error (Franklin)------------ (Listo)
     d) Ningun problema----------------------------------------------------------------------------------------------------------  (Listo) 
     e) Ningun problema. (excepto cuando se poner valores locos en las propiedades (sobretodo en la dis.normal) )----------------- (Listo)
-        -No sirve el stop. luedo de haber parado la simulacion dice que existen resdes disconexsas.(Franklin)----------------------(Pendiente)
+        -No sirve el stop. luedo de haber parado la simulacion dice que existen resdes disconexsas.(Franklin)----------------------(Listo)
     g) Cuadno se eliminan los nodos de servcio y ser agregan otros, los validadores permten la ejecucion.
         No se valida que el cliente ni que el clusten hayan quedado sin broker(Yesid)-------------------------------------------- (Pendiente)
 
@@ -80,4 +81,3 @@ Otros problemas
 
 #####  Cambios despues de entrega de documento  ###############################################################################################################
 
-c2) Problema cuando se deja la session y se guarda y abre varias veces se duplican los nods y da error (Franklin)------------ (Pendiente)
