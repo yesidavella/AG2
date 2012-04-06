@@ -8,15 +8,11 @@ import javafx.animation.TimelineBuilder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
+import javafx.scene.paint.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,7 +21,7 @@ import javafx.util.Duration;
 public abstract class ModalAG2window extends Stage {
 
     private Button btnAccept;
-    private BorderPane brPnWindowsLayout;
+    private BorderPane brpWindowLayout;
     protected StackPane modalDimmer;
 
     public ModalAG2window(String title) {
@@ -34,13 +30,13 @@ public abstract class ModalAG2window extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setResizable(true);
         initStyle(StageStyle.UNDECORATED);
-        brPnWindowsLayout = new BorderPane();
-        brPnWindowsLayout.setPadding(new Insets(10, 10, 10, 10));
+        brpWindowLayout = new BorderPane();
+        brpWindowLayout.setPadding(new Insets(10, 10, 10, 10));
 
-        Scene scene = new Scene(brPnWindowsLayout, 510, 400);//#FFEB8C
+        Scene scene = new Scene(brpWindowLayout, 515, 400);//#FFEB8C
         setGradientEffect(scene);
         scene.getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
-        brPnWindowsLayout.getStyleClass().add("modal-AG2-window");
+        brpWindowLayout.getStyleClass().add("modal-AG2-window");
 
         btnAccept = new Button("Aceptar");
         btnAccept.setOnAction(new EventHandler<ActionEvent>() {
@@ -109,7 +105,7 @@ public abstract class ModalAG2window extends Stage {
     }
 
     public BorderPane getBrPnWindowsLayout() {
-        return brPnWindowsLayout;
+        return brpWindowLayout;
     }
 
     public Button getBtnAccept() {

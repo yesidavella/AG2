@@ -19,6 +19,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -71,9 +72,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 //        scPnResults.getStyleClass().addAll("boxLogosVerticalGradient");
         
         DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.web("#FFD779"));
         
-        gpnDataProgress.getStyleClass().addAll("boxLogosVerticalGradient");
-        vBoxImageProgress.getStyleClass().addAll("boxLogosVerticalGradient");
+        gpnDataProgress.getStyleClass().add("data-progress-box");
+//        vBoxImageProgress.getStyleClass().add("progress-indicator-box");
         gpnDataProgress.setEffect(dropShadow);
         vBoxImageProgress.setEffect(dropShadow);
 
@@ -95,14 +97,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         setFont(lblPageHTMLCount);
 
         setFont(lblSimulationTimeValue);
-
         setFont(lblSimulationTimePercentageValue);
-
         setFont(lblRealTimeValue);
-
         setFont(lblPageHTMLCountValue);
-
-
+        
         GridPane.setConstraints(lbTitle, 0, 0);
         GridPane.setColumnSpan(lbTitle, 3);
         GridPane.setHalignment(lbTitle, HPos.CENTER);
