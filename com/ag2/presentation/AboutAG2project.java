@@ -30,7 +30,6 @@ public class AboutAG2project extends ModalAG2window {
         brPnWindowsLayout = getBrPnWindowsLayout();
         btnAccept = getBtnAccept();
       
-
         setWidth(600);
         setHeight(635);
 
@@ -163,10 +162,8 @@ public class AboutAG2project extends ModalAG2window {
             super(5);
             setPadding(new Insets(5));
 
-            setStyle("-fx-border-radius: 5;"
-                    + "-fx-border-color:lightgray;"
-                    + "-fx-border-width:3px;"
-                    + "-fx-background-color:whitesmoke;");
+            setStyle("-fx-background-color:whitesmoke;"
+                    + "-fx-background-radius: 7px;");
             loadDescription(description_type);
         }
 
