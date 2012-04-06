@@ -17,12 +17,11 @@ import trs.core.NetworkRouting;
 
 public class NetworkChecker {
 
-    private GridSimulator simulator;
+    
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 
-    public NetworkChecker(GridSimulator simulator) {
-        this.simulator = simulator;
+    public NetworkChecker() {       
         listOfErrors = new HashMap<Object, String>();
     }
 
@@ -49,15 +48,17 @@ public class NetworkChecker {
         return statusOfCheck;
     }
 
-    private void checkAmountOfNodesCreated() {
-        if (simulator.getEntities().size() <= 0) {
-            addError(simulator, " \n►No contiene ningun nodo.");
+    private void checkAmountOfNodesCreated()
+    {
+        
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntities().size() <= 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►No contiene ningun nodo.");
         }
     }
 
     private void checkLinksBetweenNodes() {
 
-        for (SimBaseEntity simBaseEntity : simulator.getEntities()) {
+        for (SimBaseEntity simBaseEntity : SimulationBase.getInstance().getGridSimulatorModel().getEntities()) {
             Entity node = (Entity) simBaseEntity;
 
             if (node.getOutPorts().size() <= 0) {
@@ -68,13 +69,13 @@ public class NetworkChecker {
 
     private void checkCorrectNodesWithBroker() {
 
-        for (SimBaseEntity clienNode : simulator.getEntitiesOfType(ClientNode.class)) {
+        for (SimBaseEntity clienNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class)) {
             if (((ClientNode) clienNode).getServiceNode() == null) {
                 addError((ClientNode) clienNode, " \n►Al ser un Cliente debe tener un Nodo de Servicio registrado.");
             }
         }
 
-        for (SimBaseEntity resourceNode : simulator.getEntitiesOfType(ResourceNode.class)) {
+        for (SimBaseEntity resourceNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ResourceNode.class)) {
             if (((ResourceNode) resourceNode).getServiceNodes().size() <= 0) {
                 addError((ResourceNode) resourceNode, " \n►Al ser un Recurso debe tener almenos un Nodo de Servicio registrado.");
             }
@@ -92,7 +93,7 @@ public class NetworkChecker {
 
     private void checkSwitchesWellLinked() {
 
-        for (SimBaseEntity oneSwitch : simulator.getEntitiesOfType(Switch.class)) {
+        for (SimBaseEntity oneSwitch : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(Switch.class)) {
 
             if (oneSwitch.getOutPorts().size() == 1) {
                 addError((Switch) oneSwitch, " \n►Solo tiene un enlace, debe tener almenos otro.");
@@ -125,11 +126,11 @@ public class NetworkChecker {
      */
     private void checkIsolatedNetworks() {
 
-        Routing routing = simulator.getRouting();
+        Routing routing = SimulationBase.getInstance().getGridSimulatorModel().getRouting();
         Boolean foundIsolatedNetworks = false;
 
         if (routing instanceof RoutingViaJung) {
-System.out.println("Entro a:RoutingViaJung");
+            System.out.println("Entro a:RoutingViaJung");
             Graph networkRoutingGraph = ((RoutingViaJung) routing).getHybridNetwork();
             GridVertex pivotVertex = null;
 
@@ -143,7 +144,7 @@ System.out.println("Entro a:RoutingViaJung");
                 }
 
                 if (pivotVertex.getTheEntity().getHopCount(vertex.getTheEntity()) == -1) {
-                    addError(simulator, " \n►Contiene redes disconexas.");
+                    addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Contiene redes disconexas.");
                     foundIsolatedNetworks = true;
                 }
             }
@@ -171,7 +172,7 @@ System.out.println("Entro a:RoutingViaJung");
                     Connection conn = itConns.next();
 
                     if (conn.getRoute() == null) {
-                        addError(simulator, " \n►Contiene redes disconexas.");
+                        addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Contiene redes disconexas.");
                         foundIsolatedNetworks = true;
                     }
                 }
@@ -181,19 +182,19 @@ System.out.println("Entro a:RoutingViaJung");
 
     private void checkNecessaryNodes() {
 
-        if (simulator.getEntitiesOfType(ClientNode.class).size() == 0) {
-            addError(simulator, " \n►Debe haber por lo menos un \"Nodo Cliente\".");
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class).size() == 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo Cliente\".");
         }
 
-        if (simulator.getEntitiesOfType(ResourceNode.class).size() == 0) {
-            addError(simulator, " \n►Debe haber por lo menos un \"Nodo de Recurso\".");
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ResourceNode.class).size() == 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo de Recurso\".");
         }
 
-        if (simulator.getEntitiesOfType(ServiceNode.class).size() == 0) {
-            addError(simulator, " \n►Debe haber por lo menos un \"Nodo de Servicio\".");
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ServiceNode.class).size() == 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo de Servicio\".");
         }
-        if (simulator.getEntitiesOfType(Switch.class).size() == 0) {
-            addError(simulator, " \n►Debe haber por lo menos un \"Nodo de Conmutación\".");
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(Switch.class).size() == 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo de Conmutación\".");
         }
     }
 }
