@@ -80,7 +80,12 @@ public class SimulationBase implements Runnable, Serializable {
     public void stop() {
 
         simulationInstance.stopEvent = true;
-        simulationBase = new SimulationBase();
+       
+                
+    }
+    public void reload()
+    {
+         simulationBase = new SimulationBase();
         OutputterModel outputterModelNew = new OutputterModel(simulationBase.getGridSimulatorModel());
         simulationBase.setResultsAbstractController(resultsAbstractController);
         simulationBase.setOutputterModel(outputterModelNew);
@@ -89,6 +94,8 @@ public class SimulationBase implements Runnable, Serializable {
         nodeAdminAbstractController.reCreatePhosphorousNodes();
         linkAdminAbstractController.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
+        System.out.println("------------------------Stop en base");
+        
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
@@ -116,7 +123,7 @@ public class SimulationBase implements Runnable, Serializable {
                 outputterModel.printResource((ResourceNode) entity);
             }
         }
-        stop();
+       reload();
     }
 
     public SimulationInstance getSimulationInstance() {

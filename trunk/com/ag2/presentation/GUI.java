@@ -95,6 +95,8 @@ public class GUI extends Scene implements Serializable {
     private GUI(StackPane layerPane, double width, double height) {
         super(layerPane, width, height);
         this.layerPane = layerPane;
+        
+        stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
 
         brpRoot = new BorderPane();
         scPnWorld = new ScrollPane();
@@ -162,7 +164,8 @@ public class GUI extends Scene implements Serializable {
 
 
         final DropShadow dropShadow = new DropShadow();
-        Label lblTitle = new Label("Simulador de infraestructura de grillas opticas");
+        Label lblTitle = new Label("Simulador de infraestructura de grillas opticas AG2");
+       
         lblTitle.setFont(Font.font("Arial", FontWeight.LIGHT, 14));
         lblTitle.setEffect(dropShadow);
 

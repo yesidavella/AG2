@@ -23,6 +23,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
     public ExecutePane() {
 
+
         btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
 
             @Override
@@ -34,6 +35,12 @@ public class ExecutePane extends TilePane implements ExecuteView {
                         ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
 
                         if (executeController != null) {
+
+
+                            System.out.println("################    PLAY  ################");
+                            btnRun.setDisable(true);
+                            btnStop.setDisable(false);
+                            
                             if (phosphosrusHTMLResults != null) {
                                 phosphosrusHTMLResults.lookToNextExecution();
                             }
@@ -44,12 +51,11 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             executeController.initNetwork();
 
                             if (executeController.isWellFormedNetwork()) {
-                                if( GUI.getInstance().getGraphDesignGroup().getSelectable()!=null)
-                                {    
+                                if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
                                     GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
                                     GUI.getInstance().getGraphDesignGroup().setSelectable(null);
                                 }
-                                
+
                                 GUI.getInstance().getEntityPropertyTable().clearData();
                                 GUI.getInstance().disable();
                                 toggleButtonAg2.setSelected(true);
@@ -63,6 +69,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
             }
         };
 
+
         btnStop = new ToggleButtonAg2(ActionTypeEmun.STOP) {
 
             @Override
@@ -71,14 +78,16 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
                     public void handle(MouseEvent mouEvent) {
 
-                        ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
+                        System.out.println("################    STOP  ################");
                         GUI.getInstance().enable();
                         enable();
                         executeController.stop();
+
                     }
                 });
             }
         };
+        btnStop.setDisable(true);
 
         getStyleClass().add("barraDeHerramientas");
         setPadding(new Insets(10, 10, 10, 10));
@@ -109,6 +118,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
     public void enable() {
         btnStop.setSelected(true);
+        btnRun.setDisable(false);
+        btnStop.setDisable(true);
 
     }
 
