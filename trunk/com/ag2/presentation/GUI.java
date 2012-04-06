@@ -92,10 +92,15 @@ public class GUI extends Scene implements Serializable {
     private BorderPane brpRoot;
     private StackPane modalDimmer;
 
-    private GUI(StackPane layerPane, double width, double height) {
-        super(layerPane, width, height);
-        this.layerPane = layerPane;
+    private GUI(Group group, double width, double height) 
+    
+    {
+        super(group, width, height);
         
+        
+        layerPane = new StackPane();
+        group.getChildren().add(layerPane);        
+                
         stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
 
         brpRoot = new BorderPane();
@@ -153,7 +158,7 @@ public class GUI extends Scene implements Serializable {
     public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new StackPane(), 1040, 720);//new BorderPane()
+            iguAG2 = new GUI(new Group(), 1040, 720);//new BorderPane()
         }
         return iguAG2;
     }
@@ -181,7 +186,7 @@ public class GUI extends Scene implements Serializable {
         tlbWindow.setMinHeight(60);
         tlbWindow.setMaxHeight(60);
         stage.initStyle(StageStyle.UNDECORATED);
-        windowButtons = new WindowButtons(stage);
+        windowButtons = new WindowButtons(stage,layerPane);
 
         tlbWindow.getItems().add(windowButtons);
 
@@ -201,6 +206,7 @@ public class GUI extends Scene implements Serializable {
             public void handle(MouseEvent event) {
                 mouseDragOffsetX = event.getSceneX();
                 mouseDragOffsetY = event.getSceneY();
+               
             }
         });
         tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
