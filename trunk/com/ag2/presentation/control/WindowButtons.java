@@ -58,7 +58,7 @@ public class WindowButtons extends VBox {
     private boolean maximized = false;
     private Main main;
     Button closeBtn = new Button();
-    StackPane stackPane;
+    StackPane layerPane;
 
     public void setMain(Main main) {
         this.main = main;
@@ -81,11 +81,11 @@ public class WindowButtons extends VBox {
         });
     }
 
-    public WindowButtons(final Stage stage,final  StackPane stackPane) {
+    public WindowButtons(final Stage stage,final  StackPane layerPane) {
         super(0);
         this.stage = stage;
         // create buttons
-        this.stackPane = stackPane;
+        this.layerPane = layerPane;
         setScaleX(1.3);
         setScaleY(1.3);
         closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-close.png")));
@@ -130,13 +130,13 @@ public class WindowButtons extends VBox {
                 stage.setWidth(backupWindowBounds.getWidth());
                 stage.setHeight(backupWindowBounds.getHeight());
                 
-                stackPane.setPrefHeight(backupWindowBounds.getHeight());
-                stackPane.setMaxHeight(backupWindowBounds.getHeight());
-                stackPane.setMinHeight(backupWindowBounds.getHeight());
+                layerPane.setPrefHeight(backupWindowBounds.getHeight());
+                layerPane.setMaxHeight(backupWindowBounds.getHeight());
+                layerPane.setMinHeight(backupWindowBounds.getHeight());
                 
-                stackPane.setPrefWidth(backupWindowBounds.getWidth());
-                stackPane.setMaxWidth(backupWindowBounds.getWidth());
-                stackPane.setMinWidth(backupWindowBounds.getWidth());
+                layerPane.setPrefWidth(backupWindowBounds.getWidth());
+                layerPane.setMaxWidth(backupWindowBounds.getWidth());
+                layerPane.setMinWidth(backupWindowBounds.getWidth());
             }
         } else {
             maximized = true;
@@ -146,13 +146,13 @@ public class WindowButtons extends VBox {
             stage.setWidth(screen.getVisualBounds().getWidth());
             stage.setHeight(screen.getVisualBounds().getHeight());
             
-             stackPane.setPrefHeight(backupWindowBounds.getHeight());
-                stackPane.setMaxHeight(backupWindowBounds.getHeight());
-                stackPane.setMinHeight(backupWindowBounds.getHeight());
+             layerPane.setPrefHeight(screen.getVisualBounds().getHeight());
+                layerPane.setMaxHeight(screen.getVisualBounds().getHeight());
+                layerPane.setMinHeight(screen.getVisualBounds().getHeight());
                 
-                stackPane.setPrefWidth(backupWindowBounds.getWidth());
-                stackPane.setMaxWidth(backupWindowBounds.getWidth());
-                stackPane.setMinWidth(backupWindowBounds.getWidth());
+                layerPane.setPrefWidth(screen.getVisualBounds().getWidth());
+                layerPane.setMaxWidth(screen.getVisualBounds().getWidth());
+                layerPane.setMinWidth(screen.getVisualBounds().getWidth());
         }
     }
 

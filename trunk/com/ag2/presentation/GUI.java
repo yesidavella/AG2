@@ -92,15 +92,13 @@ public class GUI extends Scene implements Serializable {
     private BorderPane brpRoot;
     private StackPane modalDimmer;
 
-    private GUI(Group group, double width, double height) 
-    
-    {
-        super(group, width, height);
-        
-        
+    private GUI(Group grCanvas, double width, double height) {
+        super(grCanvas, width, height);
+
+
         layerPane = new StackPane();
-        group.getChildren().add(layerPane);        
-                
+        grCanvas.getChildren().add(layerPane);
+
         stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
 
         brpRoot = new BorderPane();
@@ -110,6 +108,9 @@ public class GUI extends Scene implements Serializable {
         splitPane.setOrientation(Orientation.HORIZONTAL);
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
+
+        grCanvas.getChildren().add(gpMapNavegation);
+        gpMapNavegation.setLayoutX(500);
 
         layerPane.getChildren().add(brpRoot);
         executePane.setGroup(graphDesignGroup.getGroup());
@@ -153,6 +154,17 @@ public class GUI extends Scene implements Serializable {
         modalDimmer.setId("ModalDimmer");
         modalDimmer.setVisible(false);
         layerPane.getChildren().add(modalDimmer);
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public static GUI getInstance() {
@@ -170,7 +182,7 @@ public class GUI extends Scene implements Serializable {
 
         final DropShadow dropShadow = new DropShadow();
         Label lblTitle = new Label("Simulador de infraestructura de grillas opticas AG2");
-       
+
         lblTitle.setFont(Font.font("Arial", FontWeight.LIGHT, 14));
         lblTitle.setEffect(dropShadow);
 
@@ -182,11 +194,11 @@ public class GUI extends Scene implements Serializable {
         HBox.setHgrow(spacer2, Priority.ALWAYS);
         tlbWindow.getItems().add(spacer2);
 
-        tlbWindow.setPrefHeight(60);
-        tlbWindow.setMinHeight(60);
-        tlbWindow.setMaxHeight(60);
+        tlbWindow.setPrefHeight(40);
+        tlbWindow.setMinHeight(40);
+        tlbWindow.setMaxHeight(40);
         stage.initStyle(StageStyle.UNDECORATED);
-        windowButtons = new WindowButtons(stage,layerPane);
+        windowButtons = new WindowButtons(stage, layerPane);
 
         tlbWindow.getItems().add(windowButtons);
 
@@ -206,7 +218,7 @@ public class GUI extends Scene implements Serializable {
             public void handle(MouseEvent event) {
                 mouseDragOffsetX = event.getSceneX();
                 mouseDragOffsetY = event.getSceneY();
-               
+
             }
         });
         tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -594,15 +606,15 @@ public class GUI extends Scene implements Serializable {
         vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 5, 3, 3));
-        
-        vbLogos.getChildren().addAll(linkAG2,linkInterIntel,linkPhosphorus,linkDistritalUniv);     
+
+        vbLogos.getChildren().addAll(linkAG2, linkInterIntel, linkPhosphorus, linkDistritalUniv);
 
 
         vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
-        
+
         DropShadow dropShadow = new DropShadow();
         vbLogos.setEffect(dropShadow);
-                
+
         return vbLogos;
     }
 
@@ -720,7 +732,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.getChildren().add(btnIrServiceNodes);
 
         if (!vBox.getChildren().contains(gpMapNavegation)) {
-            vBox.getChildren().add(gpMapNavegation);
+//            vBox.getChildren().add(gpMapNavegation);
         }
 
         setEventGoBtn(btnIrClients, cbClients);
@@ -825,6 +837,9 @@ public class GUI extends Scene implements Serializable {
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
+        
+        windowButtons.toogleMaximized();
+
         new AboutAG2project();
     }
 
