@@ -38,9 +38,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
 
                             System.out.println("################    PLAY  ################");
-                            btnRun.setDisable(true);
-                            btnStop.setDisable(false);
-                            
+
+
                             if (phosphosrusHTMLResults != null) {
                                 phosphosrusHTMLResults.lookToNextExecution();
                             }
@@ -59,6 +58,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 GUI.getInstance().getEntityPropertyTable().clearData();
                                 GUI.getInstance().disable();
                                 toggleButtonAg2.setSelected(true);
+                                btnRun.setDisable(true);
+                                btnStop.setDisable(false);
                                 executeController.run();
                             } else {
                                 btnStop.setSelected(true);
