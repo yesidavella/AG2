@@ -13,12 +13,15 @@
 }
 
 #mainToolBar{
-    -fx-background-image: url("full.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
-    -fx-background-color: red;
-    -fx-background-size: 100% 100%;
+/*    -fx-background-image: url("full.png");*/
+/*    -fx-background-repeat: no-repeat;
+    -fx-background-position: left;*/
+    -fx-background-color: linear-gradient(to top,#5CABFF 10%,#8FC6FF 50%,#5CABFF 90%);/*Gris claro a oscuro#D5D5D5,#B8B8B8*/
+    
+/*    -fx-background-size: 100% 100%;*/
     /*    -fx-background-color: transparent;*/
+/*    -fx-border-bottom-color: black;
+    -fx-border-bottom-style: dotted;*/
 }
 
 .barraDeMenus{
@@ -98,11 +101,13 @@ TableView{
 }
 
 .data-progress-box{
-    -fx-border-width:2px;
+    -fx-border-width:1px;
     -fx-border-style: dashed;
     -fx-border-color:#FF9A00;
     -fx-background-color:linear-gradient(to top, #FFD779 0%,#FFF2D0 45%, #FFF2D0 55%, #FFD779 100%);
 }
+/**Este es el estilo q se supone q usa la caja q tiene la pelotica q usa el avance
+de la simulacion, no se esta usando este estilo por ahora*/
 .progress-indicator-box{
     -fx-border-style: dashed;
     -fx-border-width:2px;
