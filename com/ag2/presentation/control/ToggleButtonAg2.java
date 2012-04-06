@@ -23,7 +23,9 @@ public class ToggleButtonAg2 extends ToggleButton {
         setGraphic(imageView);
         setMaxWidth(WIDTH);
         setMaxHeight(HEIGHT);
-
+        setFocusTraversable(false);
+        
+        
     }
 
     public ActionTypeEmun getActionTypeEmun() {
@@ -58,7 +60,13 @@ public class ToggleButtonAg2 extends ToggleButton {
                 } else {
                     toggleButtonAg2.setSelected(true);
                 }
+                
             }
-        });
+            
+
+        }
+                
+                
+                );
     }
 }
