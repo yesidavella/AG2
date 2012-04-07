@@ -170,7 +170,7 @@ public class GUI extends Scene implements Serializable {
     public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new Group(), 1040, 720);//new BorderPane()
+            iguAG2 = new GUI(new Group(), 800, 600);//new BorderPane()
         }
         return iguAG2;
     }
