@@ -120,7 +120,11 @@ public class WindowButtons extends VBox {
         getChildren().addAll(closeBtn, minBtn, maxBtn);
     }
 
-    public void toogleMaximized() {
+    public void toogleMaximized()
+    {
+        try{
+            
+            
         final Screen screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
         if (maximized) {
             maximized = false;
@@ -153,6 +157,11 @@ public class WindowButtons extends VBox {
                 layerPane.setPrefWidth(screen.getVisualBounds().getWidth());
                 layerPane.setMaxWidth(screen.getVisualBounds().getWidth());
                 layerPane.setMinWidth(screen.getVisualBounds().getWidth());
+        }
+        }
+        catch(Exception ex )
+        {
+            
         }
     }
 
