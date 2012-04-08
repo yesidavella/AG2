@@ -2,7 +2,7 @@ package com.ag2.model;
 
 import Grid.Entity;
 
-public class ModeloCrearNodoDeRecurso extends NodeCreationModel{
+public class ResourceCreationModel extends NodeCreationModel{
 
     @Override
     public Entity createPhosphorusNode(String nombreNodoGrafico) {
