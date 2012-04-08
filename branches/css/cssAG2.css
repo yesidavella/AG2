@@ -36,7 +36,7 @@
 .barraDeHerramientas{
     -fx-base: #B9D7FF;
     -fx-border-color: #687FFF;
-    -fx-border-width: 3;
+    -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-color: linear-gradient(to top,#B2BEFF,#E3E7FF,#B2BEFF);
 }
@@ -44,12 +44,12 @@
 TableView{
     /*    -fx-base: #b6e7c9;*/
     -fx-border-radius: 5;
-    -fx-border-width: 2;
+    -fx-border-width: 1;
 }
 
 .cajaInferior{
     -fx-border-color: #687FFF;
-    -fx-border-width: 3;
+    -fx-border-width: 1;
     -fx-insets: 20, 40, 60, 80;
     -fx-padding: 5;
     -fx-border-radius: 5;
@@ -96,7 +96,7 @@ TableView{
 .boxLogosVerticalGradient{
     -fx-border-radius: 5;
     -fx-border-color:gray;
-    -fx-border-width:2px;
+    -fx-border-width:1px;
     -fx-background-color:linear-gradient(to top, derive(-fx-base,-5%) 0%, derive(-fx-base,90%) 50%, derive(-fx-base,-5%) 100%);
 }
 
@@ -110,7 +110,7 @@ TableView{
 de la simulacion, no se esta usando este estilo por ahora*/
 .progress-indicator-box{
     -fx-border-style: dashed;
-    -fx-border-width:2px;
+    -fx-border-width:1px;
     -fx-border-color:#FF9A00;
     -fx-background-color:#FFE3A1;
 }
