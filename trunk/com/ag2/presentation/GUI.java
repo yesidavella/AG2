@@ -14,33 +14,25 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
@@ -62,7 +54,7 @@ public class GUI extends Scene implements Serializable {
     private EntityPropertyTableView entityPropertyTable;
     private GridPane gpTools;
     private ScrollPane scPnWorld;
-    private ProgressBar pgBrExecutionProgress;
+    private ProgressIndicator progressIndicator;
     private boolean isPrincipalKeyPressed = false;
     private ActionTypeEmun beforeActionTypeEmun;
     private Cursor beforeEventCursor;
@@ -91,6 +83,7 @@ public class GUI extends Scene implements Serializable {
     private StackPane layerPane;
     private BorderPane brpRoot;
     private StackPane modalDimmer;
+    private HBox hBoxProgressIndicator = new HBox();
 
     private GUI(Group grCanvas, double width, double height) {
         super(grCanvas, width, height);
@@ -127,12 +120,28 @@ public class GUI extends Scene implements Serializable {
 
         VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.setMaxWidth(130);
+        contenedorHerramietas.setPadding( new Insets(3, 3, 3, 3));
 
         contenedorHerramietas.setAlignment(Pos.CENTER);
         Region region = new Region();
         VBox.setVgrow(region, Priority.NEVER);
         region.setPrefHeight(100);
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, region, vbLogos);
+
+
+        hBoxProgressIndicator.setPadding(new Insets(5));
+        hBoxProgressIndicator.setAlignment(Pos.CENTER);
+        hBoxProgressIndicator.getStyleClass().add("boxLogosHorizontalGradient");
+        DropShadow dropShadow = new DropShadow();
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setPrefSize(50, 50);
+        progressIndicator.setMaxSize(50, 50);
+        progressIndicator.setMinSize(50, 50);
+        progressIndicator.setProgress(-1);
+        progressIndicator.setEffect(dropShadow);
+        hBoxProgressIndicator.setVisible(false);
+        hBoxProgressIndicator.getChildren().add(progressIndicator);
+
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, region, vbLogos);
         brpRoot.setLeft(contenedorHerramietas);
         //Diseño central
         createTabs();
@@ -143,25 +152,10 @@ public class GUI extends Scene implements Serializable {
         splitPane.getItems().addAll(tabPane, scpnProperties);
         brpRoot.setCenter(splitPane);
 
-        //Diseño inferior
-
-//        borderPane.setBottom(cajaInferiorHor);
-
-//        Rectangle r =new Rectangle(30, 30);
-//        
-//        borderPane.getChildren().add(r);
         modalDimmer = new StackPane();
         modalDimmer.setId("ModalDimmer");
         modalDimmer.setVisible(false);
         layerPane.getChildren().add(modalDimmer);
-
-
-
-
-
-
-
-
 
 
 
@@ -552,9 +546,8 @@ public class GUI extends Scene implements Serializable {
         splPnPropertiesTbs.setDividerPositions(0.525f);
 
         VBox vbxBottomRight = new VBox(10);
-        VBox vbxExecuteIndicatorPane = createExecuteIndicatorPane();
         createMapNavigationPanel(vbNavegation);
-        vbxBottomRight.getChildren().addAll(vbxExecuteIndicatorPane, vbNavegation);
+        vbxBottomRight.getChildren().addAll(vbNavegation);
 
         hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight);
         scrollPane.setContent(hboxAllBottom);
@@ -837,7 +830,7 @@ public class GUI extends Scene implements Serializable {
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
-        
+
         windowButtons.toogleMaximized();
 
         new AboutAG2project();
@@ -851,34 +844,13 @@ public class GUI extends Scene implements Serializable {
         return entityPropertyTable;
     }
 
-    private VBox createExecuteIndicatorPane() {
-
-        VBox vBoxCajaContenedoraIndicadores = new VBox(10);
-        vBoxCajaContenedoraIndicadores.getStyleClass().add("boxLogosVerticalGradient");
-        vBoxCajaContenedoraIndicadores.setPadding(new Insets(10, 10, 10, 10));
-        vBoxCajaContenedoraIndicadores.setAlignment(Pos.CENTER);
-
-        Label lblIndicadoraEjec = new Label("Ejecución:");
-        lblIndicadoraEjec.setFont(new Font("Arial Bold", 10));
-
-        pgBrExecutionProgress = new ProgressBar(0);
-        pgBrExecutionProgress.getStyleClass().add("progress-bar");
-        pgBrExecutionProgress.setPrefWidth(150);
-        pgBrExecutionProgress.setTooltip(new Tooltip("Muestra el estado de ejecución de la simulación"));
-
-        vBoxCajaContenedoraIndicadores.getChildren().addAll(lblIndicadoraEjec, pgBrExecutionProgress);
-
-        return vBoxCajaContenedoraIndicadores;
-    }
-
     public void enable() {
 
         GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
         gpTools.setDisable(false);
         gpTools.setOpacity(1);
-        //prgBarBarraProgresoEjec.setProgress(0);
-        pgBrExecutionProgress.setVisible(false);
+        hBoxProgressIndicator.setVisible(false);      
         graphDesignGroup.getGroup().setOpacity(1);
     }
 
@@ -889,10 +861,10 @@ public class GUI extends Scene implements Serializable {
         GUI.setActionTypeEmun(ActionTypeEmun.HAND);
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
 
-        pgBrExecutionProgress.setVisible(true);
+        hBoxProgressIndicator.setVisible(true);
         gpTools.setDisable(true);
         gpTools.setOpacity(0.8);
-        pgBrExecutionProgress.setProgress(-1);
+
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tabPane.getTabs().contains(tabResultsHTML)) {
             tabPane.getTabs().addAll(tabResultsHTML, tabResults);
