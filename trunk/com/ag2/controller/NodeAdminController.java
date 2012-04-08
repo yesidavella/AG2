@@ -34,8 +34,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 newPhosphorusNode = ((ClientCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
             } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode) {
                 newPhosphorusNode = ((BrokerCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
-            } else if (nodeCreationModel instanceof ModeloCrearNodoDeRecurso && graphNode instanceof ResourceGraphNode) {
-                newPhosphorusNode = ((ModeloCrearNodoDeRecurso) nodeCreationModel).createPhosphorusNode(graphNode.getName());
+            } else if (nodeCreationModel instanceof ResourceCreationModel && graphNode instanceof ResourceGraphNode) {
+                newPhosphorusNode = ((ResourceCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
             } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) {
                 newPhosphorusNode = ((PCE_SwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
             } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
