@@ -71,6 +71,7 @@ public class GUI extends Scene implements Serializable {
     private VBox vbNavegation = new VBox();
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
+    private Tab tabCharts = new Tab();
     private Tab tabResultsHTML = new Tab();
     private TabPane tabPane = new TabPane();
     private TableView<String> tbwSimulationProperties = new TableView<String>();
@@ -84,6 +85,7 @@ public class GUI extends Scene implements Serializable {
     private BorderPane brpRoot;
     private StackPane modalDimmer;
     private HBox hBoxProgressIndicator = new HBox();
+    private ChartsResults chartsResChartults; 
 
     private GUI(Group grCanvas, double width, double height) {
         super(grCanvas, width, height);
@@ -506,9 +508,11 @@ public class GUI extends Scene implements Serializable {
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados Phosphorus");
         tabResults.setClosable(false);
-
         tabResultsHTML.setText("Resultado Phosphorus HTML");
         tabResultsHTML.setClosable(false);
+        
+        tabCharts.setText("Graficos de resultados");
+        tabCharts.setClosable(false);
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
@@ -519,10 +523,10 @@ public class GUI extends Scene implements Serializable {
 
         grRoot.getChildren().add(graphDesignGroup.getGroup());
         scPnWorld.setContent(grRoot);
-        tabSimulation.setContent(scPnWorld);
-
-        // tabPane.getTabs().addAll(  tabResultsHTML, tabResults);
-        tabPane.getTabs().addAll(tabSimulation);
+        tabSimulation.setContent(scPnWorld);   
+        chartsResChartults= new ChartsResults(tabCharts);
+        
+        tabPane.getTabs().addAll(tabSimulation, tabCharts);
     }
 
     private ScrollPane createDesignBottom() {
@@ -852,6 +856,7 @@ public class GUI extends Scene implements Serializable {
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);      
         graphDesignGroup.getGroup().setOpacity(1);
+       chartsResChartults.stop();
     }
 
     public void disable() {
@@ -869,7 +874,7 @@ public class GUI extends Scene implements Serializable {
         if (!tabPane.getTabs().contains(tabResultsHTML)) {
             tabPane.getTabs().addAll(tabResultsHTML, tabResults);
         }
-
+        chartsResChartults.play();
         tabPane.getSelectionModel().select(tabResults);
 
     }

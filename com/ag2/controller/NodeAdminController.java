@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Set;
+import javafx.application.Platform;
 import simbase.SimBaseSimulator;
 
 public class NodeAdminController extends NodeAdminAbstractController implements Serializable {
@@ -41,11 +42,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
                 newPhosphorusNode = ((HybridSwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getName());
             }
-            
+
             if (newPhosphorusNode != null) {
-                
+
                 addNodeMatchCouple(graphNode, newPhosphorusNode);
-                
+
             }
         }
         return newPhosphorusNode;
@@ -145,7 +146,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
             //============================================================================================================
 
-        } 
+        }
 //        else if (graphNode instanceof SwitchGraphNode) {
 //            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(graphNode);
 //
@@ -342,10 +343,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 String serviceNodeName = value.replace("_ON", "").replace("_OFF", "");
 
                 Set<GraphNode> graphNodes = nodeMatchCoupleObjectContainer.keySet();
-                GraphNode nodoGrafico=null;
-                for (GraphNode nodoGraficoAux: graphNodes) {
+                GraphNode nodoGrafico = null;
+                for (GraphNode nodoGraficoAux : graphNodes) {
                     if (nodoGraficoAux.getName().equals(serviceNodeName)) {
-                        nodoGrafico =nodoGraficoAux;
+                        nodoGrafico = nodoGraficoAux;
                         break;
                     }
                 }
@@ -365,7 +366,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 }
             }
 
-        } 
+        }
 //        else if (selectedGraphNode instanceof SwitchGraphNode) {
 //            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(selectedGraphNode);
 //            if (id.equalsIgnoreCase("HandleDelay")) {
@@ -467,8 +468,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     }
 
-    public GraphNode findKeyNodeByValueNode(Entity entity, HashMap<GraphNode, Entity> hashMap) 
-    {
+    public GraphNode findKeyNodeByValueNode(Entity entity, HashMap<GraphNode, Entity> hashMap) {
         for (GraphNode nodoGrafico : hashMap.keySet()) {
             if (hashMap.get(nodoGrafico) == entity) {
                 return nodoGrafico;
@@ -513,8 +513,16 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
         }
 
-        for (GraphNodesView vistaNodosGraficos : graphNodesViews) {
-            vistaNodosGraficos.enableDisign();
+        for (final GraphNodesView vistaNodosGraficos : graphNodesViews) {
+            Runnable runnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    vistaNodosGraficos.enableDisign();
+                }
+            };
+            Platform.runLater(runnable);
+
         }
     }
 }
