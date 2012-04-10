@@ -30,8 +30,8 @@ public class DataChartResourceController extends DataChartAbstractController
          ResourceNode resourceNode = (ResourceNode)  nodeMatchCoupleObjectContainer.get(graphNode);
          List<CPU> cpuSet = resourceNode.getCpuSet(); 
          
-         int totalCPU = cpuSet.size();
-         int countBusyCPU =0;
+         double totalCPU = cpuSet.size();
+         double countBusyCPU =0;
          
          for(CPU cpu : cpuSet )
          {
@@ -46,7 +46,8 @@ public class DataChartResourceController extends DataChartAbstractController
         } catch (ParseException ex) {
             Logger.getLogger(DataChartResourceController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         value1 =  countBusyCPU;       
+         value1 =  Math.round(100*(countBusyCPU/totalCPU));       
+         
         
        
     }
