@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
@@ -134,6 +135,8 @@ public class GUI extends Scene implements Serializable {
         hBoxProgressIndicator.setAlignment(Pos.CENTER);
         hBoxProgressIndicator.getStyleClass().add("boxLogosHorizontalGradient");
         DropShadow dropShadow = new DropShadow();
+        dropShadow.setSpread(0.5);
+        dropShadow.setColor(Color.WHITESMOKE);
         progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefSize(50, 50);
         progressIndicator.setMaxSize(50, 50);

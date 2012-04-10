@@ -7,6 +7,7 @@ package com.ag2.presentation.control;
 import Grid.Entity;
 import com.ag2.controller.DataChartResourceController;
 import com.ag2.controller.MatchCoupleObjectContainer;
+import com.ag2.presentation.design.ClientGraphNode;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.ResourceGraphNode;
 
@@ -41,7 +42,9 @@ public class ChartsResults {
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<ResourceGraphNode, XYChart.Series<Number, Number>> relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
     private DataChartResourceController dataChartResourceController;
-    private boolean loadResources = true;
+    private boolean loadResources = true;   
+    private int countClients = 0;
+    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
 
     public ChartsResults(Tab tab) {
         this.tab = tab;
@@ -67,29 +70,10 @@ public class ChartsResults {
         xAxis.setLabel("Tiempo de simulacion");
         yAxis.setLabel("Porcentaje de ocupación ");
 
-        final XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
-        final XYChart.Series<Number, Number> series2 = new XYChart.Series<Number, Number>();
-
-        final XYChart.Series<Number, Number> series3 = new XYChart.Series<Number, Number>();
-        final XYChart.Series<Number, Number> series4 = new XYChart.Series<Number, Number>();
-
-        series.setName("C1");
-        series2.setName("C2");
-
-//        series.getData().add(new XYChart.Data<Number, Number>(20d, 50d));
-//        series.getData().add(new XYChart.Data<Number, Number>(40d, 80d));
-//        series.getData().add(new XYChart.Data<Number, Number>(50d, 90d));
-//        series.getData().add(new XYChart.Data<Number, Number>(70d, 30d));
-//        series.getData().add(new XYChart.Data<Number, Number>(90d, 100d));
-//        
-//        series2.getData().add(new XYChart.Data<Number, Number>(10d, 30d));
-//        series2.getData().add(new XYChart.Data<Number, Number>(20d, 50d));
-//        series2.getData().add(new XYChart.Data<Number, Number>(30d, 60d));
-//        series2.getData().add(new XYChart.Data<Number, Number>(40d, 70d));
-//        series2.getData().add(new XYChart.Data<Number, Number>(50d, 5d));
 
 
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {
                 if (loadResources) {
@@ -97,18 +81,42 @@ public class ChartsResults {
                     for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
                         if (graphNode instanceof ResourceGraphNode) {
                             XYChart.Series<Number, Number> serie = new XYChart.Series<Number, Number>();
+                            serie.setName(graphNode.toString());
+                            serie.getData().add(new XYChart.Data<Number, Number>(0, 0));
                             lineChart.getData().addAll(serie);
                             relationResourceSerie.put((ResourceGraphNode) graphNode, serie);
+                            relationResourceDataAverage.put((ResourceGraphNode) graphNode, new UtilSerieAverage());
                         }
+                        if (graphNode instanceof ClientGraphNode) {
+                            countClients++;
+                        }
+
                     }
                 }
 
                 for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
 
                     dataChartResourceController.loadDataChart(resourceGraphNode);
-                    XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
-                    serie.getData().add(new XYChart.Data<Number, Number>(dataChartResourceController.getTime(), dataChartResourceController.getValue1()));
-                    System.out.println(" value " + dataChartResourceController.getValue1());
+                    UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
+
+                    if (dataChartResourceController.getTime() != 0) {
+                        utilSerieAverage.countAverage++;
+                        utilSerieAverage.timeAverage += dataChartResourceController.getTime();
+                        utilSerieAverage.valueAverage += dataChartResourceController.getValue1();
+
+
+                        if (utilSerieAverage.countAverage >= 4 * countClients) {
+                            
+                            XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
+                            serie.getData().add(new XYChart.Data<Number, Number>(utilSerieAverage.timeAverage / utilSerieAverage.countAverage, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
+
+                            utilSerieAverage.timeAverage = 0;
+                            utilSerieAverage.valueAverage = 0;
+                            utilSerieAverage.countAverage = 0;
+                        }
+
+                    }
+
                 }
             }
         });
@@ -121,12 +129,60 @@ public class ChartsResults {
 
     public void play() {
         loadResources = true;
-        time.play();
+        time.play();        
+      
+
+        for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
+
+            UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
+            utilSerieAverage.timeAverage = 0;
+            utilSerieAverage.valueAverage = 0;
+            utilSerieAverage.countAverage = 0;
+        }
+        lineChart.getData().clear();
 
     }
 
     public void stop() {
         time.stop();
-       // lineChart.getData().clear();
+
+        for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) 
+        {
+             UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
+             XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
+             serie.getData().add(new XYChart.Data<Number, Number>(100, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
+
+        }
+    }
+
+    public static class UtilSerieAverage {
+
+        int countAverage = 0;
+        double timeAverage = 0;
+        double valueAverage = 0;
+
+        public int getCountAverage() {
+            return countAverage;
+        }
+
+        public void setCountAverage(int countAverage) {
+            this.countAverage = countAverage;
+        }
+
+        public double getTimeAverage() {
+            return timeAverage;
+        }
+
+        public void setTimeAverage(double timeAverage) {
+            this.timeAverage = timeAverage;
+        }
+
+        public double getValueAverage() {
+            return valueAverage;
+        }
+
+        public void setValueAverage(double valueAverage) {
+            this.valueAverage = valueAverage;
+        }
     }
 }
