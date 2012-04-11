@@ -195,13 +195,13 @@ ProgressBar progress-bar:indeterminate .bar {
 /* ====== LINE CHART =========================================================== */
 .chart-line-symbol {
     -fx-background-color: #f9d900, white;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 5px;
-    -fx-padding: 1px;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 3px;
+    -fx-padding: 3px;
 }
 .chart-series-line {
     -fx-stroke: #f9d900;
-    -fx-stroke-width: 1px;
+    -fx-stroke-width: 2px;
     -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 0 , 3 );
 }
 .default-color0.chart-line-symbol { -fx-background-color: #f9d900, white; }
