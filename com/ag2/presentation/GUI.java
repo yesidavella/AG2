@@ -87,6 +87,7 @@ public class GUI extends Scene implements Serializable {
     private StackPane modalDimmer;
     private HBox hBoxProgressIndicator = new HBox();
     private ChartsResults chartsResChartults; 
+    private ScrollPane scpnProperties;
 
     private GUI(Group grCanvas, double width, double height) {
         super(grCanvas, width, height);
@@ -149,19 +150,21 @@ public class GUI extends Scene implements Serializable {
         contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, region, vbLogos);
         brpRoot.setLeft(contenedorHerramietas);
         //Diseño central
+       
+        scpnProperties = createDesignBottom();        
         createTabs();
-        ScrollPane scpnProperties = createDesignBottom();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         splitPane.setDividerPosition(0, 0.80);
         splitPane.setOrientation(Orientation.VERTICAL);
-        splitPane.getItems().addAll(tabPane, scpnProperties);
-        brpRoot.setCenter(splitPane);
+        
+        brpRoot.setCenter(tabPane);
 
         modalDimmer = new StackPane();
         modalDimmer.setId("ModalDimmer");
         modalDimmer.setVisible(false);
         layerPane.getChildren().add(modalDimmer);
-
+        
+        
 
 
     }
@@ -526,7 +529,8 @@ public class GUI extends Scene implements Serializable {
 
         grRoot.getChildren().add(graphDesignGroup.getGroup());
         scPnWorld.setContent(grRoot);
-        tabSimulation.setContent(scPnWorld);   
+        splitPane.getItems().addAll( scPnWorld, scpnProperties);
+        tabSimulation.setContent( splitPane );   
         chartsResChartults= new ChartsResults(tabCharts);
         
         tabPane.getTabs().addAll(tabSimulation, tabCharts);
