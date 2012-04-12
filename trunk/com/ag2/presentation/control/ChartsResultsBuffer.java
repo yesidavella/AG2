@@ -16,17 +16,13 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -34,7 +30,7 @@ import javafx.util.Duration;
  *
  * @author Frank
  */
-public class ChartsResults {
+public class ChartsResultsBuffer {
 
     private Tab tab;
     private VBox hBox;
@@ -50,7 +46,7 @@ public class ChartsResults {
     private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
     private int countPlays = 1;
 
-    public ChartsResults(Tab tab) {
+    public ChartsResultsBuffer(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
         dataChartResourceController = new DataChartResourceController();
@@ -70,9 +66,9 @@ public class ChartsResults {
         lineChart = new LineChart<Number, Number>(xAxis, yAxis);
         lineChart.setMinWidth(1100);
 
-        lineChart.setTitle("Ocupación de los recursos (CPU) - Ejecución N." + countPlays);
+        lineChart.setTitle("Uso del buffer del Cluster  - Ejecución N." + countPlays);
         xAxis.setLabel("Tiempo de simulacion");
-        yAxis.setLabel("Porcentaje de ocupación ");
+        yAxis.setLabel("Trabajos en el buffer ");
         countPlays++;
 
 
@@ -101,7 +97,7 @@ public class ChartsResults {
 
                 for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
 
-                    dataChartResourceController.loadDataChart(resourceGraphNode);
+                    dataChartResourceController.loadDataChartResourceBuffer(resourceGraphNode);
                     UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
 
                     if (dataChartResourceController.getTime() != 0) {
@@ -114,8 +110,7 @@ public class ChartsResults {
 
                             XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
                             serie.getData().add(new XYChart.Data<Number, Number>(utilSerieAverage.timeAverage / utilSerieAverage.countAverage, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
-
-                            System.out.println(" time " + (utilSerieAverage.timeAverage / utilSerieAverage.countAverage) + " value " + (utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
+                            //System.out.println(" time " + (utilSerieAverage.timeAverage / utilSerieAverage.countAverage) + " value " + (utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
                             utilSerieAverage.timeAverage = 0;
                             utilSerieAverage.valueAverage = 0;
                             utilSerieAverage.countAverage = 0;
@@ -123,9 +118,7 @@ public class ChartsResults {
                         } else {
                             utilSerieAverage.lastData = false;
                         }
-
                     }
-
                 }
             }
         });
@@ -133,27 +126,12 @@ public class ChartsResults {
         time.setCycleCount(Timeline.INDEFINITE);
         lineChart.setEffect(new DropShadow());
         hBox.getChildren().add(0, lineChart);
-
-
-
     }
 
     public void play() {
         createChart();
         loadResources = true;
         time.play();
-
-
-//        for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
-//
-//            UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
-//            utilSerieAverage.timeAverage = 0;
-//            utilSerieAverage.valueAverage = 0;
-//            utilSerieAverage.countAverage = 0;
-//        }
-
-
-
 
     }
 
@@ -169,11 +147,7 @@ public class ChartsResults {
             {
                 XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
                 serie.getData().add(new XYChart.Data<Number, Number>(100, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
-            }
-            else
-            {
-                 System.out.println("  else fin time " + (utilSerieAverage.timeAverage / utilSerieAverage.countAverage) + " value " + (utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
-            }
+            }        
 
         }
     }

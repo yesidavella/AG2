@@ -72,7 +72,8 @@ public class GUI extends Scene implements Serializable {
     private VBox vbNavegation = new VBox();
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
-    private Tab tabCharts = new Tab();
+    private Tab tabChartsResourceCPU = new Tab();
+    private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
     private TabPane tabPane = new TabPane();
     private TableView<String> tbwSimulationProperties = new TableView<String>();
@@ -86,7 +87,8 @@ public class GUI extends Scene implements Serializable {
     private BorderPane brpRoot;
     private StackPane modalDimmer;
     private HBox hBoxProgressIndicator = new HBox();
-    private ChartsResults chartsResChartults; 
+    private ChartsResultsCPU chartsResultsCPU; 
+    private ChartsResultsBuffer chartsResultsBuffer;
     private ScrollPane scpnProperties;
 
     private GUI(Group grCanvas, double width, double height) {
@@ -106,7 +108,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
 
-        grCanvas.getChildren().add(gpMapNavegation);
+       // grCanvas.getChildren().add(gpMapNavegation); FIXME: Poner nevagacion flotante
         gpMapNavegation.setLayoutX(500);
 
         layerPane.getChildren().add(brpRoot);
@@ -127,9 +129,9 @@ public class GUI extends Scene implements Serializable {
         contenedorHerramietas.setPadding( new Insets(3, 3, 3, 3));
 
         contenedorHerramietas.setAlignment(Pos.CENTER);
-        Region region = new Region();
-        VBox.setVgrow(region, Priority.NEVER);
-        region.setPrefHeight(100);
+//        Region region = new Region();
+//        VBox.setVgrow(region, Priority.NEVER);
+//        region.setPrefHeight(100);
 
 
         hBoxProgressIndicator.setPadding(new Insets(5));
@@ -147,7 +149,7 @@ public class GUI extends Scene implements Serializable {
         hBoxProgressIndicator.setVisible(false);
         hBoxProgressIndicator.getChildren().add(progressIndicator);
 
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, region, vbLogos);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator,  vbLogos);
         brpRoot.setLeft(contenedorHerramietas);
         //Diseño central
        
@@ -172,7 +174,7 @@ public class GUI extends Scene implements Serializable {
     public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new Group(), 800, 600);//new BorderPane()
+            iguAG2 = new GUI(new Group(), 1000, 700);//new BorderPane()
         }
         return iguAG2;
     }
@@ -517,8 +519,11 @@ public class GUI extends Scene implements Serializable {
         tabResultsHTML.setText("Resultado Phosphorus HTML");
         tabResultsHTML.setClosable(false);
         
-        tabCharts.setText("Graficos de resultados");
-        tabCharts.setClosable(false);
+        tabChartsResourceCPU.setText("Graficos de recurso (CPU)");
+        tabChartsResourceCPU.setClosable(false);
+        
+        tabChartsResourceBuffer.setText("Graficos de recurso (buffer)");
+        tabChartsResourceBuffer.setClosable(false);
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
@@ -531,9 +536,10 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setContent(grRoot);
         splitPane.getItems().addAll( scPnWorld, scpnProperties);
         tabSimulation.setContent( splitPane );   
-        chartsResChartults= new ChartsResults(tabCharts);
+        chartsResultsCPU= new ChartsResultsCPU(tabChartsResourceCPU);
+        chartsResultsBuffer= new ChartsResultsBuffer(tabChartsResourceBuffer);
         
-        tabPane.getTabs().addAll(tabSimulation, tabCharts);
+        tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
     private ScrollPane createDesignBottom() {
@@ -863,7 +869,8 @@ public class GUI extends Scene implements Serializable {
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);      
         graphDesignGroup.getGroup().setOpacity(1);
-       chartsResChartults.stop();
+       chartsResultsCPU.stop();
+       chartsResultsBuffer.stop();
     }
 
     public void disable() {
@@ -881,7 +888,8 @@ public class GUI extends Scene implements Serializable {
         if (!tabPane.getTabs().contains(tabResultsHTML)) {
             tabPane.getTabs().addAll(tabResultsHTML, tabResults);
         }
-        chartsResChartults.play();
+        chartsResultsCPU.play();
+        chartsResultsBuffer.play();
         tabPane.getSelectionModel().select(tabResults);
 
     }
