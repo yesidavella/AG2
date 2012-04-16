@@ -14,6 +14,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
@@ -34,6 +36,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
 public class GUI extends Scene implements Serializable {
@@ -90,6 +93,8 @@ public class GUI extends Scene implements Serializable {
     private ChartsResultsCPU chartsResultsCPU;
     private ChartsResultsBuffer chartsResultsBuffer;
     private ScrollPane scpnProperties;
+    private Timeline tlProperties = new Timeline();
+    private boolean showProperties = false;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -142,7 +147,24 @@ public class GUI extends Scene implements Serializable {
         scpnProperties = createDesignBottom();
         createTabs();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0, 0.80);
+        splitPane.setDividerPosition(0, 0.4);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                double increment = 0.0252;
+
+                if (showProperties) {
+                    increment = -1 * increment;
+                }
+                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
+            }
+        });
+
+        tlProperties.setCycleCount(29);
+        tlProperties.getKeyFrames().add(keyFrame);
+
         splitPane.setOrientation(Orientation.VERTICAL);
 
         brpRoot.setCenter(tabPane);
@@ -548,8 +570,19 @@ public class GUI extends Scene implements Serializable {
         VBox vbxBottomRight = new VBox(10);
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbNavegation);
+        Button buttonDownUp = new Button("X");
 
-        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight);
+        buttonDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                showProperties = !showProperties;
+                tlProperties.play();
+            }
+        });
+        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, buttonDownUp);
+
+
         scrollPane.setContent(hboxAllBottom);
         return scrollPane;
     }
@@ -558,8 +591,8 @@ public class GUI extends Scene implements Serializable {
 
         ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
-        ivAG2.setFitHeight(40);
-        ivAG2.setFitWidth(40 * proportionXYAG2);
+        ivAG2.setFitHeight(50);
+        ivAG2.setFitWidth(50 * proportionXYAG2);
 
         ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
@@ -834,6 +867,9 @@ public class GUI extends Scene implements Serializable {
         windowButtons.toogleMaximized();
 
         new AboutAG2project();
+
+        tlProperties.play();
+
     }
 
     public GraphDesignGroup getGraphDesignGroup() {
