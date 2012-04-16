@@ -141,7 +141,7 @@ public class GUI extends Scene implements Serializable {
         hBoxProgressIndicator.setVisible(false);
         hBoxProgressIndicator.getChildren().add(progressIndicator);
 
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, vbLogos);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools,new SimulationOptionSwitcher() , hBoxProgressIndicator, vbLogos);
         brpRoot.setLeft(contenedorHerramietas);
         //Diseño central
         scpnProperties = createDesignBottom();
