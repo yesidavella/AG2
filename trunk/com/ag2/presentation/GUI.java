@@ -147,22 +147,36 @@ public class GUI extends Scene implements Serializable {
         scpnProperties = createDesignBottom();
         createTabs();
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0, 0.4);
+        splitPane.setDividerPosition(0,0.6);
 
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent arg0) {
                 double increment = 0.0252;
-
-                if (showProperties) {
-                    increment = -1 * increment;
+                if (showProperties)
+                {
+                    increment = -0.0252;
+//                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
+                    if(splitPane.getDividerPositions()[0] <=.215 )
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    increment = 0.0252;
+//                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
+                    if(splitPane.getDividerPositions()[0] >= 0.95 )
+                    {
+                        return;
+                    }
                 }
                 splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
             }
         });
 
-        tlProperties.setCycleCount(29);
+        tlProperties.setCycleCount(150);
         tlProperties.getKeyFrames().add(keyFrame);
 
         splitPane.setOrientation(Orientation.VERTICAL);
@@ -570,17 +584,29 @@ public class GUI extends Scene implements Serializable {
         VBox vbxBottomRight = new VBox(10);
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbNavegation);
-        Button buttonDownUp = new Button("X");
+        final Button btnDownUp = new Button("Icon UP");
 
-        buttonDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0) {
+            public void handle(MouseEvent arg0)
+            {
+                btnDownUp.setText("Icon down");
+
                 showProperties = !showProperties;
+
                 tlProperties.play();
+                if(showProperties)
+                {
+                     btnDownUp.setText("Icon down");
+                }
+                else
+                {
+                       btnDownUp.setText("Icon up");
+                }
             }
         });
-        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, buttonDownUp);
+        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, btnDownUp);
 
 
         scrollPane.setContent(hboxAllBottom);
@@ -868,7 +894,7 @@ public class GUI extends Scene implements Serializable {
 
         new AboutAG2project();
 
-        tlProperties.play();
+//        tlProperties.play();
 
     }
 
