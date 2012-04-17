@@ -6,7 +6,6 @@ import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.ResourcesPath;
-
 import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
@@ -143,7 +142,9 @@ public class GUI extends Scene implements Serializable {
         VBox contenedorHerramietas = new VBox();
         gpTools = createToolsBar();
 
-        contenedorHerramietas.setMaxWidth(130);
+        contenedorHerramietas.setMaxWidth(50);
+        contenedorHerramietas.setMinWidth(50);
+        contenedorHerramietas.setPrefWidth(50);
 //        contenedorHerramietas.setPadding(new Insets(3));
         contenedorHerramietas.setAlignment(Pos.CENTER);
         scpMenuTools.setFitToWidth(true);
