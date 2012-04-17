@@ -5,6 +5,7 @@
 package com.ag2.controller;
 
 import Grid.Nodes.AbstractServiceNode;
+import Grid.Nodes.ResourceScheduler.StandardSelector;
 import com.ag2.model.AG2_ResourceSelectorModel;
 import com.ag2.presentation.design.BrokerGrahpNode;
 import com.ag2.presentation.design.GraphNode;
@@ -18,7 +19,7 @@ public class SimulationOptionSwictherController {
 
     public enum OptionSimulation {
 
-        AG2, PHOSPHOSRUS
+        AG2, PHOSPHORUS, PHOSPHORUS_OPTIMIZE
     };
     private static SimulationOptionSwictherController simulationOptionSwictherController;
 
@@ -42,14 +43,24 @@ public class SimulationOptionSwictherController {
                 BrokerGrahpNode brokerGrahpNode = (BrokerGrahpNode) graphNode;
                 AbstractServiceNode abstractServiceNode = (AbstractServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(brokerGrahpNode);
 
-                if (this.optionSimulation == OptionSimulation.AG2)
+                switch( optionSimulation)
                 {
-                    AG2_ResourceSelectorModel aG2_ResourceSelectorModel = new AG2_ResourceSelectorModel(abstractServiceNode.getResources());
-                    abstractServiceNode.setResourceSelector(aG2_ResourceSelectorModel);
-
-                } else if (this.optionSimulation == OptionSimulation.AG2)
-                {
-                    abstractServiceNode.loadDefaultResourceSelector();
+                    case  AG2:
+                    {
+                        AG2_ResourceSelectorModel aG2_ResourceSelectorModel = new AG2_ResourceSelectorModel(abstractServiceNode.getResources());
+                        abstractServiceNode.setResourceSelector(aG2_ResourceSelectorModel);
+                        break;
+                    }
+                    case PHOSPHORUS:
+                    {
+                        abstractServiceNode.loadDefaultResourceSelector();
+                        break;
+                    }
+                    case  PHOSPHORUS_OPTIMIZE:
+                    {
+                        abstractServiceNode.loadStandarSelector();
+                        break;
+                    }
                 }
             }
         }
