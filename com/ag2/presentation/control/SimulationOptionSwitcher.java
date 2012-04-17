@@ -54,7 +54,7 @@ public class SimulationOptionSwitcher extends VBox {
 
             @Override
             public void handle(MouseEvent arg0) {
-                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHOSRUS);
+                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
             }
         });
 
@@ -64,6 +64,15 @@ public class SimulationOptionSwitcher extends VBox {
             public void handle(MouseEvent arg0) {
 
                 SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
+            }
+        });
+
+          rbPhosphorus2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
             }
         });
     }
