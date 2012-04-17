@@ -119,7 +119,7 @@ public class GUI extends Scene implements Serializable {
     public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new StackPane(), 1000, 770);//new BorderPane()
+            iguAG2 = new GUI(new StackPane(), 1100, 720);//new BorderPane()
         }
         return iguAG2;
     }
@@ -641,23 +641,23 @@ public class GUI extends Scene implements Serializable {
 
         ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
-        ivAG2.setFitHeight(50);
-        ivAG2.setFitWidth(50 * proportionXYAG2);
+        ivAG2.setFitHeight(35);
+        ivAG2.setFitWidth(35 * proportionXYAG2);
 
         ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
-        ivInternetIntel.setFitHeight(35);
-        ivInternetIntel.setFitWidth(35 * proportionXYInternetIn);
+        ivInternetIntel.setFitHeight(25);
+        ivInternetIntel.setFitWidth(25 * proportionXYInternetIn);
 
         ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg"));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth() / ivPhosphorus.getBoundsInParent().getHeight();
-        ivPhosphorus.setFitHeight(45);
-        ivPhosphorus.setFitWidth(45 * proportionXYphosphorus);
+        ivPhosphorus.setFitHeight(30);
+        ivPhosphorus.setFitWidth(30 * proportionXYphosphorus);
 
         ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg"));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth() / ivDistritalUniv.getBoundsInParent().getHeight();
-        ivDistritalUniv.setFitHeight(55);
-        ivDistritalUniv.setFitWidth(55 * proportionXYdistritalUniv);
+        ivDistritalUniv.setFitHeight(35);
+        ivDistritalUniv.setFitWidth(35 * proportionXYdistritalUniv);
 
         Hyperlink linkAG2 = new Hyperlink();
         Hyperlink linkInterIntel = new Hyperlink();
@@ -679,7 +679,7 @@ public class GUI extends Scene implements Serializable {
         setOnLunchBrowser(linkPhosphorus, "http://www.ist-phosphorus.eu/");
         setOnLunchBrowser(linkDistritalUniv, "www.udistrital.edu.co");
 
-        vbLogos = new VBox(10);
+        vbLogos = new VBox(5);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
 
