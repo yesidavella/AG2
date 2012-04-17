@@ -94,7 +94,9 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane scpnProperties;
     private Timeline tlProperties = new Timeline();
     private boolean showProperties = false;
-    ScrollPane scpMenuTools;
+    private ScrollPane scpMenuTools;
+    private SimulationOptionSwitcher simulationOptionSwitcher = new SimulationOptionSwitcher();
+
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -132,6 +134,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
         executePane.setGroup(graphDesignGroup.getGroup());
+        executePane.setSimulationOptionSwitcher(simulationOptionSwitcher);
 
         //DiseÃ±o superior
         creationMenuBar(brpRoot);
@@ -152,7 +155,7 @@ public class GUI extends Scene implements Serializable {
 
         settingupProgressIndicator();
 
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools,new SimulationOptionSwitcher() , hBoxProgressIndicator, vbLogos);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher , hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
         brpRoot.setLeft(scpMenuTools);
 
