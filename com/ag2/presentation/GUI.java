@@ -142,9 +142,9 @@ public class GUI extends Scene implements Serializable {
         VBox contenedorHerramietas = new VBox();
         gpTools = createToolsBar();
 
-        contenedorHerramietas.setMaxWidth(50);
-        contenedorHerramietas.setMinWidth(50);
-        contenedorHerramietas.setPrefWidth(50);
+//        contenedorHerramietas.setMaxWidth(50);
+//        contenedorHerramietas.setMinWidth(50);
+//        contenedorHerramietas.setPrefWidth(50);
 //        contenedorHerramietas.setPadding(new Insets(3));
         contenedorHerramietas.setAlignment(Pos.CENTER);
         scpMenuTools.setFitToWidth(true);

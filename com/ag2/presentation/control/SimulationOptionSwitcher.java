@@ -9,8 +9,9 @@ import com.ag2.controller.SimulationOptionSwictherController.OptionSimulation;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,50 +20,51 @@ import javafx.scene.layout.VBox;
  *
  * @author INFORCOL
  */
-public class SimulationOptionSwitcher extends HBox
-{
-    private ToggleGroup toggleGroup;
-    private ToggleButton tbAg2;
-    private ToggleButton tbPhosphorus;
+public class SimulationOptionSwitcher extends VBox {
 
-    public SimulationOptionSwitcher()
-    {
+    private ToggleGroup toggleGroup;
+    private RadioButton rbAg2;
+    private RadioButton rbPhosphorus1;
+    private RadioButton rbPhosphorus2;
+
+    public SimulationOptionSwitcher() {
         setPadding(new Insets(5, 5, 5, 5));
         setSpacing(5);
         setAlignment(Pos.CENTER);
         getStyleClass().add("barraDeHerramientas");
         toggleGroup = new ToggleGroup();
-        tbAg2 = new ToggleButton("AG-2");
-        tbPhosphorus = new ToggleButton("P");
+        rbAg2 = new RadioButton("AG2");
+        rbPhosphorus1 = new RadioButton("Ph-1");
+        rbPhosphorus2 = new RadioButton("Ph-2");
 
-        tbAg2.setToggleGroup(toggleGroup);
-        tbPhosphorus.setToggleGroup(toggleGroup);
+        rbAg2.setToggleGroup(toggleGroup);
+        rbPhosphorus1.setToggleGroup(toggleGroup);
+        rbPhosphorus2.setToggleGroup(toggleGroup);
 
-        tbPhosphorus.setSelected(true);
-       getChildren().addAll(tbPhosphorus, tbAg2);
+        rbAg2.setTooltip(new Tooltip("Ejecuion con algoritmos AG2"));
+        rbPhosphorus1.setTooltip(new Tooltip("Ejecuion con algoritmos Phosphorus"));
+        rbPhosphorus2.setTooltip(new Tooltip("Ejecuion con algoritmos optimos Phosphorus"));
 
 
-       tbPhosphorus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        rbPhosphorus1.setSelected(true);
+        getChildren().addAll(rbPhosphorus1, rbPhosphorus2, rbAg2);
+
+
+        rbPhosphorus1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0)
-            {
-                tbPhosphorus.setDisable(true);
-                tbAg2.setDisable(false);
-                SimulationOptionSwictherController.getInstance().setOptionSimulation( OptionSimulation.PHOSPHOSRUS );
+            public void handle(MouseEvent arg0) {
+                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHOSRUS);
             }
         });
 
-        tbAg2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        rbAg2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0)
-            {
-                tbPhosphorus.setDisable(false);
-                tbAg2.setDisable(true);
-                SimulationOptionSwictherController.getInstance().setOptionSimulation( OptionSimulation.AG2 );
+            public void handle(MouseEvent arg0) {
+
+                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
             }
         });
     }
-
 }
