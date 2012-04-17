@@ -100,6 +100,7 @@ public class GUI extends Scene implements Serializable {
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
+
         brpRoot = new BorderPane();
         addScene(this);
         brpRoot.getStyleClass().add("ventanaPrincipal");
@@ -150,7 +151,7 @@ public class GUI extends Scene implements Serializable {
 
         settingupProgressIndicator();
 
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, vbLogos);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools,new SimulationOptionSwitcher() , hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
         brpRoot.setLeft(scpMenuTools);
 
@@ -167,20 +168,34 @@ public class GUI extends Scene implements Serializable {
     }
 
     private void setSplitPaneAnimation() {
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
+       KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent arg0) {
                 double increment = 0.0252;
-
-                if (showProperties) {
-                    increment = -1 * increment;
+                if (showProperties)
+                {
+                    increment = -0.0252;
+//                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
+                    if(splitPane.getDividerPositions()[0] <=.215 )
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    increment = 0.0252;
+//                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
+                    if(splitPane.getDividerPositions()[0] >= 0.95 )
+                    {
+                        return;
+                    }
                 }
                 splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
             }
         });
 
-        tlProperties.setCycleCount(29);
+        tlProperties.setCycleCount(150);
         tlProperties.getKeyFrames().add(keyFrame);
     }
 
@@ -589,17 +604,33 @@ public class GUI extends Scene implements Serializable {
         VBox vbxBottomRight = new VBox(10);
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbNavegation);
-        Button buttonDownUp = new Button("X");
 
-        buttonDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+    final Button btnDownUp = new Button("Icon UP");
+
+        btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0) {
+            public void handle(MouseEvent arg0)
+            {
+                btnDownUp.setText("Icon down");
+
                 showProperties = !showProperties;
+
                 tlProperties.play();
+                if(showProperties)
+                {
+                     btnDownUp.setText("Icon down");
+                }
+                else
+                {
+                       btnDownUp.setText("Icon up");
+                }
             }
         });
-        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, buttonDownUp);
+
+
+        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, btnDownUp);
 
 
         scrollPane.setContent(hboxAllBottom);
