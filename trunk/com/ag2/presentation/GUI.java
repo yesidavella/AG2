@@ -746,7 +746,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.setHgap(4);
         gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
 
-        Label lbTitle = new Label("LISTAS DE NAVEGACIÃ“N");
+        Label lbTitle = new Label("LISTAS DE NAVEGACION");
         lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
         final ChoiceBox cbClients = new ChoiceBox(graphDesignGroup.getClientsObservableList());

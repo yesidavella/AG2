@@ -19,7 +19,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
         // this.resources = resources;
 
-        double maxCPUCount = 0;;
+        double maxCPUCount = 0;
 
         double maxCPUCountSwap = 0;
 
