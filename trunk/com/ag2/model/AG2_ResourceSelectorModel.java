@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.ag2.model;
 
 import Grid.Interfaces.CPU;
@@ -10,10 +7,7 @@ import Grid.Interfaces.ResourceSelector;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author INFORCOL
- */
+
 public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable {
 
      private List<ResourceNode> resources;
