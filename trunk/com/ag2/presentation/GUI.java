@@ -382,7 +382,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "Â¿Desea guardar los cambios efectuados en la simulaciÃ³n?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "¿Desea guardar los cambios efectuados en la simulación", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     main.loadFileBaseSimulation();
@@ -406,7 +406,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "Â¿Desea guardar los cambios efectuados en la simulaciÃ³n?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "¿Desea guardar los cambios efectuados en la simulación", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     System.exit(0);
@@ -553,7 +553,7 @@ public class GUI extends Scene implements Serializable {
     private void createTabs() {
 
         tabSimulation.setClosable(false);
-        tabSimulation.setText("SimulaciÃ³n");
+        tabSimulation.setText("Simulación");
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados Phosphorus");
         tabResults.setClosable(false);
@@ -722,7 +722,7 @@ public class GUI extends Scene implements Serializable {
         tbcolPropValue.setPrefWidth(195);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÃ“N");
+        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACION");
         tbcolSimTableTitle.getColumns().addAll(tbcolPropName, tbcolPropValue);
         tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
 
