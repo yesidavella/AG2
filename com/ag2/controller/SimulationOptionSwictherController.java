@@ -4,12 +4,12 @@
  */
 package com.ag2.controller;
 
+import Grid.Entity;
 import Grid.Nodes.AbstractServiceNode;
-import Grid.Nodes.ResourceScheduler.StandardSelector;
 import com.ag2.model.AG2_ResourceSelectorModel;
 import com.ag2.presentation.design.BrokerGrahpNode;
 import com.ag2.presentation.design.GraphNode;
-import com.ag2.presentation.design.ResourceGraphNode;
+import java.util.HashMap;
 
 /**
  *
@@ -17,6 +17,7 @@ import com.ag2.presentation.design.ResourceGraphNode;
  */
 public class SimulationOptionSwictherController {
 
+     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     public enum OptionSimulation {
 
         AG2, PHOSPHORUS, PHOSPHORUS_OPTIMIZE
@@ -38,10 +39,10 @@ public class SimulationOptionSwictherController {
     public void setOptionSimulation(OptionSimulation optionSimulation) {
         this.optionSimulation = optionSimulation;
 
-        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
             if (graphNode instanceof BrokerGrahpNode) {
                 BrokerGrahpNode brokerGrahpNode = (BrokerGrahpNode) graphNode;
-                AbstractServiceNode abstractServiceNode = (AbstractServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(brokerGrahpNode);
+                AbstractServiceNode abstractServiceNode = (AbstractServiceNode) nodeMatchCoupleObjectContainer.get(brokerGrahpNode);
 
                 switch( optionSimulation)
                 {
@@ -65,6 +66,7 @@ public class SimulationOptionSwictherController {
             }
         }
     }
+
 
     private SimulationOptionSwictherController() {
     }

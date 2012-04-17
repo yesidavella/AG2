@@ -54,7 +54,7 @@ public class SimulationOptionSwitcher extends VBox {
 
             @Override
             public void handle(MouseEvent arg0) {
-                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
+//                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
             }
         });
 
@@ -63,7 +63,7 @@ public class SimulationOptionSwitcher extends VBox {
             @Override
             public void handle(MouseEvent arg0) {
 
-                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
+//                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
             }
         });
 
@@ -72,8 +72,27 @@ public class SimulationOptionSwitcher extends VBox {
             @Override
             public void handle(MouseEvent arg0) {
 
-                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
+//                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
             }
         });
+    }
+
+    public void loadSimulationOptionBeforeRun()
+    {
+        if(rbAg2.isSelected())
+        {
+             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
+                System.out.println("################    VIA AG2   ################");
+        }
+        else if(rbPhosphorus1.isSelected())
+        {
+            SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
+             System.out.println("################    VIA PHOSPHORUS   ################");
+        }
+         else if(rbPhosphorus2.isSelected())
+        {
+            SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
+             System.out.println("################   VIA PHOSPHORUS_OPTIMIZE  ################");
+        }
     }
 }

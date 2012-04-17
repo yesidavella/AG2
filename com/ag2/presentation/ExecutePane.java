@@ -3,6 +3,7 @@ package com.ag2.presentation;
 import com.ag2.controller.ExecuteAbstractController;
 import com.ag2.presentation.control.PhosphosrusHTMLResults;
 import com.ag2.presentation.control.PhosphosrusResults;
+import com.ag2.presentation.control.SimulationOptionSwitcher;
 import com.ag2.presentation.control.ToggleButtonAg2;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,6 +21,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
     private PhosphosrusHTMLResults phosphosrusHTMLResults;
     private PhosphosrusResults phosphosrusResults;
     private ExecuteAbstractController executeController;
+    private  SimulationOptionSwitcher simulationOptionSwitcher;
+
 
     public ExecutePane() {
 
@@ -46,8 +49,9 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 phosphosrusResults.lookToNextExecution();
                             }
 
-                            executeController.initNetwork();
 
+                            executeController.initNetwork();
+                             simulationOptionSwitcher.loadSimulationOptionBeforeRun();
                             if (executeController.isWellFormedNetwork()) {
                                 if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
                                     GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
@@ -128,4 +132,9 @@ public class ExecutePane extends TilePane implements ExecuteView {
         btnRun.setGraphDesignGroup(group);
         btnStop.setGraphDesignGroup(group);
     }
+
+    public void setSimulationOptionSwitcher(SimulationOptionSwitcher simulationOptionSwitcher) {
+        this.simulationOptionSwitcher = simulationOptionSwitcher;
+    }
+
 }
