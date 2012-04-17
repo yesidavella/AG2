@@ -23,7 +23,6 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
     public ExecutePane() {
 
-
         btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
 
             @Override
@@ -91,9 +90,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
         btnStop.setDisable(true);
 
         getStyleClass().add("barraDeHerramientas");
-        setPadding(new Insets(10, 10, 10, 10));
+        setPadding(new Insets(10,6,10,6));
         setHgap(4);
         setPrefColumns(2);
+        setPrefRows(1);
 
         btnRun.setTooltip(new Tooltip("Ejecutar simulación"));
         btnRun.setToggleGroup(tgRun);

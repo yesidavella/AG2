@@ -95,6 +95,7 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane scpnProperties;
     private Timeline tlProperties = new Timeline();
     private boolean showProperties = false;
+    ScrollPane scpMenuTools;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -114,8 +115,16 @@ public class GUI extends Scene implements Serializable {
         stpLayer.getChildren().add(modalDimmer);
     }
 
+    public static GUI getInstance() {
+
+        if (iguAG2 == null) {
+            iguAG2 = new GUI(new StackPane(), 1000, 770);//new BorderPane()
+        }
+        return iguAG2;
+    }
+
     private void createSceneBody() {
-        
+
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
         splitPane = new SplitPane();
@@ -128,14 +137,16 @@ public class GUI extends Scene implements Serializable {
         creationMenuBar(brpRoot);
 
         //DiseÃ±o izquierdo(contenedor de Ejecucion y herramientas)
-        ScrollPane scpMenuTools = new ScrollPane();
+        scpMenuTools = new ScrollPane();
         scpMenuTools.getStyleClass().add("ventanaPrincipal");
         VBox contenedorHerramietas = new VBox();
         gpTools = createToolsBar();
 
         contenedorHerramietas.setMaxWidth(130);
-        contenedorHerramietas.setPadding(new Insets(3, 3, 3, 3));
+//        contenedorHerramietas.setPadding(new Insets(3));
         contenedorHerramietas.setAlignment(Pos.CENTER);
+        scpMenuTools.setFitToWidth(true);
+        scpMenuTools.setFitToHeight(true);
 
         settingupProgressIndicator();
 
@@ -190,12 +201,8 @@ public class GUI extends Scene implements Serializable {
         hBoxProgressIndicator.getChildren().add(progressIndicator);
     }
 
-    public static GUI getInstance() {
-
-        if (iguAG2 == null) {
-            iguAG2 = new GUI(new StackPane(), 1000, 700);//new BorderPane()
-        }
-        return iguAG2;
+    public ScrollPane getScpMenuTools() {
+        return scpMenuTools;
     }
 
     private void createToolWindow() {
@@ -220,7 +227,7 @@ public class GUI extends Scene implements Serializable {
         tlbWindow.setPrefHeight(40);
         tlbWindow.setMinHeight(40);
         tlbWindow.setMaxHeight(40);
-//        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage, stpLayer);
 
         tlbWindow.getItems().add(windowButtons);
@@ -643,7 +650,7 @@ public class GUI extends Scene implements Serializable {
 
         vbLogos = new VBox(10);
         vbLogos.setAlignment(Pos.CENTER);
-        vbLogos.setPadding(new Insets(3, 5, 3, 3));
+        vbLogos.setPadding(new Insets(3, 3, 3, 3));
 
         vbLogos.getChildren().addAll(linkAG2, linkInterIntel, linkPhosphorus, linkDistritalUniv);
 
@@ -876,7 +883,8 @@ public class GUI extends Scene implements Serializable {
         scPnWorld.setHvalue(0.27151447890809266);
         scPnWorld.setVvalue(0.4661207267437006);
 
-        windowButtons.toogleMaximized();
+
+//        windowButtons.toogleMaximized();
 
         new AboutAG2project();
 
