@@ -10,9 +10,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
+import netscape.javascript.JSObject;
 
 public class Main extends Application implements Serializable {
 
@@ -24,12 +27,21 @@ public class Main extends Application implements Serializable {
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
-
+    private JSObject browser;
+    public static boolean isApplet = false;
 
     @Override
     public void start(final Stage stage) {
 
-//        stage.setTitle("Modelo AG2 - Simulador Grafico"); por q GUI esta undecorated
+        stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
+        
+        try {
+            browser = getHostServices().getWebContext();
+            isApplet = browser != null;
+        } catch (Exception e) {
+            isApplet = false;
+        }
+
         GUI.setStage(stage);
         stage.setScene(GUI.getInstance());
         GUI.getInstance().setStage(stage);

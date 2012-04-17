@@ -98,34 +98,82 @@ public class GUI extends Scene implements Serializable {
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
-        brpRoot = new BorderPane();
-        stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
 
+        brpRoot = new BorderPane();
+        addScene(this);
+        brpRoot.getStyleClass().add("ventanaPrincipal");
+
+        getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
+
+        createSceneBody();
+
+        modalDimmer = new StackPane();
+        modalDimmer.setId("ModalDimmer");
+        modalDimmer.setVisible(false);
+        stpLayer.getChildren().add(brpRoot);
+        stpLayer.getChildren().add(modalDimmer);
+    }
+
+    private void createSceneBody() {
+        
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
         splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
         gpMapNavegation = new GridPane();
         executePane = new ExecutePane();
-
         executePane.setGroup(graphDesignGroup.getGroup());
 
-        addScene(this);
-        getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
-        brpRoot.getStyleClass().add("ventanaPrincipal");
-
-        //Diseño superior
+        //DiseÃ±o superior
         creationMenuBar(brpRoot);
 
-        //Diseño izquierdo(contenedor de Ejecucion y herramientas)
+        //DiseÃ±o izquierdo(contenedor de Ejecucion y herramientas)
+        ScrollPane scpMenuTools = new ScrollPane();
+        scpMenuTools.getStyleClass().add("ventanaPrincipal");
+        VBox contenedorHerramietas = new VBox();
         gpTools = createToolsBar();
 
-        VBox contenedorHerramietas = new VBox();
         contenedorHerramietas.setMaxWidth(130);
         contenedorHerramietas.setPadding(new Insets(3, 3, 3, 3));
-
         contenedorHerramietas.setAlignment(Pos.CENTER);
 
+        settingupProgressIndicator();
+
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, hBoxProgressIndicator, vbLogos);
+        scpMenuTools.setContent(contenedorHerramietas);
+        brpRoot.setLeft(scpMenuTools);
+
+        //Diseño central
+        scpnProperties = createBottomDesign();
+
+        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        splitPane.setDividerPosition(0, 0.3);
+        splitPane.setOrientation(Orientation.VERTICAL);
+        setSplitPaneAnimation();
+
+        createTabs();
+        brpRoot.setCenter(tabPane);
+    }
+
+    private void setSplitPaneAnimation() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                double increment = 0.0252;
+
+                if (showProperties) {
+                    increment = -1 * increment;
+                }
+                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
+            }
+        });
+
+        tlProperties.setCycleCount(29);
+        tlProperties.getKeyFrames().add(keyFrame);
+    }
+
+    private void settingupProgressIndicator() {
         hBoxProgressIndicator.setPadding(new Insets(5));
         hBoxProgressIndicator.setAlignment(Pos.CENTER);
         hBoxProgressIndicator.getStyleClass().add("boxLogosHorizontalGradient");
@@ -140,54 +188,6 @@ public class GUI extends Scene implements Serializable {
         progressIndicator.setEffect(dropShadow);
         hBoxProgressIndicator.setVisible(false);
         hBoxProgressIndicator.getChildren().add(progressIndicator);
-
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools,new SimulationOptionSwitcher() , hBoxProgressIndicator, vbLogos);
-        brpRoot.setLeft(contenedorHerramietas);
-        //Diseño central
-        scpnProperties = createDesignBottom();
-        createTabs();
-        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0,0.6);
-
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                double increment = 0.0252;
-                if (showProperties)
-                {
-                    increment = -0.0252;
-//                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
-                    if(splitPane.getDividerPositions()[0] <=.215 )
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    increment = 0.0252;
-//                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
-                    if(splitPane.getDividerPositions()[0] >= 0.95 )
-                    {
-                        return;
-                    }
-                }
-                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
-            }
-        });
-
-        tlProperties.setCycleCount(150);
-        tlProperties.getKeyFrames().add(keyFrame);
-
-        splitPane.setOrientation(Orientation.VERTICAL);
-
-        brpRoot.setCenter(tabPane);
-
-        modalDimmer = new StackPane();
-        modalDimmer.setId("ModalDimmer");
-        modalDimmer.setVisible(false);
-        stpLayer.getChildren().add(brpRoot);
-        stpLayer.getChildren().add(modalDimmer);
     }
 
     public static GUI getInstance() {
@@ -220,7 +220,7 @@ public class GUI extends Scene implements Serializable {
         tlbWindow.setPrefHeight(40);
         tlbWindow.setMinHeight(40);
         tlbWindow.setMaxHeight(40);
-        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage, stpLayer);
 
         tlbWindow.getItems().add(windowButtons);
@@ -360,7 +360,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "Â¿Desea guardar los cambios efectuados en la simulaciÃ³n?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     main.loadFileBaseSimulation();
@@ -384,7 +384,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "Â¿Desea guardar los cambios efectuados en la simulaciÃ³n?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     System.exit(0);
@@ -442,12 +442,12 @@ public class GUI extends Scene implements Serializable {
         btnMinusZoom.setToggleGroup(tgTools);
         btnPlusZoom.setToggleGroup(tgTools);
 
-        btnHand.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton (Selección rapida:Alt)."));
+        btnHand.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton (SelecciÃ³n rapida:Alt)."));
         btnSelection.setTooltip(new Tooltip("Seleccione cualquier objeto"));
-        btnPointSeparator.setTooltip(new Tooltip("Añadale vertices a un enlace"));
+        btnPointSeparator.setTooltip(new Tooltip("AÃ±adale vertices a un enlace"));
         btnDeleted.setTooltip(new Tooltip("Elimine un objeto"));
-        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde\nrealize el click (Selección rapida:Ctrl)"));
-        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (Selección rapida:Shift)"));
+        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde\nrealize el click (SelecciÃ³n rapida:Ctrl)"));
+        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (SelecciÃ³n rapida:Shift)"));
 
         GridPane.setConstraints(btnSelection, 0, 0);
         grdPnToolsBar.getChildren().add(btnSelection);
@@ -499,9 +499,9 @@ public class GUI extends Scene implements Serializable {
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
         btnPCE_Switch.setTooltip(new Tooltip("PCE (Path Computation Element)"));
-        //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de Ráfaga"));
+        //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de RÃ¡faga"));
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
-        btnResource.setTooltip(new Tooltip("Clúster (Recurso de almacenamiento y procesamiento) "));
+        btnResource.setTooltip(new Tooltip("ClÃºster (Recurso de almacenamiento y procesamiento) "));
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
 
         GridPane.setConstraints(btnClient, 0, 4);
@@ -531,7 +531,7 @@ public class GUI extends Scene implements Serializable {
     private void createTabs() {
 
         tabSimulation.setClosable(false);
-        tabSimulation.setText("Simulación");
+        tabSimulation.setText("SimulaciÃ³n");
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados Phosphorus");
         tabResults.setClosable(false);
@@ -561,14 +561,12 @@ public class GUI extends Scene implements Serializable {
         tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
-    private ScrollPane createDesignBottom() {
+    private ScrollPane createBottomDesign() {
 
         ScrollPane scrollPane = new ScrollPane();
         HBox hboxAllBottom = new HBox();
         scrollPane.getStyleClass().add("cajaInferior");
         hboxAllBottom.setSpacing(10);
-
-
 
         entityPropertyTable = new EntityPropertyTableView();
         stPnDeviceProperties.getChildren().add(entityPropertyTable);
@@ -584,29 +582,17 @@ public class GUI extends Scene implements Serializable {
         VBox vbxBottomRight = new VBox(10);
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().addAll(vbNavegation);
-        final Button btnDownUp = new Button("Icon UP");
+        Button buttonDownUp = new Button("X");
 
-        btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0)
-            {
-                btnDownUp.setText("Icon down");
-
+            public void handle(MouseEvent arg0) {
                 showProperties = !showProperties;
-
                 tlProperties.play();
-                if(showProperties)
-                {
-                     btnDownUp.setText("Icon down");
-                }
-                else
-                {
-                       btnDownUp.setText("Icon up");
-                }
             }
         });
-        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, btnDownUp);
+        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, buttonDownUp);
 
 
         scrollPane.setContent(hboxAllBottom);
@@ -640,10 +626,10 @@ public class GUI extends Scene implements Serializable {
         Hyperlink linkPhosphorus = new Hyperlink();
         Hyperlink linkDistritalUniv = new Hyperlink();
 
-        linkAG2.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación en \"Colciencias\""));
-        linkInterIntel.setTooltip(new Tooltip("Visite la página web del Grupo de Investigación \"Internet Inteligente\""));
-        linkPhosphorus.setTooltip(new Tooltip("Visite la página web del proyecto \"Fósforo\""));
-        linkDistritalUniv.setTooltip(new Tooltip("Visite la página web de la \"Universidad Distrital FJC\""));
+        linkAG2.setTooltip(new Tooltip("Visite la pÃ¡gina web del Grupo de InvestigaciÃ³n en \"Colciencias\""));
+        linkInterIntel.setTooltip(new Tooltip("Visite la pÃ¡gina web del Grupo de InvestigaciÃ³n \"Internet Inteligente\""));
+        linkPhosphorus.setTooltip(new Tooltip("Visite la pÃ¡gina web del proyecto \"FÃ³sforo\""));
+        linkDistritalUniv.setTooltip(new Tooltip("Visite la pÃ¡gina web de la \"Universidad Distrital FJC\""));
 
         linkAG2.setGraphic(ivAG2);
         linkInterIntel.setGraphic(ivInternetIntel);
@@ -698,7 +684,7 @@ public class GUI extends Scene implements Serializable {
         tbcolPropValue.setPrefWidth(195);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÓN");
+        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACIÃ“N");
         tbcolSimTableTitle.getColumns().addAll(tbcolPropName, tbcolPropValue);
         tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
 
@@ -718,7 +704,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.setHgap(4);
         gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
 
-        Label lbTitle = new Label("LISTAS DE NAVEGACIÓN");
+        Label lbTitle = new Label("LISTAS DE NAVEGACIÃ“N");
         lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
         final ChoiceBox cbClients = new ChoiceBox(graphDesignGroup.getClientsObservableList());
@@ -894,7 +880,7 @@ public class GUI extends Scene implements Serializable {
 
         new AboutAG2project();
 
-//        tlProperties.play();
+        tlProperties.play();
 
     }
 

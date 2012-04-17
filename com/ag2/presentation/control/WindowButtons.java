@@ -81,7 +81,7 @@ public class WindowButtons extends VBox {
         });
     }
 
-    public WindowButtons(final Stage stage,final  StackPane layerPane) {
+    public WindowButtons(final Stage stage, final StackPane layerPane) {
         super(0);
         this.stage = stage;
         // create buttons
@@ -120,48 +120,43 @@ public class WindowButtons extends VBox {
         getChildren().addAll(closeBtn, minBtn, maxBtn);
     }
 
-    public void toogleMaximized()
-    {
-        try{
-            
-            
-        final Screen screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
-        if (maximized) {
-            maximized = false;
-            if (backupWindowBounds != null) {
-                stage.setX(backupWindowBounds.getMinX());
-                stage.setY(backupWindowBounds.getMinY());
-                stage.setWidth(backupWindowBounds.getWidth());
-                stage.setHeight(backupWindowBounds.getHeight());
-                
-                layerPane.setPrefHeight(backupWindowBounds.getHeight());
-                layerPane.setMaxHeight(backupWindowBounds.getHeight());
-                layerPane.setMinHeight(backupWindowBounds.getHeight());
-                
-                layerPane.setPrefWidth(backupWindowBounds.getWidth());
-                layerPane.setMaxWidth(backupWindowBounds.getWidth());
-                layerPane.setMinWidth(backupWindowBounds.getWidth());
-            }
-        } else {
-            maximized = true;
-            backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
-            stage.setX(screen.getVisualBounds().getMinX());
-            stage.setY(screen.getVisualBounds().getMinY());
-            stage.setWidth(screen.getVisualBounds().getWidth());
-            stage.setHeight(screen.getVisualBounds().getHeight());
-            
-             layerPane.setPrefHeight(screen.getVisualBounds().getHeight());
+    public void toogleMaximized() {
+        
+        try {
+            final Screen screen = Screen.getPrimary().getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
+            if (maximized) {
+                maximized = false;
+                if (backupWindowBounds != null) {
+                    stage.setX(backupWindowBounds.getMinX());
+                    stage.setY(backupWindowBounds.getMinY());
+                    stage.setWidth(backupWindowBounds.getWidth());
+                    stage.setHeight(backupWindowBounds.getHeight());
+
+                    layerPane.setPrefHeight(backupWindowBounds.getHeight());
+                    layerPane.setMaxHeight(backupWindowBounds.getHeight());
+                    layerPane.setMinHeight(backupWindowBounds.getHeight());
+
+                    layerPane.setPrefWidth(backupWindowBounds.getWidth());
+                    layerPane.setMaxWidth(backupWindowBounds.getWidth());
+                    layerPane.setMinWidth(backupWindowBounds.getWidth());
+                }
+            } else {
+                maximized = true;
+                backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+                stage.setX(screen.getVisualBounds().getMinX());
+                stage.setY(screen.getVisualBounds().getMinY());
+                stage.setWidth(screen.getVisualBounds().getWidth());
+                stage.setHeight(screen.getVisualBounds().getHeight());
+
+                layerPane.setPrefHeight(screen.getVisualBounds().getHeight());
                 layerPane.setMaxHeight(screen.getVisualBounds().getHeight());
                 layerPane.setMinHeight(screen.getVisualBounds().getHeight());
-                
+
                 layerPane.setPrefWidth(screen.getVisualBounds().getWidth());
                 layerPane.setMaxWidth(screen.getVisualBounds().getWidth());
                 layerPane.setMinWidth(screen.getVisualBounds().getWidth());
-        }
-        }
-        catch(Exception ex )
-        {
-            
+            }
+        } catch (Exception ex) {
         }
     }
 
