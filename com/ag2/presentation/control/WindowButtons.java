@@ -51,7 +51,7 @@ import javax.swing.JOptionPane;
 /**
  * Vertical box with 3 small buttons for window close, minimize and maximize.
  */
-public class WindowButtons extends VBox {
+public class WindowButtons extends HBox {
 
     private Stage stage;
     private Rectangle2D backupWindowBounds = null;
@@ -116,8 +116,9 @@ public class WindowButtons extends VBox {
             public void handle(ActionEvent actionEvent) {
                 toogleMaximized();
             }
-        });
-        getChildren().addAll(closeBtn, minBtn, maxBtn);
+        });        closeBtn.toFront();
+        getChildren().addAll(closeBtn,minBtn,maxBtn);
+
     }
 
     public void toogleMaximized() {
