@@ -43,6 +43,7 @@ public class Main extends Application implements Serializable {
         }
 
         GUI.setStage(stage);
+        
         stage.setScene(GUI.getInstance());
         GUI.getInstance().setStage(stage);
         GUI.getInstance().setMain(this);

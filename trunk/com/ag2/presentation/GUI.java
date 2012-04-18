@@ -80,7 +80,7 @@ public class GUI extends Scene implements Serializable {
     private TabPane tabPane = new TabPane();
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
-    private transient ToolBar tlbWindow;
+    private transient ToolBar tobWindow;
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
     private SplitPane splitPane;
@@ -96,17 +96,37 @@ public class GUI extends Scene implements Serializable {
     private boolean showProperties = false;
     private ScrollPane scpMenuTools;
     private SimulationOptionSwitcher simulationOptionSwitcher = new SimulationOptionSwitcher();
-
+    private WindowResizeButton windowResizeButton;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
-
-        brpRoot = new BorderPane();
-        addScene(this);
-        brpRoot.getStyleClass().add("ventanaPrincipal");
-
         getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
+
+        if (!Main.isApplet) {
+            stage.initStyle(StageStyle.UNDECORATED);
+            // create window resize button
+            windowResizeButton = new WindowResizeButton(stage, 200, 200);
+            // create root
+            brpRoot = new BorderPane() {
+
+                @Override
+                protected void layoutChildren() {
+                    super.layoutChildren();
+                    windowResizeButton.autosize();
+                    windowResizeButton.setLayoutX(5);
+                    windowResizeButton.setLayoutY(5);
+                }
+            };
+            brpRoot.getStyleClass().add("ventanaPrincipal");
+        } else {
+            brpRoot = new BorderPane();
+            brpRoot.getStyleClass().add("applet");
+        }
+
+        //brpRoot = new BorderPane();
+        addScene(this);
+
 
         createSceneBody();
 
@@ -115,6 +135,12 @@ public class GUI extends Scene implements Serializable {
         modalDimmer.setVisible(false);
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
+
+        if (true) {/*!Main.isApplet*/
+            windowResizeButton.getStyleClass().add("window-resize-button");
+            windowResizeButton.setManaged(false);
+            grRoot.getChildren().add(windowResizeButton);
+        }
     }
 
     public static GUI getInstance() {
@@ -155,9 +181,9 @@ public class GUI extends Scene implements Serializable {
 
         settingupProgressIndicator();
 
-        contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher , hBoxProgressIndicator, vbLogos);
+        contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher, hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
-        brpRoot.setLeft(scpMenuTools);
+//        brpRoot.setLeft(scpMenuTools);
 
         //Diseño central
         scpnProperties = createBottomDesign();
@@ -168,30 +194,25 @@ public class GUI extends Scene implements Serializable {
         setSplitPaneAnimation();
 
         createTabs();
-        brpRoot.setCenter(tabPane);
+//        brpRoot.setCenter(tabPane);
     }
 
     private void setSplitPaneAnimation() {
-       KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent arg0) {
                 double increment = 0.0252;
-                if (showProperties)
-                {
+                if (showProperties) {
                     increment = -0.0252;
 //                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
-                    if(splitPane.getDividerPositions()[0] <=.215 )
-                    {
+                    if (splitPane.getDividerPositions()[0] <= .215) {
                         return;
                     }
-                }
-                else
-                {
+                } else {
                     increment = 0.0252;
 //                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
-                    if(splitPane.getDividerPositions()[0] >= 0.95 )
-                    {
+                    if (splitPane.getDividerPositions()[0] >= 0.95) {
                         return;
                     }
                 }
@@ -225,9 +246,8 @@ public class GUI extends Scene implements Serializable {
     }
 
     private void createToolWindow() {
-        tlbWindow = new ToolBar();
-        tlbWindow.setId("mainToolBar");
-
+        tobWindow = new ToolBar();
+        tobWindow.setId("mainToolBar");
 
         final DropShadow dropShadow = new DropShadow();
         Label lblTitle = new Label("Simulador de infraestructura de grillas opticas AG2");
@@ -237,21 +257,21 @@ public class GUI extends Scene implements Serializable {
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        tlbWindow.getItems().addAll(lblTitle, spacer);
+        tobWindow.getItems().addAll(lblTitle, spacer);
 
         Region spacer2 = new Region();
         HBox.setHgrow(spacer2, Priority.ALWAYS);
-        tlbWindow.getItems().add(spacer2);
+        tobWindow.getItems().add(spacer2);
 
-        tlbWindow.setPrefHeight(40);
-        tlbWindow.setMinHeight(40);
-        tlbWindow.setMaxHeight(40);
+        tobWindow.setPrefHeight(40);
+        tobWindow.setMinHeight(40);
+        tobWindow.setMaxHeight(40);
         stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage, stpLayer);
 
-        tlbWindow.getItems().add(windowButtons);
+        tobWindow.getItems().add(windowButtons);
 
-        tlbWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        tobWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
@@ -261,7 +281,7 @@ public class GUI extends Scene implements Serializable {
             }
         });
         // add window dragging
-        tlbWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
+        tobWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
@@ -270,7 +290,7 @@ public class GUI extends Scene implements Serializable {
 
             }
         });
-        tlbWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
+        tobWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
@@ -343,7 +363,7 @@ public class GUI extends Scene implements Serializable {
         //Panel de menus
         VBox vBoxMainBar = new VBox();
         createToolWindow();
-        vBoxMainBar.getChildren().add(tlbWindow);
+        vBoxMainBar.getChildren().add(tobWindow);
 
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(3, 0, 3, 3));
@@ -610,25 +630,21 @@ public class GUI extends Scene implements Serializable {
         vbxBottomRight.getChildren().addAll(vbNavegation);
 
 
-    final Button btnDownUp = new Button("Icon UP");
+        final Button btnDownUp = new Button("Icon UP");
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0)
-            {
+            public void handle(MouseEvent arg0) {
                 btnDownUp.setText("Icon down");
 
                 showProperties = !showProperties;
 
                 tlProperties.play();
-                if(showProperties)
-                {
-                     btnDownUp.setText("Icon down");
-                }
-                else
-                {
-                       btnDownUp.setText("Icon up");
+                if (showProperties) {
+                    btnDownUp.setText("Icon down");
+                } else {
+                    btnDownUp.setText("Icon up");
                 }
             }
         });
