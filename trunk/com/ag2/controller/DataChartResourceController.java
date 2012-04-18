@@ -58,7 +58,7 @@ public class DataChartResourceController extends DataChartAbstractController {
         AbstractResourceNode abstractResourceNode = (AbstractResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
         ResourceNode resourceNode = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
 
-        value1 = 0.0;//abstractResourceNode.getQueue().size();
+        value1 = abstractResourceNode.getQueue().size();
 //        value2 = resourceNode.getMaxQueueSize();
         try {
             time = decimalFormat.parse(String.valueOf(100 * resourceNode.getCurrentTime().getTime() / PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME))).doubleValue();
