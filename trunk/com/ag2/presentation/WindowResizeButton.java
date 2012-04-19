@@ -1,3 +1,5 @@
+package com.ag2.presentation;
+
 /*
  * Copyright (c) 2008, 2011 Oracle and/or its affiliates.
  * All rights reserved. Use is subject to license terms.
@@ -29,7 +31,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ag2.presentation;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -68,8 +69,8 @@ public class WindowResizeButton extends Region {
                 Rectangle2D visualBounds = screen.getVisualBounds();             
                 double maxX = Math.min(visualBounds.getMaxX(), e.getScreenX() + dragOffsetX);
                 double maxY = Math.min(visualBounds.getMaxY(), e.getScreenY() - dragOffsetY);
-                stage.setWidth(Math.max(0, maxX - stage.getX()));
-                stage.setHeight(Math.max(0, maxY - stage.getY()));
+                stage.setWidth(Math.max(stageMinimumWidth, maxX - stage.getX()));
+                stage.setHeight(Math.max(stageMinimumHeight, maxY - stage.getY()));
                 e.consume();
             }
         });
