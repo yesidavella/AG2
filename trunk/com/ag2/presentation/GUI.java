@@ -1,5 +1,6 @@
 package com.ag2.presentation;
 
+import com.ag2.presentation.control.WindowResizeButton;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
@@ -163,7 +164,7 @@ public class GUI extends Scene implements Serializable {
 
         //DiseÃ±o izquierdo(contenedor de Ejecucion y herramientas)
         scpMenuTools = new ScrollPane();
-        scpMenuTools.getStyleClass().add("ventanaPrincipal");
+        scpMenuTools.setId("scrollPane-menu-tools");
         VBox contenedorHerramietas = new VBox();
         gpTools = createToolsBar();
 

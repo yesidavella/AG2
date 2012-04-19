@@ -1,4 +1,4 @@
-package com.ag2.presentation;
+package com.ag2.presentation.control;
 
 /*
  * Copyright (c) 2008, 2011 Oracle and/or its affiliates.
