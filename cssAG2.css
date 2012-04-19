@@ -81,6 +81,9 @@ TableView{
     -fx-border-color: gray;
     -fx-border-width: 2;
 }
+#scrollPane-menu-tools{
+    -fx-background-color:linear-gradient(from 0% 49% to 100% 51%,#B0BFFF,#D2DAFF);
+}
 
 .nodoNoSeleccionado{
     -fx-border-width: 0;
@@ -189,19 +192,21 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-border-width: 0.083333em, 0.083333em;
 }
 .tab-pane *.tab-header-background {
-    -fx-background-color: blue;
-    /*    -fx-background-color: -fx-outer-border, -fx-inner-border, derive(-fx-color, -20%);*/
+    -fx-background-color: #C3D5FF;
     -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
 }
-.tab:selected {
-    /*    -fx-background-color: white;*/
-
-    /*    -fx-background-color: -fx-tab-border-color, -fx-inner-border, -fx-body-color;
-        -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
-        -fx-background-insets: 0, 1 1 0 1, 2 2 0 2;*/
-    -fx-background-color: red;
+.tab{
     -fx-background-insets: 0, 1 1 0 1;
     -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-text-fill:black;
+    -fx-font-weight:normal
+}
+.tab:selected {
+    -fx-background-color: linear-gradient(to bottom,rgb(0,134,229),rgb(0,100,172));
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-text-fill:white;
+    -fx-font-weight: bold
 }
 
 
