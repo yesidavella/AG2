@@ -117,7 +117,7 @@ public class WindowButtons extends HBox {
                 toogleMaximized();
             }
         });        closeBtn.toFront();
-        getChildren().addAll(closeBtn,minBtn,maxBtn);
+        getChildren().addAll(maxBtn,minBtn,closeBtn);
 
     }
 

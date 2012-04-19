@@ -106,7 +106,7 @@ public class GUI extends Scene implements Serializable {
         if (!Main.isApplet) {
             stage.initStyle(StageStyle.UNDECORATED);
             // create window resize button
-            windowResizeButton = new WindowResizeButton(stage, 200, 200);
+            windowResizeButton = new WindowResizeButton(stage, 800, 600);
             // create root
             brpRoot = new BorderPane() {
 
@@ -114,8 +114,8 @@ public class GUI extends Scene implements Serializable {
                 protected void layoutChildren() {
                     super.layoutChildren();
                     windowResizeButton.autosize();
-                    windowResizeButton.setLayoutX(5);
-                    windowResizeButton.setLayoutY(5);
+                    windowResizeButton.setLayoutX(getWidth() - windowResizeButton.getLayoutBounds().getWidth());
+                    windowResizeButton.setLayoutY(getHeight() - windowResizeButton.getLayoutBounds().getHeight());
                 }
             };
             brpRoot.getStyleClass().add("ventanaPrincipal");
@@ -124,9 +124,7 @@ public class GUI extends Scene implements Serializable {
             brpRoot.getStyleClass().add("applet");
         }
 
-        //brpRoot = new BorderPane();
         addScene(this);
-
 
         createSceneBody();
 
@@ -136,10 +134,8 @@ public class GUI extends Scene implements Serializable {
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
 
-        if (true) {/*!Main.isApplet*/
-            windowResizeButton.getStyleClass().add("window-resize-button");
-            windowResizeButton.setManaged(false);
-            grRoot.getChildren().add(windowResizeButton);
+        if (!Main.isApplet) {
+            brpRoot.getChildren().add(windowResizeButton);
         }
     }
 
@@ -183,7 +179,7 @@ public class GUI extends Scene implements Serializable {
 
         contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher, hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
-//        brpRoot.setLeft(scpMenuTools);
+        brpRoot.setLeft(scpMenuTools);
 
         //Diseño central
         scpnProperties = createBottomDesign();
@@ -194,7 +190,7 @@ public class GUI extends Scene implements Serializable {
         setSplitPaneAnimation();
 
         createTabs();
-//        brpRoot.setCenter(tabPane);
+        brpRoot.setCenter(tabPane);
     }
 
     private void setSplitPaneAnimation() {
