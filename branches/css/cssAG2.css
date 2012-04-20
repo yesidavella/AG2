@@ -175,7 +175,7 @@ ProgressBar progress-bar:indeterminate .bar {
     /* TODO: for some reason, this doesn't scale. */
     -fx-font-size: 1.083333em; /* 13pt - 1 more than the default font */
     -fx-size: 25;
-    -fx-background-color: C01F25;
+    -fx-background-color: null;
     -fx-border-style: solid;
     -fx-border-color:
         /*
