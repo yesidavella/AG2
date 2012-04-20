@@ -7,6 +7,7 @@ import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.ResourcesPath;
+import com.sun.javafx.scene.web.skin.ColorPicker;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
@@ -65,7 +66,7 @@ public class GUI extends Scene implements Serializable {
     private PhosphosrusResults phosphosrusResults;
     private static GUI iguAG2;
     private Main main;
-    private StackPane stPnDeviceProperties = new StackPane();
+ 
     private ToggleButtonAg2 btnSelection;
     private ToggleButtonAg2 btnPointSeparator;
     private ToggleButtonAg2 btnDeleted;
@@ -186,8 +187,8 @@ public class GUI extends Scene implements Serializable {
         scpnProperties = createBottomDesign();
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0, 0.3);
-        splitPane.setOrientation(Orientation.VERTICAL);
+        splitPane.setDividerPosition(0,99 );
+        splitPane.setOrientation(Orientation.HORIZONTAL);
         setSplitPaneAnimation();
 
         createTabs();
@@ -203,13 +204,13 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.0252;
 //                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
-                    if (splitPane.getDividerPositions()[0] <= .215) {
+                    if (splitPane.getDividerPositions()[0] <= .68) {
                         return;
                     }
                 } else {
                     increment = 0.0252;
 //                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
-                    if (splitPane.getDividerPositions()[0] >= 0.95) {
+                    if (splitPane.getDividerPositions()[0] >= 0.99) {
                         return;
                     }
                 }
@@ -604,53 +605,85 @@ public class GUI extends Scene implements Serializable {
         tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
-    private ScrollPane createBottomDesign() {
-
-        ScrollPane scrollPane = new ScrollPane();
-        HBox hboxAllBottom = new HBox();
+    private ScrollPane createBottomDesign()    
+    {
+        
+        ScrollPane scrollPane = new ScrollPane();     
         scrollPane.getStyleClass().add("cajaInferior");
-        hboxAllBottom.setSpacing(10);
+        
+        VBox vBoxProperties = new VBox();
+        vBoxProperties.setAlignment(Pos.TOP_LEFT);
+      
+        
+        
+        TabPane tpProperties = new TabPane();
+        tpProperties.setSide(Side.LEFT);
+        Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
+        Tab tabSimulationProperties = new Tab("Propiedades de simulación"); 
+        Tab tabNavigation = new Tab("Panel de navegación"); 
+        tabNodeProperties.setClosable(false);
+        tabSimulationProperties.setClosable(false);   
+        tabNavigation.setClosable(false);  
+        tpProperties.getTabs().addAll(tabNodeProperties, tabSimulationProperties, tabNavigation);  
+        
+             
 
-        entityPropertyTable = new EntityPropertyTableView();
-        stPnDeviceProperties.getChildren().add(entityPropertyTable);
-
+        entityPropertyTable = new EntityPropertyTableView();      
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
-        StackPane stPnSimulationProperties = new StackPane();
-        stPnSimulationProperties.getChildren().add(tbSimulationProperties);
-        stPnSimulationProperties.setMinWidth(400);
-        SplitPane splPnPropertiesTbs = new SplitPane();
-        splPnPropertiesTbs.getItems().addAll(stPnDeviceProperties, stPnSimulationProperties);
-        splPnPropertiesTbs.setDividerPositions(0.525f);
-
-        VBox vbxBottomRight = new VBox(10);
+        
+        
+       tabNodeProperties.setContent(entityPropertyTable);
+       tabSimulationProperties.setContent(tbSimulationProperties);
+       
+         VBox vbxBottomRight = new VBox(10);
+         vbxBottomRight.getStyleClass().add("cajaInferior");
+         
+         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
         createMapNavigationPanel(vbNavegation);
-        vbxBottomRight.getChildren().addAll(vbNavegation);
+       vbxBottomRight.getChildren().add(vbNavegation);
+            
 
+ 
+        tabNavigation.setContent(vbxBottomRight);
+      
 
-        final Button btnDownUp = new Button("Icon UP");
+        final Button btnDownUp = new Button("<");
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0) {
-                btnDownUp.setText("Icon down");
+            public void handle(MouseEvent arg0) {            
 
                 showProperties = !showProperties;
 
                 tlProperties.play();
                 if (showProperties) {
-                    btnDownUp.setText("Icon down");
+                    btnDownUp.setText(">");
                 } else {
-                    btnDownUp.setText("Icon up");
+                    btnDownUp.setText("<");
                 }
             }
         });
+        
+        tpProperties.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+            @Override
+            public void handle(MouseEvent arg0)
+            {
+               if(!showProperties)
+               {
+                    showProperties = !showProperties;
+                    tlProperties.play();
+                     btnDownUp.setText(">");
+                   
+               }
+            }
+        });
 
-        hboxAllBottom.getChildren().addAll(splPnPropertiesTbs, vbxBottomRight, btnDownUp);
-
-
-        scrollPane.setContent(hboxAllBottom);
+       
+        vBoxProperties.getChildren().addAll(tpProperties, btnDownUp);
+       
+        scrollPane.setContent(vBoxProperties);
         return scrollPane;
     }
 
@@ -735,15 +768,13 @@ public class GUI extends Scene implements Serializable {
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");
-        tbcolPropValue.setMinWidth(195);
-        tbcolPropValue.setPrefWidth(195);
+        tbcolPropValue.setMinWidth(160);
+        tbcolPropValue.setPrefWidth(160);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        TableColumn tbcolSimTableTitle = new TableColumn("PROPIEDADES SIMULACION");
-        tbcolSimTableTitle.getColumns().addAll(tbcolPropName, tbcolPropValue);
-        tbwSimulationProperties.getColumns().addAll(tbcolSimTableTitle);
+        tbwSimulationProperties.getColumns().addAll(tbcolPropName,tbcolPropValue);
 
-        tbwSimulationProperties.setMinWidth(tbcolSimTableTitle.getMinWidth() + 13);
+     
         tbwSimulationProperties.setMinHeight(469);
 //        tbwSimulationProperties.setPrefWidth(345);
 //
@@ -767,10 +798,10 @@ public class GUI extends Scene implements Serializable {
         final ChoiceBox cbSwicthes = new ChoiceBox(graphDesignGroup.getSwitchesObservableList());
         final ChoiceBox cbServiceNodes = new ChoiceBox(graphDesignGroup.getBrokersObservableList());
 
-        cbClients.setMinWidth(100);
-        cbResources.setMinWidth(100);
-        cbSwicthes.setMinWidth(100);
-        cbServiceNodes.setMinWidth(100);
+        cbClients.setMinWidth(150);
+        cbResources.setMinWidth(150);
+        cbSwicthes.setMinWidth(150);
+        cbServiceNodes.setMinWidth(150);
 
         Button btnIrClients = new Button("ir");
         Button btnIrResources = new Button("ir");
@@ -825,7 +856,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.getChildren().add(btnIrServiceNodes);
 
         if (!vBox.getChildren().contains(gpMapNavegation)) {
-//            vBox.getChildren().add(gpMapNavegation);
+            vBox.getChildren().add(gpMapNavegation);
         }
 
         setEventGoBtn(btnIrClients, cbClients);
@@ -936,7 +967,6 @@ public class GUI extends Scene implements Serializable {
 
         new AboutAG2project();
 
-        tlProperties.play();
 
     }
 
