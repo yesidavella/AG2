@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -66,7 +67,6 @@ public class GUI extends Scene implements Serializable {
     private PhosphosrusResults phosphosrusResults;
     private static GUI iguAG2;
     private Main main;
- 
     private ToggleButtonAg2 btnSelection;
     private ToggleButtonAg2 btnPointSeparator;
     private ToggleButtonAg2 btnDeleted;
@@ -150,6 +150,8 @@ public class GUI extends Scene implements Serializable {
     }
 
     private void createSceneBody() {
+        //DiseÃ±o superior
+        createTopDesign(brpRoot);
 
         scPnWorld = new ScrollPane();
         tgTools = new ToggleGroup();
@@ -159,9 +161,6 @@ public class GUI extends Scene implements Serializable {
         executePane = new ExecutePane();
         executePane.setGroup(graphDesignGroup.getGroup());
         executePane.setSimulationOptionSwitcher(simulationOptionSwitcher);
-
-        //DiseÃ±o superior
-        creationMenuBar(brpRoot);
 
         //DiseÃ±o izquierdo(contenedor de Ejecucion y herramientas)
         scpMenuTools = new ScrollPane();
@@ -187,7 +186,7 @@ public class GUI extends Scene implements Serializable {
         scpnProperties = createBottomDesign();
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0,99 );
+        splitPane.setDividerPosition(0, 99);
         splitPane.setOrientation(Orientation.HORIZONTAL);
         setSplitPaneAnimation();
 
@@ -243,15 +242,16 @@ public class GUI extends Scene implements Serializable {
         return scpMenuTools;
     }
 
-    private void createToolWindow() {
+    private void createTitleBar() {
         tobWindow = new ToolBar();
         tobWindow.setId("mainToolBar");
 
-        final DropShadow dropShadow = new DropShadow();
-        Label lblTitle = new Label("Simulador de infraestructura de grillas opticas AG2");
-
-        lblTitle.setFont(Font.font("Arial", FontWeight.LIGHT, 14));
-        lblTitle.setEffect(dropShadow);
+        Label lblTitle = new Label("Simulador de infraestructura de grillas ópticas AG2");
+        lblTitle.setId("titleApplication");
+        Reflection r = new Reflection();
+        r.setTopOffset(-4);
+        lblTitle.setEffect(r);
+//        lblTitle.setTranslateX(400);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -356,11 +356,12 @@ public class GUI extends Scene implements Serializable {
         GUI.actionTypeEmun = actionTypeEmun;
     }
 
-    private void creationMenuBar(BorderPane borderPane) {
+    private void createTopDesign(BorderPane brpRoot) {
+
+        createTitleBar();
 
         //Panel de menus
         VBox vBoxMainBar = new VBox();
-        createToolWindow();
         vBoxMainBar.getChildren().add(tobWindow);
 
         HBox hBox = new HBox();
@@ -446,7 +447,7 @@ public class GUI extends Scene implements Serializable {
         hBox.getChildren().add(mbarMainMenuBar);
 
         vBoxMainBar.getChildren().add(hBox);
-        borderPane.setTop(vBoxMainBar);
+        brpRoot.setTop(vBoxMainBar);
     }
 
     private GridPane createToolsBar() {
@@ -605,54 +606,53 @@ public class GUI extends Scene implements Serializable {
         tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
-    private ScrollPane createBottomDesign()    
-    {
-        
-        ScrollPane scrollPane = new ScrollPane();     
+    private ScrollPane createBottomDesign() {
+
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.getStyleClass().add("cajaInferior");
-        
+
         VBox vBoxProperties = new VBox();
         vBoxProperties.setAlignment(Pos.TOP_LEFT);
-      
-        
-        
+
+
+
         TabPane tpProperties = new TabPane();
         tpProperties.setSide(Side.LEFT);
         Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
-        Tab tabSimulationProperties = new Tab("Propiedades de simulación"); 
-        Tab tabNavigation = new Tab("Panel de navegación"); 
+        Tab tabSimulationProperties = new Tab("Propiedades de simulación");
+        Tab tabNavigation = new Tab("Panel de navegación");
         tabNodeProperties.setClosable(false);
-        tabSimulationProperties.setClosable(false);   
-        tabNavigation.setClosable(false);  
-        tpProperties.getTabs().addAll(tabNodeProperties, tabSimulationProperties, tabNavigation);  
-        
-             
+        tabSimulationProperties.setClosable(false);
+        tabNavigation.setClosable(false);
+        tpProperties.getTabs().addAll(tabNodeProperties, tabSimulationProperties, tabNavigation);
 
-        entityPropertyTable = new EntityPropertyTableView();      
+
+
+        entityPropertyTable = new EntityPropertyTableView();
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
-        
-        
-       tabNodeProperties.setContent(entityPropertyTable);
-       tabSimulationProperties.setContent(tbSimulationProperties);
-       
-         VBox vbxBottomRight = new VBox(10);
-         vbxBottomRight.getStyleClass().add("cajaInferior");
-         
-         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
-        createMapNavigationPanel(vbNavegation);
-       vbxBottomRight.getChildren().add(vbNavegation);
-            
 
- 
+
+        tabNodeProperties.setContent(entityPropertyTable);
+        tabSimulationProperties.setContent(tbSimulationProperties);
+
+        VBox vbxBottomRight = new VBox(10);
+        vbxBottomRight.getStyleClass().add("cajaInferior");
+
+        vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
+        createMapNavigationPanel(vbNavegation);
+        vbxBottomRight.getChildren().add(vbNavegation);
+
+
+
         tabNavigation.setContent(vbxBottomRight);
-      
+
 
         final Button btnDownUp = new Button("<");
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0) {            
+            public void handle(MouseEvent arg0) {
 
                 showProperties = !showProperties;
 
@@ -664,25 +664,23 @@ public class GUI extends Scene implements Serializable {
                 }
             }
         });
-        
+
         tpProperties.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0)
-            {
-               if(!showProperties)
-               {
+            public void handle(MouseEvent arg0) {
+                if (!showProperties) {
                     showProperties = !showProperties;
                     tlProperties.play();
-                     btnDownUp.setText(">");
-                   
-               }
+                    btnDownUp.setText(">");
+
+                }
             }
         });
 
-       
+
         vBoxProperties.getChildren().addAll(tpProperties, btnDownUp);
-       
+
         scrollPane.setContent(vBoxProperties);
         return scrollPane;
     }
@@ -736,10 +734,10 @@ public class GUI extends Scene implements Serializable {
         vbLogos.getChildren().addAll(linkAG2, linkInterIntel, linkPhosphorus, linkDistritalUniv);
 
 
-        vbLogos.getStyleClass().add("boxLogosHorizontalGradient");
+        vbLogos.getStyleClass().add("boxLogos");
 
-        DropShadow dropShadow = new DropShadow();
-        vbLogos.setEffect(dropShadow);
+//        DropShadow dropShadow = new DropShadow();
+//        vbLogos.setEffect(dropShadow);
 
         return vbLogos;
     }
@@ -772,9 +770,9 @@ public class GUI extends Scene implements Serializable {
         tbcolPropValue.setPrefWidth(160);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        tbwSimulationProperties.getColumns().addAll(tbcolPropName,tbcolPropValue);
+        tbwSimulationProperties.getColumns().addAll(tbcolPropName, tbcolPropValue);
 
-     
+
         tbwSimulationProperties.setMinHeight(469);
 //        tbwSimulationProperties.setPrefWidth(345);
 //
