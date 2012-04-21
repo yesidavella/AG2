@@ -37,6 +37,7 @@ import com.sun.javafx.Utils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -58,7 +59,85 @@ public class WindowButtons extends HBox {
     private boolean maximized = false;
     private Main main;
     Button closeBtn = new Button();
-    StackPane layerPane;
+    StackPane stpLayer;
+
+    public WindowButtons(final Stage stage, final StackPane layerPane) {
+        super(0);
+        setPadding(new Insets(3, 0, 3, 0));
+        this.stage = stage;
+        // create buttons
+        this.stpLayer = layerPane;
+        closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-close.png")));
+        closeBtn.setId("window-close");
+
+        Button minBtn = new Button();
+        minBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-min.png")));
+        minBtn.setId("window-min");
+        minBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                stage.setIconified(true);
+            }
+        });
+        Button maxBtn = new Button();
+        maxBtn.setId("window-max");
+        maxBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-expand.png")));
+
+        maxBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                toogleMaximized();
+            }
+        });
+        getChildren().addAll(maxBtn, minBtn, closeBtn);
+
+    }
+
+    public void toogleMaximized() {
+
+        try {
+            final Screen screen = Screen.getPrimary().getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
+            if (maximized) {
+                maximized = false;
+                if (backupWindowBounds != null) {
+                    stage.setX(backupWindowBounds.getMinX());
+                    stage.setY(backupWindowBounds.getMinY());
+                    stage.setWidth(backupWindowBounds.getWidth());
+                    stage.setHeight(backupWindowBounds.getHeight());
+
+                    stpLayer.setPrefHeight(backupWindowBounds.getHeight());
+                    stpLayer.setMaxHeight(backupWindowBounds.getHeight());
+                    stpLayer.setMinHeight(backupWindowBounds.getHeight());
+
+                    stpLayer.setPrefWidth(backupWindowBounds.getWidth());
+                    stpLayer.setMaxWidth(backupWindowBounds.getWidth());
+                    stpLayer.setMinWidth(backupWindowBounds.getWidth());
+                }
+            } else {
+                maximized = true;
+                backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+                stage.setX(screen.getVisualBounds().getMinX());
+                stage.setY(screen.getVisualBounds().getMinY());
+                stage.setWidth(screen.getVisualBounds().getWidth());
+                stage.setHeight(screen.getVisualBounds().getHeight());
+
+                stpLayer.setPrefHeight(screen.getVisualBounds().getHeight());
+                stpLayer.setMaxHeight(screen.getVisualBounds().getHeight());
+                stpLayer.setMinHeight(screen.getVisualBounds().getHeight());
+
+                stpLayer.setPrefWidth(screen.getVisualBounds().getWidth());
+                stpLayer.setMaxWidth(screen.getVisualBounds().getWidth());
+                stpLayer.setMinWidth(screen.getVisualBounds().getWidth());
+            }
+        } catch (Exception ex) {
+        }
+    }
+
+    public boolean isMaximized() {
+        return maximized;
+    }
 
     public void setMain(Main main) {
         this.main = main;
@@ -79,89 +158,5 @@ public class WindowButtons extends HBox {
                 //Platform.exit();
             }
         });
-    }
-
-    public WindowButtons(final Stage stage, final StackPane layerPane) {
-        super(0);
-        this.stage = stage;
-        // create buttons
-        this.layerPane = layerPane;
-        setScaleX(1.3);
-        setScaleY(1.3);
-        closeBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-close.png")));
-        closeBtn.setId("window-close");
-        closeBtn.setMaxWidth(4);
-
-
-
-        Button minBtn = new Button();
-        minBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-min.png")));
-        minBtn.setId("window-min");
-        minBtn.setMaxWidth(4);
-        minBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                stage.setIconified(true);
-            }
-        });
-        Button maxBtn = new Button();
-        maxBtn.setId("window-max");
-        maxBtn.setMaxWidth(4);
-        maxBtn.setGraphic(new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "window-expand.png")));
-
-        maxBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                toogleMaximized();
-            }
-        });        closeBtn.toFront();
-        getChildren().addAll(maxBtn,minBtn,closeBtn);
-
-    }
-
-    public void toogleMaximized() {
-        
-        try {
-            final Screen screen = Screen.getPrimary().getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
-            if (maximized) {
-                maximized = false;
-                if (backupWindowBounds != null) {
-                    stage.setX(backupWindowBounds.getMinX());
-                    stage.setY(backupWindowBounds.getMinY());
-                    stage.setWidth(backupWindowBounds.getWidth());
-                    stage.setHeight(backupWindowBounds.getHeight());
-
-                    layerPane.setPrefHeight(backupWindowBounds.getHeight());
-                    layerPane.setMaxHeight(backupWindowBounds.getHeight());
-                    layerPane.setMinHeight(backupWindowBounds.getHeight());
-
-                    layerPane.setPrefWidth(backupWindowBounds.getWidth());
-                    layerPane.setMaxWidth(backupWindowBounds.getWidth());
-                    layerPane.setMinWidth(backupWindowBounds.getWidth());
-                }
-            } else {
-                maximized = true;
-                backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
-                stage.setX(screen.getVisualBounds().getMinX());
-                stage.setY(screen.getVisualBounds().getMinY());
-                stage.setWidth(screen.getVisualBounds().getWidth());
-                stage.setHeight(screen.getVisualBounds().getHeight());
-
-                layerPane.setPrefHeight(screen.getVisualBounds().getHeight());
-                layerPane.setMaxHeight(screen.getVisualBounds().getHeight());
-                layerPane.setMinHeight(screen.getVisualBounds().getHeight());
-
-                layerPane.setPrefWidth(screen.getVisualBounds().getWidth());
-                layerPane.setMaxWidth(screen.getVisualBounds().getWidth());
-                layerPane.setMinWidth(screen.getVisualBounds().getWidth());
-            }
-        } catch (Exception ex) {
-        }
-    }
-
-    public boolean isMaximized() {
-        return maximized;
     }
 }
