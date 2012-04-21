@@ -1,3 +1,8 @@
+ver-borde-rojo{/*Para ver el borde cuando se desarrolla TEMPORAL*/
+    -fx-border-style: solid;
+    -fx-border-color:red;
+}
+
 .ventanaPrincipal{
     -fx-background-color: linear-gradient(to top, #EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6);
     -fx-border-color: #707070;
@@ -12,16 +17,10 @@
     -fx-background-radius: 3px;
 }
 
-#mainToolBar, .mainToolBar{
-    /*    -fx-background-image: url("full.png");*/
-    /*    -fx-background-repeat: no-repeat;
-        -fx-background-position: left;*/
-    -fx-background-color: linear-gradient(to top,#5CABFF 10%,#8FC6FF 50%,#5CABFF 90%);/*Gris claro a oscuro#D5D5D5,#B8B8B8*/
-
-    /*    -fx-background-size: 100% 100%;*/
-    /*    -fx-background-color: transparent;*/
-    /*    -fx-border-bottom-color: black;
-        -fx-border-bottom-style: dotted;*/
+#mainToolBar{
+    -fx-background-image: url("../images/background-titlebar-ag2.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
 }
 
 .barraDeMenus{
@@ -39,6 +38,13 @@
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-color: linear-gradient(to top,#B2BEFF,#E3E7FF,#B2BEFF);
+}
+
+#titleApplication{
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+/*    -fx-effect: dropshadow( two-pass-box , #B2BEFF, 10, 0.0 , 2 , 4);*/
 }
 
 TableView{
@@ -95,6 +101,12 @@ TableView{
     -fx-border-width:1px;
     /*    -fx-background-color:null;*/
 }
+.boxLogos{
+    -fx-background-color:#B4FCFF;
+    -fx-effect: innershadow(gaussian,blue,20,0.5,0,0);
+    -fx-background-radius: 15, 14, 13,13;
+/*    -fx-opacity: 50%;*/
+}
 
 .boxLogosVerticalGradient{
     -fx-border-radius: 5;
@@ -135,34 +147,22 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: linear-gradient(to top left, transparent,lime);
 }
 
-#window-close {
+#window-close,#window-min,#window-max {
     -fx-font-size: 1px;
     -fx-background-color: transparent;
     -fx-padding:0px;
 }
 
-#window-min {
-    -fx-font-size: 1px;
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-#window-max {
-    -fx-font-size: 1px;
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
 #window-close:hover {
-    -fx-background-image: url("images/window-close-over.png");
+    -fx-background-image: url("../images/window-close-over.png");
 }
 
 #window-min:hover {
-    -fx-background-image: url("images/window-min-over.png");
+    -fx-background-image: url("../images/window-min-over.png");
 }
 
 #window-max:hover {
-    -fx-background-image: url("images/window-expand-over.png");
+    -fx-background-image: url("../images/window-expand-over.png");
 }
 
 #ModalDimmer {
