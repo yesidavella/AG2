@@ -1,13 +1,11 @@
 package com.ag2.presentation;
 
-import com.ag2.presentation.control.WindowResizeButton;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.ResourcesPath;
-import com.sun.javafx.scene.web.skin.ColorPicker;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
@@ -59,7 +57,7 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
     private EntityPropertyTableView entityPropertyTable;
     private GridPane gpTools;
-    private ScrollPane scPnWorld;
+    private ScrollPane scpWorld;
     private ProgressIndicator progressIndicator;
     private boolean isPrincipalKeyPressed = false;
     private ActionTypeEmun beforeActionTypeEmun;
@@ -72,7 +70,7 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnDeleted;
     private ToggleButtonAg2 btnMinusZoom;
     private ToggleButtonAg2 btnPlusZoom;
-    private Group grRoot = new Group();
+    private Group grRootWorld = new Group();
     private VBox vbNavegation = new VBox();
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
@@ -105,7 +103,7 @@ public class GUI extends Scene implements Serializable {
 
         getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
 
-        if (!Main.isApplet) {
+        if (!Main.IS_APPLET) {
             stage.initStyle(StageStyle.UNDECORATED);
             // create window resize button
             windowResizeButton = new WindowResizeButton(stage, 800, 600);
@@ -136,7 +134,7 @@ public class GUI extends Scene implements Serializable {
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
 
-        if (!Main.isApplet) {
+        if (!Main.IS_APPLET) {
             brpRoot.getChildren().add(windowResizeButton);
         }
     }
@@ -153,7 +151,7 @@ public class GUI extends Scene implements Serializable {
         //DiseÃ±o superior
         createTopDesign(brpRoot);
 
-        scPnWorld = new ScrollPane();
+        scpWorld = new ScrollPane();
         tgTools = new ToggleGroup();
         splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.HORIZONTAL);
@@ -261,9 +259,9 @@ public class GUI extends Scene implements Serializable {
         HBox.setHgrow(spacer2, Priority.ALWAYS);
         tobWindow.getItems().add(spacer2);
 
-        tobWindow.setPrefHeight(40);
-        tobWindow.setMinHeight(40);
-        tobWindow.setMaxHeight(40);
+        tobWindow.setPrefHeight(50);
+        tobWindow.setMinHeight(50);
+        tobWindow.setMaxHeight(50);
         stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage, stpLayer);
 
@@ -302,7 +300,7 @@ public class GUI extends Scene implements Serializable {
     }
 
     public ScrollPane getScPnWorld() {
-        return scPnWorld;
+        return scpWorld;
     }
 
     public EntityPropertyTableView getEntityPropertyTable() {
@@ -316,9 +314,9 @@ public class GUI extends Scene implements Serializable {
 
     public void loadGraphDesignGroup(GraphDesignGroup graphDesignGroup) {
 
-        grRoot.getChildren().remove(this.graphDesignGroup.getGroup());
+        grRootWorld.getChildren().remove(this.graphDesignGroup.getGroup());
         this.graphDesignGroup = graphDesignGroup;
-        grRoot.getChildren().add(graphDesignGroup.getGroup());
+        grRootWorld.getChildren().add(graphDesignGroup.getGroup());
 
         executePane.setGroup(graphDesignGroup.getGroup());
         btnHand.setGraphDesignGroup(graphDesignGroup.getGroup());
@@ -335,7 +333,7 @@ public class GUI extends Scene implements Serializable {
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
         executePane.setGroup(graphDesignGroup.getGroup());
-        graphDesignGroup.setScrollPane(scPnWorld);
+        graphDesignGroup.setScrollPane(scpWorld);
 
         createMapNavigationPanel(vbNavegation);
         addScene(this);
@@ -594,11 +592,11 @@ public class GUI extends Scene implements Serializable {
         executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
         executePane.setPhosphosrusResults(phosphosrusResults);
 
-        graphDesignGroup.setScrollPane(scPnWorld);
+        graphDesignGroup.setScrollPane(scpWorld);
 
-        grRoot.getChildren().add(graphDesignGroup.getGroup());
-        scPnWorld.setContent(grRoot);
-        splitPane.getItems().addAll(scPnWorld, scpnProperties);
+        grRootWorld.getChildren().add(graphDesignGroup.getGroup());
+        scpWorld.setContent(grRootWorld);
+        splitPane.getItems().addAll(scpWorld, scpnProperties);
         tabSimulation.setContent(splitPane);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
@@ -887,19 +885,19 @@ public class GUI extends Scene implements Serializable {
                     double posXInPercentage = posXNewCoords / worldWidth;
                     double posYInPercentage = posYNewCoords / worldHeight;
 
-                    double maxErrorInX = scPnWorld.getViewportBounds().getWidth() / 2;
+                    double maxErrorInX = scpWorld.getViewportBounds().getWidth() / 2;
                     double funcToCalculateXError = (-2 * maxErrorInX * posXInPercentage) + maxErrorInX;
                     double percentageXError = funcToCalculateXError / worldWidth;
 
-                    double maxErrorInY = scPnWorld.getViewportBounds().getHeight() / 2;
+                    double maxErrorInY = scpWorld.getViewportBounds().getHeight() / 2;
                     double funcToCalculateYError = (-2 * maxErrorInY * posYInPercentage) + maxErrorInY;
                     double percentageYError = funcToCalculateYError / worldHeight;
 
                     double percentImgHeightCorrecX = (selectedNode.getWidth()) / worldWidth;
                     double percentImgHeightCorrecY = (selectedNode.getHeight()) / worldHeight;
 
-                    scPnWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
-                    scPnWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
+                    scpWorld.setHvalue(posXInPercentage - percentageXError + percentImgHeightCorrecX);
+                    scpWorld.setVvalue(posYInPercentage - percentageYError - percentImgHeightCorrecY);
 
                     if (graphDesignGroup.getSelectable() != null) {
                         graphDesignGroup.getSelectable().select(false);
@@ -957,8 +955,8 @@ public class GUI extends Scene implements Serializable {
         btnClient.setSelected(true);
         GUI.setActionTypeEmun(ActionTypeEmun.CLIENT);
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.CLIENT.getCursorImage());
-        scPnWorld.setHvalue(0.27151447890809266);
-        scPnWorld.setVvalue(0.4661207267437006);
+        scpWorld.setHvalue(0.27151447890809266);
+        scpWorld.setVvalue(0.4661207267437006);
 
 
 //        windowButtons.toogleMaximized();

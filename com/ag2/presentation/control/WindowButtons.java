@@ -33,8 +33,6 @@ package com.ag2.presentation.control;
 
 import com.ag2.presentation.Main;
 import com.ag2.util.ResourcesPath;
-import com.sun.javafx.Utils;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -42,7 +40,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -52,7 +49,7 @@ import javax.swing.JOptionPane;
 /**
  * Vertical box with 3 small buttons for window close, minimize and maximize.
  */
-public class WindowButtons extends HBox {
+public class WindowButtons extends VBox {
 
     private Stage stage;
     private Rectangle2D backupWindowBounds = null;
@@ -89,10 +86,10 @@ public class WindowButtons extends HBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 toogleMaximized();
+                actionEvent.consume();
             }
         });
-        getChildren().addAll(maxBtn, minBtn, closeBtn);
-
+        getChildren().addAll(closeBtn,minBtn,maxBtn);
     }
 
     public void toogleMaximized() {

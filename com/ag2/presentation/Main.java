@@ -28,7 +28,7 @@ public class Main extends Application implements Serializable {
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
     private JSObject browser;
-    public static boolean isApplet = false;
+    public static boolean IS_APPLET = false;
 
     @Override
     public void start(final Stage stage) {
@@ -37,9 +37,9 @@ public class Main extends Application implements Serializable {
         
         try {
             browser = getHostServices().getWebContext();
-            isApplet = browser != null;
+            IS_APPLET = browser != null;
         } catch (Exception e) {
-            isApplet = false;
+            IS_APPLET = false;
         }
 
         GUI.setStage(stage);
