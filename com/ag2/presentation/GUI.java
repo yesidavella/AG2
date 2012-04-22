@@ -359,8 +359,8 @@ public class GUI extends Scene implements Serializable {
         createTitleBar();
 
         //Panel de menus
-        VBox vBoxMainBar = new VBox();
-        vBoxMainBar.getChildren().add(tobWindow);
+        VBox vboxMainBar = new VBox();
+        vboxMainBar.getChildren().add(tobWindow);
 
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(3, 0, 3, 3));
@@ -368,18 +368,25 @@ public class GUI extends Scene implements Serializable {
 
         //Items de menus y menus
         Menu fileMenu = new Menu("Archivo");
-
         Menu helpFile = new Menu("Ayuda");
 
-        MenuItem newNenuItem = new MenuItem("Nuevo Proyecto");
+        MenuItem newMenuItem = new MenuItem("Nuevo Proyecto");
         MenuItem openMenuItem = new MenuItem("Abrir");
         MenuItem saveMenuItem = new MenuItem("Guardar");
         MenuItem closeMenuItem = new MenuItem("Cerrar");
+        
+        newMenuItem.getStyleClass().add("menu-item-ag2");
+        openMenuItem.getStyleClass().add("menu-item-ag2");
+        saveMenuItem.getStyleClass().add("menu-item-ag2");
+        closeMenuItem.getStyleClass().add("menu-item-ag2");
 
         MenuItem helpMenuItem = new MenuItem("Ayuda");
         MenuItem aboutMenuItem = new MenuItem("Acerca del Proyecto AG2...");
+        
+        helpMenuItem.getStyleClass().add("menu-item-ag2");
+        aboutMenuItem.getStyleClass().add("menu-item-ag2");
 
-        fileMenu.getItems().addAll(newNenuItem, new SeparatorMenuItem(), openMenuItem, saveMenuItem, new SeparatorMenuItem(), closeMenuItem);
+        fileMenu.getItems().addAll(newMenuItem, new SeparatorMenuItem(), openMenuItem, saveMenuItem, new SeparatorMenuItem(), closeMenuItem);
         helpFile.getItems().addAll(helpMenuItem, new SeparatorMenuItem(), aboutMenuItem);
 
         saveMenuItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -398,7 +405,7 @@ public class GUI extends Scene implements Serializable {
             }
         });
 
-        newNenuItem.setOnAction(new EventHandler<ActionEvent>() {
+        newMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -439,13 +446,14 @@ public class GUI extends Scene implements Serializable {
 
         //La barra de menus
         MenuBar mbarMainMenuBar = new MenuBar();
+        mbarMainMenuBar.setId("menu-bar");
+        
         mbarMainMenuBar.getMenus().addAll(fileMenu, helpFile);
-        mbarMainMenuBar.getStyleClass().add("barraDeMenus");
 
         hBox.getChildren().add(mbarMainMenuBar);
 
-        vBoxMainBar.getChildren().add(hBox);
-        brpRoot.setTop(vBoxMainBar);
+        vboxMainBar.getChildren().add(hBox);
+        brpRoot.setTop(vboxMainBar);
     }
 
     private GridPane createToolsBar() {
