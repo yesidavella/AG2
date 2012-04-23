@@ -1,5 +1,9 @@
 /*Colores de azules del tema, el azul de abajo de los botones rgb(18,69,175)
 y del de arriba rgb(91,136,224)*/
+.root {
+    -fx-yesid:green;
+    -fx-base:lightgray;
+}
 
 .ver-borde-rojo{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
     -fx-border-style: solid;
@@ -39,8 +43,13 @@ y del de arriba rgb(91,136,224)*/
 .bg-bigContainer-menuBar{
     -fx-background-color: linear-gradient(to bottom, derive(rgb(18,69,175),-30%), derive(rgb(91,136,224),10%));
 }
-/**********************************************************************/
 
+
+#world-ocean{
+    -fx-fill:radial-gradient(center 50% 0%, radius 100%, derive(rgb(91,136,224),50%), derive(rgb(18,69,175),10%) 80%);
+}
+
+/**********************************************************************/
 /*Todo lo referente con los menus*/
 .menu-item-ag2 {
     -fx-font-weight: normal;
@@ -57,11 +66,10 @@ y del de arriba rgb(91,136,224)*/
         derive(#B2D1FF,100%),
         linear-gradient(to bottom, derive(#B2D1FF,100%) 0%, derive(#B2D1FF,50%) 12%, derive(#B2D1FF,65%) 88%, derive(#B2D1FF,23%) 100%);
 }
-
 /**********************************************************************/
 
 .bg-general-container{
-/*    -fx-base: rgb(91,136,224);*/
+    /*    -fx-base: rgb(91,136,224);*/
     -fx-border-color: rgb(91,136,224);
     -fx-border-width: 1;
     -fx-border-radius: 3;
@@ -185,12 +193,20 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: rgb(0,0,0,0.5);
 }
 
+.table-view:focused .table-row-cell:selected:focused, .table-view:focused .table-row-cell:selected, .table-view:row-selection .table-row-cell:filled:hover:selected {
+    -fx-background: black;
+    -fx-background-color: linear-gradient(to top,rgb(18,69,175) 0%,rgb(91,136,224) 70%);
+/*    -fx-text-fill: -fx-selection-bar-text;*/
+/*-fx-font-weight: bold;*/
+}
+
 .table-view .column-header, .table-view .filler, .table-view .column-drag-header {
-    -fx-text-fill: FFFFFF;
+/*    -fx-text-fill: black;*/
+/*    -fx-font-weight: bold;*/
 
     /* TODO: for some reason, this doesn't scale. */
-    -fx-font-size: 1.083333em; /* 13pt - 1 more than the default font */
-    -fx-size: 25;
+    -fx-font-size: 0.95em; /* 13pt - 1 more than the default font */
+    -fx-size: 20;
     -fx-background-color: null;
     -fx-border-style: solid;
     -fx-border-color:
@@ -211,12 +227,14 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: #C3D5FF;
     -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
 }
+
 .tab{
     -fx-background-insets: 0, 1 1 0 1;
     -fx-background-radius: 5 5 0 0, 4 4 0 0;
     -fx-text-fill:black;
     -fx-font-weight:normal
 }
+
 .tab:selected {
     -fx-background-color: linear-gradient(to top,rgb(18,69,175) 0%,rgb(91,136,224) 70%);/*rgb(0,134,229),rgb(0,100,172)*/
     -fx-background-insets: 0, 1 1 0 1;
@@ -224,7 +242,6 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-text-fill:white;
     -fx-font-weight: bold
 }
-
 
 /* ====== LINE CHART =========================================================== */
 .chart-line-symbol {
@@ -261,3 +278,4 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-repeat: no-repeat;
     -fx-cursor:move;
 }
+/**********************************************************************************/
