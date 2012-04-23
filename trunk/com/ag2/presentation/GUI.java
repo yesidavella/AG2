@@ -204,8 +204,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent arg0) {
 
-                double widthProperties = scpnProperties.getBoundsInParent().getWidth();
-                System.out.println(" small " + widthProperties + " showProperties " + showProperties);
+                double widthProperties = scpnProperties.getBoundsInParent().getWidth();              
                 double increment;
                 if (showProperties) {
                     increment = -0.00003;
@@ -233,8 +232,7 @@ public class GUI extends Scene implements Serializable {
             @Override
             public void handle(ActionEvent arg0) {
 
-                double widthProperties = scpnProperties.getBoundsInParent().getWidth();
-                System.out.println(" grand " + widthProperties + " showProperties " + showProperties);
+                double widthProperties = scpnProperties.getBoundsInParent().getWidth();                
                 double increment;
                 if (showProperties) {
                     increment = -0.0005;
@@ -269,8 +267,7 @@ public class GUI extends Scene implements Serializable {
 
             @Override
             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-
-                System.out.println(arg2.doubleValue());
+          
 
                 if (showProperties) {
                     final double y = (-arg2.doubleValue() / 30) + 80;
@@ -278,10 +275,8 @@ public class GUI extends Scene implements Serializable {
                     Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run() {
-                            System.out.println("slip show");
-                            double value = 100 - y;
-                            System.out.println("y " + value);
+                        public void run() {                            
+                            double value = 100 - y;                         
                             splitPane.setDividerPosition(0, value / 100);
 
                         }
@@ -292,8 +287,7 @@ public class GUI extends Scene implements Serializable {
                     Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run() {
-                            System.out.println("slip hide");
+                        public void run() {                          
                             splitPane.setDividerPosition(0, .90);
                             tlPropertiesSmall.play();
                         }
