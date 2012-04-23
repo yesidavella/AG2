@@ -93,7 +93,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
         };
         btnStop.setDisable(true);
 
-        getStyleClass().add("barraDeHerramientas");
+        getStyleClass().add("bg-general-container");
         setPadding(new Insets(10,6,10,6));
         setHgap(4);
         setPrefColumns(2);

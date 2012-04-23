@@ -49,6 +49,8 @@ public class WindowResizeButton extends Region {
     public WindowResizeButton(final Stage stage, final double stageMinimumWidth, final double stageMinimumHeight) {
         setId("window-resize-button");
         setPrefSize(11,11);
+        setFocusTraversable(false);
+        
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
                 dragOffsetX = (stage.getX() + stage.getWidth()) - e.getScreenX();

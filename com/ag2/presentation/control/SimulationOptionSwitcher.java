@@ -31,7 +31,7 @@ public class SimulationOptionSwitcher extends VBox {
         setPadding(new Insets(5, 5, 5, 5));
         setSpacing(5);
         setAlignment(Pos.CENTER);
-        getStyleClass().add("barraDeHerramientas");
+        getStyleClass().add("bg-general-container");
         toggleGroup = new ToggleGroup();
         rbAg2 = new RadioButton("AG2");
         rbPhosphorus1 = new RadioButton("Ph-1");
