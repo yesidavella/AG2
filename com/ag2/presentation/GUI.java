@@ -208,9 +208,9 @@ public class GUI extends Scene implements Serializable {
                 System.out.println(" small " + widthProperties + " showProperties " + showProperties);
                 double increment;
                 if (showProperties) {
-                    increment = -0.0002;
+                    increment = -0.00003;
 
-                    if (!(widthProperties <= 390)) {
+                    if (!(widthProperties <= 405)) {
                         tlPropertiesSmall.stop();
                         return;
                     }
@@ -239,7 +239,7 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.0005;
 
-                    if (!(widthProperties <= 330)) {
+                    if (!(widthProperties <= 310)) {
                         tlProperties.stop();
                         tlPropertiesSmall.play();
 
@@ -264,54 +264,44 @@ public class GUI extends Scene implements Serializable {
 
         tlPropertiesSmall.setCycleCount(50000);
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
-        
-         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
+
+        brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
 
             @Override
             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 
                 System.out.println(arg2.doubleValue());
 
-                if (showProperties) 
-                {
+                if (showProperties) {
                     final double y = (-arg2.doubleValue() / 30) + 80;
-                 
-                    
-                     Runnable runnable = new Runnable() {
+
+                    Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run() 
-                        {
-                             System.out.println("slip show");
-                             double value = 100-y;
-                                System.out.println("y " + value );
-                            splitPane.setDividerPosition(0, value/100);
+                        public void run() {
+                            System.out.println("slip show");
+                            double value = 100 - y;
+                            System.out.println("y " + value);
+                            splitPane.setDividerPosition(0, value / 100);
+
                         }
                     };
                     Platform.runLater(runnable);
 
-                } else 
-                {               
-
-                   
+                } else {
                     Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run() 
-                        {
-                             System.out.println("slip hide");
-                            splitPane.setDividerPosition(0, .95);
+                        public void run() {
+                            System.out.println("slip hide");
+                            splitPane.setDividerPosition(0, .90);
                             tlPropertiesSmall.play();
                         }
                     };
                     Platform.runLater(runnable);
-                    
-
                 }
-
             }
         });
-
     }
 
     private void settingupProgressIndicator() {
@@ -700,6 +690,7 @@ public class GUI extends Scene implements Serializable {
         grRootWorld.getChildren().add(graphDesignGroup.getGroup());
         scpWorld.setContent(grRootWorld);
         splitPane.getItems().addAll(scpWorld, scpnProperties);
+        splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
@@ -710,6 +701,7 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane createBottomDesign() {
 
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStyleClass().add("cajaInferior");
 
         VBox vBoxProperties = new VBox();
@@ -721,11 +713,11 @@ public class GUI extends Scene implements Serializable {
         tpProperties.setSide(Side.LEFT);
         Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
         Tab tabSimulationProperties = new Tab("Propiedades de simulación");
-       
+
         tabNodeProperties.setClosable(false);
         tabSimulationProperties.setClosable(false);
-       
-        tpProperties.getTabs().addAll(tabSimulationProperties,tabNodeProperties);
+
+        tpProperties.getTabs().addAll(tabSimulationProperties, tabNodeProperties);
 
         entityPropertyTable = new EntityPropertyTableView();
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
@@ -739,9 +731,9 @@ public class GUI extends Scene implements Serializable {
         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().add(vbNavegation);
-        
+
         final Button btnDownUp = new Button("<");
-        
+
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -771,7 +763,7 @@ public class GUI extends Scene implements Serializable {
             }
         });
 
-       VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
+        VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
 
         vBoxProperties.getChildren().addAll(tpProperties, vbxBottomRight, btnDownUp);
         scrollPane.setContent(vBoxProperties);
