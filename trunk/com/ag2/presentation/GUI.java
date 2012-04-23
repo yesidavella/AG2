@@ -703,8 +703,6 @@ public class GUI extends Scene implements Serializable {
         VBox vBoxProperties = new VBox();
         vBoxProperties.setAlignment(Pos.TOP_LEFT);
 
-
-
         TabPane tpProperties = new TabPane();
         tpProperties.setSide(Side.LEFT);
         Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
@@ -722,7 +720,7 @@ public class GUI extends Scene implements Serializable {
         tabSimulationProperties.setContent(tbSimulationProperties);
 
         VBox vbxBottomRight = new VBox(10);
-        vbxBottomRight.getStyleClass().add("cajaInferior");
+//        vbxBottomRight.getStyleClass().add("cajaInferior");
 
         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
         createMapNavigationPanel(vbNavegation);
