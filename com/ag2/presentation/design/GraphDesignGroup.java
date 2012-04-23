@@ -418,7 +418,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
-                        path.setFill(Color.web("#C1BBB1"));//A0A5CE,B7B7B7,A4A4A4
+                        path.setFill(Color.web("#C3B8A5"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1 
                         //Si le va cambiar el color por lo menos deje el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
@@ -434,23 +434,23 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
             add(texts);
 
-            Stop[] stops = {
-                new Stop(0.1, Color.web("#9DCAFF")),
-                new Stop(0.6, Color.web("#005AFF")),
-                new Stop(0.8, Color.BLUE)
-            };
-            Rectangle backgroudRec = new Rectangle(360, 175,
-                    new RadialGradient(-90, 0.7, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE, stops));
+//            Stop[] stops = {
+//                new Stop(0.1, Color.web("#9DCAFF")),
+//                new Stop(0.6, Color.web("#005AFF")),
+//                new Stop(0.8, Color.BLUE)
+//            };
+//            Rectangle backgroundRec = new Rectangle(360, 175,
+//                    new RadialGradient(-90, 0.7, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE, stops));
+            Rectangle backgroundRec = new Rectangle(360, 175);
+            backgroundRec.setId("world-ocean");
+            
+            backgroundRec.setTranslateX(-backgroundRec.getWidth() / 2);
+            backgroundRec.setTranslateY(-backgroundRec.getHeight() / 2);
+            backgroundRec.setScaleX(MAP_SCALE);
+            backgroundRec.setScaleY(MAP_SCALE);
 
-            backgroudRec.setTranslateX(-backgroudRec.getWidth() / 2);
-            backgroudRec.setTranslateY(-backgroudRec.getHeight() / 2);
-            backgroudRec.setScaleX(MAP_SCALE);
-            backgroudRec.setScaleY(MAP_SCALE);
-
-            add(backgroudRec);
-            backgroudRec.toBack();
-
-
+            add(backgroundRec);
+            backgroundRec.toBack();
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
