@@ -15,6 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
@@ -97,6 +100,7 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane scpMenuTools;
     private SimulationOptionSwitcher simulationOptionSwitcher = new SimulationOptionSwitcher();
     private WindowResizeButton windowResizeButton;
+    private Timeline tlPropertiesSmall = new Timeline();
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -184,7 +188,7 @@ public class GUI extends Scene implements Serializable {
         scpnProperties = createBottomDesign();
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        splitPane.setDividerPosition(0, 99);
+
         splitPane.setOrientation(Orientation.HORIZONTAL);
         setSplitPaneAnimation();
 
@@ -193,21 +197,32 @@ public class GUI extends Scene implements Serializable {
     }
 
     private void setSplitPaneAnimation() {
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(15), new EventHandler<ActionEvent>() {
+
+
+       
+      
+
+        KeyFrame keyFrameSmall = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent arg0) {
-                double increment = 0.0252;
+
+                double widthProperties = scpnProperties.getBoundsInParent().getWidth();
+                System.out.println(" small " + widthProperties + " showProperties " + showProperties);
+                double increment;
                 if (showProperties) {
-                    increment = -0.0252;
-//                     System.out.println(" show "+splitPane.getDividerPositions()[0]);
-                    if (splitPane.getDividerPositions()[0] <= .68) {
+                    increment = -0.0002;
+
+                    if (!(widthProperties <= 402)) {
+                        tlPropertiesSmall.stop();
                         return;
                     }
                 } else {
-                    increment = 0.0252;
-//                    System.out.println(" Hide "+splitPane.getDividerPositions()[0]);
-                    if (splitPane.getDividerPositions()[0] >= 0.99) {
+                    increment = 0.00003;
+
+                    if (!(widthProperties > 46)) {
+
+                        tlPropertiesSmall.stop();
                         return;
                     }
                 }
@@ -215,8 +230,91 @@ public class GUI extends Scene implements Serializable {
             }
         });
 
-        tlProperties.setCycleCount(150);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+
+                double widthProperties = scpnProperties.getBoundsInParent().getWidth();
+                System.out.println(" grand " + widthProperties + " showProperties " + showProperties);
+                double increment;
+                if (showProperties) {
+                    increment = -0.0005;
+
+                    if (!(widthProperties <= 350)) {
+                        tlProperties.stop();
+                        tlPropertiesSmall.play();
+
+                        return;
+
+                    }
+                } else {
+                    increment = 0.0003;
+
+                    if (!(widthProperties > 90)) {
+                        tlProperties.stop();
+                        tlPropertiesSmall.play();
+                        return;
+                    }
+                }
+                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
+            }
+        });
+
+        tlProperties.setCycleCount(50000);
         tlProperties.getKeyFrames().add(keyFrame);
+
+        tlPropertiesSmall.setCycleCount(50000);
+        tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
+        
+         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+
+                System.out.println(arg2.doubleValue());
+
+                if (showProperties) 
+                {
+                    final double y = (-arg2.doubleValue() / 30) + 80;
+                 
+                    
+                     Runnable runnable = new Runnable() {
+
+                        @Override
+                        public void run() 
+                        {
+                             System.out.println("slip show");
+                             double value = 100-y;
+                                System.out.println("y " + value );
+                            splitPane.setDividerPosition(0, value/100);
+                        }
+                    };
+                    Platform.runLater(runnable);
+
+                } else 
+                {               
+
+                   
+                    Runnable runnable = new Runnable() {
+
+                        @Override
+                        public void run() 
+                        {
+                             System.out.println("slip hide");
+                            splitPane.setDividerPosition(0, .95);
+                            tlPropertiesSmall.play();
+                        }
+                    };
+                    Platform.runLater(runnable);
+                    
+
+                }
+
+            }
+        });
+
     }
 
     private void settingupProgressIndicator() {
@@ -374,7 +472,7 @@ public class GUI extends Scene implements Serializable {
         MenuItem openMenuItem = new MenuItem("Abrir");
         MenuItem saveMenuItem = new MenuItem("Guardar");
         MenuItem closeMenuItem = new MenuItem("Cerrar");
-        
+
         newMenuItem.getStyleClass().add("menu-item-ag2");
         openMenuItem.getStyleClass().add("menu-item-ag2");
         saveMenuItem.getStyleClass().add("menu-item-ag2");
@@ -382,7 +480,7 @@ public class GUI extends Scene implements Serializable {
 
         MenuItem helpMenuItem = new MenuItem("Ayuda");
         MenuItem aboutMenuItem = new MenuItem("Acerca del Proyecto AG2...");
-        
+
         helpMenuItem.getStyleClass().add("menu-item-ag2");
         aboutMenuItem.getStyleClass().add("menu-item-ag2");
 
@@ -447,7 +545,7 @@ public class GUI extends Scene implements Serializable {
         //La barra de menus
         MenuBar mbarMainMenuBar = new MenuBar();
         mbarMainMenuBar.setId("menu-bar");
-        
+
         mbarMainMenuBar.getMenus().addAll(fileMenu, helpFile);
 
         hBox.getChildren().add(mbarMainMenuBar);
