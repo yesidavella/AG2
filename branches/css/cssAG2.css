@@ -1,4 +1,7 @@
-.ver-borde-rojo{/*Para ver el borde cuando se desarrolla TEMPORAL*/
+/*Colores de azules del tema, el azul de abajo de los botones rgb(18,69,175)
+y del de arriba rgb(91,136,224)*/
+
+.ver-borde-rojo{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
     -fx-border-style: solid;
     -fx-border-color:red;
 }
@@ -33,15 +36,16 @@
     -fx-font-weight: bold
 }
 
-.contenedorDeMenus{
-    -fx-background-color: linear-gradient(to left, #E3E7FF,#B2BEFF,#B2BEFF,#B2BEFF,#E3E7FF);
+.bg-bigContainer-menuBar{
+    -fx-background-color: linear-gradient(to bottom, derive(rgb(18,69,175),-30%), derive(rgb(91,136,224),10%));
 }
 /**********************************************************************/
+
 /*Todo lo referente con los menus*/
 .menu-item-ag2 {
     -fx-font-weight: normal;
 }
-.menu-item-ag2:hover {
+.menu-item-ag2:hover,.menu-item-ag2:focused {
     -fx-background-color: linear-gradient(to top,rgb(18,69,175) 0%,rgb(91,136,224) 70%);
     -fx-text-fill:white;
     -fx-font-weight: bold
@@ -56,12 +60,12 @@
 
 /**********************************************************************/
 
-.barraDeHerramientas{
-    -fx-base: #B9D7FF;
-    -fx-border-color: #687FFF;
+.bg-general-container{
+/*    -fx-base: rgb(91,136,224);*/
+    -fx-border-color: rgb(91,136,224);
     -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-color: linear-gradient(to top,#B2BEFF,#E3E7FF,#B2BEFF);
+    -fx-border-radius: 3;
+    -fx-background-color: linear-gradient(from 0% 20% to 100% 80%, derive(rgb(91,136,224),90%),derive(rgb(91,136,224),70%), derive(rgb(91,136,224),90%));
 }
 
 #titleApplication{
@@ -71,23 +75,8 @@
     /*    -fx-effect: dropshadow( two-pass-box , #B2BEFF, 10, 0.0 , 2 , 4);*/
 }
 
-TableView{
-    /*    -fx-base: #b6e7c9;*/
-    -fx-border-radius: 5;
-    -fx-border-width: 1;
-}
-
-.cajaInferior{
-    -fx-border-color: #687FFF;
-    -fx-border-width: 1;
-    -fx-insets: 20, 40, 60, 80;
-    -fx-padding: 5;
-    -fx-border-radius: 5;
-    -fx-background-color: linear-gradient(to top,#B2BEFF,#E3E7FF,#B2BEFF);
-}
-
-.separadorBarraDeHerramientas{
-    -fx-background-color: #687FFF;
+.separator-toolbar{
+    -fx-background-color: rgb(18,69,175);
     -fx-border-style: dotted;
     -fx-border-width: 0.1;
 }
@@ -112,7 +101,7 @@ TableView{
     -fx-border-width: 2;
 }
 #scrollPane-menu-tools{
-    -fx-background-color:linear-gradient(from 0% 49% to 100% 51%,#B0BFFF,#D2DAFF);
+    -fx-background-color:linear-gradient(from 0% 49% to 100% 51%,derive(rgb(18,69,175),80%), derive(rgb(91,136,224),85%));
 }
 
 .nodoNoSeleccionado{
@@ -192,7 +181,7 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-repeat: no-repeat;
 }
 
-#ModalDimmer {
+#modalDimmer {
     -fx-background-color: rgb(0,0,0,0.5);
 }
 
