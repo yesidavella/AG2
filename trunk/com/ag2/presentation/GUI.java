@@ -199,9 +199,6 @@ public class GUI extends Scene implements Serializable {
     private void setSplitPaneAnimation() {
 
 
-       
-      
-
         KeyFrame keyFrameSmall = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
 
             @Override
@@ -213,7 +210,7 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.0002;
 
-                    if (!(widthProperties <= 402)) {
+                    if (!(widthProperties <= 390)) {
                         tlPropertiesSmall.stop();
                         return;
                     }
@@ -242,7 +239,7 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.0005;
 
-                    if (!(widthProperties <= 350)) {
+                    if (!(widthProperties <= 330)) {
                         tlProperties.stop();
                         tlPropertiesSmall.play();
 
@@ -724,17 +721,14 @@ public class GUI extends Scene implements Serializable {
         tpProperties.setSide(Side.LEFT);
         Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
         Tab tabSimulationProperties = new Tab("Propiedades de simulación");
-        Tab tabNavigation = new Tab("Panel de navegación");
+       
         tabNodeProperties.setClosable(false);
         tabSimulationProperties.setClosable(false);
-        tabNavigation.setClosable(false);
-        tpProperties.getTabs().addAll(tabNodeProperties, tabSimulationProperties, tabNavigation);
-
-
+       
+        tpProperties.getTabs().addAll(tabSimulationProperties,tabNodeProperties);
 
         entityPropertyTable = new EntityPropertyTableView();
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
-
 
         tabNodeProperties.setContent(entityPropertyTable);
         tabSimulationProperties.setContent(tbSimulationProperties);
@@ -745,14 +739,9 @@ public class GUI extends Scene implements Serializable {
         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().add(vbNavegation);
-
-
-
-        tabNavigation.setContent(vbxBottomRight);
-
-
+        
         final Button btnDownUp = new Button("<");
-
+        
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -782,9 +771,9 @@ public class GUI extends Scene implements Serializable {
             }
         });
 
+       VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
 
-        vBoxProperties.getChildren().addAll(tpProperties, btnDownUp);
-
+        vBoxProperties.getChildren().addAll(tpProperties, vbxBottomRight, btnDownUp);
         scrollPane.setContent(vBoxProperties);
         return scrollPane;
     }
@@ -870,14 +859,14 @@ public class GUI extends Scene implements Serializable {
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
 
         TableColumn tbcolPropValue = new TableColumn("VALOR");
-        tbcolPropValue.setMinWidth(160);
-        tbcolPropValue.setPrefWidth(160);
+        tbcolPropValue.setMinWidth(140);
+        tbcolPropValue.setPrefWidth(140);
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
         tbwSimulationProperties.getColumns().addAll(tbcolPropName, tbcolPropValue);
 
 
-        tbwSimulationProperties.setMinHeight(469);
+        tbwSimulationProperties.setMinHeight(400);
 //        tbwSimulationProperties.setPrefWidth(345);
 //
 //        tbwSimulationProperties.setPrefHeight(200);
@@ -887,13 +876,13 @@ public class GUI extends Scene implements Serializable {
 
     public void createMapNavigationPanel(VBox vBox) {
 
-        gpMapNavegation.setPadding(new Insets(10, 10, 10, 10));
-        gpMapNavegation.setVgap(5);
+        gpMapNavegation.setPadding(new Insets(5, 5, 5, 5));
+        gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
         gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
 
         Label lbTitle = new Label("LISTAS DE NAVEGACION");
-        lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        lbTitle.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
 
         final ChoiceBox cbClients = new ChoiceBox(graphDesignGroup.getClientsObservableList());
         final ChoiceBox cbResources = new ChoiceBox(graphDesignGroup.getResourcesObservableList());
@@ -911,13 +900,13 @@ public class GUI extends Scene implements Serializable {
         Button btnIrServiceNodes = new Button("ir");
 
         Label lbRouters = new Label("Enrutadores");
-        lbRouters.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        lbRouters.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
         Label lbClientes = new Label("Clientes");
-        lbClientes.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        lbClientes.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
         Label lbRecursos = new Label("Recursos");
-        lbRecursos.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        lbRecursos.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
         Label lbNodosServicio = new Label("Agendadores");
-        lbNodosServicio.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+        lbNodosServicio.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
 
         lbRouters.setMinWidth(80);
         lbClientes.setMinWidth(80);

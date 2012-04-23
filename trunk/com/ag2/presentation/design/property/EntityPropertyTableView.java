@@ -31,6 +31,7 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
         valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
         valueTableColumn.setMinWidth(160);
         valueTableColumn.setPrefWidth(160);
+        
 
       
         
