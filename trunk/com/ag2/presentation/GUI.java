@@ -133,7 +133,7 @@ public class GUI extends Scene implements Serializable {
         createSceneBody();
 
         modalDimmer = new StackPane();
-        modalDimmer.setId("ModalDimmer");
+        modalDimmer.setId("modalDimmer");
         modalDimmer.setVisible(false);
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
@@ -443,9 +443,9 @@ public class GUI extends Scene implements Serializable {
         VBox vboxMainBar = new VBox();
         vboxMainBar.getChildren().add(tobWindow);
 
-        HBox hBox = new HBox();
-        hBox.setPadding(new Insets(3, 0, 3, 3));
-        hBox.getStyleClass().add("contenedorDeMenus");
+        HBox hbBigContainerMenuBar = new HBox();
+        hbBigContainerMenuBar.setPadding(new Insets(3, 0, 3, 3));
+        hbBigContainerMenuBar.getStyleClass().add("bg-bigContainer-menuBar");
 
         //Items de menus y menus
         Menu fileMenu = new Menu("Archivo");
@@ -531,9 +531,9 @@ public class GUI extends Scene implements Serializable {
 
         mbarMainMenuBar.getMenus().addAll(fileMenu, helpFile);
 
-        hBox.getChildren().add(mbarMainMenuBar);
+        hbBigContainerMenuBar.getChildren().add(mbarMainMenuBar);
 
-        vboxMainBar.getChildren().add(hBox);
+        vboxMainBar.getChildren().add(hbBigContainerMenuBar);
         brpRoot.setTop(vboxMainBar);
     }
 
@@ -544,7 +544,7 @@ public class GUI extends Scene implements Serializable {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(4);
-        gridPane.getStyleClass().add("barraDeHerramientas");
+        gridPane.getStyleClass().add("bg-general-container");
         createUtilButtons(gridPane);
         createNodeButtons(gridPane);
 
@@ -600,7 +600,7 @@ public class GUI extends Scene implements Serializable {
         grdPnToolsBar.getChildren().add(btnPlusZoom);
 
         Separator separadorHerramientas = new Separator(Orientation.HORIZONTAL);
-        separadorHerramientas.getStyleClass().add("separadorBarraDeHerramientas");
+        separadorHerramientas.getStyleClass().add("separator-toolbar");
 
         GridPane.setConstraints(separadorHerramientas, 0, 3);
         separadorHerramientas.setValignment(VPos.CENTER);
@@ -698,7 +698,7 @@ public class GUI extends Scene implements Serializable {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.getStyleClass().add("cajaInferior");
+        scrollPane.getStyleClass().add("bg-general-container");
 
         VBox vBoxProperties = new VBox();
         vBoxProperties.setAlignment(Pos.TOP_LEFT);
