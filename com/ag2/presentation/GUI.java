@@ -74,7 +74,6 @@ public class GUI extends Scene implements Serializable {
     private ToggleButtonAg2 btnMinusZoom;
     private ToggleButtonAg2 btnPlusZoom;
     private Group grRootWorld = new Group();
-    private VBox vbNavegation = new VBox();
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
     private Tab tabChartsResourceCPU = new Tab();
@@ -102,7 +101,7 @@ public class GUI extends Scene implements Serializable {
     private WindowResizeButton windowResizeButton;
     private Timeline tlPropertiesSmall = new Timeline();
     private boolean hideAgainProperties = false;
-    private  Button btnDownUp = new Button("<");
+    private Button btnDownUp = new Button("<");
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -187,7 +186,7 @@ public class GUI extends Scene implements Serializable {
         brpRoot.setLeft(scpMenuTools);
 
         //Diseño central
-        scpnProperties = createBottomDesign();
+        scpnProperties = createRightDesign();
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
@@ -267,8 +266,8 @@ public class GUI extends Scene implements Serializable {
         tlPropertiesSmall.setCycleCount(50000);
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
 
-                
-        
+
+
 
         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
 
@@ -276,17 +275,15 @@ public class GUI extends Scene implements Serializable {
             public void changed(ObservableValue<? extends Number> arg0, final Number arg1, final Number arg2) {
 
 
-                if (showProperties) 
-                {           
-                        
-                    final double y = (arg2.doubleValue() * 0.0318342D)  +24.48D  ;
-                    
+                if (showProperties) {
+
+                    final double y = (arg2.doubleValue() * 0.0318342D) + 24.48D;
+
                     Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run()
-                        {
-                            
+                        public void run() {
+
                             splitPane.setDividerPosition(0, y / 100);
                         }
                     };
@@ -307,26 +304,23 @@ public class GUI extends Scene implements Serializable {
                 }
             }
         });
-        
-        
+
+
         scpWorld.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if(hideAgainProperties && showProperties)
-                {
-                    showProperties=!showProperties; 
+            public void handle(MouseEvent arg0) {
+                if (hideAgainProperties && showProperties) {
+                    showProperties = !showProperties;
                     tlProperties.play();
-                    hideAgainProperties=false;
-                    
-                     btnDownUp.setText("<");
+                    hideAgainProperties = false;
+
+                    btnDownUp.setText("<");
                 }
             }
-            
         });
-               
-         
+
+
     }
 
     private void settingupProgressIndicator() {
@@ -445,7 +439,7 @@ public class GUI extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
         graphDesignGroup.setScrollPane(scpWorld);
 
-        createMapNavigationPanel(vbNavegation);
+        createMapNavigationPanel();
         addScene(this);
     }
 
@@ -723,14 +717,14 @@ public class GUI extends Scene implements Serializable {
         tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
-    private ScrollPane createBottomDesign() {
+    private ScrollPane createRightDesign() {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStyleClass().add("bg-general-container");
 
-        VBox vBoxProperties = new VBox();
-        vBoxProperties.setAlignment(Pos.TOP_LEFT);
+        VBox vbxProperties = new VBox(5);
+        vbxProperties.setAlignment(Pos.TOP_LEFT);
 
         TabPane tpProperties = new TabPane();
         tpProperties.setSide(Side.LEFT);
@@ -749,13 +743,12 @@ public class GUI extends Scene implements Serializable {
         tabSimulationProperties.setContent(tbSimulationProperties);
 
         VBox vbxBottomRight = new VBox(10);
-//        vbxBottomRight.getStyleClass().add("cajaInferior");
-
+        VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
-        createMapNavigationPanel(vbNavegation);
-        vbxBottomRight.getChildren().add(vbNavegation);
+        vbxBottomRight.getStyleClass().add("blanco");
 
-       
+        createMapNavigationPanel();
+        vbxBottomRight.getChildren().add(gpMapNavegation);
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -780,17 +773,16 @@ public class GUI extends Scene implements Serializable {
                 if (!showProperties) {
                     showProperties = !showProperties;
                     tlProperties.play();
-                    hideAgainProperties= true;
+                    hideAgainProperties = true;
                     btnDownUp.setText(">");
 
                 }
             }
         });
 
-        VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
+        vbxProperties.getChildren().addAll(tpProperties, vbxBottomRight, btnDownUp);
+        scrollPane.setContent(vbxProperties);
 
-        vBoxProperties.getChildren().addAll(tpProperties, vbxBottomRight, btnDownUp);
-        scrollPane.setContent(vBoxProperties);
         return scrollPane;
     }
 
@@ -890,14 +882,16 @@ public class GUI extends Scene implements Serializable {
         return tbwSimulationProperties;
     }
 
-    public void createMapNavigationPanel(VBox vBox) {
+    public void createMapNavigationPanel() {
 
-        gpMapNavegation.setPadding(new Insets(5, 5, 5, 5));
+        gpMapNavegation.setPadding(new Insets(3, 5, 5, 5));
+        gpMapNavegation.setAlignment(Pos.BASELINE_CENTER);
         gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
-        gpMapNavegation.getStyleClass().addAll("boxLogosVerticalGradient");
+        gpMapNavegation.getStyleClass().addAll("a");
 
         Label lbTitle = new Label("LISTAS DE NAVEGACION");
+        lbTitle.setId("title-nav-map");
         lbTitle.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
 
         final ChoiceBox cbClients = new ChoiceBox(graphDesignGroup.getClientsObservableList());
@@ -915,13 +909,13 @@ public class GUI extends Scene implements Serializable {
         Button btnIrSwichtes = new Button("ir");
         Button btnIrServiceNodes = new Button("ir");
 
-        Label lbRouters = new Label("Enrutadores");
+        Label lbRouters = new Label("Enrutadores:");
         lbRouters.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
-        Label lbClientes = new Label("Clientes");
+        Label lbClientes = new Label("Clientes:");
         lbClientes.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
-        Label lbRecursos = new Label("Recursos");
+        Label lbRecursos = new Label("Recursos:");
         lbRecursos.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
-        Label lbNodosServicio = new Label("Agendadores");
+        Label lbNodosServicio = new Label("Agendadores:");
         lbNodosServicio.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
 
         lbRouters.setMinWidth(80);
@@ -962,9 +956,9 @@ public class GUI extends Scene implements Serializable {
         GridPane.setConstraints(btnIrServiceNodes, 2, 5);
         gpMapNavegation.getChildren().add(btnIrServiceNodes);
 
-        if (!vBox.getChildren().contains(gpMapNavegation)) {
-            vBox.getChildren().add(gpMapNavegation);
-        }
+//        if (!vBox.getChildren().contains(gpMapNavegation)) {
+//            vBox.getChildren().add(gpMapNavegation);
+//        }
 
         setEventGoBtn(btnIrClients, cbClients);
         setEventGoBtn(btnIrServiceNodes, cbServiceNodes);
