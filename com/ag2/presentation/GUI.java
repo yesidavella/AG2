@@ -101,6 +101,8 @@ public class GUI extends Scene implements Serializable {
     private SimulationOptionSwitcher simulationOptionSwitcher = new SimulationOptionSwitcher();
     private WindowResizeButton windowResizeButton;
     private Timeline tlPropertiesSmall = new Timeline();
+    private boolean hideAgainProperties = false;
+    private  Button btnDownUp = new Button("<");
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -264,15 +266,7 @@ public class GUI extends Scene implements Serializable {
 
         tlPropertiesSmall.setCycleCount(50000);
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
-        
-        scpnProperties.widthProperty().addListener(new ChangeListener<Object>() {
 
-            @Override
-            public void changed(ObservableValue<? extends Object> arg0, Object arg1, Object arg2) {
-             //  System.out.println("actual prop  "+splitPane.getDividerPositions()[0]);
-            }
-        });
-           
                 
         
 
@@ -283,13 +277,10 @@ public class GUI extends Scene implements Serializable {
 
 
                 if (showProperties) 
-                {
-                    
-                   
-                    
-                    
+                {           
+                        
                     final double y = (arg2.doubleValue() * 0.0318342D)  +24.48D  ;
-                     System.out.println("actual  "+y);
+                    
                     Runnable runnable = new Runnable() {
 
                         @Override
@@ -316,6 +307,26 @@ public class GUI extends Scene implements Serializable {
                 }
             }
         });
+        
+        
+        scpWorld.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+                if(hideAgainProperties && showProperties)
+                {
+                    showProperties=!showProperties; 
+                    tlProperties.play();
+                    hideAgainProperties=false;
+                    
+                     btnDownUp.setText("<");
+                }
+            }
+            
+        });
+               
+         
     }
 
     private void settingupProgressIndicator() {
@@ -744,7 +755,7 @@ public class GUI extends Scene implements Serializable {
         createMapNavigationPanel(vbNavegation);
         vbxBottomRight.getChildren().add(vbNavegation);
 
-        final Button btnDownUp = new Button("<");
+       
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -769,6 +780,7 @@ public class GUI extends Scene implements Serializable {
                 if (!showProperties) {
                     showProperties = !showProperties;
                     tlProperties.play();
+                    hideAgainProperties= true;
                     btnDownUp.setText(">");
 
                 }
