@@ -288,7 +288,7 @@ public class GUI extends Scene implements Serializable {
                    
                     
                     
-                    final double y = (arg2.doubleValue() * 0.0318342D)  +24.558968D  ;
+                    final double y = (arg2.doubleValue() * 0.0318342D)  +24.48D  ;
                      System.out.println("actual  "+y);
                     Runnable runnable = new Runnable() {
 
