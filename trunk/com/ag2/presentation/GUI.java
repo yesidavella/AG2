@@ -209,17 +209,17 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.00003;
 
-                    if (!(widthProperties <= 405)) {
+                    if (!(widthProperties <= 401)) {
                         tlPropertiesSmall.stop();
                         return;
                     }
                 } else {
                     increment = 0.00003;
 
-                      System.out.println( " X "+widthProperties  );
-                    if (!(widthProperties > 46)) {
-                        
-                      
+
+                    if (!(widthProperties > 39)) {
+
+
                         tlPropertiesSmall.stop();
                         return;
                     }
@@ -239,7 +239,7 @@ public class GUI extends Scene implements Serializable {
                 if (showProperties) {
                     increment = -0.0005;
 
-                    if (!(widthProperties <= 310)) {
+                    if (!(widthProperties <= 350)) {
                         tlProperties.stop();
                         tlPropertiesSmall.play();
 
@@ -264,23 +264,39 @@ public class GUI extends Scene implements Serializable {
 
         tlPropertiesSmall.setCycleCount(50000);
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
+        
+        scpnProperties.widthProperty().addListener(new ChangeListener<Object>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Object> arg0, Object arg1, Object arg2) {
+             //  System.out.println("actual prop  "+splitPane.getDividerPositions()[0]);
+            }
+        });
+           
+                
+        
 
         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
 
             @Override
-            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+            public void changed(ObservableValue<? extends Number> arg0, final Number arg1, final Number arg2) {
 
 
-                if (showProperties) {
-                    final double y = (-arg2.doubleValue() / 30) + 80;
-
+                if (showProperties) 
+                {
+                    
+                   
+                    
+                    
+                    final double y = (arg2.doubleValue() * 0.0318342D)  +24.558968D  ;
+                     System.out.println("actual  "+y);
                     Runnable runnable = new Runnable() {
 
                         @Override
-                        public void run() {
-                            double value = 100 - y;
-                            splitPane.setDividerPosition(0, value / 100);
-                            tlPropertiesSmall.play();
+                        public void run()
+                        {
+                            
+                            splitPane.setDividerPosition(0, y / 100);
                         }
                     };
                     Platform.runLater(runnable);
@@ -290,8 +306,10 @@ public class GUI extends Scene implements Serializable {
 
                         @Override
                         public void run() {
-                            splitPane.setDividerPosition(0, .95);
-                            tlPropertiesSmall.play();
+                            if (arg2.doubleValue() > arg1.doubleValue()) {
+                                splitPane.setDividerPosition(0, .95);
+                                tlPropertiesSmall.play();
+                            }
                         }
                     };
                     Platform.runLater(runnable);
