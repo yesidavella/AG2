@@ -2,9 +2,13 @@
 y del de arriba rgb(91,136,224)*/
 .root {
     -fx-yesid:green;
-    -fx-base:lightgray;
+/*    -fx-base:white;*/
 }
 
+.ver-borde-verde{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
+    -fx-border-style: solid;
+    -fx-border-color:green;
+}
 .ver-borde-rojo{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
     -fx-border-style: solid;
     -fx-border-color:red;
@@ -207,6 +211,8 @@ ProgressBar progress-bar:indeterminate .bar {
     /* TODO: for some reason, this doesn't scale. */
     -fx-font-size: 0.95em; /* 13pt - 1 more than the default font */
     -fx-size: 20;
+/*    -fx-font-style:italic;*/
+/*    -fx-font-family:Courier,monospace;*/
     -fx-background-color: null;
     -fx-border-style: solid;
     -fx-border-color:
@@ -279,3 +285,31 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-cursor:move;
 }
 /**********************************************************************************/
+.a{
+    -fx-background-color: linear-gradient(to top,rgb(18,69,175) 0%,rgb(91,136,224) 70%);/*rgb(0,134,229),rgb(0,100,172)*/
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 7;
+    -fx-text-fill:white;
+    -fx-font-weight: bold    
+}
+.blanco{
+   -fx-background-color:lightgray;
+   -fx-background-radius:6;
+}
+
+.a .label{
+/*    -fx-text-fill:red;*/
+    -fx-alignment:center-right
+}
+
+#title-nav-map{
+    -fx-label-padding:3;
+    -fx-text-fill:white;
+}
+
+.choice-box {
+
+    -fx-background-color: red, -fx-outer-border, -fx-inner-border, blue;
+
+
+}
