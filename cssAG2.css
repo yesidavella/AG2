@@ -284,22 +284,22 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-repeat: no-repeat;
     -fx-cursor:move;
 }
-/**********************************************************************************/
-.a{
-    -fx-background-color: linear-gradient(to top,rgb(18,69,175) 0%,rgb(91,136,224) 70%);/*rgb(0,134,229),rgb(0,100,172)*/
+
+/***************MAPA DE NAVEGACION Y ELEMENTOS INTERNOS************************/
+
+.bg-map-navigation-container{
+   -fx-background-color:lightgray;
+   -fx-background-radius:6;
+/*    -fx-border-style: solid;
+    -fx-border-color:green;*/
+}
+
+.bg-map-navigation{
+    -fx-background-color: linear-gradient(to top,derive(rgb(18,69,175),30%) 0%,derive(rgb(91,136,224),50%) 70%);
     -fx-background-insets: 0, 1 1 0 1;
     -fx-background-radius: 7;
     -fx-text-fill:white;
     -fx-font-weight: bold    
-}
-.blanco{
-   -fx-background-color:lightgray;
-   -fx-background-radius:6;
-}
-
-.a .label{
-/*    -fx-text-fill:red;*/
-    -fx-alignment:center-right
 }
 
 #title-nav-map{
@@ -307,9 +307,41 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-text-fill:white;
 }
 
-.choice-box {
-
-    -fx-background-color: red, -fx-outer-border, -fx-inner-border, blue;
-
-
+.bg-map-navigation .label{
+    -fx-text-fill:white;
+    -fx-alignment:center-right
 }
+/*
+.choice-box {
+    -fx-background-color: red, -fx-outer-border, -fx-inner-border, blue;
+}
+
+.button {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ButtonSkin";
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em;  2 10 3 10 
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-graphic-vpos: CENTER;
+}
+
+.button:focused {
+    -fx-color: -fx-focused-base;
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius:  6.4, 5, 4, 3;
+}
+
+.a .button:hover {
+    -fx-color: red;
+}
+
+.button:armed {
+    -fx-color: -fx-pressed-base;
+}
+
+.button:default {
+    -fx-base: -fx-accent;*/
+/*}*/
