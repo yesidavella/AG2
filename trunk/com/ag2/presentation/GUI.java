@@ -91,6 +91,7 @@ public class GUI extends Scene implements Serializable {
     private BorderPane brpRoot;
     private StackPane modalDimmer;
     private HBox hBoxProgressIndicator = new HBox();
+    private VBox vbxBottomRight = new VBox(10);
     private ChartsResultsCPU chartsResultsCPU;
     private ChartsResultsBuffer chartsResultsBuffer;
     private ScrollPane scpnProperties;
@@ -439,7 +440,7 @@ public class GUI extends Scene implements Serializable {
         executePane.setGroup(graphDesignGroup.getGroup());
         graphDesignGroup.setScrollPane(scpWorld);
 
-        createMapNavigationPanel();
+        createMapNavigationPanel(vbxBottomRight);
         addScene(this);
     }
 
@@ -742,13 +743,12 @@ public class GUI extends Scene implements Serializable {
         tabNodeProperties.setContent(entityPropertyTable);
         tabSimulationProperties.setContent(tbSimulationProperties);
 
-        VBox vbxBottomRight = new VBox(10);
         VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
         vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
-        vbxBottomRight.getStyleClass().add("blanco");
+        vbxBottomRight.getStyleClass().add("bg-map-navigation-container");
 
-        createMapNavigationPanel();
-        vbxBottomRight.getChildren().add(gpMapNavegation);
+        createMapNavigationPanel(vbxBottomRight);
+//        vbxBottomRight.getChildren().add(gpMapNavegation);
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -882,13 +882,13 @@ public class GUI extends Scene implements Serializable {
         return tbwSimulationProperties;
     }
 
-    public void createMapNavigationPanel() {
+    public void createMapNavigationPanel(VBox vbxBottomRight) {
 
         gpMapNavegation.setPadding(new Insets(3, 5, 5, 5));
         gpMapNavegation.setAlignment(Pos.BASELINE_CENTER);
         gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
-        gpMapNavegation.getStyleClass().addAll("a");
+        gpMapNavegation.getStyleClass().addAll("bg-map-navigation");
 
         Label lbTitle = new Label("LISTAS DE NAVEGACION");
         lbTitle.setId("title-nav-map");
@@ -956,9 +956,9 @@ public class GUI extends Scene implements Serializable {
         GridPane.setConstraints(btnIrServiceNodes, 2, 5);
         gpMapNavegation.getChildren().add(btnIrServiceNodes);
 
-//        if (!vBox.getChildren().contains(gpMapNavegation)) {
-//            vBox.getChildren().add(gpMapNavegation);
-//        }
+        if (!vbxBottomRight.getChildren().contains(gpMapNavegation)) {
+            vbxBottomRight.getChildren().add(gpMapNavegation);
+        }
 
         setEventGoBtn(btnIrClients, cbClients);
         setEventGoBtn(btnIrServiceNodes, cbServiceNodes);
