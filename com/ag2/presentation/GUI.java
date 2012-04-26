@@ -181,7 +181,7 @@ public class GUI extends Scene implements Serializable {
         scpMenuTools.setFitToHeight(true);
 
         settingupProgressIndicator();
-   
+
         contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher, hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
         brpRoot.setLeft(scpMenuTools);
@@ -839,11 +839,11 @@ public class GUI extends Scene implements Serializable {
 //
 ////        DropShadow dropShadow = new DropShadow();
 ////        vbLogos.setEffect(dropShadow);
-        
+
         vbLogos = new VBox(5);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
-        
+
         ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logos.gif"));
         ivAG2.setEffect(new DropShadow());
         vbLogos.getChildren().addAll(ivAG2);
@@ -897,7 +897,7 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.setAlignment(Pos.BASELINE_CENTER);
         gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
-        gpMapNavegation.getStyleClass().addAll("bg-map-navigation","bg-map-navigation-container");
+        gpMapNavegation.getStyleClass().addAll("bg-map-navigation", "bg-map-navigation-container");
 //        gpMapNavegation.setGridLinesVisible(true);
 
         Label lbTitle = new Label("LISTAS DE NAVEGACION");
@@ -914,10 +914,15 @@ public class GUI extends Scene implements Serializable {
         cbSwicthes.setMinWidth(150);
         cbServiceNodes.setMinWidth(150);
 
-        Button btnIrClients = new Button("ir");
-        Button btnIrResources = new Button("ir");
-        Button btnIrSwichtes = new Button("ir");
-        Button btnIrServiceNodes = new Button("ir");
+        Button btnIrClients = new Button();
+        Button btnIrResources = new Button();
+        Button btnIrSwichtes = new Button();
+        Button btnIrServiceNodes = new Button();
+
+        btnIrClients.getStyleClass().add("go-btn");
+        btnIrResources.getStyleClass().add("go-btn");
+        btnIrSwichtes.getStyleClass().add("go-btn");
+        btnIrServiceNodes.getStyleClass().add("go-btn");
 
         Label lbRouters = new Label("Enrutadores:");
         lbRouters.setFont(Font.font("Arial", FontWeight.NORMAL, 11));
