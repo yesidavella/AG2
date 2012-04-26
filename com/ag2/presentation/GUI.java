@@ -176,12 +176,12 @@ public class GUI extends Scene implements Serializable {
 //        contenedorHerramietas.setMinWidth(50);
 //        contenedorHerramietas.setPrefWidth(50);
 //        contenedorHerramietas.setPadding(new Insets(3));
-        contenedorHerramietas.setAlignment(Pos.CENTER);
+        contenedorHerramietas.setAlignment(Pos.TOP_CENTER);
         scpMenuTools.setFitToWidth(true);
         scpMenuTools.setFitToHeight(true);
 
         settingupProgressIndicator();
-
+   
         contenedorHerramietas.getChildren().addAll(executePane, gpTools, simulationOptionSwitcher, hBoxProgressIndicator, vbLogos);
         scpMenuTools.setContent(contenedorHerramietas);
         brpRoot.setLeft(scpMenuTools);
@@ -788,58 +788,67 @@ public class GUI extends Scene implements Serializable {
 
     private VBox createProjectsLogos() {
 
-        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png"));
-        double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
-        ivAG2.setFitHeight(35);
-        ivAG2.setFitWidth(35 * proportionXYAG2);
-
-        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png"));
-        double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
-        ivInternetIntel.setFitHeight(25);
-        ivInternetIntel.setFitWidth(25 * proportionXYInternetIn);
-
-        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg"));
-        double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth() / ivPhosphorus.getBoundsInParent().getHeight();
-        ivPhosphorus.setFitHeight(30);
-        ivPhosphorus.setFitWidth(30 * proportionXYphosphorus);
-
-        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg"));
-        double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth() / ivDistritalUniv.getBoundsInParent().getHeight();
-        ivDistritalUniv.setFitHeight(35);
-        ivDistritalUniv.setFitWidth(35 * proportionXYdistritalUniv);
-
-        Hyperlink linkAG2 = new Hyperlink();
-        Hyperlink linkInterIntel = new Hyperlink();
-        Hyperlink linkPhosphorus = new Hyperlink();
-        Hyperlink linkDistritalUniv = new Hyperlink();
-
-        linkAG2.setTooltip(new Tooltip("Visite la pÃ¡gina web del Grupo de InvestigaciÃ³n en \"Colciencias\""));
-        linkInterIntel.setTooltip(new Tooltip("Visite la pÃ¡gina web del Grupo de InvestigaciÃ³n \"Internet Inteligente\""));
-        linkPhosphorus.setTooltip(new Tooltip("Visite la pÃ¡gina web del proyecto \"FÃ³sforo\""));
-        linkDistritalUniv.setTooltip(new Tooltip("Visite la pÃ¡gina web de la \"Universidad Distrital FJC\""));
-
-        linkAG2.setGraphic(ivAG2);
-        linkInterIntel.setGraphic(ivInternetIntel);
-        linkPhosphorus.setGraphic(ivPhosphorus);
-        linkDistritalUniv.setGraphic(ivDistritalUniv);
-
-        setOnLunchBrowser(linkAG2, "http://201.234.78.173:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003328");
-        setOnLunchBrowser(linkInterIntel, "http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
-        setOnLunchBrowser(linkPhosphorus, "http://www.ist-phosphorus.eu/");
-        setOnLunchBrowser(linkDistritalUniv, "www.udistrital.edu.co");
-
+//        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoAG2.png"));
+//        double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
+//        ivAG2.setFitHeight(35);
+//        ivAG2.setFitWidth(35 * proportionXYAG2);
+//
+//        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logoInterInt.png"));
+//        double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
+//        ivInternetIntel.setFitHeight(25);
+//        ivInternetIntel.setFitWidth(25 * proportionXYInternetIn);
+//
+//        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "phosphorus.jpg"));
+//        double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth() / ivPhosphorus.getBoundsInParent().getHeight();
+//        ivPhosphorus.setFitHeight(30);
+//        ivPhosphorus.setFitWidth(30 * proportionXYphosphorus);
+//
+//        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "escudo_udistrital.jpg"));
+//        double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth() / ivDistritalUniv.getBoundsInParent().getHeight();
+//        ivDistritalUniv.setFitHeight(35);
+//        ivDistritalUniv.setFitWidth(35 * proportionXYdistritalUniv);
+//
+//        Hyperlink linkAG2 = new Hyperlink();
+//        Hyperlink linkInterIntel = new Hyperlink();
+//        Hyperlink linkPhosphorus = new Hyperlink();
+//        Hyperlink linkDistritalUniv = new Hyperlink();
+//
+//        linkAG2.setTooltip(new Tooltip("Visite la pagina web del Grupo de InvestigaciÃ³n en \"Colciencias\""));
+//        linkInterIntel.setTooltip(new Tooltip("Visite la pagina web del Grupo de InvestigaciÃ³n \"Internet Inteligente\""));
+//        linkPhosphorus.setTooltip(new Tooltip("Visite la pagina web del proyecto \"FÃ³sforo\""));
+//        linkDistritalUniv.setTooltip(new Tooltip("Visite la pagina web de la \"Universidad Distrital FJC\""));
+//
+//        linkAG2.setGraphic(ivAG2);
+//        linkInterIntel.setGraphic(ivInternetIntel);
+//        linkPhosphorus.setGraphic(ivPhosphorus);
+//        linkDistritalUniv.setGraphic(ivDistritalUniv);
+//
+//        setOnLunchBrowser(linkAG2, "http://201.234.78.173:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=00000000003328");
+//        setOnLunchBrowser(linkInterIntel, "http://gemini.udistrital.edu.co/comunidad/grupos/internetinteligente/");
+//        setOnLunchBrowser(linkPhosphorus, "http://www.ist-phosphorus.eu/");
+//        setOnLunchBrowser(linkDistritalUniv, "www.udistrital.edu.co");
+//
+//        vbLogos = new VBox(5);
+//        vbLogos.setAlignment(Pos.CENTER);
+//        vbLogos.setPadding(new Insets(3, 3, 3, 3));
+//
+//        vbLogos.getChildren().addAll(linkAG2, linkInterIntel, linkPhosphorus, linkDistritalUniv);
+//
+//
+//        vbLogos.getStyleClass().add("boxLogos");
+//
+////        DropShadow dropShadow = new DropShadow();
+////        vbLogos.setEffect(dropShadow);
+        
         vbLogos = new VBox(5);
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
-
-        vbLogos.getChildren().addAll(linkAG2, linkInterIntel, linkPhosphorus, linkDistritalUniv);
-
-
-        vbLogos.getStyleClass().add("boxLogos");
-
-//        DropShadow dropShadow = new DropShadow();
-//        vbLogos.setEffect(dropShadow);
-
+        
+        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logos.gif"));
+        ivAG2.setEffect(new DropShadow());
+        vbLogos.getChildren().addAll(ivAG2);
+        ivAG2.setFitHeight(90);
+        ivAG2.setFitWidth(90);
         return vbLogos;
     }
 
