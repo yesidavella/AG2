@@ -295,7 +295,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcPeticionesFallidas.setMinWidth(130);
         tcPeticionesFallidas.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
 
-        TableColumn tcPorcentajeResultadosRecibidos = new TableColumn(" %Resultados Recibidos");
+        TableColumn tcPorcentajeResultadosRecibidos = new TableColumn("Resultados recibidos");
         tcPorcentajeResultadosRecibidos.setMinWidth(160);
         tcPorcentajeResultadosRecibidos.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
 
