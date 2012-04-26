@@ -502,15 +502,22 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             createNode(nodoGrafico);
 
         }
-        for (GraphNode nodoGrafico : nodeMatchCoupleObjectContainer.keySet()) {
-            for (String id : nodoGrafico.getNodeProperties().keySet()) {
-                selectedGraphNode = nodoGrafico;
-                updateProperty(false, false, id, nodoGrafico.getNodeProperties().get(id));
-            }
-            for (String id : nodoGrafico.getSubPropertiesNode().keySet()) {
-                selectedGraphNode = nodoGrafico;
-                updateProperty(true, false, id, nodoGrafico.getSubPropertiesNode().get(id));
-            }
+        for (final GraphNode nodoGrafico : nodeMatchCoupleObjectContainer.keySet()) {
+            Runnable runnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    for (String id : nodoGrafico.getNodeProperties().keySet()) {
+                        selectedGraphNode = nodoGrafico;
+                        updateProperty(false, false, id, nodoGrafico.getNodeProperties().get(id));
+                    }
+                    for (String id : nodoGrafico.getSubPropertiesNode().keySet()) {
+                        selectedGraphNode = nodoGrafico;
+                        updateProperty(true, false, id, nodoGrafico.getSubPropertiesNode().get(id));
+                    }
+                }
+            };
+            Platform.runLater(runnable);
         }
 
         for (final GraphNodesView vistaNodosGraficos : graphNodesViews) {
