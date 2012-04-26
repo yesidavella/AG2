@@ -1,9 +1,13 @@
 package com.ag2.presentation.control;
 
+import Grid.Entity;
 import Grid.Utilities.HtmlWriter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
+import com.ag2.controller.MatchCoupleObjectContainer;
+import com.ag2.presentation.design.GraphNode;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.HashMap;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -49,7 +53,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Label lblPageHTMLCountValue = new Label("0");
     private transient Timeline time = new Timeline();
     private transient long tiempoInicial = System.currentTimeMillis();
-
+    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer=  MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+ 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -212,37 +217,37 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     private void creartvResultadosConmutadores() {
 
-        TableColumn tcConmutador = new TableColumn("Conmutador Optico");
+        TableColumn tcConmutador = new TableColumn("Conmutador 0ptico");
         tcConmutador.setMinWidth(130);
         tcConmutador.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
 
-        TableColumn tcMensajesTrabajoConmutados = new TableColumn("Mensajes De Trabajo Conmutados");
+        TableColumn tcMensajesTrabajoConmutados = new TableColumn("Trabajos conmutados");
         tcMensajesTrabajoConmutados.setMinWidth(130);
         tcMensajesTrabajoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
 
-        TableColumn tcMensajesTrabajoNoConmutados = new TableColumn("Mensajes De Trabajo No Conmutados");
+        TableColumn tcMensajesTrabajoNoConmutados = new TableColumn("Trabajos no conmutados");
         tcMensajesTrabajoNoConmutados.setMinWidth(130);
         tcMensajesTrabajoNoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
 
-        TableColumn tcMensajesResultadosConmutados = new TableColumn("Mensajes De Resultados  Conmutados");
+        TableColumn tcMensajesResultadosConmutados = new TableColumn("Resultados conmutados");
         tcMensajesResultadosConmutados.setMinWidth(130);
         tcMensajesResultadosConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
 
 
-        TableColumn tcMensajesResultadosNoConmutados = new TableColumn("Mensajes De Resultados No  Conmutados");
-        tcMensajesResultadosNoConmutados.setMinWidth(130);
+        TableColumn tcMensajesResultadosNoConmutados = new TableColumn("Resultados no conmutados");
+        tcMensajesResultadosNoConmutados.setMinWidth(150);
         tcMensajesResultadosNoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
 
-        TableColumn relDropJob = new TableColumn("Rel Drop Job"); //FIME: Cambiar el nombre
-        relDropJob.setMinWidth(50);
+        TableColumn relDropJob = new TableColumn("% Trabajos no conmutado"); 
+        relDropJob.setMinWidth(150);
         relDropJob.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
 
-        TableColumn relDropRes = new TableColumn("Rel Drop Res"); //FIME: Cambiar el nombre
-        relDropRes.setMinWidth(50);
+        TableColumn relDropRes = new TableColumn("% Resultados no conmutados");
+        relDropRes.setMinWidth(150);
         relDropRes.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
 
-        TableColumn reltotDrop = new TableColumn("Rel tot Drop"); //FIME: Cambiar el nombre
-        reltotDrop.setMinWidth(50);
+        TableColumn reltotDrop = new TableColumn("% Mensajes no conmutados"); 
+        reltotDrop.setMinWidth(150);
         reltotDrop.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
 
         tvResultadosConmutadorPhosphorus.getColumns().addAll(tcConmutador, tcMensajesTrabajoConmutados,
@@ -278,27 +283,29 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         TableColumn tcCliente = new TableColumn("Cliente");
         tcCliente.setMinWidth(80);
         tcCliente.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
+  
 
-        TableColumn tcPeticionesEnviadas = new TableColumn("Peticiones Enviadas");
+        TableColumn tcPeticionesEnviadas = new TableColumn("Peticiones enviadas");
         tcPeticionesEnviadas.setMinWidth(130);
         tcPeticionesEnviadas.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
 
-        TableColumn tcTrabajosEnviados = new TableColumn("Trabajos Enviados");
+        TableColumn tcTrabajosEnviados = new TableColumn("Trabajos enviados");
         tcTrabajosEnviados.setMinWidth(130);
         tcTrabajosEnviados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
 
-        TableColumn tcResultadosRecibidos = new TableColumn("Resultados Recibidos");
+        TableColumn tcResultadosRecibidos = new TableColumn("Resultados recibidos");
         tcResultadosRecibidos.setMinWidth(150);
         tcResultadosRecibidos.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
 
-        TableColumn tcPeticionesFallidas = new TableColumn("Peticiones Fallidas");
+        TableColumn tcPeticionesFallidas = new TableColumn("Peticiones fallidas");
         tcPeticionesFallidas.setMinWidth(130);
         tcPeticionesFallidas.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
 
-        TableColumn tcPorcentajeResultadosRecibidos = new TableColumn("Resultados recibidos");
+        TableColumn tcPorcentajeResultadosRecibidos = new TableColumn("% Resultados recibidos");
         tcPorcentajeResultadosRecibidos.setMinWidth(160);
         tcPorcentajeResultadosRecibidos.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
 
+        
         tvResultadosClientePhosphorus.getColumns().addAll(tcCliente, tcPeticionesEnviadas, tcTrabajosEnviados, tcResultadosRecibidos,
                 tcPeticionesFallidas, tcPorcentajeResultadosRecibidos);
         tvResultadosClientePhosphorus.setItems(dataCliente);
@@ -310,24 +317,36 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
 
 
-
+        
         time.stop();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(tcCliente);
+        cpp.setProperty1(findGraphicalName(tcCliente));
         cpp.setProperty2(tcPeticionesEnviadas);
         cpp.setProperty3(tcTrabajosEnviados);
         cpp.setProperty4(tcResultadosRecibidos);
         cpp.setProperty5(tcPeticionesFallidas);
         cpp.setProperty6(tcPorcentajeResultadosRecibidos);
         dataCliente.add(cpp);
-
     }
-
+    
+    private String findGraphicalName(String originalName)
+    {
+        String name= originalName;
+        for(GraphNode graphNode: nodeMatchCoupleObjectContainer.keySet())
+        {
+            if(graphNode.getOriginalName().equalsIgnoreCase(originalName))
+            {
+                name = graphNode.getName();
+            }            
+        }
+        return name;
+                
+    }
     public void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos, String tcFallasNoEspacio, String tcFallasEnviadas) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(tcRecurso);
+        cpp.setProperty1(findGraphicalName(tcRecurso));
         cpp.setProperty2(tcTrabajosRecibidos);
         cpp.setProperty3(tcFallasNoEspacio);
         cpp.setProperty4(tcFallasEnviadas);
@@ -346,7 +365,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String reltotDrop) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(tcConmutador);
+        cpp.setProperty1(findGraphicalName(tcConmutador));
         cpp.setProperty2(tcMensajesTrabajoConmutados);
         cpp.setProperty3(tcMensajesTrabajoNoConmutados);
         cpp.setProperty4(tcMensajesResultadosConmutados);

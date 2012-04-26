@@ -6,11 +6,13 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import Grid.Outputter;
 import com.ag2.controller.ResultsAbstractController;
+import java.text.DecimalFormat;
 import simbase.Stats.SimBaseStats;
 
 public class OutputterModel extends Outputter {
 
     private ResultsAbstractController resultsAbstractController;
+    DecimalFormat decimalFormat = new DecimalFormat("###############.###");
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
@@ -25,18 +27,18 @@ public class OutputterModel extends Outputter {
     public void printClient(ClientNode client) {
 
         resultsAbstractController.addClientResult(
-                returnStringWithAsterix(client),
-                " " + sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT),
-                " " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
-                " " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED),
-                " " + sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED),
-                " " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT));
+                client.toString(),
+                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT),
+                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
+                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED),
+                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED),
+                "  " +decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT)*100) +"%" );
     }
 
     @Override
     public void printResource(ResourceNode resourceNode) {
         resultsAbstractController.adicionarResultadoRecurso(
-                " " + returnStringWithAsterix(resourceNode),
+                 resourceNode.toString(),
                 " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED),
                 " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE),
                 " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED));
@@ -58,13 +60,13 @@ public class OutputterModel extends Outputter {
         double relative = messagesDropped / (messagesDropped + messagesSwitched);
 
         resultsAbstractController.adicionarResultadoConmutador(
-                returnStringWithAsterix(switch1),
-                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
-                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
-                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
-                "" + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
-                "" + jobRelative,
-                "" + resultRelative,
-                "" + relative);
+                switch1.toString(),
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
+                " " + decimalFormat.format(jobRelative*100)+"%",
+                " " + decimalFormat.format(resultRelative*100)+"%",
+                " " + decimalFormat.format( relative*100 )+"%");
     }
 }
