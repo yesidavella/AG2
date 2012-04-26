@@ -744,8 +744,8 @@ public class GUI extends Scene implements Serializable {
         tabSimulationProperties.setContent(tbSimulationProperties);
 
         VBox.setMargin(vbxBottomRight, new Insets(0, 0, 0, 32));
-        vbxBottomRight.setPadding(new Insets(10, 10, 10, 10));
-        vbxBottomRight.getStyleClass().add("bg-map-navigation-container");
+        vbxBottomRight.setPadding(new Insets(5));
+//        vbxBottomRight.getStyleClass().add("bg-map-navigation-container");
 
         createMapNavigationPanel(vbxBottomRight);
 //        vbxBottomRight.getChildren().add(gpMapNavegation);
@@ -897,7 +897,8 @@ public class GUI extends Scene implements Serializable {
         gpMapNavegation.setAlignment(Pos.BASELINE_CENTER);
         gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
-        gpMapNavegation.getStyleClass().addAll("bg-map-navigation");
+        gpMapNavegation.getStyleClass().addAll("bg-map-navigation","bg-map-navigation-container");
+//        gpMapNavegation.setGridLinesVisible(true);
 
         Label lbTitle = new Label("LISTAS DE NAVEGACION");
         lbTitle.setId("title-nav-map");
