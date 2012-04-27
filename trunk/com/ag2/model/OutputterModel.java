@@ -36,12 +36,25 @@ public class OutputterModel extends Outputter {
     }
 
     @Override
-    public void printResource(ResourceNode resourceNode) {
+    public void printResource(ResourceNode resourceNode) 
+    {
+        
+        double recive = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED);
+        double sent = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED);
+        double sentFall = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED);
+        
+        double relativeSent  =  sent/recive;
+        double relativeSentFall  =  sentFall/recive;
+        
         resultsAbstractController.adicionarResultadoRecurso(
                  resourceNode.toString(),
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED),
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE),
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED));
+                " " + recive,                
+                " " + decimalFormat.format(relativeSent*100)+"%",
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED),                 
+                " " + sentFall,
+                 " " + decimalFormat.format(relativeSentFall*100)+"%",
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_BUSY_TIME),
+                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE));
     }
 
     @Override
@@ -57,6 +70,12 @@ public class OutputterModel extends Outputter {
 
         double messagesDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_DROPPED);
         double messagesSwitched = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_SWITCHED);
+        
+        double messagesReqDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED);
+        double messagesReqSwitched = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED);
+        
+         double relativeReq = messagesReqDropped / (messagesReqDropped + messagesReqSwitched);
+        
         double relative = messagesDropped / (messagesDropped + messagesSwitched);
 
         resultsAbstractController.adicionarResultadoConmutador(
@@ -65,8 +84,11 @@ public class OutputterModel extends Outputter {
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
+                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
+                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
                 " " + decimalFormat.format(jobRelative*100)+"%",
                 " " + decimalFormat.format(resultRelative*100)+"%",
+                " " + decimalFormat.format(relativeReq*100)+"%",
                 " " + decimalFormat.format( relative*100 )+"%");
     }
 }

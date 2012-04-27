@@ -19,18 +19,28 @@ public abstract class ResultsAbstractController  implements Serializable
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
             String tcPorcentajeResultadosRecibidos );
 
-   public abstract void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos,
-           String tcFallasNoEspacio, String tcFallasEnviadas );
+   public abstract void adicionarResultadoRecurso(
+           String tcRecurso, 
+           String tcTrabajosRecibidos,
+           String tcTrabajosEnviados,
+           String relativeTrabajosEnviados,
+           String tcFallasEnviadas,
+           String relativeFallasEnviadas,
+           String tcVecesNoCPUFree,           
+           String tcVecesFallasNoEspacio );
 
    public abstract void adicionarResultadoConmutador(
-                                            String tcConmutador,
-                                            String tcMensajesTrabajoConmutados,
-                                            String tcMensajesTrabajoNoConmutados,
-                                            String tcMensajesResultadosConmutados,
-                                            String tcMensajesResultadosNoConmutados,
-                                            String relDropJob,
-                                            String relDropRes,
-                                            String reltotDrop);
+                                            final String tcConmutador,
+                                            final String tcMensajesTrabajoConmutados,
+                                            final String tcMensajesTrabajoNoConmutados,
+                                            final String tcMensajesResultadosConmutados,
+                                            final String tcMensajesResultadosNoConmutados,
+                                            final String tcSwitchedJobRequest ,
+                                            final String tcNonSwitchedJobRequest ,
+                                            final String relDropJob,
+                                            final String relDropRes,
+                                            final String relDropReq,
+                                            final String reltotDrop);
 
     public abstract void setExecutionPercentage(double Percentage,double simulationTime);
 }
