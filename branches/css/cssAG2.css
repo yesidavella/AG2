@@ -360,5 +360,17 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-size: 60% 60%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
-/*    -fx-cursor:w-resize;*/
+    -fx-cursor:hand;
+}
+
+/******************LUZ DEL HEADER Q TIENE LA ANIMACION************************/
+#tin{
+    /*    -fx-fill: red;*/
+    -fx-background-image: url("../images/enlace.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+
+    -fx-border-style: solid;
+    -fx-border-color:green;
 }
