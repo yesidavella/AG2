@@ -1178,7 +1178,7 @@ public class GUI extends Scene implements Serializable {
         scaleTransBegin.setCycleCount(2);
         scaleTransBegin.setAutoReverse(true);
 
-        ChildParalTransBegin.getChildren().addAll(rotateTransBegin, scaleTransBegin);
+        ChildParalTransBegin.getChildren().addAll(rotateTransBegin,scaleTransBegin);
         
 //        Luego la transicion de desplazamiento con curva
         double endPointX = headerAnimationContainer.getLayoutBounds().getWidth();
@@ -1210,7 +1210,7 @@ public class GUI extends Scene implements Serializable {
         scaleTransEnd.setCycleCount(2);
         scaleTransEnd.setAutoReverse(true);
 
-        childParalTransEnd.getChildren().addAll(rotateTransEnd, scaleTransEnd);
+        childParalTransEnd.getChildren().addAll(rotateTransEnd,scaleTransEnd);
 
         parentSeqTrans.getChildren().addAll(ChildParalTransBegin, pathTransition, childParalTransEnd);
 
