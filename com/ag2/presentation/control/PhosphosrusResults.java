@@ -53,8 +53,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Label lblPageHTMLCountValue = new Label("0");
     private transient Timeline time = new Timeline();
     private transient long tiempoInicial = System.currentTimeMillis();
-    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer=  MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
- 
+    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -238,20 +238,39 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcMensajesResultadosNoConmutados.setMinWidth(150);
         tcMensajesResultadosNoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
 
-        TableColumn relDropJob = new TableColumn("% Trabajos no conmutado"); 
+        TableColumn tcMensajesSolicitudConmutados = new TableColumn("Solicitudes conmutadas");
+        tcMensajesSolicitudConmutados.setMinWidth(160);
+        tcMensajesSolicitudConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
+
+        TableColumn tcMensajesSolicitudNoConmutados = new TableColumn("Solicitudes no conmutadas");
+        tcMensajesSolicitudNoConmutados.setMinWidth(160);
+        tcMensajesSolicitudNoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
+
+        
+        
+        
+        
+        TableColumn relDropJob = new TableColumn("% Trabajos no conmutados");
         relDropJob.setMinWidth(150);
-        relDropJob.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
+        relDropJob.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
 
         TableColumn relDropRes = new TableColumn("% Resultados no conmutados");
         relDropRes.setMinWidth(150);
-        relDropRes.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
+        relDropRes.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property9"));
 
-        TableColumn reltotDrop = new TableColumn("% Mensajes no conmutados"); 
+        TableColumn relDropReq = new TableColumn("% Solicitudes no conmutadas");
+        relDropReq.setMinWidth(150);
+        relDropReq.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property10"));
+
+        
+        TableColumn reltotDrop = new TableColumn("% Total no conmutados");
         reltotDrop.setMinWidth(150);
-        reltotDrop.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
+        reltotDrop.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property11"));
 
         tvResultadosConmutadorPhosphorus.getColumns().addAll(tcConmutador, tcMensajesTrabajoConmutados,
-                tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados, relDropJob, relDropRes, reltotDrop);
+                tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados, 
+                tcMensajesSolicitudConmutados, tcMensajesSolicitudNoConmutados,
+                relDropJob, relDropRes,relDropReq ,reltotDrop);
         tvResultadosConmutadorPhosphorus.setItems(dataConmutador);
     }
 
@@ -261,19 +280,36 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcRecurso.setMinWidth(80);
         tcRecurso.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
 
-        TableColumn tcTrabajosRecibidos = new TableColumn("Trabajos recibidos");
-        tcTrabajosRecibidos.setMinWidth(130);
-        tcTrabajosRecibidos.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
+        TableColumn tableColumn1 = new TableColumn("Trabajos recibidos");
+        tableColumn1.setMinWidth(130);
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
 
-        TableColumn tcFallasNoEspacio = new TableColumn("Fallas/No Espacio");
-        tcFallasNoEspacio.setMinWidth(130);
-        tcFallasNoEspacio.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
+        TableColumn tableColumn2 = new TableColumn("Trabajos enviados");
+        tableColumn2.setMinWidth(130);
+        tableColumn2.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
 
-        TableColumn tcFallasEnviadas = new TableColumn("Fallas Enviadas");
-        tcFallasEnviadas.setMinWidth(150);
-        tcFallasEnviadas.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
+        TableColumn tableColumn3 = new TableColumn("%Trabajos enviados");
+        tableColumn3.setMinWidth(135);
+        tableColumn3.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
 
-        tvResultadosRecursoPhosphorus.getColumns().addAll(tcRecurso, tcTrabajosRecibidos, tcFallasNoEspacio, tcFallasEnviadas);
+        TableColumn tableColumn4 = new TableColumn("Fallas enviadas");
+        tableColumn4.setMinWidth(120);
+        tableColumn4.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
+
+        TableColumn tableColumn5 = new TableColumn("% Fallas enviadas");
+        tableColumn5.setMinWidth(130);
+        tableColumn5.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
+        
+        TableColumn tableColumn6 = new TableColumn("Tiempo ocupacion (ms) ");
+        tableColumn6.setMinWidth(160);
+        tableColumn6.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
+
+         TableColumn tableColumn7 = new TableColumn("CPU/buffer no libre  ");
+        tableColumn7.setMinWidth(160);
+        tableColumn7.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
+
+        tvResultadosRecursoPhosphorus.getColumns().addAll(tcRecurso,  tableColumn1, tableColumn2, tableColumn3,
+                tableColumn4, tableColumn5,tableColumn6,tableColumn7);
         tvResultadosRecursoPhosphorus.setItems(dataRecurso);
     }
 
@@ -283,7 +319,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         TableColumn tcCliente = new TableColumn("Cliente");
         tcCliente.setMinWidth(80);
         tcCliente.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
-  
+
 
         TableColumn tcPeticionesEnviadas = new TableColumn("Peticiones enviadas");
         tcPeticionesEnviadas.setMinWidth(130);
@@ -305,7 +341,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcPorcentajeResultadosRecibidos.setMinWidth(160);
         tcPorcentajeResultadosRecibidos.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
 
-        
+
         tvResultadosClientePhosphorus.getColumns().addAll(tcCliente, tcPeticionesEnviadas, tcTrabajosEnviados, tcResultadosRecibidos,
                 tcPeticionesFallidas, tcPorcentajeResultadosRecibidos);
         tvResultadosClientePhosphorus.setItems(dataCliente);
@@ -317,7 +353,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
 
 
-        
+
         time.stop();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
@@ -329,39 +365,54 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty6(tcPorcentajeResultadosRecibidos);
         dataCliente.add(cpp);
     }
-    
-    private String findGraphicalName(String originalName)
-    {
-        String name= originalName;
-        for(GraphNode graphNode: nodeMatchCoupleObjectContainer.keySet())
-        {
-            if(graphNode.getOriginalName().equalsIgnoreCase(originalName))
-            {
+
+    private String findGraphicalName(String originalName) {
+        String name = originalName;
+        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
+            if (graphNode.getOriginalName().equalsIgnoreCase(originalName)) {
                 name = graphNode.getName();
-            }            
+            }
         }
         return name;
-                
+
     }
-    public void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos, String tcFallasNoEspacio, String tcFallasEnviadas) {
+
+    @Override
+    public void adicionarResultadoRecurso( 
+           String tcRecurso, 
+           String tcTrabajosRecibidos,
+           String tcTrabajosEnviados,
+           String relativeTrabajosEnviados,
+           String tcFallasEnviadas,
+           String relativeFallasEnviadas,
+           String tcVecesNoCPUFree,           
+           String tcVecesFallasNoEspacio) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(findGraphicalName(tcRecurso));
         cpp.setProperty2(tcTrabajosRecibidos);
-        cpp.setProperty3(tcFallasNoEspacio);
-        cpp.setProperty4(tcFallasEnviadas);
+        cpp.setProperty3(tcTrabajosEnviados);
+        cpp.setProperty4(relativeTrabajosEnviados);
+        cpp.setProperty5(tcFallasEnviadas);
+        cpp.setProperty6(relativeFallasEnviadas);
+        cpp.setProperty7(tcVecesNoCPUFree);
+        cpp.setProperty8(tcVecesFallasNoEspacio);
         dataRecurso.add(cpp);
 
     }
 
+    @Override
     public void adicionarResultadoConmutador(
             String tcConmutador,
             String tcMensajesTrabajoConmutados,
             String tcMensajesTrabajoNoConmutados,
             String tcMensajesResultadosConmutados,
             String tcMensajesResultadosNoConmutados,
+            String tcSwitchedJobRequest,
+            String tcNonSwitchedJobRequest,
             String relDropJob,
             String relDropRes,
+            String relDropReq,
             String reltotDrop) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
@@ -370,9 +421,13 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty3(tcMensajesTrabajoNoConmutados);
         cpp.setProperty4(tcMensajesResultadosConmutados);
         cpp.setProperty5(tcMensajesResultadosNoConmutados);
-        cpp.setProperty6(relDropJob);
-        cpp.setProperty7(relDropRes);
-        cpp.setProperty8(reltotDrop);
+        cpp.setProperty6(tcSwitchedJobRequest);
+        cpp.setProperty7(tcNonSwitchedJobRequest);
+        cpp.setProperty8(relDropJob);
+        cpp.setProperty9(relDropRes);
+        cpp.setProperty10(relDropReq);
+        cpp.setProperty11(reltotDrop);
+
         dataConmutador.add(cpp);
 
     }
@@ -401,8 +456,35 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         private String property6;
         private String property7;
         private String property8;
+        private String property9;
+        private String property10;
+        private String property11;
 
         private ConjuntoProiedadesPhosphorus() {
+        }
+
+        public String getProperty10() {
+            return property10;
+        }
+
+        public void setProperty10(String property10) {
+            this.property10 = property10;
+        }
+
+        public String getProperty11() {
+            return property11;
+        }
+
+        public void setProperty11(String property11) {
+            this.property11 = property11;
+        }
+
+        public String getProperty9() {
+            return property9;
+        }
+
+        public void setProperty9(String property9) {
+            this.property9 = property9;
         }
 
         public String getProperty1() {

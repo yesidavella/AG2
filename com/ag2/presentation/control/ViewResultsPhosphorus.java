@@ -7,18 +7,33 @@ public interface  ViewResultsPhosphorus {
             String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
             String tcPorcentajeResultadosRecibidos );
 
-   public abstract void adicionarResultadoRecurso(String tcRecurso, String tcTrabajosRecibidos,
-           String tcFallasNoEspacio, String tcFallasEnviadas );
+   public abstract void adicionarResultadoRecurso(
+           String tcRecurso, 
+           String tcTrabajosRecibidos,
+           String tcTrabajosEnviados,
+           String relativeTrabajosEnviados,
+           String tcFallasEnviadas,
+           String relativeFallasEnviadas,
+           String tcVecesNoCPUFree,           
+           String tcVecesFallasNoEspacio);       
+        
+         
+           
+
+   
 
    public abstract void adicionarResultadoConmutador(
-                                            String tcConmutador,
-                                            String tcMensajesTrabajoConmutados,
-                                            String tcMensajesTrabajoNoConmutados,
-                                            String tcMensajesResultadosConmutados,
-                                            String tcMensajesResultadosNoConmutados,
-                                            String relDropJob,
-                                            String relDropRes,
-                                            String reltotDrop);
+                                             String tcConmutador,
+                                             String tcMensajesTrabajoConmutados,
+                                             String tcMensajesTrabajoNoConmutados,
+                                             String tcMensajesResultadosConmutados,
+                                             String tcMensajesResultadosNoConmutados,
+                                             String tcSwitchedJobRequest ,
+                                             String tcNonSwitchedJobRequest ,
+                                             String relDropJob,
+                                             String relDropRes,
+                                             String relDropReq,
+                                             String reltotDrop);
 
    public void setExecutionPercentage(double Percentage,double simulationTime);
 }
