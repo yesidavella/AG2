@@ -5,6 +5,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.Switch;
 import Grid.Outputter;
+import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import java.text.DecimalFormat;
 import simbase.Stats.SimBaseStats;
@@ -32,63 +33,111 @@ public class OutputterModel extends Outputter {
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED),
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED),
-                "  " +decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT)*100) +"%" );
+                "  " + decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT) * 100) + "%");
     }
 
     @Override
-    public void printResource(ResourceNode resourceNode) 
-    {
-        
+    public void printResource(ResourceNode resourceNode) {
+
         double recive = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED);
-        double sent = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_JOB_RECEIVED);
-        double sentFall = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED);
-        
-        double relativeSent  =  sent/recive;
-        double relativeSentFall  =  sentFall/recive;
-        
-        resultsAbstractController.adicionarResultadoRecurso(
-                 resourceNode.toString(),
-                " " + recive,                
-                " " + decimalFormat.format(relativeSent*100)+"%",
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED),                 
+
+        double sent = 0;
+        double sentFall = 0;
+
+        double relativeSent = 0;
+        double relativeSentFall = 0;
+
+        double timeNoCPUFree = 0;
+        double timeNoCPUFreePerCPU = 0;
+
+        double relativeTimeNoCPUFree = 0;
+        double resourceFailNoFreespace = 0;
+        double relativeResourceFailNoFreespace = 0;
+
+        if (recive > 0) {
+
+            sent = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_RESULTS_SENT);
+            sentFall = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_SENDING_FAILED);
+
+            relativeSent = sent / recive;
+            relativeSentFall = sentFall / recive;
+
+            timeNoCPUFree = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_BUSY_TIME);
+            timeNoCPUFreePerCPU = timeNoCPUFree / resourceNode.getCpuSet().size();
+
+            relativeTimeNoCPUFree = timeNoCPUFreePerCPU / PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
+            resourceFailNoFreespace = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE);
+            relativeResourceFailNoFreespace = sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE) / recive;
+
+        }
+
+        resultsAbstractController.addResourceResult(
+                resourceNode.toString(),
+                " " + recive,
+                " " + sent,
+                " " + decimalFormat.format(relativeSent * 100) + "%",
                 " " + sentFall,
-                 " " + decimalFormat.format(relativeSentFall*100)+"%",
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_BUSY_TIME),
-                " " + sim.getStat(resourceNode, SimBaseStats.Stat.RESOURCE_FAIL_NO_FREE_PLACE));
+                " " + decimalFormat.format(relativeSentFall * 100) + "%",
+                " " + decimalFormat.format(timeNoCPUFreePerCPU),
+                " " + decimalFormat.format(relativeTimeNoCPUFree * 100) + "%",
+                " " + resourceFailNoFreespace,
+                " " + decimalFormat.format(relativeResourceFailNoFreespace * 100) + "%");
     }
 
     @Override
     public void printSwitch(Switch switch1) {
 
         double fail_resultMessage = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED);
+
         double switchedResultMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED);
-        double resultRelative = fail_resultMessage / (fail_resultMessage + switchedResultMessages);
+        double totalResultMessage = fail_resultMessage + switchedResultMessages;
+        double resultRelative = 0;
+        if (totalResultMessage > 0) {
+            resultRelative = fail_resultMessage / (totalResultMessage);
+        }
 
         double switchedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED);
         double droppedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED);
-        double jobRelative = droppedJobMessages / (switchedJobMessages + droppedJobMessages);
+
+        double jobRelative = 0;
+        double totalJobMessage = switchedJobMessages + droppedJobMessages;
+
+        if (totalJobMessage > 0) {
+            jobRelative = droppedJobMessages / totalJobMessage;
+        }
 
         double messagesDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_DROPPED);
         double messagesSwitched = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_SWITCHED);
-        
+
         double messagesReqDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED);
         double messagesReqSwitched = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED);
-        
-         double relativeReq = messagesReqDropped / (messagesReqDropped + messagesReqSwitched);
-        
-        double relative = messagesDropped / (messagesDropped + messagesSwitched);
 
-        resultsAbstractController.adicionarResultadoConmutador(
+        double relativeReq = 0;
+        double totalReqMessage = messagesReqDropped + messagesReqSwitched;
+
+        if (totalReqMessage > 0) {
+            relativeReq = messagesReqDropped / (totalReqMessage);
+        }
+
+        double relativeMessage = 0;
+        double totalMessage = messagesDropped + messagesSwitched;
+
+        if (totalMessage > 0) 
+        {
+            relativeMessage = messagesDropped / (totalMessage);
+        }
+
+        resultsAbstractController.addSwitchResult(
                 switch1.toString(),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
-                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
-                 " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
-                " " + decimalFormat.format(jobRelative*100)+"%",
-                " " + decimalFormat.format(resultRelative*100)+"%",
-                " " + decimalFormat.format(relativeReq*100)+"%",
-                " " + decimalFormat.format( relative*100 )+"%");
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
+                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
+                " " + decimalFormat.format(jobRelative * 100) + "%",
+                " " + decimalFormat.format(resultRelative * 100) + "%",
+                " " + decimalFormat.format(relativeReq * 100) + "%",
+                " " + decimalFormat.format(relativeMessage * 100) + "%");
     }
 }
