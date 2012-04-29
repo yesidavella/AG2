@@ -80,7 +80,7 @@ public class GUI extends Scene implements Serializable {
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
     private TabPane tabPane = new TabPane();   
-    private Tab tabChartsResults;
+    private Tab tabChartsResults  = new Tab();
     private ChartsResult chartsResult;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
