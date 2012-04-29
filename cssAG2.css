@@ -364,13 +364,19 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 /******************LUZ DEL HEADER Q TIENE LA ANIMACION************************/
-#tin{
+#animation-light{
     /*    -fx-fill: red;*/
-    -fx-background-image: url("../images/enlace.png");
+    -fx-background-image: url("../images/light.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
-
+/*
     -fx-border-style: solid;
-    -fx-border-color:green;
+    -fx-border-color:green;*/
+}
+
+#path-light{
+    -fx-stroke:transparent;
+/*    -fx-stroke-width:0.5px;*/
+/*    -fx-effect:dropshadow( gaussian , derive(-fx-mBlue-ag2,-30%) , 10, 0.5 ,0,0 ); */
 }
