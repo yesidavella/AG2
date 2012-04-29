@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -29,7 +31,7 @@ public class Main extends Application implements Serializable {
     private ResultsController resultsController;
     private JSObject browser;
     public static boolean IS_APPLET = false;
-    private GUI iguAG2;
+    private GUI guiAG2;
 
     @Override
     public void start(final Stage stage) {
@@ -45,17 +47,16 @@ public class Main extends Application implements Serializable {
 
         GUI.setStage(stage);
         
-        iguAG2 = GUI.getInstance();
-        
-        stage.setScene(iguAG2);
-        iguAG2.setStage(stage);
-        iguAG2.setMain(this);
+        guiAG2 = GUI.getInstance();
+        stage.setScene(guiAG2);
+        guiAG2.setStage(stage);
+        guiAG2.setMain(this);
         stage.show();
-        graphDesignGroup = iguAG2.getGraphDesignGroup();
+        graphDesignGroup = guiAG2.getGraphDesignGroup();
 
         initModelsAndControllers();
-        iguAG2.initStateGUI();
-
+        guiAG2.initStateGUI();
+        
         utilSerializator = new UtilSerializator(this, stage);
         
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -90,12 +91,12 @@ public class Main extends Application implements Serializable {
         executeController = new ExecuteController();
         resultsController = new ResultsController();
 
-        iguAG2.getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
+        guiAG2.getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
 
-        nodeAdminController.addGraphNodesView(iguAG2.getGraphDesignGroup());
-        nodeAdminController.addGraphNodesView(iguAG2.getEntityPropertyTb());
-        iguAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
-        iguAG2.getExecutePane().setExecuteAbstractController(executeController);
+        nodeAdminController.addGraphNodesView(guiAG2.getGraphDesignGroup());
+        nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
+        guiAG2.getExecutePane().setExecuteAbstractController(executeController);
 
 
         nodeCreationModel = new ClientCreationModel();
@@ -117,15 +118,15 @@ public class Main extends Application implements Serializable {
         LinkCreationAbstractModel modeloCrearEnlace = new LinkCreationModel();
         linkAdminAbstractController.addModel(modeloCrearEnlace);
 
-        linkAdminAbstractController.setLinkView(iguAG2.getEntityPropertyTb());
-        iguAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
-        iguAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
+        linkAdminAbstractController.setLinkView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
 
-        resultsController.setViewResultsPhosphorus(iguAG2.getPhosphosrusResults());
+        resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
-        iguAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
+        guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
 
     }
 
@@ -170,7 +171,7 @@ public class Main extends Application implements Serializable {
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();
 
-        iguAG2.loadGraphDesignGroup(graphDesignGroup);
+        guiAG2.loadGraphDesignGroup(graphDesignGroup);
 
         nodeAdminController = main.getNodeAdminController();
         linkAdminAbstractController = main.getLinkAdminAbstractController();
@@ -179,17 +180,17 @@ public class Main extends Application implements Serializable {
 
         nodeCreationModel = main.getNodeCreationModel();
 
-        iguAG2.getExecutePane().setExecuteAbstractController(executeController);
-        resultsController.setViewResultsPhosphorus(iguAG2.getPhosphosrusResults());
+        guiAG2.getExecutePane().setExecuteAbstractController(executeController);
+        resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
 
-        linkAdminAbstractController.setLinkView(iguAG2.getEntityPropertyTb());
-        iguAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
+        linkAdminAbstractController.setLinkView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
 
         SimulationBase.getInstance().setLinkAdminAbstractController(linkAdminAbstractController);
 
-        nodeAdminController.addGraphNodesView(iguAG2.getGraphDesignGroup());
-        nodeAdminController.addGraphNodesView(iguAG2.getEntityPropertyTb());
-        iguAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
+        nodeAdminController.addGraphNodesView(guiAG2.getGraphDesignGroup());
+        nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
         //  executeAbstractController.stop();
     }
 

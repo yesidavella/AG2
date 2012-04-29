@@ -32,6 +32,7 @@ package com.ag2.presentation.control;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.ag2.presentation.GUI;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
