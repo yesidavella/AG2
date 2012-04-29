@@ -79,7 +79,9 @@ public class GUI extends Scene implements Serializable {
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
-    private TabPane tabPane = new TabPane();
+    private TabPane tabPane = new TabPane();   
+    private Tab tabChartsResults;
+    private ChartsResult chartsResult;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
     private transient ToolBar tobWindow;
@@ -694,19 +696,26 @@ public class GUI extends Scene implements Serializable {
 
     private void createTabs() {
 
+      
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
         tabSimulation.setClosable(false);
-        tabResults.setText("Resultados Phosphorus");
+        tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
-        tabResultsHTML.setText("Resultado Phosphorus HTML");
+        tabResultsHTML.setText("Registros HTML");
         tabResultsHTML.setClosable(false);
-
+        
+        tabChartsResults.setText("Graficos de resultados");
+        tabChartsResults.setClosable(false);
+        
         tabChartsResourceCPU.setText("Graficos de recurso (CPU)");
         tabChartsResourceCPU.setClosable(false);
-
+        
         tabChartsResourceBuffer.setText("Graficos de recurso (buffer)");
         tabChartsResourceBuffer.setClosable(false);
+        
+        
+        
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
@@ -720,10 +729,13 @@ public class GUI extends Scene implements Serializable {
         splitPane.getItems().addAll(scpWorld, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
+        
+        chartsResult = new ChartsResult(tabChartsResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
-
-        tabPane.getTabs().addAll(tabSimulation, tabChartsResourceCPU, tabChartsResourceBuffer);
+        
+        
+        tabPane.getTabs().addAll(tabSimulation, tabChartsResults  ,tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
     private ScrollPane createRightDesign() {
