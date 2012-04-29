@@ -5,42 +5,47 @@ import com.ag2.model.SimulationBase;
 import com.ag2.presentation.control.ViewResultsPhosphorus;
 import java.io.Serializable;
 
-public abstract class ResultsAbstractController  implements Serializable
-{
-   protected  ViewResultsPhosphorus viewResultsPhosphorus;
-   protected  OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getGridSimulatorModel());
+public abstract class ResultsAbstractController implements Serializable {
 
-    public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus)
-    {
+    protected ViewResultsPhosphorus viewResultsPhosphorus;
+    protected OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getGridSimulatorModel());
+
+    public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) {
         this.viewResultsPhosphorus = viewResultsPhosphorus;
     }
 
-   public abstract  void addClientResult(String tcCliente, String tcPeticionesEnviadas,
-            String tcTrabajosEnviados, String tcResultadosRecibidos, String tcPeticionesFallidas,
-            String tcPorcentajeResultadosRecibidos );
+    public abstract void addClientResult(
+            String clientName,
+            String requestSent,
+            String jobSent,
+            String resultReceive ,
+            String requestNoSent,
+            String relativeResultReceive);
 
-   public abstract void adicionarResultadoRecurso(
-           String tcRecurso, 
-           String tcTrabajosRecibidos,
-           String tcTrabajosEnviados,
-           String relativeTrabajosEnviados,
-           String tcFallasEnviadas,
-           String relativeFallasEnviadas,
-           String tcVecesNoCPUFree,           
-           String tcVecesFallasNoEspacio );
+    public abstract void addResourceResult(
+            String resourceName,
+            String jobReceive,
+            String jobSent,
+            String relativeJobSent,
+            String failSent,
+            String relativeFailSent,
+            String busyTime,
+            String relativeBusyTime,
+            String noAvailable,
+            String relativeNoAvailable);
 
-   public abstract void adicionarResultadoConmutador(
-                                            final String tcConmutador,
-                                            final String tcMensajesTrabajoConmutados,
-                                            final String tcMensajesTrabajoNoConmutados,
-                                            final String tcMensajesResultadosConmutados,
-                                            final String tcMensajesResultadosNoConmutados,
-                                            final String tcSwitchedJobRequest ,
-                                            final String tcNonSwitchedJobRequest ,
-                                            final String relDropJob,
-                                            final String relDropRes,
-                                            final String relDropReq,
-                                            final String reltotDrop);
+    public abstract void addSwitchResult(
+            final String switchName,
+            final String jobSwitched,
+            final String jobNoSwitched,
+            final String resultSwiched,
+            final String resultNoSwitched,
+            final String requestSwitched,
+            final String requestNoSwitched,
+            final String relativeNojobNoSwitched,
+            final String relativeResultNoSwitched,
+            final String relativeRequestNoSwitched,
+            final String relativeAllNoSwitched);
 
-    public abstract void setExecutionPercentage(double Percentage,double simulationTime);
+    public abstract void setExecutionPercentage(double percentage, double simulationTime);
 }

@@ -6,40 +6,57 @@ public class ResultsController extends ResultsAbstractController {
 
     @Override
     public void addClientResult(
-            final String tcCliente, final String tcPeticionesEnviadas, final String tcTrabajosEnviados, final String tcResultadosRecibidos, final String tcPeticionesFallidas, final String tcPorcentajeResultadosRecibidos) {
+            final String clientName,
+            final String requestSent,
+            final String jobSent,
+            final String resultReceive,
+            final String requestNoSent,
+            final String relativeResultReceive) {
 
         Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
-                viewResultsPhosphorus.adicionarResultadoCliente(tcCliente, tcPeticionesEnviadas, tcTrabajosEnviados, tcResultadosRecibidos, tcPeticionesFallidas, tcPorcentajeResultadosRecibidos);
+                viewResultsPhosphorus.addClientResult(
+                        clientName,
+                        requestSent,
+                        jobSent,
+                        resultReceive,
+                        requestNoSent,
+                        relativeResultReceive);
             }
         };
         Platform.runLater(runnable);
     }
 
     @Override
-    public void adicionarResultadoRecurso( 
-           final String tcRecurso, 
-           final String tcTrabajosRecibidos,
-           final String tcTrabajosEnviados,
-           final String relativeTrabajosEnviados,
-           final String tcFallasEnviadas,
-           final String relativeFallasEnviadas,
-           final String tcVecesNoCPUFree,           
-           final String tcVecesFallasNoEspacio) {
+    public void addResourceResult(
+            final String resourceName,
+            final String jobReceive,
+            final String jobSent,
+            final String relativeJobSent,
+            final String failSent,
+            final String relativeFailSent,
+            final String busyTime,
+            final String relativeBusyTime,
+            final String noAvailable,
+            final String relativeNoAvailable) {
 
         Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
-                viewResultsPhosphorus.adicionarResultadoRecurso( tcRecurso, 
-           tcTrabajosRecibidos,
-           tcTrabajosEnviados,
-           relativeTrabajosEnviados,
-           tcFallasEnviadas,
-           relativeFallasEnviadas,
-           tcVecesNoCPUFree,           
-           tcVecesFallasNoEspacio);
+                viewResultsPhosphorus.addResourceResult(
+                        resourceName,
+                        jobReceive,
+                        jobSent,
+                        relativeJobSent,
+                        failSent,
+                        relativeFailSent,
+                        busyTime,
+                        relativeBusyTime,
+                        noAvailable,
+                        relativeNoAvailable);
             }
         };
         Platform.runLater(runnable);
@@ -47,44 +64,47 @@ public class ResultsController extends ResultsAbstractController {
     }
 
     @Override
-    public void adicionarResultadoConmutador(
-                                            final String tcConmutador,
-                                            final String tcMensajesTrabajoConmutados,
-                                            final String tcMensajesTrabajoNoConmutados,
-                                            final String tcMensajesResultadosConmutados,
-                                            final String tcMensajesResultadosNoConmutados,
-                                            final String tcSwitchedJobRequest ,
-                                            final String tcNonSwitchedJobRequest ,
-                                            final String relDropJob,
-                                            final String relDropRes,
-                                            final String relDropReq,
-                                            final String reltotDrop)
-    {
-       
-          Runnable runnable = new Runnable() {
+    public void addSwitchResult(
+            final String switchName,
+            final String jobSwitched,
+            final String jobNoSwitched,
+            final String resultSwiched,
+            final String resultNoSwitched,
+            final String requestSwitched,
+            final String requestNoSwitched,
+            final String relativeNojobNoSwitched,
+            final String relativeResultNoSwitched,
+            final String relativeRequestNoSwitched,
+            final String relativeAllNoSwitched) {
+
+        Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
-               viewResultsPhosphorus.adicionarResultadoConmutador(
-                       tcConmutador,
-                       tcMensajesTrabajoConmutados, 
-                       tcMensajesTrabajoNoConmutados, 
-                       tcMensajesResultadosConmutados, 
-                       tcMensajesResultadosNoConmutados,
-                       tcSwitchedJobRequest,
-                       tcNonSwitchedJobRequest,
-                       relDropJob, relDropRes,relDropReq , reltotDrop);
+                viewResultsPhosphorus.addSwitchResult(
+                        switchName,
+                        jobSwitched,
+                        jobNoSwitched,
+                        resultSwiched,
+                        resultNoSwitched,
+                        requestSwitched,
+                        requestNoSwitched,
+                        relativeNojobNoSwitched,
+                        relativeResultNoSwitched,
+                        relativeRequestNoSwitched,
+                        relativeAllNoSwitched);
             }
         };
         Platform.runLater(runnable);
     }
 
     @Override
-    public void setExecutionPercentage(final double Percentage,final double simulationTime) 
-    {
+    public void setExecutionPercentage(final double Percentage, final double simulationTime) {
         Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
-                viewResultsPhosphorus.setExecutionPercentage(Percentage,simulationTime);
+                viewResultsPhosphorus.setExecutionPercentage(Percentage, simulationTime);
             }
         };
 
