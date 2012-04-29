@@ -5,6 +5,7 @@ import Grid.Utilities.HtmlWriter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.presentation.design.GraphNode;
+import com.ag2.util.ResourcesPath;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -380,7 +381,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         time.stop();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(findGraphicalName(clientName));
+        cpp.setProperty1(ResourcesPath.findGraphicalName(clientName));
         cpp.setProperty2(requestSent);
         cpp.setProperty3(jobSent);
         cpp.setProperty4(resultReceive);
@@ -390,16 +391,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         dataCliente.add(cpp);
     }
 
-    private String findGraphicalName(String originalName) {
-        String name = originalName;
-        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
-            if (graphNode.getOriginalName().equalsIgnoreCase(originalName)) {
-                name = graphNode.getName();
-            }
-        }
-        return name;
-
-    }
+    
 
     @Override
     public void addResourceResult( 
@@ -415,7 +407,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
            String relativeVecesFallasNoEspacio) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(findGraphicalName(tcRecurso));
+        cpp.setProperty1(ResourcesPath.findGraphicalName(tcRecurso));
         cpp.setProperty2(tcTrabajosRecibidos);
         cpp.setProperty3(tcTrabajosEnviados);
         cpp.setProperty4(relativeTrabajosEnviados);
@@ -444,7 +436,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String reltotDrop) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(findGraphicalName(tcConmutador));
+        cpp.setProperty1(ResourcesPath.findGraphicalName(tcConmutador));
         cpp.setProperty2(tcMensajesTrabajoConmutados);
         cpp.setProperty3(tcMensajesTrabajoNoConmutados);
         cpp.setProperty4(tcMensajesResultadosConmutados);

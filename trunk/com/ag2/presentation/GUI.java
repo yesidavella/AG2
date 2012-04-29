@@ -1141,6 +1141,7 @@ public class GUI extends Scene implements Serializable {
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
+        chartsResult.play();
         tabPane.getSelectionModel().select(tabResults);
 
     }
@@ -1168,4 +1169,9 @@ public class GUI extends Scene implements Serializable {
     public ToolBarAnimationAG2 getToolBarAnimationAG2() {
         return animationHeaderAG2;
     }
+
+    public ChartsResult getChartsResult() {
+        return chartsResult;
+    }
+    
 }
