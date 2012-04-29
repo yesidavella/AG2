@@ -13,7 +13,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,10 +34,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
@@ -106,7 +103,8 @@ public class GUI extends Scene implements Serializable {
     private Timeline tlPropertiesSmall = new Timeline();
     private boolean hideAgainProperties = false;
     private Button btnDownUp = new Button("<");
-    private VBox headerAnimationContainer = new VBox();
+    private ToolBarAnimationAG2 animationHeaderAG2;
+    private VBox vbHeaderAnimationContainer;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -352,6 +350,16 @@ public class GUI extends Scene implements Serializable {
     private void createTitleBar() {
         tobWindow = new ToolBar();
         tobWindow.setId("mainToolBar");
+        tobWindow.widthProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+
+                if (animationHeaderAG2 != null) {
+                    animationHeaderAG2.resize(stage);
+                }
+            }
+        });
 
         Label lblTitle = new Label("Simulador de infraestructura de grillas ópticas AG2");
         lblTitle.setId("titleApplication");
@@ -360,13 +368,9 @@ public class GUI extends Scene implements Serializable {
         reflecEfect.setTopOffset(-4);
         lblTitle.setEffect(reflecEfect);
 
-
-        HBox.setHgrow(headerAnimationContainer, Priority.ALWAYS);
-//        tobWindow.getItems().addAll(lblTitle, spacer);
-
-//        Region spacer2 = new Region();
-//        HBox.setHgrow(spacer2, Priority.ALWAYS);
-//        tobWindow.getItems().add(spacer2);
+        vbHeaderAnimationContainer = new VBox();
+        vbHeaderAnimationContainer.setId("animation-container");
+        HBox.setHgrow(vbHeaderAnimationContainer, Priority.ALWAYS);
 
         tobWindow.setPrefHeight(50);
         tobWindow.setMinHeight(50);
@@ -374,12 +378,7 @@ public class GUI extends Scene implements Serializable {
         stage.initStyle(StageStyle.UNDECORATED);
         windowButtons = new WindowButtons(stage, stpLayer);
 
-        headerAnimationContainer.getStyleClass().add("ver-borde-rojo");
-//        spacer2.getStyleClass().add("ver-borde-verde");
-
-        tobWindow.getItems().addAll(lblTitle, headerAnimationContainer, windowButtons);
-
-//        createHeaderAnimation(spacer);
+        tobWindow.getItems().addAll(lblTitle, vbHeaderAnimationContainer, windowButtons);
 
         tobWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -1087,8 +1086,9 @@ public class GUI extends Scene implements Serializable {
         scpWorld.setHvalue(0.27151447890809266);
         scpWorld.setVvalue(0.4661207267437006);
 
+        createHeaderAnimation(tobWindow);
 //        windowButtons.toogleMaximized();
-        createHeaderAnimation();
+
 
         new AboutAG2project();
     }
@@ -1149,71 +1149,11 @@ public class GUI extends Scene implements Serializable {
         return modalDimmer;
     }
 
-    private void createHeaderAnimation() {
-        Region regLight = new Region();
-        regLight.setId("tin");
-        regLight.setPrefSize(10, 10);
-        regLight.setMinSize(10, 10);
-        regLight.setMaxSize(10, 10);
+    public void createHeaderAnimation(ToolBar tobWindow) {
+        animationHeaderAG2 = new ToolBarAnimationAG2(tobWindow);
+    }
 
-        headerAnimationContainer.getChildren().add(regLight);
-
-        ParallelTransition ChildParalTransBegin = new ParallelTransition();
-        ParallelTransition childParalTransEnd = new ParallelTransition();
-        SequentialTransition parentSeqTrans = new SequentialTransition();
-        parentSeqTrans.setCycleCount(Timeline.INDEFINITE);
-        parentSeqTrans.setAutoReverse(true);
-        parentSeqTrans.setCycleCount(Timeline.INDEFINITE);
-        parentSeqTrans.setAutoReverse(true);
-
-//        Se configuran las transiciones q ejecuta al inicio
-        RotateTransition rotateTransBegin = new RotateTransition(Duration.seconds(4), regLight);
-        rotateTransBegin.setByAngle(180f);
-        rotateTransBegin.setCycleCount(2);
-        rotateTransBegin.setAutoReverse(true);
-
-        ScaleTransition scaleTransBegin = new ScaleTransition(Duration.seconds(2), regLight);
-        scaleTransBegin.setToX(2f);
-        scaleTransBegin.setToY(2f);
-        scaleTransBegin.setCycleCount(2);
-        scaleTransBegin.setAutoReverse(true);
-
-        ChildParalTransBegin.getChildren().addAll(rotateTransBegin,scaleTransBegin);
-        
-//        Luego la transicion de desplazamiento con curva
-        double endPointX = headerAnimationContainer.getLayoutBounds().getWidth();
-
-        Path path = new Path();
-        path.getElements().add(new MoveTo(0, 0));
-        path.getElements().add(new CubicCurveTo(endPointX / 3, 10, 2 * endPointX / 3, 40, endPointX, 40));
-        path.setStroke(Color.AQUAMARINE);
-        path.getStrokeDashArray().setAll(5d, 5d);
-
-        headerAnimationContainer.getChildren().add(path);
-
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.seconds(2));
-        pathTransition.setPath(path);
-        pathTransition.setNode(regLight);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(1);
-
-//        Al final la ultima transicion
-        RotateTransition rotateTransEnd = new RotateTransition(Duration.seconds(4), regLight);
-        rotateTransEnd.setByAngle(180f);
-        rotateTransEnd.setCycleCount(2);
-        rotateTransEnd.setAutoReverse(true);
-
-        ScaleTransition scaleTransEnd = new ScaleTransition(Duration.seconds(2), regLight);
-        scaleTransEnd.setToX(2f);
-        scaleTransEnd.setToY(2f);
-        scaleTransEnd.setCycleCount(2);
-        scaleTransEnd.setAutoReverse(true);
-
-        childParalTransEnd.getChildren().addAll(rotateTransEnd,scaleTransEnd);
-
-        parentSeqTrans.getChildren().addAll(ChildParalTransBegin, pathTransition, childParalTransEnd);
-
-        parentSeqTrans.play();
+    public ToolBarAnimationAG2 getToolBarAnimationAG2() {
+        return animationHeaderAG2;
     }
 }
