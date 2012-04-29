@@ -9,12 +9,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 import netscape.javascript.JSObject;
@@ -29,6 +25,7 @@ public class Main extends Application implements Serializable {
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
+    private ResultsChartController resultsChartController;
     private JSObject browser;
     public static boolean IS_APPLET = false;
     private GUI guiAG2;
@@ -90,6 +87,7 @@ public class Main extends Application implements Serializable {
         nodeAdminController = new NodeAdminController();
         executeController = new ExecuteController();
         resultsController = new ResultsController();
+        resultsChartController = new ResultsChartController();
 
         guiAG2.getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
 
@@ -124,10 +122,12 @@ public class Main extends Application implements Serializable {
 
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
+        resultsChartController.setViewResultsChart(guiAG2.getChartsResult());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
         guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
-
+        
+        simulationBase.setResultsChartAbstractController(resultsChartController);
     }
 
     public ResultsController getResultsController() {

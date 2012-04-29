@@ -7,17 +7,26 @@ import Grid.Interfaces.Switch;
 import Grid.Outputter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
+import com.ag2.controller.ResultsChartAbstractController;
 import java.text.DecimalFormat;
 import simbase.Stats.SimBaseStats;
 
 public class OutputterModel extends Outputter {
 
     private ResultsAbstractController resultsAbstractController;
+    private ResultsChartAbstractController chartAbstractController;
+        
     DecimalFormat decimalFormat = new DecimalFormat("###############.###");
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
     }
+
+    public void setChartAbstractController(ResultsChartAbstractController chartAbstractController) {
+        this.chartAbstractController = chartAbstractController;
+    }
+    
+    
 
     public OutputterModel(GridSimulator gridSimulator) {
         super(gridSimulator);
@@ -32,14 +41,21 @@ public class OutputterModel extends Outputter {
         
         double realtiveRequestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED)/requestSent;
 
+        double resultReceive =  sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED);
+        double relativeResultReceive = resultReceive/sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT);
+        
         resultsAbstractController.addClientResult(
                 client.toString(),
                 "  " +requestSent,
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
-                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED),
+                "  " + resultReceive,
                 "  " + requestNoSent,
-                "  " + decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT) * 100) + "%",
+                "  " + decimalFormat.format(relativeResultReceive* 100) + "%",
                 "  " +  decimalFormat.format(realtiveRequestNoSent*100) );
+        
+        chartAbstractController.createClientResult(client.toString(), 
+                relativeResultReceive*100, 
+                realtiveRequestNoSent*100);
     }
 
     @Override

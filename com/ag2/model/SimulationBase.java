@@ -9,6 +9,7 @@ import Grid.Utilities.HtmlWriter;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.controller.ResultsAbstractController;
+import com.ag2.controller.ResultsChartAbstractController;
 import com.ag2.util.ResourcesPath;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,7 +27,8 @@ public class SimulationBase implements Runnable, Serializable {
     private NodeAdminAbstractController nodeAdminAbstractController;
     private LinkAdminAbstractController linkAdminAbstractController;
     private ResultsAbstractController resultsAbstractController;
-    private String id;
+    private ResultsChartAbstractController resultsChartAbstractController;
+    private String id; 
 
     private SimulationBase() {
 
@@ -87,10 +89,13 @@ public class SimulationBase implements Runnable, Serializable {
     {
          simulationBase = new SimulationBase();
         OutputterModel outputterModelNew = new OutputterModel(simulationBase.getGridSimulatorModel());
+        
         simulationBase.setResultsAbstractController(resultsAbstractController);
         simulationBase.setOutputterModel(outputterModelNew);
         simulationBase.setNodeAdminAbstractController(nodeAdminAbstractController);
         simulationBase.setLinkAdminAbstractController(linkAdminAbstractController);
+        simulationBase.setResultsChartAbstractController(resultsChartAbstractController);
+      
         nodeAdminAbstractController.reCreatePhosphorousNodes();
         linkAdminAbstractController.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
@@ -137,4 +142,15 @@ public class SimulationBase implements Runnable, Serializable {
     public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminController) {
         this.linkAdminAbstractController = linkAdminController;
     }
+
+    public OutputterModel getOutputterModel() {
+        return outputterModel;
+    }
+
+    public void setResultsChartAbstractController(ResultsChartAbstractController resultsChartAbstractController) {
+        this.resultsChartAbstractController = resultsChartAbstractController;
+        outputterModel.setChartAbstractController(resultsChartAbstractController);
+    }
+    
+    
 }
