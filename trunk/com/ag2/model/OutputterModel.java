@@ -25,15 +25,21 @@ public class OutputterModel extends Outputter {
     }
 
     @Override
-    public void printClient(ClientNode client) {
+    public void printClient(ClientNode client) 
+    {
+        double requestSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT);
+        double requestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED);
+        
+        double realtiveRequestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED)/requestSent;
 
         resultsAbstractController.addClientResult(
                 client.toString(),
-                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT),
+                "  " +requestSent,
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
                 "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED),
-                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED),
-                "  " + decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT) * 100) + "%");
+                "  " + requestNoSent,
+                "  " + decimalFormat.format(sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED) / sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT) * 100) + "%",
+                "  " +  decimalFormat.format(realtiveRequestNoSent*100) );
     }
 
     @Override

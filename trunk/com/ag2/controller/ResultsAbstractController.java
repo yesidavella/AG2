@@ -20,7 +20,8 @@ public abstract class ResultsAbstractController implements Serializable {
             String jobSent,
             String resultReceive ,
             String requestNoSent,
-            String relativeResultReceive);
+            String relativeResultReceive, 
+            String relativeRequestNoSent);
 
     public abstract void addResourceResult(
             String resourceName,

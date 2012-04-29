@@ -3,12 +3,14 @@ package com.ag2.presentation.control;
 
 public interface  ViewResultsPhosphorus {
     
-   public abstract  void addClientResult(String clientName,
+   public abstract  void addClientResult(
+            String clientName,
             String requestSent,
             String jobSent,
             String resultReceive ,
             String requestNoSent,
-            String relativeResultReceive);
+            String relativeResultReceive, 
+            String relativeRequestNoSent);
 
    public abstract void addResourceResult(
           String resourceName,
