@@ -11,7 +11,8 @@ public class ResultsController extends ResultsAbstractController {
             final String jobSent,
             final String resultReceive,
             final String requestNoSent,
-            final String relativeResultReceive) {
+            final String relativeResultReceive,
+            final String relativeRequestNoSent) {
 
         Runnable runnable = new Runnable() {
 
@@ -23,7 +24,8 @@ public class ResultsController extends ResultsAbstractController {
                         jobSent,
                         resultReceive,
                         requestNoSent,
-                        relativeResultReceive);
+                        relativeResultReceive,
+                        relativeRequestNoSent);
             }
         };
         Platform.runLater(runnable);
