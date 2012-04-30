@@ -2,7 +2,7 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
 
 public class PCE_SwicthGraphNode extends SwitchGraphNode{
@@ -11,7 +11,7 @@ public class PCE_SwicthGraphNode extends SwitchGraphNode{
     public PCE_SwicthGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,
             LinkAdminAbstractController linkAdminAbstractController) {
         
-        super(graphDesignGroup,"PCE"+(++nodeCounter),ResourcesPath.ABS_PATH_IMGS+"PCE_mapa.png",
+        super(graphDesignGroup,"PCE"+(++nodeCounter),Utils.ABS_PATH_IMGS+"PCE_mapa.png",
                 nodeAdminAbstractController,linkAdminAbstractController);
     }
      private void readObject(ObjectInputStream inputStream)

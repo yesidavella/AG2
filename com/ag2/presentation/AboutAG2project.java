@@ -1,6 +1,6 @@
 package com.ag2.presentation;
 
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -79,22 +79,22 @@ public class AboutAG2project extends ModalAG2window {
         final int PHOSPHORUS_HEIGHT = 80;
         final int UNIV_DIST_HEIGHT = 80;
 
-        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoAG2.png"));
+        ImageView ivAG2 = new ImageView(new Image(Utils.ABS_PATH_IMGS+"logoAG2.png"));
         double proportionXYAG2 = ivAG2.getBoundsInParent().getWidth() / ivAG2.getBoundsInParent().getHeight();
         ivAG2.setFitHeight(AG2_HEIGHT);
         ivAG2.setFitWidth(AG2_HEIGHT * proportionXYAG2);
 
-        ImageView ivInternetIntel = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"logoInterInt.png"));
+        ImageView ivInternetIntel = new ImageView(new Image(Utils.ABS_PATH_IMGS+"logoInterInt.png"));
         double proportionXYInternetIn = ivInternetIntel.getBoundsInParent().getWidth() / ivInternetIntel.getBoundsInParent().getHeight();
         ivInternetIntel.setFitHeight(INTER_INTEL_HEIGHT);
         ivInternetIntel.setFitWidth(INTER_INTEL_HEIGHT * proportionXYInternetIn);
 
-        ImageView ivPhosphorus = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"phosphorus.jpg"));
+        ImageView ivPhosphorus = new ImageView(new Image(Utils.ABS_PATH_IMGS+"phosphorus.jpg"));
         double proportionXYphosphorus = ivPhosphorus.getBoundsInParent().getWidth() / ivPhosphorus.getBoundsInParent().getHeight();
         ivPhosphorus.setFitHeight(PHOSPHORUS_HEIGHT);
         ivPhosphorus.setFitWidth(PHOSPHORUS_HEIGHT * proportionXYphosphorus);
 
-        ImageView ivDistritalUniv = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"escudo_udistrital.jpg"));
+        ImageView ivDistritalUniv = new ImageView(new Image(Utils.ABS_PATH_IMGS+"escudo_udistrital.jpg"));
         double proportionXYdistritalUniv = ivDistritalUniv.getBoundsInParent().getWidth() / ivDistritalUniv.getBoundsInParent().getHeight();
         ivDistritalUniv.setFitHeight(UNIV_DIST_HEIGHT);
         ivDistritalUniv.setFitWidth(UNIV_DIST_HEIGHT * proportionXYdistritalUniv);

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ResourcesPath {
+public class Utils {
 
     public static String ABS_PATH_CONFIG_AG2 = ""; //URLUtil.fileToURL(new File("resources/")).toString().replaceFirst("file:/","");
     public static String ABS_PATH_IMGS = "";// URLUtil.fileToURL(new File("resources/images/")).toString();
@@ -23,7 +23,7 @@ public class ResourcesPath {
             ABS_PATH_CSS = new File("resources/css/").toURL().toString();
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ResourcesPath.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
