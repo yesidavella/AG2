@@ -294,6 +294,27 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-cursor:move;
 }
 
+/*************BOTON Q MUESTRA Y OCULTA LAS LATBLAS DE PROPIEDADES**************/
+#btn-show-hide-properties{
+    -fx-background-color: white;
+    -fx-background-size: 60% 60%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-cursor: hand;
+    -fx-border-color: derive(-fx-mBlue-ag2,10%);
+    -fx-border-radius:3;
+}
+#btn-show-hide-properties:hover{
+    -fx-border-color: derive(-fx-dBlue-ag2,-10%);
+}
+
+.btn-show-minus{
+    -fx-background-image: url("../images/arrow-show-minus.png");
+}
+.btn-show-more{
+    -fx-background-image: url("../images/arrow-show-more.png");
+}
+
 /***************MAPA DE NAVEGACION Y ELEMENTOS INTERNOS************************/
 
 .bg-map-navigation{
@@ -366,10 +387,11 @@ ProgressBar progress-bar:indeterminate .bar {
 
 .go-btn{
     -fx-background-image: url("../images/go_arrow.png");    
-    -fx-background-size: 60% 60%;
+    -fx-background-size: 55% 55%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
     -fx-cursor:hand;
+    -fx-background-radius:10
 }
 
 /******************LUZ DEL HEADER Q TIENE LA ANIMACION************************/
@@ -379,13 +401,13 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
-/*
-    -fx-border-style: solid;
-    -fx-border-color:green;*/
+    /*
+        -fx-border-style: solid;
+        -fx-border-color:green;*/
 }
 
 #path-light{
     -fx-stroke:transparent;
-/*    -fx-stroke-width:0.5px;*/
-/*    -fx-effect:dropshadow( gaussian , derive(-fx-mBlue-ag2,-30%) , 10, 0.5 ,0,0 ); */
+    /*    -fx-stroke-width:0.5px;*/
+    /*    -fx-effect:dropshadow( gaussian , derive(-fx-mBlue-ag2,-30%) , 10, 0.5 ,0,0 ); */
 }
