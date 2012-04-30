@@ -4,7 +4,7 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -28,7 +28,7 @@ import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
  
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"prohibido_enlace.png"));
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(Utils.ABS_PATH_IMGS+"prohibido_enlace.png"));
     public static boolean linkBegin = false;        
     private static GraphNode wildcardNodeA = null;
     

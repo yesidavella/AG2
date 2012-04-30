@@ -1,6 +1,6 @@
 package com.ag2.presentation;
 
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -35,7 +35,7 @@ public abstract class ModalAG2window extends Stage {
 
         Scene scene = new Scene(brpWindowLayout, 515, 400);//#FFEB8C
         setGradientEffect(scene);
-        scene.getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
+        scene.getStylesheets().add(Utils.ABS_PATH_CSS + "cssAG2.css");
         brpWindowLayout.getStyleClass().add("modal-AG2-window");
 
         btnAccept = new Button("Aceptar");

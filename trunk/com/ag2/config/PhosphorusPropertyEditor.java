@@ -1,6 +1,6 @@
 package com.ag2.config;
 
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
@@ -26,19 +26,19 @@ public final class PhosphorusPropertyEditor {
     public void readFile() {
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME);
             properties.load(fileInputStream);
             fileInputStream.close();
 
         } catch (Exception ex) {
-            System.out.println("Failed to read from " + ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
+            System.out.println("Failed to read from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
 
     }
 
     public void writeFile() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(ResourcesPath.ABS_PATH_CONFIG_AG2 + FILE_NAME);
+            FileOutputStream fileOutputStream = new FileOutputStream(Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME);
             properties.store(fileOutputStream, null);
             fileOutputStream.flush();
             fileOutputStream.close();

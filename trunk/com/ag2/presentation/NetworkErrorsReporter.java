@@ -1,6 +1,6 @@
 package com.ag2.presentation;
 
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +29,7 @@ public class NetworkErrorsReporter extends ModalAG2window {
         hbTitle.setPadding(new Insets(0, 0, 10, 0));
         hbTitle.setAlignment(Pos.CENTER);
         
-        ImageView ivWarning = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"warning.png"));
+        ImageView ivWarning = new ImageView(new Image(Utils.ABS_PATH_IMGS+"warning.png"));
         double proportionXYivWarning = ivWarning.getBoundsInParent().getWidth()/ivWarning.getBoundsInParent().getHeight();
         ivWarning.setFitHeight(WARNING_WIDTH);
         ivWarning.setFitWidth(WARNING_WIDTH*proportionXYivWarning);

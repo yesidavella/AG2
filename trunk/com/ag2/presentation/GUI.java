@@ -5,7 +5,7 @@ import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
@@ -80,8 +80,8 @@ public class GUI extends Scene implements Serializable {
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
     private TabPane tabPane = new TabPane();   
-    private Tab tabChartsResults  = new Tab();
-    private ChartsResult chartsResult;
+    private Tab tabChartsClientResults  = new Tab();
+    private ChartsResultClient chartsResultClient;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
     private transient ToolBar tobWindow;
@@ -111,7 +111,7 @@ public class GUI extends Scene implements Serializable {
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
-        getStylesheets().add(ResourcesPath.ABS_PATH_CSS + "cssAG2.css");
+        getStylesheets().add(Utils.ABS_PATH_CSS + "cssAG2.css");
 
         if (!Main.IS_APPLET) {
             stage.initStyle(StageStyle.UNDECORATED);
@@ -705,8 +705,8 @@ public class GUI extends Scene implements Serializable {
         tabResultsHTML.setText("Registros HTML");
         tabResultsHTML.setClosable(false);
         
-        tabChartsResults.setText("Graficos de resultados");
-        tabChartsResults.setClosable(false);
+        tabChartsClientResults.setText("Graficos de Cliente");
+        tabChartsClientResults.setClosable(false);
         
         tabChartsResourceCPU.setText("Graficos de recurso (CPU)");
         tabChartsResourceCPU.setClosable(false);
@@ -714,9 +714,6 @@ public class GUI extends Scene implements Serializable {
         tabChartsResourceBuffer.setText("Graficos de recurso (buffer)");
         tabChartsResourceBuffer.setClosable(false);
         
-        
-        
-
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
         executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
@@ -730,12 +727,12 @@ public class GUI extends Scene implements Serializable {
         splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
         
-        chartsResult = new ChartsResult(tabChartsResults);
+        chartsResultClient = new ChartsResultClient(tabChartsClientResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
         
         
-        tabPane.getTabs().addAll(tabSimulation, tabChartsResults  ,tabChartsResourceCPU, tabChartsResourceBuffer);
+        tabPane.getTabs().addAll(tabSimulation, tabChartsClientResults  ,tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
     private ScrollPane createRightDesign() {
@@ -864,7 +861,7 @@ public class GUI extends Scene implements Serializable {
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
 
-        ImageView ivAG2 = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS + "logos.gif"));
+        ImageView ivAG2 = new ImageView(new Image(Utils.ABS_PATH_IMGS + "logos.gif"));
         ivAG2.setEffect(new DropShadow());
         vbLogos.getChildren().addAll(ivAG2);
         ivAG2.setFitHeight(90);
@@ -1141,7 +1138,7 @@ public class GUI extends Scene implements Serializable {
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
-        chartsResult.play();
+        chartsResultClient.play();
         tabPane.getSelectionModel().select(tabResults);
 
     }
@@ -1170,8 +1167,8 @@ public class GUI extends Scene implements Serializable {
         return animationHeaderAG2;
     }
 
-    public ChartsResult getChartsResult() {
-        return chartsResult;
+    public ChartsResultClient getChartsResult() {
+        return chartsResultClient;
     }
     
 }

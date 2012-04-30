@@ -1,7 +1,7 @@
 package com.ag2.presentation.control;
 
 import Grid.Utilities.HtmlWriter;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,10 +22,10 @@ import javafx.scene.web.WebView;
 
 public class PhosphosrusHTMLResults {
 
-    private ImageView leftEndImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_izquierda_fin.png"));
-    private ImageView leftImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_izquierda.png"));
-    private ImageView rightImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_derecha.png"));
-    private ImageView rightEndImageView = new ImageView(new Image(ResourcesPath.ABS_PATH_IMGS+"mini_derecha_fin.png"));
+    private ImageView leftEndImageView = new ImageView(new Image(Utils.ABS_PATH_IMGS+"mini_izquierda_fin.png"));
+    private ImageView leftImageView = new ImageView(new Image(Utils.ABS_PATH_IMGS+"mini_izquierda.png"));
+    private ImageView rightImageView = new ImageView(new Image(Utils.ABS_PATH_IMGS+"mini_derecha.png"));
+    private ImageView rightEndImageView = new ImageView(new Image(Utils.ABS_PATH_IMGS+"mini_derecha_fin.png"));
     private Button btnLeftEnd = new Button();
     private Button btnLeft = new Button();
     private Button btnRight = new Button();

@@ -5,7 +5,7 @@ import Grid.Utilities.HtmlWriter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.presentation.design.GraphNode;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -381,7 +381,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         time.stop();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(ResourcesPath.findGraphicalName(clientName));
+        cpp.setProperty1(Utils.findGraphicalName(clientName));
         cpp.setProperty2(requestSent);
         cpp.setProperty3(jobSent);
         cpp.setProperty4(resultReceive);
@@ -407,7 +407,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
            String relativeVecesFallasNoEspacio) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(ResourcesPath.findGraphicalName(tcRecurso));
+        cpp.setProperty1(Utils.findGraphicalName(tcRecurso));
         cpp.setProperty2(tcTrabajosRecibidos);
         cpp.setProperty3(tcTrabajosEnviados);
         cpp.setProperty4(relativeTrabajosEnviados);
@@ -436,7 +436,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String reltotDrop) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
-        cpp.setProperty1(ResourcesPath.findGraphicalName(tcConmutador));
+        cpp.setProperty1(Utils.findGraphicalName(tcConmutador));
         cpp.setProperty2(tcMensajesTrabajoConmutados);
         cpp.setProperty3(tcMensajesTrabajoNoConmutados);
         cpp.setProperty4(tcMensajesResultadosConmutados);

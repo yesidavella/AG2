@@ -2,7 +2,7 @@ package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
-import com.ag2.util.ResourcesPath;
+import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
 
 public class BrokerGrahpNode extends GraphNode {
@@ -12,7 +12,7 @@ public class BrokerGrahpNode extends GraphNode {
     public BrokerGrahpNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
             LinkAdminAbstractController linkAdminAbstractController) {
 
-        super(graphDesignGroup, "Agentador_" + (++nodeCounter), ResourcesPath.ABS_PATH_IMGS + "nodo_servicio_mapa.png",
+        super(graphDesignGroup, "Agentador_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "nodo_servicio_mapa.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 74);
         setWidth((short) 61);
