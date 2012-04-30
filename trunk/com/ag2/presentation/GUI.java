@@ -104,7 +104,7 @@ public class GUI extends Scene implements Serializable {
     private WindowResizeButton windowResizeButton;
     private Timeline tlPropertiesSmall = new Timeline();
     private boolean hideAgainProperties = false;
-    private Button btnDownUp = new Button("<");
+    private Button btnDownUp = new Button();
     private ToolBarAnimationAG2 animationHeaderAG2;
     private VBox vbHeaderAnimationContainer;
 
@@ -271,9 +271,6 @@ public class GUI extends Scene implements Serializable {
         tlPropertiesSmall.setCycleCount(50000);
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
 
-
-
-
         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
 
             @Override
@@ -320,7 +317,8 @@ public class GUI extends Scene implements Serializable {
                     tlProperties.play();
                     hideAgainProperties = false;
 
-                    btnDownUp.setText("izq");
+                    btnDownUp.getStyleClass().remove("btn-show-minus");
+                    btnDownUp.getStyleClass().add("btn-show-more");
                 }
             }
         });
@@ -767,6 +765,10 @@ public class GUI extends Scene implements Serializable {
         createMapNavigationPanel(vbxBottomRight);
 //        vbxBottomRight.getChildren().add(gpMapNavegation);
 
+        btnDownUp.setId("btn-show-hide-properties");
+        btnDownUp.getStyleClass().add("btn-show-more");
+        btnDownUp.setTooltip(new Tooltip("Muestra/oculta las propiedades de la simulación/dispositivo."));
+
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -776,9 +778,20 @@ public class GUI extends Scene implements Serializable {
 
                 tlProperties.play();
                 if (showProperties) {
-                    btnDownUp.setText("der");
+                    if (btnDownUp.getStyleClass().contains("btn-show-minus")) {
+                        btnDownUp.getStyleClass().remove("btn-show-more");
+                    } else {
+                        btnDownUp.getStyleClass().remove("btn-show-more");
+                        btnDownUp.getStyleClass().add("btn-show-minus");
+                    }
                 } else {
-                    btnDownUp.setText("izq");
+
+                    if (btnDownUp.getStyleClass().contains("btn-show-more")) {
+                        btnDownUp.getStyleClass().remove("btn-show-minus");
+                    } else {
+                        btnDownUp.getStyleClass().remove("btn-show-minus");
+                        btnDownUp.getStyleClass().add("btn-show-more");
+                    }
                 }
             }
         });
@@ -791,8 +804,9 @@ public class GUI extends Scene implements Serializable {
                     showProperties = !showProperties;
                     tlProperties.play();
                     hideAgainProperties = true;
-                    btnDownUp.setText(">");
 
+                    btnDownUp.getStyleClass().remove("btn-show-more");
+                    btnDownUp.getStyleClass().add("btn-show-minus");
                 }
             }
         });
