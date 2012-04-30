@@ -145,6 +145,12 @@ y del de arriba rgb(91,136,224)*/
     -fx-border-width:1px;
     -fx-background-color:null;
 }
+.boxChart2{
+    -fx-border-radius: 5;
+    -fx-border-color:#BFBFBF;
+    -fx-border-width:1px;
+    -fx-background-color:null;
+}
 
 .boxDataChart{
     -fx-border-radius: 4;
@@ -249,6 +255,9 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-font-weight: bold
 }
 
+.chart-title {
+    -fx-font-size: 14;
+}
 /* ====================== LINE CHART =========================================*/
 .chart-line-symbol {
     -fx-background-color: #f9d900, white;
