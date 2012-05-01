@@ -13,12 +13,17 @@ import javafx.application.Platform;
 public class ResultsChartController extends ResultsChartAbstractController {
 
     @Override
-    public void createClientResult(final String clientName, final double relativeResultReceive, final double relativeJobsNoSent) {
+    public void createClientResult( 
+            final String clientName,
+            final double requestSent, 
+            final double jobNosent,
+            final double jobSent,
+            final double jobreceive) {
         Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
-                viewResultsChart.createClientResult(clientName, relativeResultReceive, relativeJobsNoSent);
+                viewResultsChart.createClientResult(clientName, requestSent, jobNosent,jobSent, jobreceive );
             }
         };
         Platform.runLater(runnable);

@@ -38,11 +38,13 @@ public class OutputterModel extends Outputter {
     {
         double requestSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT);
         double requestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED);
+        double jobSent  = sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT);
+        
         
         double realtiveRequestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED)/requestSent;
 
         double resultReceive =  sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED);
-        double relativeResultReceive = resultReceive/sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT);
+        double relativeResultReceive = resultReceive/jobSent;
         
         resultsAbstractController.addClientResult(
                 client.toString(),
@@ -54,8 +56,10 @@ public class OutputterModel extends Outputter {
                 "  " +  decimalFormat.format(realtiveRequestNoSent*100) );
         
         chartAbstractController.createClientResult(client.toString(), 
-                relativeResultReceive*100, 
-                realtiveRequestNoSent*100);
+                requestSent, 
+                requestNoSent,
+                jobSent,
+                resultReceive );
     }
 
     @Override

@@ -6,11 +6,12 @@ package com.ag2.presentation.control;
 
 import com.ag2.util.Utils;
 import com.sun.javafx.scene.web.skin.ColorPicker;
+import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -33,6 +34,13 @@ public class ChartsResultClient implements ViewResultsChart {
     private VBox vBoxMain;
     private HBox hBoxMainClient;
     private int countPlays = 1;
+    private BarChart<String, Number> barChart;
+    XYChart.Series<String, Number> series1;
+    XYChart.Series<String, Number> series2;
+    XYChart.Series<String, Number> series3;
+    XYChart.Series<String, Number> series4;
+    CategoryAxis xAxis = new CategoryAxis();
+    NumberAxis yAxis;
 
     public ChartsResultClient(Tab tab) {
         this.tab = tab;
@@ -54,48 +62,64 @@ public class ChartsResultClient implements ViewResultsChart {
         vBoxPlay.getChildren().addAll(lblTitle, hBoxMainClient);
         vBoxPlay.getStyleClass().add("boxChart");
         vBoxPlay.setAlignment(Pos.CENTER);
-        vBoxMain.getChildren().add(0,vBoxPlay);
+        vBoxMain.getChildren().add(0, vBoxPlay);
+
+
+
         countPlays++;
+
+        xAxis = new CategoryAxis();
+        yAxis = new NumberAxis();
+
+        barChart = new BarChart<String, Number>(xAxis, yAxis);
+        barChart.setTitle("Grafico de clientes solicitudes/trabajos");
+        barChart.setMinHeight(550);
+        barChart.setMinWidth(100);
+
+        xAxis.setLabel("Clientes");
+        yAxis.setLabel("Solicitudes/Trabajos");
+
+
+        series1 = new XYChart.Series<String, Number>();
+        series1.setName("Solicitudes enviadas");
+        series2 = new XYChart.Series<String, Number>();
+        series2.setName("Trabajos no enviados");
+        series3 = new XYChart.Series<String, Number>();
+        series3.setName("Trabajos enviados");
+        series4 = new XYChart.Series<String, Number>();
+        series4.setName("Resultados recibidos");
+        barChart.getData().addAll(series1, series2, series3, series4);
+
     }
 
     @Override
-    public void createClientResult(String clientName, double relativeResultReceive, double relativeJobsNoSent) {
-        System.out.println(" ######  " + clientName + " " + relativeResultReceive + "  " + relativeJobsNoSent);
-
-        double relativeNoResultReceive = 100 - relativeResultReceive;
-        double relativeJobsSent = 100 - relativeJobsNoSent;
-
-
-        ObservableList<PieChart.Data> dataRelativeResultReceive = FXCollections.observableArrayList(
-                new PieChart.Data("Resultado no recibidos", relativeNoResultReceive),
-                new PieChart.Data("Resultado  recibidos", relativeResultReceive));
-        PieChart chartRelativeResultReceive = new PieChart(dataRelativeResultReceive);
-        chartRelativeResultReceive.setTitle("Resultados recibidos");
-        chartRelativeResultReceive.setClockwise(false);
+    public void createClientResult(final String clientName,
+            final double requestSent,
+            final double jobNosent,
+            final double jobSent,
+            final double jobReceive) {
 
 
-        ObservableList<PieChart.Data> dataRelativeJobsNoSent = FXCollections.observableArrayList(
-                new PieChart.Data("Trabajos no enviados", relativeJobsNoSent),
-                new PieChart.Data("Trabajos enviados", relativeJobsSent));
-        PieChart chartRelativeJobsNoSent = new PieChart(dataRelativeJobsNoSent);
-        chartRelativeJobsNoSent.setTitle("Trabajos enviados");
-        chartRelativeJobsNoSent.setClockwise(false);
-
-        
-        Label lblTitleClient = new Label("Resultados cliente  "+Utils.findGraphicalName(clientName)) ;
-        lblTitleClient.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
-        
         VBox vBoxClient = new VBox();
         HBox hBoxClient = new HBox();
         vBoxClient.setAlignment(Pos.CENTER);
         vBoxClient.getStyleClass().add("boxChart2");
-        
-        vBoxClient.setSpacing(10);
-        vBoxClient.setPadding(new Insets(10, 10, 10, 10));
-        hBoxClient.getChildren().addAll(chartRelativeResultReceive, chartRelativeJobsNoSent);
-        vBoxClient.getChildren().addAll(lblTitleClient, hBoxClient);
-        
-        hBoxClient.setMaxHeight(270);
+        vBoxClient.getChildren().addAll(hBoxClient);
+
+
+
+
+        series1.getData().add(new XYChart.Data<String, Number>(Utils.findGraphicalName(clientName), requestSent));
+        series2.getData().add(new XYChart.Data<String, Number>(Utils.findGraphicalName(clientName), jobNosent));
+        series3.getData().add(new XYChart.Data<String, Number>(Utils.findGraphicalName(clientName), jobSent));
+        series4.getData().add(new XYChart.Data<String, Number>(Utils.findGraphicalName(clientName), jobReceive));
+
+
+     
+
+        barChart.setMinWidth(barChart.getMinWidth() + 240);
+        vBoxClient.getChildren().add(barChart);
+
         hBoxMainClient.getChildren().addAll(vBoxClient);
 
 

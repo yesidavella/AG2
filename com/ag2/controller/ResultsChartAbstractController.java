@@ -12,7 +12,12 @@ import com.ag2.presentation.control.ViewResultsChart;
  */
 public abstract class ResultsChartAbstractController {
 
-    public abstract void createClientResult(String clientName, double relativeResultReceive, double relativeJobsNoSent);
+    public abstract void createClientResult(
+            String clientName,
+            double requestSent, 
+            double jobNosent,
+            double jobSent,
+            double jobreceive);
     protected ViewResultsChart viewResultsChart;
 
     public void setViewResultsChart(ViewResultsChart viewResultsChart) {

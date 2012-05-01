@@ -10,6 +10,11 @@ package com.ag2.presentation.control;
  */
 public interface ViewResultsChart
 {
-    public void  createClientResult(String clientName, double relativeResultReceive, double relativeJobsNoSent );
+    public void  createClientResult( 
+            final String clientName,
+            final double requestSent, 
+            final double jobNosent,
+            final double jobSent,
+            final double jobreceive );
     
 }
