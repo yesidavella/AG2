@@ -36,17 +36,24 @@ public abstract class ResultsAbstractController implements Serializable {
             String relativeNoAvailable);
 
     public abstract void addSwitchResult(
-            final String switchName,
-            final String jobSwitched,
-            final String jobNoSwitched,
-            final String resultSwiched,
-            final String resultNoSwitched,
-            final String requestSwitched,
-            final String requestNoSwitched,
-            final String relativeNojobNoSwitched,
-            final String relativeResultNoSwitched,
-            final String relativeRequestNoSwitched,
-            final String relativeAllNoSwitched);
+             String switchName,
+             String jobSwitched,
+             String jobNoSwitched,
+             String resultSwiched,
+             String resultNoSwitched,
+             String requestSwitched,
+             String requestNoSwitched,
+             String relativeNojobNoSwitched,
+             String relativeResultNoSwitched,
+             String relativeRequestNoSwitched,
+             String relativeAllNoSwitched);
 
     public abstract void setExecutionPercentage(double percentage, double simulationTime);
+
+    public abstract void addBrokerResults(String brokerName,
+            String noFreeResource,
+            String registrationReceived,
+            String reqAckSent,
+            String reqRecieved,
+            String sendingFailed);
 }

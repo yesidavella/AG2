@@ -105,7 +105,7 @@ public class GUI extends Scene implements Serializable {
     private Timeline tlPropertiesSmall = new Timeline();
     private boolean hideAgainProperties = false;
     private Button btnDownUp = new Button();
-    private ToolBarAnimationAG2 animationHeaderAG2;
+    private transient ToolBarAnimationAG2 animationHeaderAG2;
     private VBox vbHeaderAnimationContainer;
 
     private GUI(StackPane stpLayer, double width, double height) {

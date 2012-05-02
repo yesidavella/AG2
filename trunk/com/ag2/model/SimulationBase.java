@@ -4,6 +4,7 @@ import Grid.GridSimulation;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
+import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Utilities.HtmlWriter;
 import com.ag2.controller.LinkAdminAbstractController;
@@ -126,6 +127,8 @@ public class SimulationBase implements Runnable, Serializable {
                 outputterModel.printSwitch((Switch) entity);
             } else if (entity instanceof ResourceNode) {
                 outputterModel.printResource((ResourceNode) entity);
+            } else if(entity instanceof ServiceNode){
+                outputterModel.printBroker((ServiceNode)entity);
             }
         }
        reload();

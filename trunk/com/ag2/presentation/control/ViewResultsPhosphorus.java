@@ -1,19 +1,18 @@
-
 package com.ag2.presentation.control;
 
-public interface  ViewResultsPhosphorus {
-    
-   public abstract  void addClientResult(
+public interface ViewResultsPhosphorus {
+
+    public abstract void addClientResult(
             String clientName,
             String requestSent,
             String jobSent,
-            String resultReceive ,
+            String resultReceive,
             String requestNoSent,
-            String relativeResultReceive, 
+            String relativeResultReceive,
             String relativeRequestNoSent);
 
-   public abstract void addResourceResult(
-          String resourceName,
+    public abstract void addResourceResult(
+            String resourceName,
             String jobReceive,
             String jobSent,
             String relativeJobSent,
@@ -22,14 +21,10 @@ public interface  ViewResultsPhosphorus {
             String busyTime,
             String relativeBusyTime,
             String noAvailable,
-            String relativeNoAvailable);       
-             
-           
+            String relativeNoAvailable);
 
-   
-
-   public abstract void addSwitchResult(
-           final String switchName,
+    public abstract void addSwitchResult(
+            final String switchName,
             final String jobSwitched,
             final String jobNoSwitched,
             final String resultSwiched,
@@ -41,5 +36,13 @@ public interface  ViewResultsPhosphorus {
             final String relativeRequestNoSwitched,
             final String relativeAllNoSwitched);
 
-   public void setExecutionPercentage(double Percentage,double simulationTime);
+    public abstract void addBrokerResult(
+            final String brokerName,
+            final String noFreeResource,
+            final String registrationReceived,
+            final String reqAckSent,
+            final String reqRecieved,
+            final String sendingFailed);
+
+    public void setExecutionPercentage(double Percentage, double simulationTime);
 }

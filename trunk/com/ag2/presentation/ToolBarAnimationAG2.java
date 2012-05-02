@@ -96,8 +96,8 @@ public class ToolBarAnimationAG2 {
         rotateTransEnd.setAutoReverse(true);
 
         ScaleTransition scaleTransEnd = new ScaleTransition(Duration.seconds(1), regLight);
-        scaleTransEnd.setToX(2f);
-        scaleTransEnd.setToY(2f);
+        scaleTransEnd.setToX(3f);
+        scaleTransEnd.setToY(3f);
         scaleTransEnd.setCycleCount(2);
         scaleTransEnd.setAutoReverse(true);
 
