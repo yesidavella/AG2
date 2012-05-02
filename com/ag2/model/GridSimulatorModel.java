@@ -37,10 +37,13 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     public void setViewResultsPhosphorus(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
     }
+   
 
     @Override
     public boolean runNextEvent() throws StopException {
-        if (events.isEmpty()) {
+        if (events.isEmpty())
+        {
+            System.out.println("NO hay ams eventos¡¡¡");
             throw new StopException("There are no events to execute anymore");
         }
         eventCount++;

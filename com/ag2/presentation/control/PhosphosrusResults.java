@@ -32,15 +32,18 @@ import javafx.util.Duration;
 public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     private transient Tab tab;
-    private transient TableView tvResultadosClientePhosphorus = new TableView();
-    private transient TableView tvResultadosRecursoPhosphorus = new TableView();
-    private transient TableView tvResultadosConmutadorPhosphorus = new TableView();
-    private transient Label lblCliente = new Label("Resultados del cliente");
-    private transient Label lbRecurso = new Label("Resultados del recurso");
-    private transient Label lbConmutador = new Label("Resultados del Conmutador Optico");
-    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataCliente = FXCollections.observableArrayList();
-    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataRecurso = FXCollections.observableArrayList();
-    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataConmutador = FXCollections.observableArrayList();
+    private transient TableView tvClientResults = new TableView();
+    private transient TableView tvResourceResults = new TableView();
+    private transient TableView tvSwitchResults = new TableView();
+    private transient TableView tvBrokerResults = new TableView();
+    private transient Label lblClient = new Label("Resultados del cliente");
+    private transient Label lbResource = new Label("Resultados del recurso");
+    private transient Label lbSwitch = new Label("Resultados del Conmutador Optico");
+    private transient Label lbBroker = new Label("Resultados del Agendador");
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataClient = FXCollections.observableArrayList();
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataResource = FXCollections.observableArrayList();
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataSwitch = FXCollections.observableArrayList();
+    private transient ObservableList<ConjuntoProiedadesPhosphorus> dataBroker = FXCollections.observableArrayList();
     private transient ScrollPane scPnResults;
     private transient VBox vBoxMain = new VBox();
     private transient ProgressIndicator progressIndicator;
@@ -59,9 +62,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
-        lblCliente.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        lbRecurso.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        lbConmutador.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lblClient.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lbResource.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lbSwitch.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lbBroker.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
         scPnResults = new ScrollPane();
 
@@ -144,17 +148,21 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         vBoxMain.setPrefSize(1200, 900);
         vBoxMain.setAlignment(Pos.CENTER);
 
-        creartvResultadosCliente();
-        creartvResultadosRecurso();
-        creartvResultadosConmutadores();
+        createtvClientResults();
+        createtvResultsResource();
+        createtvBrokerResults();
+        createtvResultsSwitch();
+
         vBoxImageProgress.getChildren().add(progressIndicator);
 
         hBoxProgress.getChildren().addAll(vBoxDataProgress, vBoxImageProgress);
-        tvResultadosClientePhosphorus.setPrefHeight(175);
-        tvResultadosRecursoPhosphorus.setPrefHeight(175);
-        tvResultadosConmutadorPhosphorus.setPrefHeight(175);
+        tvClientResults.setPrefHeight(180);
+        tvResourceResults.setPrefHeight(180);
+        tvSwitchResults.setPrefHeight(180);
+        tvBrokerResults.setPrefHeight(180);
 
-        vBoxMain.getChildren().addAll(hBoxProgress, lblCliente, tvResultadosClientePhosphorus, lbRecurso, tvResultadosRecursoPhosphorus, lbConmutador, tvResultadosConmutadorPhosphorus);
+        vBoxMain.getChildren().addAll(hBoxProgress, lblClient, tvClientResults, lbResource, tvResourceResults,
+                lbSwitch, tvSwitchResults, lbBroker, tvBrokerResults);
         scPnResults.setContent(vBoxMain);
         scPnResults.setFitToWidth(true);
         tab.setContent(scPnResults);
@@ -196,17 +204,21 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     public void lookToNextExecution() {
         tiempoInicial = System.currentTimeMillis();
         time.play();
-        int sizeClients = dataCliente.size();
+        int sizeClients = dataClient.size();
         for (int i = 0; i < sizeClients; i++) {
-            dataCliente.remove(0);
+            dataClient.remove(0);
         }
-        int sizeSwitches = dataConmutador.size();
+        int sizeSwitches = dataSwitch.size();
         for (int i = 0; i < sizeSwitches; i++) {
-            dataConmutador.remove(0);
+            dataSwitch.remove(0);
         }
-        int sizeResources = dataRecurso.size();
+        int sizeResources = dataResource.size();
         for (int i = 0; i < sizeResources; i++) {
-            dataRecurso.remove(0);
+            dataResource.remove(0);
+        }
+        int sizeBrokers = dataBroker.size();
+        for (int i = 0; i < sizeBrokers; i++) {
+            dataBroker.remove(0);
         }
 
         showProgressIndicator();
@@ -216,7 +228,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         progressIndicator.setProgress(0);
     }
 
-    private void creartvResultadosConmutadores() {
+    private void createtvResultsSwitch() {
 
         TableColumn tcConmutador = new TableColumn("Conmutador 0ptico");
         tcConmutador.setMinWidth(130);
@@ -247,10 +259,10 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcMensajesSolicitudNoConmutados.setMinWidth(160);
         tcMensajesSolicitudNoConmutados.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
 
-        
-        
-        
-        
+
+
+
+
         TableColumn relDropJob = new TableColumn("% Trabajos no conmutados");
         relDropJob.setMinWidth(150);
         relDropJob.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
@@ -263,19 +275,19 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         relDropReq.setMinWidth(150);
         relDropReq.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property10"));
 
-        
+
         TableColumn reltotDrop = new TableColumn("% Total no conmutados");
         reltotDrop.setMinWidth(150);
         reltotDrop.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property11"));
 
-        tvResultadosConmutadorPhosphorus.getColumns().addAll(tcConmutador, tcMensajesTrabajoConmutados,
-                tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados, 
+        tvSwitchResults.getColumns().addAll(tcConmutador, tcMensajesTrabajoConmutados,
+                tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados,
                 tcMensajesSolicitudConmutados, tcMensajesSolicitudNoConmutados,
-                relDropJob, relDropRes,relDropReq ,reltotDrop);
-        tvResultadosConmutadorPhosphorus.setItems(dataConmutador);
+                relDropJob, relDropRes, relDropReq, reltotDrop);
+        tvSwitchResults.setItems(dataSwitch);
     }
 
-    private void creartvResultadosRecurso() {
+    private void createtvResultsResource() {
 
         TableColumn tcRecurso = new TableColumn("Recurso");
         tcRecurso.setMinWidth(80);
@@ -300,7 +312,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         TableColumn tableColumn5 = new TableColumn("% Fallas enviadas");
         tableColumn5.setMinWidth(130);
         tableColumn5.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
-        
+
         TableColumn tableColumn6 = new TableColumn("Tiempo ocupacion (ms) ");
         tableColumn6.setMinWidth(160);
         tableColumn6.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
@@ -309,22 +321,22 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tableColumn7.setMinWidth(160);
         tableColumn7.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
 
-        
+
         TableColumn tableColumn8 = new TableColumn("CPU/buffer no libre  ");
         tableColumn8.setMinWidth(160);
         tableColumn8.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property9"));
 
-        
+
         TableColumn tableColumn9 = new TableColumn("% CPU/buffer no libre  ");
         tableColumn9.setMinWidth(160);
         tableColumn9.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property10"));
 
-        tvResultadosRecursoPhosphorus.getColumns().addAll(tcRecurso,  tableColumn1, tableColumn2, tableColumn3,
-        tableColumn4, tableColumn5,tableColumn6,tableColumn7, tableColumn8,tableColumn9);
-        tvResultadosRecursoPhosphorus.setItems(dataRecurso);
+        tvResourceResults.getColumns().addAll(tcRecurso, tableColumn1, tableColumn2, tableColumn3,
+                tableColumn4, tableColumn5, tableColumn6, tableColumn7, tableColumn8, tableColumn9);
+        tvResourceResults.setItems(dataResource);
     }
 
-    private void creartvResultadosCliente() {
+    private void createtvClientResults() {
 
 
         TableColumn tcCliente = new TableColumn("Cliente");
@@ -357,7 +369,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tableColumn6.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
 
 
-        tvResultadosClientePhosphorus.getColumns().addAll(
+        tvClientResults.getColumns().addAll(
                 tcCliente,
                 tableColumn1,
                 tableColumn2,
@@ -365,7 +377,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
                 tableColumn4,
                 tableColumn5,
                 tableColumn6);
-        tvResultadosClientePhosphorus.setItems(dataCliente);
+        tvClientResults.setItems(dataClient);
     }
 
     @Override
@@ -373,9 +385,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String clientName,
             String requestSent,
             String jobSent,
-            String resultReceive ,
+            String resultReceive,
             String requestNoSent,
-            String relativeResultReceive, 
+            String relativeResultReceive,
             String relativeRequestNoSent) {
 
         time.stop();
@@ -388,23 +400,21 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty5(requestNoSent);
         cpp.setProperty6(relativeResultReceive);
         cpp.setProperty7(relativeRequestNoSent);
-        dataCliente.add(cpp);
+        dataClient.add(cpp);
     }
 
-    
-
     @Override
-    public void addResourceResult( 
-           String tcRecurso, 
-           String tcTrabajosRecibidos,
-           String tcTrabajosEnviados,
-           String relativeTrabajosEnviados,
-           String tcFallasEnviadas,
-           String relativeFallasEnviadas,
-           String tcTimeNoCPUFree,           
-           String tcRelativeTimeNoCPUFree,        
-           String tcVecesFallasNoEspacio, 
-           String relativeVecesFallasNoEspacio) {
+    public void addResourceResult(
+            String tcRecurso,
+            String tcTrabajosRecibidos,
+            String tcTrabajosEnviados,
+            String relativeTrabajosEnviados,
+            String tcFallasEnviadas,
+            String relativeFallasEnviadas,
+            String tcTimeNoCPUFree,
+            String tcRelativeTimeNoCPUFree,
+            String tcVecesFallasNoEspacio,
+            String relativeVecesFallasNoEspacio) {
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(Utils.findGraphicalName(tcRecurso));
@@ -417,7 +427,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty8(tcRelativeTimeNoCPUFree);
         cpp.setProperty9(tcVecesFallasNoEspacio);
         cpp.setProperty10(relativeVecesFallasNoEspacio);
-        dataRecurso.add(cpp);
+        dataResource.add(cpp);
 
     }
 
@@ -448,7 +458,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty10(relDropReq);
         cpp.setProperty11(reltotDrop);
 
-        dataConmutador.add(cpp);
+        dataSwitch.add(cpp);
 
     }
 
@@ -464,6 +474,56 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             lblSimulationTimePercentageValue.setText("100%");
             lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " ms (Finalizado) ");
         }
+    }
+
+    @Override
+    public void addBrokerResult(String brokerName,
+    String noFreeResource,
+    String registrationReceived,
+    String reqAckSent,
+    String reqRecieved,
+    String sendingFailed) {
+        
+        ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
+        cpp.setProperty1(Utils.findGraphicalName(brokerName));
+        cpp.setProperty2(noFreeResource);
+        cpp.setProperty3(registrationReceived);
+        cpp.setProperty4(reqAckSent);
+        cpp.setProperty5(reqRecieved);
+        cpp.setProperty6(sendingFailed);
+
+        dataBroker.add(cpp);
+    }
+
+    private void createtvBrokerResults() {
+
+        TableColumn tcRecurso = new TableColumn("Agendador");
+        tcRecurso.setMinWidth(80);
+        tcRecurso.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
+
+        TableColumn tableColumn1 = new TableColumn("Recurso no libre");
+        tableColumn1.setMinWidth(130);
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
+
+        TableColumn tableColumn2 = new TableColumn("Registro recibido");
+        tableColumn2.setMinWidth(130);
+        tableColumn2.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
+
+        TableColumn tableColumn3 = new TableColumn("Solicitud de confirmacion enviada");
+        tableColumn3.setMinWidth(135);
+        tableColumn3.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
+
+        TableColumn tableColumn4 = new TableColumn("Solicitud recibida");
+        tableColumn4.setMinWidth(120);
+        tableColumn4.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
+
+        TableColumn tableColumn5 = new TableColumn("Fallo envio");
+        tableColumn5.setMinWidth(120);
+        tableColumn5.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
+
+        tvBrokerResults.getColumns().addAll(tcRecurso, tableColumn1, tableColumn2, tableColumn3,
+                tableColumn4, tableColumn5);
+        tvBrokerResults.setItems(dataBroker);
     }
 
     public static class ConjuntoProiedadesPhosphorus {

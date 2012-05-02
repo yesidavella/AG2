@@ -3,6 +3,7 @@ package com.ag2.model;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
+import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Outputter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
@@ -165,5 +166,23 @@ public class OutputterModel extends Outputter {
                 " " + decimalFormat.format(resultRelative * 100) + "%",
                 " " + decimalFormat.format(relativeReq * 100) + "%",
                 " " + decimalFormat.format(relativeMessage * 100) + "%");
+    }
+    
+    public void printBroker(ServiceNode serviceNode) {
+        
+        double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
+        double registrationReceived = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REGISTRATION_RECEIVED);
+        double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
+        double reqRecieved = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_RECIEVED);
+        double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
+        
+        resultsAbstractController.addBrokerResults(
+                serviceNode.toString(),
+                " " +noFreeResouce,
+                " " +registrationReceived,
+                " " +reqAckSent,
+                " " +reqRecieved,
+                " " +sendingFailed
+                );
     }
 }

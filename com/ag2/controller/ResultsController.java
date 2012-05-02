@@ -101,6 +101,33 @@ public class ResultsController extends ResultsAbstractController {
     }
 
     @Override
+    public void addBrokerResults(
+            final String brokerName,
+            final String noFreeResource,
+            final String registrationReceived,
+            final String reqAckSent,
+            final String reqRecieved,
+            final String sendingFailed) {
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                viewResultsPhosphorus.addBrokerResult(
+                        brokerName,
+                        noFreeResource,
+                        registrationReceived,
+                        reqAckSent,
+                        reqRecieved,
+                        sendingFailed);
+            }
+        };
+        Platform.runLater(runnable);
+
+
+    }
+
+    @Override
     public void setExecutionPercentage(final double Percentage, final double simulationTime) {
         Runnable runnable = new Runnable() {
 
