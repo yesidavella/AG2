@@ -43,7 +43,7 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     public boolean runNextEvent() throws StopException {
         if (events.isEmpty())
         {
-            System.out.println("NO hay ams eventos¡¡¡");
+            System.out.println("No hay ams eventos¡¡¡");
             throw new StopException("There are no events to execute anymore");
         }
         eventCount++;
