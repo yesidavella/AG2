@@ -38,8 +38,6 @@ public class ExecuteController extends ExecuteAbstractController {
     @Override
     public boolean isWellFormedNetwork() {
         
-       
-        
         //Hace las veces de modelo
         NetworkChecker networkChecker = new NetworkChecker();
         
