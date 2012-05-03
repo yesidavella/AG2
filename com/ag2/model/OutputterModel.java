@@ -16,7 +16,6 @@ public class OutputterModel extends Outputter {
 
     private ResultsAbstractController resultsAbstractController;
     private ResultsChartAbstractController chartAbstractController;
-        
     DecimalFormat decimalFormat = new DecimalFormat("###############.###");
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
@@ -26,8 +25,6 @@ public class OutputterModel extends Outputter {
     public void setChartAbstractController(ResultsChartAbstractController chartAbstractController) {
         this.chartAbstractController = chartAbstractController;
     }
-    
-    
 
     public OutputterModel(GridSimulator gridSimulator) {
         super(gridSimulator);
@@ -35,32 +32,53 @@ public class OutputterModel extends Outputter {
     }
 
     @Override
-    public void printClient(ClientNode client) 
-    {
-        double requestSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT);
-        double requestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED);
-        double jobSent  = sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT);
-        
-        
-        double realtiveRequestNoSent =  sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED)/requestSent;
+    public void printClient(ClientNode client) {
 
-        double resultReceive =  sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED);
-        double relativeResultReceive = resultReceive/jobSent;
-        
+
+        double requestCreated = sim.getStat(client, SimBaseStats.Stat.CLIENT_CREATED_REQ);
+        double requestSent = sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT);
+        double requestNoSent = sim.getStat(client, SimBaseStats.Stat.CLIENT_NO_REQ_SENT);
+        double jobSent = sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT);
+        double jobNoSent = sim.getStat(client, SimBaseStats.Stat.CLIENT_SENDING_FAILED);
+        double resultReceive = sim.getStat(client, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED);
+
+        double relativeRequestSent = 0;
+        double relativeJobSent = 0;
+        double relativeReceiveResult_jobSent = 0;
+        double relativeReceiveResult_requsetSent = 0;
+        double relativeReceiveresult_requestCreated = 0;
+
+        if (requestCreated > 0) {
+            relativeRequestSent = requestSent / requestCreated;
+            relativeReceiveresult_requestCreated = resultReceive / requestCreated;
+        }
+        if (requestSent > 0) {
+            relativeJobSent = jobSent / requestSent;
+            relativeReceiveResult_requsetSent = resultReceive / requestSent;
+        }
+        if (jobSent > 0) {
+            relativeReceiveResult_jobSent = resultReceive / jobSent;
+        }
+
         resultsAbstractController.addClientResult(
                 client.toString(),
-                "  " +requestSent,
-                "  " + sim.getStat(client, SimBaseStats.Stat.CLIENT_JOB_SENT),
-                "  " + resultReceive,
+                "  " + requestCreated,
+                "  " + requestSent,
                 "  " + requestNoSent,
-                "  " + decimalFormat.format(relativeResultReceive* 100) + "%",
-                "  " +  decimalFormat.format(realtiveRequestNoSent*100) );
-        
-        chartAbstractController.createClientResult(client.toString(), 
-                requestSent, 
+                "  " + jobSent,
+                "  " + jobNoSent,
+                "  " +resultReceive,
+                "  " + decimalFormat.format(relativeRequestSent * 100) + "%",
+                "  " + decimalFormat.format(relativeJobSent * 100) + "%",
+                "  " + decimalFormat.format(relativeReceiveResult_jobSent * 100) + "%",
+                "  " + decimalFormat.format(relativeReceiveResult_requsetSent * 100) + "%",
+                "  " + decimalFormat.format(relativeReceiveresult_requestCreated * 100) + "%");
+
+        chartAbstractController.createClientResult(client.toString(),
+                requestSent,
                 requestNoSent,
                 jobSent,
-                resultReceive );
+                resultReceive);
     }
 
     @Override
@@ -149,8 +167,7 @@ public class OutputterModel extends Outputter {
         double relativeMessage = 0;
         double totalMessage = messagesDropped + messagesSwitched;
 
-        if (totalMessage > 0) 
-        {
+        if (totalMessage > 0) {
             relativeMessage = messagesDropped / (totalMessage);
         }
 
@@ -167,22 +184,21 @@ public class OutputterModel extends Outputter {
                 " " + decimalFormat.format(relativeReq * 100) + "%",
                 " " + decimalFormat.format(relativeMessage * 100) + "%");
     }
-    
+
     public void printBroker(ServiceNode serviceNode) {
-        
+
         double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double registrationReceived = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REGISTRATION_RECEIVED);
         double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
         double reqRecieved = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_RECIEVED);
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
-        
+
         resultsAbstractController.addBrokerResults(
                 serviceNode.toString(),
-                " " +noFreeResouce,
-                " " +registrationReceived,
-                " " +reqAckSent,
-                " " +reqRecieved,
-                " " +sendingFailed
-                );
+                " " + noFreeResouce,
+                " " + registrationReceived,
+                " " + reqAckSent,
+                " " + reqRecieved,
+                " " + sendingFailed);
     }
 }

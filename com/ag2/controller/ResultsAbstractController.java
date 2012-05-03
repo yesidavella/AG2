@@ -15,13 +15,20 @@ public abstract class ResultsAbstractController implements Serializable {
     }
 
     public abstract void addClientResult(
-            String clientName,
+              String clientName,
+            String requestCreated,
             String requestSent,
-            String jobSent,
-            String resultReceive ,
             String requestNoSent,
-            String relativeResultReceive, 
-            String relativeRequestNoSent);
+            String jobSent,
+            String jobNoSent,                  
+            String resultReceive,            
+            String relativeRequestSent,
+            String relativeJobSent,
+            String relativeReceiveResult_jobSent,
+            String relativeReceiveResult_requsetSent,
+            String relativeReceiveresult_requestCreated       
+            
+            );
 
     public abstract void addResourceResult(
             String resourceName,
@@ -56,4 +63,6 @@ public abstract class ResultsAbstractController implements Serializable {
             String reqAckSent,
             String reqRecieved,
             String sendingFailed);
+
+  
 }

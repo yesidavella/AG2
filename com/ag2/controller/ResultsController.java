@@ -7,12 +7,17 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addClientResult(
             final String clientName,
+            final String requestCreated,
             final String requestSent,
-            final String jobSent,
-            final String resultReceive,
             final String requestNoSent,
-            final String relativeResultReceive,
-            final String relativeRequestNoSent) {
+            final String jobSent,
+            final String jobNoSent,
+            final String resultReceive,
+            final String relativeRequestSent,
+            final String relativeJobSent,
+            final String relativeReceiveResult_jobSent,
+            final String relativeReceiveResult_requsetSent,
+            final String relativeReceiveresult_requestCreated) {
 
         Runnable runnable = new Runnable() {
 
@@ -20,12 +25,17 @@ public class ResultsController extends ResultsAbstractController {
             public void run() {
                 viewResultsPhosphorus.addClientResult(
                         clientName,
+                        requestCreated,
                         requestSent,
-                        jobSent,
-                        resultReceive,
                         requestNoSent,
-                        relativeResultReceive,
-                        relativeRequestNoSent);
+                        jobSent,
+                        jobNoSent,
+                        resultReceive,
+                        relativeRequestSent,
+                        relativeJobSent,
+                        relativeReceiveResult_jobSent,
+                        relativeReceiveResult_requsetSent,
+                        relativeReceiveresult_requestCreated);
             }
         };
         Platform.runLater(runnable);
