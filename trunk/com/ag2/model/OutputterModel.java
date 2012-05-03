@@ -74,11 +74,7 @@ public class OutputterModel extends Outputter {
                 "  " + decimalFormat.format(relativeReceiveResult_requsetSent * 100) + "%",
                 "  " + decimalFormat.format(relativeReceiveresult_requestCreated * 100) + "%");
 
-        chartAbstractController.createClientResult(client.toString(),
-                requestSent,
-                requestNoSent,
-                jobSent,
-                resultReceive);
+        chartAbstractController.createClientResult(client.toString(), requestCreated,  requestSent,   jobSent, resultReceive);
     }
 
     @Override

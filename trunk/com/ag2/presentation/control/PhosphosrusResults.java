@@ -58,9 +58,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Timeline time = new Timeline();
     private transient long tiempoInicial = System.currentTimeMillis();
     protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
-    private static int columnWidthSmall = 65;
-    private static int columnWidthMedium = 100;
-    private static int columnWidthBig = 160;
+    private int columnWidthSmall = 65;
+    private int columnWidthMedium = 100;
+    private int columnWidthBig = 160;
+    private int tableViewHeight = 300;
+
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -158,10 +160,14 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         vBoxImageProgress.getChildren().add(progressIndicator);
 
         hBoxProgress.getChildren().addAll(vBoxDataProgress, vBoxImageProgress);
-        tvClientResults.setPrefHeight(180);
-        tvResourceResults.setPrefHeight(180);
-        tvSwitchResults.setPrefHeight(180);
-        tvBrokerResults.setPrefHeight(180);
+        tvClientResults.setPrefHeight(tableViewHeight);
+        tvResourceResults.setPrefHeight(tableViewHeight);
+        tvSwitchResults.setPrefHeight(tableViewHeight);
+        tvBrokerResults.setPrefHeight(tableViewHeight);
+        tvClientResults.setMinHeight(tableViewHeight);
+        tvResourceResults.setMinHeight(tableViewHeight);
+        tvSwitchResults.setMinHeight(tableViewHeight);
+        tvBrokerResults.setMinHeight(tableViewHeight);
 
         vBoxMain.getChildren().addAll(hBoxProgress, lblClient, tvClientResults, lbResource, tvResourceResults,
                 lbSwitch, tvSwitchResults, lbBroker, tvBrokerResults);
@@ -373,7 +379,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         TableColumn tableColumn7 = new TableColumn("% Solicitudes enviadas \n/Solicitudes creadas ");
         tableColumn7.setMinWidth(columnWidthBig);
         tableColumn7.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
-        
+
         TableColumn tableColumn8 = new TableColumn("% Trabajos enviados\n/Solicitudes enviadas");
         tableColumn8.setMinWidth(columnWidthBig);
         tableColumn8.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property9"));
@@ -390,8 +396,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tableColumn11.setMinWidth(columnWidthBig);
         tableColumn11.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property12"));
 
-       
-        
+
+
 
         tvClientResults.getColumns().addAll(
                 tcCliente,
@@ -411,18 +417,18 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     @Override
     public void addClientResult(
-           String clientName,
+            String clientName,
             String requestCreated,
             String requestSent,
             String requestNoSent,
             String jobSent,
-            String jobNoSent,                  
-            String resultReceive,            
+            String jobNoSent,
+            String resultReceive,
             String relativeRequestSent,
             String relativeJobSent,
             String relativeReceiveResult_jobSent,
             String relativeReceiveResult_requsetSent,
-            String relativeReceiveresult_requestCreated ) {
+            String relativeReceiveresult_requestCreated) {
 
         time.stop();
 
@@ -439,7 +445,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         cpp.setProperty10(relativeReceiveResult_jobSent);
         cpp.setProperty11(relativeReceiveResult_requsetSent);
         cpp.setProperty12(relativeReceiveresult_requestCreated);
-       
+
         dataClient.add(cpp);
     }
 
@@ -518,12 +524,12 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     @Override
     public void addBrokerResult(String brokerName,
-    String noFreeResource,
-    String registrationReceived,
-    String reqAckSent,
-    String reqRecieved,
-    String sendingFailed) {
-        
+            String noFreeResource,
+            String registrationReceived,
+            String reqAckSent,
+            String reqRecieved,
+            String sendingFailed) {
+
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(Utils.findGraphicalName(brokerName));
         cpp.setProperty2(noFreeResource);
@@ -688,6 +694,5 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         public void setProperty13(String property13) {
             this.property13 = property13;
         }
-        
     }
 }

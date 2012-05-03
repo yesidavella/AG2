@@ -14,16 +14,16 @@ public class ResultsChartController extends ResultsChartAbstractController {
 
     @Override
     public void createClientResult( 
-            final String clientName,
-            final double requestSent, 
-            final double jobNosent,
-            final double jobSent,
-            final double jobreceive) {
+           final String clientName,
+           final double requestCreated, 
+           final double requestSent,
+           final double jobSent,
+           final double resultReceive) {
         Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
-                viewResultsChart.createClientResult(clientName, requestSent, jobNosent,jobSent, jobreceive );
+                viewResultsChart.createClientResult(clientName, requestCreated, requestSent,jobSent, resultReceive );
             }
         };
         Platform.runLater(runnable);
