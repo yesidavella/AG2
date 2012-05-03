@@ -14,10 +14,10 @@ public abstract class ResultsChartAbstractController {
 
     public abstract void createClientResult(
             String clientName,
-            double requestSent, 
-            double jobNosent,
+            double requestCreated, 
+            double requestSent,
             double jobSent,
-            double jobreceive);
+            double resultReceive);
     protected ViewResultsChart viewResultsChart;
 
     public void setViewResultsChart(ViewResultsChart viewResultsChart) {

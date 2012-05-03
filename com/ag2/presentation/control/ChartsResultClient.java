@@ -81,9 +81,9 @@ public class ChartsResultClient implements ViewResultsChart {
 
 
         series1 = new XYChart.Series<String, Number>();
-        series1.setName("Solicitudes enviadas");
+        series1.setName("Solicitudes creadas");
         series2 = new XYChart.Series<String, Number>();
-        series2.setName("Trabajos no enviados");
+        series2.setName("Solicitudes enviadas");
         series3 = new XYChart.Series<String, Number>();
         series3.setName("Trabajos enviados");
         series4 = new XYChart.Series<String, Number>();
