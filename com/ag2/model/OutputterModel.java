@@ -18,17 +18,17 @@ public class OutputterModel extends Outputter {
     private ResultsChartAbstractController chartAbstractController;
     DecimalFormat decimalFormat = new DecimalFormat("###############.###");
 
+    public OutputterModel(GridSimulator gridSimulator) {
+        super(gridSimulator);
+        SimulationBase.getInstance().setOutputterModel(this);
+    }
+
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
         this.resultsAbstractController = resultsAbstractController;
     }
 
     public void setChartAbstractController(ResultsChartAbstractController chartAbstractController) {
         this.chartAbstractController = chartAbstractController;
-    }
-
-    public OutputterModel(GridSimulator gridSimulator) {
-        super(gridSimulator);
-        SimulationBase.getInstance().setOutputterModel(this);
     }
 
     @Override
@@ -183,18 +183,20 @@ public class OutputterModel extends Outputter {
 
     public void printBroker(ServiceNode serviceNode) {
 
-        double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double registrationReceived = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REGISTRATION_RECEIVED);
-        double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
+        double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double reqRecieved = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_RECIEVED);
+        double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
+        double relativeAckSent = (reqAckSent/reqRecieved)*100; 
 
         resultsAbstractController.addBrokerResults(
                 serviceNode.toString(),
-                " " + noFreeResouce,
                 " " + registrationReceived,
-                " " + reqAckSent,
+                " " + noFreeResouce,
                 " " + reqRecieved,
-                " " + sendingFailed);
+                " " + reqAckSent,
+                " " + sendingFailed,
+                " " + relativeAckSent);
     }
 }

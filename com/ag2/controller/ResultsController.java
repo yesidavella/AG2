@@ -113,11 +113,12 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addBrokerResults(
             final String brokerName,
-            final String noFreeResource,
             final String registrationReceived,
+            final String noFreeResource,
             final String reqAckSent,
             final String reqRecieved,
-            final String sendingFailed) {
+            final String sendingFailed,
+            final String relativeAckSent) {
 
         Runnable runnable = new Runnable() {
 
@@ -125,16 +126,15 @@ public class ResultsController extends ResultsAbstractController {
             public void run() {
                 viewResultsPhosphorus.addBrokerResult(
                         brokerName,
-                        noFreeResource,
                         registrationReceived,
+                        noFreeResource,                        
                         reqAckSent,
                         reqRecieved,
-                        sendingFailed);
+                        sendingFailed,
+                        relativeAckSent);
             }
         };
         Platform.runLater(runnable);
-
-
     }
 
     @Override
