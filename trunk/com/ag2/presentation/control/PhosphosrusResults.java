@@ -58,9 +58,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Timeline time = new Timeline();
     private transient long tiempoInicial = System.currentTimeMillis();
     protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
-    private int columnWidthSmall = 65;
+    private int columnWidthSmall = 60;
     private int columnWidthMedium = 100;
-    private int columnWidthBig = 160;
+    private int columnWidthBig = 120;
     private int tableViewHeight = 300;
 
     public PhosphosrusResults(Tab tab) {
