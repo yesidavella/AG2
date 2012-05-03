@@ -58,7 +58,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private transient Timeline time = new Timeline();
     private transient long tiempoInicial = System.currentTimeMillis();
     protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
-
+    private static int columnWidthSmall = 65;
+    private static int columnWidthMedium = 100;
+    private static int columnWidthBig = 160;
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
@@ -344,30 +346,52 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         tcCliente.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property1"));
 
 
-        TableColumn tableColumn1 = new TableColumn("Solicitudes enviadas");
-        tableColumn1.setMinWidth(130);
+        TableColumn tableColumn1 = new TableColumn("Solicitudes \n creadas");
+        tableColumn1.setMinWidth(columnWidthSmall);
         tableColumn1.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property2"));
 
-        TableColumn tableColumn2 = new TableColumn("Trabajos enviados");
-        tableColumn2.setMinWidth(130);
+        TableColumn tableColumn2 = new TableColumn("Solicitudes \n enviadas");
+        tableColumn2.setMinWidth(columnWidthSmall);
         tableColumn2.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property3"));
 
-        TableColumn tableColumn3 = new TableColumn("Resultados recibidos");
-        tableColumn3.setMinWidth(150);
+        TableColumn tableColumn3 = new TableColumn("Solicitudes \n no enviadas");
+        tableColumn3.setMinWidth(columnWidthSmall);
         tableColumn3.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property4"));
 
-        TableColumn tableColumn4 = new TableColumn("Trabajos no enviados");
-        tableColumn4.setMinWidth(130);
+        TableColumn tableColumn4 = new TableColumn("Trabajos \n enviados");
+        tableColumn4.setMinWidth(columnWidthSmall);
         tableColumn4.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property5"));
 
-        TableColumn tableColumn5 = new TableColumn("% Resultados recibidos");
-        tableColumn5.setMinWidth(160);
+        TableColumn tableColumn5 = new TableColumn("Trabajos \n no enviados");
+        tableColumn5.setMinWidth(columnWidthSmall);
         tableColumn5.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property6"));
 
-        TableColumn tableColumn6 = new TableColumn("% Trabajos no enviados");
-        tableColumn6.setMinWidth(160);
+        TableColumn tableColumn6 = new TableColumn("Resultados \n recibidos");
+        tableColumn6.setMinWidth(columnWidthSmall);
         tableColumn6.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property7"));
 
+        TableColumn tableColumn7 = new TableColumn("% Solicitudes enviadas \n/Solicitudes creadas ");
+        tableColumn7.setMinWidth(columnWidthBig);
+        tableColumn7.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property8"));
+        
+        TableColumn tableColumn8 = new TableColumn("% Trabajos enviados\n/Solicitudes enviadas");
+        tableColumn8.setMinWidth(columnWidthBig);
+        tableColumn8.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property9"));
+
+        TableColumn tableColumn9 = new TableColumn("% Resultados recibidos\n/Trabajos enviados");
+        tableColumn9.setMinWidth(columnWidthBig);
+        tableColumn9.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property10"));
+
+        TableColumn tableColumn10 = new TableColumn("% Resultados recibidos\n/Solicitudes enviadas");
+        tableColumn10.setMinWidth(columnWidthBig);
+        tableColumn10.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property11"));
+
+        TableColumn tableColumn11 = new TableColumn("% Resultados recibidos\n/Solicitudes creadas ");
+        tableColumn11.setMinWidth(columnWidthBig);
+        tableColumn11.setCellValueFactory(new PropertyValueFactory<ConjuntoProiedadesPhosphorus, String>("property12"));
+
+       
+        
 
         tvClientResults.getColumns().addAll(
                 tcCliente,
@@ -376,30 +400,46 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
                 tableColumn3,
                 tableColumn4,
                 tableColumn5,
-                tableColumn6);
+                tableColumn6,
+                tableColumn7,
+                tableColumn8,
+                tableColumn9,
+                tableColumn10,
+                tableColumn11);
         tvClientResults.setItems(dataClient);
     }
 
     @Override
     public void addClientResult(
-            String clientName,
+           String clientName,
+            String requestCreated,
             String requestSent,
-            String jobSent,
-            String resultReceive,
             String requestNoSent,
-            String relativeResultReceive,
-            String relativeRequestNoSent) {
+            String jobSent,
+            String jobNoSent,                  
+            String resultReceive,            
+            String relativeRequestSent,
+            String relativeJobSent,
+            String relativeReceiveResult_jobSent,
+            String relativeReceiveResult_requsetSent,
+            String relativeReceiveresult_requestCreated ) {
 
         time.stop();
 
         ConjuntoProiedadesPhosphorus cpp = new ConjuntoProiedadesPhosphorus();
         cpp.setProperty1(Utils.findGraphicalName(clientName));
-        cpp.setProperty2(requestSent);
-        cpp.setProperty3(jobSent);
-        cpp.setProperty4(resultReceive);
-        cpp.setProperty5(requestNoSent);
-        cpp.setProperty6(relativeResultReceive);
-        cpp.setProperty7(relativeRequestNoSent);
+        cpp.setProperty2(requestCreated);
+        cpp.setProperty3(requestSent);
+        cpp.setProperty4(requestNoSent);
+        cpp.setProperty5(jobSent);
+        cpp.setProperty6(jobNoSent);
+        cpp.setProperty7(resultReceive);
+        cpp.setProperty8(relativeRequestSent);
+        cpp.setProperty9(relativeJobSent);
+        cpp.setProperty10(relativeReceiveResult_jobSent);
+        cpp.setProperty11(relativeReceiveResult_requsetSent);
+        cpp.setProperty12(relativeReceiveresult_requestCreated);
+       
         dataClient.add(cpp);
     }
 
@@ -539,6 +579,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         private String property9;
         private String property10;
         private String property11;
+        private String property12;
+        private String property13;
 
         private ConjuntoProiedadesPhosphorus() {
         }
@@ -630,5 +672,22 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
         public void setProperty8(String property8) {
             this.property8 = property8;
         }
+
+        public String getProperty12() {
+            return property12;
+        }
+
+        public void setProperty12(String property12) {
+            this.property12 = property12;
+        }
+
+        public String getProperty13() {
+            return property13;
+        }
+
+        public void setProperty13(String property13) {
+            this.property13 = property13;
+        }
+        
     }
 }
