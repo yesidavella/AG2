@@ -58,11 +58,12 @@ public abstract class ResultsAbstractController implements Serializable {
     public abstract void setExecutionPercentage(double percentage, double simulationTime);
 
     public abstract void addBrokerResults(String brokerName,
-            String noFreeResource,
             String registrationReceived,
+            String noFreeResource,
             String reqAckSent,
             String reqRecieved,
-            String sendingFailed);
+            String sendingFailed,
+            String relativeAckSent);
 
   
 }

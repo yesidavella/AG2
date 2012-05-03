@@ -43,11 +43,12 @@ public interface ViewResultsPhosphorus {
 
     public abstract void addBrokerResult(
             final String brokerName,
-            final String noFreeResource,
             final String registrationReceived,
+            final String noFreeResource,
             final String reqAckSent,
             final String reqRecieved,
-            final String sendingFailed);
+            final String sendingFailed,
+            final String relativeAckSent);
 
     public void setExecutionPercentage(double Percentage, double simulationTime);
 }

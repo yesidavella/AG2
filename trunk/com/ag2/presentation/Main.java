@@ -120,7 +120,6 @@ public class Main extends Application implements Serializable {
         guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
-
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         resultsChartController.setViewResultsChart(guiAG2.getChartsResult());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
