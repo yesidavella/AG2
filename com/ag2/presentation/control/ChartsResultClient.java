@@ -5,18 +5,13 @@
 package com.ag2.presentation.control;
 
 import com.ag2.util.Utils;
-import com.sun.javafx.scene.web.skin.ColorPicker;
-import java.util.Arrays;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.Serializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -26,21 +21,21 @@ import javafx.scene.text.FontWeight;
  *
  * @author Frank
  */
-public class ChartsResultClient implements ViewResultsChart {
+public class ChartsResultClient implements ViewResultsClientChart, Serializable{
 
-    private Tab tab;
-    private ScrollPane scrollPane;
-    private VBox vBoxPlay;
-    private VBox vBoxMain;
-    private HBox hBoxMainClient;
-    private int countPlays = 1;
-    private BarChart<String, Number> barChart;
-    XYChart.Series<String, Number> series1;
-    XYChart.Series<String, Number> series2;
-    XYChart.Series<String, Number> series3;
-    XYChart.Series<String, Number> series4;
-    CategoryAxis xAxis = new CategoryAxis();
-    NumberAxis yAxis;
+    private transient Tab tab;
+    private transient ScrollPane scrollPane;
+    private transient VBox vBoxPlay;
+    private transient VBox vBoxMain;
+    private transient HBox hBoxMainClient;
+    private transient int countPlays = 1;
+    private transient BarChart<String, Number> barChart;
+    private transient  XYChart.Series<String, Number> series1;
+    private transient XYChart.Series<String, Number> series2;
+    private transient XYChart.Series<String, Number> series3;
+    private transient XYChart.Series<String, Number> series4;
+    private transient CategoryAxis xAxis = new CategoryAxis();
+    private transient NumberAxis yAxis;
 
     public ChartsResultClient(Tab tab) {
         this.tab = tab;

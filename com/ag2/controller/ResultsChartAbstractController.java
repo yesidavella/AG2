@@ -4,23 +4,36 @@
  */
 package com.ag2.controller;
 
-import com.ag2.presentation.control.ViewResultsChart;
+import com.ag2.presentation.control.ViewResultsClientChart;
+import com.ag2.presentation.control.ViewResultsResourceChart;
+import java.io.Serializable;
 
 /**
  *
  * @author Frank
  */
-public abstract class ResultsChartAbstractController {
+public abstract class ResultsChartAbstractController implements Serializable {
+
+    protected ViewResultsClientChart viewResultsChart;
+    protected ViewResultsResourceChart viewResultsResourceChart;
+
+    public void setViewResultsChart(ViewResultsClientChart viewResultsChart) {
+        this.viewResultsChart = viewResultsChart;
+    }
+
+    public void setViewResultsResourceChart(ViewResultsResourceChart viewResultsResourceChart) {
+        this.viewResultsResourceChart = viewResultsResourceChart;
+    }
 
     public abstract void createClientResult(
             String clientName,
-            double requestCreated, 
+            double requestCreated,
             double requestSent,
             double jobSent,
             double resultReceive);
-    protected ViewResultsChart viewResultsChart;
 
-    public void setViewResultsChart(ViewResultsChart viewResultsChart) {
-        this.viewResultsChart = viewResultsChart;
-    }
+      public abstract void  createResourceResult( 
+            final String resourceName,
+            final double jobReceive, 
+            final double resultSent);
 }
