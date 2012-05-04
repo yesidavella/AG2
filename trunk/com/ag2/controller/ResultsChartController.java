@@ -23,7 +23,7 @@ public class ResultsChartController extends ResultsChartAbstractController {
 
             @Override
             public void run() {
-                viewResultsChart.createClientResult(clientName, requestCreated, requestSent,jobSent, resultReceive );
+                viewResultsClientChart.createClientResult(clientName, requestCreated, requestSent,jobSent, resultReceive );
             }
         };
         Platform.runLater(runnable);

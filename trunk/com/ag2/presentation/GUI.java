@@ -79,9 +79,12 @@ public class GUI extends Scene implements Serializable {
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
-    private TabPane tabPane = new TabPane();   
     private Tab tabChartsClientResults  = new Tab();
+    private Tab tabChartsrResourceResults  = new Tab();
+    private TabPane tabPane = new TabPane();   
+    
     private ChartsResultClient chartsResultClient;
+    private ChartsResultResource chartsResultResource;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private static Stage stage;
     private transient ToolBar tobWindow;
@@ -703,13 +706,16 @@ public class GUI extends Scene implements Serializable {
         tabResultsHTML.setText("Registros HTML");
         tabResultsHTML.setClosable(false);
         
-        tabChartsClientResults.setText("Graficos de Cliente");
+        tabChartsClientResults.setText("Graficos de Clientes");
         tabChartsClientResults.setClosable(false);
         
-        tabChartsResourceCPU.setText("Graficos de recurso (CPU)");
+        tabChartsrResourceResults.setText("Graficos de recursos");
+        tabChartsClientResults.setClosable(false);
+        
+        tabChartsResourceCPU.setText("Graficos de recursos (CPU)");
         tabChartsResourceCPU.setClosable(false);
         
-        tabChartsResourceBuffer.setText("Graficos de recurso (buffer)");
+        tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
         
         phosphosrusResults = new PhosphosrusResults(tabResults);
@@ -726,11 +732,12 @@ public class GUI extends Scene implements Serializable {
         tabSimulation.setContent(splitPane);
         
         chartsResultClient = new ChartsResultClient(tabChartsClientResults);
+        chartsResultResource = new ChartsResultResource(tabChartsrResourceResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
         
         
-        tabPane.getTabs().addAll(tabSimulation, tabChartsClientResults  ,tabChartsResourceCPU, tabChartsResourceBuffer);
+        tabPane.getTabs().addAll(tabSimulation, tabChartsClientResults  ,tabChartsrResourceResults,tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
     private ScrollPane createRightDesign() {
@@ -1153,6 +1160,7 @@ public class GUI extends Scene implements Serializable {
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
         chartsResultClient.play();
+        chartsResultResource.play();
         tabPane.getSelectionModel().select(tabResults);
 
     }
@@ -1181,8 +1189,13 @@ public class GUI extends Scene implements Serializable {
         return animationHeaderAG2;
     }
 
-    public ChartsResultClient getChartsResult() {
+    public ChartsResultClient getChartsResultClient() {
         return chartsResultClient;
     }
+
+    public ChartsResultResource getChartsResultResource() {
+        return chartsResultResource;
+    }
+    
     
 }

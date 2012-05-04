@@ -14,11 +14,11 @@ import java.io.Serializable;
  */
 public abstract class ResultsChartAbstractController implements Serializable {
 
-    protected ViewResultsClientChart viewResultsChart;
+    protected ViewResultsClientChart viewResultsClientChart;
     protected ViewResultsResourceChart viewResultsResourceChart;
 
-    public void setViewResultsChart(ViewResultsClientChart viewResultsChart) {
-        this.viewResultsChart = viewResultsChart;
+    public void setViewResultsClientChart(ViewResultsClientChart viewResultsChart) {
+        this.viewResultsClientChart = viewResultsChart;
     }
 
     public void setViewResultsResourceChart(ViewResultsResourceChart viewResultsResourceChart) {
