@@ -185,8 +185,8 @@ public class OutputterModel extends Outputter {
     public void printBroker(ServiceNode serviceNode) {
 
         double registrationReceived = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REGISTRATION_RECEIVED);
-        double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double reqRecieved = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_RECIEVED);
+        double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
         double relativeAckSent = (reqAckSent/reqRecieved)*100; 
@@ -194,8 +194,8 @@ public class OutputterModel extends Outputter {
         resultsAbstractController.addBrokerResults(
                 serviceNode.toString(),
                 " " + registrationReceived,
-                " " + noFreeResouce,
                 " " + reqRecieved,
+                " " + noFreeResouce,
                 " " + reqAckSent,
                 " " + sendingFailed,
                 " " + relativeAckSent);
