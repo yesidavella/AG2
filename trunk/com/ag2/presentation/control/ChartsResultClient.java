@@ -84,6 +84,15 @@ public class ChartsResultClient implements ViewResultsClientChart, Serializable{
         series4 = new XYChart.Series<String, Number>();
         series4.setName("Resultados recibidos");
         barChart.getData().addAll(series1, series2, series3, series4);
+        
+        
+        VBox vBoxClient = new VBox();
+        HBox hBoxClient = new HBox();
+        vBoxClient.setAlignment(Pos.CENTER);
+        vBoxClient.getStyleClass().add("boxChart2");
+        vBoxClient.getChildren().addAll(hBoxClient);
+        vBoxClient.getChildren().add(barChart);
+        hBoxMainClient.getChildren().addAll(vBoxClient);
 
     }
 
@@ -94,28 +103,14 @@ public class ChartsResultClient implements ViewResultsClientChart, Serializable{
             final double jobSent,
             final double jobReceive) {
 
-
-        VBox vBoxClient = new VBox();
-        HBox hBoxClient = new HBox();
-        vBoxClient.setAlignment(Pos.CENTER);
-        vBoxClient.getStyleClass().add("boxChart2");
-        vBoxClient.getChildren().addAll(hBoxClient);
-
-
-
         String graficalname = Utils.findGraphicalName(clientName);
         series1.getData().add(new XYChart.Data<String, Number>(graficalname, requestSent));
         series2.getData().add(new XYChart.Data<String, Number>(graficalname, jobNosent));
         series3.getData().add(new XYChart.Data<String, Number>(graficalname, jobSent));
-        series4.getData().add(new XYChart.Data<String, Number>(graficalname, jobReceive));
-
-
-     
+        series4.getData().add(new XYChart.Data<String, Number>(graficalname, jobReceive));     
 
         barChart.setMinWidth(barChart.getMinWidth() + 240);
-        vBoxClient.getChildren().add(barChart);
-
-        hBoxMainClient.getChildren().addAll(vBoxClient);
+        
 
 
     }
