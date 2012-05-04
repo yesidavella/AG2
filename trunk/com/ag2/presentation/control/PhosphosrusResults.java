@@ -62,7 +62,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private int columnWidthMedium = 100;
     private int columnWidthBig = 120;
     private int tableViewHeight = 300;
-    
 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
@@ -519,20 +518,20 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     @Override
     public void addBrokerResult(String brokerName,
-    String registrationReceived,
-    String noFreeResource,
-    String reqRecieved,
-    String reqAckSent,
-    String sendingFailed,
-    String relativeAckSent) {
-        
-        relativeAckSent+="%";
-        
+            String registrationReceived,
+            String reqRecieved,
+            String noFreeResource,
+            String reqAckSent,
+            String sendingFailed,
+            String relativeAckSent) {
+
+        relativeAckSent += "%";
+
         PhosphorusPropertySet cpp = new PhosphorusPropertySet();
         cpp.setProperty1(Utils.findGraphicalName(brokerName));
         cpp.setProperty2(registrationReceived);
-        cpp.setProperty3(noFreeResource);
-        cpp.setProperty4(reqRecieved);
+        cpp.setProperty3(reqRecieved);
+        cpp.setProperty4(noFreeResource);
         cpp.setProperty5(reqAckSent);
         cpp.setProperty6(sendingFailed);
         cpp.setProperty7(relativeAckSent);
@@ -541,38 +540,71 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     }
 
     private void createtvBrokerResults() {
-        int columnWight = 110;
-        TableColumn tcRecurso = new TableColumn("Agendador");
-        tcRecurso.setMinWidth(columnWight);
-        tcRecurso.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
-
-        TableColumn tableColumn1 = new TableColumn("Registros de Clúster");
-        tableColumn1.setMinWidth(columnWight);
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
-
-        TableColumn tableColumn2 = new TableColumn("No se asigno Clúster");
-        tableColumn2.setMinWidth(columnWight);
-        tableColumn2.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
-
-        TableColumn tableColumn3 = new TableColumn("Solicitudes");
-        tableColumn3.setMinWidth(columnWight);
-        tableColumn3.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
-
-        TableColumn tableColumn4 = new TableColumn("Solicitudes\nenviadas(con ack)");
-        tableColumn4.setMinWidth(columnWight);
-        tableColumn4.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
-
-        TableColumn tableColumn5 = new TableColumn("Solicitudes no enviadas");
-        tableColumn5.setMinWidth(columnWight);
-        tableColumn5.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        int columnWight = 130;
+        TableColumn tableColumn1 = new TableColumn("Agendador");
+        tableColumn1.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        setMinPrefAndMaxWidthToColTable(tableColumn1, columnWight);
         
-        TableColumn tableColumn6 = new TableColumn("% Solicitudes\nenviadas(con ack)");
-        tableColumn6.setMinWidth(columnWight);
-        tableColumn6.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
+        TableColumn tableColumn2 = new TableColumn("Registros de Clúster");
+        tableColumn2.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+        setMinPrefAndMaxWidthToColTable(tableColumn2, columnWight);
 
-        tvBrokerResults.getColumns().addAll(tcRecurso, tableColumn1, tableColumn2, tableColumn3,
-                tableColumn4, tableColumn5,tableColumn6);
+        TableColumn tableColumn3 = new TableColumn("Total");
+        tableColumn3.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
+        setMinPrefAndMaxWidthToColTable(tableColumn3, columnWight);
+
+        TableColumn tableColumn4 = new TableColumn("No asignadas");
+        tableColumn4.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
+        setMinPrefAndMaxWidthToColTable(tableColumn4, columnWight);
+        
+        TableColumn tableColumn5 = new TableColumn("Enviadas(con ack)");
+        tableColumn5.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
+        setMinPrefAndMaxWidthToColTable(tableColumn5, columnWight);
+        
+        TableColumn tableColumn6 = new TableColumn("No enviadas");
+        tableColumn6.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        setMinPrefAndMaxWidthToColTable(tableColumn6, columnWight);
+        
+        TableColumn tableColumn7 = new TableColumn("% de envió(con ack)");
+        tableColumn7.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
+        setMinPrefAndMaxWidthToColTable(tableColumn7, columnWight);
+        
+        TableColumn tclAllReqRecieved = new TableColumn("SOLICITUDES RECIBIDAS");
+        
+        TableColumn reqRecievedAssigned = new TableColumn("Asignadas");
+
+        reqRecievedAssigned.getColumns().addAll(tableColumn5, tableColumn6, tableColumn7);
+                
+        tclAllReqRecieved.getColumns().addAll(reqRecievedAssigned,tableColumn4,tableColumn3);
+
+        tvBrokerResults.getColumns().addAll(tableColumn1, tableColumn2, tclAllReqRecieved);
         tvBrokerResults.setItems(dataBroker);
+    }
+
+    /**
+     * Le asigna a una columna de TableView el ancho minimo,preferido y maximo a
+     * el mismo valor del parametro q le envio.
+     *
+     * @param tColumn, la columna a dar el ancho.
+     * @param sameWidht, el valor q va a tener en el ancho esta columna.
+     */
+    private void setMinPrefAndMaxWidthToColTable(TableColumn tColumn, double sameWidht) {
+        tColumn.setMinWidth(sameWidht);
+        tColumn.setPrefWidth(sameWidht);
+        tColumn.setMaxWidth(sameWidht);
+    }
+
+    /**
+     * Le asigna a una columna de TableView el ancho minimo,preferido y maximo.
+     * @param tColumn, la columna a dar el ancho. 
+     * @param minWidht, el ancho minimo de la columna.
+     * @param prefWidht, el ancho preferido de la columna.
+     * @param maxWidht, el ancho maximo de la columna.
+     */
+    private void setMinPrefAndMaxWidthToColTable(TableColumn tColumn, double minWidht, double prefWidht, double maxWidht) {
+        tColumn.setMinWidth(minWidht);
+        tColumn.setPrefWidth(prefWidht);
+        tColumn.setMaxWidth(maxWidht);
     }
 
     public static class PhosphorusPropertySet {
