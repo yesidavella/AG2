@@ -44,9 +44,9 @@ public interface ViewResultsPhosphorus {
     public abstract void addBrokerResult(
             final String brokerName,
             final String registrationReceived,
+            final String reqRecieved,
             final String noFreeResource,
             final String reqAckSent,
-            final String reqRecieved,
             final String sendingFailed,
             final String relativeAckSent);
 

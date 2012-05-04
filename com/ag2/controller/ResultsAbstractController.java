@@ -59,9 +59,9 @@ public abstract class ResultsAbstractController implements Serializable {
 
     public abstract void addBrokerResults(String brokerName,
             String registrationReceived,
+            String reqRecieved,
             String noFreeResource,
             String reqAckSent,
-            String reqRecieved,
             String sendingFailed,
             String relativeAckSent);
 

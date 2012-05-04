@@ -114,9 +114,9 @@ public class ResultsController extends ResultsAbstractController {
     public void addBrokerResults(
             final String brokerName,
             final String registrationReceived,
+            final String reqRecieved,
             final String noFreeResource,
             final String reqAckSent,
-            final String reqRecieved,
             final String sendingFailed,
             final String relativeAckSent) {
 
@@ -127,9 +127,9 @@ public class ResultsController extends ResultsAbstractController {
                 viewResultsPhosphorus.addBrokerResult(
                         brokerName,
                         registrationReceived,
+                        reqRecieved,
                         noFreeResource,                        
                         reqAckSent,
-                        reqRecieved,
                         sendingFailed,
                         relativeAckSent);
             }
