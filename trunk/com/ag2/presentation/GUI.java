@@ -63,7 +63,7 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane scpWorld;
     private ProgressIndicator progressIndicator;
     private boolean isPrincipalKeyPressed = false;
-    private ActionTypeEmun beforeActionTypeEmun;
+    private transient  ActionTypeEmun beforeActionTypeEmun;
     private Cursor beforeEventCursor;
     private PhosphosrusResults phosphosrusResults;
     private static GUI iguAG2;

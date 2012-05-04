@@ -112,6 +112,7 @@ public class OutputterModel extends Outputter {
 
         }
 
+        chartAbstractController.createResourceResult(resourceNode.toString(), recive, sent);
         resultsAbstractController.addResourceResult(
                 resourceNode.toString(),
                 " " + recive,

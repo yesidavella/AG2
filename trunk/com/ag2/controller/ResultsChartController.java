@@ -28,4 +28,18 @@ public class ResultsChartController extends ResultsChartAbstractController {
         };
         Platform.runLater(runnable);
     }
+
+    @Override
+    public void createResourceResult(final String resourceName,final  double jobReceive,final double resultSent) 
+    {
+         Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                viewResultsResourceChart.createResourceResult(resourceName,jobReceive, resultSent );
+            }
+        };
+        Platform.runLater(runnable);
+        
+    }
 }

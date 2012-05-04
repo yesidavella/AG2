@@ -8,7 +8,7 @@ package com.ag2.presentation.control;
  *
  * @author Frank
  */
-public interface ViewResultsChart
+public interface ViewResultsClientChart
 {
     public void  createClientResult( 
             final String clientName,
