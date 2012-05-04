@@ -121,7 +121,8 @@ public class Main extends Application implements Serializable {
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
-        resultsChartController.setViewResultsChart(guiAG2.getChartsResult());
+        resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
+        resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
         guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
