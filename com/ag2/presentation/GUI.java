@@ -710,7 +710,7 @@ public class GUI extends Scene implements Serializable {
         tabChartsClientResults.setClosable(false);
         
         tabChartsrResourceResults.setText("Graficos de recursos");
-        tabChartsClientResults.setClosable(false);
+        tabChartsrResourceResults.setClosable(false);
         
         tabChartsResourceCPU.setText("Graficos de recursos (CPU)");
         tabChartsResourceCPU.setClosable(false);
