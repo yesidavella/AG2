@@ -7,6 +7,8 @@ import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.util.Utils;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import javafx.animation.KeyFrame;
@@ -64,6 +66,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private int tableViewHeight = 300;
     
     private int generalColumnWight = 130;
+    private NumberFormat percentFormat = DecimalFormat.getPercentInstance();
+    private NumberFormat decFormat = DecimalFormat.getInstance();
+    private NumberFormat intFormat = DecimalFormat.getIntegerInstance();
 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
@@ -493,12 +498,12 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
         PhosphorusPropertySet cpp = new PhosphorusPropertySet();
         cpp.setProperty1(Utils.findGraphicalName(tcConmutador));
-        cpp.setProperty2(tcMensajesTrabajoConmutados);
-        cpp.setProperty3(tcMensajesTrabajoNoConmutados);
-        cpp.setProperty4(tcMensajesResultadosConmutados);
-        cpp.setProperty5(tcMensajesResultadosNoConmutados);
-        cpp.setProperty6(tcSwitchedJobRequest);
-        cpp.setProperty7(tcNonSwitchedJobRequest);
+        cpp.setProperty2(intFormat.format(Double.parseDouble(tcMensajesTrabajoConmutados)));
+        cpp.setProperty3(intFormat.format(Double.parseDouble(tcMensajesTrabajoNoConmutados.toString())));
+        cpp.setProperty4(intFormat.format(Double.parseDouble(tcMensajesResultadosConmutados)));
+        cpp.setProperty5(intFormat.format(Double.parseDouble(tcMensajesResultadosNoConmutados)));
+        cpp.setProperty6(intFormat.format(Double.parseDouble(tcSwitchedJobRequest)));
+        cpp.setProperty7(intFormat.format(Double.parseDouble(tcNonSwitchedJobRequest)));
         cpp.setProperty8(relDropJob);
         cpp.setProperty9(relDropRes);
         cpp.setProperty10(relDropReq);
@@ -530,17 +535,15 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
             String reqAckSent,
             String sendingFailed,
             String relativeAckSent) {
-
-        relativeAckSent += "%";
-
+        
         PhosphorusPropertySet cpp = new PhosphorusPropertySet();
         cpp.setProperty1(Utils.findGraphicalName(brokerName));
-        cpp.setProperty2(registrationReceived);
-        cpp.setProperty3(reqRecieved);
-        cpp.setProperty4(noFreeResource);
-        cpp.setProperty5(reqAckSent);
-        cpp.setProperty6(sendingFailed);
-        cpp.setProperty7(relativeAckSent);
+        cpp.setProperty2(intFormat.format(Double.parseDouble(registrationReceived)));
+        cpp.setProperty3(intFormat.format(Double.parseDouble(reqRecieved)));
+        cpp.setProperty4(intFormat.format(Double.parseDouble(noFreeResource)));
+        cpp.setProperty5(intFormat.format(Double.parseDouble(reqAckSent)));
+        cpp.setProperty6(intFormat.format(Double.parseDouble(sendingFailed)));
+        cpp.setProperty7(percentFormat.format(Double.parseDouble(relativeAckSent)));
 
         dataBroker.add(cpp);
     }
