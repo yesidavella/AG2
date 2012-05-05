@@ -189,7 +189,7 @@ public class OutputterModel extends Outputter {
         double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
-        double relativeAckSent = (reqAckSent/reqRecieved)*100; 
+        double relativeAckSent = reqAckSent/reqRecieved; 
 
         resultsAbstractController.addBrokerResults(
                 serviceNode.toString(),
