@@ -62,6 +62,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     private int columnWidthMedium = 100;
     private int columnWidthBig = 120;
     private int tableViewHeight = 300;
+    
+    private int generalColumnWight = 130;
 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
@@ -238,56 +240,60 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     private void createtvResultsSwitch() {
 
-        TableColumn tcConmutador = new TableColumn("Conmutador 0ptico");
-        tcConmutador.setMinWidth(130);
-        tcConmutador.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        TableColumn tclSwitchName = new TableColumn("Conmutador 0ptico");
+        setMinPrefAndMaxWidthToColTable(tclSwitchName,generalColumnWight);
+        tclSwitchName.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
 
-        TableColumn tcMensajesTrabajoConmutados = new TableColumn("Trabajos conmutados");
-        tcMensajesTrabajoConmutados.setMinWidth(130);
-        tcMensajesTrabajoConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+        TableColumn tclSwitchedJobMsg = new TableColumn("Conmutados");
+        setMinPrefAndMaxWidthToColTable(tclSwitchedJobMsg, generalColumnWight);
+        tclSwitchedJobMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
 
-        TableColumn tcMensajesTrabajoNoConmutados = new TableColumn("Trabajos no conmutados");
-        tcMensajesTrabajoNoConmutados.setMinWidth(130);
-        tcMensajesTrabajoNoConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
+        TableColumn tclNotSwitchedJobMsg = new TableColumn("No conmutados");
+        setMinPrefAndMaxWidthToColTable(tclNotSwitchedJobMsg, generalColumnWight);
+        tclNotSwitchedJobMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
 
-        TableColumn tcMensajesResultadosConmutados = new TableColumn("Resultados conmutados");
-        tcMensajesResultadosConmutados.setMinWidth(130);
-        tcMensajesResultadosConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
+        TableColumn tclSwitchedResultMsg = new TableColumn("Conmutados");
+        setMinPrefAndMaxWidthToColTable(tclSwitchedResultMsg,generalColumnWight);
+        tclSwitchedResultMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
 
+        TableColumn tclNotSwitchedResultMsg = new TableColumn("No conmutados");
+        setMinPrefAndMaxWidthToColTable(tclNotSwitchedResultMsg,generalColumnWight);
+        tclNotSwitchedResultMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
 
-        TableColumn tcMensajesResultadosNoConmutados = new TableColumn("Resultados no conmutados");
-        tcMensajesResultadosNoConmutados.setMinWidth(150);
-        tcMensajesResultadosNoConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
+        TableColumn tclSwitchedReqMsg = new TableColumn("Conmutadas");
+        setMinPrefAndMaxWidthToColTable(tclSwitchedReqMsg,generalColumnWight);
+        tclSwitchedReqMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
 
-        TableColumn tcMensajesSolicitudConmutados = new TableColumn("Solicitudes conmutadas");
-        tcMensajesSolicitudConmutados.setMinWidth(160);
-        tcMensajesSolicitudConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        TableColumn tclNotSwitchedReqMsg = new TableColumn("No conmutadas");
+        setMinPrefAndMaxWidthToColTable(tclNotSwitchedReqMsg,generalColumnWight);
+        tclNotSwitchedReqMsg.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
 
-        TableColumn tcMensajesSolicitudNoConmutados = new TableColumn("Solicitudes no conmutadas");
-        tcMensajesSolicitudNoConmutados.setMinWidth(160);
-        tcMensajesSolicitudNoConmutados.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
-
-        TableColumn relDropJob = new TableColumn("% Trabajos no conmutados");
+        TableColumn relDropJob = new TableColumn("% no conmutado");
         relDropJob.setMinWidth(150);
         relDropJob.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property8"));
 
-        TableColumn relDropRes = new TableColumn("% Resultados no conmutados");
+        TableColumn relDropRes = new TableColumn("% no conmutados");
         relDropRes.setMinWidth(150);
         relDropRes.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property9"));
 
-        TableColumn relDropReq = new TableColumn("% Solicitudes no conmutadas");
+        TableColumn relDropReq = new TableColumn("% no conmutadas");
         relDropReq.setMinWidth(150);
         relDropReq.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property10"));
 
-
-        TableColumn reltotDrop = new TableColumn("% Total no conmutados");
+        TableColumn reltotDrop = new TableColumn("% Total no conmutado");
         reltotDrop.setMinWidth(150);
         reltotDrop.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property11"));
 
-        tvSwitchResults.getColumns().addAll(tcConmutador, tcMensajesTrabajoConmutados,
-                tcMensajesTrabajoNoConmutados, tcMensajesResultadosConmutados, tcMensajesResultadosNoConmutados,
-                tcMensajesSolicitudConmutados, tcMensajesSolicitudNoConmutados,
-                relDropJob, relDropRes, relDropReq, reltotDrop);
+        TableColumn tclJobs = new TableColumn("Trabajos");
+        tclJobs.getColumns().addAll(tclSwitchedJobMsg, tclNotSwitchedJobMsg,relDropJob);
+
+        TableColumn tclJobResults = new TableColumn("Resultados de Trabajo");
+        tclJobResults.getColumns().addAll(tclSwitchedResultMsg, tclNotSwitchedResultMsg, relDropRes);
+
+        TableColumn tclScheduleReq = new TableColumn("Solicitudes de agendamiento");
+        tclScheduleReq.getColumns().addAll(tclSwitchedReqMsg, tclNotSwitchedReqMsg, relDropReq);
+
+        tvSwitchResults.getColumns().addAll(tclSwitchName, tclJobs, tclJobResults,tclScheduleReq, reltotDrop);
         tvSwitchResults.setItems(dataSwitch);
     }
 
@@ -540,44 +546,44 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
     }
 
     private void createtvBrokerResults() {
-        int columnWight = 130;
-        TableColumn tableColumn1 = new TableColumn("Agendador");
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
-        setMinPrefAndMaxWidthToColTable(tableColumn1, columnWight);
         
-        TableColumn tableColumn2 = new TableColumn("Registros de Clúster");
-        tableColumn2.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
-        setMinPrefAndMaxWidthToColTable(tableColumn2, columnWight);
+        TableColumn tclBrokerName = new TableColumn("Agendador");
+        tclBrokerName.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        setMinPrefAndMaxWidthToColTable(tclBrokerName, generalColumnWight);
 
-        TableColumn tableColumn3 = new TableColumn("Total");
-        tableColumn3.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
-        setMinPrefAndMaxWidthToColTable(tableColumn3, columnWight);
+        TableColumn tclRegistrationReceived = new TableColumn("Registros de Clúster");
+        tclRegistrationReceived.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+        setMinPrefAndMaxWidthToColTable(tclRegistrationReceived, generalColumnWight);
 
-        TableColumn tableColumn4 = new TableColumn("No asignadas");
-        tableColumn4.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
-        setMinPrefAndMaxWidthToColTable(tableColumn4, columnWight);
-        
-        TableColumn tableColumn5 = new TableColumn("Enviadas(con ack)");
-        tableColumn5.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
-        setMinPrefAndMaxWidthToColTable(tableColumn5, columnWight);
-        
-        TableColumn tableColumn6 = new TableColumn("No enviadas");
-        tableColumn6.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
-        setMinPrefAndMaxWidthToColTable(tableColumn6, columnWight);
-        
-        TableColumn tableColumn7 = new TableColumn("% de envió(con ack)");
-        tableColumn7.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
-        setMinPrefAndMaxWidthToColTable(tableColumn7, columnWight);
-        
-        TableColumn tclAllReqRecieved = new TableColumn("SOLICITUDES RECIBIDAS");
-        
+        TableColumn tclReqRecieved = new TableColumn("Total Solicitudes");
+        tclReqRecieved.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
+        setMinPrefAndMaxWidthToColTable(tclReqRecieved, generalColumnWight);
+
+        TableColumn tclNoFreeResource = new TableColumn("No asignadas");
+        tclNoFreeResource.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
+        setMinPrefAndMaxWidthToColTable(tclNoFreeResource, generalColumnWight);
+
+        TableColumn tclReqAckSent = new TableColumn("Enviadas(con ack)");
+        tclReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
+        setMinPrefAndMaxWidthToColTable(tclReqAckSent, generalColumnWight);
+
+        TableColumn tclSendingFailed = new TableColumn("No enviadas");
+        tclSendingFailed.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        setMinPrefAndMaxWidthToColTable(tclSendingFailed, generalColumnWight);
+
+        TableColumn tclRelativeReqAckSent = new TableColumn("% de envió(con ack)");
+        tclRelativeReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
+        setMinPrefAndMaxWidthToColTable(tclRelativeReqAckSent, generalColumnWight);
+
+        TableColumn tclAllReqRecieved = new TableColumn("SOLICITUDES RECIBIDAS DE AGENDAMIENTO");
+
         TableColumn reqRecievedAssigned = new TableColumn("Asignadas");
 
-        reqRecievedAssigned.getColumns().addAll(tableColumn5, tableColumn6, tableColumn7);
-                
-        tclAllReqRecieved.getColumns().addAll(reqRecievedAssigned,tableColumn4,tableColumn3);
+        reqRecievedAssigned.getColumns().addAll(tclReqAckSent, tclSendingFailed, tclRelativeReqAckSent);
 
-        tvBrokerResults.getColumns().addAll(tableColumn1, tableColumn2, tclAllReqRecieved);
+        tclAllReqRecieved.getColumns().addAll(reqRecievedAssigned, tclNoFreeResource, tclReqRecieved);
+
+        tvBrokerResults.getColumns().addAll(tclBrokerName, tclRegistrationReceived, tclAllReqRecieved);
         tvBrokerResults.setItems(dataBroker);
     }
 
@@ -596,7 +602,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus, Serializable {
 
     /**
      * Le asigna a una columna de TableView el ancho minimo,preferido y maximo.
-     * @param tColumn, la columna a dar el ancho. 
+     *
+     * @param tColumn, la columna a dar el ancho.
      * @param minWidht, el ancho minimo de la columna.
      * @param prefWidht, el ancho preferido de la columna.
      * @param maxWidht, el ancho maximo de la columna.
