@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class DataChartResourceController extends DataChartAbstractController {
 
-    private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+   
     private DecimalFormat decimalFormat = new DecimalFormat("###################.###");
     private int countCPU = 0;
     private double capacityCPU = 0;
@@ -32,7 +32,7 @@ public class DataChartResourceController extends DataChartAbstractController {
 
     @Override
     public void loadDataChartResourceCPU(GraphNode graphNode) {
-        ResourceNode resourceNode = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
+        ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
         List<CPU> cpuSet = resourceNode.getCpuSet();
 
 
@@ -55,8 +55,8 @@ public class DataChartResourceController extends DataChartAbstractController {
 
     @Override
     public void loadDataChartResourceBuffer(GraphNode graphNode) {
-        AbstractResourceNode abstractResourceNode = (AbstractResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
-        ResourceNode resourceNode = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
+        AbstractResourceNode abstractResourceNode = (AbstractResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
+        ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
         value1 = abstractResourceNode.getQueue().size();
 //        value2 = resourceNode.getMaxQueueSize();
@@ -68,7 +68,7 @@ public class DataChartResourceController extends DataChartAbstractController {
     }
 
     public void loadInfoCPUResouce(ResourceGraphNode graphNode) {
-        ResourceNode resourceNode = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
+        ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
         CPU cpu = (CPU) resourceNode.getCpuSet().get(0);
 
@@ -81,7 +81,7 @@ public class DataChartResourceController extends DataChartAbstractController {
     }
 
     public void loadInfoBufferResouce(ResourceGraphNode graphNode) {
-        ResourceNode resourceNode = (ResourceNode) nodeMatchCoupleObjectContainer.get(graphNode);
+        ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
         maxQueueSize = resourceNode.getMaxQueueSize();
 

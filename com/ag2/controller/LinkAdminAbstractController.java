@@ -11,12 +11,11 @@ import java.util.HashMap;
 public abstract class LinkAdminAbstractController implements Serializable {
 
     protected ArrayList<LinkCreationAbstractModel> linkCreationAbstractModels;
-    protected transient EntityPropertyTableView entityPropertyTable;
-    protected HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
+    protected transient EntityPropertyTableView entityPropertyTable;   
 
     public LinkAdminAbstractController() {
         linkCreationAbstractModels = new ArrayList<LinkCreationAbstractModel>();
-        linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+        
     }
 
     public boolean addModel(LinkCreationAbstractModel linkCreationAbstractModel) {

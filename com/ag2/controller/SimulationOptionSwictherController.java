@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public class SimulationOptionSwictherController {
 
-     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+     
     public enum OptionSimulation {
 
         AG2, PHOSPHORUS, PHOSPHORUS_OPTIMIZE
@@ -39,10 +39,10 @@ public class SimulationOptionSwictherController {
     public void setOptionSimulation(OptionSimulation optionSimulation) {
         this.optionSimulation = optionSimulation;
 
-        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode instanceof BrokerGrahpNode) {
                 BrokerGrahpNode brokerGrahpNode = (BrokerGrahpNode) graphNode;
-                AbstractServiceNode abstractServiceNode = (AbstractServiceNode) nodeMatchCoupleObjectContainer.get(brokerGrahpNode);
+                AbstractServiceNode abstractServiceNode = (AbstractServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(brokerGrahpNode);
 
                 switch( optionSimulation)
                 {

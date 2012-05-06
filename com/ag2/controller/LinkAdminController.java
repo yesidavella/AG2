@@ -17,7 +17,7 @@ import simbase.SimBaseEntity;
 public class LinkAdminController extends LinkAdminAbstractController {
 
   
-    private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    
 
     @Override
     public void createLink(GraphLink graphLink) {
@@ -32,12 +32,12 @@ public class LinkAdminController extends LinkAdminAbstractController {
                 GraphNode graphNodeA = graphLink.getGraphNodeA();
                 GraphNode graphNodeB = graphLink.getGraphNodeB();
 
-                phosphorusNodeA = (Entity) nodeMatchCoupleObjectContainer.get(graphNodeA);
-                phosphorusNodeB = (Entity) nodeMatchCoupleObjectContainer.get(graphNodeB);
+                phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNodeA);
+                phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNodeB);
 
                 if (phosphorusNodeA != null && phosphorusNodeB != null) {
                     PhosphorusLinkModel phosphorusLinkModel = model.createPhosphorusLink(phosphorusNodeA, phosphorusNodeB);
-                    linkMatchCoupleObjectContainer.put(graphLink, phosphorusLinkModel);
+                    MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
                 } else {
                     System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
                 }
@@ -51,7 +51,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
     public void queryProperty(GraphLink graphLink) {
 
         ArrayList<EntityProperty> entityPropertys = new ArrayList<EntityProperty>();
-        PhosphorusLinkModel phosphorusSelectedLinkModel = (PhosphorusLinkModel) linkMatchCoupleObjectContainer.get(graphLink);
+        PhosphorusLinkModel phosphorusSelectedLinkModel = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(graphLink);
         GridOutPort gridOutPortA = phosphorusSelectedLinkModel.getGridOutPortA();
         GridOutPort gridOutPortB = phosphorusSelectedLinkModel.getGridOutPortB();
         /*
@@ -117,6 +117,8 @@ public class LinkAdminController extends LinkAdminAbstractController {
     @Override
     public void reCreatePhosphorousLinks() {
 
+        
+        HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
             createLink(graphLink);
         }
@@ -132,6 +134,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
     @Override
     public boolean removeLink(GraphLink graphLink) {
 
+        HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.get(graphLink);
 
         boolean canRemovePortsInNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
