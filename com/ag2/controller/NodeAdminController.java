@@ -9,15 +9,20 @@ import Grid.Interfaces.ServiceNode;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
+import com.ag2.presentation.Main;
 import com.ag2.presentation.design.*;
 import com.ag2.presentation.design.property.EntityProperty;
 import com.ag2.presentation.design.property.NodeDistributionProperty;
 import com.ag2.presentation.design.property.NodeRelationProperty;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import simbase.SimBaseSimulator;
 
@@ -530,6 +535,16 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             };
             Platform.runLater(runnable);
 
+        }
+    }
+    
+     private void writeObject(ObjectOutputStream stream) {
+        try {
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

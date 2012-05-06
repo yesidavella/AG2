@@ -2,6 +2,7 @@ package com.ag2.presentation.design;
 
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
+import com.ag2.presentation.Main;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,10 +18,9 @@ import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.StrokeType;
 import javax.swing.JOptionPane;
 
-public class GraphArc  implements Serializable {
+public class GraphArc implements Serializable {
 
     private transient QuadCurve quadCurve;
-
     private GraphDesignGroup graphDesignGroup;
     private GraphNode graphNodeB;
     private ArrayList<ArcListener> arcListeners = new ArrayList<ArcListener>();
@@ -32,11 +32,9 @@ public class GraphArc  implements Serializable {
     private double endY;
     private double controlX;
     private double controlY;
+    private GraphArcSeparatorPoint initialGraphArcSeparatorPoint, finalGraphArcSeparatorPoint;
 
-    private GraphArcSeparatorPoint initialGraphArcSeparatorPoint,finalGraphArcSeparatorPoint;
-
-    public GraphArc(GraphLink graphLink, GraphDesignGroup graphDesignGroup)
-    {
+    public GraphArc(GraphLink graphLink, GraphDesignGroup graphDesignGroup) {
         this.graphDesignGroup = graphDesignGroup;
         this.graphLink = graphLink;
         this.graphNodeB = this.graphLink.getGraphNodeB();
@@ -60,8 +58,7 @@ public class GraphArc  implements Serializable {
         this.finalGraphArcSeparatorPoint = finalGraphArcSeparatorPoint;
     }
 
-    public void initTransientObjects()
-    {
+    public void initTransientObjects() {
         quadCurve = new QuadCurve();
         quadCurve.setFill(null);
         quadCurve.setStrokeWidth(2);
@@ -121,11 +118,11 @@ public class GraphArc  implements Serializable {
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     double dragX = me.getX();
                     double dragY = me.getY();
-                    GraphArc graphArc = GraphArc.this ;
+                    GraphArc graphArc = GraphArc.this;
                     graphArc.setControlX(dragX);
                     graphArc.setControlY(dragY);
 
-                    if(!graphLink.isSelected()){
+                    if (!graphLink.isSelected()) {
                         graphLink.select(true);
                     }
 
@@ -142,10 +139,10 @@ public class GraphArc  implements Serializable {
                 double clickX = mouseEvent.getX();
                 double clickY = mouseEvent.getY();
 
-                if(GUI.getActionTypeEmun() == ActionTypeEmun.POINTER){
-                    if(!graphLink.isSelected()){
+                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
+                    if (!graphLink.isSelected()) {
                         graphLink.select(true);
-                    }else{
+                    } else {
                         graphLink.select(false);
                     }
                 }
@@ -168,7 +165,7 @@ public class GraphArc  implements Serializable {
 
                     GraphArcSeparatorPoint graphArcSeparatorPointNew = new GraphArcSeparatorPoint(graphDesignGroup, graphArc, newGraphArc, clickX, clickY);
 
-                    if( graphArc.getFinalGraphArcSeparatorPoint()!=null){
+                    if (graphArc.getFinalGraphArcSeparatorPoint() != null) {
                         graphArc.getFinalGraphArcSeparatorPoint().setGraphArcA(newGraphArc);
                         newGraphArc.setFinalGraphArcSeparatorPoint(graphArc.getFinalGraphArcSeparatorPoint());
                     }
@@ -203,7 +200,7 @@ public class GraphArc  implements Serializable {
                         graphDesignGroup.remove(graphArc);
                     }
 
-                    if(!graphLink.removeGraphLink()){
+                    if (!graphLink.removeGraphLink()) {
                         JOptionPane.showMessageDialog(null, "No se pudo eliminar los puertos de los Nodos Phosphorous satisfactoriamente.");
                     }
 
@@ -246,13 +243,11 @@ public class GraphArc  implements Serializable {
         return graphNodeB;
     }
 
-
     public double getControlX() {
         return controlX;
     }
 
-    public void setControlX(double controlX)
-    {
+    public void setControlX(double controlX) {
         this.controlX = controlX;
         quadCurve.setControlX(controlX);
     }
@@ -288,8 +283,6 @@ public class GraphArc  implements Serializable {
         return quadCurve;
     }
 
-
-
     public double getStartX() {
         return startX;
     }
@@ -308,7 +301,6 @@ public class GraphArc  implements Serializable {
         quadCurve.setStartY(startY);
     }
 
-
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
@@ -318,13 +310,13 @@ public class GraphArc  implements Serializable {
         }
     }
 
-    private void writeObject(ObjectOutputStream stream){
+    private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();
-//            System.out.println("Write : Arco" );
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

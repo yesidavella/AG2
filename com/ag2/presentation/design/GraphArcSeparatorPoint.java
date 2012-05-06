@@ -3,6 +3,7 @@ package com.ag2.presentation.design;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -178,4 +179,7 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         }
 
     }
+    
+
+    
 }

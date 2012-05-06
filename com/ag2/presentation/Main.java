@@ -4,10 +4,13 @@ import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
 import com.ag2.controller.*;
 import com.ag2.model.*;
+import com.ag2.presentation.design.GraphArc;
 import com.ag2.presentation.design.GraphDesignGroup;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -28,13 +31,14 @@ public class Main extends Application implements Serializable {
     private ResultsChartController resultsChartController;
     private JSObject browser;
     public static boolean IS_APPLET = false;
-    private GUI guiAG2;
+    private transient GUI guiAG2;
+    public static int countObject = 0;
 
     @Override
     public void start(final Stage stage) {
 
         stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
-        
+
         try {
             browser = getHostServices().getWebContext();
             IS_APPLET = browser != null;
@@ -43,7 +47,7 @@ public class Main extends Application implements Serializable {
         }
 
         GUI.setStage(stage);
-        
+
         guiAG2 = GUI.getInstance();
         stage.setScene(guiAG2);
         guiAG2.setStage(stage);
@@ -53,9 +57,9 @@ public class Main extends Application implements Serializable {
 
         initModelsAndControllers();
         guiAG2.initStateGUI();
-        
+
         utilSerializator = new UtilSerializator(this, stage);
-        
+
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
@@ -126,7 +130,7 @@ public class Main extends Application implements Serializable {
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
 
         guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
-        
+
         simulationBase.setResultsChartAbstractController(resultsChartController);
     }
 
@@ -177,8 +181,10 @@ public class Main extends Application implements Serializable {
         linkAdminAbstractController = main.getLinkAdminAbstractController();
         executeController = main.getExecuteAbstractController();
         resultsController = main.getResultsController();
-
         nodeCreationModel = main.getNodeCreationModel();
+        resultsChartController  = main.getResultsChartController();
+        
+        guiAG2.loadGraphDesignGroup(graphDesignGroup);
 
         guiAG2.getExecutePane().setExecuteAbstractController(executeController);
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
@@ -191,6 +197,10 @@ public class Main extends Application implements Serializable {
         nodeAdminController.addGraphNodesView(guiAG2.getGraphDesignGroup());
         nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
         guiAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
+        
+        
+         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
+        resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
         //  executeAbstractController.stop();
     }
 
@@ -201,16 +211,28 @@ public class Main extends Application implements Serializable {
         }
     }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
-        simulationBase = SimulationBase.getInstance();
-        simulationBase.getGridSimulatorModel().getEntities();
-        objectOutputStream.defaultWriteObject();
-    }
-
     public void load() {
         Main main = utilSerializator.OpenDialogToLoad();
         if (main != null) {
             loadControllers(main);
         }
     }
+
+    private void writeObject(ObjectOutputStream stream) {
+        try {
+            simulationBase = SimulationBase.getInstance();
+            simulationBase.getGridSimulatorModel().getEntities();
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ResultsChartController getResultsChartController() {
+        return resultsChartController;
+    }
+    
+    
 }

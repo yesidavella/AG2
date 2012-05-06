@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public abstract class ResultsAbstractController implements Serializable {
 
-    protected ViewResultsPhosphorus viewResultsPhosphorus;
+    protected transient ViewResultsPhosphorus viewResultsPhosphorus;
     protected OutputterModel outputterModel = new OutputterModel(SimulationBase.getInstance().getGridSimulatorModel());
 
     public void setViewResultsPhosphorus(ViewResultsPhosphorus viewResultsPhosphorus) {

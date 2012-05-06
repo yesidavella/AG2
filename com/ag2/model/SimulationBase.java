@@ -11,11 +11,15 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.controller.ResultsAbstractController;
 import com.ag2.controller.ResultsChartAbstractController;
+import com.ag2.presentation.Main;
+import com.ag2.presentation.design.GraphArc;
 import com.ag2.util.Utils;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
 
@@ -104,9 +108,7 @@ public class SimulationBase implements Runnable, Serializable {
         
     }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
-        objectOutputStream.defaultWriteObject();
-    }
+
 
     public void initNetwork() {
         simulationInstance.stopEvent = false;
@@ -153,6 +155,15 @@ public class SimulationBase implements Runnable, Serializable {
     public void setResultsChartAbstractController(ResultsChartAbstractController resultsChartAbstractController) {
         this.resultsChartAbstractController = resultsChartAbstractController;
         outputterModel.setChartAbstractController(resultsChartAbstractController);
+    }
+    private void writeObject(ObjectOutputStream stream) {
+        try {
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

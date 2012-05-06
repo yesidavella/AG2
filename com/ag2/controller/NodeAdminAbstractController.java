@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public abstract class NodeAdminAbstractController implements Serializable {
 
-    protected ArrayList<GraphNodesView>  graphNodesViews = new ArrayList<GraphNodesView>();
+    protected transient ArrayList<GraphNodesView>  graphNodesViews = new ArrayList<GraphNodesView>();
     protected ArrayList<NodeCreationModel>   nodeCreationModels;
     protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer;
 
@@ -60,11 +60,10 @@ public abstract class NodeAdminAbstractController implements Serializable {
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
-            for (int i = 0; i < graphNodesViews.size(); i++) {
-                graphNodesViews.remove(0);
-            }
+            graphNodesViews = new ArrayList<GraphNodesView>();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
 }

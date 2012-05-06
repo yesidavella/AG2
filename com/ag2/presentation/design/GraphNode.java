@@ -4,12 +4,16 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
+import com.ag2.presentation.Main;
 import com.ag2.util.Utils;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -402,15 +406,6 @@ public abstract class GraphNode implements Selectable, Serializable {
         }
     }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) {
-        try {
-            objectOutputStream.defaultWriteObject();
-            System.out.println("write :" + name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public short getHeight() {
         return height;
     }
@@ -532,4 +527,14 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public abstract boolean isEnableToCreateLInk(GraphNode graphNode);
+    
+     private void writeObject(ObjectOutputStream stream) {
+        try {
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

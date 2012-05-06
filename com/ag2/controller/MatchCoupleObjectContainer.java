@@ -4,11 +4,10 @@ import Grid.Entity;
 import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
-import java.io.Serializable;
 import java.util.HashMap;
 
 
-public abstract class MatchCoupleObjectContainer implements Serializable{
+public abstract class MatchCoupleObjectContainer {
     
     private static HashMap<GraphNode,Entity> nodeMatchCoupleObjectContainer;
     private static HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer;

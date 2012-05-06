@@ -3,8 +3,14 @@ package com.ag2.model;
 import Grid.Interfaces.CPU;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ResourceSelector;
+import com.ag2.presentation.Main;
+import com.ag2.presentation.design.GraphArc;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable {
 
@@ -110,5 +116,16 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     @Override
     public ResourceNode findBestresource(double jobFlops) {
         return null; // FIXME: por ahora no se debe  usar // findBestResource(resources, jobFlops);
+    }
+    
+    
+     private void writeObject(ObjectOutputStream stream) {
+        try {
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
