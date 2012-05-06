@@ -13,7 +13,7 @@ import java.util.Map;
 import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
-    private HashMap<GraphNode,Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+   
 
     @Override
     public void initNetwork() {
@@ -81,9 +81,9 @@ public class ExecuteController extends ExecuteAbstractController {
 
     private GraphNode findGraphNode(Object object) {
 
-        for(GraphNode graphNode:nodeMatchCoupleObjectContainer.keySet()){
+        for(GraphNode graphNode:MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()){
             
-            if(nodeMatchCoupleObjectContainer.get(graphNode).equals(object)){
+            if(MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode).equals(object)){
                 return graphNode;
             }
         }

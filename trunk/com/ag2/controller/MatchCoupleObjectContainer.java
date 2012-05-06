@@ -27,4 +27,14 @@ public abstract class MatchCoupleObjectContainer {
         }
         return linkMatchCoupleObjectContainer;
     }
+
+    public static void setLinkMatchCoupleObjectContainer(HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer) {
+        MatchCoupleObjectContainer.linkMatchCoupleObjectContainer = linkMatchCoupleObjectContainer;
+    }
+
+    public static void setNodeMatchCoupleObjectContainer(HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer) {
+        MatchCoupleObjectContainer.nodeMatchCoupleObjectContainer = nodeMatchCoupleObjectContainer;
+    }
+    
+    
 }

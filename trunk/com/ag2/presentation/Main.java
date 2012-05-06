@@ -1,14 +1,18 @@
 package com.ag2.presentation;
 
+import Grid.Entity;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
 import com.ag2.controller.*;
 import com.ag2.model.*;
 import com.ag2.presentation.design.GraphArc;
 import com.ag2.presentation.design.GraphDesignGroup;
+import com.ag2.presentation.design.GraphLink;
+import com.ag2.presentation.design.GraphNode;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -33,7 +37,9 @@ public class Main extends Application implements Serializable {
     public static boolean IS_APPLET = false;
     private transient GUI guiAG2;
     public static int countObject = 0;
-
+    private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    private  HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+    
     @Override
     public void start(final Stage stage) {
 
@@ -183,6 +189,12 @@ public class Main extends Application implements Serializable {
         resultsController = main.getResultsController();
         nodeCreationModel = main.getNodeCreationModel();
         resultsChartController  = main.getResultsChartController();
+        nodeMatchCoupleObjectContainer= main.getNodeMatchCoupleObjectContainer();
+        linkMatchCoupleObjectContainer  =main.getLinkMatchCoupleObjectContainer();
+        
+        MatchCoupleObjectContainer.setNodeMatchCoupleObjectContainer(nodeMatchCoupleObjectContainer);
+        MatchCoupleObjectContainer.setLinkMatchCoupleObjectContainer(linkMatchCoupleObjectContainer);
+       
         
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
 
@@ -232,6 +244,14 @@ public class Main extends Application implements Serializable {
 
     public ResultsChartController getResultsChartController() {
         return resultsChartController;
+    }
+
+    public HashMap<GraphLink, PhosphorusLinkModel> getLinkMatchCoupleObjectContainer() {
+        return linkMatchCoupleObjectContainer;
+    }
+
+    public HashMap<GraphNode, Entity> getNodeMatchCoupleObjectContainer() {
+        return nodeMatchCoupleObjectContainer;
     }
     
     

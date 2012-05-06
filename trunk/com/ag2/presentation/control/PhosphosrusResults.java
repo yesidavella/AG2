@@ -58,7 +58,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private  Label lblPageHTMLCountValue = new Label("0");
     private  Timeline time = new Timeline();
     private  long initialTime = System.currentTimeMillis();
-    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+   
     private int columnWidthSmall = 60;
     private int columnWidthMedium = 100;
     private int columnWidthBig = 120;

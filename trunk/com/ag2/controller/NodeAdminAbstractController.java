@@ -14,11 +14,11 @@ public abstract class NodeAdminAbstractController implements Serializable {
 
     protected transient ArrayList<GraphNodesView>  graphNodesViews = new ArrayList<GraphNodesView>();
     protected ArrayList<NodeCreationModel>   nodeCreationModels;
-    protected HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer;
+   
 
     public NodeAdminAbstractController() {
         nodeCreationModels = new ArrayList<NodeCreationModel>();
-        nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+        
         SimulationBase.getInstance().setNodeAdminAbstractController(this);
     }
 
@@ -40,11 +40,11 @@ public abstract class NodeAdminAbstractController implements Serializable {
     }
 
     public void addNodeMatchCouple(GraphNode graphNode, Entity phosphorusNode) {
-        nodeMatchCoupleObjectContainer.put(graphNode, phosphorusNode);
+        MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().put(graphNode, phosphorusNode);
     }
 
     public void removeNodeMatchCouple(GraphNode graphNode) {
-        nodeMatchCoupleObjectContainer.remove(graphNode);
+        MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().remove(graphNode);
     }
 
     public abstract Entity createNode(GraphNode graphNode);

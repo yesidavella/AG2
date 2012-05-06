@@ -15,7 +15,7 @@ public class Utils {
     public static String ABS_PATH_IMGS = "";// URLUtil.fileToURL(new File("resources/images/")).toString();
     public static String ABS_PATH_CSS = "";//URLUtil.fileToURL(new File("resources/css/")).toString();
 
-   protected static HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    
     static {
         try {
             ABS_PATH_CONFIG_AG2 = new File("resources/").toURL().toString().replaceFirst("file:", "");
@@ -29,7 +29,7 @@ public class Utils {
     
        public static String findGraphicalName(String originalName) {
         String name = originalName;
-        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode.getOriginalName().equalsIgnoreCase(originalName)) {
                 name = graphNode.getName();
             }

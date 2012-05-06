@@ -44,8 +44,7 @@ public class ChartsResultsCPU {
     private VBox vBox;
     private transient Timeline time = new Timeline();
     private ScrollPane scrollPane;
-    private LineChart<Number, Number> lineChart;
-    private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
+    private LineChart<Number, Number> lineChart;    
     private HashMap<ResourceGraphNode, XYChart.Series<Number, Number>> relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
     private DataChartResourceController dataChartResourceController;
 //    private boolean loadResources = true;
@@ -78,8 +77,8 @@ public class ChartsResultsCPU {
         countPlays++;
 
 
-
-        for (GraphNode graphNode : nodeMatchCoupleObjectContainer.keySet()) {
+ 
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode instanceof ResourceGraphNode) {
                 XYChart.Series<Number, Number> serie = new XYChart.Series<Number, Number>();
                 serie.setName(graphNode.toString());
@@ -178,7 +177,6 @@ public class ChartsResultsCPU {
         gridPane.getChildren().addAll(lblNameTitle, lblcountCPUTitle, lblcapacityCPUTitle);
         int row = 1;
 
-
         for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
             dataChartResourceController.loadInfoCPUResouce(resourceGraphNode);
             String name = resourceGraphNode.getName();
@@ -271,4 +269,6 @@ public class ChartsResultsCPU {
             this.valueAverage = valueAverage;
         }
     }
+    
+    
 }
