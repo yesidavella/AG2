@@ -14,8 +14,8 @@ import java.io.Serializable;
  */
 public abstract class ResultsChartAbstractController implements Serializable {
 
-    protected ViewResultsClientChart viewResultsClientChart;
-    protected ViewResultsResourceChart viewResultsResourceChart;
+    protected transient ViewResultsClientChart viewResultsClientChart;
+    protected transient ViewResultsResourceChart viewResultsResourceChart;
 
     public void setViewResultsClientChart(ViewResultsClientChart viewResultsChart) {
         this.viewResultsClientChart = viewResultsChart;

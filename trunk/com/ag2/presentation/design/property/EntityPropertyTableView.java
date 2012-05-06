@@ -7,7 +7,6 @@ import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.Selectable;
-import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class EntityPropertyTableView extends TableView<EntityProperty> implements GraphNodesView, Serializable {
+public class EntityPropertyTableView extends TableView<EntityProperty> implements GraphNodesView {
 
     private NodeAdminAbstractController nodeAdminAbstractController;
     private LinkAdminAbstractController linkAdminAbstractController;

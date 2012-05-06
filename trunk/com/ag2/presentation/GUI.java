@@ -8,7 +8,6 @@ import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.Utils;
 import java.awt.Desktop;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -42,19 +41,22 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
-public class GUI extends Scene implements Serializable {
-
+public class GUI extends Scene 
+{
+    //Static object
+    private static GUI iguAG2;
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
-    private VBox vbLogos = createProjectsLogos();
-    private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();
+    private static Stage stage;
+   
+    private VBox vbLogos = createProjectsLogos();     
+    private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();         
     private ToggleGroup tgTools;
     private GridPane gpMapNavegation;
     private ExecutePane executePane;
     private ToggleButtonAg2 btnHand;
     private ToggleButtonAg2 btnClient = new ToggleButtonAg2(ActionTypeEmun.CLIENT);
     private ToggleButtonAg2 btnBroker = new ToggleButtonAg2(ActionTypeEmun.BROKER);
-    private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);
-    //  private ToggleButtonAg2 btnOBS_Switch = new ToggleButtonAg2(ActionTypeEmun.OBS_SWITCH);
+    private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);  
     private ToggleButtonAg2 btnHybridSwitch = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnResource = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
@@ -63,10 +65,9 @@ public class GUI extends Scene implements Serializable {
     private ScrollPane scpWorld;
     private ProgressIndicator progressIndicator;
     private boolean isPrincipalKeyPressed = false;
-    private transient  ActionTypeEmun beforeActionTypeEmun;
+    private ActionTypeEmun beforeActionTypeEmun;    
     private Cursor beforeEventCursor;
-    private PhosphosrusResults phosphosrusResults;
-    private static GUI iguAG2;
+    private PhosphosrusResults phosphosrusResults;    
     private Main main;
     private ToggleButtonAg2 btnSelection;
     private ToggleButtonAg2 btnPointSeparator;
@@ -81,13 +82,12 @@ public class GUI extends Scene implements Serializable {
     private Tab tabResultsHTML = new Tab();
     private Tab tabChartsClientResults  = new Tab();
     private Tab tabChartsrResourceResults  = new Tab();
-    private TabPane tabPane = new TabPane();   
-    
+    private TabPane tabPane = new TabPane();       
     private ChartsResultClient chartsResultClient;
     private ChartsResultResource chartsResultResource;
-    private TableView<String> tbwSimulationProperties = new TableView<String>();
-    private static Stage stage;
-    private transient ToolBar tobWindow;
+    private TableView<String> tbwSimulationProperties = new TableView<String>();   
+    private  ToolBar tobWindow;
+    
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
     private SplitPane splitPane;

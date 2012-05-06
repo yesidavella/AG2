@@ -28,4 +28,6 @@ public abstract class NodeCreationModel implements Serializable {
     }
 
     public abstract Entity createPhosphorusNode(String id);
+    
+    
 }

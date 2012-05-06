@@ -5,7 +5,6 @@
 package com.ag2.presentation.control;
 
 import com.ag2.util.Utils;
-import java.io.Serializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -23,7 +22,7 @@ import javafx.scene.text.FontWeight;
  *
  * @author Frank
  */
-public class ChartsResultResource implements ViewResultsResourceChart, Serializable {
+public class ChartsResultResource implements ViewResultsResourceChart {
 
     private transient Tab tab;
     private transient ScrollPane scrollPane;

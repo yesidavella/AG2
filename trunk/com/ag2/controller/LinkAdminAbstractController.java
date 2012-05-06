@@ -11,7 +11,7 @@ import java.util.HashMap;
 public abstract class LinkAdminAbstractController implements Serializable {
 
     protected ArrayList<LinkCreationAbstractModel> linkCreationAbstractModels;
-    protected EntityPropertyTableView entityPropertyTable;
+    protected transient EntityPropertyTableView entityPropertyTable;
     protected HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
 
     public LinkAdminAbstractController() {

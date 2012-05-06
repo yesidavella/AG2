@@ -5,6 +5,7 @@ import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.GUI;
+import com.ag2.presentation.Main;
 import com.ag2.presentation.design.property.EntityProperty;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -294,14 +295,15 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         nodeAdminAbstractControllers.add(nodeAdminAbstractController);
     }
 
-    private void writeObject(ObjectOutputStream objectOutputStream) {
+ 
+    private void writeObject(ObjectOutputStream stream) {
         try {
-            serializableComplete = false;
-            objectOutputStream.defaultWriteObject();
-
-            System.out.println("Write:" + " Grupo");
-        } catch (Exception e) {
-            e.printStackTrace();
+             serializableComplete = false;
+            stream.defaultWriteObject();
+            Main.countObject++;
+            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+        } catch (IOException ex) {
+            Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
