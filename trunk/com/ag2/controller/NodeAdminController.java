@@ -34,6 +34,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     public Entity createNode(GraphNode graphNode) {
 
         Entity newPhosphorusNode = null;
+        
         for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
 
             if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
@@ -49,12 +50,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
 
             if (newPhosphorusNode != null) {
-
                 addNodeMatchCouple(graphNode, newPhosphorusNode);
-
+                return newPhosphorusNode;
             }
         }
-        return newPhosphorusNode;
+        return null;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             for (GraphNode brokerGrahpNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
 
                 if (brokerGrahpNode instanceof BrokerGrahpNode) {
-                    EntityProperty entityProperty = new EntityProperty("RelationshipResouceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
+                    EntityProperty entityProperty = new EntityProperty("RelationshipResourceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
                     nodeProperties.add(entityProperty);
                     for (ServiceNode serviceNode : resource.getServiceNodes()) {
                         if (serviceNode.getID().equals(brokerGrahpNode.getOriginalName())) {
@@ -344,7 +344,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     capacity = cpu.getCpuCapacity();
                 }
                 resource.setCpuCount(Integer.parseInt(value), capacity);
-            } else if (id.contains("RelationshipResouceAndServiceNodo")) {
+            } else if (id.contains("RelationshipResourceAndServiceNodo")) {
                 String serviceNodeName = value.replace("_ON", "").replace("_OFF", "");
 
                 Set<GraphNode> graphNodes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet();

@@ -190,9 +190,6 @@ public class GraphArc implements Serializable {
                     nodeA.removeNodeListener(graphLink);
                     nodeB.removeNodeListener(graphLink);
 
-                    nodeA.setLinkCounter((short) (nodeA.getLinkCounter() - 1));
-                    nodeB.setLinkCounter((short) (nodeB.getLinkCounter() - 1));
-
                     for (GraphArc graphArc : graphLink.getGraphArcs()) {
                         graphArc.setDeleted(true);
                         graphArc.updateArcListeners();

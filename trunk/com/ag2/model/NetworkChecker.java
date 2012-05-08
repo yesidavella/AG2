@@ -1,7 +1,6 @@
 package com.ag2.model;
 
 import Grid.Entity;
-import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;

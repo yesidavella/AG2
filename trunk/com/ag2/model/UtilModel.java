@@ -101,8 +101,7 @@ public class UtilModel extends Util {
      * @param simulator
      * @return A new outputresource
      */
-    public static ResourceNode createOutputResource(
-            String id, GridSimulator simulator) {
+    public static ResourceNode createOutputResource(String id, GridSimulator simulator) {
         ResourceNode resource = new OutputResourceNode(id, simulator);
         simulator.register(resource);
         return resource;

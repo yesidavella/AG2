@@ -5,32 +5,30 @@ import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
 
-public class ResourceGraphNode extends GraphNode{
+public class ResourceGraphNode extends GraphNode {
 
-    private   static short nodeCounter = 0;
-    public ResourceGraphNode(GraphDesignGroup graphDesignGroup,NodeAdminAbstractController nodeAdminAbstractController,LinkAdminAbstractController linkAdminAbstractController) {
-        super(graphDesignGroup, "Cluster_"+(++nodeCounter),Utils.ABS_PATH_IMGS+"recurso_cursor_mapa.png", nodeAdminAbstractController,linkAdminAbstractController);
-        setHeight((short)67);
-        setWidth((short)49);
+    private static short nodeCounter = 0;
+
+    public ResourceGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController, LinkAdminAbstractController linkAdminAbstractController) {
+        super(graphDesignGroup, "Cluster_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "recurso_cursor_mapa.png", nodeAdminAbstractController, linkAdminAbstractController);
+        setHeight((short) 67);
+        setWidth((short) 49);
 
         lineBreakStep = 11;
     }
 
-    @Override
-    public boolean isEnableToCreateLInk(GraphNode graphNode) {
-        return (graphNode instanceof SwitchGraphNode) ;
-    }
-     private void readObject(ObjectInputStream inputStream)
-    {
-        try
-        {
-           inputStream.defaultReadObject();
-           nodeCounter++;
+    private void readObject(ObjectInputStream inputStream) {
+        try {
+            inputStream.defaultReadObject();
+            nodeCounter++;
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean isEnableToCreateLInk(GraphNode graphNode) {
+        return (graphNode instanceof SwitchGraphNode);
     }
 }
