@@ -6,6 +6,7 @@ import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.LinkCreationModel;
 import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.SimulationBase;
+import com.ag2.presentation.design.ClientGraphNode;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityProperty;
@@ -15,9 +16,6 @@ import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
 
 public class LinkAdminController extends LinkAdminAbstractController {
-
-  
-    
 
     @Override
     public void createLink(GraphLink graphLink) {
@@ -117,8 +115,8 @@ public class LinkAdminController extends LinkAdminAbstractController {
     @Override
     public void reCreatePhosphorousLinks() {
 
-        
-        HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+        HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
             createLink(graphLink);
         }
@@ -134,7 +132,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
     @Override
     public boolean removeLink(GraphLink graphLink) {
 
-        HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+        HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.get(graphLink);
 
         boolean canRemovePortsInNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
@@ -156,5 +154,45 @@ public class LinkAdminController extends LinkAdminAbstractController {
         boolean canRemoveOutPort = source.getOutPorts().remove(outPort);
 
         return canRemoveInPort && canRemoveOutPort;
+    }
+
+    @Override
+    public boolean canCreateLink(GraphNode sourceGraphNode, GraphNode targetGraphNode) {
+
+        HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+
+            GraphNode nodeInLinkA = graphLink.getGraphNodeA();
+            GraphNode nodeInLinkB = graphLink.getGraphNodeB();
+            
+            //Verifico q no haya un enlace entre este par de nodos
+            if ((sourceGraphNode.equals(nodeInLinkA) || sourceGraphNode.equals(nodeInLinkB))
+                    && (targetGraphNode.equals(nodeInLinkA) || targetGraphNode.equals(nodeInLinkB))) {
+                return false;
+            }
+
+            //Verifico q los nodos clientes no puedan tener mas de un enlace
+            boolean isInPreviousLinkSourceNode = clientNodeExistInPreviousLink(sourceGraphNode, nodeInLinkA, nodeInLinkB);
+            boolean isInPreviousLinkTargetNode = clientNodeExistInPreviousLink(targetGraphNode, nodeInLinkA, nodeInLinkB);
+            
+            if(isInPreviousLinkSourceNode || isInPreviousLinkTargetNode){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean clientNodeExistInPreviousLink(GraphNode graphNodeToCheck, GraphNode nodeInLinkA, GraphNode nodeInLinkB) {
+
+        if (graphNodeToCheck instanceof ClientGraphNode) {
+
+            if (graphNodeToCheck.equals(nodeInLinkA) || graphNodeToCheck.equals(nodeInLinkB)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

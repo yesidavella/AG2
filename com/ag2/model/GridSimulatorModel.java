@@ -58,9 +58,9 @@ public class GridSimulatorModel extends Grid.GridSimulator {
 
         reloadTime();
         percentage = masterClock.getTime() * 100 / simulationTime;
-        
+
         countEventToAdvise++;
-       
+
         if(countEventToAdvise>10)
         {
             countEventToAdvise=0;

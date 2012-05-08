@@ -27,7 +27,7 @@ public class ClientGraphNode extends GraphNode{
 
     @Override
     public boolean isEnableToCreateLInk(GraphNode graphNode) {
-        return (graphNode instanceof SwitchGraphNode) && getLinkCounter()<1;
+        return graphNode instanceof SwitchGraphNode;
     }
  
     private void readObject(ObjectInputStream inputStream)

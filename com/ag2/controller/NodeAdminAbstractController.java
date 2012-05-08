@@ -8,7 +8,6 @@ import com.ag2.presentation.design.GraphNode;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class NodeAdminAbstractController implements Serializable {
 

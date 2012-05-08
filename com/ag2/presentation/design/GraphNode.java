@@ -31,11 +31,10 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
- 
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(Utils.ABS_PATH_IMGS+"prohibido_enlace.png"));
-    public static boolean linkBegin = false;        
+
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(Utils.ABS_PATH_IMGS + "prohibido_enlace.png"));
+    public static boolean linkBegin = false;
     private static GraphNode wildcardNodeA = null;
-    
     protected transient Image image = null;
     private transient Line wildcardLink;
     private transient ImageView imageView;
@@ -43,7 +42,6 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient DropShadow dropShadow;
     protected transient VBox vBoxWrapper;
     private transient Group group;
-    
     private String name = null;
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
     private boolean deleted = false;
@@ -54,7 +52,6 @@ public abstract class GraphNode implements Selectable, Serializable {
     private LinkAdminAbstractController linkAdminAbstractController;
     private short height;
     private short width;
-    private short linkCounter = 0;
     private String originalName;
     protected short lineBreakStep;
     private short initialHeight = 0;
@@ -193,14 +190,11 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                     if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
 
-                        if (graphNode.isEnableToCreateLInk(wildcardNodeA)) {
+                        if (wildcardNodeA.isEnableToCreateLInk(graphNode) && linkAdminAbstractController.canCreateLink(wildcardNodeA,graphNode)) {
                             graphDesignGroup.remove(wildcardLink);
 
                             GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
                             graphLink.addInitialGraphArc();
-
-                            wildcardNodeA.setLinkCounter((short) (wildcardNodeA.getLinkCounter() + 1));
-                            graphNode.setLinkCounter((short) (graphNode.getLinkCounter() + 1));
 
                             wildcardNodeA.getGroup().toFront();
                             graphNode.getGroup().toFront();
@@ -296,7 +290,6 @@ public abstract class GraphNode implements Selectable, Serializable {
                     graphDesignGroup.remove(graphNode);
                     graphDesignGroup.deleteNodeFromGoList(graphNode);
                     nodeAdminAbstractController.removeNode(graphNode);
-
                 }
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
@@ -391,8 +384,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         try {
             inputStream.defaultReadObject();
             System.out.println("read :" + name);
-            if (graphDesignGroup.isSerializableComplete())
-            {
+            if (graphDesignGroup.isSerializableComplete()) {
                 initTransientObjects();
                 getGroup().setLayoutX(getLayoutX());
                 getGroup().setLayoutY(getLayoutY());
@@ -426,19 +418,13 @@ public abstract class GraphNode implements Selectable, Serializable {
         this.width = ancho;
     }
 //FIXME:Eliminar este y dejar el generico y mira q enrutador no descuadre
+
     private String formatearNombre(String nombre) {
 
         if (nombre.startsWith("Enrutador")) {
             return nombre.substring(0, "Enrutador".length()) + "\n" + nombre.substring("Enrutador".length() + 1, nombre.length());
         }
         return nombre;
-    }
-    public short getLinkCounter() {
-        return linkCounter;
-    }
-
-    public void setLinkCounter(short linkCounter) {
-        this.linkCounter = linkCounter;
     }
 
     public boolean isLinkBegin() {
@@ -510,7 +496,6 @@ public abstract class GraphNode implements Selectable, Serializable {
         IMG_VW_DENY_LINK.setLayoutX(getLayoutX() + getWidth() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
         IMG_VW_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getHeight() - (getInitialHeight() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
 
-
         graphDesignGroup.add(IMG_VW_DENY_LINK);
 
         FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
@@ -528,7 +513,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public abstract boolean isEnableToCreateLInk(GraphNode graphNode);
     
-     private void writeObject(ObjectOutputStream stream) {
+    private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();
             Main.countObject++;

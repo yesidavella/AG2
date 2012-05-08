@@ -6,7 +6,6 @@ import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import java.util.HashMap;
 
-
 public abstract class MatchCoupleObjectContainer {
     
     private static HashMap<GraphNode,Entity> nodeMatchCoupleObjectContainer;
@@ -35,6 +34,5 @@ public abstract class MatchCoupleObjectContainer {
     public static void setNodeMatchCoupleObjectContainer(HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer) {
         MatchCoupleObjectContainer.nodeMatchCoupleObjectContainer = nodeMatchCoupleObjectContainer;
     }
-    
     
 }
