@@ -21,14 +21,18 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private ResultsAbstractController resultsAbstractController;
 
     public GridSimulatorModel() {
+        
+        initRoutingObjLoadingConfigFile();
 
+        simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
+    }
+
+    private void initRoutingObjLoadingConfigFile() {
         if (PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)) {
             super.setRouting(new RoutingViaJung(this));
         } else {
             super.setRouting(new ShortesPathRouting(this));
         }
-
-        simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
     }
 
     public void reloadTime() {
@@ -77,12 +81,7 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
-
-            if (PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)) {
-                super.setRouting(new RoutingViaJung(this));
-            } else {
-                super.setRouting(new ShortesPathRouting(this));
-            }
+            initRoutingObjLoadingConfigFile();
 
         } catch (Exception e) {
             e.printStackTrace();
