@@ -16,7 +16,6 @@ import trs.core.NetworkRouting;
 
 public class NetworkChecker {
 
-    
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 

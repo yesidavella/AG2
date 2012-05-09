@@ -108,8 +108,6 @@ public class SimulationBase implements Runnable, Serializable {
         
     }
 
-
-
     public void initNetwork() {
         simulationInstance.stopEvent = false;
         gridSimulatorModel.getRouting().clear();

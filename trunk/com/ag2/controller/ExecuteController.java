@@ -1,13 +1,10 @@
 package com.ag2.controller;
 
 import Grid.Entity;
-import Grid.GridSimulator;
 import com.ag2.model.NetworkChecker;
 import com.ag2.model.SimulationBase;
 import com.ag2.presentation.NetworkErrorsReporter;
 import com.ag2.presentation.design.GraphNode;
-import java.util.HashMap;
-
 import java.util.Iterator;
 import java.util.Map;
 import simbase.SimulationInstance;
