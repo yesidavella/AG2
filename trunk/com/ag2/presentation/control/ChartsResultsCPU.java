@@ -49,7 +49,7 @@ public class ChartsResultsCPU {
     private DataChartResourceController dataChartResourceController;
 //    private boolean loadResources = true;
     private int countClients = 0;
-    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
+    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage;
     private int countPlays = 1;
 
     public ChartsResultsCPU(Tab tab) {
@@ -76,8 +76,9 @@ public class ChartsResultsCPU {
         yAxis.setLabel("Porcentaje de ocupación ");
         countPlays++;
 
-
- 
+        relationResourceSerie = new  HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
+        relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
+        
         for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode instanceof ResourceGraphNode) {
                 XYChart.Series<Number, Number> serie = new XYChart.Series<Number, Number>();

@@ -44,11 +44,11 @@ public class ChartsResultsBuffer {
     private transient Timeline time = new Timeline();
     private ScrollPane scrollPane;
     private LineChart<Number, Number> lineChart;    
-    private HashMap<ResourceGraphNode, XYChart.Series<Number, Number>> relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
+    private HashMap<ResourceGraphNode, XYChart.Series<Number, Number>> relationResourceSerie;
     private DataChartResourceController dataChartResourceController;
 //    private boolean loadResources = true;
     private int countClients = 0;
-    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
+    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage;
     private int countPlays = 1;
 
     public ChartsResultsBuffer(Tab tab) {
@@ -74,8 +74,8 @@ public class ChartsResultsBuffer {
         xAxis.setLabel("Tiempo de simulacion");
         yAxis.setLabel("Trabajos en el buffer ");
         countPlays++;
-
-
+       relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
+       relationResourceDataAverage =  new HashMap<ResourceGraphNode, UtilSerieAverage>();
 
         for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode instanceof ResourceGraphNode) {

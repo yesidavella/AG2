@@ -6,6 +6,7 @@ import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
+import Grid.Nodes.AbstractServiceNode;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
@@ -17,10 +18,7 @@ import com.ag2.presentation.design.property.NodeRelationProperty;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -34,7 +32,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     public Entity createNode(GraphNode graphNode) {
 
         Entity newPhosphorusNode = null;
-        
+
         for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
 
             if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
@@ -493,8 +491,18 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     @Override
     public void removeNode(GraphNode nodoGrafico) {
+
         Entity phosNodeRemoved = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().remove(nodoGrafico);
         SimulationBase.getInstance().getGridSimulatorModel().unRegister(phosNodeRemoved);
+
+        if (nodoGrafico instanceof ResourceGraphNode) {
+
+            List<ServiceNode> serviceNodes = ((ResourceNode) phosNodeRemoved).getServiceNodes();
+
+            for (ServiceNode serviceNode : serviceNodes) {
+                ((AbstractServiceNode) serviceNode).getResources().remove((ResourceNode)phosNodeRemoved);
+            }
+        }
     }
 
     @Override
@@ -537,8 +545,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
         }
     }
-    
-     private void writeObject(ObjectOutputStream stream) {
+
+    private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();
             Main.countObject++;
