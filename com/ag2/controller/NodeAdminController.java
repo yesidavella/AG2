@@ -500,9 +500,20 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             List<ServiceNode> serviceNodes = ((ResourceNode) phosNodeRemoved).getServiceNodes();
 
             for (ServiceNode serviceNode : serviceNodes) {
-                ((AbstractServiceNode) serviceNode).getResources().remove((ResourceNode)phosNodeRemoved);
+                ((AbstractServiceNode) serviceNode).getResources().remove((ResourceNode) phosNodeRemoved);
             }
         }
+        
+       GUI.getInstance().getEntityPropertyTable().clearData();
+        if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null)
+        {                       
+            GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);          
+             GUI.getInstance().getGraphDesignGroup().getSelectable().select(true);
+            
+        }
+       
+        
+        
     }
 
     @Override
