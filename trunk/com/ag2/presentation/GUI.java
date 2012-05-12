@@ -82,7 +82,10 @@ public class GUI extends Scene
     private Tab tabResultsHTML = new Tab();
     private Tab tabChartsClientResults  = new Tab();
     private Tab tabChartsrResourceResults  = new Tab();
-    private TabPane tabPane = new TabPane();       
+    private Tab tabResultsResource  = new Tab();
+    
+    private TabPane tbMain = new TabPane();       
+    private TabPane tbResultsResource = new TabPane();  
     private ChartsResultClient chartsResultClient;
     private ChartsResultResource chartsResultResource;
     private TableView<String> tbwSimulationProperties = new TableView<String>();   
@@ -202,7 +205,7 @@ public class GUI extends Scene
         setSplitPaneAnimation();
 
         createTabs();
-        brpRoot.setCenter(tabPane);
+        brpRoot.setCenter(tbMain);
     }
 
     private void setSplitPaneAnimation() {
@@ -709,6 +712,7 @@ public class GUI extends Scene
         tabChartsClientResults.setText("Graficos de Clientes");
         tabChartsClientResults.setClosable(false);
         
+        
         tabChartsrResourceResults.setText("Graficos de recursos");
         tabChartsrResourceResults.setClosable(false);
         
@@ -717,6 +721,9 @@ public class GUI extends Scene
         
         tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
+        
+        tabResultsResource.setText(" Graficos de  recurso");
+        tabResultsResource.setClosable(false);
         
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
@@ -736,8 +743,12 @@ public class GUI extends Scene
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
         
+        tbResultsResource.setSide(Side.LEFT);
+        tbResultsResource.getTabs().addAll( tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
+        tabResultsResource.setContent(tbResultsResource);
+     
+        tbMain.getTabs().addAll(tabSimulation );
         
-        tabPane.getTabs().addAll(tabSimulation, tabChartsClientResults  ,tabChartsrResourceResults,tabChartsResourceCPU, tabChartsResourceBuffer);
     }
 
     private ScrollPane createRightDesign() {
@@ -1154,14 +1165,16 @@ public class GUI extends Scene
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
-        if (!tabPane.getTabs().contains(tabResultsHTML)) {
-            tabPane.getTabs().addAll(tabResultsHTML, tabResults);
+        if (!tbMain.getTabs().contains(tabResults)) 
+        {
+             tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource ,tabChartsClientResults, tabResults);
+            
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
         chartsResultClient.play();
         chartsResultResource.play();
-        tabPane.getSelectionModel().select(tabResults);
+        tbMain.getSelectionModel().select(tabResults);
 
     }
 
