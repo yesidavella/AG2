@@ -79,6 +79,17 @@ Otros problemas
     -Cuando esta la manito de mover y se pasa por un enlace cambia el imageCursor(yesid)------------------------------------------ (Pendiente)
 
 
+
+ - Organizar los resultados totales. (yesid)
+ - crear charts del broker y de enrutador. (los  controladores y las vista ahi reresitraslos en el main y el simulationBase) (yesid)
+ - Poner el doc el nuevo de costo del buffer y porogramarlo. (Franklin)
+ - refrescar las propiedades del nodo selecionado cuando se elimina otro. (Franklin)
+ - sacar prodios de todos los valroes y tomar extremsos pra graficar en (chart cpu y buffer) (Franklin)
+
+
 #####  Cambios despues de entrega de documento  ###############################################################################################################
 
  - Hacer algo interesante con los logos. (Franklin)
+ - validar y ordenar los inputs de las propiedades (Yesid)
+
+
