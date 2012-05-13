@@ -89,7 +89,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double CPU_libre = 0;
         double CPU_totales;
         double d;
-        double f;
+        double s;
         double bufferBusy; 
         double bufferFree; 
         double z = 1;
@@ -120,10 +120,10 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         Cproc = jobFlops / (Acpu / CPU_libre);
         d = ( 40/100) * (1 - (CPU_libre / CPU_totales));
         
-        f = ( 20/100)* (1 - (bufferFree / maxBuffer));
+        s = ( 20/100)* (1 - (bufferFree / maxBuffer));
         
         
-        Tproc = Cproc + (d * Cproc) + (f* Cproc);
+        Tproc = Cproc + (d * Cproc) + (s* Cproc);
 
         return z * Tproc;
 
