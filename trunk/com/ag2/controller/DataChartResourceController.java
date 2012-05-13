@@ -24,47 +24,62 @@ import java.util.logging.Logger;
  */
 public class DataChartResourceController extends DataChartAbstractController {
 
-   
-    private DecimalFormat decimalFormat = new DecimalFormat("###################.###");
+    private DecimalFormat decimalFormat = new DecimalFormat("#.######");
     private int countCPU = 0;
     private double capacityCPU = 0;
     private int maxQueueSize;
+    private HashMap<GraphNode, Double> nodeTimeCPU = new HashMap<GraphNode, Double>();
+    private HashMap<GraphNode, Double> nodeTimeBuffer = new HashMap<GraphNode, Double>();
 
     @Override
-    public void loadDataChartResourceCPU(GraphNode graphNode) {
-        ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
-        List<CPU> cpuSet = resourceNode.getCpuSet();
+    public boolean loadDataChartResourceCPU(GraphNode graphNode) {
+        AbstractResourceNode resourceNode = (AbstractResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
-
-        double totalCPU = cpuSet.size();
-        double countBusyCPU = 0;
-
-        for (CPU cpu : cpuSet) {
-            if (cpu.isBusy()) {
-                countBusyCPU++;
-            }
-        }
 
         try {
             time = decimalFormat.parse(String.valueOf(100 * resourceNode.getCurrentTime().getTime() / PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME))).doubleValue();
+            if (nodeTimeCPU.containsKey(graphNode)) {
+                if (nodeTimeCPU.get(graphNode) != time) {
+                    nodeTimeCPU.put(graphNode, time);
+                } else {
+                    return false;
+                }
+            } else {
+                nodeTimeCPU.put(graphNode, time);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(DataChartResourceController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        value1 = Math.round(100 * (countBusyCPU / totalCPU));
+        value1 = resourceNode.getAverageCPU() * 100;
+
+        return true;
     }
 
     @Override
-    public void loadDataChartResourceBuffer(GraphNode graphNode) {
+    public boolean loadDataChartResourceBuffer(GraphNode graphNode) {
         AbstractResourceNode abstractResourceNode = (AbstractResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
         ResourceNode resourceNode = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
-        value1 = abstractResourceNode.getQueue().size();
-//        value2 = resourceNode.getMaxQueueSize();
-        try {
+        
+         try {
             time = decimalFormat.parse(String.valueOf(100 * resourceNode.getCurrentTime().getTime() / PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME))).doubleValue();
+            if (nodeTimeBuffer.containsKey(graphNode)) {
+                if (nodeTimeBuffer.get(graphNode) != time) {
+                    nodeTimeBuffer.put(graphNode, time);
+                } else {
+                    return false;
+                }
+            } else {
+                nodeTimeBuffer.put(graphNode, time);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(DataChartResourceController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }               
+        
+        value1 = abstractResourceNode.getAverageBuffer();
+        
+        return true;
+        
     }
 
     public void loadInfoCPUResouce(ResourceGraphNode graphNode) {

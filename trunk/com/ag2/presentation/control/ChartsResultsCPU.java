@@ -44,12 +44,11 @@ public class ChartsResultsCPU {
     private VBox vBox;
     private transient Timeline time = new Timeline();
     private ScrollPane scrollPane;
-    private LineChart<Number, Number> lineChart;    
+    private LineChart<Number, Number> lineChart;
     private HashMap<ResourceGraphNode, XYChart.Series<Number, Number>> relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
     private DataChartResourceController dataChartResourceController;
 //    private boolean loadResources = true;
     private int countClients = 0;
-    private HashMap<ResourceGraphNode, UtilSerieAverage> relationResourceDataAverage;
     private int countPlays = 1;
 
     public ChartsResultsCPU(Tab tab) {
@@ -76,9 +75,9 @@ public class ChartsResultsCPU {
         yAxis.setLabel("Porcentaje de ocupación ");
         countPlays++;
 
-        relationResourceSerie = new  HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
-        relationResourceDataAverage = new HashMap<ResourceGraphNode, UtilSerieAverage>();
-        
+        relationResourceSerie = new HashMap<ResourceGraphNode, XYChart.Series<Number, Number>>();
+
+
         for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode instanceof ResourceGraphNode) {
                 XYChart.Series<Number, Number> serie = new XYChart.Series<Number, Number>();
@@ -87,7 +86,7 @@ public class ChartsResultsCPU {
                 lineChart.getData().addAll(serie);
 
                 relationResourceSerie.put((ResourceGraphNode) graphNode, serie);
-                relationResourceDataAverage.put((ResourceGraphNode) graphNode, new UtilSerieAverage());
+
             }
             if (graphNode instanceof ClientGraphNode) {
                 countClients++;
@@ -95,35 +94,22 @@ public class ChartsResultsCPU {
         }
 
 
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
 
 
-                for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
-
-                    dataChartResourceController.loadDataChartResourceCPU(resourceGraphNode);
-                    UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
-
-                    if (dataChartResourceController.getTime() != 0) {
-                        utilSerieAverage.countAverage++;
-                        utilSerieAverage.timeAverage += dataChartResourceController.getTime();
-                        utilSerieAverage.valueAverage += dataChartResourceController.getValue1();
-                        if (utilSerieAverage.countAverage >= 5 * countClients) {
-
+                for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) 
+                {
+                    if (dataChartResourceController.loadDataChartResourceCPU(resourceGraphNode)) 
+                    {
+                        if(dataChartResourceController.getTime()>0)
+                        {
                             XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
-                            serie.getData().add(new XYChart.Data<Number, Number>(utilSerieAverage.timeAverage / utilSerieAverage.countAverage, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
-                            utilSerieAverage.timeAverage = 0;
-                            utilSerieAverage.valueAverage = 0;
-                            utilSerieAverage.countAverage = 0;
-                            utilSerieAverage.lastData = true;
-                        } else {
-                            utilSerieAverage.lastData = false;
+                            serie.getData().add(new XYChart.Data<Number, Number>(dataChartResourceController.getTime(), dataChartResourceController.getValue1()));
                         }
-
                     }
-
                 }
             }
         });
@@ -225,51 +211,6 @@ public class ChartsResultsCPU {
     public void stop() {
         time.stop();
 
-        for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
 
-            UtilSerieAverage utilSerieAverage = relationResourceDataAverage.get(resourceGraphNode);
-            XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
-            if (!utilSerieAverage.lastData) {
-                serie.getData().add(new XYChart.Data<Number, Number>(100, utilSerieAverage.valueAverage / utilSerieAverage.countAverage));
-            } else {
-                double repeatValue = serie.getData().get(serie.getData().size() - 1).getYValue().doubleValue();
-                serie.getData().add(new XYChart.Data<Number, Number>(100, repeatValue));
-            }
-
-        }
     }
-
-    public static class UtilSerieAverage {
-
-        private int countAverage = 0;
-        private double timeAverage = 0;
-        private double valueAverage = 0;
-        private boolean lastData = true;
-
-        public int getCountAverage() {
-            return countAverage;
-        }
-
-        public void setCountAverage(int countAverage) {
-            this.countAverage = countAverage;
-        }
-
-        public double getTimeAverage() {
-            return timeAverage;
-        }
-
-        public void setTimeAverage(double timeAverage) {
-            this.timeAverage = timeAverage;
-        }
-
-        public double getValueAverage() {
-            return valueAverage;
-        }
-
-        public void setValueAverage(double valueAverage) {
-            this.valueAverage = valueAverage;
-        }
-    }
-    
-    
 }
