@@ -3,6 +3,7 @@ package com.ag2.model;
 import Grid.Interfaces.CPU;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ResourceSelector;
+import Grid.Nodes.AbstractResourceNode;
 import com.ag2.presentation.Main;
 import com.ag2.presentation.design.GraphArc;
 import java.io.IOException;
@@ -26,17 +27,25 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         // this.resources = resources;
 
         double maxCPUCount = 0;
-
         double maxCPUCountSwap = 0;
+        double maxBuffer = 0;
+        double maxBufferSwap = 0;
 
-        for (ResourceNode resourceNode : resources) {
+        for (ResourceNode resourceNode : resources) 
+        {
             maxCPUCountSwap = resourceNode.getCpuCount();
-            if (maxCPUCountSwap > maxCPUCount) {
+            if (maxCPUCountSwap > maxCPUCount) 
+            {
                 maxCPUCount = maxCPUCountSwap;
+            }
+            maxBufferSwap = resourceNode.getMaxQueueSize();
+            if(maxBufferSwap>maxBuffer)
+            {
+                maxBuffer = maxBufferSwap;
             }
         }
 
-        // System.out.println(" Recurso max cpu "+maxCPUCount);
+//         System.out.println(" Recurso max cpu "+maxBuffer);
 
 
 
@@ -47,8 +56,8 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
 
             for (ResourceNode resourceNode : resources) {
-                double costCurrent = getCostProcByResource(resourceNode, jobFlops, maxCPUCount);
-                //     System.out.println(" recuroso opcion "+resourceNode+" al costo "+costCurrent);
+                double costCurrent = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
+                    
 
                 if(swithOrder)
                 {
@@ -73,13 +82,16 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         return resourceNodeSelected;
     }
 
-    public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount) {
+    public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer ) {
         double Tproc;
         double Cproc;
         double Acpu;
         double CPU_libre = 0;
         double CPU_totales;
         double d;
+        double f;
+        double bufferBusy; 
+        double bufferFree; 
         double z = 1;
         /////////////
         double capacityCPU;
@@ -99,14 +111,19 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         if (CPU_libre == 0) {
             return Double.MAX_VALUE;
         }
-
+        
+        bufferBusy = ((AbstractResourceNode)resourceNode).getQueue().size();
+        bufferFree =  resourceNode.getMaxQueueSize() - bufferBusy;
         Acpu = CPU_libre * capacityCPU;
         CPU_totales = maxCPUCount;
 
         Cproc = jobFlops / (Acpu / CPU_libre);
-        d = (1 / 3) * (1 - (CPU_libre / CPU_totales));
-
-        Tproc = Cproc + (d * Cproc);
+        d = ( 40/100) * (1 - (CPU_libre / CPU_totales));
+        
+        f = ( 20/100)* (1 - (bufferFree / maxBuffer));
+        
+        
+        Tproc = Cproc + (d * Cproc) + (f* Cproc);
 
         return z * Tproc;
 
