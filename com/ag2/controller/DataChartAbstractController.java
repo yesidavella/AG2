@@ -17,8 +17,8 @@ public abstract class DataChartAbstractController
     protected double value1; 
     protected double value2; 
     
-    public abstract void loadDataChartResourceCPU(GraphNode graphNode);
-    public abstract void loadDataChartResourceBuffer(GraphNode graphNode);
+    public abstract boolean loadDataChartResourceCPU(GraphNode graphNode);
+    public abstract boolean loadDataChartResourceBuffer(GraphNode graphNode);
 
     public double getTime() {
         return time;

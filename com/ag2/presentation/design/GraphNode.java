@@ -82,7 +82,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         lblName = new Label(formatearNombre(name));
         lblName.setTextFill(Color.BLACK);
         lblName.setTextAlignment(TextAlignment.CENTER);
-        lblName.setStyle("-fx-font: bold 8pt 'Arial'; -fx-background-color:#CCD4EC");
+        lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
 
         wildcardLink = new Line();
         vBoxWrapper = new VBox();
