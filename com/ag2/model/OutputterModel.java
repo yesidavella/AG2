@@ -66,7 +66,7 @@ public class OutputterModel extends Outputter {
                 jobNoSent,
                 resultReceive,
                 relativeRequestSent,
-                relativeJobSent * 100,
+                relativeJobSent,
                 relativeReceiveResult_jobSent,
                 relativeReceiveResult_requsetSent,
                 relativeReceiveresult_requestCreated);

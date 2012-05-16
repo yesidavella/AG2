@@ -429,21 +429,21 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
 
         time.stop();
 
-        PhosphorusPropertySet cpp = new PhosphorusPropertySet();
-        cpp.setProperty1(Utils.findGraphicalName(clientName));
-        cpp.setProperty2(intFormat.format(requestCreated));
-        cpp.setProperty3(intFormat.format(requestSent));
-        cpp.setProperty4(intFormat.format(requestNoSent));
-        cpp.setProperty5(intFormat.format(jobSent));
-        cpp.setProperty6(intFormat.format(jobNoSent));
-        cpp.setProperty7(intFormat.format(resultReceive));
-        cpp.setProperty8(percentFormat.format(relativeRequestSent));
-        cpp.setProperty9(percentFormat.format(relativeJobSent));
-        cpp.setProperty10(percentFormat.format(relativeReceiveResult_jobSent));
-        cpp.setProperty11(percentFormat.format(relativeReceiveResult_requsetSent));
-        cpp.setProperty12(percentFormat.format(relativeReceiveresult_requestCreated));
+        PhosphorusPropertySet clientsPropSet = new PhosphorusPropertySet();
+        clientsPropSet.setProperty1(Utils.findGraphicalName(clientName));
+        clientsPropSet.setProperty2(intFormat.format(requestCreated));
+        clientsPropSet.setProperty3(intFormat.format(requestSent));
+        clientsPropSet.setProperty4(intFormat.format(requestNoSent));
+        clientsPropSet.setProperty5(intFormat.format(jobSent));
+        clientsPropSet.setProperty6(intFormat.format(jobNoSent));
+        clientsPropSet.setProperty7(intFormat.format(resultReceive));
+        clientsPropSet.setProperty8(percentFormat.format(relativeRequestSent));
+        clientsPropSet.setProperty9(percentFormat.format(relativeJobSent));
+        clientsPropSet.setProperty10(percentFormat.format(relativeReceiveResult_jobSent));
+        clientsPropSet.setProperty11(percentFormat.format(relativeReceiveResult_requsetSent));
+        clientsPropSet.setProperty12(percentFormat.format(relativeReceiveresult_requestCreated));
 
-        dataClient.add(cpp);
+        dataClient.add(clientsPropSet);
     }
 
     @Override
@@ -459,19 +459,19 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
             double tcVecesFallasNoEspacio,
             double relativeVecesFallasNoEspacio) {
 
-        PhosphorusPropertySet cpp = new PhosphorusPropertySet();
-        cpp.setProperty1(Utils.findGraphicalName(resourceName));
-        cpp.setProperty2(intFormat.format(tcTrabajosRecibidos));
-        cpp.setProperty3(intFormat.format(tcTrabajosEnviados));
-        cpp.setProperty4(percentFormat.format(relativeTrabajosEnviados));
-        cpp.setProperty5(intFormat.format(tcFallasEnviadas));
-        cpp.setProperty6(percentFormat.format(relativeFallasEnviadas));
-        cpp.setProperty7(intFormat.format(tcTimeNoCPUFree));
-        cpp.setProperty8(percentFormat.format(tcRelativeTimeNoCPUFree));
-        cpp.setProperty9(intFormat.format(tcVecesFallasNoEspacio));
-        cpp.setProperty10(percentFormat.format(relativeVecesFallasNoEspacio));
+        PhosphorusPropertySet resourcesPropSet = new PhosphorusPropertySet();
+        resourcesPropSet.setProperty1(Utils.findGraphicalName(resourceName));
+        resourcesPropSet.setProperty2(intFormat.format(tcTrabajosRecibidos));
+        resourcesPropSet.setProperty3(intFormat.format(tcTrabajosEnviados));
+        resourcesPropSet.setProperty4(percentFormat.format(relativeTrabajosEnviados));
+        resourcesPropSet.setProperty5(intFormat.format(tcFallasEnviadas));
+        resourcesPropSet.setProperty6(percentFormat.format(relativeFallasEnviadas));
+        resourcesPropSet.setProperty7(intFormat.format(tcTimeNoCPUFree));
+        resourcesPropSet.setProperty8(percentFormat.format(tcRelativeTimeNoCPUFree));
+        resourcesPropSet.setProperty9(intFormat.format(tcVecesFallasNoEspacio));
+        resourcesPropSet.setProperty10(percentFormat.format(relativeVecesFallasNoEspacio));
         
-        dataResource.add(cpp);
+        dataResource.add(resourcesPropSet);
     }
 
     @Override
@@ -488,20 +488,20 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
             double relDropReq,
             double reltotDrop) {
 
-        PhosphorusPropertySet cpp = new PhosphorusPropertySet();
-        cpp.setProperty1(Utils.findGraphicalName(tcConmutador));
-        cpp.setProperty2(intFormat.format(tcMensajesTrabajoConmutados));
-        cpp.setProperty3(intFormat.format(tcMensajesTrabajoNoConmutados));
-        cpp.setProperty4(intFormat.format(tcMensajesResultadosConmutados));
-        cpp.setProperty5(intFormat.format(tcMensajesResultadosNoConmutados));
-        cpp.setProperty6(intFormat.format(tcSwitchedJobRequest));
-        cpp.setProperty7(intFormat.format(tcNonSwitchedJobRequest));
-        cpp.setProperty8(percentFormat.format(relDropJob));
-        cpp.setProperty9(percentFormat.format(relDropRes));
-        cpp.setProperty10(percentFormat.format(relDropReq));
-        cpp.setProperty11(percentFormat.format(reltotDrop));
+        PhosphorusPropertySet switchesPropSet = new PhosphorusPropertySet();
+        switchesPropSet.setProperty1(Utils.findGraphicalName(tcConmutador));
+        switchesPropSet.setProperty2(intFormat.format(tcMensajesTrabajoConmutados));
+        switchesPropSet.setProperty3(intFormat.format(tcMensajesTrabajoNoConmutados));
+        switchesPropSet.setProperty4(intFormat.format(tcMensajesResultadosConmutados));
+        switchesPropSet.setProperty5(intFormat.format(tcMensajesResultadosNoConmutados));
+        switchesPropSet.setProperty6(intFormat.format(tcSwitchedJobRequest));
+        switchesPropSet.setProperty7(intFormat.format(tcNonSwitchedJobRequest));
+        switchesPropSet.setProperty8(percentFormat.format(relDropJob));
+        switchesPropSet.setProperty9(percentFormat.format(relDropRes));
+        switchesPropSet.setProperty10(percentFormat.format(relDropReq));
+        switchesPropSet.setProperty11(percentFormat.format(reltotDrop));
 
-        dataSwitch.add(cpp);
+        dataSwitch.add(switchesPropSet);
     }
 
     @Override
@@ -528,16 +528,16 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
             double sendingFailed,
             double relativeAckSent) {
         
-        PhosphorusPropertySet cpp = new PhosphorusPropertySet();
-        cpp.setProperty1(Utils.findGraphicalName(brokerName));
-        cpp.setProperty2(intFormat.format(registrationReceived));
-        cpp.setProperty3(intFormat.format(reqRecieved));
-        cpp.setProperty4(intFormat.format(noFreeResource));
-        cpp.setProperty5(intFormat.format(reqAckSent));
-        cpp.setProperty6(intFormat.format(sendingFailed));
-        cpp.setProperty7(percentFormat.format(relativeAckSent));
+        PhosphorusPropertySet brokersPropSet = new PhosphorusPropertySet();
+        brokersPropSet.setProperty1(Utils.findGraphicalName(brokerName));
+        brokersPropSet.setProperty2(intFormat.format(registrationReceived));
+        brokersPropSet.setProperty3(intFormat.format(reqRecieved));
+        brokersPropSet.setProperty4(intFormat.format(noFreeResource));
+        brokersPropSet.setProperty5(intFormat.format(reqAckSent));
+        brokersPropSet.setProperty6(intFormat.format(sendingFailed));
+        brokersPropSet.setProperty7(percentFormat.format(relativeAckSent));
 
-        dataBroker.add(cpp);
+        dataBroker.add(brokersPropSet);
     }
 
     private void createtvBrokerResults() {
@@ -610,9 +610,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     }
 
     /**************************************************************************/
-    /********************Class to show the results in**************************/
-    /**********************the tablesviews of results**************************/
-    
+    /********************Static class to show the results in**************************/
+    /**********************the tablesview of results***************************/
+    /**
+     * This class shows the results in the tablesview of results.
+     */
     public static class PhosphorusPropertySet {
 
         private String property1;
