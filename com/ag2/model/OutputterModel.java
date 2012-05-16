@@ -9,14 +9,12 @@ import Grid.Outputter;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import com.ag2.controller.ResultsChartAbstractController;
-import java.text.DecimalFormat;
 import simbase.Stats.SimBaseStats;
 
 public class OutputterModel extends Outputter {
 
-    private ResultsAbstractController resultsAbstractController;
+    private ResultsAbstractController resultsController;
     private ResultsChartAbstractController chartAbstractController;
-    DecimalFormat decimalFormat = new DecimalFormat("###############.###");
 
     public OutputterModel(GridSimulator gridSimulator) {
         super(gridSimulator);
@@ -24,7 +22,7 @@ public class OutputterModel extends Outputter {
     }
 
     public void setResultsAbstractController(ResultsAbstractController resultsAbstractController) {
-        this.resultsAbstractController = resultsAbstractController;
+        this.resultsController = resultsAbstractController;
     }
 
     public void setChartAbstractController(ResultsChartAbstractController chartAbstractController) {
@@ -33,7 +31,6 @@ public class OutputterModel extends Outputter {
 
     @Override
     public void printClient(ClientNode client) {
-
 
         double requestCreated = sim.getStat(client, SimBaseStats.Stat.CLIENT_CREATED_REQ);
         double requestSent = sim.getStat(client, SimBaseStats.Stat.CLIENT_REQ_SENT);
@@ -60,19 +57,19 @@ public class OutputterModel extends Outputter {
             relativeReceiveResult_jobSent = resultReceive / jobSent;
         }
 
-        resultsAbstractController.addClientResult(
+        resultsController.addClientResult(
                 client.toString(),
-                "  " + requestCreated,
-                "  " + requestSent,
-                "  " + requestNoSent,
-                "  " + jobSent,
-                "  " + jobNoSent,
-                "  " +resultReceive,
-                "  " + decimalFormat.format(relativeRequestSent * 100) + "%",
-                "  " + decimalFormat.format(relativeJobSent * 100) + "%",
-                "  " + decimalFormat.format(relativeReceiveResult_jobSent * 100) + "%",
-                "  " + decimalFormat.format(relativeReceiveResult_requsetSent * 100) + "%",
-                "  " + decimalFormat.format(relativeReceiveresult_requestCreated * 100) + "%");
+                requestCreated,
+                requestSent,
+                requestNoSent,
+                jobSent,
+                jobNoSent,
+                resultReceive,
+                relativeRequestSent,
+                relativeJobSent * 100,
+                relativeReceiveResult_jobSent,
+                relativeReceiveResult_requsetSent,
+                relativeReceiveresult_requestCreated);
 
         chartAbstractController.createClientResult(client.toString(), requestCreated,  requestSent,   jobSent, resultReceive);
     }
@@ -113,17 +110,17 @@ public class OutputterModel extends Outputter {
         }
 
         chartAbstractController.createResourceResult(resourceNode.toString(), recive, sent);
-        resultsAbstractController.addResourceResult(
+        resultsController.addResourceResult(
                 resourceNode.toString(),
-                " " + recive,
-                " " + sent,
-                " " + decimalFormat.format(relativeSent * 100) + "%",
-                " " + sentFall,
-                " " + decimalFormat.format(relativeSentFall * 100) + "%",
-                " " + decimalFormat.format(timeNoCPUFreePerCPU),
-                " " + decimalFormat.format(relativeTimeNoCPUFree * 100) + "%",
-                " " + resourceFailNoFreespace,
-                " " + decimalFormat.format(relativeResourceFailNoFreespace * 100) + "%");
+                recive,
+                sent,
+                relativeSent,
+                sentFall,
+                relativeSentFall,
+                timeNoCPUFreePerCPU,
+                relativeTimeNoCPUFree,
+                resourceFailNoFreespace,
+                relativeResourceFailNoFreespace);
     }
 
     @Override
@@ -133,19 +130,19 @@ public class OutputterModel extends Outputter {
 
         double switchedResultMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED);
         double totalResultMessage = fail_resultMessage + switchedResultMessages;
-        double resultRelative = 0;
+        double relativeResult = 0;
         if (totalResultMessage > 0) {
-            resultRelative = fail_resultMessage / (totalResultMessage);
+            relativeResult = fail_resultMessage / (totalResultMessage);
         }
 
         double switchedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED);
         double droppedJobMessages = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED);
 
-        double jobRelative = 0;
+        double relativeJob = 0;
         double totalJobMessage = switchedJobMessages + droppedJobMessages;
 
         if (totalJobMessage > 0) {
-            jobRelative = droppedJobMessages / totalJobMessage;
+            relativeJob = droppedJobMessages / totalJobMessage;
         }
 
         double messagesDropped = sim.getStat(switch1, SimBaseStats.Stat.SWITCH_MESSAGE_DROPPED);
@@ -168,18 +165,18 @@ public class OutputterModel extends Outputter {
             relativeMessage = messagesDropped / (totalMessage);
         }
 
-        resultsAbstractController.addSwitchResult(
+        resultsController.addSwitchResult(
                 switch1.toString(),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
-                " " + sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
-                " " + decimalFormat.format(jobRelative * 100) + "%",
-                " " + decimalFormat.format(resultRelative * 100) + "%",
-                " " + decimalFormat.format(relativeReq * 100) + "%",
-                " " + decimalFormat.format(relativeMessage * 100) + "%");
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
+                relativeJob,
+                relativeResult,
+                relativeReq,
+                relativeMessage);
     }
 
     public void printBroker(ServiceNode serviceNode) {
@@ -191,13 +188,13 @@ public class OutputterModel extends Outputter {
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
         double relativeAckSent = reqAckSent/reqRecieved; 
 
-        resultsAbstractController.addBrokerResults(
+        resultsController.addBrokerResults(
                 serviceNode.toString(),
-                " " + registrationReceived,
-                " " + reqRecieved,
-                " " + noFreeResouce,
-                " " + reqAckSent,
-                " " + sendingFailed,
-                " " + relativeAckSent);
+                registrationReceived,
+                reqRecieved,
+                noFreeResouce,
+                reqAckSent,
+                sendingFailed,
+                relativeAckSent);
     }
 }
