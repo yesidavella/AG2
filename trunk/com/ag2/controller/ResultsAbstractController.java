@@ -15,55 +15,52 @@ public abstract class ResultsAbstractController implements Serializable {
     }
 
     public abstract void addClientResult(
-              String clientName,
-            String requestCreated,
-            String requestSent,
-            String requestNoSent,
-            String jobSent,
-            String jobNoSent,                  
-            String resultReceive,            
-            String relativeRequestSent,
-            String relativeJobSent,
-            String relativeReceiveResult_jobSent,
-            String relativeReceiveResult_requsetSent,
-            String relativeReceiveresult_requestCreated       
-            
-            );
+            String clientName,
+            double requestCreated,
+            double requestSent,
+            double requestNoSent,
+            double jobSent,
+            double jobNoSent,
+            double resultReceive,
+            double relativeRequestSent,
+            double relativeJobSent,
+            double relativeReceiveResult_jobSent,
+            double relativeReceiveResult_requsetSent,
+            double relativeReceiveresult_requestCreated);
 
     public abstract void addResourceResult(
             String resourceName,
-            String jobReceive,
-            String jobSent,
-            String relativeJobSent,
-            String failSent,
-            String relativeFailSent,
-            String busyTime,
-            String relativeBusyTime,
-            String noAvailable,
-            String relativeNoAvailable);
+            double jobReceive,
+            double jobSent,
+            double relativeJobSent,
+            double failSent,
+            double relativeFailSent,
+            double busyTime,
+            double relativeBusyTime,
+            double noAvailable,
+            double relativeNoAvailable);
 
     public abstract void addSwitchResult(
-             String switchName,
-             String jobSwitched,
-             String jobNoSwitched,
-             String resultSwiched,
-             String resultNoSwitched,
-             String requestSwitched,
-             String requestNoSwitched,
-             String relativeNojobNoSwitched,
-             String relativeResultNoSwitched,
-             String relativeRequestNoSwitched,
-             String relativeAllNoSwitched);
+            String switchName,
+            double jobSwitched,
+            double jobNoSwitched,
+            double resultSwiched,
+            double resultNoSwitched,
+            double requestSwitched,
+            double requestNoSwitched,
+            double relativeNojobNoSwitched,
+            double relativeResultNoSwitched,
+            double relativeRequestNoSwitched,
+            double relativeAllNoSwitched);
 
     public abstract void setExecutionPercentage(double percentage, double simulationTime);
 
-    public abstract void addBrokerResults(String brokerName,
-            String registrationReceived,
-            String reqRecieved,
-            String noFreeResource,
-            String reqAckSent,
-            String sendingFailed,
-            String relativeAckSent);
-
-  
+    public abstract void addBrokerResults(
+            String brokerName,
+            double registrationReceived,
+            double reqRecieved,
+            double noFreeResource,
+            double reqAckSent,
+            double sendingFailed,
+            double relativeAckSent);
 }

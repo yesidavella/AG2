@@ -7,17 +7,17 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addClientResult(
             final String clientName,
-            final String requestCreated,
-            final String requestSent,
-            final String requestNoSent,
-            final String jobSent,
-            final String jobNoSent,
-            final String resultReceive,
-            final String relativeRequestSent,
-            final String relativeJobSent,
-            final String relativeReceiveResult_jobSent,
-            final String relativeReceiveResult_requsetSent,
-            final String relativeReceiveresult_requestCreated) {
+            final double requestCreated,
+            final double requestSent,
+            final double requestNoSent,
+            final double jobSent,
+            final double jobNoSent,
+            final double resultReceive,
+            final double relativeRequestSent,
+            final double relativeJobSent,
+            final double relativeReceiveResult_jobSent,
+            final double relativeReceiveResult_requsetSent,
+            final double relativeReceiveresult_requestCreated) {
 
         Runnable runnable = new Runnable() {
 
@@ -44,15 +44,15 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addResourceResult(
             final String resourceName,
-            final String jobReceive,
-            final String jobSent,
-            final String relativeJobSent,
-            final String failSent,
-            final String relativeFailSent,
-            final String busyTime,
-            final String relativeBusyTime,
-            final String noAvailable,
-            final String relativeNoAvailable) {
+            final double jobReceive,
+            final double jobSent,
+            final double relativeJobSent,
+            final double failSent,
+            final double relativeFailSent,
+            final double busyTime,
+            final double relativeBusyTime,
+            final double noAvailable,
+            final double relativeNoAvailable) {
 
         Runnable runnable = new Runnable() {
 
@@ -72,22 +72,21 @@ public class ResultsController extends ResultsAbstractController {
             }
         };
         Platform.runLater(runnable);
-
     }
 
     @Override
     public void addSwitchResult(
             final String switchName,
-            final String jobSwitched,
-            final String jobNoSwitched,
-            final String resultSwiched,
-            final String resultNoSwitched,
-            final String requestSwitched,
-            final String requestNoSwitched,
-            final String relativeNojobNoSwitched,
-            final String relativeResultNoSwitched,
-            final String relativeRequestNoSwitched,
-            final String relativeAllNoSwitched) {
+            final double jobSwitched,
+            final double jobNoSwitched,
+            final double resultSwiched,
+            final double resultNoSwitched,
+            final double requestSwitched,
+            final double requestNoSwitched,
+            final double relativeNojobNoSwitched,
+            final double relativeResultNoSwitched,
+            final double relativeRequestNoSwitched,
+            final double relativeAllNoSwitched) {
 
         Runnable runnable = new Runnable() {
 
@@ -113,12 +112,12 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addBrokerResults(
             final String brokerName,
-            final String registrationReceived,
-            final String reqRecieved,
-            final String noFreeResource,
-            final String reqAckSent,
-            final String sendingFailed,
-            final String relativeAckSent) {
+            final double registrationReceived,
+            final double reqRecieved,
+            final double noFreeResource,
+            final double reqAckSent,
+            final double sendingFailed,
+            final double relativeAckSent) {
 
         Runnable runnable = new Runnable() {
 
@@ -128,7 +127,7 @@ public class ResultsController extends ResultsAbstractController {
                         brokerName,
                         registrationReceived,
                         reqRecieved,
-                        noFreeResource,                        
+                        noFreeResource,
                         reqAckSent,
                         sendingFailed,
                         relativeAckSent);
