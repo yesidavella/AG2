@@ -77,15 +77,15 @@ public class ResultsController extends ResultsAbstractController {
     @Override
     public void addSwitchResult(
             final String switchName,
-            final double jobSwitched,
-            final double jobNoSwitched,
-            final double resultSwiched,
-            final double resultNoSwitched,
-            final double requestSwitched,
-            final double requestNoSwitched,
-            final double relativeNojobNoSwitched,
-            final double relativeResultNoSwitched,
-            final double relativeRequestNoSwitched,
+            final double jobsSwitched,
+            final double jobsNoSwitched,
+            final double resultsSwiched,
+            final double resultsNoSwitched,
+            final double requestsSwitched,
+            final double requestsNoSwitched,
+            final double relativeNojobsNoSwitched,
+            final double relativeResultsNoSwitched,
+            final double relativeRequestsNoSwitched,
             final double relativeAllNoSwitched) {
 
         Runnable runnable = new Runnable() {
@@ -94,15 +94,15 @@ public class ResultsController extends ResultsAbstractController {
             public void run() {
                 viewResultsPhosphorus.addSwitchResult(
                         switchName,
-                        jobSwitched,
-                        jobNoSwitched,
-                        resultSwiched,
-                        resultNoSwitched,
-                        requestSwitched,
-                        requestNoSwitched,
-                        relativeNojobNoSwitched,
-                        relativeResultNoSwitched,
-                        relativeRequestNoSwitched,
+                        jobsSwitched,
+                        jobsNoSwitched,
+                        resultsSwiched,
+                        resultsNoSwitched,
+                        requestsSwitched,
+                        requestsNoSwitched,
+                        relativeNojobsNoSwitched,
+                        relativeResultsNoSwitched,
+                        relativeRequestsNoSwitched,
                         relativeAllNoSwitched);
             }
         };
