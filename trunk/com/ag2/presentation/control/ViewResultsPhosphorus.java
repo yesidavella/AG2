@@ -13,7 +13,7 @@ public interface ViewResultsPhosphorus {
             double relativeRequestSent,
             double relativeJobSent,
             double relativeReceiveResult_jobSent,
-            double relativeReceiveResult_requsetSent,
+            double relativeReceiveResult_requestSent,
             double relativeReceiveresult_requestCreated);
 
     public abstract void addResourceResult(

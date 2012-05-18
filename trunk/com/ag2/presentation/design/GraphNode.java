@@ -40,7 +40,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient ImageView imageView;
     protected transient Label lblName;
     private transient DropShadow dropShadow;
-    protected transient VBox vBoxWrapper;
+    protected transient VBox vbxWrapper;
     private transient Group group;
     private String name = null;
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
@@ -85,13 +85,13 @@ public abstract class GraphNode implements Selectable, Serializable {
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
 
         wildcardLink = new Line();
-        vBoxWrapper = new VBox();
+        vbxWrapper = new VBox();
         image = new Image(imageURL);
         imageView = new ImageView(image);
-        vBoxWrapper.setAlignment(Pos.CENTER);
-        vBoxWrapper.getChildren().addAll(imageView, lblName);
+        vbxWrapper.setAlignment(Pos.CENTER);
+        vbxWrapper.getChildren().addAll(imageView, lblName);
 
-        group.getChildren().addAll(vBoxWrapper);
+        group.getChildren().addAll(vbxWrapper);
         group.setScaleX(0.5);
         group.setScaleY(-0.5);
 
@@ -148,12 +148,12 @@ public abstract class GraphNode implements Selectable, Serializable {
             dropShadow.setWidth(20);
             dropShadow.setHeight(20);
 
-            vBoxWrapper.getStyleClass().remove("nodoSeleccionado");
-            vBoxWrapper.getStyleClass().add("nodoNoSeleccionado");
+            vbxWrapper.getStyleClass().remove("nodoSeleccionado");
+            vbxWrapper.getStyleClass().add("nodoNoSeleccionado");
         } else {
             nodeAdminAbstractController.queryProperties(this);
-            vBoxWrapper.getStyleClass().remove("nodoNoSeleccionado");
-            vBoxWrapper.getStyleClass().add("nodoSeleccionado");
+            vbxWrapper.getStyleClass().remove("nodoNoSeleccionado");
+            vbxWrapper.getStyleClass().add("nodoSeleccionado");
 
             group.toFront();
             dropShadow.setColor(Color.web("#44FF00"));
@@ -216,8 +216,8 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-                setWidth((short) vBoxWrapper.getWidth());
-                setHeight((short) vBoxWrapper.getHeight());
+                setWidth((short) vbxWrapper.getWidth());
+                setHeight((short) vbxWrapper.getHeight());
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.LINK) {
 
@@ -455,8 +455,8 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             i++;
         }
-        setHeight((short) vBoxWrapper.getHeight());
-        setWidth((short) vBoxWrapper.getWidth());
+        setHeight((short) vbxWrapper.getHeight());
+        setWidth((short) vbxWrapper.getWidth());
         updateNodeListener();
         return (alterName.length() == 0) ? nameToFormat : alterName.toString();
     }
