@@ -503,17 +503,15 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 ((AbstractServiceNode) serviceNode).getResources().remove((ResourceNode) phosNodeRemoved);
             }
         }
-        
-       GUI.getInstance().getEntityPropertyTable().clearData();
-        if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null)
-        {                       
-            GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);          
-             GUI.getInstance().getGraphDesignGroup().getSelectable().select(true);
-            
+
+        GUI.getInstance().getEntityPropertyTable().clearData();
+        if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
+            GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
+//             GUI.getInstance().getGraphDesignGroup().getSelectable().select(true);
         }
-       
-        
-        
+
+
+
     }
 
     @Override

@@ -34,10 +34,12 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private TableView tvResourceResults = new TableView();
     private TableView tvSwitchResults = new TableView();
     private TableView tvBrokerResults = new TableView();
-    private Label lblClient = new Label("Resultados del Cliente");
-    private Label lbResource = new Label("Resultados del Recurso");
-    private Label lbSwitch = new Label("Resultados del Conmutador Optico");
-    private Label lbBroker = new Label("Resultados del Agendador");
+    private Label lbTitlePage = LabelBuilder.create().text("RESULTADOS DE SIMULACIÓN")
+            .font(Font.font("Arial", FontWeight.BOLD, 20)).minWidth(20).alignment(Pos.CENTER).build();
+    private Label lblClient = new Label("Clientes");
+    private Label lbResource = new Label("Recursos");
+    private Label lbSwitch = new Label("Conmutadores Opticos");
+    private Label lbBroker = new Label("Agendadores");
     private ObservableList<PhosphorusPropertySet> dataClients = FXCollections.observableArrayList();
     private ObservableList<PhosphorusPropertySet> dataResources = FXCollections.observableArrayList();
     private ObservableList<PhosphorusPropertySet> dataSwitches = FXCollections.observableArrayList();
@@ -55,18 +57,16 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private Label lblPageHTMLCountValue = new Label("0");
     private Timeline time = new Timeline();
     private long initialTime = System.currentTimeMillis();
-    private int columnWidthSmall = 60;
-    private int columnWidthMedium = 100;
-    private int columnWidthBig = 120;
-//    private int tableViewHeight = 300;
-    private int generalColumnWight = 100;
+//    private int columnWidthSmall = 60;
+//    private int columnWidthMedium = 100;
+//    private int columnWidthBig = 120;
+//    private int generalColumnWight = 100;
     private NumberFormat percent = DecimalFormat.getPercentInstance();
     private NumberFormat decimal = DecimalFormat.getInstance();
     private NumberFormat integer = DecimalFormat.getIntegerInstance();
 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
-
         percent.setMaximumFractionDigits(3);
 
         lblClient.setFont(Font.font("Arial", FontWeight.BOLD, 16));
@@ -159,18 +159,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         createtvResultsSwitch();
 
         vbxImageProgress.getChildren().add(progressIndicator);
-
         hbxProgress.getChildren().addAll(vbxDataProgress, vbxImageProgress);
-//        tvClientResults.setPrefHeight(tableViewHeight);
-//        tvResourceResults.setPrefHeight(tableViewHeight);
-//        tvSwitchResults.setPrefHeight(tableViewHeight);
-//        tvBrokerResults.setPrefHeight(tableViewHeight);
-//        tvClientResults.setMinHeight(tableViewHeight);
-//        tvResourceResults.setMinHeight(tableViewHeight);
-//        tvSwitchResults.setMinHeight(tableViewHeight);
-//        tvBrokerResults.setMinHeight(tableViewHeight);
-
-        vbxMain.getChildren().addAll(hbxProgress, lblClient, tvClientResults, lbResource, tvResourceResults,
+        vbxMain.getChildren().addAll(lbTitlePage, hbxProgress, lblClient, tvClientResults, lbResource, tvResourceResults,
                 lbSwitch, tvSwitchResults, lbBroker, tvBrokerResults);
         scpResults.setContent(vbxMain);
         scpResults.setFitToWidth(true);
@@ -260,20 +250,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         relDropReq.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property10"));
         reltotDrop.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property11"));
 
-        //setMinPrefAndMaxWidthToColTable(tclSwitchName, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclSwitchedJobMsg, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclNotSwitchedJobMsg, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclSwitchedResultMsg, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclNotSwitchedResultMsg, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclSwitchedReqMsg, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclNotSwitchedReqMsg, generalColumnWight);
-//        relDropJob.setMinWidth(150);
-//        relDropRes.setMinWidth(150);
-//        relDropReq.setMinWidth(150);
-//        reltotDrop.setMinWidth(150);
-
         TableColumn tclJobs = new TableColumn("Trabajos");
-        TableColumn tclJobResults = new TableColumn("Resultados de Trabajo");
+        TableColumn tclJobResults = new TableColumn("Trabajo Atendidos");
         TableColumn tclScheduleReq = new TableColumn("Solicitudes de Agendamiento");
 
         tclJobs.getColumns().addAll(tclSwitchedJobMsg, tclNotSwitchedJobMsg, relDropJob);
@@ -286,46 +264,41 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
 
     private void createtvResultsResource() {
 
-        TableColumn tcRecurso = new TableColumn("Recurso");
-        TableColumn tableColumn1 = new TableColumn("Trabajos recibidos");
-        TableColumn tableColumn2 = new TableColumn("Respuestas enviadas");
-        TableColumn tableColumn3 = new TableColumn("%Respuestas enviadas");
-        TableColumn tableColumn4 = new TableColumn("Fallas enviadas");
-        TableColumn tableColumn5 = new TableColumn("% Fallas enviadas");
-        TableColumn tableColumn6 = new TableColumn("Tiempo ocupacion (ms)");
-        TableColumn tableColumn7 = new TableColumn("% Tiempo ocupacion");
-        TableColumn tableColumn8 = new TableColumn("CPU/buffer no libre");
-        TableColumn tableColumn9 = new TableColumn("% CPU/buffer no libre");
+        TableColumn resourceName = new TableColumn("Recurso");
+        TableColumn tclJobsReceived = new TableColumn("Recibidos");
+        TableColumn tclSentServedJobs = new TableColumn("Enviados a origen");
+        TableColumn tclRelSentServedJobs = new TableColumn("% enviados a origen");
+        TableColumn tclFaultsSent = new TableColumn("Enviados a origen");
+        TableColumn tclRelFaultsSent = new TableColumn("% enviados a origen");
+        TableColumn tclOccupancyTime = new TableColumn("Tiempo de ocupacion (ms)");
+        TableColumn tclRelOccupancyTime = new TableColumn("% Tiempo de ocupacion");
+        TableColumn tclCPU_buffNoFree = new TableColumn("CPU/buffer no libre");
+        TableColumn tclRelCPU_buffNoFree = new TableColumn("% CPU/buffer no libre");
 
-        tcRecurso.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
-        tableColumn1.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
-        tableColumn2.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
-        tableColumn3.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
-        tableColumn4.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
-        tableColumn5.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
-        tableColumn6.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
-        tableColumn7.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property8"));
-        tableColumn8.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property9"));
-        tableColumn9.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property10"));
+        resourceName.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        tclJobsReceived.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+        tclSentServedJobs.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
+        tclRelSentServedJobs.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
+        tclFaultsSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
+        tclRelFaultsSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        tclOccupancyTime.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
+        tclRelOccupancyTime.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property8"));
+        tclCPU_buffNoFree.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property9"));
+        tclRelCPU_buffNoFree.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property10"));
 
-        TableColumn tclAnws = new TableColumn("Respuestas");
-        TableColumn tclFaults = new TableColumn("Fallas");
+        TableColumn tclAllJobs = new TableColumn("Trabajos");
+        TableColumn tclServedJobs = new TableColumn("Atendidos");
+        TableColumn tclFaults = new TableColumn("No Atendidos");
         TableColumn tclTime = new TableColumn("Tiempo");
-        TableColumn tclCPU = new TableColumn("CPU");
+        TableColumn tclCPU_buff = new TableColumn("CPU");
 
-//        tcRecurso.setMinWidth(80);
-//        tableColumn1.setMinWidth(130);
-//        tableColumn2.setMinWidth(130);
-//        tableColumn3.setMinWidth(135);
-//        tableColumn4.setMinWidth(120);
-//        tableColumn5.setMinWidth(130);
-//        tableColumn6.setMinWidth(160);
-//        tableColumn7.setMinWidth(160);
-//        tableColumn8.setMinWidth(160);
-//        tableColumn9.setMinWidth(160);
+        tclAllJobs.getColumns().addAll(tclJobsReceived, tclServedJobs, tclFaults);
+        tclServedJobs.getColumns().addAll(tclSentServedJobs, tclRelSentServedJobs);
+        tclFaults.getColumns().addAll(tclFaultsSent, tclRelFaultsSent);
+        tclTime.getColumns().addAll(tclOccupancyTime, tclRelOccupancyTime);
+        tclCPU_buff.getColumns().addAll(tclCPU_buffNoFree, tclRelCPU_buffNoFree);
 
-        tvResourceResults.getColumns().addAll(tcRecurso, tableColumn1, tableColumn2, tableColumn3,
-                tableColumn4, tableColumn5, tableColumn6, tableColumn7, tableColumn8, tableColumn9);
+        tvResourceResults.getColumns().addAll(resourceName, tclAllJobs, tclTime, tclCPU_buff);
 
         tvResourceResults.setItems(dataResources);
     }
@@ -337,6 +310,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         TableColumn tcReqsSent = new TableColumn("Enviadas");
         TableColumn tcReqsNotSent = new TableColumn("No enviadas");
         TableColumn relReqsSent_reqsCreated = new TableColumn("% enviadas/creadas ");
+        TableColumn tclScheduledReqs = new TableColumn("Agendadas");
 
         TableColumn tcJobsSent = new TableColumn("Enviados");
         TableColumn tcJobsNotSent = new TableColumn("No enviados");
@@ -360,23 +334,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         relResultsReceived_reqsSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property11"));
         relReceivedResults_createdReqs.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property12"));
 
-        TableColumn tclAllReqs = new TableColumn("Solicitudes");
+        TableColumn tclAllReqs = new TableColumn("Solicitudes de Agendamiento");
         TableColumn tclAllJobs = new TableColumn("Trabajos");
 
-        tclAllReqs.getColumns().addAll(tcReqsCreated, tcReqsSent, tcReqsNotSent, relReqsSent_reqsCreated);
+        tclAllReqs.getColumns().addAll(tcReqsCreated, tcReqsSent, tcReqsNotSent, relReqsSent_reqsCreated, tclScheduledReqs);
         tclAllJobs.getColumns().addAll(tcJobsSent, tcJobsNotSent, tcReceivedResults, relResultsReceived_jobsSent);
-//        tcClient.setMinWidth(80);
-//        tcReqsCreated.setMinWidth(columnWidthSmall);
-//        tcReqsSent.setMinWidth(columnWidthSmall);
-//        tcReqsNotSent.setMinWidth(columnWidthSmall);
-//        tcJobsSent.setMinWidth(columnWidthSmall);
-//        tcJobsNotSent.setMinWidth(columnWidthSmall);
-//        tcReceivedResults.setMinWidth(columnWidthSmall);
-//        relReqsSent_reqsCreated.setMinWidth(columnWidthBig);
-//        relJobsSent_reqsSent.setMinWidth(columnWidthBig);
-//        relResultsReceived_jobsSent.setMinWidth(columnWidthBig);
-//        relResultsReceived_reqsSent.setMinWidth(columnWidthBig);
-//        relReceivedResults_createdReqs.setMinWidth(columnWidthBig);
 
         tvClientResults.getColumns().addAll(
                 tcClient,
@@ -386,6 +348,42 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
                 relReceivedResults_createdReqs,
                 relResultsReceived_reqsSent);
         tvClientResults.setItems(dataClients);
+    }
+
+    private void createtvBrokerResults() {
+
+        TableColumn tclBrokerName = new TableColumn("Agendador");
+        TableColumn tclRegistrationReceived = new TableColumn("Registros de Clúster");
+        TableColumn tclReqRecieved = new TableColumn("Total Solicitudes");
+        TableColumn tclNoFreeResource = new TableColumn("No asignadas");
+        TableColumn tclReqAckSent = new TableColumn("Enviadas(con ack)");
+        TableColumn tclSendingFailed = new TableColumn("No enviadas");
+        TableColumn tclRelativeReqAckSent = new TableColumn("% de envió(con ack)");
+
+        tclBrokerName.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        tclRegistrationReceived.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+        tclReqRecieved.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
+        tclNoFreeResource.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
+        tclReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
+        tclSendingFailed.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
+        tclRelativeReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
+
+        //setMinPrefAndMaxWidthToColTable(tclBrokerName, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclRegistrationReceived, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclReqRecieved, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclNoFreeResource, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclReqAckSent, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclSendingFailed, generalColumnWight);
+        //setMinPrefAndMaxWidthToColTable(tclRelativeReqAckSent, generalColumnWight);
+
+        TableColumn tclAllReqRecieved = new TableColumn("Solicitudes Recibidas de Agendamiento");
+        TableColumn reqRecievedAssigned = new TableColumn("Asignadas");
+
+        reqRecievedAssigned.getColumns().addAll(tclReqAckSent, tclSendingFailed, tclRelativeReqAckSent);
+        tclAllReqRecieved.getColumns().addAll(reqRecievedAssigned, tclNoFreeResource, tclReqRecieved);
+
+        tvBrokerResults.getColumns().addAll(tclBrokerName, tclRegistrationReceived, tclAllReqRecieved);
+        tvBrokerResults.setItems(dataBrokers);
     }
 
     @Override
@@ -481,20 +479,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     }
 
     @Override
-    public void setExecutionPercentage(final double Percentage, double simulationTime) {
-        progressIndicator.setProgress(Percentage / 100);
-        String valuePercentage = String.valueOf(Math.round(Percentage));
-        lblSimulationTimePercentageValue.setText(valuePercentage + " %");
-        lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
-        lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
-        if (Math.round(Percentage) == 100) {
-            progressIndicator.setProgress(1);
-            lblSimulationTimePercentageValue.setText("100%");
-            lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " ms (Finalizado) ");
-        }
-    }
-
-    @Override
     public void addBrokerResult(
             String brokerName,
             double registrationReceived,
@@ -516,40 +500,18 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         dataBrokers.add(brokerPropSet);
     }
 
-    private void createtvBrokerResults() {
-
-        TableColumn tclBrokerName = new TableColumn("Agendador");
-        TableColumn tclRegistrationReceived = new TableColumn("Registros de Clúster");
-        TableColumn tclReqRecieved = new TableColumn("Total Solicitudes");
-        TableColumn tclNoFreeResource = new TableColumn("No asignadas");
-        TableColumn tclReqAckSent = new TableColumn("Enviadas(con ack)");
-        TableColumn tclSendingFailed = new TableColumn("No enviadas");
-        TableColumn tclRelativeReqAckSent = new TableColumn("% de envió(con ack)");
-
-        tclBrokerName.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
-        tclRegistrationReceived.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
-        tclReqRecieved.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property3"));
-        tclNoFreeResource.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property4"));
-        tclReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property5"));
-        tclSendingFailed.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property6"));
-        tclRelativeReqAckSent.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property7"));
-
-        //setMinPrefAndMaxWidthToColTable(tclBrokerName, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclRegistrationReceived, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclReqRecieved, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclNoFreeResource, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclReqAckSent, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclSendingFailed, generalColumnWight);
-        //setMinPrefAndMaxWidthToColTable(tclRelativeReqAckSent, generalColumnWight);
-
-        TableColumn tclAllReqRecieved = new TableColumn("SOLICITUDES RECIBIDAS DE AGENDAMIENTO");
-        TableColumn reqRecievedAssigned = new TableColumn("Asignadas");
-
-        reqRecievedAssigned.getColumns().addAll(tclReqAckSent, tclSendingFailed, tclRelativeReqAckSent);
-        tclAllReqRecieved.getColumns().addAll(reqRecievedAssigned, tclNoFreeResource, tclReqRecieved);
-
-        tvBrokerResults.getColumns().addAll(tclBrokerName, tclRegistrationReceived, tclAllReqRecieved);
-        tvBrokerResults.setItems(dataBrokers);
+    @Override
+    public void setExecutionPercentage(final double Percentage, double simulationTime) {
+        progressIndicator.setProgress(Percentage / 100);
+        String valuePercentage = String.valueOf(Math.round(Percentage));
+        lblSimulationTimePercentageValue.setText(valuePercentage + " %");
+        lblPageHTMLCountValue.setText(String.valueOf(HtmlWriter.getInstance().getPagina()));
+        lblSimulationTimeValue.setText(String.valueOf(simulationTime) + " ms");
+        if (Math.round(Percentage) == 100) {
+            progressIndicator.setProgress(1);
+            lblSimulationTimePercentageValue.setText("100%");
+            lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " ms (Finalizado) ");
+        }
     }
 
     /**
