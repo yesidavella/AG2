@@ -10,7 +10,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -24,23 +23,95 @@ public class ResultsOCS {
     private transient Tab tab;
     private ScrollPane scrollPane;
     private VBox vBoxMain;
-    private TableView tvSumaryOCS = new TableView();
+    private TableView tvSummaryOCS ;
+    private TableView tvInstaceOCS ;
     private ObservableList<SummaryOCSData> dataSummaryOCS = FXCollections.observableArrayList();
+    private ObservableList<InstanceOCSData> dataInstanceOCS = FXCollections.observableArrayList();
     private Label lblSummaryOCS;
+    private Label lblInstanceOCS;
 
     public ResultsOCS(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
         vBoxMain = new VBox();
+        vBoxMain.setFillWidth(true);
         vBoxMain.setPadding(new Insets(10, 10, 10, 10));
         vBoxMain.setAlignment(Pos.CENTER);
-        vBoxMain.setSpacing(10);
-
-
-        tvSumaryOCS.setMaxHeight(300);
+        vBoxMain.setSpacing(10);           
 
         lblSummaryOCS = new Label(" Resumen de Caminos Conmutados de Etiquetas de la capa optica (λSP) ");
+        lblInstanceOCS = new Label();
         lblSummaryOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        lblInstanceOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        
+        
+        createTVSummaryOCS();
+        createTVInstanceOCS();
+                
+        vBoxMain.getChildren().addAll(lblSummaryOCS, tvSummaryOCS, lblInstanceOCS, tvInstaceOCS);
+        scrollPane.setContent(vBoxMain);
+        tab.setContent(scrollPane);
+
+    }
+    
+    private void createTVInstanceOCS()
+    {
+        tvInstaceOCS= new TableView();
+        tvInstaceOCS.setMaxHeight(250);
+        tvInstaceOCS.setMinHeight(250);
+
+        TableColumn tableColumn1 = new TableColumn();
+        tableColumn1.setText("Camino");
+        tableColumn1.setMinWidth(130);
+        tableColumn1.setCellValueFactory(new PropertyValueFactory("path"));
+
+        TableColumn tableColumn2 = new TableColumn();
+        tableColumn2.setText("Tiempo de la \nsolicitud λSP ");
+        tableColumn2.setMinWidth(130);
+        tableColumn2.setCellValueFactory(new PropertyValueFactory("requestTime"));
+
+        TableColumn tableColumn3 = new TableColumn();
+        tableColumn3.setText("Tiempo de \nestablecimiento λSP  ");
+        tableColumn3.setMinWidth(130);
+        tableColumn3.setCellValueFactory(new PropertyValueFactory("setupTime"));
+
+        TableColumn tableColumn4 = new TableColumn();
+        tableColumn4.setText("Duracion λSP ");
+        tableColumn4.setMinWidth(130);
+        tableColumn4.setCellValueFactory(new PropertyValueFactory("durationTime"));
+
+        TableColumn tableColumn5 = new TableColumn();
+        tableColumn5.setText("Tiempo de\nliberacion λSP");
+        tableColumn5.setMinWidth(130);
+        tableColumn5.setCellValueFactory(new PropertyValueFactory("tearDownTime"));
+
+        TableColumn tableColumn6 = new TableColumn();
+        tableColumn6.setText("Trafico");
+        tableColumn6.setMinWidth(130);
+        tableColumn6.setCellValueFactory(new PropertyValueFactory("traffic"));  
+        
+        TableColumn tableColumn7 = new TableColumn();
+        tableColumn7.setText("Problemas");
+        tableColumn7.setMinWidth(130);
+        tableColumn7.setCellValueFactory(new PropertyValueFactory("errorNodo")); 
+
+        tvInstaceOCS.setItems(dataInstanceOCS);       
+        tvInstaceOCS.getColumns().addAll(
+                tableColumn1, 
+                tableColumn2, 
+                tableColumn3,
+                tableColumn4, 
+                tableColumn5, 
+                tableColumn6,
+                tableColumn7);
+ 
+        
+    }
+    private void createTVSummaryOCS() {
+        tvSummaryOCS= new TableView();
+        tvSummaryOCS.setMaxHeight(250);
+        tvSummaryOCS.setMinHeight(250);
 
         TableColumn tableColumn1 = new TableColumn();
         tableColumn1.setText("Origen/Destino");
@@ -48,7 +119,7 @@ public class ResultsOCS {
         tableColumn1.setCellValueFactory(new PropertyValueFactory("sourceDestination"));
 
         TableColumn tableColumn2 = new TableColumn();
-        tableColumn2.setText("OCS Solicitudes ");
+        tableColumn2.setText("OCS Solicitudes");
         tableColumn2.setMinWidth(130);
         tableColumn2.setCellValueFactory(new PropertyValueFactory("requestOCS"));
 
@@ -70,34 +141,89 @@ public class ResultsOCS {
         TableColumn tableColumn6 = new TableColumn();
         tableColumn6.setText("Detalles");
         tableColumn6.setMinWidth(130);
-        tableColumn6.setCellValueFactory(new PropertyValueFactory("btnViewDetails"));
+        tableColumn6.setCellValueFactory(new PropertyValueFactory("btnViewDetails"));  
         
-        for (int i = 0; i < 10; i++) {
-            
-       
-        
-        SummaryOCSData data = new SummaryOCSData();
-        
-        
-        data.setSourceDestination("Nodo 1  - Nodo 2");
-        data.setCountFault("5");
-        data.setRequestOCS("34");
-        data.setCreateOCS("40");
-        data.setTimeDuration("407899 ms");
 
-        dataSummaryOCS.add(data);
-
-        tvSumaryOCS.setItems(dataSummaryOCS);
-         }
+        tvSummaryOCS.setItems(dataSummaryOCS);       
+        tvSummaryOCS.getColumns().addAll(tableColumn1, tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
+    }
+    public static class InstanceOCSData{
         
-        
-       
-        tvSumaryOCS.getColumns().addAll(tableColumn1, tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
+         String sourceDestination;
+         String path;
+         String requestTime;
+         String setupTime;         
+         String durationTime;
+         String tearDownTime;
+         String errorNodo;
+         String traffic;
 
-        vBoxMain.getChildren().addAll(lblSummaryOCS, tvSumaryOCS);
-        scrollPane.setContent(vBoxMain);
-        tab.setContent(scrollPane);
+        public String getDurationTime() {
+            return durationTime;
+        }
 
+        public void setDurationTime(String durationTime) {
+            this.durationTime = durationTime;
+        }
+
+        public String getErrorNodo() {
+            return errorNodo;
+        }
+
+        public void setErrorNodo(String errorNodo) {
+            this.errorNodo = errorNodo;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public String getRequestTime() {
+            return requestTime;
+        }
+
+        public void setRequestTime(String requestTime) {
+            this.requestTime = requestTime;
+        }
+
+        public String getSetupTime() {
+            return setupTime;
+        }
+
+        public void setSetupTime(String setupTime) {
+            this.setupTime = setupTime;
+        }
+
+        public String getSourceDestination() {
+            return sourceDestination;
+        }
+
+        public void setSourceDestination(String sourceDestination) {
+            this.sourceDestination = sourceDestination;
+        }
+
+        public String getTearDownTime() {
+            return tearDownTime;
+        }
+
+        public void setTearDownTime(String tearDownTime) {
+            this.tearDownTime = tearDownTime;
+        }
+
+        public String getTraffic() {
+            return traffic;
+        }
+
+        public void setTraffic(String traffic) {
+            this.traffic = traffic;
+        }
+         
+         
+         
     }
 
     public static class SummaryOCSData {
@@ -106,7 +232,7 @@ public class ResultsOCS {
         private String requestOCS;
         private String createOCS;
         private String countFault;
-        private String timeDuration;
+        private String durationTime;
         private Button btnViewDetails;
         
 
@@ -150,12 +276,12 @@ public class ResultsOCS {
             this.sourceDestination = sourceDestination;
         }
 
-        public String getTimeDuration() {
-            return timeDuration;
+        public String getDurationTime() {
+            return durationTime;
         }
 
         public void setTimeDuration(String timeDuration) {
-            this.timeDuration = timeDuration;
+            this.durationTime = timeDuration;
         }
     }
 }
