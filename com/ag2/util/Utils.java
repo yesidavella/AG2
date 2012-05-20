@@ -15,7 +15,6 @@ public class Utils {
     public static String ABS_PATH_IMGS = "";// URLUtil.fileToURL(new File("resources/images/")).toString();
     public static String ABS_PATH_CSS = "";//URLUtil.fileToURL(new File("resources/css/")).toString();
 
-    
     static {
         try {
             ABS_PATH_CONFIG_AG2 = new File("resources/").toURL().toString().replaceFirst("file:", "");
@@ -26,8 +25,8 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-       public static String findGraphicalName(String originalName) {
+
+    public static String findGraphicalName(String originalName) {
         String name = originalName;
         for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             if (graphNode.getOriginalName().equalsIgnoreCase(originalName)) {
@@ -37,4 +36,17 @@ public class Utils {
         return name;
     }
 
+    public static GraphNode findGraphicalNode(Entity entity) {
+     
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) 
+        {
+            
+           if(entity == MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode))
+           {
+               return graphNode;
+           }
+           
+        }
+        return null;
+    }
 }
