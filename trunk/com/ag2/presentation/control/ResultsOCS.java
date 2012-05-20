@@ -4,6 +4,7 @@
  */
 package com.ag2.presentation.control;
 
+import com.ag2.presentation.design.GraphNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -29,6 +30,8 @@ public class ResultsOCS {
     private ObservableList<InstanceOCSData> dataInstanceOCS = FXCollections.observableArrayList();
     private Label lblSummaryOCS;
     private Label lblInstanceOCS;
+    
+    ResultsOCSController resultsOCSController ;
 
     public ResultsOCS(Tab tab) {
         this.tab = tab;
@@ -52,8 +55,31 @@ public class ResultsOCS {
         vBoxMain.getChildren().addAll(lblSummaryOCS, tvSummaryOCS, lblInstanceOCS, tvInstaceOCS);
         scrollPane.setContent(vBoxMain);
         tab.setContent(scrollPane);
-
     }
+    
+    public void showResults()
+    {
+        for (int i = 0; i < resultsOCSController.sizeSummaryOCS(); i++) 
+        {
+            
+            resultsOCSController.loadOCS_SummaryByIndex(i);
+            SummaryOCSData summaryOCSData = new  SummaryOCSData();
+            GraphNode graphNodeSource = resultsOCSController.getGnSummarySource();
+            GraphNode graphNodeDestion = resultsOCSController.getGnSummaryDestination();
+            
+            summaryOCSData.setSourceDestination(" "+graphNodeSource.getName()+" - "+graphNodeDestion.getName());
+            summaryOCSData.setRequestOCS("   "+resultsOCSController.getRequestedSummaryOCS());
+            summaryOCSData.setRequestOCS("   "+resultsOCSController.getCreatedSummaryOCS());
+            summaryOCSData.setCountFault("   "+resultsOCSController.getFaultSummaryOCS());            
+            summaryOCSData.setTimeDuration("   "+resultsOCSController.getDurationTimeInstanceOCS());            
+              
+            dataSummaryOCS.add(summaryOCSData);
+            
+            
+        }
+        
+    }
+    
     
     private void createTVInstanceOCS()
     {
@@ -63,9 +89,15 @@ public class ResultsOCS {
 
         TableColumn tableColumn1 = new TableColumn();
         tableColumn1.setText("Camino");
-        tableColumn1.setMinWidth(130);
+        tableColumn1.setMinWidth(230);
         tableColumn1.setCellValueFactory(new PropertyValueFactory("path"));
 
+        TableColumn tableColumn8 = new TableColumn();
+        tableColumn8.setText("Longitud  \nde onda (λ)");
+        tableColumn8.setMinWidth(230);
+        tableColumn8.setCellValueFactory(new PropertyValueFactory("lambda"));
+        
+                
         TableColumn tableColumn2 = new TableColumn();
         tableColumn2.setText("Tiempo de la \nsolicitud λSP ");
         tableColumn2.setMinWidth(130);
@@ -100,6 +132,7 @@ public class ResultsOCS {
         tvInstaceOCS.getColumns().addAll(
                 tableColumn1, 
                 tableColumn2, 
+                tableColumn8,
                 tableColumn3,
                 tableColumn4, 
                 tableColumn5, 
@@ -157,6 +190,17 @@ public class ResultsOCS {
          String tearDownTime;
          String errorNodo;
          String traffic;
+         String lambda;
+
+        public String getLambda() {
+            return lambda;
+        }
+
+        public void setLambda(String lambda) {
+            this.lambda = lambda;
+        }
+         
+         
 
         public String getDurationTime() {
             return durationTime;
@@ -284,4 +328,14 @@ public class ResultsOCS {
             this.durationTime = timeDuration;
         }
     }
+
+    public ResultsOCSController getResultsOCSController() {
+        return resultsOCSController;
+    }
+
+    public void setResultsOCSController(ResultsOCSController resultsOCSController) {
+        this.resultsOCSController = resultsOCSController;
+    }
+    
+    
 }
