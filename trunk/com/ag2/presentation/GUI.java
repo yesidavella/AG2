@@ -67,7 +67,8 @@ public class GUI extends Scene
     private boolean isPrincipalKeyPressed = false;
     private ActionTypeEmun beforeActionTypeEmun;    
     private Cursor beforeEventCursor;
-    private PhosphosrusResults phosphosrusResults;    
+    private PhosphosrusResults phosphosrusResults;  
+    private ResultsOCS resultsOCS;
     private Main main;
     private ToggleButtonAg2 btnSelection;
     private ToggleButtonAg2 btnPointSeparator;
@@ -77,6 +78,7 @@ public class GUI extends Scene
     private Group grRootWorld = new Group();
     private Tab tabSimulation = new Tab();
     private Tab tabResults = new Tab();
+    private Tab tabResultsOCS = new Tab();
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
@@ -671,7 +673,7 @@ public class GUI extends Scene
         btnPCE_Switch.setTooltip(new Tooltip("PCE (Path Computation Element)"));
         //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de RÃ¡faga"));
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
-        btnResource.setTooltip(new Tooltip("ClÃºster (Recurso de almacenamiento y procesamiento) "));
+        btnResource.setTooltip(new Tooltip("Cluster (Recurso de almacenamiento y procesamiento) "));
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
 
         GridPane.setConstraints(btnClient, 0, 4);
@@ -707,11 +709,9 @@ public class GUI extends Scene
         tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
         tabResultsHTML.setText("Registros HTML");
-        tabResultsHTML.setClosable(false);
-        
+        tabResultsHTML.setClosable(false);        
         tabChartsClientResults.setText("Graficos de Clientes");
-        tabChartsClientResults.setClosable(false);
-        
+        tabChartsClientResults.setClosable(false);       
         
         tabChartsrResourceResults.setText("Graficos de recursos");
         tabChartsrResourceResults.setClosable(false);
@@ -722,8 +722,12 @@ public class GUI extends Scene
         tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
         
-        tabResultsResource.setText(" Graficos de  recurso");
+        tabResultsResource.setText("Graficos de  recurso");
         tabResultsResource.setClosable(false);
+        
+        tabResultsOCS.setText("Resultados OCS");
+        tabResultsOCS.setClosable(false);
+        
         
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
@@ -742,12 +746,14 @@ public class GUI extends Scene
         chartsResultResource = new ChartsResultResource(tabChartsrResourceResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
+        resultsOCS = new ResultsOCS(tabResultsOCS);
+                
         
         tbResultsResource.setSide(Side.LEFT);
         tbResultsResource.getTabs().addAll( tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
      
-        tbMain.getTabs().addAll(tabSimulation );
+        tbMain.getTabs().addAll(tabSimulation, tabResultsOCS );
         
     }
 
