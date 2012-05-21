@@ -54,7 +54,7 @@ public class OCSAdminController extends LinkAdminAbstractController {
 
             if (linkCreationModel instanceof OCSCreationModel) {
                 
-                System.out.println("La madreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                System.out.println("Creando OCSs");
                 GridSimulatorModel simulatorModel = (GridSimulatorModel) SimulationBase.getInstance().getGridSimulatorModel();
                 HashMap<Entity, Entity> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
 
