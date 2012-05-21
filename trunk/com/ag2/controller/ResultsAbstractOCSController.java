@@ -21,6 +21,7 @@ public abstract class ResultsAbstractOCSController
     protected  double  timeDuracionSummaryOCS;
     
     protected ArrayList<GraphNode> pathInstaceOCS;
+    protected  int     wavelengthID;
     protected  double  requestTimeInstanceOCS;
     protected  double  setupTimeInstanceOCS;
     protected  double  durationTimeInstanceOCS;
@@ -93,6 +94,10 @@ public abstract class ResultsAbstractOCSController
 
     public double getTrafficInstanceOCS() {
         return trafficInstanceOCS;
+    }
+
+    public int getWavelengthID() {
+        return wavelengthID;
     }
 
         

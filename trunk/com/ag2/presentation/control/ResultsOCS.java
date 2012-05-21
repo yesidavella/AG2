@@ -7,10 +7,12 @@ package com.ag2.presentation.control;
 import com.ag2.presentation.design.GraphNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -48,7 +50,6 @@ public class ResultsOCS {
         lblSummaryOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         lblInstanceOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         
-        
         createTVSummaryOCS();
         createTVInstanceOCS();
                 
@@ -59,22 +60,59 @@ public class ResultsOCS {
     
     public void showResults()
     {
+        int sizeSummaryOCS = dataSummaryOCS.size();
+        for (int i = 0; i < sizeSummaryOCS; i++) {
+            dataSummaryOCS.remove(0);
+        }
+        
         for (int i = 0; i < resultsOCSController.sizeSummaryOCS(); i++) 
-        {
-            
+        {            
             resultsOCSController.loadOCS_SummaryByIndex(i);
             SummaryOCSData summaryOCSData = new  SummaryOCSData();
             GraphNode graphNodeSource = resultsOCSController.getGnSummarySource();
             GraphNode graphNodeDestion = resultsOCSController.getGnSummaryDestination();
             
-            summaryOCSData.setSourceDestination(" "+graphNodeSource.getName()+" - "+graphNodeDestion.getName());
+            summaryOCSData.setGraphNodeSource(graphNodeSource);
+            summaryOCSData.setGraphNodeDestination(graphNodeDestion);
+            
+            summaryOCSData.setSource(" "+graphNodeSource.getName());
+            summaryOCSData.setSource(" "+graphNodeDestion.getName());
+            
             summaryOCSData.setRequestOCS("   "+resultsOCSController.getRequestedSummaryOCS());
             summaryOCSData.setRequestOCS("   "+resultsOCSController.getCreatedSummaryOCS());
             summaryOCSData.setCountFault("   "+resultsOCSController.getFaultSummaryOCS());            
-            summaryOCSData.setTimeDuration("   "+resultsOCSController.getDurationTimeInstanceOCS());            
+            summaryOCSData.setTimeDuration("   "+resultsOCSController.getDurationTimeInstanceOCS());           
               
-            dataSummaryOCS.add(summaryOCSData);
+            dataSummaryOCS.add(summaryOCSData);            
             
+        }        
+        
+    }
+    
+    public void loadInstancesOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
+    {
+        
+        for (int i = 0; i < resultsOCSController.sizeInstanceOCS(graphNodeSource, graphNodeDestination); i++)
+        {
+            InstanceOCSData instanceOCSData = new InstanceOCSData();            
+            resultsOCSController.loadOCS_InstanceByIndex(graphNodeSource, graphNodeDestination, i);
+            instanceOCSData.setRequestTime("   "+resultsOCSController.getRequestTimeInstanceOCS());
+            instanceOCSData.setLambda("   "+resultsOCSController.getWavelengthID());
+            instanceOCSData.setSetupTime("   "+resultsOCSController.getSetupTimeInstanceOCS());
+            instanceOCSData.setDurationTime("   "+resultsOCSController.getDurationTimeInstanceOCS());
+            instanceOCSData.setTearDownTime("   "+resultsOCSController.getTearDownTimeInstanceOCS());
+            instanceOCSData.setTraffic("   "+resultsOCSController.getTrafficInstanceOCS());
+            
+            if(resultsOCSController.getNodeErrorInstanceOCS()==null)
+            {    
+                instanceOCSData.setErrorNodo("Sin problemas");
+            }
+            else
+            {
+                instanceOCSData.setErrorNodo(resultsOCSController.getProblemInstanceOCS() +" "+resultsOCSController.getNodeErrorInstanceOCS().getName());
+            }            
+            
+            dataInstanceOCS.add(instanceOCSData);
             
         }
         
@@ -94,22 +132,22 @@ public class ResultsOCS {
 
         TableColumn tableColumn8 = new TableColumn();
         tableColumn8.setText("Longitud  \nde onda (λ)");
-        tableColumn8.setMinWidth(230);
+        tableColumn8.setMinWidth(100);
         tableColumn8.setCellValueFactory(new PropertyValueFactory("lambda"));
         
                 
         TableColumn tableColumn2 = new TableColumn();
-        tableColumn2.setText("Tiempo de la \nsolicitud λSP ");
+        tableColumn2.setText("Tiempo de la \nsolicitud λSP");
         tableColumn2.setMinWidth(130);
         tableColumn2.setCellValueFactory(new PropertyValueFactory("requestTime"));
 
         TableColumn tableColumn3 = new TableColumn();
-        tableColumn3.setText("Tiempo de \nestablecimiento λSP  ");
+        tableColumn3.setText("Tiempo de \nestablecimiento λSP");
         tableColumn3.setMinWidth(130);
         tableColumn3.setCellValueFactory(new PropertyValueFactory("setupTime"));
 
         TableColumn tableColumn4 = new TableColumn();
-        tableColumn4.setText("Duracion λSP ");
+        tableColumn4.setText("Duracion λSP");
         tableColumn4.setMinWidth(130);
         tableColumn4.setCellValueFactory(new PropertyValueFactory("durationTime"));
 
@@ -125,7 +163,7 @@ public class ResultsOCS {
         
         TableColumn tableColumn7 = new TableColumn();
         tableColumn7.setText("Problemas");
-        tableColumn7.setMinWidth(130);
+        tableColumn7.setMinWidth(250);
         tableColumn7.setCellValueFactory(new PropertyValueFactory("errorNodo")); 
 
         tvInstaceOCS.setItems(dataInstanceOCS);       
@@ -147,9 +185,14 @@ public class ResultsOCS {
         tvSummaryOCS.setMinHeight(250);
 
         TableColumn tableColumn1 = new TableColumn();
-        tableColumn1.setText("Origen/Destino");
-        tableColumn1.setMinWidth(130);
-        tableColumn1.setCellValueFactory(new PropertyValueFactory("sourceDestination"));
+        tableColumn1.setText("Origen");
+        tableColumn1.setMinWidth(220);
+        tableColumn1.setCellValueFactory(new PropertyValueFactory("source"));
+        
+        TableColumn tableColumn7 = new TableColumn();
+        tableColumn7.setText("Destino");
+        tableColumn7.setMinWidth(220);
+        tableColumn7.setCellValueFactory(new PropertyValueFactory("destination"));
 
         TableColumn tableColumn2 = new TableColumn();
         tableColumn2.setText("OCS Solicitudes");
@@ -178,11 +221,12 @@ public class ResultsOCS {
         
 
         tvSummaryOCS.setItems(dataSummaryOCS);       
-        tvSummaryOCS.getColumns().addAll(tableColumn1, tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
+        tvSummaryOCS.getColumns().addAll(tableColumn1,tableColumn7 ,tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
     }
     public static class InstanceOCSData{
         
-         String sourceDestination;
+         String source;
+         String destination;
          String path;
          String requestTime;
          String setupTime;         
@@ -199,8 +243,6 @@ public class ResultsOCS {
         public void setLambda(String lambda) {
             this.lambda = lambda;
         }
-         
-         
 
         public String getDurationTime() {
             return durationTime;
@@ -242,14 +284,7 @@ public class ResultsOCS {
             this.setupTime = setupTime;
         }
 
-        public String getSourceDestination() {
-            return sourceDestination;
-        }
-
-        public void setSourceDestination(String sourceDestination) {
-            this.sourceDestination = sourceDestination;
-        }
-
+   
         public String getTearDownTime() {
             return tearDownTime;
         }
@@ -265,23 +300,32 @@ public class ResultsOCS {
         public void setTraffic(String traffic) {
             this.traffic = traffic;
         }
-         
-         
-         
+                  
     }
 
-    public static class SummaryOCSData {
+    public  class SummaryOCSData {
 
-        private String sourceDestination;
+        private String source;
+        private String destination;
         private String requestOCS;
         private String createOCS;
         private String countFault;
         private String durationTime;
         private Button btnViewDetails;
+        private GraphNode graphNodeSource;
+        private GraphNode graphNodeDestination;
+        
         
 
         public SummaryOCSData() {
             btnViewDetails = new Button("Ver detalles");
+            btnViewDetails.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent arg0) {
+                   ResultsOCS.this.loadInstancesOCS(graphNodeSource, graphNodeDestination);
+                }
+            });
         }
 
         public Button getBtnViewDetails() {
@@ -312,13 +356,23 @@ public class ResultsOCS {
             this.requestOCS = requestOCS;
         }
 
-        public String getSourceDestination() {
-            return sourceDestination;
+        public String getDestination() {
+            return destination;
         }
 
-        public void setSourceDestination(String sourceDestination) {
-            this.sourceDestination = sourceDestination;
+        public void setDestination(String destination) {
+            this.destination = destination;
         }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+
+      
 
         public String getDurationTime() {
             return durationTime;
@@ -327,6 +381,24 @@ public class ResultsOCS {
         public void setTimeDuration(String timeDuration) {
             this.durationTime = timeDuration;
         }
+
+        public GraphNode getGraphNodeDestination() {
+            return graphNodeDestination;
+        }
+
+        public void setGraphNodeDestination(GraphNode graphNodeDestination) {
+            this.graphNodeDestination = graphNodeDestination;
+        }
+
+        public GraphNode getGraphNodeSource() {
+            return graphNodeSource;
+        }
+
+        public void setGraphNodeSource(GraphNode graphNodeSource) {
+            this.graphNodeSource = graphNodeSource;
+        }
+        
+        
     }
 
     public ResultsOCSController getResultsOCSController() {

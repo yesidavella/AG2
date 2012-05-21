@@ -73,7 +73,7 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         
         for(Entity entity : instanceOCS.getRoute()  )
         {            
-            pathInstaceOCS.add(  Utils.findGraphicalNode(entity));            
+            pathInstaceOCS.add( Utils.findGraphicalNode(entity));            
         }
               
         requestTimeInstanceOCS = instanceOCS.getRequestTimeInstanceOCS();
