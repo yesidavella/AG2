@@ -19,7 +19,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
     private ArrayList<GraphArc> graphArcs = new ArrayList<GraphArc>();
     private GraphArc initialGraphArc, finalGraphArc;
     private GraphDesignGroup graphDesignGroup;
-    private LinkAdminAbstractController linkAdminAbstractController;
+    private LinkAdminAbstractController linkAdminCtr;
     private boolean isSelected;
     private HashMap<String, String> properties;
 
@@ -27,7 +27,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 
         this.graphNodeA = graphNodeA;
         this.graphNodeB = graphNodeB;
-        this.linkAdminAbstractController = linkAdminAbstractController;
+        this.linkAdminCtr = linkAdminAbstractController;
         this.graphNodeA.addNodeListener(this);
         this.graphNodeB.addNodeListener(this);
 
@@ -44,8 +44,8 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 
         properties = new HashMap<String, String>();
         findOutInitialAndFinalArc();
-        linkAdminAbstractController.createLink(this);
-        select(true);
+//        linkAdminAbstractController.createLink(graphNodeA,graphNodeB);
+//        select(true);
 
     }
 
@@ -123,7 +123,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
                 }
             }
             graphDesignGroup.setSelectable(this);
-            linkAdminAbstractController.queryProperty(this);
+            linkAdminCtr.queryProperty(this);
 
         } else {
             for (GraphArc graphArc : graphArcs) {
@@ -169,7 +169,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
     }
 
     public boolean removeGraphLink() {
-        return linkAdminAbstractController.removeLink(this);
+        return linkAdminCtr.removeLink(this);
     }
     private void writeObject(ObjectOutputStream stream) {
         try {

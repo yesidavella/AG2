@@ -4,13 +4,14 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
+import java.util.List;
 
 public class HybridSwitchGraphNode extends SwitchGraphNode {
 
     private static short nodeCounter = 0;
 
     public HybridSwitchGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
-            LinkAdminAbstractController linkAdminAbstractController) {
+            List<LinkAdminAbstractController> linkAdminAbstractController) {
 
         super(graphDesignGroup, "Enrutador_Hibrido_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "enrutador_hibrido_mapa.png",
                 nodeAdminAbstractController, linkAdminAbstractController);

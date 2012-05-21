@@ -1,7 +1,9 @@
 package com.ag2.presentation.design;
 
+import com.ag2.controller.FiberAdminController;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
+import com.ag2.controller.OCSAdminController;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.Main;
@@ -12,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
@@ -48,8 +51,8 @@ public abstract class GraphNode implements Selectable, Serializable {
     private boolean selected = false;
     private String imageURL;
     private boolean dragging = false;
-    private NodeAdminAbstractController nodeAdminAbstractController;
-    private LinkAdminAbstractController linkAdminAbstractController;
+    private NodeAdminAbstractController nodeAdminController;
+    private List<LinkAdminAbstractController> linkAdminControllers;
     private short height;
     private short width;
     private String originalName;
@@ -61,11 +64,11 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
 
-    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, NodeAdminAbstractController nodeAdminAbstractController, LinkAdminAbstractController linkAdminAbstractController) {
+    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
         this.graphDesignGroup = graphDesignGroup;
-        this.nodeAdminAbstractController = nodeAdminAbstractController;
-        this.linkAdminAbstractController = linkAdminAbstractController;
+        this.nodeAdminController = nodeAdminAbstractController;
+        this.linkAdminControllers = linkAdminControllers;
         this.imageURL = imageURL;
         this.name = name;
         this.originalName = name;
@@ -151,7 +154,7 @@ public abstract class GraphNode implements Selectable, Serializable {
             vbxWrapper.getStyleClass().remove("nodoSeleccionado");
             vbxWrapper.getStyleClass().add("nodoNoSeleccionado");
         } else {
-            nodeAdminAbstractController.queryProperties(this);
+            nodeAdminController.queryProperties(this);
             vbxWrapper.getStyleClass().remove("nodoNoSeleccionado");
             vbxWrapper.getStyleClass().add("nodoSeleccionado");
 
@@ -190,16 +193,41 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                     if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
 
-                        if (wildcardNodeA.isEnableToCreateLInk(graphNode) && linkAdminAbstractController.canCreateLink(wildcardNodeA,graphNode)) {
-                            graphDesignGroup.remove(wildcardLink);
+                        for (LinkAdminAbstractController linkAdminCtr : linkAdminControllers) {
 
-                            GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminAbstractController);
-                            graphLink.addInitialGraphArc();
+                            if (linkAdminCtr instanceof FiberAdminController) {
 
-                            wildcardNodeA.getGroup().toFront();
-                            graphNode.getGroup().toFront();
-                        } else {
-                            graphNode.playDenyLinkAnimation();
+                                if (wildcardNodeA.isEnableToCreateLInk(graphNode) && linkAdminCtr.canCreateLink(wildcardNodeA, graphNode)) {
+                                    
+                                    graphDesignGroup.remove(wildcardLink);
+
+                                    if (linkAdminCtr.createLink(wildcardNodeA, graphNode)) {
+                                        GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminCtr);
+                                        graphLink.addInitialGraphArc();
+                                        
+                                        ((FiberAdminController)linkAdminCtr).insertCoupleLinksOnMatchContainer(graphLink);
+                                        graphLink.select(true);
+                                        
+                                        wildcardNodeA.getGroup().toFront();
+                                        graphNode.getGroup().toFront();
+                                    }
+                                } else {
+                                    graphNode.playDenyLinkAnimation();
+                                }
+                            }
+                        }
+                    }
+
+                } else if (actionTypeEmun == actionTypeEmun.OCS_CIRCUIT) {
+                    System.out.println("Circuito:" + wildcardNodeA);
+
+                    if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
+
+                        for (LinkAdminAbstractController linkAdminCtr : linkAdminControllers) {
+
+                            if (linkAdminCtr instanceof OCSAdminController) {
+                                linkAdminCtr.createLink(wildcardNodeA, graphNode);
+                            }
                         }
                     }
 
@@ -237,6 +265,11 @@ public abstract class GraphNode implements Selectable, Serializable {
                     if (mouseEvent.isPrimaryButtonDown() && group.isHover()) {
                         GraphNode.linkBegin = true;
                     }
+                } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
+                    GraphNode graphNode = GraphNode.this;
+                    wildcardNodeA = graphNode;
+                    GraphNode.linkBegin = true;
+                    System.out.println("Grabando:" + wildcardNodeA);
                 }
                 group.setScaleX(1);
                 group.setScaleY(-1);
@@ -289,7 +322,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     graphNode.setDeleted(true);
                     graphDesignGroup.remove(graphNode);
                     graphDesignGroup.deleteNodeFromGoList(graphNode);
-                    nodeAdminAbstractController.removeNode(graphNode);
+                    nodeAdminController.removeNode(graphNode);
                 }
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
@@ -512,7 +545,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public abstract boolean isEnableToCreateLInk(GraphNode graphNode);
-    
+
     private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();

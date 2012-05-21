@@ -24,8 +24,7 @@ public class ToggleButtonAg2 extends ToggleButton {
         setMaxWidth(WIDTH);
         setMaxHeight(HEIGHT);
         setFocusTraversable(false);
-        
-        
+
     }
 
     public ActionTypeEmun getActionTypeEmun() {
@@ -47,7 +46,6 @@ public class ToggleButtonAg2 extends ToggleButton {
 
                     GUI.setActionTypeEmun(toggleButtonAg2.getActionTypeEmun());
 
-
                     if (toggleButtonAg2.actionTypeEmun == ActionTypeEmun.POINTER) {
                         group.setCursor(Cursor.DEFAULT);
                     } else {
@@ -60,13 +58,7 @@ public class ToggleButtonAg2 extends ToggleButton {
                 } else {
                     toggleButtonAg2.setSelected(true);
                 }
-                
             }
-            
-
-        }
-                
-                
-                );
+        });
     }
 }

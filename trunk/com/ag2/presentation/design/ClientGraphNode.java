@@ -4,13 +4,14 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
+import java.util.List;
 
 public class ClientGraphNode extends GraphNode{
 
     private static int nodeCounter = 0;
     
     public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
-            LinkAdminAbstractController linkAdminAbstractController) {
+            List<LinkAdminAbstractController> linkAdminAbstractController) {
         
         super(graphDesignGroup,"Cliente_"+(++nodeCounter), Utils.ABS_PATH_IMGS+"cliente_mapa.png", 
                 nodeAdminAbstractController,linkAdminAbstractController);        
