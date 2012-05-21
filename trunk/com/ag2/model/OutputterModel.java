@@ -196,5 +196,6 @@ public class OutputterModel extends Outputter {
                 reqAckSent,
                 sendingFailed,
                 relativeAckSent);
+        printCircuitsStats();
     }
 }
