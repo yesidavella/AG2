@@ -28,8 +28,8 @@ public class Main extends Application implements Serializable {
     private NodeAdminController nodeAdminController;
     private ExecuteController executeController;
     private NodeCreationModel nodeCreationModel;
-    private LinkAdminAbstractController fiberLinkAdminACtl;
-    private transient LinkAdminAbstractController OCSlinkAdminCtl;
+    private LinkAdminAbstractController fiberLinkAdminACtrl;
+    private transient LinkAdminAbstractController OCSlinkAdminCtrl;
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
@@ -122,20 +122,20 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new HybridSwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
-        fiberLinkAdminACtl = new FiberAdminController();
+        fiberLinkAdminACtrl = new FiberAdminController();
         LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
-        fiberLinkAdminACtl.addModel(fiberCreationModel);
-        SimulationBase.getInstance().setFiberLinkAdminController(fiberLinkAdminACtl);
+        fiberLinkAdminACtrl.addModel(fiberCreationModel);
+        SimulationBase.getInstance().setFiberLinkAdminController(fiberLinkAdminACtrl);
 
-        fiberLinkAdminACtl.setLinkView(guiAG2.getEntityPropertyTb());
-        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(fiberLinkAdminACtl);
-        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(fiberLinkAdminACtl);
+        fiberLinkAdminACtrl.setLinkView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(fiberLinkAdminACtrl);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(fiberLinkAdminACtrl);
 
-        OCSlinkAdminCtl = new OCSAdminController();
+        OCSlinkAdminCtrl = new OCSAdminController();
         LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
-        OCSlinkAdminCtl.addModel(OCSCreationAbstractModel);
-        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(OCSlinkAdminCtl);
-        SimulationBase.getInstance().setOCSLinkAdminCtr(OCSlinkAdminCtl);
+        OCSlinkAdminCtrl.addModel(OCSCreationAbstractModel);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(OCSlinkAdminCtrl);
+        SimulationBase.getInstance().setOCSLinkAdminCtr(OCSlinkAdminCtrl);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
@@ -156,11 +156,11 @@ public class Main extends Application implements Serializable {
     }
 
     public LinkAdminAbstractController getLinkAdminAbstractController() {
-        return fiberLinkAdminACtl;
+        return fiberLinkAdminACtrl;
     }
 
     public LinkAdminAbstractController getLinkAdminOCSCtl() {
-        return OCSlinkAdminCtl;
+        return OCSlinkAdminCtrl;
     }
 
     public ExecuteController getExecuteAbstractController() {
@@ -195,7 +195,7 @@ public class Main extends Application implements Serializable {
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
 
         nodeAdminController = main.getNodeAdminController();
-        fiberLinkAdminACtl = main.getLinkAdminAbstractController();
+        fiberLinkAdminACtrl = main.getLinkAdminAbstractController();
 //        linkAdminOCSCtl = main.getLinkAdminOCSCtl();
 
         executeController = main.getExecuteAbstractController();
@@ -214,10 +214,10 @@ public class Main extends Application implements Serializable {
         guiAG2.getExecutePane().setExecuteAbstractController(executeController);
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
 
-        fiberLinkAdminACtl.setLinkView(guiAG2.getEntityPropertyTb());
-        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(fiberLinkAdminACtl);
+        fiberLinkAdminACtrl.setLinkView(guiAG2.getEntityPropertyTb());
+        guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(fiberLinkAdminACtrl);
 
-        SimulationBase.getInstance().setFiberLinkAdminController(fiberLinkAdminACtl);
+        SimulationBase.getInstance().setFiberLinkAdminController(fiberLinkAdminACtrl);
 
         nodeAdminController.addGraphNodesView(guiAG2.getGraphDesignGroup());
         nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
