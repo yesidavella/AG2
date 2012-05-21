@@ -45,7 +45,6 @@ public class FiberAdminController extends LinkAdminAbstractController {
             }
         }
 
-        SimulationBase.getInstance().setLinkAdminAbstractController(this);
 
         return false;
     }
@@ -124,6 +123,8 @@ public class FiberAdminController extends LinkAdminAbstractController {
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
             //createLink(graphLink); ojo
+            
+            createLink(graphLink.getGraphNodeA(),graphLink.getGraphNodeB());
         }
 
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
