@@ -29,7 +29,7 @@ public class Main extends Application implements Serializable {
     private ExecuteController executeController;
     private NodeCreationModel nodeCreationModel;
     private LinkAdminAbstractController linkAdminAbstractController;
-    private LinkAdminAbstractController linkAdminOCSCtl;
+    private transient LinkAdminAbstractController linkAdminOCSCtl;
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
@@ -127,7 +127,7 @@ public class Main extends Application implements Serializable {
         LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
         linkAdminOCSCtl.addModel(OCSCreationAbstractModel);
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminOCSCtl);
-
+        SimulationBase.getInstance().setLinkAdminOCSCtr(linkAdminOCSCtl);
 
         linkAdminAbstractController = new FiberAdminController();
         LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
@@ -159,6 +159,10 @@ public class Main extends Application implements Serializable {
 
     public LinkAdminAbstractController getLinkAdminAbstractController() {
         return linkAdminAbstractController;
+    }
+
+    public LinkAdminAbstractController getLinkAdminOCSCtl() {
+        return linkAdminOCSCtl;
     }
 
     public ExecuteController getExecuteAbstractController() {
@@ -194,6 +198,8 @@ public class Main extends Application implements Serializable {
 
         nodeAdminController = main.getNodeAdminController();
         linkAdminAbstractController = main.getLinkAdminAbstractController();
+//        linkAdminOCSCtl = main.getLinkAdminOCSCtl();
+
         executeController = main.getExecuteAbstractController();
         resultsController = main.getResultsController();
         nodeCreationModel = main.getNodeCreationModel();
