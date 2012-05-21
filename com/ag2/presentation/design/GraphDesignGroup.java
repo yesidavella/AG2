@@ -3,8 +3,8 @@ package com.ag2.presentation.design;
 import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.presentation.ActionTypeEmun;
-import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.GUI;
+import com.ag2.presentation.GraphNodesView;
 import com.ag2.presentation.Main;
 import com.ag2.presentation.design.property.EntityProperty;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -25,9 +25,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -49,7 +46,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private transient ObservableList resourcesObservableList;
     private transient ObservableList switchesObservableList;
     private transient ObservableList brokersObservableList;
-    private transient ScrollPane scPnWorld;
+    private transient ScrollPane scpWorld;
     private transient Scale scZoom;
     private transient Group group;
     private Selectable selectable;
@@ -57,7 +54,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private final int MAP_SCALE = 17;
     private final double PERCENT_ZOOM = 1.2;
     private ArrayList<NodeAdminAbstractController> nodeAdminAbstractControllers;
-    private ArrayList<LinkAdminAbstractController> linkAdminAbstractControllers;
+    private ArrayList<LinkAdminAbstractController> linkAdminCtrs;
     private double dragMouseX = 0;
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
@@ -65,7 +62,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public GraphDesignGroup() {
         initTransientObjects();
         nodeAdminAbstractControllers = new ArrayList<NodeAdminAbstractController>();
-        linkAdminAbstractControllers = new ArrayList<LinkAdminAbstractController>();
+        linkAdminCtrs = new ArrayList<LinkAdminAbstractController>();
     }
 
     public boolean isSerializableComplete() {
@@ -127,43 +124,43 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 double distanceMovedX = dragMouseX - mouseEvent.getX();
                 double percentToMoveX = distanceMovedX / currentWidth;
 
-                scPnWorld.setHvalue(scPnWorld.getHvalue() + percentToMoveX);
+                scpWorld.setHvalue(scpWorld.getHvalue() + percentToMoveX);
 
                 double currentHeight = group.getBoundsInParent().getHeight();
                 double distanceMovedY = dragMouseY - mouseEvent.getY();
                 double percentToMoveY = distanceMovedY / currentHeight;
 
-                scPnWorld.setVvalue(scPnWorld.getVvalue() - percentToMoveY);
+                scpWorld.setVvalue(scpWorld.getVvalue() - percentToMoveY);
             }
 
         } else if (eventType == MouseEvent.MOUSE_RELEASED) {
 
             GraphNode graphNode = null;
             NodeAdminAbstractController nodeAdminAbstractController = nodeAdminAbstractControllers.get(0);
-            LinkAdminAbstractController linkAdminAbstractController = linkAdminAbstractControllers.get(0);
+//            LinkAdminAbstractController linkAdminAbstractController = linkAdminAbstractControllers.get(0);
 
             if (actionTypeEmun == ActionTypeEmun.HAND) {
                 group.setCursor(ActionTypeEmun.HAND.getCursorImage());
 
             } else if (actionTypeEmun == ActionTypeEmun.CLIENT) {
 
-                graphNode = new ClientGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                graphNode = new ClientGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 clientsObservableList.add(graphNode);
 
             } else if (actionTypeEmun == ActionTypeEmun.BROKER) {
-                graphNode = new BrokerGrahpNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                graphNode = new BrokerGrahpNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 brokersObservableList.add(graphNode);
 
             } else if (actionTypeEmun == ActionTypeEmun.PCE_SWITCH) {
-                graphNode = new PCE_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                graphNode = new PCE_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 switchesObservableList.add(graphNode);
 
             }  else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
-                graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 switchesObservableList.add(graphNode);
 
             } else if (actionTypeEmun == ActionTypeEmun.RESOURCE) {
-                graphNode = new ResourceGraphNode(this, nodeAdminAbstractController, linkAdminAbstractController);
+                graphNode = new ResourceGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 resourcesObservableList.add(graphNode);
             }
 
@@ -175,8 +172,8 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 addNodeOnMap(graphNode, mouseEvent);
                 selectable = graphNode;
 
-                for (NodeAdminAbstractController controladorRegistrado : nodeAdminAbstractControllers) {
-                    controladorRegistrado.createNode(graphNode);
+                for (NodeAdminAbstractController nodeAdminController : nodeAdminAbstractControllers) {
+                    nodeAdminController.createNode(graphNode);
                 }
                 graphNode.select(true);
             }
@@ -312,7 +309,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             inputStream.defaultReadObject();
             initTransientObjects();
 
-
             for (Serializable serializable : serializableObjects) {
                 if (serializable instanceof GraphArc) {
                     GraphArc graphArc = (GraphArc) serializable;
@@ -376,7 +372,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     }
 
     public void addLinkAdminAbstractControllers(LinkAdminAbstractController linkAdminAbstractController) {
-        linkAdminAbstractControllers.add(linkAdminAbstractController);
+        linkAdminCtrs.add(linkAdminAbstractController);
     }
 
     private void loadGeoMap() {
@@ -421,7 +417,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         path.setStrokeWidth(0.5);
                         path.setFill(Color.BLACK);
                         path.setFill(Color.web("#C3B8A5"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1 
-                        //Si le va cambiar el color por lo menos deje el registro de cual era el q estaba¡¡¡
+                        //Si le va cambiar el color, dejar el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 0; i < coords.length; i++) {
@@ -478,10 +474,10 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         double percentageClickX = coorAbsClickX / currentWidth;
         double percentageClickY = coorAbsClickY / currentHeight;
 
-        double desfaceMaxX = scPnWorld.getViewportBounds().getWidth() / 2;
+        double desfaceMaxX = scpWorld.getViewportBounds().getWidth() / 2;
         double functionDesfaceX = (-2 * desfaceMaxX * (percentageClickX)) + desfaceMaxX;
 
-        double desfaceMaxY = scPnWorld.getViewportBounds().getHeight() / 2;
+        double desfaceMaxY = scpWorld.getViewportBounds().getHeight() / 2;
         double functionDesfaceY = (-2 * (desfaceMaxY) * (percentageClickY)) + desfaceMaxY;
         /*
          * Convercion de pixeles a porcentaje del resultado de la funcion de
@@ -490,13 +486,13 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         double percentageCorrectionX = functionDesfaceX / currentWidth;
         double percentageCorrectionY = functionDesfaceY / currentHeight;
 
-        scPnWorld.setVvalue(percentageClickY - percentageCorrectionY);
-        scPnWorld.setHvalue(percentageClickX - percentageCorrectionX);
+        scpWorld.setVvalue(percentageClickY - percentageCorrectionY);
+        scpWorld.setHvalue(percentageClickX - percentageCorrectionX);
 
     }
 
     public void setScrollPane(ScrollPane scPnPanelWorld) {
-        this.scPnWorld = scPnPanelWorld;
+        this.scpWorld = scPnPanelWorld;
     }
 
     public void enableDisign() {

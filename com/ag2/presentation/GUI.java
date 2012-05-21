@@ -41,31 +41,31 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
-public class GUI extends Scene 
-{
+public class GUI extends Scene {
     //Static object
+
     private static GUI iguAG2;
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
     private static Stage stage;
-   
-    private VBox vbLogos = createProjectsLogos();     
-    private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();         
+    private VBox vbLogos = createProjectsLogos();
+    private GraphDesignGroup graphDesignGroup = new GraphDesignGroup();
     private ToggleGroup tgTools;
     private GridPane gpMapNavegation;
     private ExecutePane executePane;
     private ToggleButtonAg2 btnHand;
     private ToggleButtonAg2 btnClient = new ToggleButtonAg2(ActionTypeEmun.CLIENT);
     private ToggleButtonAg2 btnBroker = new ToggleButtonAg2(ActionTypeEmun.BROKER);
-    private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);  
+    private ToggleButtonAg2 btnPCE_Switch = new ToggleButtonAg2(ActionTypeEmun.PCE_SWITCH);
     private ToggleButtonAg2 btnHybridSwitch = new ToggleButtonAg2(ActionTypeEmun.HRYDRID_SWITCH);
     private ToggleButtonAg2 btnResource = new ToggleButtonAg2(ActionTypeEmun.RESOURCE);
     private ToggleButtonAg2 btnLink = new ToggleButtonAg2(ActionTypeEmun.LINK);
+    private ToggleButtonAg2 btnOCSCircuit = new ToggleButtonAg2(ActionTypeEmun.OCS_CIRCUIT);
     private EntityPropertyTableView entityPropertyTable;
     private GridPane gpTools;
     private ScrollPane scpWorld;
     private ProgressIndicator progressIndicator;
     private boolean isPrincipalKeyPressed = false;
-    private ActionTypeEmun beforeActionTypeEmun;    
+    private ActionTypeEmun beforeActionTypeEmun;
     private Cursor beforeEventCursor;
     private PhosphosrusResults phosphosrusResults;  
     private ResultsOCS resultsOCS;
@@ -82,17 +82,15 @@ public class GUI extends Scene
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
-    private Tab tabChartsClientResults  = new Tab();
-    private Tab tabChartsrResourceResults  = new Tab();
-    private Tab tabResultsResource  = new Tab();
-    
-    private TabPane tbMain = new TabPane();       
-    private TabPane tbResultsResource = new TabPane();  
+    private Tab tabChartsClientResults = new Tab();
+    private Tab tabChartsrResourceResults = new Tab();
+    private Tab tabResultsResource = new Tab();
+    private TabPane tbMain = new TabPane();
+    private TabPane tbResultsResource = new TabPane();
     private ChartsResultClient chartsResultClient;
     private ChartsResultResource chartsResultResource;
-    private TableView<String> tbwSimulationProperties = new TableView<String>();   
-    private  ToolBar tobWindow;
-    
+    private TableView<String> tbwSimulationProperties = new TableView<String>();
+    private ToolBar tobWindow;
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
     private SplitPane splitPane;
@@ -453,6 +451,7 @@ public class GUI extends Scene
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
+        btnOCSCircuit.setGraphDesignGroup(graphDesignGroup.getGroup());
         executePane.setGroup(graphDesignGroup.getGroup());
         graphDesignGroup.setScrollPane(scpWorld);
 
@@ -659,6 +658,7 @@ public class GUI extends Scene
         btnHybridSwitch.setToggleGroup(tgTools);
         btnResource.setToggleGroup(tgTools);
         btnLink.setToggleGroup(tgTools);
+        btnOCSCircuit.setToggleGroup(tgTools);
 
         btnClient.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnBroker.setGraphDesignGroup(graphDesignGroup.getGroup());
@@ -667,6 +667,7 @@ public class GUI extends Scene
         btnHybridSwitch.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnResource.setGraphDesignGroup(graphDesignGroup.getGroup());
         btnLink.setGraphDesignGroup(graphDesignGroup.getGroup());
+        btnOCSCircuit.setGraphDesignGroup(graphDesignGroup.getGroup());
 
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
@@ -675,6 +676,7 @@ public class GUI extends Scene
         btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
         btnResource.setTooltip(new Tooltip("Cluster (Recurso de almacenamiento y procesamiento) "));
         btnLink.setTooltip(new Tooltip("Enlace Optico"));
+        btnOCSCircuit.setTooltip(new Tooltip("Circuito Optico"));
 
         GridPane.setConstraints(btnClient, 0, 4);
         grdPnToolsBar.getChildren().add(btnClient);
@@ -697,12 +699,14 @@ public class GUI extends Scene
         GridPane.setConstraints(btnLink, 1, 6);
         grdPnToolsBar.getChildren().add(btnLink);
 
+        GridPane.setConstraints(btnOCSCircuit, 0, 7);
+        grdPnToolsBar.getChildren().add(btnOCSCircuit);
 
     }
 
     private void createTabs() {
 
-      
+
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
         tabSimulation.setClosable(false);
@@ -715,16 +719,16 @@ public class GUI extends Scene
         
         tabChartsrResourceResults.setText("Graficos de recursos");
         tabChartsrResourceResults.setClosable(false);
-        
+
         tabChartsResourceCPU.setText("Graficos de recursos (CPU)");
         tabChartsResourceCPU.setClosable(false);
-        
+
         tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
-        
+
         tabResultsResource.setText("Graficos de  recurso");
         tabResultsResource.setClosable(false);
-        
+
         tabResultsOCS.setText("Resultados OCS");
         tabResultsOCS.setClosable(false);
         
@@ -741,7 +745,7 @@ public class GUI extends Scene
         splitPane.getItems().addAll(scpWorld, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
-        
+
         chartsResultClient = new ChartsResultClient(tabChartsClientResults);
         chartsResultResource = new ChartsResultResource(tabChartsrResourceResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
@@ -750,7 +754,7 @@ public class GUI extends Scene
                 
         
         tbResultsResource.setSide(Side.LEFT);
-        tbResultsResource.getTabs().addAll( tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
+        tbResultsResource.getTabs().addAll(tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
      
         tbMain.getTabs().addAll(tabSimulation, tabResultsOCS );
@@ -1171,10 +1175,9 @@ public class GUI extends Scene
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
-        if (!tbMain.getTabs().contains(tabResults)) 
-        {
-             tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource ,tabChartsClientResults, tabResults);
-            
+        if (!tbMain.getTabs().contains(tabResults)) {
+            tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults);
+
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
@@ -1215,6 +1218,4 @@ public class GUI extends Scene
     public ChartsResultResource getChartsResultResource() {
         return chartsResultResource;
     }
-    
-    
 }

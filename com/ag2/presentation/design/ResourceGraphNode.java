@@ -4,12 +4,13 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
+import java.util.List;
 
 public class ResourceGraphNode extends GraphNode {
 
     private static short nodeCounter = 0;
 
-    public ResourceGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController, LinkAdminAbstractController linkAdminAbstractController) {
+    public ResourceGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminAbstractController) {
         super(graphDesignGroup, "Cluster_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "recurso_cursor_mapa.png", nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 67);
         setWidth((short) 49);

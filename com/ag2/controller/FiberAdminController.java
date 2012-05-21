@@ -2,8 +2,8 @@ package com.ag2.controller;
 
 import Grid.Entity;
 import Grid.Port.GridOutPort;
+import com.ag2.model.FiberCreationModel;
 import com.ag2.model.LinkCreationAbstractModel;
-import com.ag2.model.LinkCreationModel;
 import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.SimulationBase;
 import com.ag2.presentation.design.ClientGraphNode;
@@ -15,34 +15,39 @@ import java.util.HashMap;
 import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
 
-public class LinkAdminController extends LinkAdminAbstractController {
+public class FiberAdminController extends LinkAdminAbstractController {
+
+    private PhosphorusLinkModel lastPhosphorusLinkModelCreated = null;
 
     @Override
-    public void createLink(GraphLink graphLink) {
+    public boolean createLink(GraphNode sourceGraphNode, GraphNode destinationGraphNode) {
 
         Entity phosphorusNodeA;
         Entity phosphorusNodeB;
 
-        for (LinkCreationAbstractModel model : linkCreationAbstractModels) {
+        for (LinkCreationAbstractModel linkCreationModel : linkCreationAbstractModels) {
 
-            if (model instanceof LinkCreationModel) {
+            if (linkCreationModel instanceof FiberCreationModel) {
 
-                GraphNode graphNodeA = graphLink.getGraphNodeA();
-                GraphNode graphNodeB = graphLink.getGraphNodeB();
-
-                phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNodeA);
-                phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNodeB);
+                lastPhosphorusLinkModelCreated = null;
+                
+                phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(sourceGraphNode);
+                phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(destinationGraphNode);
 
                 if (phosphorusNodeA != null && phosphorusNodeB != null) {
-                    PhosphorusLinkModel phosphorusLinkModel = model.createPhosphorusLink(phosphorusNodeA, phosphorusNodeB);
-                    MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
+                    lastPhosphorusLinkModelCreated = (PhosphorusLinkModel) linkCreationModel.createLink(phosphorusNodeA, phosphorusNodeB);
+//                    MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
                 } else {
                     System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
                 }
+
+                return (lastPhosphorusLinkModelCreated == null) ? false : true;
             }
         }
 
         SimulationBase.getInstance().setLinkAdminAbstractController(this);
+
+        return false;
     }
 
     @Override
@@ -118,7 +123,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
 
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-            createLink(graphLink);
+            //createLink(graphLink); ojo
         }
 
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
@@ -165,7 +170,7 @@ public class LinkAdminController extends LinkAdminAbstractController {
 
             GraphNode nodeInLinkA = graphLink.getGraphNodeA();
             GraphNode nodeInLinkB = graphLink.getGraphNodeB();
-            
+
             //Verifico q no haya un enlace entre este par de nodos
             if ((sourceGraphNode.equals(nodeInLinkA) || sourceGraphNode.equals(nodeInLinkB))
                     && (targetGraphNode.equals(nodeInLinkA) || targetGraphNode.equals(nodeInLinkB))) {
@@ -175,8 +180,8 @@ public class LinkAdminController extends LinkAdminAbstractController {
             //Verifico q los nodos clientes no puedan tener mas de un enlace
             boolean isInPreviousLinkSourceNode = clientNodeExistInPreviousLink(sourceGraphNode, nodeInLinkA, nodeInLinkB);
             boolean isInPreviousLinkTargetNode = clientNodeExistInPreviousLink(targetGraphNode, nodeInLinkA, nodeInLinkB);
-            
-            if(isInPreviousLinkSourceNode || isInPreviousLinkTargetNode){
+
+            if (isInPreviousLinkSourceNode || isInPreviousLinkTargetNode) {
                 return false;
             }
         }
@@ -194,5 +199,18 @@ public class LinkAdminController extends LinkAdminAbstractController {
         }
 
         return false;
+    }
+
+    public PhosphorusLinkModel getLastPhosphorusLinkModelCreated() {
+        return lastPhosphorusLinkModelCreated;
+    }
+
+    public void setLastPhosphorusLinkModelCreated(PhosphorusLinkModel lastPhosphorusLinkModelCreated) {
+        this.lastPhosphorusLinkModelCreated = lastPhosphorusLinkModelCreated;
+    }
+
+    public void insertCoupleLinksOnMatchContainer(GraphLink graphLink) {
+        MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, lastPhosphorusLinkModelCreated);
+        lastPhosphorusLinkModelCreated = null;
     }
 }

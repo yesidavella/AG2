@@ -38,8 +38,8 @@ public class Main extends Application implements Serializable {
     private transient GUI guiAG2;
     public static int countObject = 0;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
-    private  HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-    
+    private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
     @Override
     public void start(final Stage stage) {
 
@@ -122,12 +122,17 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new HybridSwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
-        linkAdminAbstractController = new LinkAdminController();
-        LinkCreationAbstractModel modeloCrearEnlace = new LinkCreationModel();
-        linkAdminAbstractController.addModel(modeloCrearEnlace);
+        linkAdminAbstractController = new FiberAdminController();
+        LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
+        linkAdminAbstractController.addModel(fiberCreationModel);
 
         linkAdminAbstractController.setLinkView(guiAG2.getEntityPropertyTb());
         guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
+
+        linkAdminAbstractController = new OCSAdminController();
+        LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
+        linkAdminAbstractController.addModel(OCSCreationAbstractModel);
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
@@ -188,14 +193,14 @@ public class Main extends Application implements Serializable {
         executeController = main.getExecuteAbstractController();
         resultsController = main.getResultsController();
         nodeCreationModel = main.getNodeCreationModel();
-        resultsChartController  = main.getResultsChartController();
-        nodeMatchCoupleObjectContainer= main.getNodeMatchCoupleObjectContainer();
-        linkMatchCoupleObjectContainer  =main.getLinkMatchCoupleObjectContainer();
-        
+        resultsChartController = main.getResultsChartController();
+        nodeMatchCoupleObjectContainer = main.getNodeMatchCoupleObjectContainer();
+        linkMatchCoupleObjectContainer = main.getLinkMatchCoupleObjectContainer();
+
         MatchCoupleObjectContainer.setNodeMatchCoupleObjectContainer(nodeMatchCoupleObjectContainer);
         MatchCoupleObjectContainer.setLinkMatchCoupleObjectContainer(linkMatchCoupleObjectContainer);
-       
-        
+
+
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
 
         guiAG2.getExecutePane().setExecuteAbstractController(executeController);
@@ -209,9 +214,8 @@ public class Main extends Application implements Serializable {
         nodeAdminController.addGraphNodesView(guiAG2.getGraphDesignGroup());
         nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
         guiAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
-        
-        
-         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
+
+        resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
         resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
         //  executeAbstractController.stop();
     }
@@ -253,6 +257,4 @@ public class Main extends Application implements Serializable {
     public HashMap<GraphNode, Entity> getNodeMatchCoupleObjectContainer() {
         return nodeMatchCoupleObjectContainer;
     }
-    
-    
 }

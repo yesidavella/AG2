@@ -10,6 +10,7 @@ import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Nodes.Hybrid.Parallel.*;
 import Grid.Nodes.OutputResourceNode;
+import Grid.OCS.OCSRoute;
 import Grid.Port.GridInPort;
 import Grid.Port.GridOutPort;
 import Grid.Utilities.IllegalEdgeException;
@@ -177,7 +178,7 @@ public class UtilModel extends Util {
         return customLinkSpeed;
     }
 
-    static PhosphorusLinkModel crearEnlaceBiDireccional(Entity from, Entity to) {
+    static PhosphorusLinkModel createBiDireccionalFiberLink(Entity from, Entity to) {
 
         GridOutPort puertoSalidaNodoA = null;
         GridOutPort puertoSalidaNodoB = null;
@@ -227,5 +228,14 @@ public class UtilModel extends Util {
             throw new IllegalEdgeException("Cannot connect two entities which do not share the same swithcing protocols "
                     + from.getId() + " -->" + to.getId());
         }
+    }
+
+    public static OCSRoute createOCS(Entity source, Entity destination, GridSimulator gridSim, boolean permanent) {
+        OCSRoute ocsRoute = gridSim.getRouting().findOCSRoute(source, destination);
+        source.requestOCSCircuit(ocsRoute, permanent, gridSim.getMasterClock());
+        if (permanent) {
+            gridSim.addRequestedCircuit(ocsRoute);
+        }
+        return ocsRoute;
     }
 }

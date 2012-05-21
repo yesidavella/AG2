@@ -4,13 +4,14 @@ import com.ag2.controller.LinkAdminAbstractController;
 import com.ag2.controller.NodeAdminAbstractController;
 import com.ag2.util.Utils;
 import java.io.ObjectInputStream;
+import java.util.List;
 
 public class PCE_SwicthGraphNode extends SwitchGraphNode {
 
     private static short nodeCounter = 0;
 
     public PCE_SwicthGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
-            LinkAdminAbstractController linkAdminAbstractController) {
+            List<LinkAdminAbstractController> linkAdminAbstractController) {
 
         super(graphDesignGroup, "PCE" + (++nodeCounter), Utils.ABS_PATH_IMGS + "PCE_mapa.png",
                 nodeAdminAbstractController, linkAdminAbstractController);

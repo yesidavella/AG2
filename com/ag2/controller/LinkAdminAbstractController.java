@@ -1,13 +1,11 @@
 package com.ag2.controller;
 
 import com.ag2.model.LinkCreationAbstractModel;
-import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class LinkAdminAbstractController implements Serializable {
 
@@ -16,7 +14,6 @@ public abstract class LinkAdminAbstractController implements Serializable {
 
     public LinkAdminAbstractController() {
         linkCreationAbstractModels = new ArrayList<LinkCreationAbstractModel>();
-        
     }
 
     public boolean addModel(LinkCreationAbstractModel linkCreationAbstractModel) {
@@ -31,7 +28,7 @@ public abstract class LinkAdminAbstractController implements Serializable {
         this.entityPropertyTable = entityPropertyTable;
     }
 
-    public abstract void createLink(GraphLink graphLink);
+    public abstract boolean createLink(GraphNode sourceNode, GraphNode destinationNode);
     
     public abstract boolean removeLink(GraphLink graphLink);
 

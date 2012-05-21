@@ -1,10 +1,12 @@
 package com.ag2.model;
 
+import Grid.Entity;
 import Grid.Routing.RoutingViaJung;
 import Grid.Routing.ShortesPathRouting;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import java.io.ObjectInputStream;
+import java.util.HashMap;
 import simbase.Exceptions.StopException;
 import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
@@ -19,12 +21,15 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     private int percentageSwapShort = 0;
     private long countEventToAdvise = 0;
     private ResultsAbstractController resultsAbstractController;
+    private HashMap<Entity, Entity> OCSDesignedCircuits;
 
     public GridSimulatorModel() {
-        
+
         initRoutingObjLoadingConfigFile();
 
         simulationTime = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME);
+
+        OCSDesignedCircuits = new HashMap<Entity, Entity>();
     }
 
     private void initRoutingObjLoadingConfigFile() {
@@ -86,5 +91,9 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public HashMap<Entity, Entity> getDesignedOCSCircuits() {
+        return OCSDesignedCircuits;
     }
 }

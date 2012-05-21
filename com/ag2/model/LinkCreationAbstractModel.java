@@ -21,5 +21,5 @@ public abstract class LinkCreationAbstractModel implements Serializable{
         return linkAdminAbstractControllers.remove(linkAdminAbstractController);
     }
     
-    public abstract PhosphorusLinkModel createPhosphorusLink(Entity entityA,Entity entityB);
+    public abstract Object createLink(Entity entityA,Entity entityB);
 }

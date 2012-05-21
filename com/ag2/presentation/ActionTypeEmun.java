@@ -22,15 +22,15 @@ import javafx.scene.image.Image;
         HRYDRID_SWITCH("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
         BROKER("nodo_servicio","nodo_servicio_cursor",15,16),
         RESOURCE("recurso","recurso_cursor",13,16),
-        LINK("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
+        LINK("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7),
+        OCS_CIRCUIT("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
 
     private Image buttonImage;
     private ImageCursor cursorImage;
     private ImageCursor overCursorImage;
     private Point2D point2D; 
 
-        private ActionTypeEmun(String imageName)
-        {
+        private ActionTypeEmun(String imageName) {
             point2D = new Point2D(0,0);
             buttonImage = new Image(Utils.ABS_PATH_IMGS + imageName + ".png");
         }
