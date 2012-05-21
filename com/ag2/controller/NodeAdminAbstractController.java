@@ -18,7 +18,7 @@ public abstract class NodeAdminAbstractController implements Serializable {
     public NodeAdminAbstractController() {
         nodeCreationModels = new ArrayList<NodeCreationModel>();
         
-        SimulationBase.getInstance().setNodeAdminAbstractController(this);
+        SimulationBase.getInstance().setNodeAdminController(this);
     }
 
     public void addGraphNodesView(GraphNodesView graphNodesView) {

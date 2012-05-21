@@ -219,7 +219,6 @@ public abstract class GraphNode implements Selectable, Serializable {
                     }
 
                 } else if (actionTypeEmun == actionTypeEmun.OCS_CIRCUIT) {
-                    System.out.println("Circuito:" + wildcardNodeA);
 
                     if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
 
@@ -269,7 +268,6 @@ public abstract class GraphNode implements Selectable, Serializable {
                     GraphNode graphNode = GraphNode.this;
                     wildcardNodeA = graphNode;
                     GraphNode.linkBegin = true;
-                    System.out.println("Grabando:" + wildcardNodeA);
                 }
                 group.setScaleX(1);
                 group.setScaleY(-1);
