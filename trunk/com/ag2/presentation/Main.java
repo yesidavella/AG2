@@ -29,6 +29,7 @@ public class Main extends Application implements Serializable {
     private ExecuteController executeController;
     private NodeCreationModel nodeCreationModel;
     private LinkAdminAbstractController linkAdminAbstractController;
+    private LinkAdminAbstractController linkAdminOCSCtl;
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
@@ -122,12 +123,12 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new HybridSwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
-                linkAdminAbstractController = new OCSAdminController();
+        linkAdminOCSCtl = new OCSAdminController();
         LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
-        linkAdminAbstractController.addModel(OCSCreationAbstractModel);
-        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
-        
-        
+        linkAdminOCSCtl.addModel(OCSCreationAbstractModel);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminOCSCtl);
+
+
         linkAdminAbstractController = new FiberAdminController();
         LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
         linkAdminAbstractController.addModel(fiberCreationModel);
