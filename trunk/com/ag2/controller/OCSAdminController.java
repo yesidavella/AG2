@@ -4,7 +4,7 @@ import Grid.Entity;
 import com.ag2.model.*;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class OCSAdminController extends LinkAdminAbstractController {
 
@@ -16,7 +16,7 @@ public class OCSAdminController extends LinkAdminAbstractController {
         Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(sourceGraphNode);
         Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(destinationGraphNode);
 
-        simulatorModel.getDesignedOCSCircuits().put(phosphorusNodeA, phosphorusNodeB);
+        simulatorModel.getDesignedOCSCircuits().add(new OCSRequest(phosphorusNodeA, phosphorusNodeB));
 
         System.out.println("Solicito OCS circuito entre:" + sourceGraphNode.getName() + " -y- " + destinationGraphNode.getName());
 
@@ -55,10 +55,13 @@ public class OCSAdminController extends LinkAdminAbstractController {
             if (linkCreationModel instanceof OCSCreationModel) {
                 
                 GridSimulatorModel simulatorModel = (GridSimulatorModel) SimulationBase.getInstance().getGridSimulatorModel();
-                HashMap<Entity, Entity> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
+                ArrayList<OCSRequest> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
 
-                for (Entity sourceNode : designedOCSCircuits.keySet()) {
-                    Entity destinationNode = designedOCSCircuits.get(sourceNode);
+                for (OCSRequest ocsRequest : designedOCSCircuits) {
+                    
+                    Entity sourceNode = ocsRequest.getSource();
+                    Entity destinationNode = ocsRequest.getDestination();
+
                     linkCreationModel.createLink(sourceNode, destinationNode);
                 }
             }
