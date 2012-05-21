@@ -38,8 +38,8 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         }
         SumaryOCS sumaryOCS = sumaryOCSs.get(index);
 
-        gnSummarySource = Utils.findGraphicalNode(sumaryOCS.getSourceDestination().getEntitySource());
-        gnSummaryDestination = Utils.findGraphicalNode(sumaryOCS.getSourceDestination().getEntityDestination());
+        gnSummarySource = Utils.findNodeGraphByOriginalName(sumaryOCS.getSourceDestination().getEntitySource().getId());
+        gnSummaryDestination = Utils.findNodeGraphByOriginalName(sumaryOCS.getSourceDestination().getEntityDestination().getId());
 
         requestedSummaryOCS = sumaryOCS.getCountRequestOCS();
         createdSummaryOCS = sumaryOCS.getCountCreateOCS();
@@ -73,7 +73,7 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         
         for(Entity entity : instanceOCS.getRoute()  )
         {            
-            pathInstaceOCS.add( Utils.findGraphicalNode(entity));            
+            pathInstaceOCS.add( Utils.findNodeGraphByOriginalName(entity.getId()));            
         }
               
         requestTimeInstanceOCS = instanceOCS.getRequestTimeInstanceOCS();
@@ -82,7 +82,18 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         tearDownTimeInstanceOCS = instanceOCS.getTearDownTimeInstanceOCS();
         trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
         problemInstanceOCS = instanceOCS.getProblemInstanceOCS() ;
-        nodeErrorInstanceOCS =  Utils.findGraphicalNode( instanceOCS.getNodeErrorInstanceOCS());
+        if( instanceOCS.getNodeErrorInstanceOCS()!=null)
+        {
+            nodeErrorInstanceOCS =  Utils.findNodeGraphByOriginalName( instanceOCS.getNodeErrorInstanceOCS().getId());
+        }
+        
 
+    }
+    @Override
+    public void clean()
+    {
+        sumaryOCSs=null;
+        instanceOCSs=null;
+        ManagerOCS.clean();
     }
 }

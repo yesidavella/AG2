@@ -36,17 +36,27 @@ public class Utils {
         return name;
     }
 
-    public static GraphNode findGraphicalNode(Entity entity) {
-     
-        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) 
-        {
-            
-           if(entity == MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode))
-           {
-               return graphNode;
-           }
-           
+    
+    public static GraphNode findNodeGraphByOriginalName(String originalName) {
+       
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+            if (graphNode.getOriginalName().equalsIgnoreCase(originalName)) {
+                return graphNode;
+            }
         }
         return null;
     }
+//    public static GraphNode findGraphicalNode(Entity entity) {
+//     
+//        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) 
+//        {
+//            
+//           if(entity == MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode))
+//           {
+//               return graphNode;
+//           }
+//           
+//        }
+//        return null;
+//    }
 }

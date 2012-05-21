@@ -5,6 +5,7 @@
 package com.ag2.presentation.control;
 
 import com.ag2.presentation.design.GraphNode;
+import java.text.DecimalFormat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -32,8 +33,9 @@ public class ResultsOCS {
     private ObservableList<InstanceOCSData> dataInstanceOCS = FXCollections.observableArrayList();
     private Label lblSummaryOCS;
     private Label lblInstanceOCS;
+    private DecimalFormat decimalFormat = new DecimalFormat("#");
     
-    ResultsOCSController resultsOCSController ;
+    private ResultsOCSController resultsOCSController ;
 
     public ResultsOCS(Tab tab) {
         this.tab = tab;
@@ -57,13 +59,14 @@ public class ResultsOCS {
         scrollPane.setContent(vBoxMain);
         tab.setContent(scrollPane);
     }
+    public void play()
+    {
+        resultsOCSController.clean();
+    }
     
     public void showResults()
     {
-        int sizeSummaryOCS = dataSummaryOCS.size();
-        for (int i = 0; i < sizeSummaryOCS; i++) {
-            dataSummaryOCS.remove(0);
-        }
+        dataSummaryOCS.clear();       
         
         for (int i = 0; i < resultsOCSController.sizeSummaryOCS(); i++) 
         {            
@@ -76,12 +79,12 @@ public class ResultsOCS {
             summaryOCSData.setGraphNodeDestination(graphNodeDestion);
             
             summaryOCSData.setSource(" "+graphNodeSource.getName());
-            summaryOCSData.setSource(" "+graphNodeDestion.getName());
+            summaryOCSData.setDestination(" "+graphNodeDestion.getName());
             
-            summaryOCSData.setRequestOCS("   "+resultsOCSController.getRequestedSummaryOCS());
-            summaryOCSData.setRequestOCS("   "+resultsOCSController.getCreatedSummaryOCS());
-            summaryOCSData.setCountFault("   "+resultsOCSController.getFaultSummaryOCS());            
-            summaryOCSData.setTimeDuration("   "+resultsOCSController.getDurationTimeInstanceOCS());           
+            summaryOCSData.setRequestOCS("   "+decimalFormat.format(resultsOCSController.getRequestedSummaryOCS()));
+            summaryOCSData.setCreateOCS("   "+decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
+            summaryOCSData.setCountFault("   "+decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));            
+            summaryOCSData.setTimeDuration("   "+decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));           
               
             dataSummaryOCS.add(summaryOCSData);            
             
@@ -91,11 +94,26 @@ public class ResultsOCS {
     
     public void loadInstancesOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
     {
-        
+        dataInstanceOCS.clear();
+      
         for (int i = 0; i < resultsOCSController.sizeInstanceOCS(graphNodeSource, graphNodeDestination); i++)
         {
             InstanceOCSData instanceOCSData = new InstanceOCSData();            
             resultsOCSController.loadOCS_InstanceByIndex(graphNodeSource, graphNodeDestination, i);
+            
+            String path =""; 
+            String separator ="";
+            
+            for(GraphNode graphNode:  resultsOCSController.getPathInstaceOCS())
+            {
+                
+                path += separator+ graphNode.getName();
+                separator=" - ";
+            }
+           
+            
+            instanceOCSData.setPath(path);
+            
             instanceOCSData.setRequestTime("   "+resultsOCSController.getRequestTimeInstanceOCS());
             instanceOCSData.setLambda("   "+resultsOCSController.getWavelengthID());
             instanceOCSData.setSetupTime("   "+resultsOCSController.getSetupTimeInstanceOCS());
