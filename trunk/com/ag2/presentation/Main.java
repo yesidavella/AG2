@@ -122,6 +122,12 @@ public class Main extends Application implements Serializable {
         nodeCreationModel = new HybridSwitchCreationModel();
         nodeAdminController.addModel(nodeCreationModel);
 
+                linkAdminAbstractController = new OCSAdminController();
+        LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
+        linkAdminAbstractController.addModel(OCSCreationAbstractModel);
+        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
+        
+        
         linkAdminAbstractController = new FiberAdminController();
         LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
         linkAdminAbstractController.addModel(fiberCreationModel);
@@ -130,10 +136,7 @@ public class Main extends Application implements Serializable {
         guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
 
-        linkAdminAbstractController = new OCSAdminController();
-        LinkCreationAbstractModel OCSCreationAbstractModel = new OCSCreationModel();
-        linkAdminAbstractController.addModel(OCSCreationAbstractModel);
-        guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(linkAdminAbstractController);
+
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
