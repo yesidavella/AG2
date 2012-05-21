@@ -5,6 +5,7 @@ import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.config.serialization.UtilSerializator;
 import com.ag2.controller.*;
 import com.ag2.model.*;
+import com.ag2.presentation.control.ResultsOCSController;
 import com.ag2.presentation.design.GraphArc;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphLink;
@@ -141,10 +142,13 @@ public class Main extends Application implements Serializable {
         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
         resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
-
-        guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
-
+        guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));        
         simulationBase.setResultsChartAbstractController(resultsChartController);
+        
+        ResultsOCSController resultsOCSController = new ResultsOCSController();
+        guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
+        
+        
     }
 
     public ResultsController getResultsController() {
@@ -265,4 +269,6 @@ public class Main extends Application implements Serializable {
     public HashMap<GraphNode, Entity> getNodeMatchCoupleObjectContainer() {
         return nodeMatchCoupleObjectContainer;
     }
+    
+    
 }

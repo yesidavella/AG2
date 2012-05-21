@@ -1161,9 +1161,13 @@ public class GUI extends Scene {
         graphDesignGroup.getGroup().setOpacity(1);
         chartsResultsCPU.stop();
         chartsResultsBuffer.stop();
+        resultsOCS.showResults();
     }
 
-    public void disable() {
+    public void disable()
+    {
+        
+        
         beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
@@ -1184,6 +1188,7 @@ public class GUI extends Scene {
         chartsResultClient.play();
         chartsResultResource.play();
         tbMain.getSelectionModel().select(tabResults);
+        resultsOCS.play();
 
     }
 
@@ -1218,4 +1223,10 @@ public class GUI extends Scene {
     public ChartsResultResource getChartsResultResource() {
         return chartsResultResource;
     }
+
+    public ResultsOCS getResultsOCS() {
+        return resultsOCS;
+    }
+    
+    
 }
