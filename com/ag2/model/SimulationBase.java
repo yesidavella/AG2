@@ -117,8 +117,8 @@ public class SimulationBase implements Runnable, Serializable {
         gridSimulatorModel.getRouting().clear();
         route();
 
-        if (linkAdminFiberCtr instanceof OCSAdminController) {
-            ((OCSAdminController) linkAdminFiberCtr).createOCS();
+        if (linkAdminOCSCtr instanceof OCSAdminController) {
+            ((OCSAdminController) linkAdminOCSCtr).createOCS();
         }
     }
 

@@ -132,6 +132,7 @@ public class Main extends Application implements Serializable {
         linkAdminAbstractController = new FiberAdminController();
         LinkCreationAbstractModel fiberCreationModel = new FiberCreationModel();
         linkAdminAbstractController.addModel(fiberCreationModel);
+        SimulationBase.getInstance().setLinkAdminAbstractController(linkAdminAbstractController);
 
         linkAdminAbstractController.setLinkView(guiAG2.getEntityPropertyTb());
         guiAG2.getEntityPropertyTb().setLinkAdminAbstractController(linkAdminAbstractController);
