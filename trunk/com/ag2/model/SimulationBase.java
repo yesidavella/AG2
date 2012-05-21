@@ -27,7 +27,16 @@ public class SimulationBase implements Runnable, Serializable {
     private SimulationInstance simulationInstance;
     private OutputterModel outputterModel;
     private NodeAdminAbstractController nodeAdminCtr;
-    private LinkAdminAbstractController linkAdminCtr;
+    private LinkAdminAbstractController linkAdminFiberCtr;
+    private LinkAdminAbstractController linkAdminOCSCtr;
+
+    public LinkAdminAbstractController getLinkAdminOCSCtr() {
+        return linkAdminOCSCtr;
+    }
+
+    public void setLinkAdminOCSCtr(LinkAdminAbstractController linkAdminOCSCtr) {
+        this.linkAdminOCSCtr = linkAdminOCSCtr;
+    }
     private ResultsAbstractController resultsAbstractController;
     private ResultsChartAbstractController resultsChartAbstractController;
     private String id;
@@ -92,11 +101,12 @@ public class SimulationBase implements Runnable, Serializable {
         simulationBase.setResultsAbstractController(resultsAbstractController);
         simulationBase.setOutputterModel(outputterModelNew);
         simulationBase.setNodeAdminAbstractController(nodeAdminCtr);
-        simulationBase.setLinkAdminAbstractController(linkAdminCtr);
+        simulationBase.setLinkAdminAbstractController(linkAdminFiberCtr);
+        simulationBase.setLinkAdminOCSCtr(linkAdminOCSCtr);
         simulationBase.setResultsChartAbstractController(resultsChartAbstractController);
 
         nodeAdminCtr.reCreatePhosphorousNodes();
-        linkAdminCtr.reCreatePhosphorousLinks();
+        linkAdminFiberCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
         System.out.println("------------------------Stop en base");
 
@@ -106,9 +116,9 @@ public class SimulationBase implements Runnable, Serializable {
         simulationInstance.stopEvent = false;
         gridSimulatorModel.getRouting().clear();
         route();
-        
-        if (linkAdminCtr instanceof OCSAdminController) {
-            ((OCSAdminController)linkAdminCtr).createOCS();
+
+        if (linkAdminFiberCtr instanceof OCSAdminController) {
+            ((OCSAdminController) linkAdminFiberCtr).createOCS();
         }
     }
 
@@ -141,7 +151,7 @@ public class SimulationBase implements Runnable, Serializable {
     }
 
     public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminController) {
-        this.linkAdminCtr = linkAdminController;
+        this.linkAdminFiberCtr = linkAdminController;
     }
 
     public OutputterModel getOutputterModel() {
