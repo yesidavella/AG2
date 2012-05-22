@@ -82,6 +82,11 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         tearDownTimeInstanceOCS = instanceOCS.getTearDownTimeInstanceOCS();
         trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
         problemInstanceOCS = instanceOCS.getProblemInstanceOCS() ;
+        
+        
+        listWavelengthID = instanceOCS.getListWavelengthID();
+        
+        
         if( instanceOCS.getNodeErrorInstanceOCS()!=null)
         {
             nodeErrorInstanceOCS =  Utils.findNodeGraphByOriginalName( instanceOCS.getNodeErrorInstanceOCS().getId());
