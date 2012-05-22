@@ -103,19 +103,32 @@ public class ResultsOCS {
             
             String path =""; 
             String separator ="";
-            
+            int breaker=0; 
             for(GraphNode graphNode:  resultsOCSController.getPathInstaceOCS())
             {
-                
+                breaker++;
                 path += separator+ graphNode.getName();
                 separator=" - ";
+                if(breaker>=4)
+                {
+                    breaker=0;
+                    path +="\n";
+                    separator ="";
+                }
+                
+            }          
+            String wavelengthIDs = "";
+            separator ="";
+            for ( Integer w : resultsOCSController.getListWavelengthID() ) {
+                
+                wavelengthIDs += separator+ w;
+                separator =" - ";
             }
-           
             
-            instanceOCSData.setPath(path);
             
+            instanceOCSData.setPath(path);            
             instanceOCSData.setRequestTime("   "+resultsOCSController.getRequestTimeInstanceOCS());
-            instanceOCSData.setLambda("   "+resultsOCSController.getWavelengthID());
+            instanceOCSData.setLambda("   "+wavelengthIDs);
             instanceOCSData.setSetupTime("   "+resultsOCSController.getSetupTimeInstanceOCS());
             instanceOCSData.setDurationTime("   "+resultsOCSController.getDurationTimeInstanceOCS());
             instanceOCSData.setTearDownTime("   "+resultsOCSController.getTearDownTimeInstanceOCS());
