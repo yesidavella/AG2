@@ -96,6 +96,8 @@ public class ResultsOCS {
     {
         dataInstanceOCS.clear();
       
+        lblInstanceOCS.setText("Camino entre "+graphNodeSource.getName()+" y "+graphNodeDestination.getName());
+        
         for (int i = 0; i < resultsOCSController.sizeInstanceOCS(graphNodeSource, graphNodeDestination); i++)
         {
             InstanceOCSData instanceOCSData = new InstanceOCSData();            
