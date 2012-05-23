@@ -40,6 +40,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private static GraphNode wildcardNodeA = null;
     protected transient Image image = null;
     private transient Line wildcardLink;
+    private transient Line wildcardOCS;
     private transient ImageView imageView;
     protected transient Label lblName;
     private transient DropShadow dropShadow;
@@ -88,6 +89,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
 
         wildcardLink = new Line();
+        wildcardOCS = new Line();
         vbxWrapper = new VBox();
         image = new Image(imageURL);
         imageView = new ImageView(image);
@@ -187,6 +189,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 if (linkBegin == false) {
                     wildcardNodeA = null;
+//                    System.out.println("wildcardNodeA esta NULO EN."+name);
                 }
 
                 if (actionTypeEmun == ActionTypeEmun.LINK) {
@@ -219,8 +222,10 @@ public abstract class GraphNode implements Selectable, Serializable {
                     }
 
                 } else if (actionTypeEmun == actionTypeEmun.OCS_CIRCUIT) {
-
+                    
                     if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
+
+                        graphDesignGroup.remove(wildcardOCS);
 
                         for (LinkAdminAbstractController linkAdminCtr : linkAdminControllers) {
 
@@ -234,6 +239,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     group.setCursor(actionTypeEmun.getOverCursorImage());
                 }
                 wildcardNodeA = null;
+
             }
         });
     }
@@ -265,9 +271,21 @@ public abstract class GraphNode implements Selectable, Serializable {
                         GraphNode.linkBegin = true;
                     }
                 } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
+                    
                     GraphNode graphNode = GraphNode.this;
                     wildcardNodeA = graphNode;
                     GraphNode.linkBegin = true;
+                    
+                    double x = graphNode.getLayoutX();
+                    double y = graphNode.getLayoutY();
+                    wildcardOCS.setStartX(x + width / 2);
+                    wildcardOCS.setStartY(y + height / 2);
+                    wildcardOCS.setEndX(x + width / 2);
+                    wildcardOCS.setEndY(y + height / 2);
+                    graphDesignGroup.add(wildcardOCS);
+                    wildcardOCS.toFront();
+                    graphNode.group.toFront();
+
                 }
                 group.setScaleX(1);
                 group.setScaleY(-1);
@@ -280,7 +298,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
                     setLayoutY(getLayoutY() - (mouseEvent.getY() - height / 2));
@@ -289,6 +306,9 @@ public abstract class GraphNode implements Selectable, Serializable {
                     dragging = true;
                     wildcardLink.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardLink.setEndY(getLayoutY() + height - (mouseEvent.getY()));
+                }else if(GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT){
+                    wildcardOCS.setEndX(getLayoutX() + (mouseEvent.getX()));
+                    wildcardOCS.setEndY(getLayoutY() + height - (mouseEvent.getY()));
                 }
             }
         });
@@ -303,6 +323,8 @@ public abstract class GraphNode implements Selectable, Serializable {
                 group.setScaleY(-0.5);
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.LINK) {
                     graphDesignGroup.remove(wildcardLink);
+                } else if(GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT){
+                    graphDesignGroup.remove(wildcardOCS);
                 }
             }
         });
@@ -325,30 +347,30 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
 
-                    Selectable objSeleccionado = graphDesignGroup.getSelectable();
+                    Selectable selectedObj = graphDesignGroup.getSelectable();
 
                     if (!dragging) {
-                        if (objSeleccionado == graphNode) {
-                            objSeleccionado.select(false);
+                        if (selectedObj == graphNode) {
+                            selectedObj.select(false);
                             graphDesignGroup.setSelectable(null);
                         } else {
-                            if (objSeleccionado == null) {
+                            if (selectedObj == null) {
                                 graphNode.select(true);
                                 graphDesignGroup.setSelectable(graphNode);
                             } else {
-                                objSeleccionado.select(false);
+                                selectedObj.select(false);
                                 graphNode.select(true);
                                 graphDesignGroup.setSelectable(graphNode);
                             }
                         }
 
                     } else {
-                        if (graphNode != objSeleccionado) {
-                            if (objSeleccionado == null) {
+                        if (graphNode != selectedObj) {
+                            if (selectedObj == null) {
                                 graphNode.select(true);
                                 graphDesignGroup.setSelectable(graphNode);
                             } else {
-                                objSeleccionado.select(false);
+                                selectedObj.select(false);
                                 graphNode.select(true);
                                 graphDesignGroup.setSelectable(graphNode);
                             }
