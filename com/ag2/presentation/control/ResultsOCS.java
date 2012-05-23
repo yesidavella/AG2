@@ -61,6 +61,8 @@ public class ResultsOCS {
     }
     public void play()
     {
+        dataInstanceOCS.clear();
+        dataSummaryOCS.clear();
         resultsOCSController.clean();
     }
     
@@ -124,7 +126,7 @@ public class ResultsOCS {
             for ( Integer w : resultsOCSController.getListWavelengthID() ) {
                 
                 wavelengthIDs += separator+ w;
-                separator =" - ";
+                separator =" , ";
             }
             
             
@@ -142,7 +144,7 @@ public class ResultsOCS {
             }
             else
             {
-                instanceOCSData.setErrorNodo(resultsOCSController.getProblemInstanceOCS() +" "+resultsOCSController.getNodeErrorInstanceOCS().getName());
+                instanceOCSData.setErrorNodo("Nodo: "+resultsOCSController.getNodeErrorInstanceOCS().getName()+ "\n"+resultsOCSController.getProblemInstanceOCS());
             }            
             
             dataInstanceOCS.add(instanceOCSData);
@@ -171,7 +173,7 @@ public class ResultsOCS {
                 
         TableColumn tableColumn2 = new TableColumn();
         tableColumn2.setText("Tiempo de la \nsolicitud λSP");
-        tableColumn2.setMinWidth(130);
+        tableColumn2.setMinWidth(110);
         tableColumn2.setCellValueFactory(new PropertyValueFactory("requestTime"));
 
         TableColumn tableColumn3 = new TableColumn();
@@ -181,7 +183,7 @@ public class ResultsOCS {
 
         TableColumn tableColumn4 = new TableColumn();
         tableColumn4.setText("Duracion λSP");
-        tableColumn4.setMinWidth(130);
+        tableColumn4.setMinWidth(110);
         tableColumn4.setCellValueFactory(new PropertyValueFactory("durationTime"));
 
         TableColumn tableColumn5 = new TableColumn();
@@ -191,12 +193,12 @@ public class ResultsOCS {
 
         TableColumn tableColumn6 = new TableColumn();
         tableColumn6.setText("Trafico");
-        tableColumn6.setMinWidth(130);
+        tableColumn6.setMinWidth(110);
         tableColumn6.setCellValueFactory(new PropertyValueFactory("traffic"));  
         
         TableColumn tableColumn7 = new TableColumn();
         tableColumn7.setText("Problemas");
-        tableColumn7.setMinWidth(250);
+        tableColumn7.setMinWidth(320);
         tableColumn7.setCellValueFactory(new PropertyValueFactory("errorNodo")); 
 
         tvInstaceOCS.setItems(dataInstanceOCS);       

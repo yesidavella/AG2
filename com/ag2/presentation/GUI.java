@@ -726,10 +726,10 @@ public class GUI extends Scene {
         tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
 
-        tabResultsResource.setText("Graficos de  recurso");
+        tabResultsResource.setText("Graficos de recursos");
         tabResultsResource.setClosable(false);
 
-        tabResultsOCS.setText("Resultados OCS");
+        tabResultsOCS.setText("Resultados λSP");
         tabResultsOCS.setClosable(false);
         
         
@@ -757,7 +757,7 @@ public class GUI extends Scene {
         tbResultsResource.getTabs().addAll(tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
      
-        tbMain.getTabs().addAll(tabSimulation, tabResultsOCS );
+        tbMain.getTabs().addAll(tabSimulation );
         
     }
 
@@ -1180,7 +1180,7 @@ public class GUI extends Scene {
 
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tbMain.getTabs().contains(tabResults)) {
-            tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults);
+            tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS);
 
         }
         chartsResultsCPU.play();
