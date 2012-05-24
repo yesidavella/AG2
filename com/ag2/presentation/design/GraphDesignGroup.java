@@ -29,6 +29,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -58,6 +59,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private double dragMouseX = 0;
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
+    private Rectangle backgroundRec;
 
     public GraphDesignGroup() {
         initTransientObjects();
@@ -374,7 +376,27 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public void addLinkAdminAbstractControllers(LinkAdminAbstractController linkAdminAbstractController) {
         linkAdminCtrs.add(linkAdminAbstractController);
     }
+    private ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
 
+    public void  hideMap() 
+    {
+        for(Shape shape : listMapWorld)
+        {
+            shape.setVisible(false);
+            backgroundRec.setId("non-world-ocean");
+        }       
+    }
+    public void  showMap() 
+    {
+        for(Shape shape : listMapWorld)
+        {
+            shape.setVisible(true);
+            backgroundRec.setId("world-ocean");
+        }       
+    }
+    
+    
+    
     private void loadGeoMap() {
 
         Group texts = new Group();
@@ -406,6 +428,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                     text.getTransforms().add(new Translate(centroid.getX() * MAP_SCALE, centroid.getY() * MAP_SCALE));
                     text.getTransforms().add(new Scale(0.1 * MAP_SCALE, -0.1 * MAP_SCALE));
                     text.getTransforms().add(new Translate(-bounds.getWidth() / 2., bounds.getHeight() / 2.));
+                    listMapWorld.add(text);
                     texts.getChildren().add(text);
 
                     for (int geometryI = 0; geometryI < multiPolygon.getNumGeometries(); geometryI++) {
@@ -415,7 +438,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
-                        path.setFill(Color.BLACK);
+                        
                         path.setFill(Color.web("#C3B8A5"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1 
                         //Si le va cambiar el color, dejar el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
@@ -425,12 +448,14 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         }
                         //path.getElements().add(new LineTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
                         add(path);
+                        listMapWorld.add(path);
                         path.toBack();
                     }
                 }
             }
 
             add(texts);
+            
 
 //            Stop[] stops = {
 //                new Stop(0.1, Color.web("#9DCAFF")),
@@ -439,7 +464,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 //            };
 //            Rectangle backgroundRec = new Rectangle(360, 175,
 //                    new RadialGradient(-90, 0.7, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE, stops));
-            Rectangle backgroundRec = new Rectangle(360, 175);
+            backgroundRec= new Rectangle(360, 175);
             backgroundRec.setId("world-ocean");
             
             backgroundRec.setTranslateX(-backgroundRec.getWidth() / 2);
