@@ -77,6 +77,21 @@ public abstract class GraphNode implements Selectable, Serializable {
         subNodeProperties = new HashMap<String, String>();
         initTransientObjects();
     }
+    public void  showSimpleNode()
+    {
+        imageURL = imageURL.replace(".png", "_node.png");
+        image = new Image(imageURL);
+        imageView.setImage(image);
+        lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
+    }
+    public void  hideSimpleNode()
+    {
+        imageURL = imageURL.replace("_node", "");
+        image = new Image(imageURL);
+        imageView.setImage(image);
+        lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
+    }
+
 
     public void initTransientObjects() {
 

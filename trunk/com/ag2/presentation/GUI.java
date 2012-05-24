@@ -1,6 +1,7 @@
 package com.ag2.presentation;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
+import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
@@ -18,6 +19,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Cursor;
@@ -77,6 +79,7 @@ public class GUI extends Scene {
     private ToggleButtonAg2 btnPlusZoom;
     private Group grRootWorld = new Group();
     private Tab tabSimulation = new Tab();
+    private Tab tabViewOCS = new Tab();
     private Tab tabResults = new Tab();
     private Tab tabResultsOCS = new Tab();
     private Tab tabChartsResourceCPU = new Tab();
@@ -709,6 +712,10 @@ public class GUI extends Scene {
 
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
+        
+         tabViewOCS.setClosable(false);
+        tabViewOCS.setText("Vista λSP");
+        
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
@@ -745,6 +752,7 @@ public class GUI extends Scene {
         splitPane.getItems().addAll(scpWorld, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
+      
 
         chartsResultClient = new ChartsResultClient(tabChartsClientResults);
         chartsResultResource = new ChartsResultResource(tabChartsrResourceResults);
@@ -757,7 +765,51 @@ public class GUI extends Scene {
         tbResultsResource.getTabs().addAll(tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
      
-        tbMain.getTabs().addAll(tabSimulation );
+        tbMain.getTabs().addAll(tabSimulation , tabViewOCS );
+        
+        
+        
+       tabViewOCS.setOnSelectionChanged( new EventHandler<Event>() {
+
+            @Override
+            public void handle(Event arg0)
+            {
+               if(tabViewOCS.isSelected()){
+                   tabSimulation.setContent(null);
+                   tabViewOCS.setContent(splitPane);
+                   graphDesignGroup.hideMap();
+                   
+                   for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
+                   {
+                       graphNode.showSimpleNode();
+                   }
+                    
+               }
+               
+            }
+        });
+       
+         tabSimulation.setOnSelectionChanged( new EventHandler<Event>() {
+
+            @Override
+            public void handle(Event arg0)
+            {
+               if(tabSimulation.isSelected())
+               {
+                   tabViewOCS.setContent(null);
+                   tabSimulation.setContent(splitPane);
+                    graphDesignGroup.showMap();
+                    for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
+                   {
+                       graphNode.hideSimpleNode();
+                   }
+                    
+                    
+               }               
+            }
+        });
+        
+        
         
     }
 
