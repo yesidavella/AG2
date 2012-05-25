@@ -16,9 +16,9 @@ visual en el combo. 2H Franklin ................................................
 15.Al cluster poderle cabiar el broker. 3H Franklin.............................................   Listo (temporal)
 16.Arreglar bugs de serializacion. 3H Franklin..................................................   Listo
 2.regex campos de propiedades. Yesid (Vacio, tam max,num entero pos) 4H.........................   Pendiente
-12.Migrar todo a el codigo a ingles. 16H .......................................................   Pendiente
+12.Migrar todo a el codigo a ingles. 16H .......................................................   Listo
 13.Colocar valores coherentes de las propiedades. Traducir tablas de porpiedades. 3H yesid......   Parcial(Los valores coherentes no estan todavia)
-14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Pendiente
+14.En tab phos, traducir con significado y corregir los porcentajes. 2H Yesid ..................   Listo
 
 
 #####  Segundo bloque de Bugs  ###############################################################################################################
