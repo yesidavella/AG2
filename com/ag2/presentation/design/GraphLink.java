@@ -48,6 +48,13 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 //        select(true);
 
     }
+    public void setVisible(boolean  visible)
+    {
+        for(GraphArc graphArc: graphArcs)
+        {            
+            graphArc.setVisible(visible);
+        }
+    }
 
     public void addInitialGraphArc() {
         graphDesignGroup.add(initialGraphArc);
