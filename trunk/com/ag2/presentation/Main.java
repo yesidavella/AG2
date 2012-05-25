@@ -38,6 +38,7 @@ public class Main extends Application implements Serializable {
     private JSObject browser;
     public static boolean IS_APPLET = false;
     private transient GUI guiAG2;
+     private transient  NotifyControllerOCS notifyControllerOCS ;
     public static int countObject = 0;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
@@ -147,6 +148,10 @@ public class Main extends Application implements Serializable {
         
         ResultsOCSController resultsOCSController = new ResultsOCSController();
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
+        
+       notifyControllerOCS = new NotifyControllerOCS();
+       notifyControllerOCS.setGraphDesignGroup(  guiAG2.getGraphDesignGroup());
+        
         
         
     }

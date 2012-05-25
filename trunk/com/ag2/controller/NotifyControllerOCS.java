@@ -1,0 +1,63 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ag2.controller;
+
+import Grid.Entity;
+import Grid.OCS.stats.ManagerOCS;
+import Grid.OCS.stats.NotificableOCS;
+import com.ag2.presentation.design.GraphDesignGroup;
+import com.ag2.presentation.design.GraphNode;
+import com.ag2.util.Utils;
+import javafx.application.Platform;
+
+/**
+ *
+ * @author Frank
+ */
+public class NotifyControllerOCS implements NotificableOCS {
+
+    private GraphDesignGroup graphDesignGroup;
+
+    public GraphDesignGroup getGraphDesignGroup() {
+        return graphDesignGroup;
+    }
+
+    public void setGraphDesignGroup(GraphDesignGroup graphDesignGroup) {
+        this.graphDesignGroup = graphDesignGroup;
+    }
+
+    public NotifyControllerOCS() {
+        ManagerOCS.getInstance().setNotificableOCS(this);
+    }
+    //FIXME: Poner interface
+
+    @Override
+    public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination) {
+
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+
+                GraphNode graphNodeSource = Utils.findNodeGraphByOriginalName(entitySource.getId());
+                GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
+
+                graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination);
+                System.out.println(" Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+            }
+        };
+        Platform.runLater(runnable);       
+
+    }
+
+    @Override
+    public void clean()
+    {
+        graphDesignGroup.cleanLineOCS();
+       
+    }
+    
+}

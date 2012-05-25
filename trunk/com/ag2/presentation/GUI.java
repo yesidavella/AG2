@@ -2,8 +2,10 @@ package com.ag2.presentation;
 
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.MatchCoupleObjectContainer;
+import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
+import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.Utils;
@@ -11,6 +13,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -783,6 +786,14 @@ public class GUI extends Scene {
                    {
                        graphNode.showSimpleNode();
                    }
+                   
+                   HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+                   
+                   for(GraphLink graphLink :  linkMatchCoupleObjectContainer.keySet())
+                   {
+                       graphLink.setVisible(false);
+                   }
+                   graphDesignGroup.showLineOCS();
                     
                }
                
@@ -803,6 +814,14 @@ public class GUI extends Scene {
                    {
                        graphNode.hideSimpleNode();
                    }
+                    
+                     HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+                   
+                   for(GraphLink graphLink :  linkMatchCoupleObjectContainer.keySet())
+                   {
+                       graphLink.setVisible(true);
+                   }
+                   graphDesignGroup.hideLineOCS();
                     
                     
                }               

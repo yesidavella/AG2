@@ -41,6 +41,19 @@ public class GraphArc implements Serializable {
         initTransientObjects();
 
     }
+    public void setVisible(boolean visible)
+    {
+        quadCurve.setVisible(visible);
+        if(initialGraphArcSeparatorPoint!=null)
+        {
+            initialGraphArcSeparatorPoint.getCircle().setVisible(visible);
+        }
+        if(finalGraphArcSeparatorPoint !=null)
+        {    
+            finalGraphArcSeparatorPoint.getCircle().setVisible(visible);
+        }
+        
+    }
 
     public GraphArcSeparatorPoint getInitialGraphArcSeparatorPoint() {
         return initialGraphArcSeparatorPoint;

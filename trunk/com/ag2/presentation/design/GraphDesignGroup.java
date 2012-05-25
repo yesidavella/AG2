@@ -11,6 +11,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
+import java.awt.Paint;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,11 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -60,11 +57,50 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
     private Rectangle backgroundRec;
+    private ArrayList<Line> linesOCS = new ArrayList<Line>();
 
     public GraphDesignGroup() {
         initTransientObjects();
         nodeAdminAbstractControllers = new ArrayList<NodeAdminAbstractController>();
         linkAdminCtrs = new ArrayList<LinkAdminAbstractController>();
+    }
+
+    public void addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination) {
+
+        Line line = new Line();
+        line.setStartX(graphNodeSource.getLayoutX() + graphNodeSource.getWidth() / 2);
+        line.setStartY(graphNodeSource.getLayoutY() + graphNodeSource.getHeight() / 2);
+
+        line.setEndX(graphNodeDestination.getLayoutX() + graphNodeSource.getWidth() / 2);
+        line.setEndY(graphNodeDestination.getLayoutY() + graphNodeSource.getHeight() / 2);
+        
+        line.setFill(Color.RED);
+        
+        graphNodeDestination.getGroup().toFront();
+        graphNodeSource.getGroup().toFront();
+        
+        group.getChildren().add(line);
+
+        linesOCS.add(line);
+
+    }
+    public void cleanLineOCS()
+    {
+        for (Line line : linesOCS) {
+            group.getChildren().remove(line);
+        }
+    }
+
+    public void showLineOCS() {
+        for (Line line : linesOCS) {
+            line.setVisible(true);
+        }
+    }
+
+    public void hideLineOCS() {
+        for (Line line : linesOCS) {
+            line.setVisible(false);
+        }
     }
 
     public boolean isSerializableComplete() {
@@ -157,7 +193,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                 graphNode = new PCE_SwicthGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 switchesObservableList.add(graphNode);
 
-            }  else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
+            } else if (actionTypeEmun == ActionTypeEmun.HRYDRID_SWITCH) {
                 graphNode = new HybridSwitchGraphNode(this, nodeAdminAbstractController, linkAdminCtrs);
                 switchesObservableList.add(graphNode);
 
@@ -294,10 +330,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         nodeAdminAbstractControllers.add(nodeAdminAbstractController);
     }
 
- 
     private void writeObject(ObjectOutputStream stream) {
         try {
-             serializableComplete = false;
+            serializableComplete = false;
             stream.defaultWriteObject();
             Main.countObject++;
             System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
@@ -378,25 +413,20 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     }
     private ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
 
-    public void  hideMap() 
-    {
-        for(Shape shape : listMapWorld)
-        {
+    public void hideMap() {
+        for (Shape shape : listMapWorld) {
             shape.setVisible(false);
             backgroundRec.setId("non-world-ocean");
-        }       
+        }
     }
-    public void  showMap() 
-    {
-        for(Shape shape : listMapWorld)
-        {
+
+    public void showMap() {
+        for (Shape shape : listMapWorld) {
             shape.setVisible(true);
             backgroundRec.setId("world-ocean");
-        }       
+        }
     }
-    
-    
-    
+
     private void loadGeoMap() {
 
         Group texts = new Group();
@@ -438,7 +468,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
                         Path path = new Path();
                         path.setStrokeWidth(0.5);
-                        
+
                         path.setFill(Color.web("#C3B8A5"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1 
                         //Si le va cambiar el color, dejar el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
@@ -455,7 +485,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             }
 
             add(texts);
-            
+
 
 //            Stop[] stops = {
 //                new Stop(0.1, Color.web("#9DCAFF")),
@@ -464,9 +494,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 //            };
 //            Rectangle backgroundRec = new Rectangle(360, 175,
 //                    new RadialGradient(-90, 0.7, 0.5, 0.5, 0.8, true, CycleMethod.NO_CYCLE, stops));
-            backgroundRec= new Rectangle(360, 175);
+            backgroundRec = new Rectangle(360, 175);
             backgroundRec.setId("world-ocean");
-            
+
             backgroundRec.setTranslateX(-backgroundRec.getWidth() / 2);
             backgroundRec.setTranslateY(-backgroundRec.getHeight() / 2);
             backgroundRec.setScaleX(MAP_SCALE);
