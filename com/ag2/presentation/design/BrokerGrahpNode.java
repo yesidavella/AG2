@@ -21,7 +21,7 @@ public class BrokerGrahpNode extends GraphNode {
     }
 
     @Override
-    public boolean isEnableToCreateLInk(GraphNode graphNode) {
+    public boolean isEnableToCreateLink(GraphNode graphNode) {
         return (graphNode instanceof SwitchGraphNode);
     }
 

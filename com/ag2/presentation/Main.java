@@ -138,6 +138,9 @@ public class Main extends Application implements Serializable {
         OCSlinkAdminCtrl.addModel(OCSCreationAbstractModel);
         guiAG2.getGraphDesignGroup().addLinkAdminAbstractControllers(OCSlinkAdminCtrl);
         SimulationBase.getInstance().setOCSLinkAdminCtr(OCSlinkAdminCtrl);
+        //Registro el controlador de creacion de ocs en el de creacion de fibra
+        //para q cuando cree un enlace de fibra entre switches creo un ocs tambien
+        ((FiberAdminController)fiberLinkAdminACtrl).addOCSAdminController((OCSAdminController)OCSlinkAdminCtrl);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());

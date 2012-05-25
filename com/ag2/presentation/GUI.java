@@ -164,7 +164,7 @@ public class GUI extends Scene {
     public static GUI getInstance() {
 
         if (iguAG2 == null) {
-            iguAG2 = new GUI(new StackPane(), 1100, 720);//new BorderPane()
+            iguAG2 = new GUI(new StackPane(), 1000, 620);//new BorderPane()
         }
         return iguAG2;
     }

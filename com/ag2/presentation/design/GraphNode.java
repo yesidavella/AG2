@@ -215,11 +215,12 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                             if (linkAdminCtr instanceof FiberAdminController) {
 
-                                if (wildcardNodeA.isEnableToCreateLInk(graphNode) && linkAdminCtr.canCreateLink(wildcardNodeA, graphNode)) {
+                                if (wildcardNodeA.isEnableToCreateLink(graphNode) && linkAdminCtr.canCreateLink(wildcardNodeA, graphNode)) {
                                     
                                     graphDesignGroup.remove(wildcardLink);
 
                                     if (linkAdminCtr.createLink(wildcardNodeA, graphNode)) {
+                                        
                                         GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminCtr);
                                         graphLink.addInitialGraphArc();
                                         
@@ -228,6 +229,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                                         
                                         wildcardNodeA.getGroup().toFront();
                                         graphNode.getGroup().toFront();
+                                        
                                     }
                                 } else {
                                     graphNode.playDenyLinkAnimation();
@@ -579,7 +581,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         });
     }
 
-    public abstract boolean isEnableToCreateLInk(GraphNode graphNode);
+    public abstract boolean isEnableToCreateLink(GraphNode graphNode);
 
     private void writeObject(ObjectOutputStream stream) {
         try {
