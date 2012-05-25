@@ -15,7 +15,7 @@ public abstract class SwitchGraphNode extends GraphNode {
     }
 
     @Override
-    public boolean isEnableToCreateLInk(GraphNode graphNode) {
+    public boolean isEnableToCreateLink(GraphNode graphNode) {
         return true;
     }
 }
