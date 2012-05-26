@@ -7,6 +7,7 @@ import com.ag2.presentation.control.*;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
+import com.ag2.presentation.design.SwitchGraphNode;
 import com.ag2.presentation.design.property.EntityPropertyTableView;
 import com.ag2.util.Utils;
 import java.awt.Desktop;
@@ -784,7 +785,14 @@ public class GUI extends Scene {
                    
                    for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
                    {
-                       graphNode.showSimpleNode();
+                       if(graphNode instanceof SwitchGraphNode)
+                       {
+                            graphNode.showSimpleNode();
+                       }
+                       else
+                       {
+                           graphNode.getGroup().setVisible(false);
+                       }
                    }
                    
                    HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
@@ -793,6 +801,7 @@ public class GUI extends Scene {
                    {
                        graphLink.setVisible(false);
                    }
+                   
                    graphDesignGroup.showLineOCS();
                     
                }
@@ -812,7 +821,14 @@ public class GUI extends Scene {
                     graphDesignGroup.showMap();
                     for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
                    {
-                       graphNode.hideSimpleNode();
+                       if(graphNode instanceof SwitchGraphNode)
+                       {
+                            graphNode.hideSimpleNode();
+                       }
+                       else
+                       {
+                           graphNode.getGroup().setVisible(true);
+                       }
                    }
                     
                      HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
