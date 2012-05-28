@@ -7,9 +7,13 @@ package com.ag2.controller;
 import Grid.Entity;
 import Grid.OCS.stats.ManagerOCS;
 import Grid.OCS.stats.NotificableOCS;
+import com.ag2.controller.MatchCoupleObjectContainer.GraphSourceDestination;
 import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
+import com.ag2.presentation.design.GraphOCS;
 import com.ag2.util.Utils;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.application.Platform;
 
 /**
@@ -34,7 +38,7 @@ public class NotifyControllerOCS implements NotificableOCS {
     //FIXME: Poner interface
 
     @Override
-    public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination) {
+    public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination, final int countInstanceOCS) {
 
 
         Runnable runnable = new Runnable() {
@@ -44,20 +48,30 @@ public class NotifyControllerOCS implements NotificableOCS {
 
                 GraphNode graphNodeSource = Utils.findNodeGraphByOriginalName(entitySource.getId());
                 GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
-
-                graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination);
+                GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
+                MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
                 System.out.println(" Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
             }
         };
-        Platform.runLater(runnable);       
+        Platform.runLater(runnable);
 
     }
 
     @Override
-    public void clean()
+    public void clean()     
     {
-        graphDesignGroup.cleanLineOCS();
-       
+        HashMap<MatchCoupleObjectContainer.GraphSourceDestination, ArrayList<GraphOCS>>  OCSMatchCoupleObjectContainer = 
+                MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer();
+        
+        for(GraphSourceDestination graphSourceDestination:  OCSMatchCoupleObjectContainer.keySet()  )
+        {
+            for(GraphOCS graphOCS: MatchCoupleObjectContainer.getListGraphOCS(graphSourceDestination) )
+            {
+                graphOCS.remove();
+            }
+        }
+        
+        MatchCoupleObjectContainer.cleanOCSMatchCoupleObjectContainer();
+        
     }
-    
 }

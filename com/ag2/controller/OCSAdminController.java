@@ -61,8 +61,13 @@ public class OCSAdminController extends LinkAdminAbstractController {
                     
                     Entity sourceNode = ocsRequest.getSource();
                     Entity destinationNode = ocsRequest.getDestination();
+                    
+                    for (int i = 0; i < 15; i++) 
+                    {
+                        linkCreationModel.createLink(sourceNode, destinationNode);//FIXME: NO VA EL FOR
+                    }
 
-                    linkCreationModel.createLink(sourceNode, destinationNode);
+                    
                 }
             }
         }

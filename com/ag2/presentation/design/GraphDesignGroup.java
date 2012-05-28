@@ -65,31 +65,13 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         linkAdminCtrs = new ArrayList<LinkAdminAbstractController>();
     }
 
-    public void addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination) {
-
-        Line line = new Line();
-        line.setStartX(graphNodeSource.getLayoutX() + graphNodeSource.getWidth() / 2);
-        line.setStartY(graphNodeSource.getLayoutY() + graphNodeSource.getHeight() / 2);
-
-        line.setEndX(graphNodeDestination.getLayoutX() + graphNodeSource.getWidth() / 2);
-        line.setEndY(graphNodeDestination.getLayoutY() + graphNodeSource.getHeight() / 2);
-        
-        line.setFill(Color.RED);
-        
-        graphNodeDestination.getGroup().toFront();
-        graphNodeSource.getGroup().toFront();
-        
-        group.getChildren().add(line);
-
-        linesOCS.add(line);
-
-    }
-    public void cleanLineOCS()
+    public GraphOCS addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination, int  countInnstanceOCS)
     {
-        for (Line line : linesOCS) {
-            group.getChildren().remove(line);
-        }
+        GraphOCS graphOCS = new GraphOCS(graphNodeSource, graphNodeDestination, this, countInnstanceOCS) ;   
+        linesOCS.add(graphOCS.getLine());
+        return graphOCS;
     }
+    
 
     public void showLineOCS() {
         for (Line line : linesOCS) {
@@ -103,6 +85,12 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         }
     }
 
+    public ArrayList<Line> getLinesOCS() {
+        return linesOCS;
+    }
+
+    
+    
     public boolean isSerializableComplete() {
         return serializableComplete;
     }

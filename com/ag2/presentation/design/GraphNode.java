@@ -64,6 +64,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private GraphDesignGroup graphDesignGroup;
     private double layoutX;
     private double layoutY;
+    private boolean showSimpleNode = false;
 
     public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
@@ -77,21 +78,27 @@ public abstract class GraphNode implements Selectable, Serializable {
         subNodeProperties = new HashMap<String, String>();
         initTransientObjects();
     }
-    public void  showSimpleNode()
-    {
+
+    public void showSimpleNode() {
         imageURL = imageURL.replace(".png", "_node.png");
         image = new Image(imageURL);
         imageView.setImage(image);
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
+        group.setScaleX(1);
+        group.setScaleY(-1);
+         showSimpleNode = true;
     }
-    public void  hideSimpleNode()
-    {
+
+    public void hideSimpleNode() {
         imageURL = imageURL.replace("_node", "");
         image = new Image(imageURL);
         imageView.setImage(image);
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
-    }
+        group.setScaleX(0.5);
+        group.setScaleY(-0.5);
+         showSimpleNode = false;
 
+    }
 
     public void initTransientObjects() {
 
@@ -216,20 +223,20 @@ public abstract class GraphNode implements Selectable, Serializable {
                             if (linkAdminCtr instanceof FiberAdminController) {
 
                                 if (wildcardNodeA.isEnableToCreateLink(graphNode) && linkAdminCtr.canCreateLink(wildcardNodeA, graphNode)) {
-                                    
+
                                     graphDesignGroup.remove(wildcardLink);
 
                                     if (linkAdminCtr.createLink(wildcardNodeA, graphNode)) {
-                                        
+
                                         GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminCtr);
                                         graphLink.addInitialGraphArc();
-                                        
-                                        ((FiberAdminController)linkAdminCtr).insertCoupleLinksOnMatchContainer(graphLink);
+
+                                        ((FiberAdminController) linkAdminCtr).insertCoupleLinksOnMatchContainer(graphLink);
                                         graphLink.select(true);
-                                        
+
                                         wildcardNodeA.getGroup().toFront();
                                         graphNode.getGroup().toFront();
-                                        
+
                                     }
                                 } else {
                                     graphNode.playDenyLinkAnimation();
@@ -239,7 +246,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     }
 
                 } else if (actionTypeEmun == actionTypeEmun.OCS_CIRCUIT) {
-                    
+
                     if (wildcardNodeA != null && wildcardNodeA != graphNode && GraphNode.linkBegin) {
 
                         graphDesignGroup.remove(wildcardOCS);
@@ -265,6 +272,10 @@ public abstract class GraphNode implements Selectable, Serializable {
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
+                
+                 if (GraphNode.this.showSimpleNode) {
+                    return;
+                }
 
                 setWidth((short) vbxWrapper.getWidth());
                 setHeight((short) vbxWrapper.getHeight());
@@ -288,11 +299,11 @@ public abstract class GraphNode implements Selectable, Serializable {
                         GraphNode.linkBegin = true;
                     }
                 } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
-                    
+
                     GraphNode graphNode = GraphNode.this;
                     wildcardNodeA = graphNode;
                     GraphNode.linkBegin = true;
-                    
+
                     double x = graphNode.getLayoutX();
                     double y = graphNode.getLayoutY();
                     wildcardOCS.setStartX(x + width / 2);
@@ -313,7 +324,11 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void establishEventOnMouseDragged() {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(MouseEvent mouseEvent) 
+            {
+                if (GraphNode.this.showSimpleNode) {
+                    return;
+                }
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
                     setLayoutX(getLayoutX() + mouseEvent.getX() - width / 2);
@@ -323,7 +338,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     dragging = true;
                     wildcardLink.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardLink.setEndY(getLayoutY() + height - (mouseEvent.getY()));
-                }else if(GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT){
+                } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
                     wildcardOCS.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardOCS.setEndY(getLayoutY() + height - (mouseEvent.getY()));
                 }
@@ -336,11 +351,14 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
+                if (GraphNode.this.showSimpleNode) {
+                    return;
+                }
                 group.setScaleX(0.5);
                 group.setScaleY(-0.5);
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.LINK) {
                     graphDesignGroup.remove(wildcardLink);
-                } else if(GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT){
+                } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
                     graphDesignGroup.remove(wildcardOCS);
                 }
             }
@@ -351,6 +369,12 @@ public abstract class GraphNode implements Selectable, Serializable {
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
+                
+                
+
+                if (GraphNode.this.showSimpleNode) {
+                    return;
+                }
 
                 GraphNode graphNode = GraphNode.this;
 
@@ -403,7 +427,12 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void establishEventOnMouseExit() {
         group.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) {
+            
+            public void handle(MouseEvent mouseEvent)
+            {
+                if (GraphNode.this.showSimpleNode) {
+                    return;
+                }
                 if (!mouseEvent.isPrimaryButtonDown()) {
                     GraphNode.linkBegin = false;
                     wildcardNodeA = null;
