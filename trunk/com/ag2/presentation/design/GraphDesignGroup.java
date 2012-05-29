@@ -56,8 +56,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private double dragMouseX = 0;
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
-    private Rectangle backgroundRec;
-    private ArrayList<Line> linesOCS = new ArrayList<Line>();
+    private transient Rectangle backgroundRec;
+    private transient ArrayList<Line> linesOCS = new ArrayList<Line>();
+    private transient ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
 
     public GraphDesignGroup() {
         initTransientObjects();
@@ -399,7 +400,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     public void addLinkAdminAbstractControllers(LinkAdminAbstractController linkAdminAbstractController) {
         linkAdminCtrs.add(linkAdminAbstractController);
     }
-    private ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
+   
 
     public void hideMap() {
         for (Shape shape : listMapWorld) {

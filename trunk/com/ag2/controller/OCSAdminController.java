@@ -53,21 +53,20 @@ public class OCSAdminController extends LinkAdminAbstractController {
         for (LinkCreationAbstractModel linkCreationModel : linkCreationAbstractModels) {
 
             if (linkCreationModel instanceof OCSCreationModel) {
-                
+
                 GridSimulatorModel simulatorModel = (GridSimulatorModel) SimulationBase.getInstance().getGridSimulatorModel();
                 ArrayList<OCSRequest> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
 
                 for (OCSRequest ocsRequest : designedOCSCircuits) {
-                    
+
                     Entity sourceNode = ocsRequest.getSource();
                     Entity destinationNode = ocsRequest.getDestination();
-                    
-                    for (int i = 0; i < 15; i++) 
-                    {
-                        linkCreationModel.createLink(sourceNode, destinationNode);//FIXME: NO VA EL FOR
-                    }
 
-                    
+
+                    linkCreationModel.createLink(sourceNode, destinationNode);
+
+
+
                 }
             }
         }
