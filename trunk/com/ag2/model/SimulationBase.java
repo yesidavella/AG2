@@ -6,6 +6,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
+import Grid.Routing.Routing;
 import Grid.Utilities.HtmlWriter;
 import com.ag2.controller.*;
 import com.ag2.presentation.Main;
@@ -106,7 +107,9 @@ public class SimulationBase implements Runnable, Serializable {
 
     public void initNetwork() {
         simulationInstance.stopEvent = false;
-        gridSimulatorModel.getRouting().clear();
+        Routing routing = gridSimulatorModel.getRouting();
+        routing.clear();
+//        routing.setSimulator(gridSimulatorModel);
         route();
 
         ((OCSAdminController) OCSLinkAdminCtr).createOCS();
