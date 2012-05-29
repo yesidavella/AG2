@@ -507,11 +507,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         GUI.getInstance().getEntityPropertyTable().clearData();
         if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
             GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
-//             GUI.getInstance().getGraphDesignGroup().getSelectable().select(true);
         }
-
-
-
     }
 
     @Override

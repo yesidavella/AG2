@@ -1,10 +1,12 @@
 package com.ag2.controller;
 
 import Grid.Entity;
+import Grid.GridSimulator;
 import Grid.Port.GridOutPort;
 import com.ag2.model.FiberCreationModel;
 import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.PhosphorusLinkModel;
+import com.ag2.model.SimulationBase;
 import com.ag2.presentation.design.ClientGraphNode;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
@@ -126,11 +128,9 @@ public class FiberAdminController extends LinkAdminAbstractController {
     @Override
     public void reCreatePhosphorousLinks() {
 
-
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-            //createLink(graphLink); ojo
 
+        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
             createLink(graphLink.getGraphNodeA(), graphLink.getGraphNodeB());
         }
 
@@ -146,12 +146,10 @@ public class FiberAdminController extends LinkAdminAbstractController {
     public boolean removeLink(GraphLink graphLink) {
 
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-        PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.get(graphLink);
+        PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.remove(graphLink);
 
         boolean canRemovePortsInNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
         boolean canRemovePortsInNodeB = removeInAndOutPort(phosLink.getGridOutPortB());
-
-        linkMatchCoupleObjectContainer.remove(graphLink);
 
         return (canRemovePortsInNodeA && canRemovePortsInNodeB);
     }
@@ -160,11 +158,21 @@ public class FiberAdminController extends LinkAdminAbstractController {
         //Remuevo el puerto de salida y de entrada
         SimBaseInPort inPort = outPort.getTarget();
 
-        SimBaseEntity source = outPort.getOwner();
-        SimBaseEntity target = inPort.getOwner();
+        GridSimulator gridSimulatorModel = SimulationBase.getInstance().getGridSimulatorModel();
 
-        boolean canRemoveInPort = target.getInPorts().remove(inPort);
-        boolean canRemoveOutPort = source.getOutPorts().remove(outPort);
+        SimBaseEntity source = gridSimulatorModel.getEntityWithId(outPort.getOwner().getId());
+        SimBaseEntity target = gridSimulatorModel.getEntityWithId(inPort.getOwner().getId());
+
+        boolean canRemoveOutPort = false;
+        boolean canRemoveInPort = false;
+
+        if (source != null) {
+            canRemoveOutPort = source.getOutPorts().remove(outPort);
+        }
+
+        if (target != null) {
+            canRemoveInPort = target.getInPorts().remove(inPort);
+        }
 
         return canRemoveInPort && canRemoveOutPort;
     }

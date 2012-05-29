@@ -1,13 +1,11 @@
 package com.ag2.model;
 
-import Grid.Entity;
 import Grid.Routing.RoutingViaJung;
 import Grid.Routing.ShortesPathRouting;
 import com.ag2.config.PropertyPhosphorusTypeEnum;
 import com.ag2.controller.ResultsAbstractController;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import simbase.Exceptions.StopException;
 import simbase.Port.SimBaseInPort;
 import simbase.SimBaseEntity;
