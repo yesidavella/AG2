@@ -1,4 +1,4 @@
-Bugs                                                                                               Estado
+﻿Bugs                                                                                               Estado
 1.Eliminar los outPorts mvc. Yesid 3H ..........................................................   Listones
 3.Guardar porpiedades de la  en tiempo real. 2H Franklin..............................   Listo
 4. Bajar menus de navegacion y colocar titulo. COlocar
@@ -91,5 +91,11 @@ Otros problemas
 
  - Hacer algo interesante con los logos. (Franklin)
  - validar y ordenar los inputs de las propiedades (Yesid)
+
+Convencion de linea de vida de los mensajes en Phophorus:
+*solicitud
+*agendado broker
+*trabajo
+*atendido
 
 
