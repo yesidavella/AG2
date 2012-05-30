@@ -203,7 +203,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
                 GraphNode graphNode = GraphNode.this;
 
-                if (actionTypeEmun == ActionTypeEmun.LINK) {
+                if (actionTypeEmun == ActionTypeEmun.LINK || actionTypeEmun == ActionTypeEmun.OCS_CIRCUIT) {
                     group.setCursor(actionTypeEmun.getOverCursorImage());
                 } else {
                     group.setCursor(actionTypeEmun.getCursorImage());

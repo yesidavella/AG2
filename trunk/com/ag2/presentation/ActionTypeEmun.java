@@ -22,8 +22,8 @@ import javafx.scene.image.Image;
         HRYDRID_SWITCH("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
         BROKER("nodo_servicio","nodo_servicio_cursor",15,16),
         RESOURCE("recurso","recurso_cursor",13,16),
-        LINK("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7),
-        OCS_CIRCUIT("enlace","enlace_cursor",2,2,"enlace_adicionar_cursor",2,7);
+        LINK("fiber_link","fiber_cursor",3,4,"fiber_add_cursor",3,8),
+        OCS_CIRCUIT("OCS_link","OCS_cursor",2,2,"OCS_add_cursor",2,7);
 
     private Image buttonImage;
     private ImageCursor cursorImage;
