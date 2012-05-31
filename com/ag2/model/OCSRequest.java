@@ -1,7 +1,8 @@
 package com.ag2.model;
 import Grid.Entity;
+import java.io.Serializable;
 
-public class OCSRequest {
+public class OCSRequest implements Serializable{
 
     private Entity source;
     private Entity destination;

@@ -108,6 +108,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         resourcesObservableList = FXCollections.observableArrayList();
         switchesObservableList = FXCollections.observableArrayList();
         brokersObservableList = FXCollections.observableArrayList();
+        
+       linesOCS = new ArrayList<Line>();
+       listMapWorld = new ArrayList<Shape>();
         loadGeoMap();
     }
 

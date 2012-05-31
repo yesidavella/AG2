@@ -12,6 +12,7 @@ import com.ag2.presentation.design.GraphDesignGroup;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.GraphOCS;
 import com.ag2.util.Utils;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
@@ -20,7 +21,7 @@ import javafx.application.Platform;
  *
  * @author Frank
  */
-public class NotifyControllerOCS implements NotificableOCS {
+public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
     private GraphDesignGroup graphDesignGroup;
 
