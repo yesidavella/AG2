@@ -38,11 +38,12 @@ public class Main extends Application implements Serializable {
     private JSObject browser;
     public static boolean IS_APPLET = false;
     private transient GUI guiAG2;
-     private transient  NotifyControllerOCS notifyControllerOCS ;
+    private NotifyControllerOCS notifyControllerOCS ;
     public static int countObject = 0;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-
+    private transient ResultsOCSController resultsOCSController = new ResultsOCSController();
+    
     @Override
     public void start(final Stage stage) {
 
@@ -149,7 +150,7 @@ public class Main extends Application implements Serializable {
         guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));        
         simulationBase.setResultsChartAbstractController(resultsChartController);
         
-        ResultsOCSController resultsOCSController = new ResultsOCSController();
+      
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
         
        notifyControllerOCS = new NotifyControllerOCS();
@@ -200,6 +201,10 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main) {
 
+        
+        resultsOCSController = new ResultsOCSController();
+        guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
+        
         simulationBase = main.getSimulationBase();  ///SimulacionBase.getInstance();
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();
@@ -222,7 +227,8 @@ public class Main extends Application implements Serializable {
 
 
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
-
+        notifyControllerOCS.setGraphDesignGroup(graphDesignGroup);
+        
         guiAG2.getExecutePane().setExecuteAbstractController(executeController);
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
 

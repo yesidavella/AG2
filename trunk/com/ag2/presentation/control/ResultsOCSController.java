@@ -11,6 +11,7 @@ import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.controller.ResultsAbstractOCSController;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.util.Utils;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
