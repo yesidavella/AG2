@@ -34,7 +34,7 @@ public class Main extends Application implements Serializable {
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
-    private ResultsChartController resultsChartController;
+    private ResultsChartController resultsChartCtr;
     private JSObject browser;
     public static boolean IS_APPLET = false;
     private transient GUI guiAG2;
@@ -101,7 +101,7 @@ public class Main extends Application implements Serializable {
         nodeAdminController = new NodeAdminController();
         executeController = new ExecuteController();
         resultsController = new ResultsController();
-        resultsChartController = new ResultsChartController();
+        resultsChartCtr = new ResultsChartController();
 
         guiAG2.getGraphDesignGroup().addNodeAdminAbstractControllers(nodeAdminController);
 
@@ -144,13 +144,14 @@ public class Main extends Application implements Serializable {
         ((FiberAdminController) fiberLinkAdminACtrl).addOCSAdminController((OCSAdminController) OCSlinkAdminCtrl);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
-        resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
-        resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
-        resultsChartController.setViewResultsBrokerChart(guiAG2.getChartsResultsBroker());
-        
+        resultsChartCtr.setViewResultsClientChart(guiAG2.getChartsResultClient());
+        resultsChartCtr.setViewResultsResourceChart(guiAG2.getChartsResultResource());
+        resultsChartCtr.setViewResultsBrokerChart(guiAG2.getChartsResultsBroker());
+        resultsChartCtr.setViewResultsSwitchChart(guiAG2.getChartsResultsSwitch());
+
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
         guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
-        simulationBase.setResultsChartAbstractController(resultsChartController);
+        simulationBase.setResultsChartAbstractController(resultsChartCtr);
 
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
 
@@ -200,7 +201,6 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main) {
 
-
         resultsOCSController = new ResultsOCSController();
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
 
@@ -217,13 +217,12 @@ public class Main extends Application implements Serializable {
         executeController = main.getExecuteAbstractController();
         resultsController = main.getResultsController();
         nodeCreationModel = main.getNodeCreationModel();
-        resultsChartController = main.getResultsChartController();
+        resultsChartCtr = main.getResultsChartController();
         nodeMatchCoupleObjectContainer = main.getNodeMatchCoupleObjectContainer();
         linkMatchCoupleObjectContainer = main.getLinkMatchCoupleObjectContainer();
 
         MatchCoupleObjectContainer.setNodeMatchCoupleObjectContainer(nodeMatchCoupleObjectContainer);
         MatchCoupleObjectContainer.setLinkMatchCoupleObjectContainer(linkMatchCoupleObjectContainer);
-
 
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
         notifyControllerOCS.setGraphDesignGroup(graphDesignGroup);
@@ -240,8 +239,10 @@ public class Main extends Application implements Serializable {
         nodeAdminController.addGraphNodesView(guiAG2.getEntityPropertyTb());
         guiAG2.getEntityPropertyTb().setControladorAbstractoAdminNodo(nodeAdminController);
 
-        resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
-        resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
+        resultsChartCtr.setViewResultsClientChart(guiAG2.getChartsResultClient());
+        resultsChartCtr.setViewResultsResourceChart(guiAG2.getChartsResultResource());
+        resultsChartCtr.setViewResultsBrokerChart(guiAG2.getChartsResultsBroker());
+        resultsChartCtr.setViewResultsSwitchChart(guiAG2.getChartsResultsSwitch());
         //  executeAbstractController.stop();
     }
 
@@ -272,7 +273,7 @@ public class Main extends Application implements Serializable {
     }
 
     public ResultsChartController getResultsChartController() {
-        return resultsChartController;
+        return resultsChartCtr;
     }
 
     public HashMap<GraphLink, PhosphorusLinkModel> getLinkMatchCoupleObjectContainer() {
