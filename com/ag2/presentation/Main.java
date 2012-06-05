@@ -38,12 +38,12 @@ public class Main extends Application implements Serializable {
     private JSObject browser;
     public static boolean IS_APPLET = false;
     private transient GUI guiAG2;
-    private NotifyControllerOCS notifyControllerOCS ;
+    private NotifyControllerOCS notifyControllerOCS;
     public static int countObject = 0;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
     private transient ResultsOCSController resultsOCSController = new ResultsOCSController();
-    
+
     @Override
     public void start(final Stage stage) {
 
@@ -141,23 +141,22 @@ public class Main extends Application implements Serializable {
         SimulationBase.getInstance().setOCSLinkAdminCtr(OCSlinkAdminCtrl);
         //Registro el controlador de creacion de ocs en el de creacion de fibra
         //para q cuando cree un enlace de fibra entre switches creo un ocs tambien
-        ((FiberAdminController)fiberLinkAdminACtrl).addOCSAdminController((OCSAdminController)OCSlinkAdminCtrl);
+        ((FiberAdminController) fiberLinkAdminACtrl).addOCSAdminController((OCSAdminController) OCSlinkAdminCtrl);
 
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
         resultsChartController.setViewResultsClientChart(guiAG2.getChartsResultClient());
         resultsChartController.setViewResultsResourceChart(guiAG2.getChartsResultResource());
+        resultsChartController.setViewResultsBrokerChart(guiAG2.getChartsResultsBroker());
+        
         SimulationBase.getInstance().setResultsAbstractController(resultsController);
-        guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));        
+        guiAG2.getTbwSimulationProperties().setItems(PropertyPhosphorusTypeEnum.getData(executeController));
         simulationBase.setResultsChartAbstractController(resultsChartController);
-        
-      
+
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
-        
-       notifyControllerOCS = new NotifyControllerOCS();
-       notifyControllerOCS.setGraphDesignGroup(  guiAG2.getGraphDesignGroup());
-        
-        
-        
+
+        notifyControllerOCS = new NotifyControllerOCS();
+        notifyControllerOCS.setGraphDesignGroup(guiAG2.getGraphDesignGroup());
+
     }
 
     public ResultsController getResultsController() {
@@ -201,10 +200,10 @@ public class Main extends Application implements Serializable {
 
     private void loadControllers(Main main) {
 
-        
+
         resultsOCSController = new ResultsOCSController();
         guiAG2.getResultsOCS().setResultsOCSController(resultsOCSController);
-        
+
         simulationBase = main.getSimulationBase();  ///SimulacionBase.getInstance();
         SimulationBase.loadInstance(simulationBase);
         graphDesignGroup = main.getGraphDesignGroup();
@@ -228,7 +227,7 @@ public class Main extends Application implements Serializable {
 
         guiAG2.loadGraphDesignGroup(graphDesignGroup);
         notifyControllerOCS.setGraphDesignGroup(graphDesignGroup);
-        
+
         guiAG2.getExecutePane().setExecuteAbstractController(executeController);
         resultsController.setViewResultsPhosphorus(guiAG2.getPhosphosrusResults());
 
@@ -283,6 +282,4 @@ public class Main extends Application implements Serializable {
     public HashMap<GraphNode, Entity> getNodeMatchCoupleObjectContainer() {
         return nodeMatchCoupleObjectContainer;
     }
-    
-    
 }

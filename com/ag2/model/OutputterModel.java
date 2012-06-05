@@ -14,7 +14,7 @@ import simbase.Stats.SimBaseStats;
 public class OutputterModel extends Outputter {
 
     private ResultsAbstractController resultsController;
-    private ResultsChartAbstractController chartAbstractController;
+    private ResultsChartAbstractController chartsCtrl;
 
     public OutputterModel(GridSimulator gridSimulator) {
         super(gridSimulator);
@@ -26,7 +26,7 @@ public class OutputterModel extends Outputter {
     }
 
     public void setChartAbstractController(ResultsChartAbstractController chartAbstractController) {
-        this.chartAbstractController = chartAbstractController;
+        this.chartsCtrl = chartAbstractController;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class OutputterModel extends Outputter {
                 relativeReceiveResult_requsetSent,
                 relativeReceiveresult_requestCreated);
 
-        chartAbstractController.createClientResult(client.toString(), requestCreated,  requestSent,   jobSent, resultReceive);
+        chartsCtrl.createClientResult(client.toString(), requestCreated, requestSent, jobSent, resultReceive);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class OutputterModel extends Outputter {
 
         }
 
-        chartAbstractController.createResourceResult(resourceNode.toString(), recive, sent);
+        chartsCtrl.createResourceResult(resourceNode.toString(), recive, sent);
         resultsController.addResourceResult(
                 resourceNode.toString(),
                 recive,
@@ -186,7 +186,7 @@ public class OutputterModel extends Outputter {
         double noFreeResouce = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_NO_FREE_RESOURCE);
         double reqAckSent = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_REQ_ACK_SENT);
         double sendingFailed = sim.getStat(serviceNode, SimBaseStats.Stat.SERVICENODE_SENDING_FAILED);
-        double relativeAckSent = reqAckSent/reqRecieved; 
+        double relativeAckSent = reqAckSent / reqRecieved;
 
         resultsController.addBrokerResults(
                 serviceNode.toString(),
@@ -196,6 +196,14 @@ public class OutputterModel extends Outputter {
                 reqAckSent,
                 sendingFailed,
                 relativeAckSent);
-//        printCircuitsStats();
+
+        chartsCtrl.createBrokerResults(
+                serviceNode.toString(),
+                registrationReceived,
+                reqRecieved,
+                noFreeResouce,
+                reqAckSent,
+                sendingFailed,
+                relativeAckSent);
     }
 }
