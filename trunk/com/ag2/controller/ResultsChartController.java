@@ -51,4 +51,39 @@ public class ResultsChartController extends ResultsChartAbstractController {
         };
         Platform.runLater(runnable);
     }
+
+    @Override
+    public void createSwitchResults(
+            final String switchName,
+            final double jobsSwitched,
+            final double jobsNoSwitched,
+            final double resultsSwiched,
+            final double resultsNoSwitched,
+            final double requestsSwitched,
+            final double requestsNoSwitched,
+            final double relativeNojobsNoSwitched,
+            final double relativeResultsNoSwitched,
+            final double relativeRequestsNoSwitched,
+            final double relativeAllNoSwitched) {
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                viewResultsSwitchChart.createSwitchResults(
+                        switchName,
+                        jobsSwitched,
+                        jobsNoSwitched,
+                        resultsSwiched,
+                        resultsNoSwitched,
+                        requestsSwitched,
+                        requestsNoSwitched,
+                        relativeNojobsNoSwitched,
+                        relativeResultsNoSwitched,
+                        relativeRequestsNoSwitched,
+                        relativeAllNoSwitched);
+            }
+        };
+        Platform.runLater(runnable);
+    }
 }

@@ -1,9 +1,6 @@
 package com.ag2.controller;
 
-import com.ag2.presentation.control.ChartsResultsBroker;
-import com.ag2.presentation.control.ViewResultsBrokerChart;
-import com.ag2.presentation.control.ViewResultsClientChart;
-import com.ag2.presentation.control.ViewResultsResourceChart;
+import com.ag2.presentation.control.*;
 import java.io.Serializable;
 
 public abstract class ResultsChartAbstractController implements Serializable {
@@ -11,6 +8,7 @@ public abstract class ResultsChartAbstractController implements Serializable {
     protected transient ViewResultsClientChart viewResultsClientChart;
     protected transient ViewResultsResourceChart viewResultsResourceChart;
     protected transient ViewResultsBrokerChart viewResultsBrokerChart;
+    protected transient ViewResultsSwitchChart viewResultsSwitchChart;
 
     public void setViewResultsClientChart(ViewResultsClientChart viewResultsChart) {
         this.viewResultsClientChart = viewResultsChart;
@@ -24,6 +22,10 @@ public abstract class ResultsChartAbstractController implements Serializable {
         this.viewResultsBrokerChart = chartsResultsBroker;
     }
 
+    public void setViewResultsSwitchChart(ViewResultsSwitchChart viewResultsSwitchChart) {
+        this.viewResultsSwitchChart = viewResultsSwitchChart;
+    }
+
     public abstract void createClientResult(
             String clientName,
             double requestCreated,
@@ -32,9 +34,9 @@ public abstract class ResultsChartAbstractController implements Serializable {
             double resultReceive);
 
     public abstract void createResourceResult(
-            final String resourceName,
-            final double jobReceive,
-            final double resultSent);
+            String resourceName,
+            double jobReceive,
+            double resultSent);
 
     public abstract void createBrokerResults(
             String brokerName,
@@ -44,4 +46,17 @@ public abstract class ResultsChartAbstractController implements Serializable {
             double reqAckSent,
             double sendingFailed,
             double relativeAckSent);
+
+    public abstract void createSwitchResults(
+            String switchName,
+            double jobsSwitched,
+            double jobsNoSwitched,
+            double resultsSwiched,
+            double resultsNoSwitched,
+            double requestsSwitched,
+            double requestsNoSwitched,
+            double relativeNojobsNoSwitched,
+            double relativeResultsNoSwitched,
+            double relativeRequestsNoSwitched,
+            double relativeAllNoSwitched);
 }

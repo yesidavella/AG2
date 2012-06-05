@@ -91,6 +91,7 @@ public class GUI extends Scene {
     private Tab tabResultsHTML = new Tab();
     private Tab tabChartsClientResults = new Tab();
     private Tab tabChartsBrokerResults = new Tab();
+    private Tab tabChartsSwitchResults = new Tab();
     private Tab tabChartsrResourceResults = new Tab();
     private Tab tabResultsResource = new Tab();
     private TabPane tbpMain = new TabPane();
@@ -98,6 +99,7 @@ public class GUI extends Scene {
     private ChartsResultClient chartsResultClient;
     private ChartsResultResource chartsResultResource;
     private ChartsResultsBroker chartsResultsBroker;
+    private ChartsResultsSwitch chartsResultsSwitch;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private ToolBar tobWindow;
     private double mouseDragOffsetX = 0;
@@ -726,22 +728,25 @@ public class GUI extends Scene {
         tabResults.setClosable(false);
         tabResultsHTML.setText("Registros HTML");
         tabResultsHTML.setClosable(false);
-        tabChartsClientResults.setText("Graficos de Clientes");
+        tabChartsClientResults.setText("Gráficos de Clientes");
         tabChartsClientResults.setClosable(false);
 
-        tabChartsrResourceResults.setText("Graficos de recursos");
+        tabChartsrResourceResults.setText("Gráficos de recursos");
         tabChartsrResourceResults.setClosable(false);
 
-        tabChartsResourceCPU.setText("Graficos de recursos (CPU)");
+        tabChartsResourceCPU.setText("Gráficos de recursos (CPU)");
         tabChartsResourceCPU.setClosable(false);
 
-        tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
+        tabChartsResourceBuffer.setText("Gráficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
 
-        tabChartsBrokerResults.setText("Graficos de Agendador");
+        tabChartsBrokerResults.setText("Gráficos de Agendador");
         tabChartsBrokerResults.setClosable(false);
 
-        tabResultsResource.setText("Graficos de recursos");
+        tabChartsSwitchResults.setText("Gráficos de Conmutador");
+        tabChartsSwitchResults.setClosable(false);
+
+        tabResultsResource.setText("Gráficos de recursos");
         tabResultsResource.setClosable(false);
 
         tabResultsOCS.setText("Resultados λSP");
@@ -765,6 +770,7 @@ public class GUI extends Scene {
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
         chartsResultsBroker = new ChartsResultsBroker(tabChartsBrokerResults);
+        chartsResultsSwitch = new ChartsResultsSwitch(tabChartsSwitchResults);
 
         resultsOCS = new ResultsOCS(tabResultsOCS);
 
@@ -1241,7 +1247,6 @@ public class GUI extends Scene {
 
     public void disable() {
 
-
         beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
@@ -1254,7 +1259,7 @@ public class GUI extends Scene {
 
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tbpMain.getTabs().contains(tabResults)) {
-            tbpMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS, tabChartsBrokerResults);
+            tbpMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS, tabChartsBrokerResults, tabChartsSwitchResults);
 
         }
         chartsResultsCPU.play();
@@ -1304,5 +1309,9 @@ public class GUI extends Scene {
 
     public ChartsResultsBroker getChartsResultsBroker() {
         return chartsResultsBroker;
+    }
+
+    public ChartsResultsSwitch getChartsResultsSwitch() {
+        return chartsResultsSwitch;
     }
 }

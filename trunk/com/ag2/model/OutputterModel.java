@@ -166,13 +166,26 @@ public class OutputterModel extends Outputter {
         }
 
         resultsController.addSwitchResult(
-                switch1.toString(),
+                switch1.getId(),
                 sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
                 sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
                 sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
                 sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
-                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_SWITCHED),
-                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_REQ_MESSAGE_DROPPED),
+                messagesReqSwitched,
+                messagesReqDropped,
+                relativeJob,
+                relativeResult,
+                relativeReq,
+                relativeMessage);
+        
+        chartsCtrl.createSwitchResults(
+                switch1.getId(),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_SWITCHED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBMESSAGE_DROPPED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_SWITCHED),
+                sim.getStat(switch1, SimBaseStats.Stat.SWITCH_JOBRESULTMESSAGE_DROPPED),
+                messagesReqSwitched,
+                messagesReqDropped,
                 relativeJob,
                 relativeResult,
                 relativeReq,
