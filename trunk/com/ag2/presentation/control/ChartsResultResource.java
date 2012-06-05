@@ -18,10 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/**
- *
- * @author Frank
- */
 public class ChartsResultResource implements ViewResultsResourceChart {
 
     private transient Tab tab;
@@ -64,8 +60,6 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         vBoxPlay.setAlignment(Pos.CENTER);
         vBoxMain.getChildren().add(0, vBoxPlay);
 
-
-
         countPlays++;
 
         xAxis = new CategoryAxis();
@@ -78,7 +72,6 @@ public class ChartsResultResource implements ViewResultsResourceChart {
 
         xAxis.setLabel("Recursos");
         yAxis.setLabel("Trabajos");
-
 
         series1 = new XYChart.Series<String, Number>();
         series1.setName("Trabajos recibidos");
@@ -97,7 +90,6 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         vBoxBar.getChildren().addAll(hBoxClient);
         vBoxBar.getChildren().add(barChart);
         
-        
         pieChartDataReceive = FXCollections.observableArrayList();
         pieChartDataSent = FXCollections.observableArrayList();
         
@@ -113,15 +105,12 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         pieChartSent.setTitle("Resultados enviados");
         vBoxPieSent.getChildren().addAll(pieChartSent);
         
-        
         hBoxMainResource.getChildren().addAll(vBoxPieReceive,vBoxPieSent, vBoxBar);
 
     }
 
     @Override
     public void createResourceResult(final String resourceName, final double jobReceive, final double resultSent) {
-
-        
 
         String graficalname = Utils.findGraphicalName(resourceName);
         series1.getData().add(new XYChart.Data<String, Number>(graficalname, jobReceive));
@@ -130,9 +119,6 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         
         pieChartDataReceive.add(    new PieChart.Data(graficalname, jobReceive));
         pieChartDataSent.add(    new PieChart.Data(graficalname, resultSent));
-        
-
-
 
     }
 }

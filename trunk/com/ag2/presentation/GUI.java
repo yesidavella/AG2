@@ -73,7 +73,7 @@ public class GUI extends Scene {
     private boolean isPrincipalKeyPressed = false;
     private ActionTypeEmun beforeActionTypeEmun;
     private Cursor beforeEventCursor;
-    private PhosphosrusResults phosphosrusResults;  
+    private PhosphosrusResults phosphosrusResults;
     private ResultsOCS resultsOCS;
     private Main main;
     private ToggleButtonAg2 btnSelection;
@@ -90,12 +90,14 @@ public class GUI extends Scene {
     private Tab tabChartsResourceBuffer = new Tab();
     private Tab tabResultsHTML = new Tab();
     private Tab tabChartsClientResults = new Tab();
+    private Tab tabChartsBrokerResults = new Tab();
     private Tab tabChartsrResourceResults = new Tab();
     private Tab tabResultsResource = new Tab();
-    private TabPane tbMain = new TabPane();
+    private TabPane tbpMain = new TabPane();
     private TabPane tbResultsResource = new TabPane();
     private ChartsResultClient chartsResultClient;
     private ChartsResultResource chartsResultResource;
+    private ChartsResultsBroker chartsResultsBroker;
     private TableView<String> tbwSimulationProperties = new TableView<String>();
     private ToolBar tobWindow;
     private double mouseDragOffsetX = 0;
@@ -212,7 +214,7 @@ public class GUI extends Scene {
         setSplitPaneAnimation();
 
         createTabs();
-        brpRoot.setCenter(tbMain);
+        brpRoot.setCenter(tbpMain);
     }
 
     private void setSplitPaneAnimation() {
@@ -713,21 +715,20 @@ public class GUI extends Scene {
 
     private void createTabs() {
 
-
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
-        
-         tabViewOCS.setClosable(false);
+
+        tabViewOCS.setClosable(false);
         tabViewOCS.setText("Vista λSP");
-        
+
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
         tabResultsHTML.setText("Registros HTML");
-        tabResultsHTML.setClosable(false);        
+        tabResultsHTML.setClosable(false);
         tabChartsClientResults.setText("Graficos de Clientes");
-        tabChartsClientResults.setClosable(false);       
-        
+        tabChartsClientResults.setClosable(false);
+
         tabChartsrResourceResults.setText("Graficos de recursos");
         tabChartsrResourceResults.setClosable(false);
 
@@ -737,13 +738,15 @@ public class GUI extends Scene {
         tabChartsResourceBuffer.setText("Graficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
 
+        tabChartsBrokerResults.setText("Graficos de Agendador");
+        tabChartsBrokerResults.setClosable(false);
+
         tabResultsResource.setText("Graficos de recursos");
         tabResultsResource.setClosable(false);
 
         tabResultsOCS.setText("Resultados λSP");
         tabResultsOCS.setClosable(false);
-        
-        
+
         phosphosrusResults = new PhosphosrusResults(tabResults);
         PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
         executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
@@ -756,96 +759,81 @@ public class GUI extends Scene {
         splitPane.getItems().addAll(scpWorld, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
         tabSimulation.setContent(splitPane);
-      
 
         chartsResultClient = new ChartsResultClient(tabChartsClientResults);
         chartsResultResource = new ChartsResultResource(tabChartsrResourceResults);
         chartsResultsCPU = new ChartsResultsCPU(tabChartsResourceCPU);
         chartsResultsBuffer = new ChartsResultsBuffer(tabChartsResourceBuffer);
+        chartsResultsBroker = new ChartsResultsBroker(tabChartsBrokerResults);
+
         resultsOCS = new ResultsOCS(tabResultsOCS);
-                
-        
+
         tbResultsResource.setSide(Side.LEFT);
         tbResultsResource.getTabs().addAll(tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
-     
-        tbMain.getTabs().addAll(tabSimulation , tabViewOCS );
-        
-        
-        
-       tabViewOCS.setOnSelectionChanged( new EventHandler<Event>() {
+
+        tbpMain.getTabs().addAll(tabSimulation, tabViewOCS);
+
+        tabViewOCS.setOnSelectionChanged(new EventHandler<Event>() {
 
             @Override
-            public void handle(Event arg0)
-            {
-               if(tabViewOCS.isSelected()){
-                   tabSimulation.setContent(null);
-                   tabViewOCS.setContent(splitPane);
-                   graphDesignGroup.hideMap();
-                   
-                   for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
-                   {
-                       if(graphNode instanceof SwitchGraphNode)
-                       {
+            public void handle(Event arg0) {
+                if (tabViewOCS.isSelected()) {
+                    tabSimulation.setContent(null);
+                    tabViewOCS.setContent(splitPane);
+                    graphDesignGroup.hideMap();
+
+                    for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+                        if (graphNode instanceof SwitchGraphNode) {
                             graphNode.showSimpleNode();
-                       }
-                       else
-                       {
-                           graphNode.getGroup().setVisible(false);
-                       }
-                   }
-                   
-                   HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-                   
-                   for(GraphLink graphLink :  linkMatchCoupleObjectContainer.keySet())
-                   {
-                       graphLink.setVisible(false);
-                   }
-                   
-                   graphDesignGroup.showLineOCS();
-                    
-               }
-               
+                        } else {
+                            graphNode.getGroup().setVisible(false);
+                        }
+                    }
+
+                    HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+                    for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+                        graphLink.setVisible(false);
+                    }
+
+                    graphDesignGroup.showLineOCS();
+
+                }
+
             }
         });
-       
-         tabSimulation.setOnSelectionChanged( new EventHandler<Event>() {
+
+        tabSimulation.setOnSelectionChanged(new EventHandler<Event>() {
 
             @Override
-            public void handle(Event arg0)
-            {
-               if(tabSimulation.isSelected())
-               {
-                   tabViewOCS.setContent(null);
-                   tabSimulation.setContent(splitPane);
+            public void handle(Event arg0) {
+                if (tabSimulation.isSelected()) {
+                    tabViewOCS.setContent(null);
+                    tabSimulation.setContent(splitPane);
                     graphDesignGroup.showMap();
-                    for(GraphNode graphNode: MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()  )
-                   {
-                       if(graphNode instanceof SwitchGraphNode)
-                       {
+                    for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+                        if (graphNode instanceof SwitchGraphNode) {
                             graphNode.hideSimpleNode();
-                       }
-                       else
-                       {
-                           graphNode.getGroup().setVisible(true);
-                       }
-                   }
-                    
-                     HashMap<GraphLink,PhosphorusLinkModel> linkMatchCoupleObjectContainer  =MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-                   
-                   for(GraphLink graphLink :  linkMatchCoupleObjectContainer.keySet())
-                   {
-                       graphLink.setVisible(true);
-                   }
-                   graphDesignGroup.hideLineOCS();
-                    
-                    
-               }               
+                        } else {
+                            graphNode.getGroup().setVisible(true);
+                        }
+                    }
+
+                    HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+                    for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+                        graphLink.setVisible(true);
+                    }
+                    graphDesignGroup.hideLineOCS();
+
+
+                }
             }
         });
-        
-        
-        
+
+
+
     }
 
     private ScrollPane createRightDesign() {
@@ -1251,10 +1239,9 @@ public class GUI extends Scene {
         resultsOCS.showResults();
     }
 
-    public void disable()
-    {
-        
-        
+    public void disable() {
+
+
         beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();
 
@@ -1266,15 +1253,15 @@ public class GUI extends Scene {
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
-        if (!tbMain.getTabs().contains(tabResults)) {
-            tbMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS);
+        if (!tbpMain.getTabs().contains(tabResults)) {
+            tbpMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS, tabChartsBrokerResults);
 
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
         chartsResultClient.play();
         chartsResultResource.play();
-        tbMain.getSelectionModel().select(tabResults);
+        tbpMain.getSelectionModel().select(tabResults);
         resultsOCS.play();
 
     }
@@ -1314,6 +1301,8 @@ public class GUI extends Scene {
     public ResultsOCS getResultsOCS() {
         return resultsOCS;
     }
-    
-    
+
+    public ChartsResultsBroker getChartsResultsBroker() {
+        return chartsResultsBroker;
+    }
 }
