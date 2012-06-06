@@ -19,7 +19,7 @@ public class OCSAdminController extends LinkAdminAbstractController {
 
         simulatorModel.getDesignedOCSCircuits().add(new OCSRequest(phosphorusNodeA, phosphorusNodeB));
 
-        System.out.println("Solicito OCS circuito entre:" + sourceGraphNode.getName() + " -y- " + destinationGraphNode.getName());
+//        System.out.println("Solicito OCS circuito entre:" + sourceGraphNode.getName() + " -y- " + destinationGraphNode.getName());
 
         return true;
     }
@@ -65,9 +65,9 @@ public class OCSAdminController extends LinkAdminAbstractController {
                     Entity sourceNode = ocsRequest.getSource();
                     Entity destinationNode = ocsRequest.getDestination();
 
-                    for (int i = 0; i < 15; i++) {
+//                    for (int i = 0; i < 15; i++) {
                         linkCreationModel.createLink(sourceNode, destinationNode);//FIXME: NO VA EL FOR
-                    }
+//                    }
                 }
             }
         }

@@ -84,8 +84,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         image = new Image(imageURL);
         imageView.setImage(image);
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
-        group.setScaleX(1);
-        group.setScaleY(-1);
+        group.setScaleX(0.5);
+        group.setScaleY(-0.5);
          showSimpleNode = true;
     }
 

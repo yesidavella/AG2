@@ -446,7 +446,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                     centroid = multiPolygon.getCentroid();
                     final Text text = new Text(name);
                     bounds = text.getBoundsInLocal();
-                    text.setFont(new Font(6));
+                    text.setFont(new Font(4));
                     text.getTransforms().add(new Translate(centroid.getX() * MAP_SCALE, centroid.getY() * MAP_SCALE));
                     text.getTransforms().add(new Scale(0.1 * MAP_SCALE, -0.1 * MAP_SCALE));
                     text.getTransforms().add(new Translate(-bounds.getWidth() / 2., bounds.getHeight() / 2.));
@@ -459,9 +459,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         coords = polygon.getCoordinates();
 
                         Path path = new Path();
-                        path.setStrokeWidth(0.5);
+                        path.setStrokeWidth(0.2);
 
-                        path.setFill(Color.web("#C3B8A5"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1 
+                        path.setFill(Color.web("#AD9784"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1,AD9784 
                         //Si le va cambiar el color, dejar el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 

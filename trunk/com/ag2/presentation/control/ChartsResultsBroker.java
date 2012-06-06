@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class ChartsResultsBroker implements ViewResultsBrokerChart {
 
@@ -23,5 +25,7 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         vbxMain.setSpacing(10);
         scrollPane.setContent(vbxMain);
         tabChartsBrokerResults.setContent(scrollPane);
+        
+        vbxMain.getChildren().add(new Rectangle(300, 100, Color.RED));
     }
 }
