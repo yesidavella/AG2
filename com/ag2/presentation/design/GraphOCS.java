@@ -25,12 +25,13 @@ public class GraphOCS {
         this.graphNodeSource = graphNodeSource;
         this.graphNodeDestination = graphNodeDestination;
         this.graphDesignGroup = graphDesignGroup; 
-                
-        line.setStartX(graphNodeSource.getLayoutX()  + (15) + (graphNodeSource.getWidth() / 2)-  (0.2*countInstanceOCS) );
-        line.setStartY(graphNodeSource.getLayoutY() + (15) +  (graphNodeSource.getHeight() / 2)-  (0.2*countInstanceOCS) );
+        int desfaseX =18;
+        int desfaseY =30;
+        line.setStartX(graphNodeSource.getLayoutX()  + desfaseX+ (graphNodeSource.getWidth() / 2)-  (1*countInstanceOCS) );
+        line.setStartY(graphNodeSource.getLayoutY() + desfaseY+  (graphNodeSource.getHeight() / 2)-  (1*countInstanceOCS) );
 
-        line.setEndX(graphNodeDestination.getLayoutX()  + (15)+  graphNodeSource.getWidth() / 2-  (0.2*countInstanceOCS));
-        line.setEndY(graphNodeDestination.getLayoutY() + (15)+ (graphNodeSource.getHeight() / 2)-  (0.2*countInstanceOCS));
+        line.setEndX(graphNodeDestination.getLayoutX() +desfaseX+ graphNodeSource.getWidth() / 2-  (1*countInstanceOCS));
+        line.setEndY(graphNodeDestination.getLayoutY() +desfaseY+ (graphNodeSource.getHeight() / 2)-  (1*countInstanceOCS));
         
          int blue = 10;
          int red = 255;
@@ -58,9 +59,9 @@ public class GraphOCS {
         
         line.setStroke(Color.rgb(red, green, blue));
         
-        line.setStrokeWidth(0.05);
+        line.setStrokeWidth(0.5);
 //        line.toBack();
-        System.out.print("Dibujando  linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
+//        System.out.print("Dibujando  linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
         graphDesignGroup.getGroup().getChildren().add(line);
         graphNodeDestination.getGroup().toFront();
         graphNodeSource.getGroup().toFront();
@@ -76,7 +77,7 @@ public class GraphOCS {
     }
     public void remove()
     {
-        System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
+//        System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
         graphDesignGroup.getGroup().getChildren().remove(line);
         graphDesignGroup.getLinesOCS().remove(line);
     }

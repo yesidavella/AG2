@@ -51,7 +51,7 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                 GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
                 GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
                 MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
-                System.out.println(" Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+//                System.out.println(" Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
             }
         };
         Platform.runLater(runnable);
