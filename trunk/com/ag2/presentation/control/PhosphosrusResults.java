@@ -34,8 +34,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private TableView tvResourceResults = new TableView();
     private TableView tvSwitchResults = new TableView();
     private TableView tvBrokerResults = new TableView();
-    private Label lbTitlePage = LabelBuilder.create().text("RESULTADOS DE SIMULACIÓN")
-            .font(Font.font("Arial", FontWeight.BOLD, 20)).minWidth(20).alignment(Pos.CENTER).build();
+    private Label lbTitlePage = LabelBuilder.create().text("RESULTADOS DE SIMULACIÓN").font(Font.font("Arial", FontWeight.BOLD, 20)).minWidth(20).alignment(Pos.CENTER).build();
     private Label lblClient = new Label("Clientes");
     private Label lbResource = new Label("Recursos");
     private Label lbSwitch = new Label("Conmutadores Opticos");
@@ -191,6 +190,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
             }
         });
         time.getKeyFrames().add(keyFrame);
+
+        tvClientResults.setMinHeight(380);
+        tvResourceResults.setMinHeight(380);
+        tvSwitchResults.setMinHeight(380);
+        tvBrokerResults.setMinHeight(380);
     }
 
     private void setFont(Label label) {
