@@ -25,24 +25,24 @@ import netscape.javascript.JSObject;
 
 public class Main extends Application implements Serializable {
 
+    public static int countObject = 0;
+    public static boolean IS_APPLET = false;
     private transient UtilSerializator utilSerializator;
+    private transient LinkAdminAbstractController OCSlinkAdminCtrl;
+    private transient GUI guiAG2;
+    private transient ResultsOCSController resultsOCSController = new ResultsOCSController();
     private NodeAdminController nodeAdminController;
     private ExecuteController executeController;
     private NodeCreationModel nodeCreationModel;
     private LinkAdminAbstractController fiberLinkAdminACtrl;
-    private transient LinkAdminAbstractController OCSlinkAdminCtrl;
     private GraphDesignGroup graphDesignGroup;
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
     private ResultsChartController resultsChartCtr;
     private JSObject browser;
-    public static boolean IS_APPLET = false;
-    private transient GUI guiAG2;
     private NotifyControllerOCS notifyControllerOCS;
-    public static int countObject = 0;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-    private transient ResultsOCSController resultsOCSController = new ResultsOCSController();
 
     @Override
     public void start(final Stage stage) {

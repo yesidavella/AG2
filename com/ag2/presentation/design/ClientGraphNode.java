@@ -23,7 +23,7 @@ public class ClientGraphNode extends GraphNode{
             setWidth((short)44);
         }
         
-        lineBreakStep = 9;
+        lineBreakStep = 15;
     }
 
     @Override
