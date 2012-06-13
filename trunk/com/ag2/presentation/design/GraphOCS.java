@@ -4,10 +4,12 @@
  */
 package com.ag2.presentation.design;
 
-import java.security.acl.Group;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import org.apache.bcel.generic.LLOAD;
 
 /**
  *
@@ -19,73 +21,82 @@ public class GraphOCS {
     private GraphNode graphNodeSource;
     private GraphNode graphNodeDestination;
     private GraphDesignGroup graphDesignGroup;
-    public GraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
+    private Label lblCountOCS;
+    private int countOCS;
+    private Group group;
 
+    public GraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS, boolean directionCreated) {
+
+        group = new Group();
         line = new Line();
+        countOCS = 1;
+        lblCountOCS = new Label("λSP: " + countOCS);
         this.graphNodeSource = graphNodeSource;
         this.graphNodeDestination = graphNodeDestination;
-        this.graphDesignGroup = graphDesignGroup; 
-        int desfaseX =18;
-        int desfaseY =30;
-        line.setStartX(graphNodeSource.getLayoutX()  + desfaseX+ (graphNodeSource.getWidth() / 2)-  (1*countInstanceOCS) );
-        line.setStartY(graphNodeSource.getLayoutY() + desfaseY+  (graphNodeSource.getHeight() / 2)-  (1*countInstanceOCS) );
+        this.graphDesignGroup = graphDesignGroup;
+        int desfaseX = 24;
+        int desfaseY = 34;
 
-        line.setEndX(graphNodeDestination.getLayoutX() +desfaseX+ graphNodeSource.getWidth() / 2-  (1*countInstanceOCS));
-        line.setEndY(graphNodeDestination.getLayoutY() +desfaseY+ (graphNodeSource.getHeight() / 2)-  (1*countInstanceOCS));
-        
-         int blue = 10;
-         int red = 255;
-         int green = 10;
-         
-        if( countInstanceOCS<50 )
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setSpread(0.5);
+        dropShadow.setWidth(10);
+        dropShadow.setHeight(10);
+
+        line.setEffect(dropShadow);
+
+        if (!directionCreated) 
         {
-             blue = (int) Math.round(countInstanceOCS*(5));
-             red = (int) Math.round(255-(countInstanceOCS*(5)));
-        }
-        if(countInstanceOCS>50 && countInstanceOCS<100 )
+            line.setStroke(Color.RED);
+            dropShadow.setColor(Color.BLACK);
+        } else 
         {
-            blue = (int) Math.round( 255- ((countInstanceOCS -50)*(5)));
-            red = (int) Math.round( (countInstanceOCS-50) *(5) ) ;
-            green=10;
+            line.setStroke(Color.BLUE);
+            dropShadow.setColor(Color.BLACK);
+            desfaseX = 12;
+            desfaseY = 24;
         }
-        if( countInstanceOCS>100 && countInstanceOCS<150  )
-        {
-            blue = 255;
-            red = 0;
-            green = (int) Math.round( (countInstanceOCS -100)*(5)) ;
-           
-        }
-            
+
+        int posStartX = (int) graphNodeSource.getLayoutX() + desfaseX + (graphNodeSource.getWidth() / 2);
+        int posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+
+        int posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX + graphNodeSource.getWidth() / 2;
+        int posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+
+        lblCountOCS.setScaleX(1.3);
+        lblCountOCS.setScaleY(-1.3);
         
-        line.setStroke(Color.rgb(red, green, blue));
+        line.setStartX(posStartX);
+        line.setStartY(posStartY);
+        line.setEndX(posEndX);
+        line.setEndY(posEndY);
+
+        lblCountOCS.setLayoutX(posStartX + posStartX - posEndX);
+        lblCountOCS.setLayoutY(posStartY + posStartY - posEndY);
+
+        line.setStrokeWidth(2);
+
+       
         
-        line.setStrokeWidth(0.5);
-//        line.toBack();
-//        System.out.print("Dibujando  linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
-        graphDesignGroup.getGroup().getChildren().add(line);
+        group.getChildren().addAll(line, lblCountOCS);
+        graphDesignGroup.getGroup().getChildren().add(group);
+        
+        group.toFront();
         graphNodeDestination.getGroup().toFront();
         graphNodeSource.getGroup().toFront();
-        
-        
-//        DropShadow dropShadow = new DropShadow();
-//        dropShadow.setColor(Color.PINK);
-//        dropShadow.setSpread(0.1);
-//        dropShadow.setWidth(10);
-//        dropShadow.setHeight(10);
-//        line.setEffect(dropShadow);
-        
-    }
-    public void remove()
-    {
-//        System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
-        graphDesignGroup.getGroup().getChildren().remove(line);
-        graphDesignGroup.getLinesOCS().remove(line);
     }
 
-    public Line getLine() {
-        return line;
+    public void remove() {
+//        System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
+        graphDesignGroup.getGroup().getChildren().remove(group);
+        graphDesignGroup.getLinesOCS().remove(group);
     }
-    
-    
-    
+
+    public Group getGroup() {
+        return group;
+    }
+    public void addInstanceOCS()
+    {
+        countOCS++;
+          lblCountOCS.setText("λSP: " + countOCS);
+    }
 }

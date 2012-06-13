@@ -12,14 +12,32 @@ public abstract class MatchCoupleObjectContainer {
 
     private static HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer;
     private static HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer;
-    private static HashMap<GraphSourceDestination, ArrayList<GraphOCS>> OCSMatchCoupleObjectContainer;
+    private static HashMap<GraphSourceDestination, GraphOCS> OCSMatchCoupleObjectContainer;
 
-    public static HashMap<GraphSourceDestination, ArrayList<GraphOCS>> getOCSMatchCoupleObjectContainer() {
+    public static HashMap<GraphSourceDestination, GraphOCS> getOCSMatchCoupleObjectContainer() {
 
         if (OCSMatchCoupleObjectContainer == null) {
-            OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination, ArrayList<GraphOCS>>();
+            OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination,GraphOCS>();
         }
         return OCSMatchCoupleObjectContainer;
+    }
+    public static boolean containsIntanceOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
+    {
+        GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
+
+        if (OCSMatchCoupleObjectContainer.containsKey(sourceDestination))
+        {
+           return true;
+        }
+        return false;
+    }
+    public static GraphOCS getGraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
+    {
+        GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
+
+         return OCSMatchCoupleObjectContainer.get(sourceDestination);
+        
+         
     }
 
     public static void putInstanceOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination, GraphOCS graphOCS) {
@@ -28,29 +46,20 @@ public abstract class MatchCoupleObjectContainer {
 
         if (!OCSMatchCoupleObjectContainer.containsKey(sourceDestination))
         {
-            getOCSMatchCoupleObjectContainer().put(sourceDestination, new ArrayList<GraphOCS>());
+            getOCSMatchCoupleObjectContainer().put(sourceDestination, graphOCS);
         }
-        ArrayList<GraphOCS> graphOCSs = getOCSMatchCoupleObjectContainer().get(sourceDestination);
-        graphOCSs.add(graphOCS);
+       
     }
     
     public static void cleanOCSMatchCoupleObjectContainer()
     {
-        OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination, ArrayList<GraphOCS>>();
+        OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination,GraphOCS>();
         
     }
             
             
-    public static ArrayList<GraphOCS> getListGraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
-    {
-        GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
-        return  getOCSMatchCoupleObjectContainer().get(sourceDestination);
-    }
-    public static ArrayList<GraphOCS> getListGraphOCS(GraphSourceDestination sourceDestination)
-    {       
-        return  getOCSMatchCoupleObjectContainer().get(sourceDestination);
-    }
-
+  
+    
     public static HashMap<GraphNode, Entity> getInstanceNodeMatchCoupleObjectContainer() {
 
         if (nodeMatchCoupleObjectContainer == null) {

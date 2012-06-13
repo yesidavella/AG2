@@ -57,7 +57,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
     private transient Rectangle backgroundRec;
-    private transient ArrayList<Line> linesOCS = new ArrayList<Line>();
+    private transient ArrayList<Group> linesOCS = new ArrayList<Group>();
     private transient ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
 
     public GraphDesignGroup() {
@@ -66,27 +66,27 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         linkAdminCtrs = new ArrayList<LinkAdminAbstractController>();
     }
 
-    public GraphOCS addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination, int  countInnstanceOCS)
+    public GraphOCS addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination, int  countInnstanceOCS, boolean directionCreated)
     {
-        GraphOCS graphOCS = new GraphOCS(graphNodeSource, graphNodeDestination, this, countInnstanceOCS) ;   
-        linesOCS.add(graphOCS.getLine());
+        GraphOCS graphOCS = new GraphOCS(graphNodeSource, graphNodeDestination, this, countInnstanceOCS,  directionCreated) ;   
+        linesOCS.add(graphOCS.getGroup());
         return graphOCS;
     }
     
 
     public void showLineOCS() {
-        for (Line line : linesOCS) {
+        for (Group line : linesOCS) {
             line.setVisible(true);
         }
     }
 
     public void hideLineOCS() {
-        for (Line line : linesOCS) {
+        for (Group line : linesOCS) {
             line.setVisible(false);
         }
     }
 
-    public ArrayList<Line> getLinesOCS() {
+    public ArrayList<Group> getLinesOCS() {
         return linesOCS;
     }
 
@@ -109,7 +109,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         switchesObservableList = FXCollections.observableArrayList();
         brokersObservableList = FXCollections.observableArrayList();
         
-       linesOCS = new ArrayList<Line>();
+       linesOCS = new ArrayList<Group>();
        listMapWorld = new ArrayList<Shape>();
         loadGeoMap();
     }

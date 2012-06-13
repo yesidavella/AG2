@@ -49,9 +49,20 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
                 GraphNode graphNodeSource = Utils.findNodeGraphByOriginalName(entitySource.getId());
                 GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
-                GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
-                MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
-//                System.out.println(" Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+
+                if (!MatchCoupleObjectContainer.containsIntanceOCS(graphNodeSource, graphNodeDestination)) {
+                    
+                    boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination,graphNodeSource);
+                    GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS,directionCreated);
+                    MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
+
+                }
+                else
+                {
+                    MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
+                  System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+                }
+//             
             }
         };
         Platform.runLater(runnable);
@@ -59,20 +70,23 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
     }
 
     @Override
-    public void clean()     
-    {
-        HashMap<MatchCoupleObjectContainer.GraphSourceDestination, ArrayList<GraphOCS>>  OCSMatchCoupleObjectContainer = 
-                MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer();
-        
-        for(GraphSourceDestination graphSourceDestination:  OCSMatchCoupleObjectContainer.keySet()  )
+    public void clean() {
+//        HashMap<MatchCoupleObjectContainer.GraphSourceDestination, ArrayList<GraphOCS>> OCSMatchCoupleObjectContainer =
+//                MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer();
+//
+//        for (GraphSourceDestination graphSourceDestination : OCSMatchCoupleObjectContainer.keySet()) {
+//            for (GraphOCS graphOCS : MatchCoupleObjectContainer.getListGraphOCS(graphSourceDestination)) {
+//                graphOCS.remove();
+//            }
+//        }
+        for(GraphSourceDestination graphSourceDestination : MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().keySet())
         {
-            for(GraphOCS graphOCS: MatchCoupleObjectContainer.getListGraphOCS(graphSourceDestination) )
-            {
-                graphOCS.remove();
-            }
+            MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().get(graphSourceDestination).remove();
         }
         
-        MatchCoupleObjectContainer.cleanOCSMatchCoupleObjectContainer();
         
+
+        MatchCoupleObjectContainer.cleanOCSMatchCoupleObjectContainer();
+
     }
 }
