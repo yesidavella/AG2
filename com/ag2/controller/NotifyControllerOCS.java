@@ -53,13 +53,23 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                 if (!MatchCoupleObjectContainer.containsIntanceOCS(graphNodeSource, graphNodeDestination)) {
                     
                     boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination,graphNodeSource);
-                    GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS,directionCreated);
-                    MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
+                    
+                    if(directionCreated)
+                    {
+                        MatchCoupleObjectContainer.getGraphOCS(graphNodeDestination, graphNodeSource).addInstanceOCS_Inverted();
+                    }
+                    else
+                    {
+                        GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
+                        MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
+                    }
+                    
 
                 }
                 else
                 {
-                    MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
+                        
+                   MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
                   System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
                 }
 //             

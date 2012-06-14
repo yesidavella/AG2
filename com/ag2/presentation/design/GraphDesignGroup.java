@@ -23,6 +23,7 @@ import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -57,8 +58,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private double dragMouseY = 0;
     private boolean serializableComplete = false;
     private transient Rectangle backgroundRec;
-    private transient ArrayList<Group> linesOCS = new ArrayList<Group>();
-    private transient ArrayList<Shape> listMapWorld = new ArrayList<Shape>();
+    private transient ArrayList<Group> linesOCS ;
+    private transient ArrayList<Label> labelsOCS ;
+    private transient ArrayList<Shape> listMapWorld;
 
     public GraphDesignGroup() {
         initTransientObjects();
@@ -66,10 +68,11 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         linkAdminCtrs = new ArrayList<LinkAdminAbstractController>();
     }
 
-    public GraphOCS addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination, int  countInnstanceOCS, boolean directionCreated)
+    public GraphOCS addOCSLine(GraphNode graphNodeSource, GraphNode graphNodeDestination, int  countInnstanceOCS)
     {
-        GraphOCS graphOCS = new GraphOCS(graphNodeSource, graphNodeDestination, this, countInnstanceOCS,  directionCreated) ;   
+        GraphOCS graphOCS = new GraphOCS(graphNodeSource, graphNodeDestination, this, countInnstanceOCS) ;   
         linesOCS.add(graphOCS.getGroup());
+        labelsOCS.add(graphOCS.getLblCountOCS());
         return graphOCS;
     }
     
@@ -78,16 +81,26 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         for (Group line : linesOCS) {
             line.setVisible(true);
         }
+          for (Label label : labelsOCS) {
+            label.setVisible(true);
+        }
     }
 
     public void hideLineOCS() {
         for (Group line : linesOCS) {
             line.setVisible(false);
         }
+        for (Label label : labelsOCS) {
+            label.setVisible(false);
+        }
     }
 
     public ArrayList<Group> getLinesOCS() {
         return linesOCS;
+    }
+
+    public ArrayList<Label> getLabelsOCS() {
+        return labelsOCS;
     }
 
     
@@ -110,6 +123,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         brokersObservableList = FXCollections.observableArrayList();
         
        linesOCS = new ArrayList<Group>();
+       labelsOCS = new ArrayList<Label>();
        listMapWorld = new ArrayList<Shape>();
         loadGeoMap();
     }
