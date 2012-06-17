@@ -778,7 +778,7 @@ public class GUI extends Scene {
         tbResultsResource.getTabs().addAll(tabChartsResourceCPU, tabChartsResourceBuffer, tabChartsrResourceResults);
         tabResultsResource.setContent(tbResultsResource);
 
-        tbpMain.getTabs().addAll(tabSimulation, tabViewOCS);
+        tbpMain.getTabs().addAll(tabSimulation);
 
         tabViewOCS.setOnSelectionChanged(new EventHandler<Event>() {
 
@@ -1259,7 +1259,14 @@ public class GUI extends Scene {
 
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tbpMain.getTabs().contains(tabResults)) {
-            tbpMain.getTabs().addAll(tabResultsHTML, tabResultsResource, tabChartsClientResults, tabResults, tabResultsOCS, tabChartsBrokerResults, tabChartsSwitchResults);
+            tbpMain.getTabs().addAll(tabResultsHTML, 
+                    tabResultsResource,
+                    tabChartsClientResults, 
+                    tabResults, 
+                    tabResultsOCS,
+                    tabChartsBrokerResults,
+                    tabChartsSwitchResults, 
+                    tabViewOCS);
 
         }
         chartsResultsCPU.play();
