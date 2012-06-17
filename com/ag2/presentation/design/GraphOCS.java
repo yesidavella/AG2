@@ -66,7 +66,8 @@ public class GraphOCS {
 
         lblCountOCS.setScaleX(0.9);
         lblCountOCS.setScaleY(-.9);
-        lblCountOCS.setStyle(" -fx-text-fill: red;-fx-font: bold 6pt 'Arial'; -fx-background-color:#FFFFFF");
+        lblCountOCS.setStyle(" -fx-text-fill: #585858;-fx-font: bold 6pt 'Arial'; -fx-background-color:#FFFFFF;"
+                + "-fx-border-style: solid; -fx-border-color:#2E64FE");
         lblCountOCS.setVisible(false);
         DropShadow dropShadow1 = new DropShadow();
         lblCountOCS.setEffect(dropShadow1);

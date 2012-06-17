@@ -80,23 +80,28 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public void showSimpleNode() {
-        imageURL = imageURL.replace(".png", "_node.png");
-        image = new Image(imageURL);
-        imageView.setImage(image);
-        lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
-        group.setScaleX(0.5);
-        group.setScaleY(-0.5);
-         showSimpleNode = true;
+        if (!showSimpleNode) {
+            imageURL = imageURL.replace(".png", "_node.png");
+            image = new Image(imageURL);
+            imageView.setImage(image);
+            lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
+            group.setScaleX(0.5);
+            group.setScaleY(-0.5);
+        }
+
+        showSimpleNode = true;
     }
 
     public void hideSimpleNode() {
-        imageURL = imageURL.replace("_node", "");
-        image = new Image(imageURL);
-        imageView.setImage(image);
-        lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
-        group.setScaleX(0.5);
-        group.setScaleY(-0.5);
-         showSimpleNode = false;
+        if (showSimpleNode) {
+            imageURL = imageURL.replace("_node", "");
+            image = new Image(imageURL);
+            imageView.setImage(image);
+            lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
+            group.setScaleX(0.5);
+            group.setScaleY(-0.5);
+        }
+        showSimpleNode = false;
 
     }
 
@@ -272,8 +277,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                
-                 if (GraphNode.this.showSimpleNode) {
+
+                if (GraphNode.this.showSimpleNode) {
                     return;
                 }
 
@@ -324,8 +329,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void establishEventOnMouseDragged() {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent) 
-            {
+            public void handle(MouseEvent mouseEvent) {
                 if (GraphNode.this.showSimpleNode) {
                     return;
                 }
@@ -369,8 +373,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
-                
-                
+
+
 
                 if (GraphNode.this.showSimpleNode) {
                     return;
@@ -427,9 +431,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void establishEventOnMouseExit() {
         group.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            
-            public void handle(MouseEvent mouseEvent)
-            {
+            public void handle(MouseEvent mouseEvent) {
                 if (GraphNode.this.showSimpleNode) {
                     return;
                 }
