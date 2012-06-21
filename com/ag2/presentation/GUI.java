@@ -785,6 +785,7 @@ public class GUI extends Scene {
             @Override
             public void handle(Event arg0) {
                 if (tabViewOCS.isSelected()) {
+                    disableButtons(true);
                     tabSimulation.setContent(null);
                     tabViewOCS.setContent(splitPane);
                     graphDesignGroup.hideMap();
@@ -815,6 +816,7 @@ public class GUI extends Scene {
             @Override
             public void handle(Event arg0) {
                 if (tabSimulation.isSelected()) {
+                    disableButtons(false);
                     tabViewOCS.setContent(null);
                     tabSimulation.setContent(splitPane);
                     graphDesignGroup.showMap();
@@ -1233,10 +1235,39 @@ public class GUI extends Scene {
         return entityPropertyTable;
     }
 
+    public void disableButtons(boolean disable) {
+
+
+        if (disable) {
+            GUI.setActionTypeEmun(ActionTypeEmun.POINTER);
+            graphDesignGroup.getGroup().setCursor(ActionTypeEmun.POINTER.getCursorImage());
+            gpTools.setOpacity(.8);
+        } else {
+
+            gpTools.setOpacity(1);
+        }
+
+        btnClient.setDisable(disable);
+        btnBroker.setDisable(disable);
+        btnPCE_Switch.setDisable(disable);
+        btnHybridSwitch.setDisable(disable);
+        btnResource.setDisable(disable);
+        btnLink.setDisable(disable);
+        btnOCSCircuit.setDisable(disable);
+
+       
+        
+        btnPointSeparator.setDisable(disable);
+        btnDeleted.setDisable(disable);
+    }
+
     public void enable() {
         GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
-        gpTools.setDisable(false);
+        if (!tabViewOCS.isSelected()) {
+            disableButtons(false);
+        }
+
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);
         graphDesignGroup.getGroup().setOpacity(1);
@@ -1254,18 +1285,20 @@ public class GUI extends Scene {
         graphDesignGroup.getGroup().setCursor(ActionTypeEmun.HAND.getCursorImage());
 
         hBoxProgressIndicator.setVisible(true);
-        gpTools.setDisable(true);
+
+        disableButtons(true);
+
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tbpMain.getTabs().contains(tabResults)) {
-            tbpMain.getTabs().addAll(tabResultsHTML, 
+            tbpMain.getTabs().addAll(tabResultsHTML,
                     tabResultsResource,
-                    tabChartsClientResults, 
-                    tabResults, 
+                    tabChartsClientResults,
+                    tabResults,
                     tabResultsOCS,
                     tabChartsBrokerResults,
-                    tabChartsSwitchResults, 
+                    tabChartsSwitchResults,
                     tabViewOCS);
 
         }
