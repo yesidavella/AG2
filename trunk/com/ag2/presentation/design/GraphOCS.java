@@ -18,7 +18,7 @@ import org.apache.bcel.generic.LLOAD;
  *
  * @author Frank
  */
-public class GraphOCS {
+public class GraphOCS  implements  NodeListener{
 
     private Line line;
     private GraphNode graphNodeSource;
@@ -28,13 +28,19 @@ public class GraphOCS {
     private int countOCS;
     private int countOCS_Inverted = 0;
     private Group group;
-    int posStartX;
-    int posStartY;
-    int posEndX;
-    int posEndY;
+    private int posStartX;
+    private int posStartY;
+    private int posEndX;
+    private int posEndY;
+    private int desfaseX = 24;
+    private int desfaseY = 34;
+   private  Line lineMiddle = new Line();
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
+        
+        graphNodeSource.addNodeListener(this);
+        graphNodeDestination.addNodeListener(this);
         group = new Group();
         line = new Line();
         countOCS = 1;
@@ -42,8 +48,7 @@ public class GraphOCS {
         this.graphNodeSource = graphNodeSource;
         this.graphNodeDestination = graphNodeDestination;
         this.graphDesignGroup = graphDesignGroup;
-        int desfaseX = 24;
-        int desfaseY = 34;
+        
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setSpread(0.5);
@@ -163,7 +168,7 @@ public class GraphOCS {
     private void addDirection() {
 
 
-        Line lineMiddle = new Line();
+    
         lineMiddle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -182,6 +187,29 @@ public class GraphOCS {
 
     public Label getLblCountOCS() {
         return lblCountOCS;
+    }
+
+    @Override
+    public void update() 
+    {
+        
+        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX + (graphNodeSource.getWidth() / 2);
+        posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+
+        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX + graphNodeSource.getWidth() / 2;
+        posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+      
+        line.setStartX(posStartX);
+        line.setStartY(posStartY);
+        line.setEndX(posEndX);
+        line.setEndY(posEndY);
+        
+        lineMiddle.setStartX(posStartX);
+        lineMiddle.setStartY(posStartY);
+        lineMiddle.setEndX(posEndX);
+        lineMiddle.setEndY(posEndY);
+        
+        
     }
     
 }
