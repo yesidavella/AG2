@@ -7,11 +7,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+
 public class ChartsResultsSwitch implements ViewResultsSwitchChart {
 
     private Tab tabChartsSwitchResults;
-    private ScrollPane scrollPane;
-    private VBox vbxMain;
+    private ScrollPane scpAllPage;
+    private VBox vbxAllPage;
 
     public ChartsResultsSwitch(Tab tabChartsSwitchResults) {
         this.tabChartsSwitchResults = tabChartsSwitchResults;
@@ -19,13 +20,14 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
 
     @Override
     public void createSwitchResults(String switchName, double jobsSwitched, double jobsNoSwitched, double resultsSwiched, double resultsNoSwitched, double requestsSwitched, double requestsNoSwitched, double relativeNojobsNoSwitched, double relativeResultsNoSwitched, double relativeRequestsNoSwitched, double relativeAllNoSwitched) {
-        scrollPane = new ScrollPane();
-        vbxMain = new VBox();
-        vbxMain.setPadding(new Insets(10, 10, 10, 10));
-        vbxMain.setSpacing(10);
-        scrollPane.setContent(vbxMain);
-        tabChartsSwitchResults.setContent(scrollPane);
+        scpAllPage = new ScrollPane();
+        vbxAllPage = new VBox();
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setSpacing(10);
+        scpAllPage.setContent(vbxAllPage);
+        tabChartsSwitchResults.setContent(scpAllPage);
 
-        vbxMain.getChildren().add(new Rectangle(300, 100, Color.BLACK));
+        System.out.print("Creo ");
+        
     }
 }

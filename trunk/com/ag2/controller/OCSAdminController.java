@@ -17,11 +17,9 @@ public class OCSAdminController extends LinkAdminAbstractController {
         Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(sourceGraphNode);
         Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(destinationGraphNode);
 
-        simulatorModel.getDesignedOCSCircuits().add(new OCSRequest(phosphorusNodeA, phosphorusNodeB));
-
 //        System.out.println("Solicito OCS circuito entre:" + sourceGraphNode.getName() + " -y- " + destinationGraphNode.getName());
 
-        return true;
+        return simulatorModel.getDesignedOCSCircuits().add(new OCSRequest(phosphorusNodeA, phosphorusNodeB));
     }
 
     @Override

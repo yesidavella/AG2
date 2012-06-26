@@ -1,6 +1,7 @@
 package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.Main;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 public class GraphLink implements NodeListener, Serializable, Selectable {
@@ -48,10 +50,9 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 //        select(true);
 
     }
-    public void setVisible(boolean  visible)
-    {
-        for(GraphArc graphArc: graphArcs)
-        {            
+
+    public void setVisible(boolean visible) {
+        for (GraphArc graphArc : graphArcs) {
             graphArc.setVisible(visible);
         }
     }
@@ -178,6 +179,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
     public boolean removeGraphLink() {
         return linkAdminCtr.removeLink(this);
     }
+
     private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();
