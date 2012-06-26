@@ -231,18 +231,11 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                                     graphDesignGroup.remove(wildcardLink);
 
-                                    if (linkAdminCtr.createLink(wildcardNodeA, graphNode)) {
+                                    linkAdminCtr.createLink(wildcardNodeA, graphNode);
 
-                                        GraphLink graphLink = new GraphLink(graphDesignGroup, wildcardNodeA, graphNode, linkAdminCtr);
-                                        graphLink.addInitialGraphArc();
+                                    wildcardNodeA.getGroup().toFront();
+                                    graphNode.getGroup().toFront();
 
-                                        ((FiberAdminController) linkAdminCtr).insertCoupleLinksOnMatchContainer(graphLink);
-                                        graphLink.select(true);
-
-                                        wildcardNodeA.getGroup().toFront();
-                                        graphNode.getGroup().toFront();
-
-                                    }
                                 } else {
                                     graphNode.playDenyLinkAnimation();
                                 }

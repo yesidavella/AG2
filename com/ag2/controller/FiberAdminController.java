@@ -7,6 +7,7 @@ import com.ag2.model.FiberCreationModel;
 import com.ag2.model.LinkCreationAbstractModel;
 import com.ag2.model.PhosphorusLinkModel;
 import com.ag2.model.SimulationBase;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.design.ClientGraphNode;
 import com.ag2.presentation.design.GraphLink;
 import com.ag2.presentation.design.GraphNode;
@@ -20,7 +21,6 @@ import simbase.SimBaseEntity;
 public class FiberAdminController extends LinkAdminAbstractController {
 
     private LinkAdminAbstractController ocsAdminCtl;
-    private PhosphorusLinkModel lastLinkPhosphorusModelCreated = null;
 
     @Override
     public boolean createLink(GraphNode sourceGraphNode, GraphNode destinationGraphNode) {
@@ -32,26 +32,23 @@ public class FiberAdminController extends LinkAdminAbstractController {
 
             if (linkCreationModel instanceof FiberCreationModel) {
 
-                lastLinkPhosphorusModelCreated = null;
+                GraphLink graphLink = new GraphLink(GUI.getInstance().getGraphDesignGroup(), sourceGraphNode, destinationGraphNode, this);
+                PhosphorusLinkModel phosphorusLinkModel = (PhosphorusLinkModel) linkCreationModel.createLink(phosphorusNodeA, phosphorusNodeB);
 
-                if (phosphorusNodeA != null && phosphorusNodeB != null) {
-                    lastLinkPhosphorusModelCreated = (PhosphorusLinkModel) linkCreationModel.createLink(phosphorusNodeA, phosphorusNodeB);
-//                    MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
+                MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
 
-                    //Creo los ocs por default en ambas direcciones entre enrutadores
-                    if (lastLinkPhosphorusModelCreated != null
-                            && (sourceGraphNode instanceof SwitchGraphNode)
-                            && (destinationGraphNode instanceof SwitchGraphNode)) {
+                graphLink.addInitialGraphArc();
+                graphLink.select(true);
 
-                        ocsAdminCtl.createLink(sourceGraphNode, destinationGraphNode);
-                        ocsAdminCtl.createLink(destinationGraphNode, sourceGraphNode);
-                    }
+                //Creo los ocs por default en ambas direcciones entre enrutadores
+                if (sourceGraphNode instanceof SwitchGraphNode
+                        && destinationGraphNode instanceof SwitchGraphNode) {
 
-                } else {
-                    System.out.println("Algun nodo PHOSPHOROUS esta NULL, NO se creo el ENLACE en PHOPHOROUS.");
+                    ocsAdminCtl.createLink(sourceGraphNode, destinationGraphNode);
+                    ocsAdminCtl.createLink(destinationGraphNode, sourceGraphNode);
                 }
 
-                return (lastLinkPhosphorusModelCreated != null) ? true : false;
+                return (graphLink != null && phosphorusLinkModel != null) ? true : false;
             }
         }
 
@@ -131,7 +128,22 @@ public class FiberAdminController extends LinkAdminAbstractController {
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
 
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-            createLink(graphLink.getGraphNodeA(), graphLink.getGraphNodeB());
+//            createLink(graphLink.getGraphNodeA(), graphLink.getGraphNodeB());
+
+            Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphLink.getGraphNodeA());
+            Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphLink.getGraphNodeB());
+
+            PhosphorusLinkModel phosphorusLinkModel = null;
+
+            for (LinkCreationAbstractModel linkCreationModel : linkCreationAbstractModels) {
+
+                if (linkCreationModel instanceof FiberCreationModel) {
+                    phosphorusLinkModel = (PhosphorusLinkModel) linkCreationModel.createLink(phosphorusNodeA, phosphorusNodeB);
+                }
+            }
+            
+            MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
+
         }
 
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
@@ -217,19 +229,18 @@ public class FiberAdminController extends LinkAdminAbstractController {
         return false;
     }
 
-    public PhosphorusLinkModel getLastPhosphorusLinkModelCreated() {
-        return lastLinkPhosphorusModelCreated;
-    }
-
-    public void setLastPhosphorusLinkModelCreated(PhosphorusLinkModel lastPhosphorusLinkModelCreated) {
-        this.lastLinkPhosphorusModelCreated = lastPhosphorusLinkModelCreated;
-    }
-
-    public void insertCoupleLinksOnMatchContainer(GraphLink graphLink) {
-        MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, lastLinkPhosphorusModelCreated);
-        lastLinkPhosphorusModelCreated = null;
-    }
-
+//    public PhosphorusLinkModel getLastPhosphorusLinkModelCreated() {
+//        return lastLinkPhosphorusModelCreated;
+//    }
+//
+//    public void setLastPhosphorusLinkModelCreated(PhosphorusLinkModel lastPhosphorusLinkModelCreated) {
+//        this.lastLinkPhosphorusModelCreated = lastPhosphorusLinkModelCreated;
+//    }
+//
+//    public void insertCoupleLinksOnMatchContainer(GraphLink graphLink) {
+//        MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, lastLinkPhosphorusModelCreated);
+//        lastLinkPhosphorusModelCreated = null;
+//    }
     public void addOCSAdminController(OCSAdminController ocsAdminCtl) {
         this.ocsAdminCtl = ocsAdminCtl;
     }
