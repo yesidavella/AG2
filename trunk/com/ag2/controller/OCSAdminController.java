@@ -24,7 +24,38 @@ public class OCSAdminController extends LinkAdminAbstractController {
 
     @Override
     public boolean removeLink(GraphLink graphLink) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        GraphNode sourceGraphNode = graphLink.getGraphNodeA();
+        GraphNode destinationGraphNode = graphLink.getGraphNodeB();
+
+        Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(sourceGraphNode);
+        Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(destinationGraphNode);
+
+        GridSimulatorModel simulatorModel = (GridSimulatorModel) SimulationBase.getInstance().getGridSimulatorModel();
+        ArrayList<OCSRequest> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
+
+        ArrayList<SimBaseEntity> currentEntities = SimulationBase.getInstance().getGridSimulatorModel().getEntities();
+        ArrayList<OCSRequest> requetsOCSstoRemove = new ArrayList<OCSRequest>();
+
+        for (OCSRequest ocsRequest : designedOCSCircuits) {
+
+            Entity ocsSource = ocsRequest.getSource();
+            Entity ocsDestination = ocsRequest.getDestination();
+
+            if ((phosphorusNodeA == ocsSource && phosphorusNodeB == ocsDestination) ||
+                    (phosphorusNodeB == ocsSource && phosphorusNodeA == ocsDestination) ||
+                    (!currentEntities.contains(ocsSource)) || (!currentEntities.contains(ocsDestination))) {
+                requetsOCSstoRemove.add(ocsRequest);
+            }
+        }
+
+        //Si existen solicitudes q deben eliminarse, las elimino de la lista
+        //global de solicitudes 
+        for (OCSRequest requestOCStoRemove : requetsOCSstoRemove) {
+            designedOCSCircuits.remove(requestOCStoRemove);
+        }
+
+        return true;
     }
 
     @Override
@@ -56,15 +87,15 @@ public class OCSAdminController extends LinkAdminAbstractController {
                 GridSimulatorModel simulatorModel = (GridSimulatorModel) SimulationBase.getInstance().getGridSimulatorModel();
                 ArrayList<OCSRequest> designedOCSCircuits = simulatorModel.getDesignedOCSCircuits();
 
-                ArrayList<OCSRequest> validOCSs = checkOCSsNodesExist(designedOCSCircuits);
+                //ArrayList<OCSRequest> validOCSs = checkOCSsNodesExist(designedOCSCircuits);
 
-                for (OCSRequest ocsRequest : validOCSs) {
+                for (OCSRequest ocsRequest : designedOCSCircuits) {
 
                     Entity sourceNode = ocsRequest.getSource();
                     Entity destinationNode = ocsRequest.getDestination();
 
 //                    for (int i = 0; i < 15; i++) {
-                        linkCreationModel.createLink(sourceNode, destinationNode);//FIXME: NO VA EL FOR
+                    linkCreationModel.createLink(sourceNode, destinationNode);//FIXME: NO VA EL FOR
 //                    }
                 }
             }
@@ -90,8 +121,8 @@ public class OCSAdminController extends LinkAdminAbstractController {
 
             ArrayList<SimBaseEntity> currentEntities = SimulationBase.getInstance().getGridSimulatorModel().getEntities();
             //Determino q solicitudes de ocs entre nodos NO EXISTENTES deben eliminarse  
-            if ((sourceNode == null || destinationNode == null) ||
-                    (!currentEntities.contains(sourceNode) || !currentEntities.contains(destinationNode))) {
+            if ((sourceNode == null || destinationNode == null)
+                    || (!currentEntities.contains(sourceNode) || !currentEntities.contains(destinationNode))) {
                 requetsOCSstoRemove.add(ocsRequest);
             }
         }

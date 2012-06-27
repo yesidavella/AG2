@@ -71,7 +71,9 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 
     @Override
     public void update() {
+        
         if (graphNodeA != null && graphNodeB != null) {
+            
             if (graphNodeA.isDeleted() || graphNodeB.isDeleted()) {
 
                 for (GraphArc graphArc : graphArcs) {
@@ -79,10 +81,12 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
                     graphArc.updateArcListeners();
                     graphDesignGroup.remove(graphArc);
                 }
+                removeGraphLink();
+                
                 graphNodeA = null;
                 graphNodeB = null;
 
-                removeGraphLink();
+                
 
             } else {
 

@@ -3,10 +3,7 @@ package com.ag2.controller;
 import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Port.GridOutPort;
-import com.ag2.model.FiberCreationModel;
-import com.ag2.model.LinkCreationAbstractModel;
-import com.ag2.model.PhosphorusLinkModel;
-import com.ag2.model.SimulationBase;
+import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.design.ClientGraphNode;
 import com.ag2.presentation.design.GraphLink;
@@ -141,7 +138,7 @@ public class FiberAdminController extends LinkAdminAbstractController {
                     phosphorusLinkModel = (PhosphorusLinkModel) linkCreationModel.createLink(phosphorusNodeA, phosphorusNodeB);
                 }
             }
-            
+
             MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
 
         }
@@ -156,12 +153,15 @@ public class FiberAdminController extends LinkAdminAbstractController {
 
     @Override
     public boolean removeLink(GraphLink graphLink) {
-
+//        System.out.print("Elimino enlace");
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.remove(graphLink);
 
         boolean canRemovePortsInNodeA = removeInAndOutPort(phosLink.getGridOutPortA());
         boolean canRemovePortsInNodeB = removeInAndOutPort(phosLink.getGridOutPortB());
+
+        //Elimino los circuitos OCSs
+        ocsAdminCtl.removeLink(graphLink);
 
         return (canRemovePortsInNodeA && canRemovePortsInNodeB);
     }
