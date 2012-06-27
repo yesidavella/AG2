@@ -229,18 +229,6 @@ public class FiberAdminController extends LinkAdminAbstractController {
         return false;
     }
 
-//    public PhosphorusLinkModel getLastPhosphorusLinkModelCreated() {
-//        return lastLinkPhosphorusModelCreated;
-//    }
-//
-//    public void setLastPhosphorusLinkModelCreated(PhosphorusLinkModel lastPhosphorusLinkModelCreated) {
-//        this.lastLinkPhosphorusModelCreated = lastPhosphorusLinkModelCreated;
-//    }
-//
-//    public void insertCoupleLinksOnMatchContainer(GraphLink graphLink) {
-//        MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, lastLinkPhosphorusModelCreated);
-//        lastLinkPhosphorusModelCreated = null;
-//    }
     public void addOCSAdminController(OCSAdminController ocsAdminCtl) {
         this.ocsAdminCtl = ocsAdminCtl;
     }
