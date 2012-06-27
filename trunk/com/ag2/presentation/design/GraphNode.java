@@ -612,6 +612,16 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void writeObject(ObjectOutputStream stream) {
         try {
+            
+            
+            ArrayList<NodeListener> nodeListenersToDelete = new ArrayList<NodeListener>();
+             for (NodeListener nodeListener : nodeListeners) {
+                    if(nodeListener instanceof GraphOCS)
+                    {
+                        nodeListenersToDelete.add(nodeListener);
+                    }
+            }
+            nodeListeners.removeAll(nodeListenersToDelete);
             stream.defaultWriteObject();
             Main.countObject++;
             System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
