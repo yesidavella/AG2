@@ -376,11 +376,14 @@ public abstract class GraphNode implements Selectable, Serializable {
                 GraphNode graphNode = GraphNode.this;
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.DELETED) {
-
+                    
+                    
+                    
                     graphNode.setDeleted(true);
                     graphDesignGroup.remove(graphNode);
                     graphDesignGroup.deleteNodeFromGoList(graphNode);
                     nodeAdminController.removeNode(graphNode);
+
                 }
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
