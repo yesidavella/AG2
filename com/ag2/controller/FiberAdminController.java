@@ -127,8 +127,11 @@ public class FiberAdminController extends LinkAdminAbstractController {
         for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
 //            createLink(graphLink.getGraphNodeA(), graphLink.getGraphNodeB());
 
-            Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphLink.getGraphNodeA());
-            Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphLink.getGraphNodeB());
+            GraphNode sourceGraphNode = graphLink.getGraphNodeA();
+            GraphNode destinationGraphNode = graphLink.getGraphNodeB();
+
+            Entity phosphorusNodeA = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(sourceGraphNode);
+            Entity phosphorusNodeB = (Entity) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(destinationGraphNode);
 
             PhosphorusLinkModel phosphorusLinkModel = null;
 
@@ -141,14 +144,21 @@ public class FiberAdminController extends LinkAdminAbstractController {
 
             MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().put(graphLink, phosphorusLinkModel);
 
-        }
+            //Creo los ocs por default en ambas direcciones entre enrutadores
+            if (sourceGraphNode instanceof SwitchGraphNode
+                    && destinationGraphNode instanceof SwitchGraphNode) {
 
-        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+                ocsAdminCtl.createLink(sourceGraphNode, destinationGraphNode);
+                ocsAdminCtl.createLink(destinationGraphNode, sourceGraphNode);
+            }
 
             for (String id : graphLink.getProperties().keySet()) {
                 updatePropiedad(graphLink, id, graphLink.getProperties().get(id));
             }
         }
+
+//        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+//        }
     }
 
     @Override
