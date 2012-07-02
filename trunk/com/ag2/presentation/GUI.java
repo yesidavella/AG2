@@ -1307,6 +1307,7 @@ public class GUI extends Scene {
         chartsResultClient.play();
         chartsResultResource.play();
         chartsResultsBroker.play();
+        chartsResultsSwitch.play();
         tbpMain.getSelectionModel().select(tabResults);
         resultsOCS.play();
 
