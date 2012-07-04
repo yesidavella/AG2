@@ -55,9 +55,9 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         serieNoFreeResouce = new XYChart.Series<String, Number>();
         serieNoFreeResouce.setName("No asignadas");
         serieReqAckSent = new XYChart.Series<String, Number>();
-        serieReqAckSent.setName("Enviadas");
+        serieReqAckSent.setName("Asignadas Enviadas");
         serieSendingFailed = new XYChart.Series<String, Number>();
-        serieSendingFailed.setName("No enviadas");
+        serieSendingFailed.setName("Asignadas No enviadas");
 
         barChart.getData().addAll(serieReqRecieved, serieNoFreeResouce,
                 serieReqAckSent, serieSendingFailed);
