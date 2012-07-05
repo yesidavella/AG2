@@ -75,9 +75,15 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
-
-                if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
+                
+                ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
+                
+                if (actionTypeEmun == ActionTypeEmun.POINTER) {
                     circle.setCursor(Cursor.MOVE);
+                } else if(actionTypeEmun == ActionTypeEmun.DELETED){
+                    circle.setCursor(actionTypeEmun.getOverCursorImage());
+                }else {
+                    circle.setCursor(actionTypeEmun.getCursorImage());
                 }
             }
         });

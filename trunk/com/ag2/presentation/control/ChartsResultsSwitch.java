@@ -64,18 +64,19 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
 
         xAxis = new CategoryAxis();
         yAxis = new NumberAxis();
-
         xAxis.setLabel("Nombre Conmutadores");
         yAxis.setLabel("Mensajes");
-        
+
         barChart = new StackedBarChart<String, Number>(xAxis, yAxis);
         barChart.setTitle("Trafico en los enrutadores. Ejecución numero:" + countPlays);
+        barChart.setMinHeight(550);
+        barChart.setMinWidth(500);
         countPlays++;
 
         xAxis.setCategories(FXCollections.observableArrayList(switchesNameList));
         yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis));
         yAxis.setTickLabelsVisible(true);
-        
+
         hbxPerExecution = new HBox(10);
         hbxPerExecution.getChildren().addAll(barChart);
         hbxPerExecution.getStyleClass().add("boxChart");
@@ -94,7 +95,7 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
         serieResultsNoSwitched.setName("Trabs. Atendidos No Conmutados");
         serieRequestsSwitched.setName("Solic. de Agen. Conmutadas");
         serieRequestsNoSwitched.setName("Solic. de Agen. No Conmutadas");
-        
+
     }
 
     @Override
@@ -123,6 +124,7 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
             barChart.getData().addAll(serieRequestsSwitched, serieRequestsNoSwitched,
                     serieJobsSwitched, serieJobsNoSwitched, serieResultsSwiched, serieResultsNoSwitched);
         }
+        
 
     }
 }

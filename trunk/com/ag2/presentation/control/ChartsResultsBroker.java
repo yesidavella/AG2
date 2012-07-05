@@ -42,13 +42,15 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         xAxis.setLabel("Nombre Agendadores");
         yAxis.setLabel("Solicitudes");
         barChart = new BarChart<String, Number>(xAxis, yAxis);
-        barChart.setTitle("Trafico de agendamiento. Ejecución numero:"+countPlays);
+        barChart.setMinHeight(550);
+        barChart.setMinWidth(400);
+        barChart.setTitle("Trafico de agendamiento. Ejecución numero:" + countPlays);
         countPlays++;
-        
+
         hbxPerExecution = new HBox(10);
         hbxPerExecution.getChildren().addAll(barChart);
         hbxPerExecution.getStyleClass().add("boxChart");
-        vbxAllPage.getChildren().add(0,hbxPerExecution);
+        vbxAllPage.getChildren().add(0, hbxPerExecution);
 
         serieReqRecieved = new XYChart.Series<String, Number>();
         serieReqRecieved.setName("Recibidas");
@@ -73,5 +75,6 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         serieNoFreeResouce.getData().add(new XYChart.Data<String, Number>(graficalName, noFreeResouce));
         serieReqAckSent.getData().add(new XYChart.Data<String, Number>(graficalName, reqAckSent));
         serieSendingFailed.getData().add(new XYChart.Data<String, Number>(graficalName, sendingFailed));
+        
     }
 }

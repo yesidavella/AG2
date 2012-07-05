@@ -1,7 +1,7 @@
 package com.ag2.presentation.design;
 
-import com.ag2.presentation.GUI;
 import com.ag2.presentation.ActionTypeEmun;
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.Main;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,20 +39,18 @@ public class GraphArc implements Serializable {
         this.graphLink = graphLink;
         this.graphNodeB = this.graphLink.getGraphNodeB();
         initTransientObjects();
-
     }
-    public void setVisible(boolean visible)
-    {
+
+    public void setVisible(boolean visible) {
         quadCurve.setVisible(visible);
-        if(initialGraphArcSeparatorPoint!=null)
-        {
+        
+        if (initialGraphArcSeparatorPoint != null) {
             initialGraphArcSeparatorPoint.getCircle().setVisible(visible);
         }
-        if(finalGraphArcSeparatorPoint !=null)
-        {    
+        
+        if (finalGraphArcSeparatorPoint != null) {
             finalGraphArcSeparatorPoint.getCircle().setVisible(visible);
         }
-        
     }
 
     public GraphArcSeparatorPoint getInitialGraphArcSeparatorPoint() {
@@ -88,7 +86,6 @@ public class GraphArc implements Serializable {
         establishEventMouseDragged();
         establecerEnventoClicked();
         establishEventOnMouseEntered();
-
     }
 
     public void calculateCenter() {
@@ -103,7 +100,6 @@ public class GraphArc implements Serializable {
 
         setControlX(controlX);
         setControlY(controlY);
-
     }
 
     private void establishEventOnMouseEntered() {
@@ -115,10 +111,11 @@ public class GraphArc implements Serializable {
 
                 ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
 
-                if (actionTypeEmun == ActionTypeEmun.ADD_LINK_SEPARATOR || actionTypeEmun == ActionTypeEmun.DELETED) {
+                if (actionTypeEmun == ActionTypeEmun.ADD_LINK_SEPARATOR || actionTypeEmun == ActionTypeEmun.DELETED || 
+                        actionTypeEmun == ActionTypeEmun.POINTER) {
                     quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
-                } else if (actionTypeEmun == ActionTypeEmun.POINTER) {
-                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getOverCursorImage());
+                }else{
+                    quadCurveFuente.getQuadCurve().setCursor(actionTypeEmun.getCursorImage());
                 }
             }
         });
@@ -138,7 +135,6 @@ public class GraphArc implements Serializable {
                     if (!graphLink.isSelected()) {
                         graphLink.select(true);
                     }
-
                 }
             }
         });

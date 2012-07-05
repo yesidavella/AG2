@@ -1,7 +1,6 @@
 package com.ag2.presentation.design;
 
 import com.ag2.controller.LinkAdminAbstractController;
-import com.ag2.presentation.GUI;
 import com.ag2.presentation.Main;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 public class GraphLink implements NodeListener, Serializable, Selectable {
@@ -85,8 +83,6 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
                 
                 graphNodeA = null;
                 graphNodeB = null;
-
-                
 
             } else {
 
