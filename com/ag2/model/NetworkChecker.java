@@ -66,7 +66,7 @@ public class NetworkChecker {
     }
 
     private void checkCorrectNodesWithBroker() {
-
+        
         for (SimBaseEntity clienNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class)) {
             if (((ClientNode) clienNode).getServiceNode() == null) {
                 addError((ClientNode) clienNode, " \n►Al ser un Cliente debe tener un Nodo de Servicio registrado.");
