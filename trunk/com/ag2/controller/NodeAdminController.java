@@ -6,7 +6,9 @@ import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
+import Grid.Nodes.AbstractClient;
 import Grid.Nodes.AbstractServiceNode;
+import Grid.Nodes.Hybrid.Parallel.HybridServiceNode;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
@@ -22,6 +24,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import simbase.SimBaseEntity;
 import simbase.SimBaseSimulator;
 
 public class NodeAdminController extends NodeAdminAbstractController implements Serializable {
@@ -490,17 +493,46 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
     }
 
     @Override
-    public void removeNode(GraphNode nodoGrafico) {
+    public void removeNode(GraphNode graphNode) {
 
-        Entity phosNodeRemoved = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().remove(nodoGrafico);
+        Entity phosNodeRemoved = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().remove(graphNode);
         SimulationBase.getInstance().getGridSimulatorModel().unRegister(phosNodeRemoved);
 
-        if (nodoGrafico instanceof ResourceGraphNode) {
+        if (graphNode instanceof ResourceGraphNode) {
 
             List<ServiceNode> serviceNodes = ((ResourceNode) phosNodeRemoved).getServiceNodes();
 
             for (ServiceNode serviceNode : serviceNodes) {
                 ((AbstractServiceNode) serviceNode).getResources().remove((ResourceNode) phosNodeRemoved);
+            }
+        } else if (graphNode instanceof BrokerGrahpNode) {
+
+            //#######Elimino las referencias a los brokers q puedan tener los clusters############
+            ArrayList<ResourceNode> resourcesWithBrokersRemoved = new ArrayList<ResourceNode>();
+            List<SimBaseEntity> resources = SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ResourceNode.class);
+            
+            for (SimBaseEntity resourceNode : resources) {
+
+                List<ServiceNode> serviceNodes = ((ResourceNode) resourceNode).getServiceNodes();
+
+                for (ServiceNode serviceNode : serviceNodes) {
+                    if (phosNodeRemoved.getId().equalsIgnoreCase(serviceNode.getID())) {
+                        resourcesWithBrokersRemoved.add((ResourceNode)resourceNode);
+                    }
+                }
+            }
+            
+            for (ResourceNode resourcesWithBrokerRemoved:resourcesWithBrokersRemoved) {
+                resourcesWithBrokerRemoved.getServiceNodes().remove((ServiceNode)phosNodeRemoved);
+            }
+
+            //#######Elimino las referencias a los brokers q puedan tener los clientes#######
+            for (SimBaseEntity clientNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class)) {
+                ServiceNode serviceNode = ((AbstractClient) clientNode).getServiceNode();
+
+                if (serviceNode != null && phosNodeRemoved.getId().equalsIgnoreCase(serviceNode.getID())) {
+                    ((AbstractClient) clientNode).setServiceNode(null);
+                }
             }
         }
 
