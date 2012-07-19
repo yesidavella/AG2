@@ -8,7 +8,6 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,6 +62,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private NumberFormat percent = DecimalFormat.getPercentInstance();
     private NumberFormat decimal = DecimalFormat.getInstance();
     private NumberFormat integer = DecimalFormat.getIntegerInstance();
+    private final int ROW_HIGH = 29;
+    private final int TITLE_ROW_HIGH = 22;
+    private final int MAX_ROWS_TO_SHOW = 10;
 
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
@@ -190,11 +192,6 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
             }
         });
         time.getKeyFrames().add(keyFrame);
-
-        tvClientResults.setMinHeight(380);
-        tvResourceResults.setMinHeight(380);
-        tvSwitchResults.setMinHeight(380);
-        tvBrokerResults.setMinHeight(380);
     }
 
     private void setFont(Label label) {
@@ -422,6 +419,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         clientPropSet.setProperty12(percent.format(relativeReceiveresult_requestCreated));
 
         dataClients.add(clientPropSet);
+
+        setDynamicTableViewHigh(tvClientResults, 2, dataClients.size());
     }
 
     @Override
@@ -450,6 +449,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         resourcePropSet.setProperty10(percent.format(relTimesNoSpaceFault));
 
         dataResources.add(resourcePropSet);
+
+        setDynamicTableViewHigh(tvResourceResults, 3, dataResources.size());
     }
 
     @Override
@@ -480,6 +481,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         switchPropSet.setProperty11(percent.format(relativeAllNoSwitched));
 
         dataSwitches.add(switchPropSet);
+
+        setDynamicTableViewHigh(tvSwitchResults, 2, dataSwitches.size());
     }
 
     @Override
@@ -502,6 +505,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         brokerPropSet.setProperty7(percent.format(relativeAckSent));
 
         dataBrokers.add(brokerPropSet);
+
+        setDynamicTableViewHigh(tvBrokerResults, 3, dataBrokers.size());
     }
 
     @Override
@@ -543,6 +548,16 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         tColumn.setMinWidth(minWidht);
         tColumn.setPrefWidth(prefWidht);
         tColumn.setMaxWidth(maxWidht);
+    }
+
+    private void setDynamicTableViewHigh(TableView tableView, int title_rows, int numberRows) {
+
+        if (numberRows <= MAX_ROWS_TO_SHOW) {
+            tableView.setMinHeight((title_rows * TITLE_ROW_HIGH) + (ROW_HIGH * numberRows));
+        } else {
+            tableView.setPrefHeight((title_rows * TITLE_ROW_HIGH) + (ROW_HIGH * MAX_ROWS_TO_SHOW));
+            tableView.setMaxHeight((title_rows * TITLE_ROW_HIGH) + (ROW_HIGH * MAX_ROWS_TO_SHOW));
+        }
     }
 
     /*
