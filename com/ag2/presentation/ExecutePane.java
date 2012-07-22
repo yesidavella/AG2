@@ -21,8 +21,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
     private PhosphosrusHTMLResults phosphosrusHTMLResults;
     private PhosphosrusResults phosphosrusResults;
     private ExecuteAbstractController executeController;
-    private  SimulationOptionSwitcher simulationOptionSwitcher;
-
+    private SimulationOptionSwitcher simulationOptionSwitcher;
 
     public ExecutePane() {
 
@@ -38,9 +37,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
                         if (executeController != null) {
 
-
                             System.out.println("################    PLAY  ################");
-
 
                             if (phosphosrusHTMLResults != null) {
                                 phosphosrusHTMLResults.lookToNextExecution();
@@ -49,9 +46,9 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 phosphosrusResults.lookToNextExecution();
                             }
 
-
                             executeController.initNetwork();
-                             simulationOptionSwitcher.loadSimulationOptionBeforeRun();
+                            simulationOptionSwitcher.loadSimulationOptionBeforeRun();
+                            
                             if (executeController.isWellFormedNetwork()) {
                                 if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
                                     GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
@@ -94,7 +91,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
         btnStop.setDisable(true);
 
         getStyleClass().add("bg-general-container");
-        setPadding(new Insets(10,6,10,6));
+        setPadding(new Insets(10, 6, 10, 6));
         setHgap(4);
         setPrefColumns(2);
         setPrefRows(1);
@@ -136,5 +133,4 @@ public class ExecutePane extends TilePane implements ExecuteView {
     public void setSimulationOptionSwitcher(SimulationOptionSwitcher simulationOptionSwitcher) {
         this.simulationOptionSwitcher = simulationOptionSwitcher;
     }
-
 }
