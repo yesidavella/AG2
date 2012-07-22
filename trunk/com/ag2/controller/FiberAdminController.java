@@ -157,8 +157,6 @@ public class FiberAdminController extends LinkAdminAbstractController {
             }
         }
 
-//        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-//        }
     }
 
     @Override

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ag2.controller;
 
 import Grid.Entity;
@@ -13,14 +9,8 @@ import com.ag2.presentation.design.GraphNode;
 import com.ag2.presentation.design.GraphOCS;
 import com.ag2.util.Utils;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javafx.application.Platform;
-
-/**
- *
- * @author Frank
- */
+ 
 public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
     private GraphDesignGroup graphDesignGroup;
@@ -41,7 +31,6 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
     @Override
     public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination, final int countInstanceOCS) {
 
-
         Runnable runnable = new Runnable() {
 
             @Override
@@ -51,26 +40,20 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                 GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
 
                 if (!MatchCoupleObjectContainer.containsIntanceOCS(graphNodeSource, graphNodeDestination)) {
-                    
-                    boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination,graphNodeSource);
-                    
-                    if(directionCreated)
-                    {
+
+                    boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination, graphNodeSource);
+
+                    if (directionCreated) {
                         MatchCoupleObjectContainer.getGraphOCS(graphNodeDestination, graphNodeSource).addInstanceOCS_Inverted();
-                    }
-                    else
-                    {
+                    } else {
                         GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
                         MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
                     }
-                    
 
-                }
-                else
-                {
-                        
-                   MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
-                  System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+                } else {
+
+                    MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
+                    System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
                 }
 //             
             }
@@ -89,12 +72,9 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 //                graphOCS.remove();
 //            } 
 //        }
-        for(GraphSourceDestination graphSourceDestination : MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().keySet())
-        {
+        for (GraphSourceDestination graphSourceDestination : MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().keySet()) {
             MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().get(graphSourceDestination).remove();
         }
-        
-        
 
         MatchCoupleObjectContainer.cleanOCSMatchCoupleObjectContainer();
 

@@ -544,42 +544,43 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     @Override
     public void reCreatePhosphorousNodes() {
-        for (NodeCreationModel modeloRegistrado : nodeCreationModels) {
-            modeloRegistrado.loadSimulacionBase();
+        
+        for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
+            nodeCreationModel.loadSimulacionBase();
         }
 
-        for (GraphNode nodoGrafico : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
-            createNode(nodoGrafico);
-
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+            createNode(graphNode);
         }
-        for (final GraphNode nodoGrafico : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+        
+        for (final GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+            
             Runnable runnable = new Runnable() {
 
                 @Override
                 public void run() {
-                    for (String id : nodoGrafico.getNodeProperties().keySet()) {
-                        selectedGraphNode = nodoGrafico;
-                        updateProperty(false, false, id, nodoGrafico.getNodeProperties().get(id));
+                    for (String id : graphNode.getNodeProperties().keySet()) {
+                        selectedGraphNode = graphNode;
+                        updateProperty(false, false, id, graphNode.getNodeProperties().get(id));
                     }
-                    for (String id : nodoGrafico.getSubPropertiesNode().keySet()) {
-                        selectedGraphNode = nodoGrafico;
-                        updateProperty(true, false, id, nodoGrafico.getSubPropertiesNode().get(id));
+                    for (String id : graphNode.getSubPropertiesNode().keySet()) {
+                        selectedGraphNode = graphNode;
+                        updateProperty(true, false, id, graphNode.getSubPropertiesNode().get(id));
                     }
                 }
             };
             Platform.runLater(runnable);
         }
 
-        for (final GraphNodesView vistaNodosGraficos : graphNodesViews) {
+        for (final GraphNodesView graphNodesView : graphNodesViews) {
             Runnable runnable = new Runnable() {
 
                 @Override
                 public void run() {
-                    vistaNodosGraficos.enableDisign();
+                    graphNodesView.enableDisign();
                 }
             };
             Platform.runLater(runnable);
-
         }
     }
 
