@@ -12,7 +12,8 @@ import javafx.scene.input.MouseEvent;
 public class ToggleButtonAg2 extends ToggleButton {
 
     private final static double WIDTH = 36;
-    private final static double HEIGHT = 34;
+    private final static double HEIGHT = 36;
+   
     private ActionTypeEmun actionTypeEmun;
 
     public ToggleButtonAg2(ActionTypeEmun actionTypeEmun) {
@@ -21,8 +22,10 @@ public class ToggleButtonAg2 extends ToggleButton {
 
         ImageView imageView = new ImageView(actionTypeEmun.getButtonImage());
         setGraphic(imageView);
-        setMaxWidth(WIDTH);
-        setMaxHeight(HEIGHT);
+            
+        setMaxSize(WIDTH, HEIGHT);            
+        setPrefSize(WIDTH, HEIGHT);
+        setMinSize(WIDTH, HEIGHT);
         setFocusTraversable(false);
 
     }
