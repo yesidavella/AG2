@@ -3,7 +3,6 @@ package com.ag2.presentation.design;
 import com.ag2.presentation.ActionTypeEmun;
 import com.ag2.presentation.GUI;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -49,6 +48,10 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         establishEventOnMouseClicked();
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public double getCenterX() {
         return centerX;
     }
@@ -75,14 +78,14 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent t) {
-                
+
                 ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
-                
+
                 if (actionTypeEmun == ActionTypeEmun.POINTER) {
                     circle.setCursor(Cursor.MOVE);
-                } else if(actionTypeEmun == ActionTypeEmun.DELETED){
+                } else if (actionTypeEmun == ActionTypeEmun.DELETED) {
                     circle.setCursor(actionTypeEmun.getOverCursorImage());
-                }else {
+                } else {
                     circle.setCursor(actionTypeEmun.getCursorImage());
                 }
             }
@@ -90,9 +93,11 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
     }
 
     private void establishEventOnMouseDragged() {
+
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
+
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
 
                     GraphArcSeparatorPoint verticeEnlaceGrafico = GraphArcSeparatorPoint.this;
@@ -165,14 +170,19 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         this.dragged = dragged;
     }
 
+    @Override
     public void updateArc() {
+
         if (!deleted && (graphArcA.isDeleted() || graphArcB.isDeleted())) {
+
             deleted = true;
+
+            graphDesignGroup.remove(this);
+//            graphArcA.revomeNodeListener(this);
+//            graphArcB.revomeNodeListener(this);
+
             graphArcA = null;
             graphArcB = null;
-            graphArcA.revomeNodeListener(this);
-            graphArcB.revomeNodeListener(this);
-            graphDesignGroup.remove(this);
         }
     }
 
@@ -183,9 +193,5 @@ public class GraphArcSeparatorPoint implements ArcListener, Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-    
-
-    
 }

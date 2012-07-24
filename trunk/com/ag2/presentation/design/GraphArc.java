@@ -141,6 +141,7 @@ public class GraphArc implements Serializable {
     }
 
     private void establecerEnventoClicked() {
+        
         quadCurve.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent mouseEvent) {
@@ -202,7 +203,6 @@ public class GraphArc implements Serializable {
                     for (GraphArc graphArc : graphLink.getGraphArcs()) {
                         graphArc.setDeleted(true);
                         graphArc.updateArcListeners();
-
                         graphDesignGroup.remove(graphArc);
                     }
 
@@ -236,6 +236,7 @@ public class GraphArc implements Serializable {
     }
 
     public void updateArcListeners() {
+        
         for (ArcListener arcoListener : arcListeners) {
             arcoListener.updateArc();
         }

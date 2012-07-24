@@ -266,11 +266,10 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     }
 
     public void remove(GraphArcSeparatorPoint graphArcSeparatorPoint) {
-        group.getChildren().add(graphArcSeparatorPoint.getCircle());
+        group.getChildren().remove(graphArcSeparatorPoint.getCircle());
         if (graphArcSeparatorPoint instanceof Serializable) {
-            serializableObjects.add((Serializable) graphArcSeparatorPoint);
+            serializableObjects.remove((Serializable) graphArcSeparatorPoint);
         }
-
     }
 
     public void remove(Node node) {

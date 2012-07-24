@@ -367,8 +367,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
             public void handle(MouseEvent mouseEvent) {
 
-
-
                 if (GraphNode.this.showSimpleNode) {
                     return;
                 }
@@ -376,14 +374,11 @@ public abstract class GraphNode implements Selectable, Serializable {
                 GraphNode graphNode = GraphNode.this;
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.DELETED) {
-                    
-                    
-                    
+
                     graphNode.setDeleted(true);
                     graphDesignGroup.remove(graphNode);
                     graphDesignGroup.deleteNodeFromGoList(graphNode);
                     nodeAdminController.removeNode(graphNode);
-
                 }
 
                 if (GUI.getActionTypeEmun() == ActionTypeEmun.POINTER) {
@@ -612,14 +607,13 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void writeObject(ObjectOutputStream stream) {
         try {
-            
-            
+
+
             ArrayList<NodeListener> nodeListenersToDelete = new ArrayList<NodeListener>();
-             for (NodeListener nodeListener : nodeListeners) {
-                    if(nodeListener instanceof GraphOCS)
-                    {
-                        nodeListenersToDelete.add(nodeListener);
-                    }
+            for (NodeListener nodeListener : nodeListeners) {
+                if (nodeListener instanceof GraphOCS) {
+                    nodeListenersToDelete.add(nodeListener);
+                }
             }
             nodeListeners.removeAll(nodeListenersToDelete);
             stream.defaultWriteObject();
