@@ -31,8 +31,8 @@ public enum PropertyPhosphorusTypeEnum {
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
-   /// OUTPUT("output", "output(Franklin)", new CheckBox()),
-    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime","stopEventOffSetTime", new TextField()),
+    /// OUTPUT("output", "output(Franklin)", new CheckBox()),
+    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", "stopEventOffSetTime", new TextField()),
     SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(B/ms):", new TextField()),
     /**
      * Cantidad de lambdas en la fibra optica.
@@ -40,11 +40,6 @@ public enum PropertyPhosphorusTypeEnum {
     DEFAULT_WAVELENGTHS("defaultWavelengths", "Numero de lambdas:", new TextField()),
     //The size of control messages. If control messages are 0, the are being send immediately
     ACK_SIZE("ACKsize", "Prom. Tamaño AKC(B):", new TextField()),
-    /**
-     * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
-     * conmutadores hibridos. Esto es la propiedad HandleDelay.
-     */
-    //OBS_HANDLE_TIME("OBSHandleTime", "Tiempo de retardo al conmutar:", new TextField()),
     DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster(B/ms):", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
     DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs/clúster:", new TextField()),
     /**
@@ -72,6 +67,11 @@ public enum PropertyPhosphorusTypeEnum {
      */
     MAX_DELAY("maxDelay", "Prom. Retraso máx/Trab_Req(ms):", new TextField()),
     OUTPUT_FILE_NAME("outputFileName", "Nombre del archivo de traza:", new TextField()),
+    /**
+     * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
+     * conmutadores hibridos. Esto es la propiedad HandleDelay.
+     */
+    OBS_HANDLE_TIME("OBSHandleTime", "Retardo OBS(ms):", new TextField()),
     /**
      * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el
      * OCSEndSender.
@@ -137,11 +137,11 @@ public enum PropertyPhosphorusTypeEnum {
                     PropertyPhosphorusTypeEnum.this.writeProperty(Boolean.FALSE.toString());
                 }
 
-                if(getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")){
+                if (getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")) {
                     Routing routing;
-                    if(checkBox.isSelected()){
+                    if (checkBox.isSelected()) {
                         routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel());
-                    }else{
+                    } else {
                         routing = new ShortesPathRouting(SimulationBase.getInstance().getGridSimulatorModel());
                     }
 
