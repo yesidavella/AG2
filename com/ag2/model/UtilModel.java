@@ -80,7 +80,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridSwitch(String id, GridSimulator simulator) {
         Switch sw = new HybridSwitchImpl(id, simulator);
-        //sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
@@ -90,7 +90,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridOutputSwitch(String id, GridSimulator simulator) {
         Switch sw = new OuputSwitchForHybridCase(id, simulator);
-        //sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
