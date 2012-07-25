@@ -28,10 +28,11 @@ public class UtilModel extends Util {
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_FLOP_SIZE)));
         client.getState().setMaxDelayInterval(new DDNegExp(simulator,
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
-
         client.getState().setSizeDistribution(new DDNegExp(simulator,
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_DATA_SIZE)));
         double ackSize = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.ACK_SIZE);
+        client.getState().setTrafficPriority(PropertyPhosphorusTypeEnum.getIntProperty(PropertyPhosphorusTypeEnum.CLIENT_TRAFFIC_PRIORITY));
+
         if (ackSize == 0) {
             client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         } else {

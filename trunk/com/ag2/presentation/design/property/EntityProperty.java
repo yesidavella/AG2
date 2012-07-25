@@ -33,6 +33,7 @@ public class EntityProperty {
         switch (propertyType) {
             case BOOLEAN: {
                 control = new CheckBox();
+                
                 ((CheckBox) control).setOnAction(new EventHandler<ActionEvent>() {
 
                     public void handle(ActionEvent actionEvent) {

@@ -82,7 +82,12 @@ public enum PropertyPhosphorusTypeEnum {
      */
     LINK_SPEED("linkSpeed", "Vel. del enlace(ms):", new TextField()),
     //DEFAULT_LINK_SPEED("defaultLinkSpeed", "a", new TextField()),
-    ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox());
+    ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox()),
+    /**
+     * Toma la prioridad del trafico q se le asigna a un Cliente.
+     */
+    CLIENT_TRAFFIC_PRIORITY("clientTrafficPriority","Prioridad Tráfico/cliente(1,2,...10)", new TextField());
+    
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;
@@ -93,9 +98,9 @@ public enum PropertyPhosphorusTypeEnum {
         return visualNameOnTb;
     }
 
-    private PropertyPhosphorusTypeEnum(String nombre, String visualNameOnTb, Control control) {
-        this.visualNameOnTb = visualNameOnTb;
-        phosphorusPropertyName = nombre;
+    private PropertyPhosphorusTypeEnum(String name, String visualNameOnTableview, Control control) {
+        this.visualNameOnTb = visualNameOnTableview;
+        phosphorusPropertyName = name;
         this.control = control;
         if (control instanceof TextField) {
             setPropertyEvent((TextField) control);
