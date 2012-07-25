@@ -20,7 +20,6 @@ public final class PhosphorusPropertyEditor {
             phosphorusPropertyEditor = new PhosphorusPropertyEditor();
         }
         return phosphorusPropertyEditor;
-
     }
 
     public void readFile() {
@@ -33,29 +32,26 @@ public final class PhosphorusPropertyEditor {
         } catch (Exception ex) {
             System.out.println("Failed to read from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
-
     }
 
     public void writeFile() {
+        
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME);
             properties.store(fileOutputStream, null);
             fileOutputStream.flush();
             fileOutputStream.close();
-
-
         } catch (Exception ex) {
-            //System.out.println("Failed to write from " + nameArchivo + " file. Due to :" + ex.toString());
+            System.out.println("Failed to write from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
-
     }
 
     public String getPropertyValue(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum) {
         return properties.getProperty(propertyPhosphorusTypeEnum.getPhosphorusPropertyName());
     }
 
-    public void setPropertyValue(PropertyPhosphorusTypeEnum propiedadePhosphorus, String valor) {
-        properties.setProperty(propiedadePhosphorus.getPhosphorusPropertyName(), valor);
+    public void setPropertyValue(PropertyPhosphorusTypeEnum propiedadePhosphorus, String value) {
+        properties.setProperty(propiedadePhosphorus.getPhosphorusPropertyName(), value);
         writeFile();
     }
 

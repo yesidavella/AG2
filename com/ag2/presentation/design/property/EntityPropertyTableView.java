@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EntityPropertyTableView extends TableView<EntityProperty> implements GraphNodesView {
 
-    private NodeAdminAbstractController nodeAdminAbstractController;
+    private NodeAdminAbstractController nodeAdminCtrl;
     private LinkAdminAbstractController linkAdminAbstractController;
 
     public EntityPropertyTableView() {
@@ -30,19 +30,12 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
         valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
         valueTableColumn.setMinWidth(160);
         valueTableColumn.setPrefWidth(160);
-        
-
-      
-        
 
         getColumns().addAll(propertyTableColumn, valueTableColumn );
-
-       
-        
     }
 
     public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController) {
-        this.nodeAdminAbstractController = nodeAdminAbstractController;
+        this.nodeAdminCtrl = nodeAdminAbstractController;
     }
 
     public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminAbstractController) {
@@ -72,7 +65,7 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
 
         if (selectable != null) {
             if (selectable instanceof GraphNode) {
-                nodeAdminAbstractController.updateProperty(isSubProperty, true, id, value);
+                nodeAdminCtrl.updateProperty(isSubProperty, true, id, value);
             } else if (selectable instanceof GraphLink) {
                 linkAdminAbstractController.updatePropiedad((GraphLink) selectable, id, value);
             }

@@ -8,7 +8,6 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Nodes.AbstractClient;
 import Grid.Nodes.AbstractServiceNode;
-import Grid.Nodes.Hybrid.Parallel.HybridServiceNode;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
@@ -20,7 +19,10 @@ import com.ag2.presentation.design.property.NodeRelationProperty;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -68,12 +70,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         EntityProperty nodeNamePropperty = new EntityProperty("name", "Nombre:", EntityProperty.PropertyType.TEXT, false);
         nodeNamePropperty.setFirstValue(selectedGraphNode.getName());
         nodeProperties.add(nodeNamePropperty);
-        //===========================================================================================================
 
         if (graphNode instanceof ClientGraphNode) {
 
             ClientNode clientNode = (ClientNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
-
             //===========================================================================================================
             NodeRelationProperty nodeRelationProperty = new NodeRelationProperty("broker", "Agendador:");
 
@@ -82,6 +82,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     nodeRelationProperty.getObservableListNodes().add(brokerGrahpNode);
                 }
             }
+
             if (clientNode.getServiceNode() != null) {
                 GraphNode nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
                 if (nodoServiceSelected != null) {
@@ -89,22 +90,22 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 }
             }
             nodeProperties.add(nodeRelationProperty);
-
+            //===========================================================================================================
+            EntityProperty nodeTrafficPriorityProp = new EntityProperty("trafficPriority", "Prioridad de tráfico(1,2,...,10):", EntityProperty.PropertyType.NUMBER, false);
+            nodeTrafficPriorityProp.setFirstValue( String.valueOf(clientNode.getState().getTrafficPriority()) );
+            nodeProperties.add(nodeTrafficPriorityProp);
             //===========================================================================================================
             NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Generación de trabajos:");
             createDistributionProperty(clientNode.getState().getJobInterArrival(), nodeProperties, jobsDistribution, "jobsDistribution");
             //===========================================================================================================
             NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "Generación de flops por trabajo:");
             createDistributionProperty(clientNode.getState().getFlops(), nodeProperties, flopsDistribution, "flopsDistribution");
-
             //===========================================================================================================
             NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Generación de intervalo máximo de retraso:");
             createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
-
             //===========================================================================================================
             NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Generación del tamaño del trabajo:");
             createDistributionProperty(clientNode.getState().getSizeDistribution(), nodeProperties, jobSizeDistribution, "jobSizeDistribution");
-
             //===========================================================================================================
             NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Generación del tamaño de la respuesta:");
             createDistributionProperty(clientNode.getState().getAckSizeDistribution(), nodeProperties, answerSizeDistribution, "answerSizeDistribution");
@@ -257,6 +258,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     @Override
     public void updateProperty(boolean isSubProperty, boolean query, String id, String value) {
+        
         if (isSubProperty) {
             selectedGraphNode.getSubPropertiesNode().put(id, value);
         } else {
@@ -288,9 +290,9 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                 if (nodoGraficoServiceSelected != null) {
                     clientNode.setServiceNode((ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(nodoGraficoServiceSelected));
                 }
-
-
-            } else if (id.equalsIgnoreCase("jobsDistribution")) {
+            }else if(id.equalsIgnoreCase("trafficPriority")){
+                clientNode.getState().setTrafficPriority(Integer.parseInt(value));
+            }else if (id.equalsIgnoreCase("jobsDistribution")) {
                 clientNode.getState().setJobInterArrival(getDistributionByText(value));
                 if (query) {
                     queryProperties(selectedGraphNode);
@@ -332,7 +334,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
         } else if (selectedGraphNode instanceof ResourceGraphNode) {
             ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
-
 
             if (id.equalsIgnoreCase("CpuCapacity")) {
                 resource.setCpuCapacity(Double.parseDouble(value));
@@ -510,20 +511,20 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             //#######Elimino las referencias a los brokers q puedan tener los clusters############
             ArrayList<ResourceNode> resourcesWithBrokersRemoved = new ArrayList<ResourceNode>();
             List<SimBaseEntity> resources = SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ResourceNode.class);
-            
+
             for (SimBaseEntity resourceNode : resources) {
 
                 List<ServiceNode> serviceNodes = ((ResourceNode) resourceNode).getServiceNodes();
 
                 for (ServiceNode serviceNode : serviceNodes) {
                     if (phosNodeRemoved.getId().equalsIgnoreCase(serviceNode.getID())) {
-                        resourcesWithBrokersRemoved.add((ResourceNode)resourceNode);
+                        resourcesWithBrokersRemoved.add((ResourceNode) resourceNode);
                     }
                 }
             }
-            
-            for (ResourceNode resourcesWithBrokerRemoved:resourcesWithBrokersRemoved) {
-                resourcesWithBrokerRemoved.getServiceNodes().remove((ServiceNode)phosNodeRemoved);
+
+            for (ResourceNode resourcesWithBrokerRemoved : resourcesWithBrokersRemoved) {
+                resourcesWithBrokerRemoved.getServiceNodes().remove((ServiceNode) phosNodeRemoved);
             }
 
             //#######Elimino las referencias a los brokers q puedan tener los clientes#######
@@ -544,7 +545,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
     @Override
     public void reCreatePhosphorousNodes() {
-        
+
         for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
             nodeCreationModel.loadSimulacionBase();
         }
@@ -552,9 +553,9 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
             createNode(graphNode);
         }
-        
+
         for (final GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
-            
+
             Runnable runnable = new Runnable() {
 
                 @Override
