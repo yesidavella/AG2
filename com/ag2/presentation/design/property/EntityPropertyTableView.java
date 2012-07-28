@@ -21,17 +21,22 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
     private LinkAdminAbstractController linkAdminAbstractController;
 
     public EntityPropertyTableView() {
+        
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
+        TableColumn valueTableColumn = new TableColumn("VALOR");
+        
         propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
+        valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
+        
+        propertyTableColumn.setSortable(false);
+        valueTableColumn.setSortable(false);
+        
         propertyTableColumn.setMinWidth(200);
         propertyTableColumn.setPrefWidth(200);
-
-        TableColumn valueTableColumn = new TableColumn("VALOR");
-        valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
         valueTableColumn.setMinWidth(160);
         valueTableColumn.setPrefWidth(160);
 
-        getColumns().addAll(propertyTableColumn, valueTableColumn );
+        getColumns().addAll(propertyTableColumn, valueTableColumn);
     }
 
     public void setControladorAbstractoAdminNodo(NodeAdminAbstractController nodeAdminAbstractController) {
