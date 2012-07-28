@@ -100,7 +100,7 @@ public class GUI extends Scene {
     private ChartsResultResource chartsResultResource;
     private ChartsResultsBroker chartsResultsBroker;
     private ChartsResultsSwitch chartsResultsSwitch;
-    private TableView<String> tbwSimulationProperties = new TableView<String>();
+    private TableView<String> tbvSimulationProperties = new TableView<String>();
     private ToolBar tobWindow;
     private double mouseDragOffsetX = 0;
     private double mouseDragOffsetY = 0;
@@ -853,18 +853,21 @@ public class GUI extends Scene {
         VBox vbxProperties = new VBox(5);
         vbxProperties.setAlignment(Pos.TOP_LEFT);
 
-        TabPane tpProperties = new TabPane();
-        tpProperties.setSide(Side.LEFT);
+        TabPane tbpProperties = new TabPane();
+        tbpProperties.setSide(Side.LEFT);
+        tbpProperties.setId("tabpaneProperties");
         Tab tabNodeProperties = new Tab("Propiedades de dispositivo");
         Tab tabSimulationProperties = new Tab("Propiedades de simulación");
 
         tabNodeProperties.setClosable(false);
         tabSimulationProperties.setClosable(false);
 
-        tpProperties.getTabs().addAll(tabSimulationProperties, tabNodeProperties);
+        tbpProperties.getTabs().addAll(tabSimulationProperties, tabNodeProperties);
 
         entityPropertyTable = new EntityPropertyTableView();
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
+        
+        entityPropertyTable.setId("tbvEntityProperties");
 
         tabNodeProperties.setContent(entityPropertyTable);
         tabSimulationProperties.setContent(tbSimulationProperties);
@@ -907,7 +910,7 @@ public class GUI extends Scene {
             }
         });
 
-        tpProperties.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        tbpProperties.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent arg0) {
@@ -922,7 +925,7 @@ public class GUI extends Scene {
             }
         });
 
-        vbxProperties.getChildren().addAll(tpProperties, vbxBottomRight, btnDownUp);
+        vbxProperties.getChildren().addAll(tbpProperties, vbxBottomRight, btnDownUp);
         scrollPane.setContent(vbxProperties);
 
         return scrollPane;
@@ -1012,25 +1015,29 @@ public class GUI extends Scene {
 
     private TableView<String> createSimulationPropertiesTb() {
 
+        tbvSimulationProperties.setId("tbvSimulationProperties");
+        
         TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
+        TableColumn tbcolPropValue = new TableColumn("VALOR");
+        
         tbcolPropName.setMinWidth(200);
         tbcolPropName.setPrefWidth(200);
-        tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
-
-        TableColumn tbcolPropValue = new TableColumn("VALOR");
         tbcolPropValue.setMinWidth(140);
         tbcolPropValue.setPrefWidth(140);
+        
+        tbcolPropName.setSortable(false);
+        tbcolPropValue.setSortable(false);
+        
+        tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
-        tbwSimulationProperties.getColumns().addAll(tbcolPropName, tbcolPropValue);
+        tbvSimulationProperties.getColumns().addAll(tbcolPropName, tbcolPropValue);
 
-
-        tbwSimulationProperties.setMinHeight(400);
+        tbvSimulationProperties.setMinHeight(400);
 //        tbwSimulationProperties.setPrefWidth(345);
-//
 //        tbwSimulationProperties.setPrefHeight(200);
 
-        return tbwSimulationProperties;
+        return tbvSimulationProperties;
     }
 
     public void createMapNavigationPanel(VBox vbxBottomRight) {
@@ -1322,7 +1329,7 @@ public class GUI extends Scene {
     }
 
     public TableView<String> getTbwSimulationProperties() {
-        return tbwSimulationProperties;
+        return tbvSimulationProperties;
     }
 
     public StackPane getModalDimmer() {
