@@ -1,8 +1,11 @@
 /*Colores de azules del tema, el azul de abajo de los botones rgb(18,69,175)
-y del de arriba rgb(91,136,224)*/
+y del de arriba rgb(91,136,224). Tambien gris claro -fx-lGray-ag2:rgb(237,237,237)
+y gris medio -fx-mGray-ag2:rgb(204,204,204)*/
 .root {
     -fx-dBlue-ag2:rgb(18,69,175);/*Significa dark-blue*/
     -fx-mBlue-ag2:rgb(91,136,224);/*Significa middle-blue*/
+    -fx-lGray-ag2:rgb(237,237,237);
+    -fx-mGray-ag2:rgb(204,204,204)
 }
 
 .ver-borde-verde{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
@@ -206,62 +209,49 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-color: rgb(0,0,0,0.5);
 }
 
-.table-view:focused .table-row-cell:selected:focused, .table-view:focused .table-row-cell:selected, .table-view:row-selection .table-row-cell:filled:hover:selected {
-    -fx-background: black;
-    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);
-    /*    -fx-text-fill: -fx-selection-bar-text;*/
-    /*-fx-font-weight: bold;*/
+
+/******************************ESTILOS LOS TABS********************************/
+.tab{
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-font-weight:normal;
+    -fx-text-fill:black;
+}
+/*Estilos para los tab superiores*/
+.tab:top {
+    -fx-background-color: -fx-tab-border-color,-fx-inner-border-bottomup,linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+}
+/*Para los q son de izquierda*/
+.tab:left {
+    -fx-background-color: -fx-tab-border-color, -fx-inner-border-bottomup,linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
 }
 
-.table-view .column-header, .table-view .filler, .table-view .column-drag-header {
-    /*    -fx-text-fill: black;*/
-    /*    -fx-font-weight: bold;*/
-
-    /* TODO: for some reason, this doesn't scale. */
-    -fx-font-size: 0.95em; /* 13pt - 1 more than the default font */
-    -fx-size: 20;
-    /*    -fx-font-style:italic;*/
-    /*    -fx-font-family:Courier,monospace;*/
-    -fx-background-color: null;
-    -fx-border-style: solid;
-    -fx-border-color:
-        /*
-          Inner border: we have different colours along the top, right, bottom and left.
-          Refer to RT-12298 for the spec.
-        */
-        derive(FFFFFF, 80%)
-        linear-gradient(to bottom, derive(-fx-base,80%) 20%, derive(-fx-base,-10%) 90%)
-        derive(-fx-base, 10%)
-        linear-gradient(to bottom, derive(-fx-base,80%) 20%, derive(-fx-base,-10%) 90%),
-        /* Outer border: */
-        transparent -fx-table-header-border-color -fx-table-header-border-color transparent;
-    -fx-border-insets: 0 1 1 0, 0 0 0 0;
-    -fx-border-width: 0.083333em, 0.083333em;
-}
 .tab-pane *.tab-header-background {
     -fx-background-color: #C3D5FF;
     -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
 }
 
-.tab{
-    -fx-background-insets: 0, 1 1 0 1;
-    -fx-background-radius: 5 5 0 0, 4 4 0 0;
-    -fx-text-fill:black;
-    -fx-font-weight:normal
+.tab *.tab-label Text {
+    -fx-effect: dropshadow(two-pass-box , rgba(255, 255, 255, 0.4), 1, 0.0 , 0, 1);
 }
 
 .tab:selected {
     -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);/*rgb(0,134,229),rgb(0,100,172)*/
     -fx-background-insets: 0, 1 1 0 1;
     -fx-background-radius: 5 5 0 0, 4 4 0 0;
-    -fx-text-fill:white;
-    -fx-font-weight: bold
+    -fx-font-weight: bold;
 }
 
+.tab:selected *.tab-label {
+    -fx-text-fill:white;
+}
+
+/* ====================== LINE CHART =========================================*/
 .chart-title {
     -fx-font-size: 14;
 }
-/* ====================== LINE CHART =========================================*/
+
 .chart-line-symbol {
     -fx-background-color: #f9d900, white;
     -fx-background-insets: 0, 2;
@@ -297,7 +287,7 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-cursor:move;
 }
 
-/*************BOTON Q MUESTRA Y OCULTA LAS LATBLAS DE PROPIEDADES**************/
+/*************BOTON Q MUESTRA Y OCULTA LAS TABLAS DE PROPIEDADES**************/
 #btn-show-hide-properties{
     -fx-background-color: white;
     -fx-background-size: 60% 60%;
@@ -404,9 +394,6 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
-    /*
-        -fx-border-style: solid;
-        -fx-border-color:green;*/
 }
 
 #path-light{
@@ -414,5 +401,36 @@ ProgressBar progress-bar:indeterminate .bar {
     /*    -fx-stroke-width:0.5px;*/
     /*    -fx-effect:dropshadow( gaussian , derive(-fx-mBlue-ag2,-30%) , 10, 0.5 ,0,0 ); */
 }
+/************************FORMATO PARA LAS TABLESVIEWS**************************/
+.table-view .column-header, .table-view .filler, .table-view .column-drag-header {
+    -fx-font-size: 0.95em; /* 13pt - 1 more than the default font */
+    -fx-size: 20;
+    -fx-font-weight: bold;
+}
 
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+}
 
+.table-cell{
+    -fx-alignment:center;
+}
+
+/*Tablaview de propiedades de SIMULACION y DISPOSITIVO*/
+.tab-pane#tabpaneProperties .table-cell{
+    -fx-alignment:center-right;
+}
+
+.table-view:focused .table-row-cell:selected:focused, .table-view:focused .table-row-cell:selected,
+.table-view:row-selection .table-row-cell:filled:hover:selected {
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);
+}
+
+.labelPhophorusResults{
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+    -fx-padding: 5px;
+    -fx-border-radius: 5 5 0 0;
+    -fx-background-radius: 3px;
+    -fx-border-style: solid;
+    -fx-border-color:#959595 #959595 transparent #959595;
+}
