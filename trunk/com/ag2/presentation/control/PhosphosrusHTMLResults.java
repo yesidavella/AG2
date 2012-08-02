@@ -40,6 +40,8 @@ public class PhosphosrusHTMLResults {
     private String nameFolder;
     private VBox vBox = new VBox();
     private HBox hBox = new HBox();
+    private static short SIZE_X  = 16;
+    private static short SIZE_Y  = 16;
 
     public PhosphosrusHTMLResults(final Tab tab) {
 
@@ -53,6 +55,24 @@ public class PhosphosrusHTMLResults {
         btnRight.setMaxSize(20, 18);
         btnRightEnd.setMaxSize(20, 18);
         hBox.getChildren().addAll(btnLeftEnd, btnLeft, txtPage, btnRight, btnRightEnd);
+        
+       btnLeftEnd.setMinSize(SIZE_X, SIZE_Y);
+       btnLeftEnd.setMaxSize(SIZE_X, SIZE_Y);
+       btnLeftEnd.setPrefSize(SIZE_X, SIZE_Y);
+       
+       btnLeft.setMinSize(SIZE_X, SIZE_Y);
+       btnLeft.setMaxSize(SIZE_X, SIZE_Y);
+       btnLeft.setPrefSize(SIZE_X, SIZE_Y);
+       
+       btnRight.setMinSize(SIZE_X, SIZE_Y);
+       btnRight.setMaxSize(SIZE_X, SIZE_Y);
+       btnRight.setPrefSize(SIZE_X, SIZE_Y);
+       
+       btnRightEnd.setMinSize(SIZE_X, SIZE_Y);
+       btnRightEnd.setMaxSize(SIZE_X, SIZE_Y);
+       btnRightEnd.setPrefSize(SIZE_X, SIZE_Y);
+       
+   
 
         hBox.setAlignment(Pos.CENTER);
 
@@ -117,7 +137,7 @@ public class PhosphosrusHTMLResults {
         txtPage.setMaxWidth(50);
 
 
-        if (filesHTML != null && filesHTML.length > 1) {
+        if (filesHTML != null && filesHTML.length >= 1) {
             currentPage = 1;
             txtPage.setText(currentPage + "/" + totalPage);
             webEngine.load("file:///" + nameFolder + File.separator + filesHTML[0]);
@@ -142,8 +162,12 @@ public class PhosphosrusHTMLResults {
         establishEventBtnLeft(btnLeft);
         establishEventBtnRight(btnRight);
 
+        if(filesHTML.length >= 2){            
+        
         btnLeft.setDisable(true);
         btnLeftEnd.setDisable(true);
+        }
+        enableButtons();
     }
 
     private void enableButtons() {
