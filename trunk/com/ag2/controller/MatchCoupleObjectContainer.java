@@ -17,49 +17,44 @@ public abstract class MatchCoupleObjectContainer {
     public static HashMap<GraphSourceDestination, GraphOCS> getOCSMatchCoupleObjectContainer() {
 
         if (OCSMatchCoupleObjectContainer == null) {
-            OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination,GraphOCS>();
+            OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination, GraphOCS>();
         }
         return OCSMatchCoupleObjectContainer;
     }
-    public static boolean containsIntanceOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
+
+    public static boolean containsIntanceOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination) 
     {
         GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
 
-        if (OCSMatchCoupleObjectContainer.containsKey(sourceDestination))
-        {
-           return true;
+        if (OCSMatchCoupleObjectContainer.containsKey(sourceDestination)) {
+            return true;
         }
         return false;
     }
-    public static GraphOCS getGraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
-    {
+
+    public static GraphOCS getGraphOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination) {
         GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
 
-         return OCSMatchCoupleObjectContainer.get(sourceDestination);
-        
-         
+        return OCSMatchCoupleObjectContainer.get(sourceDestination);
+
+
     }
 
     public static void putInstanceOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination, GraphOCS graphOCS) {
 
         GraphSourceDestination sourceDestination = new GraphSourceDestination(graphNodeSource, graphNodeDestination);
 
-        if (!OCSMatchCoupleObjectContainer.containsKey(sourceDestination))
-        {
+        if (!OCSMatchCoupleObjectContainer.containsKey(sourceDestination)) {
             getOCSMatchCoupleObjectContainer().put(sourceDestination, graphOCS);
         }
-       
+
     }
-    
-    public static void cleanOCSMatchCoupleObjectContainer()
-    {
-        OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination,GraphOCS>();
-        
+
+    public static void cleanOCSMatchCoupleObjectContainer() {
+        OCSMatchCoupleObjectContainer = new HashMap<GraphSourceDestination, GraphOCS>();
+
     }
-            
-            
-  
-    
+
     public static HashMap<GraphNode, Entity> getInstanceNodeMatchCoupleObjectContainer() {
 
         if (nodeMatchCoupleObjectContainer == null) {
@@ -90,6 +85,11 @@ public abstract class MatchCoupleObjectContainer {
         GraphNode graphNodeDestination;
 
         public GraphSourceDestination(GraphNode graphNodeSource, GraphNode graphNodeDestination) {
+
+            if (graphNodeSource == null || graphNodeDestination == null) {
+                throw new IllegalArgumentException("No debe ir Null "); 
+                        
+            }
             this.graphNodeSource = graphNodeSource;
             this.graphNodeDestination = graphNodeDestination;
         }
@@ -97,18 +97,19 @@ public abstract class MatchCoupleObjectContainer {
         @Override
         public int hashCode() {
             int hash = 5;
-            hash = 83 * hash + (this.graphNodeSource.getName() != null ? this.graphNodeSource.getName().hashCode() : 0);
-            hash = 83 * hash + (this.graphNodeDestination.getName() != null ? this.graphNodeDestination.getName().hashCode() : 0);
+                hash = 83 * hash + (this.graphNodeSource.getOriginalName() != null ? this.graphNodeSource.getOriginalName().hashCode() : 0);
+            hash = 83 * hash + (this.graphNodeDestination.getOriginalName() != null ? this.graphNodeDestination.getOriginalName().hashCode() : 0);
             return hash;
         }
 
         @Override
         public boolean equals(Object object) {
+
             if (object instanceof GraphSourceDestination) {
                 GraphSourceDestination sourceDestination = (GraphSourceDestination) object;
 
-                if (sourceDestination.graphNodeSource.getName().equals(graphNodeSource.getName())
-                        && sourceDestination.graphNodeDestination.getName().equals(graphNodeDestination.getName())) {
+                if (sourceDestination.graphNodeSource.getOriginalName().equals(graphNodeSource.getOriginalName())
+                        && sourceDestination.graphNodeDestination.getOriginalName().equals(graphNodeDestination.getOriginalName())) {
                     return true;
                 }
             }
