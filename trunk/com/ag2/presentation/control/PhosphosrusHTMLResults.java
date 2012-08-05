@@ -42,9 +42,12 @@ public class PhosphosrusHTMLResults {
     private HBox hBox = new HBox();
     private static short SIZE_X  = 16;
     private static short SIZE_Y  = 16;
+    
+    private VBox vBoxMain;
 
-    public PhosphosrusHTMLResults(final Tab tab) {
+    public PhosphosrusHTMLResults(VBox vBoxMain) {
 
+        this.vBoxMain = vBoxMain;
         btnLeftEnd.setGraphic(leftEndImageView);
         btnLeft.setGraphic(leftImageView);
         btnRight.setGraphic(rightImageView);
@@ -76,21 +79,15 @@ public class PhosphosrusHTMLResults {
 
         hBox.setAlignment(Pos.CENTER);
 
-        tab.setOnSelectionChanged(new EventHandler<Event>() {
-
-            public void handle(Event t) {
-                if (tab.isSelected()) {
-                    loadFilesHTMLs(tab);
-                }
-            }
-        });
-
+      
+                    loadFilesHTMLs();
+              
     }
 
     public void lookToNextExecution() {
     }
 
-    private void loadFilesHTMLs(Tab tab) {
+    private void loadFilesHTMLs() {
 
 
         String currentFolder = new File("").getAbsolutePath();
@@ -156,7 +153,7 @@ public class PhosphosrusHTMLResults {
             btnRightEnd.setDisable(true);
         }
 
-        tab.setContent(vBox);
+        vBoxMain.getChildren().add( vBox);
         establishEventBtnLeftEnd(btnLeftEnd);
         establishEventBtnRightEnd(btnRightEnd);
         establishEventBtnLeft(btnLeft);
