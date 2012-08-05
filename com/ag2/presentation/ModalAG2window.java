@@ -38,7 +38,7 @@ public abstract class ModalAG2window extends Stage {
         scene.getStylesheets().add(Utils.ABS_PATH_CSS + "cssAG2.css");
         brpWindowLayout.getStyleClass().add("modal-AG2-window");
 
-        btnAccept = new Button("Aceptar");
+        btnAccept = new Button("Cerrar");
         btnAccept.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

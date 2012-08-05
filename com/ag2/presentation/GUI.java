@@ -88,7 +88,7 @@ public class GUI extends Scene {
     private Tab tabResultsOCS = new Tab();
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
-    private Tab tabResultsHTML = new Tab();
+   
     private Tab tabChartsClientResults = new Tab();
     private Tab tabChartsBrokerResults = new Tab();
     private Tab tabChartsSwitchResults = new Tab();
@@ -124,6 +124,7 @@ public class GUI extends Scene {
     private Button btnDownUp = new Button();
     private transient ToolBarAnimationAG2 animationHeaderAG2;
     private VBox vbHeaderAnimationContainer;
+    private Button btnShowLog = new Button("Ver registros");
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -160,6 +161,7 @@ public class GUI extends Scene {
         modalDimmer.setVisible(false);
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
+        btnShowLog.setDisable(true);
 
         if (!Main.IS_APPLET) {
             brpRoot.getChildren().add(windowResizeButton);
@@ -726,8 +728,7 @@ public class GUI extends Scene {
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
-        tabResultsHTML.setText("Registros HTML");
-        tabResultsHTML.setClosable(false);
+       
         tabChartsClientResults.setText("Gráficos de Clientes");
         tabChartsClientResults.setClosable(false);
 
@@ -753,8 +754,7 @@ public class GUI extends Scene {
         tabResultsOCS.setClosable(false);
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
-        PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(tabResultsHTML);
-        executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
+
         executePane.setPhosphosrusResults(phosphosrusResults);
 
         graphDesignGroup.setScrollPane(scpWorld);
@@ -866,7 +866,7 @@ public class GUI extends Scene {
 
         entityPropertyTable = new EntityPropertyTableView();
         TableView<String> tbSimulationProperties = createSimulationPropertiesTb();
-        
+
         entityPropertyTable.setId("tbvEntityProperties");
 
         tabNodeProperties.setContent(entityPropertyTable);
@@ -925,7 +925,29 @@ public class GUI extends Scene {
             }
         });
 
-        vbxProperties.getChildren().addAll(tbpProperties, vbxBottomRight, btnDownUp);
+        
+
+
+        btnShowLog.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                LogViewHTML logViewHTML = new LogViewHTML();
+                PhosphosrusHTMLResults phosphosrusHTMLResults = new PhosphosrusHTMLResults(logViewHTML.getvBoxMain());
+                executePane.setPhosphosrusHTMLResults(phosphosrusHTMLResults);
+                logViewHTML.show();
+            }
+        });
+        HBox hBox = new HBox();
+        hBox.setSpacing(280);
+
+
+
+
+        hBox.getChildren().addAll(btnDownUp, btnShowLog);
+
+        vbxProperties.getChildren().addAll(tbpProperties, vbxBottomRight, hBox);
+
         scrollPane.setContent(vbxProperties);
 
         return scrollPane;
@@ -1016,18 +1038,18 @@ public class GUI extends Scene {
     private TableView<String> createSimulationPropertiesTb() {
 
         tbvSimulationProperties.setId("tbvSimulationProperties");
-        
+
         TableColumn tbcolPropName = new TableColumn("PROPIEDAD");
         TableColumn tbcolPropValue = new TableColumn("VALOR");
-        
+
         tbcolPropName.setMinWidth(200);
         tbcolPropName.setPrefWidth(200);
         tbcolPropValue.setMinWidth(140);
         tbcolPropValue.setPrefWidth(140);
-        
+
         tbcolPropName.setSortable(false);
         tbcolPropValue.setSortable(false);
-        
+
         tbcolPropName.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, String>("visualNameOnTb"));
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
@@ -1262,8 +1284,8 @@ public class GUI extends Scene {
         btnLink.setDisable(disable);
         btnOCSCircuit.setDisable(disable);
 
-       
-        
+
+
         btnPointSeparator.setDisable(disable);
         btnDeleted.setDisable(disable);
     }
@@ -1281,6 +1303,7 @@ public class GUI extends Scene {
         chartsResultsCPU.stop();
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
+        btnShowLog.setDisable(false);
     }
 
     public void disable() {
@@ -1299,7 +1322,7 @@ public class GUI extends Scene {
 
         graphDesignGroup.getGroup().setOpacity(0.8);
         if (!tbpMain.getTabs().contains(tabResults)) {
-            tbpMain.getTabs().addAll(tabResultsHTML,
+            tbpMain.getTabs().addAll(
                     tabResultsResource,
                     tabChartsClientResults,
                     tabResults,
@@ -1317,6 +1340,7 @@ public class GUI extends Scene {
         chartsResultsSwitch.play();
         tbpMain.getSelectionModel().select(tabResults);
         resultsOCS.play();
+        btnShowLog.setDisable(true);
 
     }
 
