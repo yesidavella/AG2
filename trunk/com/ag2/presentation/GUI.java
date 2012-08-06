@@ -83,12 +83,11 @@ public class GUI extends Scene {
     private ToggleButtonAg2 btnPlusZoom;
     private Group grRootWorld = new Group();
     private Tab tabSimulation = new Tab();
-    private Tab tabViewOCS = new Tab();
+//    private Tab tabViewOCS = new Tab();
     private Tab tabResults = new Tab();
     private Tab tabResultsOCS = new Tab();
     private Tab tabChartsResourceCPU = new Tab();
     private Tab tabChartsResourceBuffer = new Tab();
-   
     private Tab tabChartsClientResults = new Tab();
     private Tab tabChartsBrokerResults = new Tab();
     private Tab tabChartsSwitchResults = new Tab();
@@ -722,13 +721,13 @@ public class GUI extends Scene {
         tabSimulation.setClosable(false);
         tabSimulation.setText("Simulación");
 
-        tabViewOCS.setClosable(false);
-        tabViewOCS.setText("Vista λSP");
+//        tabViewOCS.setClosable(false);
+//        tabViewOCS.setText("Vista λSP");
 
         tabSimulation.setClosable(false);
         tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
-       
+
         tabChartsClientResults.setText("Gráficos de Clientes");
         tabChartsClientResults.setClosable(false);
 
@@ -761,8 +760,39 @@ public class GUI extends Scene {
 
         grRootWorld.getChildren().add(graphDesignGroup.getGroup());
         scpWorld.setContent(grRootWorld);
-        splitPane.getItems().addAll(scpWorld, scpnProperties);
+        VBox vBoxSimulation = new VBox();
+
+
+
+        ToggleButton tbNormalView = new ToggleButton("Vista diseño");
+        tbNormalView.setId("pill-left");
+        ToggleButton tbLspView = new ToggleButton("Vista λSP");
+        tbLspView.setId("pill-right");
+
+        ToggleGroup group = new ToggleGroup();
+        tbNormalView.setToggleGroup(group);
+        tbLspView.setToggleGroup(group);
+
+
+        group.selectToggle(tbNormalView);
+
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(tbNormalView, tbLspView);
+        hBox.setId("pill-fondo");
+
+
+        vBoxSimulation.getChildren().addAll(hBox, scpWorld);
+
+        vBoxSimulation.setFillWidth(true);
+
+
+        scpWorld.setMinHeight(800);
+
+
+        splitPane.getItems().addAll(vBoxSimulation, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
+
         tabSimulation.setContent(splitPane);
 
         chartsResultClient = new ChartsResultClient(tabChartsClientResults);
@@ -779,69 +809,72 @@ public class GUI extends Scene {
         tabResultsResource.setContent(tbResultsResource);
 
         tbpMain.getTabs().addAll(tabSimulation);
-
-        tabViewOCS.setOnSelectionChanged(new EventHandler<Event>() {
-
-            @Override
-            public void handle(Event arg0) {
-                if (tabViewOCS.isSelected()) {
-                    disableButtons(true);
-                    tabSimulation.setContent(null);
-                    tabViewOCS.setContent(splitPane);
-                    graphDesignGroup.hideMap();
-
-                    for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
-                        if (graphNode instanceof SwitchGraphNode) {
-                            graphNode.showSimpleNode();
-                        } else {
-                            graphNode.getGroup().setVisible(false);
-                        }
-                    }
-
-                    HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-
-                    for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-                        graphLink.setVisible(false);
-                    }
-
-                    graphDesignGroup.showLineOCS();
-
-                }
-
-            }
-        });
-
-        tabSimulation.setOnSelectionChanged(new EventHandler<Event>() {
+        
+        
+        tbNormalView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(Event arg0) {
-                if (tabSimulation.isSelected()) {
-                    disableButtons(false);
-                    tabViewOCS.setContent(null);
-                    tabSimulation.setContent(splitPane);
-                    graphDesignGroup.showMap();
-                    for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
-                        if (graphNode instanceof SwitchGraphNode) {
-                            graphNode.hideSimpleNode();
-                        } else {
-                            graphNode.getGroup().setVisible(true);
-                        }
-                    }
-
-                    HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
-
-                    for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
-                        graphLink.setVisible(true);
-                    }
-                    graphDesignGroup.hideLineOCS();
-
-
-                }
+            public void handle(MouseEvent arg0) {
+                GUI.this.showNormalView();
             }
         });
+        
+        
+          tbLspView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+            @Override
+            public void handle(MouseEvent arg0) {
+                GUI.this.showLspView();
+            }
+        });
+          
+       
+        
 
+    }
 
+    private void showNormalView() {
+        disableButtons(false);
+//        tabViewOCS.setContent(null);
+//        tabSimulation.setContent(splitPane);
+        graphDesignGroup.showMap();
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+            if (graphNode instanceof SwitchGraphNode) {
+                graphNode.hideSimpleNode();
+            } else {
+                graphNode.getGroup().setVisible(true);
+            }
+        }
+
+        HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+            graphLink.setVisible(true);
+        }
+        graphDesignGroup.hideLineOCS();
+    }
+
+    private void showLspView() {
+        disableButtons(true);
+//        tabSimulation.setContent(null);
+//        tabViewOCS.setContent(splitPane);
+        graphDesignGroup.hideMap();
+
+        for (GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+            if (graphNode instanceof SwitchGraphNode) {
+                graphNode.showSimpleNode();
+            } else {
+                graphNode.getGroup().setVisible(false);
+            }
+        }
+
+        HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
+
+        for (GraphLink graphLink : linkMatchCoupleObjectContainer.keySet()) {
+            graphLink.setVisible(false);
+        }
+
+        graphDesignGroup.showLineOCS();
     }
 
     private ScrollPane createRightDesign() {
@@ -925,7 +958,7 @@ public class GUI extends Scene {
             }
         });
 
-        
+
 
 
         btnShowLog.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -1293,9 +1326,9 @@ public class GUI extends Scene {
     public void enable() {
         GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
-        if (!tabViewOCS.isSelected()) {
-            disableButtons(false);
-        }
+//        if (!tabViewOCS.isSelected()) {
+//            disableButtons(false);
+//        }
 
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);
@@ -1304,6 +1337,7 @@ public class GUI extends Scene {
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
         btnShowLog.setDisable(false);
+        graphDesignGroup.hideLineOCS();
     }
 
     public void disable() {
@@ -1328,8 +1362,7 @@ public class GUI extends Scene {
                     tabResults,
                     tabResultsOCS,
                     tabChartsBrokerResults,
-                    tabChartsSwitchResults,
-                    tabViewOCS);
+                    tabChartsSwitchResults);
 
         }
         chartsResultsCPU.play();
