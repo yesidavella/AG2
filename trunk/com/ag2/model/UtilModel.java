@@ -10,6 +10,7 @@ import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Nodes.Hybrid.Parallel.*;
 import Grid.Nodes.OutputResourceNode;
+import Grid.Nodes.PCE;
 import Grid.OCS.OCSRoute;
 import Grid.Port.GridInPort;
 import Grid.Port.GridOutPort;
@@ -84,6 +85,20 @@ public class UtilModel extends Util {
         sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
+    }
+    
+        /**
+     * Creates a PCE,
+     *
+     * @param id The id of this switch
+     * @param simulator The simulator to which this swithc belongs.
+     * @return
+     */
+    public static Switch createPCE(String id, GridSimulator simulator) {
+        PCE pce = new PCE(id, simulator);
+        pce.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+        simulator.register(pce);
+        return pce;
     }
 
     /**

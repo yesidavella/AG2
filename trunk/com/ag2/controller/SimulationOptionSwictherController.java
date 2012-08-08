@@ -11,10 +11,7 @@ import com.ag2.presentation.design.BrokerGrahpNode;
 import com.ag2.presentation.design.GraphNode;
 import java.util.HashMap;
 
-/**
- *
- * @author INFORCOL
- */
+
 public class SimulationOptionSwictherController {
 
      

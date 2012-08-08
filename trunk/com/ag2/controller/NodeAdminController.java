@@ -40,15 +40,24 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
         for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
 
-            if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
+            if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) 
+            {
                 newPhosphorusNode = ((ClientCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-            } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode) {
+                
+            } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode)
+            {
                 newPhosphorusNode = ((BrokerCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-            } else if (nodeCreationModel instanceof ResourceCreationModel && graphNode instanceof ResourceGraphNode) {
+                
+            } else if (nodeCreationModel instanceof ResourceCreationModel && graphNode instanceof ResourceGraphNode) 
+            {
                 newPhosphorusNode = ((ResourceCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-            } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) {
+                
+            } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) 
+            {
                 newPhosphorusNode = ((PCE_SwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-            } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
+                
+            } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) 
+            {
                 newPhosphorusNode = ((HybridSwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
             }
 

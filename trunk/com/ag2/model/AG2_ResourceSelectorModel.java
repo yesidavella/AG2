@@ -1,15 +1,19 @@
 package com.ag2.model;
 
+import Grid.Entity;
 import Grid.Interfaces.CPU;
+import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ResourceSelector;
 import Grid.Nodes.AbstractResourceNode;
+import Grid.Nodes.PCE;
 import com.ag2.presentation.Main;
 import com.ag2.presentation.design.GraphArc;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +26,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     }
 
     @Override
-    public ResourceNode findBestResource(List<ResourceNode> resources, double jobFlops) {
+    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce) {
 
         // this.resources = resources;
 
@@ -30,50 +34,50 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double maxCPUCountSwap = 0;
         double maxBuffer = 0;
         double maxBufferSwap = 0;
-
-        for (ResourceNode resourceNode : resources) 
-        {
+        
+        Map<ResourceNode ,Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode)sourceEntity, resources);
+        
+        for (ResourceNode resourceNode : resources) {
             maxCPUCountSwap = resourceNode.getCpuCount();
-            if (maxCPUCountSwap > maxCPUCount) 
-            {
+            if (maxCPUCountSwap > maxCPUCount) {
                 maxCPUCount = maxCPUCountSwap;
             }
             maxBufferSwap = resourceNode.getMaxQueueSize();
-            if(maxBufferSwap>maxBuffer)
-            {
+            if (maxBufferSwap > maxBuffer) {
                 maxBuffer = maxBufferSwap;
             }
         }
 
-//         System.out.println(" Recurso max cpu "+maxBuffer);
-
-
-
         double cost = Double.MAX_VALUE;
         ResourceNode resourceNodeSelected = null;
-
-
-
-
-            for (ResourceNode resourceNode : resources) {
-                double costCurrent = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
-                    
-
-                if(swithOrder)
-                {
-                    if (costCurrent < cost) {
-                        cost = costCurrent;
-                        resourceNodeSelected = resourceNode;
-                    }
+        double totalCost= 0;
+        for (ResourceNode resourceNode : resources) 
+        {
+            double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);            
+            Double networkCost = mapResourceNetworkCost.get(resourceNode); 
+            
+            
+            if(networkCost!=null)
+            {
+                totalCost =  gridCost+ networkCost;
+            }
+            else
+            {
+                totalCost = gridCost+10000; //FIXME: Solo temp. Cuando  no encuentre al recurso
+            }
+            
+            if (swithOrder) {
+                if (totalCost < cost) {
+                    cost = totalCost;
+                    resourceNodeSelected = resourceNode;
                 }
-                else
-                {
-                    if (costCurrent <= cost) {
-                        cost = costCurrent;
-                        resourceNodeSelected = resourceNode;
-                    }
+            } else {
+                if (totalCost <= cost) {
+                    cost = totalCost;
+                    resourceNodeSelected = resourceNode;
                 }
             }
+        }
 
         swithOrder = !swithOrder;
 
@@ -82,7 +86,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         return resourceNodeSelected;
     }
 
-    public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer ) {
+    public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
         double Tproc;
         double Cproc;
         double Acpu;
@@ -90,8 +94,8 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double CPU_totales;
         double d;
         double s;
-        double bufferBusy; 
-        double bufferFree; 
+        double bufferBusy;
+        double bufferFree;
         double z = 1;
         /////////////
         double capacityCPU;
@@ -111,19 +115,19 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         if (CPU_libre == 0) {
             return Double.MAX_VALUE;
         }
-        
-        bufferBusy = ((AbstractResourceNode)resourceNode).getQueue().size();
-        bufferFree =  resourceNode.getMaxQueueSize() - bufferBusy;
+
+        bufferBusy = ((AbstractResourceNode) resourceNode).getQueue().size();
+        bufferFree = resourceNode.getMaxQueueSize() - bufferBusy;
         Acpu = CPU_libre * capacityCPU;
         CPU_totales = maxCPUCount;
 
         Cproc = jobFlops / (Acpu / CPU_libre);
-        d = ( 40/100) * (1 - (CPU_libre / CPU_totales));
-        
-        s = ( 20/100)* (1 - (bufferFree / maxBuffer));
-        
-        
-        Tproc = Cproc + (d * Cproc) + (s* Cproc);
+        d = (40 / 100) * (1 - (CPU_libre / CPU_totales));
+
+        s = (20 / 100) * (1 - (bufferFree / maxBuffer));
+
+
+        Tproc = Cproc + (d * Cproc) + (s * Cproc);
 
         return z * Tproc;
 
@@ -134,9 +138,8 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     public ResourceNode findBestresource(double jobFlops) {
         return null; // FIXME: por ahora no se debe  usar // findBestResource(resources, jobFlops);
     }
-    
-    
-     private void writeObject(ObjectOutputStream stream) {
+
+    private void writeObject(ObjectOutputStream stream) {
         try {
             stream.defaultWriteObject();
             Main.countObject++;
