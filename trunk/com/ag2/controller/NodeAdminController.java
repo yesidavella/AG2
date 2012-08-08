@@ -8,6 +8,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Nodes.AbstractClient;
 import Grid.Nodes.AbstractServiceNode;
+import Grid.Nodes.PCE;
 import com.ag2.model.*;
 import com.ag2.presentation.GUI;
 import com.ag2.presentation.GraphNodesView;
@@ -40,24 +41,19 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
         for (NodeCreationModel nodeCreationModel : nodeCreationModels) {
 
-            if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) 
-            {
+            if (nodeCreationModel instanceof ClientCreationModel && graphNode instanceof ClientGraphNode) {
                 newPhosphorusNode = ((ClientCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-                
-            } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode)
-            {
+
+            } else if (nodeCreationModel instanceof BrokerCreationModel && graphNode instanceof BrokerGrahpNode) {
                 newPhosphorusNode = ((BrokerCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-                
-            } else if (nodeCreationModel instanceof ResourceCreationModel && graphNode instanceof ResourceGraphNode) 
-            {
+
+            } else if (nodeCreationModel instanceof ResourceCreationModel && graphNode instanceof ResourceGraphNode) {
                 newPhosphorusNode = ((ResourceCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-                
-            } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) 
-            {
+
+            } else if (nodeCreationModel instanceof PCE_SwitchCreationModel && graphNode instanceof PCE_SwicthGraphNode) {
                 newPhosphorusNode = ((PCE_SwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
-                
-            } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) 
-            {
+
+            } else if (nodeCreationModel instanceof HybridSwitchCreationModel && graphNode instanceof HybridSwitchGraphNode) {
                 newPhosphorusNode = ((HybridSwitchCreationModel) nodeCreationModel).createPhosphorusNode(graphNode.getOriginalName());
             }
 
@@ -101,7 +97,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeProperties.add(nodeRelationProperty);
             //===========================================================================================================
             EntityProperty nodeTrafficPriorityProp = new EntityProperty("trafficPriority", "Prioridad de tráfico(1,2,...,10):", EntityProperty.PropertyType.NUMBER, false);
-            nodeTrafficPriorityProp.setFirstValue( String.valueOf(clientNode.getState().getTrafficPriority()) );
+            nodeTrafficPriorityProp.setFirstValue(String.valueOf(clientNode.getState().getTrafficPriority()));
             nodeProperties.add(nodeTrafficPriorityProp);
             //===========================================================================================================
             NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Generación de trabajos:");
@@ -121,8 +117,8 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
 
         } else if (graphNode instanceof ResourceGraphNode) {
-            ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
+            ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
             EntityProperty cpuCapacityProperty = new EntityProperty("CpuCapacity", "Capacidad de cada CPU:", EntityProperty.PropertyType.TEXT, false);
             CPU cpu = (CPU) resource.getCpuSet().get(0);
@@ -149,12 +145,12 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             for (GraphNode brokerGrahpNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
 
                 if (brokerGrahpNode instanceof BrokerGrahpNode) {
-                    
+
                     EntityProperty entityProperty = new EntityProperty("RelationshipResourceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
                     nodeProperties.add(entityProperty);
-                    
+
                     for (ServiceNode serviceNode : resource.getServiceNodes()) {
-                        
+
                         if (serviceNode.getID().equals(brokerGrahpNode.getOriginalName())) {
                             entityProperty.setFirstValue("true");
                             // propiedadeNodo.setDisable(true);
@@ -165,23 +161,28 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
             //============================================================================================================
 
-        }else if(graphNode instanceof BrokerGrahpNode){
-            
-            System.out.println("Entro al pce!!!");
-            
+        } else if (graphNode instanceof BrokerGrahpNode) {
+
             ServiceNode broker = (ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
             NodeRelationProperty nodeRelationProperty = new NodeRelationProperty("relationshipBrokerAndPCE", "PCE:");
-            
+
             for (GraphNode pce : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+
                 if (pce instanceof PCE_SwicthGraphNode) {
                     nodeRelationProperty.getObservableListNodes().add(pce);
-                    System.out.println("Metio!!!");
                 }
             }
-            
+
+            if (broker.getPce() != null) {
+                GraphNode pceSelected = findKeyNodeByValueNode(broker.getPce(), MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
+                if (pceSelected != null) {
+                    nodeRelationProperty.setFirstValue(pceSelected);
+                }
+            }
+
             nodeProperties.add(nodeRelationProperty);
-            
+
         }
 //        else if (graphNode instanceof SwitchGraphNode) {
 //            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(graphNode);
@@ -195,6 +196,142 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         for (GraphNodesView graphNodesView : graphNodesViews) {
             graphNodesView.loadProperties(nodeProperties);
         }
+    }
+
+    @Override
+    public void updateProperty(boolean isSubProperty, boolean query, String id, String value) {
+
+        if (isSubProperty) {
+            selectedGraphNode.getSubPropertiesNode().put(id, value);
+        } else {
+            selectedGraphNode.getNodeProperties().put(id, value);
+        }
+
+        if (id.equalsIgnoreCase("name")) {
+            selectedGraphNode.setName(value);
+            if (selectedGraphNode instanceof ClientGraphNode) {
+                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().remove(selectedGraphNode);
+                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().add(selectedGraphNode);
+            } else if (selectedGraphNode instanceof ResourceGraphNode) {
+                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().remove(selectedGraphNode);
+                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().add(selectedGraphNode);
+            } else if (selectedGraphNode instanceof BrokerGrahpNode) {
+                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().remove(selectedGraphNode);
+                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().add(selectedGraphNode);
+            } else if (selectedGraphNode instanceof SwitchGraphNode) {
+                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().remove(selectedGraphNode);
+                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().add(selectedGraphNode);
+            }
+        }
+
+        if (selectedGraphNode instanceof ClientGraphNode) {
+            ClientNode clientNode = (ClientNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
+
+            if (id.equalsIgnoreCase("broker")) {
+                GraphNode brokerGraphNodeSelected = findNodoGraficoByName(value, MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
+                if (brokerGraphNodeSelected != null) {
+                    clientNode.setServiceNode((ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(brokerGraphNodeSelected));
+                }
+            } else if (id.equalsIgnoreCase("trafficPriority")) {
+                clientNode.getState().setTrafficPriority(Integer.parseInt(value));
+            } else if (id.equalsIgnoreCase("jobsDistribution")) {
+                clientNode.getState().setJobInterArrival(getDistributionByText(value));
+                if (query) {
+                    queryProperties(selectedGraphNode);
+                }
+            } else if (id.contains("jobsDistribution")) {
+                setValuesDistribution(clientNode.getState().getJobInterArrival(), value, id);
+            } else if (id.equalsIgnoreCase("flopsDistribution")) {
+                clientNode.getState().setFlops(getDistributionByText(value));
+                if (query) {
+                    queryProperties(selectedGraphNode);
+                }
+            } else if (id.contains("flopsDistribution")) {
+                setValuesDistribution(clientNode.getState().getFlops(), value, id);
+            } else if (id.equalsIgnoreCase("maxDelayDistribution")) {
+                clientNode.getState().setMaxDelayInterval(getDistributionByText(value));
+                if (query) {
+                    queryProperties(selectedGraphNode);
+                }
+            } else if (id.contains("maxDelayDistribution")) {
+                setValuesDistribution(clientNode.getState().getMaxDelayInterval(), value, id);
+
+            } else if (id.equalsIgnoreCase("jobSizeDistribution")) {
+                clientNode.getState().setSizeDistribution(getDistributionByText(value));
+                if (query) {
+                    queryProperties(selectedGraphNode);
+                }
+
+            } else if (id.contains("jobSizeDistribution")) {
+                setValuesDistribution(clientNode.getState().getSizeDistribution(), value, id);
+            } else if (id.equalsIgnoreCase("answerSizeDistribution")) {
+                clientNode.getState().setAckSizeDistribution(getDistributionByText(value));
+                if (query) {
+                    queryProperties(selectedGraphNode);
+                }
+
+            } else if (id.contains("answerSizeDistribution")) {
+                setValuesDistribution(clientNode.getState().getAckSizeDistribution(), value, id);
+            }
+
+        } else if (selectedGraphNode instanceof ResourceGraphNode) {
+            ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
+
+            if (id.equalsIgnoreCase("CpuCapacity")) {
+                resource.setCpuCapacity(Double.parseDouble(value));
+            } else if (id.equalsIgnoreCase("QueueSize")) {
+                resource.setQueueSize(Integer.parseInt(value));
+            } else if (id.equalsIgnoreCase("CpuCount")) {
+                CPU cpu = (CPU) resource.getCpuSet().get(0);
+                double capacity = 0;
+                if (cpu != null) {
+                    capacity = cpu.getCpuCapacity();
+                }
+                resource.setCpuCount(Integer.parseInt(value), capacity);
+            } else if (id.contains("RelationshipResourceAndServiceNodo")) {
+                String serviceNodeName = value.replace("_ON", "").replace("_OFF", "");
+
+                Set<GraphNode> graphNodes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet();
+                GraphNode nodoGrafico = null;
+                for (GraphNode nodoGraficoAux : graphNodes) {
+                    if (nodoGraficoAux.getName().equals(serviceNodeName)) {
+                        nodoGrafico = nodoGraficoAux;
+                        break;
+                    }
+                }
+                Entity entity = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(nodoGrafico);
+                if (value.contains("_ON")) {
+                    if (entity != null && entity instanceof ServiceNode) {
+                        ServiceNode serviceNode = (ServiceNode) entity;
+                        resource.addServiceNode(serviceNode);
+                    }
+
+                } else if (value.contains("_OFF")) {
+                    if (entity != null && entity instanceof ServiceNode) {
+                        ServiceNode serviceNode = (ServiceNode) entity;
+                        resource.removeServiceNode(serviceNode);
+                    }
+                }
+            }
+
+        } else if (selectedGraphNode instanceof BrokerGrahpNode) {
+            
+            if (id.equalsIgnoreCase("relationshipBrokerAndPCE")) {
+
+                ServiceNode broker = (ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
+                
+                GraphNode pceGraphNodeSelected = findNodoGraficoByName(value, MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
+                if (pceGraphNodeSelected != null) {
+                    broker.setPce((PCE) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(pceGraphNodeSelected));
+                }
+            }
+        }
+//        else if (selectedGraphNode instanceof SwitchGraphNode) {
+//            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(selectedGraphNode);
+//            if (id.equalsIgnoreCase("HandleDelay")) {
+//                abstractSwitch.setHandleDelay(new Time(Double.parseDouble(value)));
+//            }
+//        }
     }
 
     private void createDistributionProperty(DiscreteDistribution discreteDistribution, ArrayList<EntityProperty> nodeProperties, NodeDistributionProperty nodeDistributionProperty, String id) {
@@ -283,132 +420,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             separator = "-";
         }
         return result.toString();
-    }
-
-    @Override
-    public void updateProperty(boolean isSubProperty, boolean query, String id, String value) {
-        
-        if (isSubProperty) {
-            selectedGraphNode.getSubPropertiesNode().put(id, value);
-        } else {
-            selectedGraphNode.getNodeProperties().put(id, value);
-        }
-
-        if (id.equalsIgnoreCase("name")) {
-            selectedGraphNode.setName(value);
-            if (selectedGraphNode instanceof ClientGraphNode) {
-                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().remove(selectedGraphNode);
-                GUI.getInstance().getGraphDesignGroup().getClientsObservableList().add(selectedGraphNode);
-            } else if (selectedGraphNode instanceof ResourceGraphNode) {
-                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().remove(selectedGraphNode);
-                GUI.getInstance().getGraphDesignGroup().getResourcesObservableList().add(selectedGraphNode);
-            } else if (selectedGraphNode instanceof BrokerGrahpNode) {
-                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().remove(selectedGraphNode);
-                GUI.getInstance().getGraphDesignGroup().getBrokersObservableList().add(selectedGraphNode);
-            } else if (selectedGraphNode instanceof SwitchGraphNode) {
-                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().remove(selectedGraphNode);
-                GUI.getInstance().getGraphDesignGroup().getSwitchesObservableList().add(selectedGraphNode);
-            }
-        }
-
-        if (selectedGraphNode instanceof ClientGraphNode) {
-            ClientNode clientNode = (ClientNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
-
-            if (id.equalsIgnoreCase("broker")) {
-                GraphNode nodoGraficoServiceSelected = findNodoGraficoByName(value, MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
-                if (nodoGraficoServiceSelected != null) {
-                    clientNode.setServiceNode((ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(nodoGraficoServiceSelected));
-                }
-            }else if(id.equalsIgnoreCase("trafficPriority")){
-                clientNode.getState().setTrafficPriority(Integer.parseInt(value));
-            }else if (id.equalsIgnoreCase("jobsDistribution")) {
-                clientNode.getState().setJobInterArrival(getDistributionByText(value));
-                if (query) {
-                    queryProperties(selectedGraphNode);
-                }
-            } else if (id.contains("jobsDistribution")) {
-                setValuesDistribution(clientNode.getState().getJobInterArrival(), value, id);
-            } else if (id.equalsIgnoreCase("flopsDistribution")) {
-                clientNode.getState().setFlops(getDistributionByText(value));
-                if (query) {
-                    queryProperties(selectedGraphNode);
-                }
-            } else if (id.contains("flopsDistribution")) {
-                setValuesDistribution(clientNode.getState().getFlops(), value, id);
-            } else if (id.equalsIgnoreCase("maxDelayDistribution")) {
-                clientNode.getState().setMaxDelayInterval(getDistributionByText(value));
-                if (query) {
-                    queryProperties(selectedGraphNode);
-                }
-            } else if (id.contains("maxDelayDistribution")) {
-                setValuesDistribution(clientNode.getState().getMaxDelayInterval(), value, id);
-
-            } else if (id.equalsIgnoreCase("jobSizeDistribution")) {
-                clientNode.getState().setSizeDistribution(getDistributionByText(value));
-                if (query) {
-                    queryProperties(selectedGraphNode);
-                }
-
-            } else if (id.contains("jobSizeDistribution")) {
-                setValuesDistribution(clientNode.getState().getSizeDistribution(), value, id);
-            } else if (id.equalsIgnoreCase("answerSizeDistribution")) {
-                clientNode.getState().setAckSizeDistribution(getDistributionByText(value));
-                if (query) {
-                    queryProperties(selectedGraphNode);
-                }
-
-            } else if (id.contains("answerSizeDistribution")) {
-                setValuesDistribution(clientNode.getState().getAckSizeDistribution(), value, id);
-            }
-
-        } else if (selectedGraphNode instanceof ResourceGraphNode) {
-            ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
-
-            if (id.equalsIgnoreCase("CpuCapacity")) {
-                resource.setCpuCapacity(Double.parseDouble(value));
-            } else if (id.equalsIgnoreCase("QueueSize")) {
-                resource.setQueueSize(Integer.parseInt(value));
-            } else if (id.equalsIgnoreCase("CpuCount")) {
-                CPU cpu = (CPU) resource.getCpuSet().get(0);
-                double capacity = 0;
-                if (cpu != null) {
-                    capacity = cpu.getCpuCapacity();
-                }
-                resource.setCpuCount(Integer.parseInt(value), capacity);
-            } else if (id.contains("RelationshipResourceAndServiceNodo")) {
-                String serviceNodeName = value.replace("_ON", "").replace("_OFF", "");
-
-                Set<GraphNode> graphNodes = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet();
-                GraphNode nodoGrafico = null;
-                for (GraphNode nodoGraficoAux : graphNodes) {
-                    if (nodoGraficoAux.getName().equals(serviceNodeName)) {
-                        nodoGrafico = nodoGraficoAux;
-                        break;
-                    }
-                }
-                Entity entity = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(nodoGrafico);
-                if (value.contains("_ON")) {
-                    if (entity != null && entity instanceof ServiceNode) {
-                        ServiceNode serviceNode = (ServiceNode) entity;
-                        resource.addServiceNode(serviceNode);
-                    }
-
-                } else if (value.contains("_OFF")) {
-                    if (entity != null && entity instanceof ServiceNode) {
-                        ServiceNode serviceNode = (ServiceNode) entity;
-                        resource.removeServiceNode(serviceNode);
-
-                    }
-                }
-            }
-
-        }
-//        else if (selectedGraphNode instanceof SwitchGraphNode) {
-//            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(selectedGraphNode);
-//            if (id.equalsIgnoreCase("HandleDelay")) {
-//                abstractSwitch.setHandleDelay(new Time(Double.parseDouble(value)));
-//            }
-//        }
     }
 
     private void setValuesDistribution(DiscreteDistribution distribution, String value, String id) {
@@ -564,6 +575,16 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     ((AbstractClient) clientNode).setServiceNode(null);
                 }
             }
+        }else if (graphNode instanceof PCE_SwicthGraphNode) {
+            
+            for (SimBaseEntity brokerNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ServiceNode.class)) {
+                
+                PCE pceRegisteredOnBroker = ((ServiceNode)brokerNode).getPce();
+                
+                if(pceRegisteredOnBroker!=null && phosNodeRemoved.getId().equalsIgnoreCase(pceRegisteredOnBroker.getId())){
+                    ((ServiceNode)brokerNode).setPce(null);
+                }
+            }
         }
 
         GUI.getInstance().getEntityPropertyTable().clearData();
@@ -586,7 +607,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         for (final GraphNode graphNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
 
             Runnable runnable = new Runnable() {
-
                 @Override
                 public void run() {
                     for (String id : graphNode.getNodeProperties().keySet()) {
@@ -604,7 +624,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
         for (final GraphNodesView graphNodesView : graphNodesViews) {
             Runnable runnable = new Runnable() {
-
                 @Override
                 public void run() {
                     graphNodesView.enableDisign();

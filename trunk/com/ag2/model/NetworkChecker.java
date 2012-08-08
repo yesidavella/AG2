@@ -5,6 +5,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
+import Grid.Nodes.PCE;
 import Grid.Routing.*;
 import edu.uci.ics.jung.graph.Graph;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class NetworkChecker {
     private HashMap<Object, String> listOfErrors;
     private boolean statusOfCheck = false;
 
-    public NetworkChecker() {       
+    public NetworkChecker() {
         listOfErrors = new HashMap<Object, String>();
     }
 
@@ -29,6 +30,7 @@ public class NetworkChecker {
         checkNecessaryNodes();
         checkLinksBetweenNodes();
         checkCorrectNodesWithBroker();
+        checkCorrectNodesWithPCE();
         checkSwitchesWellLinked();
     }
 
@@ -46,9 +48,8 @@ public class NetworkChecker {
         return statusOfCheck;
     }
 
-    private void checkAmountOfNodesCreated()
-    {
-        
+    private void checkAmountOfNodesCreated() {
+
         if (SimulationBase.getInstance().getGridSimulatorModel().getEntities().size() <= 0) {
             addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►No contiene ningun nodo.");
         }
@@ -66,7 +67,7 @@ public class NetworkChecker {
     }
 
     private void checkCorrectNodesWithBroker() {
-        
+
         for (SimBaseEntity clienNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class)) {
             if (((ClientNode) clienNode).getServiceNode() == null) {
                 addError((ClientNode) clienNode, " \n►Al ser un Cliente debe tener un Nodo de Servicio registrado.");
@@ -76,6 +77,15 @@ public class NetworkChecker {
         for (SimBaseEntity resourceNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ResourceNode.class)) {
             if (((ResourceNode) resourceNode).getServiceNodes().size() <= 0) {
                 addError((ResourceNode) resourceNode, " \n►Al ser un Recurso debe tener almenos un Nodo de Servicio registrado.");
+            }
+        }
+    }
+
+    private void checkCorrectNodesWithPCE() {
+
+        for (SimBaseEntity brokerNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ServiceNode.class)) {
+            if (((ServiceNode)brokerNode).getPce() == null) {
+                addError((ServiceNode)brokerNode, " \n►Al ser un Nodo de Servicio debe tener un PCE registrado.");
             }
         }
     }
@@ -133,7 +143,7 @@ public class NetworkChecker {
             GridVertex pivotVertex = null;
 
             Iterator<GridVertex> itVertexes = networkRoutingGraph.getVertices().iterator();
-            while ( itVertexes.hasNext() && !foundIsolatedNetworks) {
+            while (itVertexes.hasNext() && !foundIsolatedNetworks) {
                 GridVertex vertex = itVertexes.next();
 
                 if (pivotVertex == null) {
@@ -156,7 +166,7 @@ public class NetworkChecker {
 
             Iterator<String> itVertexesID = networkProxy.getNodeIDs().iterator();
             while (itVertexesID.hasNext() && !foundIsolatedNetworks) {
-                
+
                 String vertexID = itVertexesID.next();
 
                 if (pivotVertexID == null) {
@@ -193,6 +203,10 @@ public class NetworkChecker {
         }
         if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(Switch.class).size() == 0) {
             addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo de Conmutación\".");
+        }
+
+        if (SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(PCE.class).size() == 0) {
+            addError(SimulationBase.getInstance().getGridSimulatorModel(), " \n►Debe haber por lo menos un \"Nodo PCE\".");
         }
     }
 }
