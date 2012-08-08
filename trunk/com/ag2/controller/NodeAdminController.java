@@ -93,9 +93,9 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
 
             if (clientNode.getServiceNode() != null) {
-                GraphNode nodoServiceSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
-                if (nodoServiceSelected != null) {
-                    nodeRelationProperty.setFirstValue(nodoServiceSelected);
+                GraphNode brokerSelected = findKeyNodeByValueNode(clientNode.getServiceNode(), MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
+                if (brokerSelected != null) {
+                    nodeRelationProperty.setFirstValue(brokerSelected);
                 }
             }
             nodeProperties.add(nodeRelationProperty);
@@ -149,9 +149,12 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             for (GraphNode brokerGrahpNode : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
 
                 if (brokerGrahpNode instanceof BrokerGrahpNode) {
+                    
                     EntityProperty entityProperty = new EntityProperty("RelationshipResourceAndServiceNodo", brokerGrahpNode.getName(), EntityProperty.PropertyType.BOOLEAN, false);
                     nodeProperties.add(entityProperty);
+                    
                     for (ServiceNode serviceNode : resource.getServiceNodes()) {
+                        
                         if (serviceNode.getID().equals(brokerGrahpNode.getOriginalName())) {
                             entityProperty.setFirstValue("true");
                             // propiedadeNodo.setDisable(true);
@@ -162,6 +165,23 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
             //============================================================================================================
 
+        }else if(graphNode instanceof BrokerGrahpNode){
+            
+            System.out.println("Entro al pce!!!");
+            
+            ServiceNode broker = (ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
+
+            NodeRelationProperty nodeRelationProperty = new NodeRelationProperty("relationshipBrokerAndPCE", "PCE:");
+            
+            for (GraphNode pce : MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().keySet()) {
+                if (pce instanceof PCE_SwicthGraphNode) {
+                    nodeRelationProperty.getObservableListNodes().add(pce);
+                    System.out.println("Metio!!!");
+                }
+            }
+            
+            nodeProperties.add(nodeRelationProperty);
+            
         }
 //        else if (graphNode instanceof SwitchGraphNode) {
 //            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(graphNode);
