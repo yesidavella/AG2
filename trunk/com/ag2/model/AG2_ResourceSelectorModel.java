@@ -3,6 +3,7 @@ package com.ag2.model;
 import Grid.Entity;
 import Grid.Interfaces.CPU;
 import Grid.Interfaces.ClientNode;
+import Grid.Interfaces.Messages.JobAckMessage;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ResourceSelector;
 import Grid.Nodes.AbstractResourceNode;
@@ -26,7 +27,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     }
 
     @Override
-    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce) {
+    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce,JobAckMessage job) {
 
         // this.resources = resources;
 
@@ -35,7 +36,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double maxBuffer = 0;
         double maxBufferSwap = 0;
         
-        Map<ResourceNode ,Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode)sourceEntity, resources);
+        Map<ResourceNode ,Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode)sourceEntity, resources, job);
         
         for (ResourceNode resourceNode : resources) {
             maxCPUCountSwap = resourceNode.getCpuCount();
