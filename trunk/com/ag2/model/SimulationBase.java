@@ -7,6 +7,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
 import Grid.Routing.Routing;
+import Grid.Sender.Hybrid.Parallel.HybridSwitchSender;
 import Grid.Utilities.HtmlWriter;
 import com.ag2.controller.*;
 import com.ag2.presentation.Main;
@@ -102,7 +103,7 @@ public class SimulationBase implements Runnable, Serializable {
         fiberLinkAdminCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
         System.out.println("------------------------Stop en base");
-
+//        HybridSwitchSender.ocsTearDownSend=false;
     }
 
     public void initNetwork() {

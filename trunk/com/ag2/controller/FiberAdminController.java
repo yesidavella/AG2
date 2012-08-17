@@ -38,8 +38,7 @@ public class FiberAdminController extends LinkAdminAbstractController {
                 graphLink.select(true);
 
                 //Creo los ocs por default en ambas direcciones entre enrutadores
-                if (sourceGraphNode instanceof SwitchGraphNode
-                        && destinationGraphNode instanceof SwitchGraphNode) {
+                if (sourceGraphNode instanceof SwitchGraphNode && destinationGraphNode instanceof SwitchGraphNode) {
 
                     ocsAdminCtl.createLink(sourceGraphNode, destinationGraphNode);
                     ocsAdminCtl.createLink(destinationGraphNode, sourceGraphNode);

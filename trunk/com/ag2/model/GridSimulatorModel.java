@@ -55,10 +55,11 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         events.remove(nextEvent);
         masterClock = nextEvent.getTime();
         nextEvent.getTarget().getOwner().updateTime(masterClock);
-        SimBaseInPort port = nextEvent.getTarget();
+
         SimBaseMessage msg = nextEvent.getMessage();
-        SimBaseEntity entity = nextEvent.getTarget().getOwner();
-        entity.receive(port, msg);
+        SimBaseInPort inPort = nextEvent.getTarget();
+        SimBaseEntity targetEntity = inPort.getOwner();
+        targetEntity.receive(inPort, msg);
 
         reloadTime();
         percentage = masterClock.getTime() * 100 / simulationTime;
