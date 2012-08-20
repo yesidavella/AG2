@@ -124,6 +124,7 @@ public class GUI extends Scene {
     private transient ToolBarAnimationAG2 animationHeaderAG2;
     private VBox vbHeaderAnimationContainer;
     private Button btnShowLog = new Button("Ver registros");
+    private boolean isPlaying = false; 
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -764,9 +765,9 @@ public class GUI extends Scene {
 
 
 
-        ToggleButton tbNormalView = new ToggleButton("Vista diseño");
+        final ToggleButton tbNormalView = new ToggleButton("Vista diseño");
         tbNormalView.setId("pill-left");
-        ToggleButton tbLspView = new ToggleButton("Vista λSP");
+        final ToggleButton tbLspView = new ToggleButton("Vista λSP");
         tbLspView.setId("pill-right");
 
         ToggleGroup group = new ToggleGroup();
@@ -828,13 +829,37 @@ public class GUI extends Scene {
             }
         });
           
+          tabSimulation.setOnSelectionChanged(new EventHandler<Event>() {
+
+            @Override
+            public void handle(Event arg0) 
+            {
+                if(tabSimulation.isSelected())
+                {
+                    if(tbNormalView.isSelected())
+                    {
+                         GUI.this.showNormalView();
+                    }
+                    else if(tbLspView.isSelected())
+                    {
+                         GUI.this.showLspView();
+                    }
+                }
+            }
+        });
        
         
 
     }
 
-    private void showNormalView() {
-        disableButtons(false);
+    private void showNormalView() 
+    {
+        
+        if(!isPlaying)
+        {   
+            disableButtons(false);
+        }
+        
 //        tabViewOCS.setContent(null);
 //        tabSimulation.setContent(splitPane);
         graphDesignGroup.showMap();
@@ -1322,14 +1347,28 @@ public class GUI extends Scene {
         btnPointSeparator.setDisable(disable);
         btnDeleted.setDisable(disable);
     }
+    
+    public void stop()
+    {
+      isPlaying= false; 
+      enable();
+    }
+        
+    public void play()
+    {
+      isPlaying= true; 
+      disable();
+    }
+        
 
-    public void enable() {
+    private void enable() {
         GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
-//        if (!tabViewOCS.isSelected()) {
-//            disableButtons(false);
-//        }
-
+        if(!isPlaying)
+        {
+             disableButtons(false);
+        }
+        
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);
         graphDesignGroup.getGroup().setOpacity(1);
@@ -1339,8 +1378,10 @@ public class GUI extends Scene {
         btnShowLog.setDisable(false);
         graphDesignGroup.hideLineOCS();
     }
+    
+    
 
-    public void disable() {
+    private  void disable() {
 
         beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();

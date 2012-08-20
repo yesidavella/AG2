@@ -56,7 +56,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 }
 
                                 GUI.getInstance().getEntityPropertyTable().clearData();
-                                GUI.getInstance().disable();
+                                GUI.getInstance().play();
                                 toggleButtonAg2.setSelected(true);
                                 btnRun.setDisable(true);
                                 btnStop.setDisable(false);
@@ -80,7 +80,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                     public void handle(MouseEvent mouEvent) {
 
                         System.out.println("################    STOP  ################");
-                        GUI.getInstance().enable();
+                        GUI.getInstance().stop();
                         enable();
                         executeController.stop();
 
