@@ -780,15 +780,15 @@ public class GUI extends Scene {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().addAll(tbNormalView, tbLspView);
-        hBox.setId("pill-fondo");
+        hBox.setId("pill-fondo");       
+                
+        VBox.setVgrow(scpWorld, Priority.ALWAYS);
+        vBoxSimulation.getChildren().addAll(hBox,scpWorld );
 
-
-        vBoxSimulation.getChildren().addAll(hBox, scpWorld);
-
-        vBoxSimulation.setFillWidth(true);
-
-
-        scpWorld.setMinHeight(800);
+      
+ 
+        
+       
 
 
         splitPane.getItems().addAll(vBoxSimulation, scpnProperties);
