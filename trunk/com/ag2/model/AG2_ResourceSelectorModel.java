@@ -86,7 +86,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         // System.out.println(" Recurso seleccionado "+resourceNodeSelected+" al costo "+cost);
         return resourceNodeSelected;
     }
-
+//FIXME: verificar el synchronized
     public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
         double Tproc;
         double Cproc;
