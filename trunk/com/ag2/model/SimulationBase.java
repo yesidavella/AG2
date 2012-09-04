@@ -34,6 +34,7 @@ public class SimulationBase implements Runnable, Serializable {
     private ResultsAbstractController resultsAbstractController;
     private ResultsChartAbstractController resultsChartAbstractController;
     private String id;
+    private double runTime;
 
     private SimulationBase() {
 
@@ -89,7 +90,11 @@ public class SimulationBase implements Runnable, Serializable {
     }
 
     public void reload() {
+
+        runTime = simulationBase.getSimulationInstance().getSimulator().getMasterClock().getTime();
+        
         simulationBase = new SimulationBase();
+        simulationBase.runTime = runTime;
         OutputterModel outputterModelNew = new OutputterModel(simulationBase.getGridSimulatorModel());
 
         simulationBase.setResultsAbstractController(resultsAbstractController);
@@ -174,4 +179,10 @@ public class SimulationBase implements Runnable, Serializable {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public double getRunTime() {
+        return runTime;
+    }
+
+ 
 }

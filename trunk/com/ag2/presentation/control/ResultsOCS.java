@@ -33,7 +33,7 @@ public class ResultsOCS {
     private ObservableList<InstanceOCSData> dataInstanceOCS = FXCollections.observableArrayList();
     private Label lblSummaryOCS;
     private Label lblInstanceOCS;
-    private DecimalFormat decimalFormat = new DecimalFormat("#");
+    private DecimalFormat decimalFormat = new DecimalFormat("#.###");
     
     private ResultsOCSController resultsOCSController ;
 
@@ -131,12 +131,12 @@ public class ResultsOCS {
             
             
             instanceOCSData.setPath(path);            
-            instanceOCSData.setRequestTime("   "+resultsOCSController.getRequestTimeInstanceOCS());
+            instanceOCSData.setRequestTime("   "+decimalFormat.format(resultsOCSController.getRequestTimeInstanceOCS()));
             instanceOCSData.setLambda("   "+wavelengthIDs);
-            instanceOCSData.setSetupTime("   "+resultsOCSController.getSetupTimeInstanceOCS());
-            instanceOCSData.setDurationTime("   "+resultsOCSController.getDurationTimeInstanceOCS());
-            instanceOCSData.setTearDownTime("   "+resultsOCSController.getTearDownTimeInstanceOCS());
-            instanceOCSData.setTraffic("   "+resultsOCSController.getTrafficInstanceOCS());
+            instanceOCSData.setSetupTime("   "+decimalFormat.format(resultsOCSController.getSetupTimeInstanceOCS()));
+            instanceOCSData.setDurationTime("   "+decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
+            instanceOCSData.setTearDownTime("   "+decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
+            instanceOCSData.setTraffic("   "+decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
             
             if(resultsOCSController.getNodeErrorInstanceOCS()==null)
             {    

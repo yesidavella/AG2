@@ -9,6 +9,7 @@ import Grid.OCS.stats.ManagerOCS;
 import Grid.OCS.stats.ManagerOCS.SumaryOCS;
 import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.controller.ResultsAbstractOCSController;
+import com.ag2.model.SimulationBase;
 import com.ag2.presentation.design.GraphNode;
 import com.ag2.util.Utils;
 import java.io.Serializable;
@@ -71,35 +72,39 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         ManagerOCS.InstanceOCS instanceOCS = instanceOCSs.get(index);
 
         pathInstaceOCS = new ArrayList<GraphNode>();
-        
-        for(Entity entity : instanceOCS.getRoute()  )
-        {            
-            pathInstaceOCS.add( Utils.findNodeGraphByOriginalName(entity.getId()));            
+
+        for (Entity entity : instanceOCS.getRoute()) {
+            pathInstaceOCS.add(Utils.findNodeGraphByOriginalName(entity.getId()));
         }
-              
+
         requestTimeInstanceOCS = instanceOCS.getRequestTimeInstanceOCS();
-        setupTimeInstanceOCS  = instanceOCS.getSetupTimeInstanceOCS();
-        durationTimeInstanceOCS = instanceOCS.getDurationTimeInstanceOCS();
-        tearDownTimeInstanceOCS = instanceOCS.getTearDownTimeInstanceOCS();
-        trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
-        problemInstanceOCS = instanceOCS.getProblemInstanceOCS() ;
-        
-        
-        listWavelengthID = instanceOCS.getListWavelengthID();
-        
-        
-        if( instanceOCS.getNodeErrorInstanceOCS()!=null)
-        {
-            nodeErrorInstanceOCS =  Utils.findNodeGraphByOriginalName( instanceOCS.getNodeErrorInstanceOCS().getId());
+        setupTimeInstanceOCS = instanceOCS.getSetupTimeInstanceOCS();
+        if (instanceOCS.isToreDown()) {
+            durationTimeInstanceOCS = instanceOCS.getDurationTimeInstanceOCS();
+            tearDownTimeInstanceOCS = instanceOCS.getTearDownTimeInstanceOCS();
+        } else {
+            durationTimeInstanceOCS = SimulationBase.getInstance().getRunTime() - setupTimeInstanceOCS;
+            tearDownTimeInstanceOCS = SimulationBase.getInstance().getRunTime();
         }
-        
+
+        trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
+        problemInstanceOCS = instanceOCS.getProblemInstanceOCS();
+
+
+        listWavelengthID = instanceOCS.getListWavelengthID();
+
+
+        if (instanceOCS.getNodeErrorInstanceOCS() != null) {
+            nodeErrorInstanceOCS = Utils.findNodeGraphByOriginalName(instanceOCS.getNodeErrorInstanceOCS().getId());
+        }
+
 
     }
+
     @Override
-    public void clean()
-    {
-        sumaryOCSs=null;
-        instanceOCSs=null;
+    public void clean() {
+        sumaryOCSs = null;
+        instanceOCSs = null;
         ManagerOCS.clean();
     }
 }
