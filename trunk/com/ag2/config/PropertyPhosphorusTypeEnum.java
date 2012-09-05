@@ -19,8 +19,6 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Carga el archivo .cfg con el valor de las constantes de la simulación.
- *
- * @author Yesid :D
  */
 public enum PropertyPhosphorusTypeEnum {
 
@@ -76,7 +74,17 @@ public enum PropertyPhosphorusTypeEnum {
      * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el
      * OCSEndSender.
      */
-    OCS_SETUP_HANDLE_TIME("OCSSetupHandleTime", "Tiempo crear/eliminar un OCS(ms):", new TextField()),
+//    OCS_SETUP_HANDLE_TIME("OCSSetupHandleTime", "Tiempo crear/eliminar un OCS(ms):", new TextField()),
+    
+    /**
+     * El costo de busqueda de una longitud de onda mientras el OCS es establecido.
+     */
+    OCS_SETUP_FIND_COMMON_WAVELENGHT("findCommonWavelenght","Costo buscar λ en creación OCS(ms):", new TextField()),
+    
+    /**
+     * El costo de alojar una longitud de onda en el OCS mientras es establecido
+     */
+    OCS_SETUP_ALLOCATE_WAVELENGHT("allocateWavelenght","Costo alojar λ en creación OCS(ms):", new TextField()),
     /**
      * Tiempo necesario en alcanzar la otra punta del enlace de un mensaje.
      */

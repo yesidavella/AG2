@@ -543,7 +543,7 @@ public class GUI extends Scene {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "¿Desea guardar los cambios efectuados en la simulación", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     main.loadFileBaseSimulation();
@@ -567,7 +567,7 @@ public class GUI extends Scene {
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
-                        null, "¿Desea guardar los cambios efectuados en la simulación", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
+                        null, "¿Desea guardar los cambios efectuados en la simulación?", "Simulador AG2", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 if (result == JOptionPane.NO_OPTION) {
                     System.exit(0);

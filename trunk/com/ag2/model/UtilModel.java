@@ -81,13 +81,15 @@ public class UtilModel extends Util {
      * @return
      */
     public static Switch createHybridSwitch(String id, GridSimulator simulator) {
-        Switch sw = new HybridSwitchImpl(id, simulator);
+        Switch sw = new HybridSwitchImpl(id, simulator,
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_FIND_COMMON_WAVELENGHT),
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_ALLOCATE_WAVELENGHT));
         sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
-    
-        /**
+
+    /**
      * Creates a PCE,
      *
      * @param id The id of this switch
@@ -95,7 +97,9 @@ public class UtilModel extends Util {
      * @return
      */
     public static Switch createPCE(String id, GridSimulator simulator) {
-        PCE pce = new PCE(id, simulator);
+        PCE pce = new PCE(id, simulator,
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_FIND_COMMON_WAVELENGHT),
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_ALLOCATE_WAVELENGHT));
         pce.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(pce);
         return pce;
@@ -126,7 +130,6 @@ public class UtilModel extends Util {
 
     public static ServiceNode createHybridServiceNode(String id, GridSimulator sim) {
         ServiceNode service = new HybridServiceNode(id, sim);
-
         sim.register(service);
         return service;
     }
