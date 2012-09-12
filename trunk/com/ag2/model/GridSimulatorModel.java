@@ -34,6 +34,8 @@ public class GridSimulatorModel extends Grid.GridSimulator {
         } else {
             super.setRouting(new ShortesPathRouting(this));
         }
+        //Needs to read
+        super.setPhysicTopology(new RoutingViaJung(this));
     }
 
     public void reloadTime() {

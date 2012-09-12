@@ -115,6 +115,8 @@ public class SimulationBase implements Runnable, Serializable {
         simulationInstance.stopEvent = false;
         Routing routing = gridSimulatorModel.getRouting();
         routing.clear();
+        Routing physicTopology = gridSimulatorModel.getPhysicTopology();
+        physicTopology.clear();
 //        routing.setSimulator(gridSimulatorModel);
         route();
 

@@ -64,7 +64,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             }
             else
             {
-                totalCost = gridCost+10000; //FIXME: Solo temp. Cuando  no encuentre al recurso
+                totalCost = gridCost+1000000000; //FIXME: Solo temp. Cuando  no encuentre al recurso
             }
             
             if (swithOrder) {

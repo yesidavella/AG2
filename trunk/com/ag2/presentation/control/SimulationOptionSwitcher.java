@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ag2.presentation.control;
 
 import com.ag2.controller.SimulationOptionSwictherController;
@@ -15,10 +11,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-/**
- *
- * @author INFORCOL
- */
 public class SimulationOptionSwitcher extends VBox {
 
     private ToggleGroup toggleGroup;
