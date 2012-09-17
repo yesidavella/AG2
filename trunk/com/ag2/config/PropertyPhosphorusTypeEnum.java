@@ -94,7 +94,12 @@ public enum PropertyPhosphorusTypeEnum {
     /**
      * Toma la prioridad del trafico q se le asigna a un Cliente.
      */
-    CLIENT_TRAFFIC_PRIORITY("clientTrafficPriority","Prioridad Tráfico/cliente(1,2,...10)", new TextField());
+    CLIENT_TRAFFIC_PRIORITY("clientTrafficPriority","Prioridad Tráfico/cliente(1,2,...10)", new TextField()),
+     /**
+     * Retraso por nodo de un flujo sobre  un circuito optico establecido 
+     */
+    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS (ms)", new TextField());
+    
     
     private ExecuteController executeController;
     private String phosphorusPropertyName;
