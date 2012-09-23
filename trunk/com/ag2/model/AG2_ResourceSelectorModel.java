@@ -83,7 +83,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         swithOrder = !swithOrder;
 
 
-        // System.out.println(" Recurso seleccionado "+resourceNodeSelected+" al costo "+cost);
+        System.out.println(" Recurso seleccionado "+resourceNodeSelected+" al costo "+cost);
         return resourceNodeSelected;
     }
 //FIXME: verificar el synchronized
