@@ -98,7 +98,12 @@ public enum PropertyPhosphorusTypeEnum {
      /**
      * Retraso por nodo de un flujo sobre  un circuito optico establecido 
      */
-    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS (ms)", new TextField());
+    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS (ms)", new TextField()),
+    
+    
+    CONFIRM_OCS_DELAY("confirmOCSDelay","Retraso de confirmacion en OCS (ms)", new TextField());
+    
+    
     
     
     private ExecuteController executeController;
