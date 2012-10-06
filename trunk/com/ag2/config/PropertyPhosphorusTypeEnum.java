@@ -25,20 +25,20 @@ public enum PropertyPhosphorusTypeEnum {
     /*
      * Tiempo de simulacion en milisegundos.
      */
-    SIMULATION_TIME("simulationTime", "Tiempo de Simulación(ms):", new TextField()),
+    SIMULATION_TIME("simulationTime", "Tiempo de Simulación(s):", new TextField()),
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
     /// OUTPUT("output", "output(Franklin)", new CheckBox()),
-    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", "stopEventOffSetTime", new TextField()),
-    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(B/ms):", new TextField()),
+    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", "stopEventOffSetTime(s)", new TextField()),
+    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(Mbps):", new TextField()),
     /**
      * Cantidad de lambdas en la fibra optica.
      */
     DEFAULT_WAVELENGTHS("defaultWavelengths", "Numero de lambdas:", new TextField()),
     //The size of control messages. If control messages are 0, the are being send immediately
-    ACK_SIZE("ACKsize", "Prom. Tamaño AKC(B):", new TextField()),
-    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster(B/ms):", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
+    ACK_SIZE("ACKsize", "Tamaño AKC(MB):", new TextField()),
+    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster(MHz):", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
     DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs/clúster:", new TextField()),
     /**
      * Cantidad de trabajos a encolar en el buffer del nodo recurso
@@ -49,27 +49,27 @@ public enum PropertyPhosphorusTypeEnum {
      * segun su capacidad. double executionTime = job.getMsg().getFlops() /
      * cpu.getCpuCapacity();
      */
-    DEFAULT_FLOP_SIZE("defaultFlopSize", "Prom. de FLOPS/Trabajo(B*ms):", new TextField()),
+    DEFAULT_FLOP_SIZE("defaultFlopSize", "FLOPS/Trabajo(Mflops):", new TextField()),
     /**
      * Promedio del tamaño de cada trabajo.
      */
-    DEFAULT_DATA_SIZE("defaultDataSize", "Prom. del tamaño/Trabajo(B):", new TextField()),
+    DEFAULT_DATA_SIZE("defaultDataSize", "Tamaño/Trabajo(MB):", new TextField()),
     /**
      * Promedio de la exp. neg. de duracion del Intervalo sin q lleguen trabajos
      */
-    DEFAULT_JOB_IAT("defaultJobIAT", "Prom. Inter LLegada/Trabajo(ms):", new TextField()),
+    DEFAULT_JOB_IAT("defaultJobIAT", "IAT Intervalo LLegada/Trabajo(s):", new TextField()),
     /**
      * Promedio de la exp. neg. del retraso maximo en la solicitud del trabajo
      * Al parecer nunca se utiliza en serio.SOlo se utiliza en getMaxEndTime(),
      * pero este ultimo metodo nunca es utilizado.
      */
-    MAX_DELAY("maxDelay", "Prom. Retraso máx/Trab_Req(ms):", new TextField()),
-    OUTPUT_FILE_NAME("outputFileName", "Nombre del archivo de traza:", new TextField()),
+    MAX_DELAY("maxDelay", "Retraso máx/Trab_Req(s):", new TextField()),
+    OUTPUT_FILE_NAME("outputFileName", "Nombre del archivos de salida:", new TextField()),
     /**
      * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
      * conmutadores hibridos. Esto es la propiedad HandleDelay.
      */
-    OBS_HANDLE_TIME("OBSHandleTime", "Retardo OBS(ms):", new TextField()),
+    OBS_HANDLE_TIME("OBSHandleTime", "Retardo OBS(s):", new TextField()),
     /**
      * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el
      * OCSEndSender.
@@ -79,16 +79,16 @@ public enum PropertyPhosphorusTypeEnum {
     /**
      * El costo de busqueda de una longitud de onda mientras el OCS es establecido.
      */
-    OCS_SETUP_FIND_COMMON_WAVELENGHT("findCommonWavelenght","Costo buscar λ en creación OCS(ms):", new TextField()),
+    OCS_SETUP_FIND_COMMON_WAVELENGHT("findCommonWavelenght","Costo buscar λ en creación OCS(s):", new TextField()),
     
     /**
      * El costo de alojar una longitud de onda en el OCS mientras es establecido
      */
-    OCS_SETUP_ALLOCATE_WAVELENGHT("allocateWavelenght","Costo alojar λ en creación OCS(ms):", new TextField()),
+    OCS_SETUP_ALLOCATE_WAVELENGHT("allocateWavelenght","Costo alojar λ en creación OCS(s):", new TextField()),
     /**
      * Tiempo necesario en alcanzar la otra punta del enlace de un mensaje.
      */
-    LINK_SPEED("linkSpeed", "Vel. del enlace(ms):", new TextField()),
+    LINK_SPEED("linkSpeed", "Vel. del enlace(Mbps):", new TextField()),
     //DEFAULT_LINK_SPEED("defaultLinkSpeed", "a", new TextField()),
     ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox()),
     /**
@@ -98,13 +98,9 @@ public enum PropertyPhosphorusTypeEnum {
      /**
      * Retraso por nodo de un flujo sobre  un circuito optico establecido 
      */
-    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS (ms)", new TextField()),
+    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS:(s)", new TextField()),
     
-    
-    CONFIRM_OCS_DELAY("confirmOCSDelay","Retraso de confirmacion en OCS (ms)", new TextField());
-    
-    
-    
+    CONFIRM_OCS_DELAY("confirmOCSDelay","Retraso de confirmacion en OCS:(s)", new TextField());
     
     private ExecuteController executeController;
     private String phosphorusPropertyName;

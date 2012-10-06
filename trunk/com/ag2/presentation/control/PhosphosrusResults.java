@@ -571,7 +571,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         if (Math.round(Percentage) == 100) {
             progressIndicator.setProgress(1);
             lblSimulationTimePercentageValue.setText("100%");
-            lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " ms (Finalizado) ");
+            lblSimulationTimeValue.setText(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.SIMULATION_TIME) + " s (Finalizado) ");
         }
     }
 

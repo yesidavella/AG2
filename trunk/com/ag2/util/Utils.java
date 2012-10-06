@@ -1,11 +1,9 @@
 package com.ag2.util;
 
-import Grid.Entity;
 import com.ag2.controller.MatchCoupleObjectContainer;
 import com.ag2.presentation.design.GraphNode;
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

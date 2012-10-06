@@ -761,7 +761,7 @@ public class GUI extends Scene {
 
         grRootWorld.getChildren().add(graphDesignGroup.getGroup());
         scpWorld.setContent(grRootWorld);
-        VBox vBoxSimulation = new VBox();
+        VBox vbxSimulation = new VBox();
 
 
 
@@ -783,15 +783,9 @@ public class GUI extends Scene {
         hBox.setId("pill-fondo");       
                 
         VBox.setVgrow(scpWorld, Priority.ALWAYS);
-        vBoxSimulation.getChildren().addAll(hBox,scpWorld );
+        vbxSimulation.getChildren().addAll(hBox,scpWorld );
 
-      
- 
-        
-       
-
-
-        splitPane.getItems().addAll(vBoxSimulation, scpnProperties);
+        splitPane.getItems().addAll(vbxSimulation, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
 
         tabSimulation.setContent(splitPane);
