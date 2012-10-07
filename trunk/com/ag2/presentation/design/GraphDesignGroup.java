@@ -340,7 +340,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             serializableComplete = false;
             stream.defaultWriteObject();
             Main.countObject++;
-            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

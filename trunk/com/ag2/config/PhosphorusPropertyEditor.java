@@ -30,7 +30,7 @@ public final class PhosphorusPropertyEditor {
             fileInputStream.close();
 
         } catch (Exception ex) {
-            System.out.println("Failed to read from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
+            //System.out.println("Failed to read from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
     }
 
@@ -42,7 +42,7 @@ public final class PhosphorusPropertyEditor {
             fileOutputStream.flush();
             fileOutputStream.close();
         } catch (Exception ex) {
-            System.out.println("Failed to write from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
+            //System.out.println("Failed to write from " + Utils.ABS_PATH_CONFIG_AG2 + FILE_NAME + " file. Due to :" + ex.toString());
         }
     }
 

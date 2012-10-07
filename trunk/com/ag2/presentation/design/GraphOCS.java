@@ -140,7 +140,7 @@ public class GraphOCS  implements  NodeListener{
     }
 
     public void remove() {
-//        System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
+//        //System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
         graphDesignGroup.getGroup().getChildren().removeAll(group, lblCountOCS);
         graphDesignGroup.getLinesOCS().remove(group);
         graphDesignGroup.getLabelsOCS().remove(lblCountOCS);

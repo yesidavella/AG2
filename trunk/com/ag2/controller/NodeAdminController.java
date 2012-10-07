@@ -489,7 +489,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
 
         } catch (ClassCastException exception) {
-            System.out.println(" Error class dd " + distribution + " value:  " + value + " id " + id);
+            //System.out.println(" Error class dd " + distribution + " value:  " + value + " id " + id);
         }
 
     }
@@ -637,7 +637,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
         try {
             stream.defaultWriteObject();
             Main.countObject++;
-            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

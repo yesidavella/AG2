@@ -107,7 +107,7 @@ public class SimulationBase implements Runnable, Serializable {
         nodeAdminCtr.reCreatePhosphorousNodes();
         fiberLinkAdminCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
-        System.out.println("------------------------Stop en base");
+        //System.out.println("------------------------Stop en base");
 //        HybridSwitchSender.ocsTearDownSend=false;
     }
 
@@ -176,7 +176,7 @@ public class SimulationBase implements Runnable, Serializable {
         try {
             stream.defaultWriteObject();
             Main.countObject++;
-            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

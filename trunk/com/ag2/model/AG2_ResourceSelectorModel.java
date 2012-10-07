@@ -57,6 +57,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);            
             Double networkCost = mapResourceNetworkCost.get(resourceNode); 
             
+          
             
             if(networkCost!=null)
             {
@@ -64,9 +65,10 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             }
             else
             {
-                totalCost = gridCost+1000000000; //FIXME: Solo temp. Cuando  no encuentre al recurso
+                totalCost = gridCost+ Double.MAX_VALUE; 
             }
             
+//             System.out.println("Costo AGG :"+totalCost+" Costo de grilla "+gridCost);
             if (swithOrder) {
                 if (totalCost < cost) {
                     cost = totalCost;
@@ -83,11 +85,11 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         swithOrder = !swithOrder;
 
 
-        System.out.println(" Recurso seleccionado "+resourceNodeSelected+" al costo "+cost);
+   
         return resourceNodeSelected;
     }
-//FIXME: verificar el synchronized
-    public synchronized double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
+
+    public  double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
         double Tproc;
         double Cproc;
         double Acpu;
@@ -144,7 +146,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         try {
             stream.defaultWriteObject();
             Main.countObject++;
-            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

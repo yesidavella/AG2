@@ -216,7 +216,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 if (linkBegin == false) {
                     wildcardNodeA = null;
-//                    System.out.println("wildcardNodeA esta NULO EN."+name);
+//                    //System.out.println("wildcardNodeA esta NULO EN."+name);
                 }
 
                 if (actionTypeEmun == ActionTypeEmun.LINK) {
@@ -475,14 +475,14 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
-            System.out.println("read :" + name);
+            //System.out.println("read :" + name);
             if (graphDesignGroup.isSerializableComplete()) {
                 initTransientObjects();
                 getGroup().setLayoutX(getLayoutX());
                 getGroup().setLayoutY(getLayoutY());
                 select(false);
                 graphDesignGroup.getGroup().getChildren().add(getGroup());
-                System.out.println("read load post :" + name);
+                //System.out.println("read load post :" + name);
             }
 
         } catch (Exception e) {
@@ -618,7 +618,7 @@ public abstract class GraphNode implements Selectable, Serializable {
             nodeListeners.removeAll(nodeListenersToDelete);
             stream.defaultWriteObject();
             Main.countObject++;
-            System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
+            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -160,7 +160,7 @@ public class FiberAdminController extends LinkAdminAbstractController {
 
     @Override
     public boolean removeLink(GraphLink graphLink) {
-//        System.out.print("Elimino enlace");
+//        //System.out.print("Elimino enlace");
         HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
         PhosphorusLinkModel phosLink = linkMatchCoupleObjectContainer.remove(graphLink);
 

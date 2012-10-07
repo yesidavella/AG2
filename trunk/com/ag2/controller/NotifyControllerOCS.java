@@ -53,7 +53,7 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                 } else {
 
                     MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
-                    System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
+                    //System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
                 }
 //             
             }

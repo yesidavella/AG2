@@ -37,7 +37,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
                         if (executeController != null) {
 
-                            System.out.println("################    PLAY  ################");
+                            //System.out.println("################    PLAY  ################");
 
                             if (phosphosrusHTMLResults != null) {
                                 phosphosrusHTMLResults.lookToNextExecution();
@@ -79,7 +79,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
                     public void handle(MouseEvent mouEvent) {
 
-                        System.out.println("################    STOP  ################");
+                        //System.out.println("################    STOP  ################");
                         GUI.getInstance().stop();
                         enable();
                         executeController.stop();

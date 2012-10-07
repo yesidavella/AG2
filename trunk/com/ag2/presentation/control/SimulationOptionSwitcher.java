@@ -73,17 +73,17 @@ public class SimulationOptionSwitcher extends VBox {
         if(rbAg2.isSelected())
         {
              SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
-                System.out.println("################    VIA AG2   ################");
+                //System.out.println("################    VIA AG2   ################");
         }
         else if(rbPhosphorus1.isSelected())
         {
             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
-             System.out.println("################    VIA PHOSPHORUS   ################");
+             //System.out.println("################    VIA PHOSPHORUS   ################");
         }
          else if(rbPhosphorus2.isSelected())
         {
             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
-             System.out.println("################   VIA PHOSPHORUS_OPTIMIZE  ################");
+             //System.out.println("################   VIA PHOSPHORUS_OPTIMIZE  ################");
         }
     }
 }
