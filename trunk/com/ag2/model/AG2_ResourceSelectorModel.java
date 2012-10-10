@@ -35,6 +35,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double maxCPUCountSwap = 0;
         double maxBuffer = 0;
         double maxBufferSwap = 0;
+        ResourceNode resourceNodeMaxCPU=null;
         
         Map<ResourceNode ,Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode)sourceEntity, resources, job);
         
@@ -42,6 +43,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             maxCPUCountSwap = resourceNode.getCpuCount();
             if (maxCPUCountSwap > maxCPUCount) {
                 maxCPUCount = maxCPUCountSwap;
+                resourceNodeMaxCPU = resourceNode;
             }
             maxBufferSwap = resourceNode.getMaxQueueSize();
             if (maxBufferSwap > maxBuffer) {
@@ -52,11 +54,16 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double cost = Double.MAX_VALUE;
         ResourceNode resourceNodeSelected = null;
         double totalCost= 0;
+        boolean allFullBusy= true;         
         for (ResourceNode resourceNode : resources) 
         {
             double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);            
             Double networkCost = mapResourceNetworkCost.get(resourceNode); 
-            
+            if(Double.MAX_VALUE!=gridCost)
+            {
+                System.out.println("valor: "+gridCost);
+                allFullBusy= false; 
+            }
           
             
             if(networkCost!=null)
@@ -68,9 +75,12 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 totalCost = gridCost+ Double.MAX_VALUE; 
             }
             
-//             System.out.println("Costo AGG :"+totalCost+" Costo de grilla "+gridCost);
-            if (swithOrder) {
-                if (totalCost < cost) {
+            System.out.println("Costo AGG Resurso: "+resourceNode +" Total red:" +networkCost+" Costo de grilla "+gridCost);
+            
+            if (swithOrder)
+            {
+                if (totalCost < cost)
+                {
                     cost = totalCost;
                     resourceNodeSelected = resourceNode;
                 }
@@ -83,6 +93,11 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         }
 
         swithOrder = !swithOrder;
+        
+        if(allFullBusy)
+        {
+            return  resourceNodeMaxCPU;
+        }
 
 
    
@@ -93,7 +108,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double Tproc;
         double Cproc;
         double Acpu;
-        double CPU_libre = 0;
+        int CPU_libre = 0;
         double CPU_totales;
         double d;
         double s;
@@ -115,7 +130,8 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 CPU_libre++;
             }
         }
-        if (CPU_libre == 0) {
+        if (CPU_libre == 0) 
+        {
             return Double.MAX_VALUE;
         }
 

@@ -21,20 +21,21 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
     private LinkAdminAbstractController linkAdminAbstractController;
 
     public EntityPropertyTableView() {
-        
+
+
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         TableColumn valueTableColumn = new TableColumn("VALOR");
-        
+
         propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
         valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
-        
+
         propertyTableColumn.setSortable(false);
         valueTableColumn.setSortable(false);
-        
-        propertyTableColumn.setMinWidth(200);
-        propertyTableColumn.setPrefWidth(200);
-        valueTableColumn.setMinWidth(160);
-        valueTableColumn.setPrefWidth(160);
+
+        propertyTableColumn.setMinWidth(185);
+        propertyTableColumn.setPrefWidth(185);
+        valueTableColumn.setMinWidth(170);
+        valueTableColumn.setPrefWidth(170);
 
         getColumns().addAll(propertyTableColumn, valueTableColumn);
     }
@@ -50,6 +51,24 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
     @Override
     public void loadProperties(ArrayList<EntityProperty> entityProperties) {
 
+
+        TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
+        TableColumn valueTableColumn = new TableColumn("VALOR");
+        getColumns().clear();
+        getColumns().addAll(propertyTableColumn, valueTableColumn);
+
+        propertyTableColumn.setMinWidth(185);
+        propertyTableColumn.setPrefWidth(185);
+        valueTableColumn.setMinWidth(170);
+        valueTableColumn.setPrefWidth(170);
+
+        propertyTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, String>("name"));
+        valueTableColumn.setCellValueFactory(new PropertyValueFactory<EntityProperty, Control>("control"));
+
+        propertyTableColumn.setSortable(false);
+        valueTableColumn.setSortable(false);
+
+
         ObservableList dataObservableList = FXCollections.observableArrayList();
 
         for (EntityProperty entityProperty : entityProperties) {
@@ -57,6 +76,9 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
             dataObservableList.add(entityProperty);
         }
         setItems(dataObservableList);
+
+
+
     }
 
     public void clearData() {

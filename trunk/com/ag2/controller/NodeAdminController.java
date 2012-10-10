@@ -100,19 +100,19 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeTrafficPriorityProp.setFirstValue(String.valueOf(clientNode.getState().getTrafficPriority()));
             nodeProperties.add(nodeTrafficPriorityProp);
             //===========================================================================================================
-            NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Generación de trabajos:");
+            NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Gen. de trabajos:");
             createDistributionProperty(clientNode.getState().getJobInterArrival(), nodeProperties, jobsDistribution, "jobsDistribution");
             //===========================================================================================================
-            NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "Generación de flops por trabajo:");
+            NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "Gen. de flops por trabajo:");
             createDistributionProperty(clientNode.getState().getFlops(), nodeProperties, flopsDistribution, "flopsDistribution");
             //===========================================================================================================
-            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Generación de intervalo máximo de retraso:");
+            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Gen. de intervalo máximo de retraso:");
             createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
             //===========================================================================================================
-            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Generación del tamaño del trabajo:");
+            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Gen. del tamaño del trabajo:");
             createDistributionProperty(clientNode.getState().getSizeDistribution(), nodeProperties, jobSizeDistribution, "jobSizeDistribution");
             //===========================================================================================================
-            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Generación del tamaño de la respuesta:");
+            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Gen. del tamaño de la respuesta:");
             createDistributionProperty(clientNode.getState().getAckSizeDistribution(), nodeProperties, answerSizeDistribution, "answerSizeDistribution");
 
 
