@@ -37,7 +37,7 @@ public class SimulationOptionSwitcher extends VBox {
         rbPhosphorus2.setTooltip(new Tooltip("Ejecuion con algoritmos optimos Phosphorus"));
 
 
-        rbPhosphorus1.setSelected(true);
+        rbAg2.setSelected(true);
         getChildren().addAll(rbPhosphorus1, rbPhosphorus2, rbAg2);
 
 

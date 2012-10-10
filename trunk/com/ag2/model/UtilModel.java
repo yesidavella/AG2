@@ -1,7 +1,7 @@
 package com.ag2.model;
 
 import Distributions.ConstantDistribution;
-import Distributions.DDNegExp;
+//import Distributions.DDNegExp;
 import Grid.Entity;
 import Grid.GridSimulator;
 import Grid.Interfaces.ClientNode;
@@ -23,13 +23,13 @@ import simbase.Time;
 public class UtilModel extends Util {
 
     private static void insertOptionsForClient(ClientNode client, GridSimulator simulator) {
-        client.getState().setJobInterArrival(new DDNegExp(simulator,
+        client.getState().setJobInterArrival(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_JOB_IAT)));
-        client.getState().setFlops(new DDNegExp(simulator,
+        client.getState().setFlops(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_FLOP_SIZE)));
-        client.getState().setMaxDelayInterval(new DDNegExp(simulator,
+        client.getState().setMaxDelayInterval(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
-        client.getState().setSizeDistribution(new DDNegExp(simulator,
+        client.getState().setSizeDistribution(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_DATA_SIZE)));
         double ackSize = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.ACK_SIZE);
         client.getState().setTrafficPriority(PropertyPhosphorusTypeEnum.getIntProperty(PropertyPhosphorusTypeEnum.CLIENT_TRAFFIC_PRIORITY));
@@ -37,7 +37,8 @@ public class UtilModel extends Util {
         if (ackSize == 0) {
             client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         } else {
-            client.getState().setAckSizeDistribution(new DDNegExp((SimBaseSimulator) simulator, ackSize));
+          //  client.getState().setAckSizeDistribution(new DDNegExp((SimBaseSimulator) simulator, ackSize));
+            client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         }
     }
 

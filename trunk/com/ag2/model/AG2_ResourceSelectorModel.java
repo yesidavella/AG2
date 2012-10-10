@@ -27,7 +27,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     }
 
     @Override
-    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce,JobAckMessage job) {
+    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce, JobAckMessage job) {
 
         // this.resources = resources;
 
@@ -35,10 +35,10 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double maxCPUCountSwap = 0;
         double maxBuffer = 0;
         double maxBufferSwap = 0;
-        ResourceNode resourceNodeMaxCPU=null;
-        
-        Map<ResourceNode ,Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode)sourceEntity, resources, job);
-        
+        ResourceNode resourceNodeMaxCPU = null;
+
+        Map<ResourceNode, Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode) sourceEntity, resources, job);
+
         for (ResourceNode resourceNode : resources) {
             maxCPUCountSwap = resourceNode.getCpuCount();
             if (maxCPUCountSwap > maxCPUCount) {
@@ -53,34 +53,30 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
         double cost = Double.MAX_VALUE;
         ResourceNode resourceNodeSelected = null;
-        double totalCost= 0;
-        boolean allFullBusy= true;         
-        for (ResourceNode resourceNode : resources) 
-        {
-            double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);            
-            Double networkCost = mapResourceNetworkCost.get(resourceNode); 
-            if(Double.MAX_VALUE!=gridCost)
-            {
-                System.out.println("valor: "+gridCost);
-                allFullBusy= false; 
+        double totalCost = 0;
+        boolean allFullBusy = true;
+        for (ResourceNode resourceNode : resources) {
+            double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
+            gridCost *= 9670.77;
+            Double networkCost = mapResourceNetworkCost.get(resourceNode);
+            if (Double.MAX_VALUE != gridCost) {
+
+                allFullBusy = false;
             }
-          
-            
-            if(networkCost!=null)
-            {
-                totalCost =  gridCost+ networkCost;
+
+
+            if (networkCost != null) {
+                totalCost = gridCost + networkCost;
+            } else {
+                totalCost = gridCost + Double.MAX_VALUE;
             }
-            else
-            {
-                totalCost = gridCost+ Double.MAX_VALUE; 
-            }
-            
-            System.out.println("Costo AGG Resurso: "+resourceNode +" Total red:" +networkCost+" Costo de grilla "+gridCost);
-            
-            if (swithOrder)
-            {
-                if (totalCost < cost)
-                {
+
+            System.out.println("Costo AGG Resurso: " + resourceNode + " Total red:" + networkCost + " Costo de grilla " + gridCost + " Costo total total: " + totalCost);
+
+
+
+            if (swithOrder) {
+                if (totalCost < cost) {
                     cost = totalCost;
                     resourceNodeSelected = resourceNode;
                 }
@@ -93,18 +89,16 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         }
 
         swithOrder = !swithOrder;
-        
-        if(allFullBusy)
-        {
-            return  resourceNodeMaxCPU;
+
+        job.setEstimatedMarkovianCost(cost);
+        if (allFullBusy) {
+            return resourceNodeMaxCPU;
         }
 
-
-   
         return resourceNodeSelected;
     }
 
-    public  double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
+    public double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
         double Tproc;
         double Cproc;
         double Acpu;
@@ -130,8 +124,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 CPU_libre++;
             }
         }
-        if (CPU_libre == 0) 
-        {
+        if (CPU_libre == 0) {
             return Double.MAX_VALUE;
         }
 
