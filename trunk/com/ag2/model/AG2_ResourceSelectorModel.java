@@ -91,6 +91,8 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         swithOrder = !swithOrder;
 
         job.setEstimatedMarkovianCost(cost);
+        job.setDomainPCE(pce);
+        
         if (allFullBusy) {
             return resourceNodeMaxCPU;
         }
