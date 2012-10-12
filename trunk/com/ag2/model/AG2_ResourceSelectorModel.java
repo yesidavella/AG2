@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable {
+    private static final double COEFFICIENT_PROPORTIONALITY_GRID = 9670.77;
 
     // private List<ResourceNode> resources;
     boolean swithOrder = true;
@@ -27,7 +28,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
     }
 
     @Override
-    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce, JobAckMessage job) {
+    public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce, JobAckMessage ackMsg) {
 
         // this.resources = resources;
 
@@ -37,7 +38,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double maxBufferSwap = 0;
         ResourceNode resourceNodeMaxCPU = null;
 
-        Map<ResourceNode, Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode) sourceEntity, resources, job);
+        Map<ResourceNode, Double> mapResourceNetworkCost = pce.getMarkovCostList((ClientNode) sourceEntity, resources, ackMsg);
 
         for (ResourceNode resourceNode : resources) {
             maxCPUCountSwap = resourceNode.getCpuCount();
@@ -51,16 +52,18 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             }
         }
 
-        double cost = Double.MAX_VALUE;
+        double costSelected = Double.MAX_VALUE;
         ResourceNode resourceNodeSelected = null;
         double totalCost = 0;
         boolean allFullBusy = true;
+        double gridCostSelected = 0;
+        double networkCostSelected = 0;
+        
         for (ResourceNode resourceNode : resources) {
             double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
-            gridCost *= 9670.77;
+            gridCost *= COEFFICIENT_PROPORTIONALITY_GRID;
             Double networkCost = mapResourceNetworkCost.get(resourceNode);
             if (Double.MAX_VALUE != gridCost) {
-
                 allFullBusy = false;
             }
 
@@ -71,28 +74,36 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 totalCost = gridCost + Double.MAX_VALUE;
             }
 
-            System.out.println("Costo AGG Resurso: " + resourceNode + " Total red:" + networkCost + " Costo de grilla " + gridCost + " Costo total total: " + totalCost);
+//            System.out.println("Costo AGG Resurso: " + resourceNode + " Total red:" + networkCost + " Costo de grilla " + gridCost + " Costo total total: " + totalCost);
 
 
 
-            if (swithOrder) {
-                if (totalCost < cost) {
-                    cost = totalCost;
+            if (swithOrder) 
+            {
+                if (totalCost < costSelected)
+                {
+                    costSelected = totalCost;
                     resourceNodeSelected = resourceNode;
+                    gridCostSelected = gridCost;
+                    networkCostSelected = networkCost;
+                    
                 }
             } else {
-                if (totalCost <= cost) {
-                    cost = totalCost;
+                if (totalCost <= costSelected) {
+                    costSelected = totalCost;
                     resourceNodeSelected = resourceNode;
+                    gridCostSelected = gridCost;
+                    networkCostSelected = networkCost;
                 }
             }
         }
 
         swithOrder = !swithOrder;
 
-        job.setEstimatedMarkovianCost(cost);
-        job.setDomainPCE(pce);
-        
+        ackMsg.setEstimatedNetworkCost(networkCostSelected);
+        ackMsg.setEstimatedGridCost(gridCostSelected);
+        ackMsg.setDomainPCE(pce);
+         
         if (allFullBusy) {
             return resourceNodeMaxCPU;
         }

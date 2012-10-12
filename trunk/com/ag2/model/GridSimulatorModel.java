@@ -30,12 +30,12 @@ public class GridSimulatorModel extends Grid.GridSimulator {
 
     private void initRoutingObjLoadingConfigFile() {
         if (PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)) {
-            super.setRouting(new RoutingViaJung(this));
+            super.setRouting(new RoutingViaJung(this,"routing"));
         } else {
             super.setRouting(new ShortesPathRouting(this));
         }
         //Needs to read
-        super.setPhysicTopology(new RoutingViaJung(this));
+        super.setPhysicTopology(new RoutingViaJung(this,"fiscaTopo"));
     }
 
     public void reloadTime() {

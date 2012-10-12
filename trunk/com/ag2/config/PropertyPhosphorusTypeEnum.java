@@ -159,7 +159,7 @@ public enum PropertyPhosphorusTypeEnum {
                 if (getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")) {
                     Routing routing;
                     if (checkBox.isSelected()) {
-                        routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel());
+                        routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel(),"routing");
                     } else {
                         routing = new ShortesPathRouting(SimulationBase.getInstance().getGridSimulatorModel());
                     }

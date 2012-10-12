@@ -347,7 +347,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
 
     private void createtvResultsSwitch() {
 
-        TableColumn tclSwitchName = new TableColumn("Conmutador 0ptico");
+        TableColumn tclSwitchName = new TableColumn("Conmutador Optico");
         TableColumn tclSwitchedJobMsg = new TableColumn("Conmutados");
         TableColumn tclNotSwitchedJobMsg = new TableColumn("No conmutados");
         TableColumn tclSwitchedResultMsg = new TableColumn("Conmutados");
