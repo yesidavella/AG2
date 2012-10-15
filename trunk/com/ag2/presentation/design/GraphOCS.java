@@ -21,8 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import org.apache.bcel.generic.LLOAD;
+
 
 /**
  *
@@ -67,7 +66,7 @@ public class GraphOCS implements NodeListener {
         graphNodeDestination.addNodeListener(this);
         group = new Group();
         line = new Line();
-        countOCS = 1;
+        countOCS = 0;
         lblCountOCS = new Label();
         this.graphNodeSource = graphNodeSource;
         this.graphNodeDestination = graphNodeDestination;
