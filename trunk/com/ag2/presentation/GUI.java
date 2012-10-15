@@ -470,6 +470,9 @@ public class GUI extends Scene {
 
         createMapNavigationPanel(vbxBottomRight);
         addScene(this);
+        
+         scpWorld.setHvalue(0.27151447890809266);
+        scpWorld.setVvalue(0.4661207267437006);
     }
 
     public static void setStage(Stage stage) {

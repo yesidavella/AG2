@@ -214,8 +214,8 @@ public class GraphOCS implements NodeListener {
         vBoxInfoOCS.setVisible(true);
         vBoxInfoOCS.setLayoutX(x - 10);
         vBoxInfoOCS.setLayoutY(y - 10);
-        vBoxInfoOCS.setScaleX(0.7);
-        vBoxInfoOCS.setScaleY(-.7);
+        vBoxInfoOCS.setScaleX(0.8);
+        vBoxInfoOCS.setScaleY(-.8);
         vBoxInfoOCS.toFront();
 
 
