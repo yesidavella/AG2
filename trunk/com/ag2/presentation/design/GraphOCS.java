@@ -55,6 +55,10 @@ public class GraphOCS implements NodeListener {
     private ObservableList<PhosphorusPropertySet> dataSummaryOCS_Inverted;
     private TableView tvSummaryOCS;
     private TableView tvSummaryOCS_Inverted;
+    private PhosphorusPropertySet tvSummaryOCS_Created;
+    PhosphorusPropertySet tvSummaryOCS_Created_Inverted;
+    PhosphorusPropertySet tvSummaryOCS_Traffic;
+    PhosphorusPropertySet tvSummaryOCS_Traffic_Inverted;
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
@@ -165,11 +169,44 @@ public class GraphOCS implements NodeListener {
         tvSummaryOCS_Inverted.getColumns().addAll(tcProperty_Inverted, tcValue_Inverted);
 
 
+
+        dataSummaryOCS = FXCollections.observableArrayList();
+        dataSummaryOCS_Inverted = FXCollections.observableArrayList();
+
         tcProperty.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
         tcValue.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
 
         tcProperty_Inverted.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
         tcValue_Inverted.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+
+
+        tvSummaryOCS_Created = new PhosphorusPropertySet();
+        tvSummaryOCS_Created_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_Traffic = new PhosphorusPropertySet();
+        tvSummaryOCS_Traffic_Inverted = new PhosphorusPropertySet();
+
+        tvSummaryOCS_Created.setProperty1("OCS Creados");
+        tvSummaryOCS_Created_Inverted.setProperty1("OCS Creados");
+        tvSummaryOCS_Traffic.setProperty1("Trafico total");
+        tvSummaryOCS_Traffic_Inverted.setProperty1("Trafico total");
+
+        tpnDireccion1.setText(graphNodeSource.getName() + "->" + graphNodeDestination.getName());
+        tpnDireccion2.setText(graphNodeDestination.getName() + "->" + graphNodeSource.getName());
+
+
+        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_Created_Inverted, tvSummaryOCS_Traffic_Inverted);
+        tvSummaryOCS.setItems(dataSummaryOCS);
+        tvSummaryOCS_Inverted.setItems(dataSummaryOCS_Inverted);
+        tpnDireccion1.setContent(tvSummaryOCS);
+        tpnDireccion2.setContent(tvSummaryOCS_Inverted);
+        dataSummaryOCS.addAll(tvSummaryOCS_Created, tvSummaryOCS_Traffic);
+        
+        tvSummaryOCS_Created.setProperty2(" "+0);
+        tvSummaryOCS_Created_Inverted.setProperty2(" "+0);
+        tvSummaryOCS_Traffic.setProperty2(" "+0);
+        tvSummaryOCS_Traffic_Inverted.setProperty2(" "+0);
+        
+        
 
     }
 
@@ -178,84 +215,18 @@ public class GraphOCS implements NodeListener {
         vBoxInfoOCS.setVisible(true);
         vBoxInfoOCS.setLayoutX(x - 10);
         vBoxInfoOCS.setLayoutY(y - 10);
-
-
-
-        vBoxInfoOCS.setScaleX(0.8);
-        vBoxInfoOCS.setScaleY(-.8);
-
+        vBoxInfoOCS.setScaleX(0.7);
+        vBoxInfoOCS.setScaleY(-.7);
         vBoxInfoOCS.toFront();
 
-        tpnDireccion1.setText(graphNodeSource.getName() + "->" + graphNodeDestination.getName());
-        tpnDireccion2.setText(graphNodeDestination.getName() + "->" + graphNodeSource.getName());
 
-        dataSummaryOCS = FXCollections.observableArrayList();
-        dataSummaryOCS_Inverted = FXCollections.observableArrayList();
-
-        PhosphorusPropertySet tvSummaryOCS_Request = new PhosphorusPropertySet();
-        tvSummaryOCS_Request.setProperty1("OCS Solicitudes");
-        tvSummaryOCS_Request.setProperty2("0");
-
-        PhosphorusPropertySet tvSummaryOCS_Created = new PhosphorusPropertySet();
-        tvSummaryOCS_Created.setProperty1("OOCS Creados");
-        tvSummaryOCS_Created.setProperty2("0");
-
-
-        PhosphorusPropertySet tvSummaryOCS_Fail = new PhosphorusPropertySet();
-        tvSummaryOCS_Fail.setProperty1("OCS Fallidos");
-        tvSummaryOCS_Fail.setProperty2("0");
-
-        PhosphorusPropertySet tvSummaryOCS_Duration = new PhosphorusPropertySet();
-        tvSummaryOCS_Duration.setProperty1("Duracion promedio");
-        tvSummaryOCS_Duration.setProperty2("0");
-
-
-        PhosphorusPropertySet tvSummaryOCS_Request_Inverted = new PhosphorusPropertySet();
-        tvSummaryOCS_Request_Inverted.setProperty1("OCS Solicitudes");
-        tvSummaryOCS_Request_Inverted.setProperty2("0");
-
-        PhosphorusPropertySet tvSummaryOCS_Created_Inverted = new PhosphorusPropertySet();
-        tvSummaryOCS_Created_Inverted.setProperty1("OOCS Creados");
-        tvSummaryOCS_Created_Inverted.setProperty2("0");
-
-
-        PhosphorusPropertySet tvSummaryOCS_Fail_Inverted = new PhosphorusPropertySet();
-        tvSummaryOCS_Fail_Inverted.setProperty1("OCS Fallidos");
-        tvSummaryOCS_Fail_Inverted.setProperty2("0");
-
-        PhosphorusPropertySet tvSummaryOCS_Duration_Inverted = new PhosphorusPropertySet();
-        tvSummaryOCS_Duration_Inverted.setProperty1("Duracion promedio");
-        tvSummaryOCS_Duration_Inverted.setProperty2("0");
-
-        dataSummaryOCS.addAll(tvSummaryOCS_Request, tvSummaryOCS_Created, tvSummaryOCS_Fail, tvSummaryOCS_Duration);
-
-        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_Request_Inverted, tvSummaryOCS_Created_Inverted, tvSummaryOCS_Fail_Inverted, tvSummaryOCS_Duration_Inverted);
-
-
-
-
-        tvSummaryOCS.setItems(dataSummaryOCS);
-        tvSummaryOCS_Inverted.setItems(dataSummaryOCS_Inverted);
-        tpnDireccion1.setContent(tvSummaryOCS);
-        tpnDireccion2.setContent(tvSummaryOCS_Inverted);
-
-
-
-
-        //
-        //        lblCountOCS.setVisible(true);
-        //        lblCountOCS.setLayoutX(x - 10);
-        //        lblCountOCS.setLayoutY(y - 10);
-        //        lblCountOCS.setText(graphNodeSource.getName() + "-" + graphNodeDestination.getName() + " -> λSP: " + countOCS + "\n"
-        //                + graphNodeDestination.getName() + "-" + graphNodeSource.getName() + " -> λSP: " + countOCS_Inverted);
-        //        lblCountOCS.toFront();
     }
 
     public void remove() {
 //        //System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
         graphDesignGroup.getGroup().getChildren().removeAll(group, lblCountOCS);
         graphDesignGroup.getLinesOCS().remove(group);
-        graphDesignGroup.getLabelsOCS().remove(lblCountOCS);
+
 
     }
 
@@ -265,21 +236,32 @@ public class GraphOCS implements NodeListener {
 
     public void addInstanceOCS() {
         countOCS++;
+        tvSummaryOCS_Created.setProperty2(" " + countOCS);
+        
+
+    }
+
+    public void setTraffic(double traffic) {
+        
+        tvSummaryOCS_Traffic.setProperty2(" " + traffic);
+
+    }
+
+    public void setTrafficInverted(double traffic) {
+    
+        tvSummaryOCS_Traffic_Inverted.setProperty2(" " + traffic);
+
     }
 
     public void addInstanceOCS_Inverted() {
         if (countOCS_Inverted == 0) {
             addDirection();
         }
-
         countOCS_Inverted++;
-
-
+            tvSummaryOCS_Created_Inverted.setProperty2(" " + countOCS_Inverted);
     }
 
     private void addDirection() {
-
-
 
         lineMiddle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 

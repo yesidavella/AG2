@@ -10,7 +10,7 @@ import com.ag2.presentation.design.GraphOCS;
 import com.ag2.util.Utils;
 import java.io.Serializable;
 import javafx.application.Platform;
- 
+
 public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
     private GraphDesignGroup graphDesignGroup;
@@ -26,7 +26,7 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
     public NotifyControllerOCS() {
         ManagerOCS.getInstance().setNotificableOCS(this);
     }
-    //FIXME: Poner interface
+  
 
     @Override
     public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination, final int countInstanceOCS) {
@@ -45,17 +45,18 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
                     if (directionCreated) {
                         MatchCoupleObjectContainer.getGraphOCS(graphNodeDestination, graphNodeSource).addInstanceOCS_Inverted();
-                    } else {
+                    } 
+                    else
+                    {
                         GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
                         MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
+                        graphOCS.addInstanceOCS();
                     }
 
                 } else {
-
                     MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).addInstanceOCS();
-                    //System.out.println(" YAAAAAA : Creado  LSP " + graphNodeSource.getName() + " - " + graphNodeDestination.getName());
                 }
-//             
+
             }
         };
         Platform.runLater(runnable);
@@ -64,19 +65,45 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
     @Override
     public void clean() {
-//        HashMap<MatchCoupleObjectContainer.GraphSourceDestination, ArrayList<GraphOCS>> OCSMatchCoupleObjectContainer =
-//                MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer();
-//
-//        for (GraphSourceDestination graphSourceDestination : OCSMatchCoupleObjectContainer.keySet()) {
-//            for (GraphOCS graphOCS : MatchCoupleObjectContainer.getListGraphOCS(graphSourceDestination)) {
-//                graphOCS.remove();
-//            } 
-//        }
+
         for (GraphSourceDestination graphSourceDestination : MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().keySet()) {
             MatchCoupleObjectContainer.getOCSMatchCoupleObjectContainer().get(graphSourceDestination).remove();
         }
 
         MatchCoupleObjectContainer.cleanOCSMatchCoupleObjectContainer();
+
+    }
+
+    @Override
+    public void notifyTrafficCreatedOCS(final Entity entitySource, final Entity entityDestination, final double traffic) {
+
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+
+                GraphNode graphNodeSource = Utils.findNodeGraphByOriginalName(entitySource.getId());
+                GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
+
+                if (!MatchCoupleObjectContainer.containsIntanceOCS(graphNodeSource, graphNodeDestination)) {
+
+                    
+                      boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination, graphNodeSource);
+
+                    if (directionCreated) 
+                    {
+                        MatchCoupleObjectContainer.getGraphOCS(graphNodeDestination, graphNodeSource).setTrafficInverted(traffic);
+                    } 
+                  
+
+                } else {
+                    MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination).setTraffic(traffic);
+                }
+
+            }
+        };
+        Platform.runLater(runnable);
 
     }
 }
