@@ -4,11 +4,21 @@
  */
 package com.ag2.presentation.design;
 
+import com.ag2.presentation.control.PhosphorusPropertySet;
+import com.ag2.presentation.control.ResultsOCS;
+import com.ag2.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -18,7 +28,7 @@ import org.apache.bcel.generic.LLOAD;
  *
  * @author Frank
  */
-public class GraphOCS  implements  NodeListener{
+public class GraphOCS implements NodeListener {
 
     private Line line;
     private GraphNode graphNodeSource;
@@ -34,11 +44,21 @@ public class GraphOCS  implements  NodeListener{
     private int posEndY;
     private int desfaseX = 24;
     private int desfaseY = 34;
-   private  Line lineMiddle = new Line();
+    private Line lineMiddle = new Line();
+    private TitledPane tpnDireccion1 = new TitledPane();
+    private TitledPane tpnDireccion2 = new TitledPane();
+    private Accordion accordion = new Accordion();
+    private VBox vBoxInfoOCS = new VBox();
+    private ImageView ivwClose = new ImageView(new Image(Utils.ABS_PATH_IMGS + "close_blue.jpg"));
+    private Button btnClose = new Button();
+    private ObservableList<PhosphorusPropertySet> dataSummaryOCS;
+    private ObservableList<PhosphorusPropertySet> dataSummaryOCS_Inverted;
+    private TableView tvSummaryOCS;
+    private TableView tvSummaryOCS_Inverted;
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
-        
+
         graphNodeSource.addNodeListener(this);
         graphNodeDestination.addNodeListener(this);
         group = new Group();
@@ -48,7 +68,7 @@ public class GraphOCS  implements  NodeListener{
         this.graphNodeSource = graphNodeSource;
         this.graphNodeDestination = graphNodeDestination;
         this.graphDesignGroup = graphDesignGroup;
-        
+
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setSpread(0.5);
@@ -76,8 +96,8 @@ public class GraphOCS  implements  NodeListener{
         lblCountOCS.setVisible(false);
         DropShadow dropShadow1 = new DropShadow();
         lblCountOCS.setEffect(dropShadow1);
-        
-        lblCountOCS.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+        accordion.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent arg0) {
@@ -85,37 +105,34 @@ public class GraphOCS  implements  NodeListener{
                 lblCountOCS.setScaleY(-1.7);
             }
         });
-         lblCountOCS.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            @Override
-            public void handle(MouseEvent arg0) {
-                 lblCountOCS.setScaleX(0.9);
-        lblCountOCS.setScaleY(-.9);
-            }
-        });
-        
-         lblCountOCS.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent arg0) {
-                lblCountOCS.setVisible(false);
-            }
-        });
 
         line.setStartX(posStartX);
         line.setStartY(posStartY);
         line.setEndX(posEndX);
         line.setEndY(posEndY);
 
-
-
-
         line.setStrokeWidth(3);
-
-
-
         group.getChildren().addAll(line);
-        graphDesignGroup.getGroup().getChildren().addAll(group, lblCountOCS);
+
+        btnClose.setGraphic(ivwClose);
+        btnClose.setMaxSize(10, 10);
+        btnClose.setMinSize(10, 10);
+        btnClose.setPrefSize(10, 10);
+        btnClose.setScaleX(0.7);
+        btnClose.setScaleY(0.7);
+        vBoxInfoOCS.setAlignment(Pos.CENTER_RIGHT);
+
+        btnClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                vBoxInfoOCS.setVisible(false);
+            }
+        });
+        vBoxInfoOCS.setSpacing(1);
+        vBoxInfoOCS.getChildren().addAll(btnClose, accordion);
+        graphDesignGroup.getGroup().getChildren().addAll(group, vBoxInfoOCS);
 
         group.toFront();
         graphNodeDestination.getGroup().toFront();
@@ -128,15 +145,110 @@ public class GraphOCS  implements  NodeListener{
                 GraphOCS.this.showLabel(arg0.getX(), arg0.getY());
             }
         });
+
+        accordion.getPanes().add(tpnDireccion1);
+        accordion.getPanes().add(tpnDireccion2);
+        vBoxInfoOCS.setVisible(false);
+
+        TableColumn tcProperty = new TableColumn("Resultado");
+        TableColumn tcValue = new TableColumn("Valor");
+        tcValue.setMinWidth(100);
+        tvSummaryOCS = new TableView();
+        tvSummaryOCS.setMaxHeight(125);
+        tvSummaryOCS.getColumns().addAll(tcProperty, tcValue);
+
+        TableColumn tcProperty_Inverted = new TableColumn("Resultado");
+        TableColumn tcValue_Inverted = new TableColumn("Valor");
+        tcValue_Inverted.setMinWidth(100);
+        tvSummaryOCS_Inverted = new TableView();
+        tvSummaryOCS_Inverted.setMaxHeight(125);
+        tvSummaryOCS_Inverted.getColumns().addAll(tcProperty_Inverted, tcValue_Inverted);
+
+
+        tcProperty.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        tcValue.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+
+        tcProperty_Inverted.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property1"));
+        tcValue_Inverted.setCellValueFactory(new PropertyValueFactory<PhosphorusPropertySet, String>("property2"));
+
     }
-    public void showLabel(double x, double y)
-    {
-          lblCountOCS.setVisible(true);
-                lblCountOCS.setLayoutX(x - 10);
-                lblCountOCS.setLayoutY(y - 10);
-                lblCountOCS.setText(graphNodeSource.getName() + "-" + graphNodeDestination.getName() + " -> λSP: " + countOCS + "\n"
-                        + graphNodeDestination.getName() + "-" + graphNodeSource.getName() + " -> λSP: " + countOCS_Inverted);
-                lblCountOCS.toFront();
+
+    public void showLabel(double x, double y) {
+
+        vBoxInfoOCS.setVisible(true);
+        vBoxInfoOCS.setLayoutX(x - 10);
+        vBoxInfoOCS.setLayoutY(y - 10);
+
+
+
+        vBoxInfoOCS.setScaleX(0.8);
+        vBoxInfoOCS.setScaleY(-.8);
+
+        vBoxInfoOCS.toFront();
+
+        tpnDireccion1.setText(graphNodeSource.getName() + "->" + graphNodeDestination.getName());
+        tpnDireccion2.setText(graphNodeDestination.getName() + "->" + graphNodeSource.getName());
+
+        dataSummaryOCS = FXCollections.observableArrayList();
+        dataSummaryOCS_Inverted = FXCollections.observableArrayList();
+
+        PhosphorusPropertySet tvSummaryOCS_Request = new PhosphorusPropertySet();
+        tvSummaryOCS_Request.setProperty1("OCS Solicitudes");
+        tvSummaryOCS_Request.setProperty2("0");
+
+        PhosphorusPropertySet tvSummaryOCS_Created = new PhosphorusPropertySet();
+        tvSummaryOCS_Created.setProperty1("OOCS Creados");
+        tvSummaryOCS_Created.setProperty2("0");
+
+
+        PhosphorusPropertySet tvSummaryOCS_Fail = new PhosphorusPropertySet();
+        tvSummaryOCS_Fail.setProperty1("OCS Fallidos");
+        tvSummaryOCS_Fail.setProperty2("0");
+
+        PhosphorusPropertySet tvSummaryOCS_Duration = new PhosphorusPropertySet();
+        tvSummaryOCS_Duration.setProperty1("Duracion promedio");
+        tvSummaryOCS_Duration.setProperty2("0");
+
+
+        PhosphorusPropertySet tvSummaryOCS_Request_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_Request_Inverted.setProperty1("OCS Solicitudes");
+        tvSummaryOCS_Request_Inverted.setProperty2("0");
+
+        PhosphorusPropertySet tvSummaryOCS_Created_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_Created_Inverted.setProperty1("OOCS Creados");
+        tvSummaryOCS_Created_Inverted.setProperty2("0");
+
+
+        PhosphorusPropertySet tvSummaryOCS_Fail_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_Fail_Inverted.setProperty1("OCS Fallidos");
+        tvSummaryOCS_Fail_Inverted.setProperty2("0");
+
+        PhosphorusPropertySet tvSummaryOCS_Duration_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_Duration_Inverted.setProperty1("Duracion promedio");
+        tvSummaryOCS_Duration_Inverted.setProperty2("0");
+
+        dataSummaryOCS.addAll(tvSummaryOCS_Request, tvSummaryOCS_Created, tvSummaryOCS_Fail, tvSummaryOCS_Duration);
+
+        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_Request_Inverted, tvSummaryOCS_Created_Inverted, tvSummaryOCS_Fail_Inverted, tvSummaryOCS_Duration_Inverted);
+
+
+
+
+        tvSummaryOCS.setItems(dataSummaryOCS);
+        tvSummaryOCS_Inverted.setItems(dataSummaryOCS_Inverted);
+        tpnDireccion1.setContent(tvSummaryOCS);
+        tpnDireccion2.setContent(tvSummaryOCS_Inverted);
+
+
+
+
+        //
+        //        lblCountOCS.setVisible(true);
+        //        lblCountOCS.setLayoutX(x - 10);
+        //        lblCountOCS.setLayoutY(y - 10);
+        //        lblCountOCS.setText(graphNodeSource.getName() + "-" + graphNodeDestination.getName() + " -> λSP: " + countOCS + "\n"
+        //                + graphNodeDestination.getName() + "-" + graphNodeSource.getName() + " -> λSP: " + countOCS_Inverted);
+        //        lblCountOCS.toFront();
     }
 
     public void remove() {
@@ -168,7 +280,7 @@ public class GraphOCS  implements  NodeListener{
     private void addDirection() {
 
 
-    
+
         lineMiddle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -190,26 +302,24 @@ public class GraphOCS  implements  NodeListener{
     }
 
     @Override
-    public void update() 
-    {
-        
+    public void update() {
+
         posStartX = (int) graphNodeSource.getLayoutX() + desfaseX + (graphNodeSource.getWidth() / 2);
         posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
         posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX + graphNodeSource.getWidth() / 2;
         posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
-      
+
         line.setStartX(posStartX);
         line.setStartY(posStartY);
         line.setEndX(posEndX);
         line.setEndY(posEndY);
-        
+
         lineMiddle.setStartX(posStartX);
         lineMiddle.setStartY(posStartY);
         lineMiddle.setEndX(posEndX);
         lineMiddle.setEndY(posEndY);
-        
-        
+
+
     }
-    
 }
