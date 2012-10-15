@@ -49,8 +49,9 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                     else
                     {
                         GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
-                        MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
                         graphOCS.addInstanceOCS();
+                        MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
+                       
                     }
 
                 } else {
@@ -74,6 +75,7 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
     }
 
+    @Override
     public void notifyTrafficCreatedOCS(final Entity entitySource, final Entity entityDestination, final double traffic) {
 
 
