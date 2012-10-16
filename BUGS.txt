@@ -14,6 +14,12 @@ ag2markov
 -Revisar lo de  los flujo a ver si se puede empatar con una teoria de network (traffic trunk). (Franklin)
 -Revisar algun alg que realizar de inv.opreaciones para balance de carga.(Franklin)
 -Terminar lio de respuesta del servidor sin tamaño(Franklin). 
+-Resolver inconsistencia de microflujos.(Franki)
+-Terminar vista lambdaSP(Franki).
+-Establecer tamaño de respuesta de recurso cluster (Franki).
+-Error al eliminar enlaces nullpointer mapping. (Yesid)
+-Cambiar avisos y formatos y alineacion y tooltips con ñ. (Yesid)
+-Cambiar min_bw por el 3% de la velocidad del canal.(Yesid)
 
 
 #####  Cambios DESPUES de entrega de documento  ###############################################################################################################
