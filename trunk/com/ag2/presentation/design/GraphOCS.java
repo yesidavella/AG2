@@ -59,6 +59,20 @@ public class GraphOCS implements NodeListener {
     PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
     PhosphorusPropertySet tvSummaryOCS_JobSent;
     PhosphorusPropertySet tvSummaryOCS_JobSentInverted;
+    PhosphorusPropertySet tvSummaryOCS_JobTraffic;
+    PhosphorusPropertySet tvSummaryOCS_JobTrafficInverted;
+    PhosphorusPropertySet tvSummaryOCS_RequestSent;
+    PhosphorusPropertySet tvSummaryOCS_RequestSentInverted;
+    PhosphorusPropertySet tvSummaryOCS_RequestTraffic;
+    PhosphorusPropertySet tvSummaryOCS_RequestTrafficInverted;
+    PhosphorusPropertySet tvSummaryOCS_ackRequestSent;
+    PhosphorusPropertySet tvSummaryOCS_ackRequestSentInverted;
+    PhosphorusPropertySet tvSummaryOCS_ackRequestTraffic;
+    PhosphorusPropertySet tvSummaryOCS_ackRequestTrafficInverted;
+    PhosphorusPropertySet tvSummaryOCS_ResultSent;
+    PhosphorusPropertySet tvSummaryOCS_ResultSentInverted;
+    PhosphorusPropertySet tvSummaryOCS_ResultTraffic;
+    PhosphorusPropertySet tvSummaryOCS_ResultTrafficInverted;
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
@@ -156,14 +170,14 @@ public class GraphOCS implements NodeListener {
 
         TableColumn tcProperty = new TableColumn("Resultado");
         TableColumn tcValue = new TableColumn("Valor");
-        tcValue.setMinWidth(100);
+        tcValue.setMinWidth(80);
         tvSummaryOCS = new TableView();
         tvSummaryOCS.setMaxHeight(125);
         tvSummaryOCS.getColumns().addAll(tcProperty, tcValue);
 
         TableColumn tcProperty_Inverted = new TableColumn("Resultado");
         TableColumn tcValue_Inverted = new TableColumn("Valor");
-        tcValue_Inverted.setMinWidth(100);
+        tcValue_Inverted.setMinWidth(80);
         tvSummaryOCS_Inverted = new TableView();
         tvSummaryOCS_Inverted.setMaxHeight(125);
         tvSummaryOCS_Inverted.getColumns().addAll(tcProperty_Inverted, tcValue_Inverted);
@@ -184,41 +198,121 @@ public class GraphOCS implements NodeListener {
         tvSummaryOCS_CreatedInverted = new PhosphorusPropertySet();
         tvSummaryOCS_Traffic = new PhosphorusPropertySet();
         tvSummaryOCS_TrafficInverted = new PhosphorusPropertySet();
+
         tvSummaryOCS_JobSent = new PhosphorusPropertySet();
         tvSummaryOCS_JobSentInverted = new PhosphorusPropertySet();
+        tvSummaryOCS_JobTraffic = new PhosphorusPropertySet();
+        tvSummaryOCS_JobTrafficInverted = new PhosphorusPropertySet();
+
+        tvSummaryOCS_RequestSent = new PhosphorusPropertySet();
+        tvSummaryOCS_RequestSentInverted = new PhosphorusPropertySet();
+        tvSummaryOCS_RequestTraffic = new PhosphorusPropertySet();
+        tvSummaryOCS_RequestTrafficInverted = new PhosphorusPropertySet();
+
+        tvSummaryOCS_ackRequestSent = new PhosphorusPropertySet();
+        tvSummaryOCS_ackRequestSentInverted = new PhosphorusPropertySet();
+        tvSummaryOCS_ackRequestTraffic = new PhosphorusPropertySet();
+        tvSummaryOCS_ackRequestTrafficInverted = new PhosphorusPropertySet();
+
+        tvSummaryOCS_ResultSent = new PhosphorusPropertySet();
+        tvSummaryOCS_ResultSentInverted = new PhosphorusPropertySet();
+        tvSummaryOCS_ResultTraffic = new PhosphorusPropertySet();
+        tvSummaryOCS_ResultTrafficInverted = new PhosphorusPropertySet();
+
+
+
 
 
         tvSummaryOCS_Created.setProperty1("OCS Creados");
         tvSummaryOCS_CreatedInverted.setProperty1("OCS Creados");
         tvSummaryOCS_Traffic.setProperty1("Trafico total");
         tvSummaryOCS_TrafficInverted.setProperty1("Trafico total");
+
         tvSummaryOCS_JobSent.setProperty1("Trabajos enviados");
         tvSummaryOCS_JobSentInverted.setProperty1("Trabajos enviados");
+        tvSummaryOCS_JobTraffic.setProperty1("Trafico trabajos");
+        tvSummaryOCS_JobTrafficInverted.setProperty1("Trafico trabajos");
 
 
+
+        tvSummaryOCS_RequestSent.setProperty1("Solicitudes enviadas");
+        tvSummaryOCS_RequestSentInverted.setProperty1("Solicitudes enviadas");
+        tvSummaryOCS_RequestTraffic.setProperty1("Trafico solicitudes");
+        tvSummaryOCS_RequestTrafficInverted.setProperty1("Trafico solicitudes");
+
+        tvSummaryOCS_ackRequestSent.setProperty1("Solicitudes(ack) enviadas");
+        tvSummaryOCS_ackRequestSentInverted.setProperty1("Solicitudes(ack)  enviadas");
+        tvSummaryOCS_ackRequestTraffic.setProperty1("Trafico solicitudes(ack)");
+        tvSummaryOCS_ackRequestTrafficInverted.setProperty1("Trafico solicitudes(ack)");
+
+        tvSummaryOCS_ResultSent.setProperty1("Respuestas enviadas");
+        tvSummaryOCS_ResultSentInverted.setProperty1("Respuestas enviadas");
+        tvSummaryOCS_ResultTraffic.setProperty1("Trafico respuestas");
+        tvSummaryOCS_ResultTrafficInverted.setProperty1("Trafico respuestas");
 
 
         tpnDireccion1.setText(graphNodeSource.getName() + "->" + graphNodeDestination.getName());
         tpnDireccion2.setText(graphNodeDestination.getName() + "->" + graphNodeSource.getName());
 
 
-        dataSummaryOCS.addAll(tvSummaryOCS_Created, tvSummaryOCS_Traffic,tvSummaryOCS_JobSent );
-        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_CreatedInverted, tvSummaryOCS_TrafficInverted,tvSummaryOCS_JobSentInverted );
+        dataSummaryOCS.addAll(
+                tvSummaryOCS_Created,
+                tvSummaryOCS_Traffic,
+                tvSummaryOCS_JobSent,
+                tvSummaryOCS_JobTraffic,
+                tvSummaryOCS_RequestSent,
+                tvSummaryOCS_RequestTraffic,
+                tvSummaryOCS_ackRequestSent,
+                tvSummaryOCS_ackRequestTraffic,
+                tvSummaryOCS_ResultSent,
+                tvSummaryOCS_ResultTraffic);
+
+
+        dataSummaryOCS_Inverted.addAll(
+                tvSummaryOCS_CreatedInverted,
+                tvSummaryOCS_TrafficInverted,
+                tvSummaryOCS_JobSentInverted,
+                tvSummaryOCS_JobTrafficInverted,
+                tvSummaryOCS_RequestSentInverted,
+                tvSummaryOCS_RequestTrafficInverted,
+                tvSummaryOCS_ackRequestSentInverted,
+                tvSummaryOCS_ackRequestTrafficInverted,
+                tvSummaryOCS_ResultSentInverted,
+                tvSummaryOCS_ResultTrafficInverted);
+
+        setInitValue(tvSummaryOCS_Created,
+                tvSummaryOCS_Traffic,
+                tvSummaryOCS_JobSent,
+                tvSummaryOCS_JobTraffic,
+                tvSummaryOCS_RequestSent,
+                tvSummaryOCS_RequestTraffic,
+                tvSummaryOCS_ackRequestSent,
+                tvSummaryOCS_ackRequestTraffic,
+                tvSummaryOCS_ResultSent,
+                tvSummaryOCS_ResultTraffic,
+                tvSummaryOCS_CreatedInverted,
+                tvSummaryOCS_TrafficInverted,
+                tvSummaryOCS_JobSentInverted,
+                tvSummaryOCS_JobTrafficInverted,
+                tvSummaryOCS_RequestSentInverted,
+                tvSummaryOCS_RequestTrafficInverted,
+                tvSummaryOCS_ackRequestSentInverted,
+                tvSummaryOCS_ackRequestTrafficInverted,
+                tvSummaryOCS_ResultSentInverted,
+                tvSummaryOCS_ResultTrafficInverted);
+
         tvSummaryOCS.setItems(dataSummaryOCS);
         tvSummaryOCS_Inverted.setItems(dataSummaryOCS_Inverted);
         tpnDireccion1.setContent(tvSummaryOCS);
         tpnDireccion2.setContent(tvSummaryOCS_Inverted);
 
 
-        tvSummaryOCS_Created.setProperty2(" " + 0);
-        tvSummaryOCS_CreatedInverted.setProperty2(" " + 0);
-        tvSummaryOCS_Traffic.setProperty2(" " + 0);
-        tvSummaryOCS_TrafficInverted.setProperty2(" " + 0);
-        tvSummaryOCS_JobSent.setProperty2(" " + 0);
-        tvSummaryOCS_JobSentInverted.setProperty2(" " + 0);
+    }
 
-
-
+    private void setInitValue(PhosphorusPropertySet... argPropertySet) {
+        for (PhosphorusPropertySet phosphorusPropertySet : argPropertySet) {
+            phosphorusPropertySet.setProperty2(" " + 0);
+        }
     }
 
     public void showLabel(double x, double y) {
@@ -226,8 +320,8 @@ public class GraphOCS implements NodeListener {
         vBoxInfoOCS.setVisible(true);
         vBoxInfoOCS.setLayoutX(x - 10);
         vBoxInfoOCS.setLayoutY(y - 10);
-        vBoxInfoOCS.setScaleX(0.8);
-        vBoxInfoOCS.setScaleY(-.8);
+        vBoxInfoOCS.setScaleX(0.7);
+        vBoxInfoOCS.setScaleY(-.7);
         vBoxInfoOCS.toFront();
 
 
@@ -250,12 +344,13 @@ public class GraphOCS implements NodeListener {
         tvSummaryOCS_Created.setProperty2(" " + countOCS);
 
     }
-    
-   public void setOCSJobSent(long jobSent) {
+
+    public void setOCSJobSent(long jobSent) {
 
         tvSummaryOCS_JobSent.setProperty2(" " + jobSent);
 
     }
+
     public void setOCSJobSentInverted(long jobSent) {
 
         tvSummaryOCS_JobSentInverted.setProperty2(" " + jobSent);
@@ -269,7 +364,6 @@ public class GraphOCS implements NodeListener {
     }
 
     public void setTrafficInverted(double traffic) {
-
         tvSummaryOCS_TrafficInverted.setProperty2(" " + traffic);
 
     }
@@ -280,6 +374,70 @@ public class GraphOCS implements NodeListener {
         }
         countOCS_Inverted++;
         tvSummaryOCS_CreatedInverted.setProperty2(" " + countOCS_Inverted);
+    }
+
+    public void setJobTraffic(double traffic) {
+        tvSummaryOCS_JobTraffic.setProperty2(" " + traffic);
+    }
+
+    public void setJobTrafficInverted(double traffic) {
+        tvSummaryOCS_JobTrafficInverted.setProperty2(" " + traffic);
+    }
+
+    public void setRequestJobSent(long jobSent) {
+        tvSummaryOCS_RequestSent.setProperty2(" " + jobSent);
+    }
+
+    public void setRequestJobSentInverted(long jobSent) {
+        tvSummaryOCS_RequestSentInverted.setProperty2(" " + jobSent);
+    }
+
+    public void setRequestJobTraffic(double traffic) {
+
+        tvSummaryOCS_RequestTraffic.setProperty2(" " + traffic);
+
+    }
+
+    public void setRequestJobTrafficInverted(double traffic) {
+        tvSummaryOCS_RequestTrafficInverted.setProperty2(" " + traffic);
+    }
+
+    public void set_ackRequestJobSent(long jobSent) {
+        tvSummaryOCS_ackRequestSent.setProperty2(" " + jobSent);
+    }
+
+    public void set_ackRequestJobSentInverted(long jobSent) {
+        tvSummaryOCS_ackRequestSentInverted.setProperty2(" " + jobSent);
+    }
+
+    public void set_ackRequestJobTraffic(double traffic) {
+        tvSummaryOCS_ackRequestTraffic.setProperty2(" " + traffic);
+    }
+
+    public void set_ackRequestJobTrafficInverted(double traffic) {
+        tvSummaryOCS_ackRequestTrafficInverted.setProperty2(" " + traffic);
+    }
+
+    public void setResultJobSent(long jobSent) {
+
+        tvSummaryOCS_ResultSent.setProperty2(" " + jobSent);
+
+    }
+
+    public void setResultJobSentInverted(long jobSent) {
+
+        tvSummaryOCS_ResultSentInverted.setProperty2(" " + jobSent);
+
+    }
+
+    public void setResultJobTraffic(double traffic) {
+
+        tvSummaryOCS_ResultTraffic.setProperty2(" " + traffic);
+
+    }
+
+    public void setResultJobTrafficInverted(double traffic) {
+        tvSummaryOCS_ResultTrafficInverted.setProperty2(" " + traffic);
     }
 
     private void addDirection() {
