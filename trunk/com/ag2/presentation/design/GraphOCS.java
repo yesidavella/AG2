@@ -319,12 +319,12 @@ public class GraphOCS implements NodeListener {
     public void showLabel(double x, double y) {
 
         vBoxInfoOCS.setVisible(true);
-        vBoxInfoOCS.setLayoutX(x - 10);
-        vBoxInfoOCS.setLayoutY(y - 10);
+        vBoxInfoOCS.setLayoutX(x );
+        vBoxInfoOCS.setLayoutY(y );
         vBoxInfoOCS.setScaleX(0.7);
         vBoxInfoOCS.setScaleY(-.7);
         vBoxInfoOCS.toFront();
-
+ 
 
     }
 
