@@ -68,7 +68,7 @@ public class UtilModel extends Util {
     }
 
     public static ResourceNode createHyridResourceNode(String id, GridSimulator simulator) {
-        ResourceNode resource = new HybridResourceNode(id, simulator);
+        ResourceNode resource = new HybridResourceNode(id, simulator, new ConstantDistribution(10));
         insertOptionsForResource(resource, simulator);
         simulator.register(resource);
         return resource;
@@ -124,7 +124,7 @@ public class UtilModel extends Util {
      * @return A new outputresource
      */
     public static ResourceNode createOutputResource(String id, GridSimulator simulator) {
-        ResourceNode resource = new OutputResourceNode(id, simulator);
+        ResourceNode resource = new OutputResourceNode(id, simulator, new ConstantDistribution(10));
         simulator.register(resource);
         return resource;
     }

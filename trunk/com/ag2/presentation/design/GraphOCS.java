@@ -22,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-
 /**
  *
  * @author Frank
@@ -55,9 +54,11 @@ public class GraphOCS implements NodeListener {
     private TableView tvSummaryOCS;
     private TableView tvSummaryOCS_Inverted;
     private PhosphorusPropertySet tvSummaryOCS_Created;
-    PhosphorusPropertySet tvSummaryOCS_Created_Inverted;
+    PhosphorusPropertySet tvSummaryOCS_CreatedInverted;
     PhosphorusPropertySet tvSummaryOCS_Traffic;
-    PhosphorusPropertySet tvSummaryOCS_Traffic_Inverted;
+    PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
+    PhosphorusPropertySet tvSummaryOCS_JobSent;
+    PhosphorusPropertySet tvSummaryOCS_JobSentInverted;
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
@@ -180,32 +181,43 @@ public class GraphOCS implements NodeListener {
 
 
         tvSummaryOCS_Created = new PhosphorusPropertySet();
-        tvSummaryOCS_Created_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_CreatedInverted = new PhosphorusPropertySet();
         tvSummaryOCS_Traffic = new PhosphorusPropertySet();
-        tvSummaryOCS_Traffic_Inverted = new PhosphorusPropertySet();
+        tvSummaryOCS_TrafficInverted = new PhosphorusPropertySet();
+        tvSummaryOCS_JobSent = new PhosphorusPropertySet();
+        tvSummaryOCS_JobSentInverted = new PhosphorusPropertySet();
+
 
         tvSummaryOCS_Created.setProperty1("OCS Creados");
-        tvSummaryOCS_Created_Inverted.setProperty1("OCS Creados");
+        tvSummaryOCS_CreatedInverted.setProperty1("OCS Creados");
         tvSummaryOCS_Traffic.setProperty1("Trafico total");
-        tvSummaryOCS_Traffic_Inverted.setProperty1("Trafico total");
+        tvSummaryOCS_TrafficInverted.setProperty1("Trafico total");
+        tvSummaryOCS_JobSent.setProperty1("Trabajos enviados");
+        tvSummaryOCS_JobSentInverted.setProperty1("Trabajos enviados");
+
+
+
 
         tpnDireccion1.setText(graphNodeSource.getName() + "->" + graphNodeDestination.getName());
         tpnDireccion2.setText(graphNodeDestination.getName() + "->" + graphNodeSource.getName());
 
 
-        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_Created_Inverted, tvSummaryOCS_Traffic_Inverted);
+        dataSummaryOCS.addAll(tvSummaryOCS_Created, tvSummaryOCS_Traffic,tvSummaryOCS_JobSent );
+        dataSummaryOCS_Inverted.addAll(tvSummaryOCS_CreatedInverted, tvSummaryOCS_TrafficInverted,tvSummaryOCS_JobSentInverted );
         tvSummaryOCS.setItems(dataSummaryOCS);
         tvSummaryOCS_Inverted.setItems(dataSummaryOCS_Inverted);
         tpnDireccion1.setContent(tvSummaryOCS);
         tpnDireccion2.setContent(tvSummaryOCS_Inverted);
-        dataSummaryOCS.addAll(tvSummaryOCS_Created, tvSummaryOCS_Traffic);
-        
-        tvSummaryOCS_Created.setProperty2(" "+0);
-        tvSummaryOCS_Created_Inverted.setProperty2(" "+0);
-        tvSummaryOCS_Traffic.setProperty2(" "+0);
-        tvSummaryOCS_Traffic_Inverted.setProperty2(" "+0);
-        
-        
+
+
+        tvSummaryOCS_Created.setProperty2(" " + 0);
+        tvSummaryOCS_CreatedInverted.setProperty2(" " + 0);
+        tvSummaryOCS_Traffic.setProperty2(" " + 0);
+        tvSummaryOCS_TrafficInverted.setProperty2(" " + 0);
+        tvSummaryOCS_JobSent.setProperty2(" " + 0);
+        tvSummaryOCS_JobSentInverted.setProperty2(" " + 0);
+
+
 
     }
 
@@ -236,19 +248,29 @@ public class GraphOCS implements NodeListener {
     public void addInstanceOCS() {
         countOCS++;
         tvSummaryOCS_Created.setProperty2(" " + countOCS);
-        
+
+    }
+    
+   public void setOCSJobSent(long jobSent) {
+
+        tvSummaryOCS_JobSent.setProperty2(" " + jobSent);
+
+    }
+    public void setOCSJobSentInverted(long jobSent) {
+
+        tvSummaryOCS_JobSentInverted.setProperty2(" " + jobSent);
 
     }
 
     public void setTraffic(double traffic) {
-        
+
         tvSummaryOCS_Traffic.setProperty2(" " + traffic);
 
     }
 
     public void setTrafficInverted(double traffic) {
-    
-        tvSummaryOCS_Traffic_Inverted.setProperty2(" " + traffic);
+
+        tvSummaryOCS_TrafficInverted.setProperty2(" " + traffic);
 
     }
 
@@ -257,7 +279,7 @@ public class GraphOCS implements NodeListener {
             addDirection();
         }
         countOCS_Inverted++;
-            tvSummaryOCS_Created_Inverted.setProperty2(" " + countOCS_Inverted);
+        tvSummaryOCS_CreatedInverted.setProperty2(" " + countOCS_Inverted);
     }
 
     private void addDirection() {
