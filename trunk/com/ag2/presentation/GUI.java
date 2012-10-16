@@ -125,6 +125,7 @@ public class GUI extends Scene {
     private VBox vbHeaderAnimationContainer;
     private Button btnShowLog = new Button("Ver registros");
     private boolean isPlaying = false; 
+    private boolean OCSView = false;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -851,6 +852,7 @@ public class GUI extends Scene {
 
     private void showNormalView() 
     {
+        OCSView= false;
         
         if(!isPlaying)
         {   
@@ -875,8 +877,17 @@ public class GUI extends Scene {
         }
         graphDesignGroup.hideLineOCS();
     }
+    
 
-    private void showLspView() {
+    public boolean isOCSView() {
+        return OCSView;
+    }
+    
+    
+    
+    private void showLspView() 
+    {
+        OCSView= true;
         disableButtons(true);
 //        tabSimulation.setContent(null);
 //        tabViewOCS.setContent(splitPane);
@@ -1373,7 +1384,7 @@ public class GUI extends Scene {
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
         btnShowLog.setDisable(false);
-        graphDesignGroup.hideLineOCS();
+//        graphDesignGroup.hideLineOCS();
     }
     
     

@@ -4,6 +4,7 @@
  */
 package com.ag2.presentation.design;
 
+import com.ag2.presentation.GUI;
 import com.ag2.presentation.control.PhosphorusPropertySet;
 import com.ag2.presentation.control.ResultsOCS;
 import com.ag2.util.Utils;
@@ -54,7 +55,7 @@ public class GraphOCS implements NodeListener {
     private TableView tvSummaryOCS;
     private TableView tvSummaryOCS_Inverted;
     private PhosphorusPropertySet tvSummaryOCS_Created;
-    PhosphorusPropertySet tvSummaryOCS_CreatedInverted;
+    private PhosphorusPropertySet tvSummaryOCS_CreatedInverted;
     PhosphorusPropertySet tvSummaryOCS_Traffic;
     PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
     PhosphorusPropertySet tvSummaryOCS_JobSent;
@@ -97,7 +98,7 @@ public class GraphOCS implements NodeListener {
 
 
         line.setStroke(Color.web("#5B88E0"));
-        dropShadow.setColor(Color.BLACK);
+        dropShadow.setColor(Color.BLACK);  
 
 
 
@@ -454,7 +455,8 @@ public class GraphOCS implements NodeListener {
         lineMiddle.setStartY(posStartY);
         lineMiddle.setEndX(posEndX);
         lineMiddle.setEndY(posEndY);
-        line.setStrokeWidth(7);
+        line.setStrokeWidth(7);  
+        
         group.getChildren().addAll(lineMiddle);
     }
 
@@ -483,4 +485,10 @@ public class GraphOCS implements NodeListener {
 
 
     }
+
+    public VBox getvBoxInfoOCS() {
+        return vBoxInfoOCS;
+    }
+    
+    
 }
