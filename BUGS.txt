@@ -19,7 +19,7 @@ ag2markov
 -Establecer tamaño de respuesta de recurso cluster (Franki).
 -Error al eliminar enlaces nullpointer mapping. (Yesid)
 -Cambiar avisos y formatos y alineacion y tooltips con ñ. (Yesid)
--Cambiar min_bw por el 3% de la velocidad del canal.(Yesid)
+-Cambiar min_bw por el 3% de la velocidad del canal.(Yesid) Listo
 
 
 #####  Cambios DESPUES de entrega de documento  ###############################################################################################################
