@@ -1007,9 +1007,6 @@ public class GUI extends Scene {
         HBox hBox = new HBox();
         hBox.setSpacing(280);
 
-
-
-
         hBox.getChildren().addAll(btnDownUp, btnShowLog);
 
         vbxProperties.getChildren().addAll(tbpProperties, vbxBottomRight, hBox);

@@ -96,35 +96,34 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
             nodeProperties.add(nodeRelationProperty);
             //===========================================================================================================
-            EntityProperty nodeTrafficPriorityProp = new EntityProperty("trafficPriority", "Prioridad de tráfico(1,2,...,10):", EntityProperty.PropertyType.NUMBER, false);
+            EntityProperty nodeTrafficPriorityProp = new EntityProperty("trafficPriority", "Prioridad Tráfico(1,2,...10)", EntityProperty.PropertyType.NUMBER, false);
             nodeTrafficPriorityProp.setFirstValue(String.valueOf(clientNode.getState().getTrafficPriority()));
             nodeProperties.add(nodeTrafficPriorityProp);
             //===========================================================================================================
-            NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Gen. de trabajos:");
+            NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Intervalo de generación de trabajo:(s)");
             createDistributionProperty(clientNode.getState().getJobInterArrival(), nodeProperties, jobsDistribution, "jobsDistribution");
             //===========================================================================================================
-            NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "Gen. de flops por trabajo:");
-            createDistributionProperty(clientNode.getState().getFlops(), nodeProperties, flopsDistribution, "flopsDistribution");
+            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Tamaño de msg confirmación:(MB)");
+            createDistributionProperty(clientNode.getState().getAckSizeDistribution(), nodeProperties, answerSizeDistribution, "answerSizeDistribution");
             //===========================================================================================================
-            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Gen. de intervalo máximo de retraso:");
-            createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
-            //===========================================================================================================
-            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Gen. del tamaño del trabajo:");
+            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Tamaño de Trabajo:(MB)");
             createDistributionProperty(clientNode.getState().getSizeDistribution(), nodeProperties, jobSizeDistribution, "jobSizeDistribution");
             //===========================================================================================================
-            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Gen. del tamaño de la respuesta:");
-            createDistributionProperty(clientNode.getState().getAckSizeDistribution(), nodeProperties, answerSizeDistribution, "answerSizeDistribution");
+            NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "FLOPS de Trabajo(Mflops):");
+            createDistributionProperty(clientNode.getState().getFlops(), nodeProperties, flopsDistribution, "flopsDistribution");
+            //===========================================================================================================
+//            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Gen. de intervalo máximo de retraso:");
+//            createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
 
 
         } else if (graphNode instanceof ResourceGraphNode) {
 
             ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(graphNode);
 
-            EntityProperty cpuCapacityProperty = new EntityProperty("CpuCapacity", "Capacidad de cada CPU:", EntityProperty.PropertyType.TEXT, false);
+            EntityProperty cpuCapacityProperty = new EntityProperty("CpuCapacity", "Capacidad de CPU:(MHz)", EntityProperty.PropertyType.TEXT, false);
             CPU cpu = (CPU) resource.getCpuSet().get(0);
 
             if (cpu != null) {
-
                 cpuCapacityProperty.setFirstValue(String.valueOf(cpu.getCpuCapacity()));
             } else {
                 cpuCapacityProperty.setFirstValue("0");
@@ -132,13 +131,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeProperties.add(cpuCapacityProperty);
 
             //===========================================================================================================
-            EntityProperty cpuCountProperty = new EntityProperty("CpuCount", "Cantidad de CPUs:", EntityProperty.PropertyType.TEXT, false);
+            EntityProperty cpuCountProperty = new EntityProperty("CpuCount", "Número de CPUs:", EntityProperty.PropertyType.TEXT, false);
             cpuCountProperty.setFirstValue(String.valueOf(resource.getCpuCount()));
             nodeProperties.add(cpuCountProperty);
-            //============================================================================================================
-
             //===========================================================================================================
-            EntityProperty queueSizeProperty = new EntityProperty("QueueSize", "Tamaño de Buffer:", EntityProperty.PropertyType.TEXT, false);
+            EntityProperty queueSizeProperty = new EntityProperty("QueueSize", "Tamaño Buffer de Trabajos:", EntityProperty.PropertyType.TEXT, false);
             queueSizeProperty.setFirstValue(String.valueOf(resource.getMaxQueueSize()));
             nodeProperties.add(queueSizeProperty);
 
@@ -315,11 +312,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             }
 
         } else if (selectedGraphNode instanceof BrokerGrahpNode) {
-            
+
             if (id.equalsIgnoreCase("relationshipBrokerAndPCE")) {
 
                 ServiceNode broker = (ServiceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
-                
+
                 GraphNode pceGraphNodeSelected = findNodoGraficoByName(value, MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer());
                 if (pceGraphNodeSelected != null) {
                     broker.setPce((PCE) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(pceGraphNodeSelected));
@@ -343,11 +340,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.ER_LANG);
             DDErlang dDErlang = (DDErlang) discreteDistribution;
 
-            EntityProperty propertyA = new EntityProperty(id + "_DDErlang_Orden", "Orden", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDErlang_Orden", "orden", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(dDErlang.getN()));
             nodeProperties.add(propertyA);
 
-            EntityProperty propertyB = new EntityProperty(id + "_DDErlang_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyB = new EntityProperty(id + "_DDErlang_Promedio", "promedio", EntityProperty.PropertyType.NUMBER, true);
             propertyB.setFirstValue(String.valueOf(dDErlang.getAvg()));
             nodeProperties.add(propertyB);
 
@@ -355,18 +352,18 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.HYPER_EXPONENTIAL);
             DDHyperExp dDHyperExp = (DDHyperExp) discreteDistribution;
 
-            EntityProperty propertyA = new EntityProperty(id + "_DDHyperExp_Lambdas", "Lambdas", EntityProperty.PropertyType.TEXT, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDHyperExp_Lambdas", "lambdas", EntityProperty.PropertyType.TEXT, true);
             propertyA.setFirstValue(getStringArrayDoubles(dDHyperExp.getLambdas()));
             nodeProperties.add(propertyA);
 
-            EntityProperty propertyB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "Oportunidades", EntityProperty.PropertyType.TEXT, true);
+            EntityProperty propertyB = new EntityProperty(id + "_DDHyperExp_Oportunidades", "oportunidades", EntityProperty.PropertyType.TEXT, true);
             propertyB.setFirstValue(getStringArrayDoubles(dDHyperExp.getChances()));
             nodeProperties.add(propertyB);
 
         } else if (discreteDistribution instanceof DDNegExp) {
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.NEGATIVE_EXPONENTIAL);
             DDNegExp dDNegExp = (DDNegExp) discreteDistribution;
-            EntityProperty propertyA = new EntityProperty(id + "_DDNegExp_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDNegExp_Promedio", "promedio", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(dDNegExp.getAvg()));
             nodeProperties.add(propertyA);
 
@@ -374,11 +371,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.NORMAL);
             DDNormal dDNormal = (DDNormal) discreteDistribution;
 
-            EntityProperty propertyA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "Desviación estándar", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDNormal_DesviacionEstandar", "desviación estándar", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(dDNormal.getDev()));
             nodeProperties.add(propertyA);
 
-            EntityProperty propertyB = new EntityProperty(id + "_DDNormal_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyB = new EntityProperty(id + "_DDNormal_Promedio", "promedio", EntityProperty.PropertyType.NUMBER, true);
             propertyB.setFirstValue(String.valueOf(dDNormal.getAvg()));
             nodeProperties.add(propertyB);
 
@@ -386,7 +383,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.POISSON_PROCESS);
             DDPoissonProcess dDPoissonProcess = (DDPoissonProcess) discreteDistribution;
-            EntityProperty propertyA = new EntityProperty(id + "_DDPoissonProcess_Promedio", "Promedio", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDPoissonProcess_Promedio", "promedio", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(dDPoissonProcess.getAverage()));
             nodeProperties.add(propertyA);
 
@@ -394,11 +391,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.UNMIFORM);
             DDUniform dDUniform = (DDUniform) discreteDistribution;
 
-            EntityProperty propertyA = new EntityProperty(id + "_DDUniform_Minimo", "Mínimo", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_DDUniform_Minimo", "mínimo", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(dDUniform.getMin()));
             nodeProperties.add(propertyA);
 
-            EntityProperty propertyB = new EntityProperty(id + "_DDUniform_Maximo", "Máximo", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyB = new EntityProperty(id + "_DDUniform_Maximo", "máximo", EntityProperty.PropertyType.NUMBER, true);
             propertyB.setFirstValue(String.valueOf(dDUniform.getMax()));
             nodeProperties.add(propertyB);
 
@@ -406,7 +403,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeDistributionProperty.setFirstValue(NodeDistributionProperty.DistributionType.CONSTANT);
             ConstantDistribution constantDistribution = (ConstantDistribution) discreteDistribution;
 
-            EntityProperty propertyA = new EntityProperty(id + "_ConstantDistribution_Constante", "Constante", EntityProperty.PropertyType.NUMBER, true);
+            EntityProperty propertyA = new EntityProperty(id + "_ConstantDistribution_Constante", "constante", EntityProperty.PropertyType.NUMBER, true);
             propertyA.setFirstValue(String.valueOf(constantDistribution.getConstant()));
             nodeProperties.add(propertyA);
         }
@@ -575,14 +572,14 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     ((AbstractClient) clientNode).setServiceNode(null);
                 }
             }
-        }else if (graphNode instanceof PCE_SwicthGraphNode) {
-            
+        } else if (graphNode instanceof PCE_SwicthGraphNode) {
+
             for (SimBaseEntity brokerNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ServiceNode.class)) {
-                
-                PCE pceRegisteredOnBroker = ((ServiceNode)brokerNode).getPce();
-                
-                if(pceRegisteredOnBroker!=null && phosNodeRemoved.getId().equalsIgnoreCase(pceRegisteredOnBroker.getId())){
-                    ((ServiceNode)brokerNode).setPce(null);
+
+                PCE pceRegisteredOnBroker = ((ServiceNode) brokerNode).getPce();
+
+                if (pceRegisteredOnBroker != null && phosNodeRemoved.getId().equalsIgnoreCase(pceRegisteredOnBroker.getId())) {
+                    ((ServiceNode) brokerNode).setPce(null);
                 }
             }
         }

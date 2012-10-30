@@ -29,12 +29,13 @@ public class GridSimulatorModel extends Grid.GridSimulator {
     }
 
     private void initRoutingObjLoadingConfigFile() {
-        if (PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)) {
-            super.setRouting(new RoutingViaJung(this,"routing"));
-        } else {
-            super.setRouting(new ShortesPathRouting(this));
-        }
+//        if (PropertyPhosphorusTypeEnum.getBooleanProperty(PropertyPhosphorusTypeEnum.ROUTED_VIA_JUNG)) {
+//            super.setRouting(new RoutingViaJung(this,"routing"));
+//        } else {
+//            super.setRouting(new ShortesPathRouting(this));
+//        }
         //Needs to read
+        super.setRouting(new RoutingViaJung(this,"routing"));
         super.setPhysicTopology(new RoutingViaJung(this,"fiscaTopo"));
     }
 

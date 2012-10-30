@@ -27,8 +27,8 @@ public class UtilModel extends Util {
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_JOB_IAT)));
         client.getState().setFlops(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_FLOP_SIZE)));
-        client.getState().setMaxDelayInterval(new ConstantDistribution( 
-                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
+//        client.getState().setMaxDelayInterval(new ConstantDistribution( 
+//                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
         client.getState().setSizeDistribution(new ConstantDistribution( 
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_DATA_SIZE)));
         double ackSize = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.ACK_SIZE);
@@ -85,7 +85,7 @@ public class UtilModel extends Util {
         Switch sw = new HybridSwitchImpl(id, simulator,
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_FIND_COMMON_WAVELENGHT),
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_ALLOCATE_WAVELENGHT));
-        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+//        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }
@@ -101,7 +101,7 @@ public class UtilModel extends Util {
         PCE pce = new PCE(id, simulator,
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_FIND_COMMON_WAVELENGHT),
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OCS_SETUP_ALLOCATE_WAVELENGHT));
-        pce.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+//        pce.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(pce);
         return pce;
     }
@@ -111,7 +111,7 @@ public class UtilModel extends Util {
      */
     public static Switch createHybridOutputSwitch(String id, GridSimulator simulator) {
         Switch sw = new OuputSwitchForHybridCase(id, simulator);
-        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
+//        sw.setHandleDelay(new Time(PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.OBS_HANDLE_TIME)));
         simulator.register(sw);
         return sw;
     }

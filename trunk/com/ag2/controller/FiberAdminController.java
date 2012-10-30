@@ -58,6 +58,18 @@ public class FiberAdminController extends LinkAdminAbstractController {
         PhosphorusLinkModel phosphorusSelectedLinkModel = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(graphLink);
         GridOutPort gridOutPortA = phosphorusSelectedLinkModel.getGridOutPortA();
         GridOutPort gridOutPortB = phosphorusSelectedLinkModel.getGridOutPortB();
+
+        /*
+         **Propiedades comunes en ambas direcciones del canal.
+         */
+        EntityProperty wavelengthsProperty = new EntityProperty("defaultWavelengths", "Número de lambdas:", EntityProperty.PropertyType.NUMBER, false);
+        wavelengthsProperty.setFirstValue((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
+        entityPropertys.add(wavelengthsProperty);
+        
+        EntityProperty switchingSpeedProperty = new EntityProperty("switchingSpeed", "Velocidad de conmutación:(Mbps)", EntityProperty.PropertyType.NUMBER, false);
+        switchingSpeedProperty.setFirstValue((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
+        entityPropertys.add(switchingSpeedProperty);
+
         /*
          **Enlace de nodo Phosphorous de A hacia B (A->B)
          */
@@ -66,7 +78,7 @@ public class FiberAdminController extends LinkAdminAbstractController {
         linkAB_NameProperty.setFirstValue(graphLink.getGraphNodeA().getName() + "-->" + graphLink.getGraphNodeB().getName());
         entityPropertys.add(linkAB_NameProperty);
 
-        EntityProperty linkABSpeedProperty = new EntityProperty("linkSpeedAB", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        EntityProperty linkABSpeedProperty = new EntityProperty("linkSpeedAB", "Velocidad del enlace:(Mbps)", EntityProperty.PropertyType.NUMBER, false);
         linkABSpeedProperty.setFirstValue(Double.toString(gridOutPortA.getLinkSpeed()));
         entityPropertys.add(linkABSpeedProperty);
         //===========================================================================================================
@@ -79,42 +91,31 @@ public class FiberAdminController extends LinkAdminAbstractController {
         linkBA_NameProperty.setFirstValue(graphLink.getGraphNodeB().getName() + "-->" + graphLink.getGraphNodeA().getName());
         entityPropertys.add(linkBA_NameProperty);
 
-        EntityProperty linkBASpeedProperty = new EntityProperty("linkSpeedBA", "Vel. del Enlace:", EntityProperty.PropertyType.NUMBER, false);
+        EntityProperty linkBASpeedProperty = new EntityProperty("linkSpeedBA", "Velocidad del enlace:(Mbps)", EntityProperty.PropertyType.NUMBER, false);
         linkBASpeedProperty.setFirstValue(Double.toString(gridOutPortB.getLinkSpeed()));
         entityPropertys.add(linkBASpeedProperty);
         //===========================================================================================================
-
-        /*
-         **Propiedades comunes en ambas direcciones del canal.
-         */
-        EntityProperty switchingSpeedProperty = new EntityProperty("switchingSpeed", "Vel. de Conmutación:", EntityProperty.PropertyType.NUMBER, false);
-        switchingSpeedProperty.setFirstValue((gridOutPortA.getSwitchingSpeed() == gridOutPortB.getSwitchingSpeed()) ? Double.toString(gridOutPortB.getSwitchingSpeed()) : "Problema leyendo Vel. de conmutación.");
-        entityPropertys.add(switchingSpeedProperty);
-
-        EntityProperty wavelengthsProperty = new EntityProperty("defaultWavelengths", "Cantidad de λs:", EntityProperty.PropertyType.NUMBER, false);
-        wavelengthsProperty.setFirstValue((gridOutPortA.getMaxNumberOfWavelengths() == gridOutPortB.getMaxNumberOfWavelengths()) ? Integer.toString(gridOutPortB.getMaxNumberOfWavelengths()) : "Problema leyendo el numero de λ.");
-        entityPropertys.add(wavelengthsProperty);
 
         entityPropertyTable.loadProperties(entityPropertys);
     }
 
     @Override
-    public void updatePropiedad(GraphLink graphLink, String id, String valor) {
+    public void updatePropiedad(GraphLink graphLink, String id, String value) {
 
-        graphLink.getProperties().put(id, valor);
+        graphLink.getProperties().put(id, value);
 
         PhosphorusLinkModel phosphorusLinkModelSelected = (PhosphorusLinkModel) MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer().get(graphLink);
 
         if (id.equalsIgnoreCase("linkSpeedAB")) {
-            phosphorusLinkModelSelected.getGridOutPortA().setLinkSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setLinkSpeed(Double.valueOf(value));
         } else if (id.equalsIgnoreCase("linkSpeedBA")) {
-            phosphorusLinkModelSelected.getGridOutPortB().setLinkSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortB().setLinkSpeed(Double.valueOf(value));
         } else if (id.equalsIgnoreCase("switchingSpeed")) {
-            phosphorusLinkModelSelected.getGridOutPortA().setSwitchingSpeed(Double.valueOf(valor));
-            phosphorusLinkModelSelected.getGridOutPortB().setSwitchingSpeed(Double.valueOf(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setSwitchingSpeed(Double.valueOf(value));
+            phosphorusLinkModelSelected.getGridOutPortB().setSwitchingSpeed(Double.valueOf(value));
         } else if (id.equalsIgnoreCase("defaultWavelengths")) {
-            phosphorusLinkModelSelected.getGridOutPortA().setMaxNumberOfWavelengths(Integer.parseInt(valor));
-            phosphorusLinkModelSelected.getGridOutPortB().setMaxNumberOfWavelengths(Integer.parseInt(valor));
+            phosphorusLinkModelSelected.getGridOutPortA().setMaxNumberOfWavelengths(Integer.parseInt(value));
+            phosphorusLinkModelSelected.getGridOutPortB().setMaxNumberOfWavelengths(Integer.parseInt(value));
         }
     }
 

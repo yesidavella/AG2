@@ -22,86 +22,84 @@ import javafx.scene.input.MouseEvent;
  */
 public enum PropertyPhosphorusTypeEnum {
 
-    /*
-     * Tiempo de simulacion en milisegundos.
+//****************************SIMULATION PROPERTIES*****************************
+    SIMULATION_TIME("simulationTime", "Tiempo de Simulación:(s)", new TextField()),
+    /**
+     * Paso ciclico de tiempo en el que el simulador verifica terminar la
+     * simulacion.
      */
-    SIMULATION_TIME("simulationTime", "Tiempo de Simulación(s):", new TextField()),
+    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", "Paso ciclico de fin simulacion:(s)", new TextField()),
+    //    ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox()),
     /**
      * Se desea que genere o no archivos HTML del paso a paso de la simulacion.
      */
     /// OUTPUT("output", "output(Franklin)", new CheckBox()),
-    STOP_EVENT_OFF_SETTIME("stopEventOffSetTime", "stopEventOffSetTime(s)", new TextField()),
-    SWITCHING_SPEED("switchingSpeed", "Vel. de conmutación(Mbps):", new TextField()),
+    OUTPUT_FILE_NAME("outputFileName", "Nombre archivo de log:", new TextField()),
+    //*****************************LINK PROPERTIES******************************
     /**
      * Cantidad de lambdas en la fibra optica.
      */
-    DEFAULT_WAVELENGTHS("defaultWavelengths", "Numero de lambdas:", new TextField()),
-    //The size of control messages. If control messages are 0, the are being send immediately
-    ACK_SIZE("ACKsize", "Tamaño AKC(MB):", new TextField()),
-    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPUs/clúster(MHz):", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
-    DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs/clúster:", new TextField()),
+    DEFAULT_WAVELENGTHS("defaultWavelengths", "Número de lambdas:", new TextField()),
+    /**
+     * Tiempo necesario en alcanzar la otra punta del enlace de un mensaje.
+     */
+    LINK_SPEED("linkSpeed", "Velocidad del enlace:(Mbps)", new TextField()),
+    //****************************SWITCH PROPERTIES*****************************
+    /**
+     * El costo de busqueda de una longitud de onda mientras el OCS es
+     * establecido.
+     */
+    OCS_SETUP_FIND_COMMON_WAVELENGHT("findCommonWavelenght", "Tiempo buscar λ en creación OCS:(s)", new TextField()),
+    /**
+     * El costo de alojar una longitud de onda en el OCS mientras es establecido el OCS
+     */
+    OCS_SETUP_ALLOCATE_WAVELENGHT("allocateWavelenght", "Tiempo alojar λ en creación OCS:(s)", new TextField()),
+    CONFIRM_OCS_DELAY("confirmOCSDelay", "Tiempo de retardo confirmación OCS:(s)", new TextField()),
+    /**
+     * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
+     * conmutadores hibridos. Esto es la propiedad HandleDelay.
+     */
+    //    OBS_HANDLE_TIME("OBSHandleTime", "Retardo conmutación OBS(s):", new TextField()),
+    /**
+     * Retraso por nodo de un flujo sobre un circuito optico establecido
+     */
+    OCS_SWITCH_DELAY("OCS_SwitchingDelay", "Retardo de conmutación en OCS:(s)", new TextField()),
+    SWITCHING_SPEED("switchingSpeed", "Velocidad de conmutación:(Mbps)", new TextField()),
+    //***************************RESOURCE PROPERTIES****************************
+    DEFAULT_CPU_CAPACITY("defaultCpuCapacity", "Capacidad de CPU:(MHz)", new TextField()),//Antes se llamaba DEFAULT_CAPACITY
+    DEFAULT_CPU_COUNT("defaultCPUCount", "Número de CPUs:", new TextField()),
     /**
      * Cantidad de trabajos a encolar en el buffer del nodo recurso
      */
-    DEFAULT_QUEUE_SIZE("defaultQueueSize", "Buffer de Trabajos/cluster:", new TextField()),
+    DEFAULT_QUEUE_SIZE("defaultQueueSize", "Tamaño Buffer de Trabajos/cluster:", new TextField()),
+    //***********************CLIENT PROPERTIES**********************************
+    /**
+     * Toma la prioridad del trafico q se le asigna a un Cliente.
+     */
+    CLIENT_TRAFFIC_PRIORITY("clientTrafficPriority", "Prioridad Tráfico/cliente(1,2,...10)", new TextField()),
+    /**
+     * Cada vez q se cumpla este intervalo se generara una nueva solicitud para
+     * generar un requestMsg.
+     */
+    DEFAULT_JOB_IAT("defaultJobIAT", "Intervalo de generación de trabajo:(s)", new TextField()),
+    //The size of control messages. If control messages are 0, the are being send immediately
+    ACK_SIZE("ACKsize", "Tamaño de msg confirmación:(MB)", new TextField()),
+    /**
+     * Tamaño de cada trabajo jobMsg.
+     */
+    DEFAULT_DATA_SIZE("defaultDataSize", "Tamaño de Trabajo:(MB)", new TextField()),
     /**
      * Determina el tiempo q tarde ejecutando un trabajo en el Nodo de recurso
      * segun su capacidad. double executionTime = job.getMsg().getFlops() /
      * cpu.getCpuCapacity();
      */
-    DEFAULT_FLOP_SIZE("defaultFlopSize", "FLOPS/Trabajo(Mflops):", new TextField()),
-    /**
-     * Promedio del tamaño de cada trabajo.
-     */
-    DEFAULT_DATA_SIZE("defaultDataSize", "Tamaño/Trabajo(MB):", new TextField()),
-    /**
-     * Promedio de la exp. neg. de duracion del Intervalo sin q lleguen trabajos
-     */
-    DEFAULT_JOB_IAT("defaultJobIAT", "IAT Intervalo LLegada/Trabajo(s):", new TextField()),
+    DEFAULT_FLOP_SIZE("defaultFlopSize", "FLOPS de Trabajo(Mflops):", new TextField());
     /**
      * Promedio de la exp. neg. del retraso maximo en la solicitud del trabajo
      * Al parecer nunca se utiliza en serio.SOlo se utiliza en getMaxEndTime(),
      * pero este ultimo metodo nunca es utilizado.
      */
-    MAX_DELAY("maxDelay", "Retraso máx/Trab_Req(s):", new TextField()),
-    OUTPUT_FILE_NAME("outputFileName", "Nombre del archivos de salida:", new TextField()),
-    /**
-     * Tiempo de retardo al conmutar un msg, solo usado en OBSSwitchImpl, NO en
-     * conmutadores hibridos. Esto es la propiedad HandleDelay.
-     */
-    OBS_HANDLE_TIME("OBSHandleTime", "Retardo OBS(s):", new TextField()),
-    /**
-     * Tiempo q se demora en crear o eliminar un OCS. Solo usado en el
-     * OCSEndSender.
-     */
-//    OCS_SETUP_HANDLE_TIME("OCSSetupHandleTime", "Tiempo crear/eliminar un OCS(ms):", new TextField()),
-    
-    /**
-     * El costo de busqueda de una longitud de onda mientras el OCS es establecido.
-     */
-    OCS_SETUP_FIND_COMMON_WAVELENGHT("findCommonWavelenght","Costo buscar λ en creación OCS(s):", new TextField()),
-    
-    /**
-     * El costo de alojar una longitud de onda en el OCS mientras es establecido
-     */
-    OCS_SETUP_ALLOCATE_WAVELENGHT("allocateWavelenght","Costo alojar λ en creación OCS(s):", new TextField()),
-    /**
-     * Tiempo necesario en alcanzar la otra punta del enlace de un mensaje.
-     */
-    LINK_SPEED("linkSpeed", "Vel. del enlace(Mbps):", new TextField()),
-    //DEFAULT_LINK_SPEED("defaultLinkSpeed", "a", new TextField()),
-    ROUTED_VIA_JUNG("routedViaJUNG", "Enrutar via:(T)Jung (F)ShortesPath", new CheckBox()),
-    /**
-     * Toma la prioridad del trafico q se le asigna a un Cliente.
-     */
-    CLIENT_TRAFFIC_PRIORITY("clientTrafficPriority","Prioridad Tráfico/cliente(1,2,...10)", new TextField()),
-     /**
-     * Retraso por nodo de un flujo sobre  un circuito optico establecido 
-     */
-    OCS_SWITCH_DELAY("OCS_SwitchingDelay","Retraso de conmutación en OCS:(s)", new TextField()),
-    
-    CONFIRM_OCS_DELAY("confirmOCSDelay","Retraso de confirmacion en OCS:(s)", new TextField());
-    
+//    MAX_DELAY("maxDelay", "Retraso máx/Trab_Req(s):", new TextField());
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;
@@ -147,7 +145,6 @@ public enum PropertyPhosphorusTypeEnum {
         }
 
         checkBox.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent actionEvent) {
                 CheckBox checkBox = (CheckBox) actionEvent.getSource();
                 if (checkBox.isSelected()) {
@@ -159,7 +156,7 @@ public enum PropertyPhosphorusTypeEnum {
                 if (getPhosphorusPropertyName().equalsIgnoreCase("routedViaJUNG")) {
                     Routing routing;
                     if (checkBox.isSelected()) {
-                        routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel(),"routing");
+                        routing = new RoutingViaJung(SimulationBase.getInstance().getGridSimulatorModel(), "routing");
                     } else {
                         routing = new ShortesPathRouting(SimulationBase.getInstance().getGridSimulatorModel());
                     }
@@ -175,14 +172,12 @@ public enum PropertyPhosphorusTypeEnum {
         textField.setText(phosphorusPropertyEditor.getPropertyValue(this));
 
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent event) {
                 GUI.getInstance().getGraphDesignGroup().getGroup().requestFocus();
             }
         });
 
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
 
                 if (beforeStateFocus == true && currentStateFocus == false) {
@@ -198,8 +193,8 @@ public enum PropertyPhosphorusTypeEnum {
         return phosphorusPropertyName;
     }
 
-    public void writeProperty(String valor) {
-        phosphorusPropertyEditor.setPropertyValue(this, valor);
+    public void writeProperty(String value) {
+        phosphorusPropertyEditor.setPropertyValue(this, value);
     }
 
     public static ObservableList getData(ExecuteController executeController) {
