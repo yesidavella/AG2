@@ -417,7 +417,7 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 /*Tablaview de propiedades de SIMULACION y DISPOSITIVO*/
-.tab-pane#tabpaneProperties .table-cell{
+.tab-pane#tabpaneProperties .table-cell, .tab-pane#tabpaneProperties .table-cell .text-field{
     -fx-alignment:center-right;
 }
 
@@ -434,6 +434,7 @@ ProgressBar progress-bar:indeterminate .bar {
     -fx-border-style: solid;
     -fx-border-color:#959595 #959595 transparent #959595;
 }
+
 #pill-left {
     -fx-padding: 5;
     -fx-border-image-source: url("left-btn.png");
@@ -450,8 +451,8 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 #pill-left:selected .label {
-   /* -fx-text-fill: black; */
-   -fx-text-fill: white;
+    /* -fx-text-fill: black; */
+    -fx-text-fill: white;
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
 #pill-center {
@@ -493,5 +494,3 @@ ProgressBar progress-bar:indeterminate .bar {
 #pill-fondo{
     -fx-background-color: #C3D5FF;
 }
-   
-
