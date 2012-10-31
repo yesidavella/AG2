@@ -20,7 +20,7 @@ public class ChartsResultClient implements ViewResultsClientChart {
     private Tab tab;
     private ScrollPane scrollPane;
     private VBox vbxPlay;
-    private VBox vbxMain;
+    private VBox vbxAllPage;
     private HBox hBoxMainClient;
     private int countPlays = 1;
     private BarChart<String, Number> barChart;
@@ -34,10 +34,11 @@ public class ChartsResultClient implements ViewResultsClientChart {
     public ChartsResultClient(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
-        vbxMain = new VBox();
-        vbxMain.setPadding(new Insets(10, 10, 10, 10));
-        vbxMain.setSpacing(10);
-        scrollPane.setContent(vbxMain);
+        scrollPane.getStyleClass().add("bg-general-container");
+        vbxAllPage = new VBox();
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setSpacing(10);
+        scrollPane.setContent(vbxAllPage);
         tab.setContent(scrollPane);
     }
 
@@ -51,7 +52,7 @@ public class ChartsResultClient implements ViewResultsClientChart {
         vbxPlay.getChildren().addAll(lblTitle, hBoxMainClient);
         vbxPlay.getStyleClass().add("boxChart");
         vbxPlay.setAlignment(Pos.CENTER);
-        vbxMain.getChildren().add(0, vbxPlay);
+        vbxAllPage.getChildren().add(0, vbxPlay);
 
         countPlays++;
 
@@ -61,7 +62,7 @@ public class ChartsResultClient implements ViewResultsClientChart {
         barChart = new BarChart<String, Number>(xAxis, yAxis);
         barChart.setTitle("Grafico de clientes solicitudes/trabajos");
         barChart.setMinHeight(550);
-        barChart.setMinWidth(100);
+        barChart.setMinWidth(1000);
 
         xAxis.setLabel("Clientes");
         yAxis.setLabel("Solicitudes/Trabajos");

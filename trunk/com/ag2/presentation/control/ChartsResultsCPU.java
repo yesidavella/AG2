@@ -41,7 +41,7 @@ import javafx.util.Duration;
 public class ChartsResultsCPU {
 
     private Tab tab;
-    private VBox vBox;
+    private VBox vbxAllPage;
     private transient Timeline time = new Timeline();
     private ScrollPane scrollPane;
     private LineChart<Number, Number> lineChart;
@@ -54,13 +54,14 @@ public class ChartsResultsCPU {
     public ChartsResultsCPU(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
+        scrollPane.getStyleClass().add("bg-general-container");
         dataChartResourceController = new DataChartResourceController();
-        vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.setSpacing(5);
-        vBox.setFillWidth(true);
-        scrollPane.setContent(vBox);
+        vbxAllPage = new VBox();
+        vbxAllPage.setAlignment(Pos.CENTER);
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setSpacing(5);
+        vbxAllPage.setFillWidth(true);
+        scrollPane.setContent(vbxAllPage);
         tab.setContent(scrollPane);
     }
 
@@ -95,17 +96,13 @@ public class ChartsResultsCPU {
 
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
 
 
-                for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) 
-                {
-                    if (dataChartResourceController.loadDataChartResourceCPU(resourceGraphNode)) 
-                    {
-                        if(dataChartResourceController.getTime()>0)
-                        {
+                for (ResourceGraphNode resourceGraphNode : relationResourceSerie.keySet()) {
+                    if (dataChartResourceController.loadDataChartResourceCPU(resourceGraphNode)) {
+                        if (dataChartResourceController.getTime() > 0) {
                             XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
                             serie.getData().add(new XYChart.Data<Number, Number>(dataChartResourceController.getTime(), dataChartResourceController.getValue1()));
                         }
@@ -127,7 +124,7 @@ public class ChartsResultsCPU {
         HBox.setHgrow(gridPane, Priority.ALWAYS);
         hBox.getChildren().addAll(gridPane, lineChart);
         hBox.setMinWidth(1200);
-        vBox.getChildren().add(0, hBox);
+        vbxAllPage.getChildren().add(0, hBox);
     }
 
     private GridPane loadInfoCPUResource() {

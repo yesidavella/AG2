@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ag2.presentation.control;
 
 import com.ag2.util.Utils;
@@ -23,7 +19,7 @@ public class ChartsResultResource implements ViewResultsResourceChart {
     private transient Tab tab;
     private transient ScrollPane scrollPane;
     private transient VBox vBoxPlay;
-    private transient VBox vBoxMain;
+    private transient VBox vbxAllPage;
     private transient HBox hBoxMainResource;
     private transient int countPlays = 1;
     private transient BarChart<String, Number> barChart;
@@ -33,18 +29,19 @@ public class ChartsResultResource implements ViewResultsResourceChart {
 //    private transient XYChart.Series<String, Number> series4;
     private transient CategoryAxis xAxis = new CategoryAxis();
     private transient NumberAxis yAxis;
-    private   PieChart pieChartRecieve;
-    private   PieChart pieChartSent;
+    private PieChart pieChartRecieve;
+    private PieChart pieChartSent;
     private ObservableList<PieChart.Data> pieChartDataReceive;
     private ObservableList<PieChart.Data> pieChartDataSent;
 
     public ChartsResultResource(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
-        vBoxMain = new VBox();
-        vBoxMain.setPadding(new Insets(10, 10, 10, 10));
-        vBoxMain.setSpacing(10);
-        scrollPane.setContent(vBoxMain);
+        scrollPane.getStyleClass().add("bg-general-container");
+        vbxAllPage = new VBox();
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setSpacing(10);
+        scrollPane.setContent(vbxAllPage);
         tab.setContent(scrollPane);
     }
 
@@ -58,7 +55,7 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         vBoxPlay.getChildren().addAll(lblTitle, hBoxMainResource);
         vBoxPlay.getStyleClass().add("boxChart");
         vBoxPlay.setAlignment(Pos.CENTER);
-        vBoxMain.getChildren().add(0, vBoxPlay);
+        vbxAllPage.getChildren().add(0, vBoxPlay);
 
         countPlays++;
 
@@ -89,23 +86,23 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         vBoxBar.getStyleClass().add("boxChart2");
         vBoxBar.getChildren().addAll(hBoxClient);
         vBoxBar.getChildren().add(barChart);
-        
+
         pieChartDataReceive = FXCollections.observableArrayList();
         pieChartDataSent = FXCollections.observableArrayList();
-        
+
         VBox vBoxPieReceive = new VBox();
         vBoxPieReceive.getStyleClass().add("boxChart2");
-        pieChartRecieve = new PieChart(pieChartDataReceive);   
+        pieChartRecieve = new PieChart(pieChartDataReceive);
         pieChartRecieve.setTitle("Trabajos recibidos");
         vBoxPieReceive.getChildren().addAll(pieChartRecieve);
-        
+
         VBox vBoxPieSent = new VBox();
-        vBoxPieSent.getStyleClass().add("boxChart2");        
-        pieChartSent = new PieChart(pieChartDataSent);        
+        vBoxPieSent.getStyleClass().add("boxChart2");
+        pieChartSent = new PieChart(pieChartDataSent);
         pieChartSent.setTitle("Resultados enviados");
         vBoxPieSent.getChildren().addAll(pieChartSent);
-        
-        hBoxMainResource.getChildren().addAll(vBoxPieReceive,vBoxPieSent, vBoxBar);
+
+        hBoxMainResource.getChildren().addAll(vBoxPieReceive, vBoxPieSent, vBoxBar);
 
     }
 
@@ -116,9 +113,9 @@ public class ChartsResultResource implements ViewResultsResourceChart {
         series1.getData().add(new XYChart.Data<String, Number>(graficalname, jobReceive));
         series2.getData().add(new XYChart.Data<String, Number>(graficalname, resultSent));
         barChart.setMinWidth(barChart.getMinWidth() + 120);
-        
-        pieChartDataReceive.add(    new PieChart.Data(graficalname, jobReceive));
-        pieChartDataSent.add(    new PieChart.Data(graficalname, resultSent));
+
+        pieChartDataReceive.add(new PieChart.Data(graficalname, jobReceive));
+        pieChartDataSent.add(new PieChart.Data(graficalname, resultSent));
 
     }
 }

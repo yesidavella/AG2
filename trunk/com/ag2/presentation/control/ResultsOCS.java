@@ -26,7 +26,7 @@ public class ResultsOCS {
 
     private transient Tab tab;
     private ScrollPane scrollPane;
-    private VBox vBoxMain;
+    private VBox vbxAllPage;
     private TableView tvSummaryOCS ;
     private TableView tvInstaceOCS ;
     private ObservableList<SummaryOCSData> dataSummaryOCS = FXCollections.observableArrayList();
@@ -41,11 +41,13 @@ public class ResultsOCS {
         this.tab = tab;
         scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
-        vBoxMain = new VBox();
-        vBoxMain.setFillWidth(true);
-        vBoxMain.setPadding(new Insets(10, 10, 10, 10));
-        vBoxMain.setAlignment(Pos.CENTER);
-        vBoxMain.setSpacing(10);           
+        scrollPane.getStyleClass().add("bg-general-container");
+        
+        vbxAllPage = new VBox();
+        vbxAllPage.setFillWidth(true);
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setAlignment(Pos.CENTER);
+        vbxAllPage.setSpacing(10);           
 
         lblSummaryOCS = new Label(" Resumen de Caminos Conmutados de Etiquetas de la capa optica (λSP) ");
         lblInstanceOCS = new Label();
@@ -55,8 +57,8 @@ public class ResultsOCS {
         createTVSummaryOCS();
         createTVInstanceOCS();
                 
-        vBoxMain.getChildren().addAll(lblSummaryOCS, tvSummaryOCS, lblInstanceOCS, tvInstaceOCS);
-        scrollPane.setContent(vBoxMain);
+        vbxAllPage.getChildren().addAll(lblSummaryOCS, tvSummaryOCS, lblInstanceOCS, tvInstaceOCS);
+        scrollPane.setContent(vbxAllPage);
         tab.setContent(scrollPane);
     }
     public void play()

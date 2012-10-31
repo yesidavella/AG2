@@ -124,7 +124,7 @@ public class GUI extends Scene {
     private transient ToolBarAnimationAG2 animationHeaderAG2;
     private VBox vbHeaderAnimationContainer;
     private Button btnShowLog = new Button("Ver registros");
-    private boolean isPlaying = false; 
+    private boolean isPlaying = false;
     private boolean OCSView = false;
 
     private GUI(StackPane stpLayer, double width, double height) {
@@ -138,7 +138,6 @@ public class GUI extends Scene {
             windowResizeButton = new WindowResizeButton(stage, 800, 600);
             // create root
             brpRoot = new BorderPane() {
-
                 @Override
                 protected void layoutChildren() {
                     super.layoutChildren();
@@ -226,7 +225,6 @@ public class GUI extends Scene {
 
 
         KeyFrame keyFrameSmall = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent arg0) {
 
@@ -256,7 +254,6 @@ public class GUI extends Scene {
 
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent arg0) {
 
@@ -292,7 +289,6 @@ public class GUI extends Scene {
         tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
 
         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
-
             @Override
             public void changed(ObservableValue<? extends Number> arg0, final Number arg1, final Number arg2) {
 
@@ -302,7 +298,6 @@ public class GUI extends Scene {
                     final double y = (arg2.doubleValue() * 0.0318342D) + 24.48D;
 
                     Runnable runnable = new Runnable() {
-
                         @Override
                         public void run() {
 
@@ -313,7 +308,6 @@ public class GUI extends Scene {
 
                 } else {
                     Runnable runnable = new Runnable() {
-
                         @Override
                         public void run() {
                             if (arg2.doubleValue() > arg1.doubleValue()) {
@@ -329,7 +323,6 @@ public class GUI extends Scene {
 
 
         scpWorld.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 if (hideAgainProperties && showProperties) {
@@ -371,7 +364,6 @@ public class GUI extends Scene {
         tobWindow = new ToolBar();
         tobWindow.setId("mainToolBar");
         tobWindow.widthProperty().addListener(new ChangeListener<Number>() {
-
             @Override
             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 
@@ -401,7 +393,6 @@ public class GUI extends Scene {
         tobWindow.getItems().addAll(lblTitle, vbHeaderAnimationContainer, windowButtons);
 
         tobWindow.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
@@ -411,7 +402,6 @@ public class GUI extends Scene {
         });
         // add window dragging
         tobWindow.setOnMousePressed(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
                 mouseDragOffsetX = event.getSceneX();
@@ -420,7 +410,6 @@ public class GUI extends Scene {
             }
         });
         tobWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
                 if (!windowButtons.isMaximized()) {
@@ -471,8 +460,8 @@ public class GUI extends Scene {
 
         createMapNavigationPanel(vbxBottomRight);
         addScene(this);
-        
-         scpWorld.setHvalue(0.27151447890809266);
+
+        scpWorld.setHvalue(0.27151447890809266);
         scpWorld.setVvalue(0.4661207267437006);
     }
 
@@ -527,7 +516,6 @@ public class GUI extends Scene {
         helpFile.getItems().addAll(helpMenuItem, new SeparatorMenuItem(), aboutMenuItem);
 
         saveMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent t) {
 
                 main.save(false);
@@ -536,14 +524,12 @@ public class GUI extends Scene {
         });
 
         openMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent t) {
                 main.load();
             }
         });
 
         newMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
@@ -559,7 +545,6 @@ public class GUI extends Scene {
         });
 
         aboutMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent t) {
                 AboutAG2project aboutAG2project = new AboutAG2project();
                 aboutAG2project.show();
@@ -567,7 +552,6 @@ public class GUI extends Scene {
         });
 
         closeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 int result = JOptionPane.showConfirmDialog(
@@ -724,38 +708,26 @@ public class GUI extends Scene {
     private void createTabs() {
 
         tabSimulation.setClosable(false);
-        tabSimulation.setText("Simulación");
-
-//        tabViewOCS.setClosable(false);
-//        tabViewOCS.setText("Vista λSP");
-
-        tabSimulation.setClosable(false);
-        tabResults.setText("Resultados totales");
         tabResults.setClosable(false);
-
-        tabChartsClientResults.setText("Gráficos de Clientes");
         tabChartsClientResults.setClosable(false);
-
-        tabChartsrResourceResults.setText("Gráficos de recursos");
         tabChartsrResourceResults.setClosable(false);
-
-        tabChartsResourceCPU.setText("Gráficos de recursos (CPU)");
         tabChartsResourceCPU.setClosable(false);
-
-        tabChartsResourceBuffer.setText("Gráficos de recursos (buffer)");
         tabChartsResourceBuffer.setClosable(false);
-
-        tabChartsBrokerResults.setText("Gráficos de Agendador");
         tabChartsBrokerResults.setClosable(false);
-
-        tabChartsSwitchResults.setText("Gráficos de Conmutador");
         tabChartsSwitchResults.setClosable(false);
-
-        tabResultsResource.setText("Gráficos de recursos");
         tabResultsResource.setClosable(false);
-
-        tabResultsOCS.setText("Resultados λSP");
         tabResultsOCS.setClosable(false);
+        
+        tabSimulation.setText("Simulación");
+        tabResults.setText("Resultados totales");
+        tabChartsClientResults.setText("Gráficos de Clientes");
+        tabChartsrResourceResults.setText("Gráficos de recursos");
+        tabChartsResourceCPU.setText("Gráficos de recursos (CPU)");
+        tabChartsResourceBuffer.setText("Gráficos de recursos (buffer)");
+        tabChartsBrokerResults.setText("Gráficos de Agendador");
+        tabChartsSwitchResults.setText("Gráficos de Conmutador");
+        tabResultsResource.setText("Gráficos de recursos");
+        tabResultsOCS.setText("Resultados λSP");
 
         phosphosrusResults = new PhosphosrusResults(tabResults);
 
@@ -767,8 +739,6 @@ public class GUI extends Scene {
         scpWorld.setContent(grRootWorld);
         VBox vbxSimulation = new VBox();
 
-
-
         final ToggleButton tbNormalView = new ToggleButton("Vista diseño");
         tbNormalView.setId("pill-left");
         final ToggleButton tbLspView = new ToggleButton("Vista λSP");
@@ -778,16 +748,15 @@ public class GUI extends Scene {
         tbNormalView.setToggleGroup(group);
         tbLspView.setToggleGroup(group);
 
-
         group.selectToggle(tbNormalView);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
         hBox.getChildren().addAll(tbNormalView, tbLspView);
-        hBox.setId("pill-fondo");       
-                
+        hBox.setId("pill-fondo");
+
         VBox.setVgrow(scpWorld, Priority.ALWAYS);
-        vbxSimulation.getChildren().addAll(hBox,scpWorld );
+        vbxSimulation.getChildren().addAll(hBox, scpWorld);
 
         splitPane.getItems().addAll(vbxSimulation, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
@@ -808,57 +777,47 @@ public class GUI extends Scene {
         tabResultsResource.setContent(tbResultsResource);
 
         tbpMain.getTabs().addAll(tabSimulation);
-        
-        
-        tbNormalView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+
+        tbNormalView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
                 GUI.this.showNormalView();
             }
         });
-        
-        
-          tbLspView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+
+        tbLspView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
                 GUI.this.showLspView();
             }
         });
-          
-          tabSimulation.setOnSelectionChanged(new EventHandler<Event>() {
 
+        tabSimulation.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
-            public void handle(Event arg0) 
-            {
-                if(tabSimulation.isSelected())
-                {
-                    if(tbNormalView.isSelected())
-                    {
-                         GUI.this.showNormalView();
-                    }
-                    else if(tbLspView.isSelected())
-                    {
-                         GUI.this.showLspView();
+            public void handle(Event arg0) {
+                if (tabSimulation.isSelected()) {
+                    if (tbNormalView.isSelected()) {
+                        GUI.this.showNormalView();
+                    } else if (tbLspView.isSelected()) {
+                        GUI.this.showLspView();
                     }
                 }
             }
         });
-       
-        
+
+
 
     }
 
-    private void showNormalView() 
-    {
-        OCSView= false;
-        
-        if(!isPlaying)
-        {   
+    private void showNormalView() {
+        OCSView = false;
+
+        if (!isPlaying) {
             disableButtons(false);
         }
-        
+
 //        tabViewOCS.setContent(null);
 //        tabSimulation.setContent(splitPane);
         graphDesignGroup.showMap();
@@ -877,17 +836,13 @@ public class GUI extends Scene {
         }
         graphDesignGroup.hideLineOCS();
     }
-    
 
     public boolean isOCSView() {
         return OCSView;
     }
-    
-    
-    
-    private void showLspView() 
-    {
-        OCSView= true;
+
+    private void showLspView() {
+        OCSView = true;
         disableButtons(true);
 //        tabSimulation.setContent(null);
 //        tabViewOCS.setContent(splitPane);
@@ -950,7 +905,6 @@ public class GUI extends Scene {
         btnDownUp.setTooltip(new Tooltip("Muestra/oculta las propiedades de la simulación/dispositivo."));
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
 
@@ -977,7 +931,6 @@ public class GUI extends Scene {
         });
 
         tbpProperties.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 if (!showProperties) {
@@ -995,7 +948,6 @@ public class GUI extends Scene {
 
 
         btnShowLog.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 LogViewHTML logViewHTML = new LogViewHTML();
@@ -1084,7 +1036,6 @@ public class GUI extends Scene {
 
     public void setOnLunchBrowser(Hyperlink link, final String URLToGo) {
         link.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent e) {
                 try {
@@ -1219,7 +1170,6 @@ public class GUI extends Scene {
     private void setEventGoBtn(Button goButton, final ChoiceBox cbxbNodes) {
 
         goButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent t) {
                 GraphNode selectedNode = (GraphNode) cbxbNodes.getSelectionModel().getSelectedItem();
 
@@ -1267,7 +1217,6 @@ public class GUI extends Scene {
     private void addScene(final Scene scene) {
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
             public void handle(KeyEvent event) {
 
                 if ((event.isAltDown() || event.isShiftDown() || event.isControlDown())
@@ -1292,7 +1241,6 @@ public class GUI extends Scene {
         });
 
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
             public void handle(KeyEvent event) {
 
                 if (isPrincipalKeyPressed == true) {
@@ -1352,28 +1300,24 @@ public class GUI extends Scene {
         btnPointSeparator.setDisable(disable);
         btnDeleted.setDisable(disable);
     }
-    
-    public void stop()
-    {
-      isPlaying= false; 
-      enable();
+
+    public void stop() {
+        isPlaying = false;
+        enable();
     }
-        
-    public void play()
-    {
-      isPlaying= true; 
-      disable();
+
+    public void play() {
+        isPlaying = true;
+        disable();
     }
-        
 
     private void enable() {
         GUI.setActionTypeEmun(beforeActionTypeEmun);
         graphDesignGroup.getGroup().setCursor(beforeEventCursor);
-        if(!isPlaying)
-        {
-             disableButtons(false);
+        if (!isPlaying) {
+            disableButtons(false);
         }
-        
+
         gpTools.setOpacity(1);
         hBoxProgressIndicator.setVisible(false);
         graphDesignGroup.getGroup().setOpacity(1);
@@ -1383,10 +1327,8 @@ public class GUI extends Scene {
         btnShowLog.setDisable(false);
 //        graphDesignGroup.hideLineOCS();
     }
-    
-    
 
-    private  void disable() {
+    private void disable() {
 
         beforeActionTypeEmun = GUI.getActionTypeEmun();
         beforeEventCursor = graphDesignGroup.getGroup().getCursor();

@@ -29,6 +29,7 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
     public ChartsResultsBroker(Tab tabChartsBrokerResults) {
         this.tabChartsBrokerResults = tabChartsBrokerResults;
         scpAllPage = new ScrollPane();
+        scpAllPage.getStyleClass().add("bg-general-container");
         vbxAllPage = new VBox();
         vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
         vbxAllPage.setSpacing(10);
@@ -43,7 +44,7 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         yAxis.setLabel("Solicitudes");
         barChart = new BarChart<String, Number>(xAxis, yAxis);
         barChart.setMinHeight(550);
-        barChart.setMinWidth(400);
+        barChart.setMinWidth(1000);
         barChart.setTitle("Trafico de agendamiento. Ejecución numero:" + countPlays);
         countPlays++;
 
@@ -75,6 +76,6 @@ public class ChartsResultsBroker implements ViewResultsBrokerChart {
         serieNoFreeResouce.getData().add(new XYChart.Data<String, Number>(graficalName, noFreeResouce));
         serieReqAckSent.getData().add(new XYChart.Data<String, Number>(graficalName, reqAckSent));
         serieSendingFailed.getData().add(new XYChart.Data<String, Number>(graficalName, sendingFailed));
-        
+
     }
 }

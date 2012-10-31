@@ -43,7 +43,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     private ObservableList<PhosphorusPropertySet> dataSwitches = FXCollections.observableArrayList();
     private ObservableList<PhosphorusPropertySet> dataBrokers = FXCollections.observableArrayList();
     private ScrollPane scpResults;
-    private VBox vbxMain = new VBox();
+    private VBox vbxAllPage = new VBox();
     private ProgressIndicator progressIndicator;
     private HBox hbxProgress;
     private VBox vbxDataProgress;
@@ -66,11 +66,11 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
     public PhosphosrusResults(Tab tab) {
         this.tab = tab;
 
-        vbxMain.getStyleClass().add("bg-general-container");
-        vbxMain.setId("vbxPhosphorusResults");
-        vbxMain.setPadding(new Insets(8, 8, 8, 8));
-        vbxMain.setPrefSize(1200, 900);
-        vbxMain.setAlignment(Pos.CENTER);
+//        vbxAllPage.getStyleClass().add("bg-general-container");
+//        vbxAllPage.setId("vbxPhosphorusResults");
+        vbxAllPage.setPadding(new Insets(8, 8, 8, 8));
+        vbxAllPage.setPrefSize(1200, 900);
+        vbxAllPage.setAlignment(Pos.CENTER);
 
         percent.setMaximumFractionDigits(3);
 
@@ -89,6 +89,8 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         VBox.setMargin(lbBroker, new Insets(10, 0, 0, 0));
 
         scpResults = new ScrollPane();
+        scpResults.setFitToWidth(true);
+        scpResults.getStyleClass().add("bg-general-container");
 
         hbxProgress = new HBox();
         vbxDataProgress = new VBox();
@@ -166,9 +168,9 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
 
         vbxImageProgress.getChildren().add(progressIndicator);
         hbxProgress.getChildren().addAll(vbxDataProgress, vbxImageProgress);
-        vbxMain.getChildren().addAll(lbTitlePage, hbxProgress, lblClient, tbvClientResults, lbResource, tvResourceResults,
+        vbxAllPage.getChildren().addAll(lbTitlePage, hbxProgress, lblClient, tbvClientResults, lbResource, tvResourceResults,
                 lbSwitch, tvSwitchResults, lbBroker, tvBrokerResults);
-        scpResults.setContent(vbxMain);
+        scpResults.setContent(vbxAllPage);
         scpResults.setFitToWidth(true);
         tab.setContent(scpResults);
 

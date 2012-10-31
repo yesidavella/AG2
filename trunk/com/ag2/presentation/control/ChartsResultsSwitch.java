@@ -1,16 +1,11 @@
 package com.ag2.presentation.control;
 
-import Grid.GridSimulation;
 import Grid.Nodes.Hybrid.Parallel.HybridSwitchImpl;
 import com.ag2.model.SimulationBase;
 import com.ag2.util.Utils;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
@@ -21,7 +16,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import simbase.SimBaseEntity;
-import simbase.SimBaseSimulator;
 
 public class ChartsResultsSwitch implements ViewResultsSwitchChart {
 
@@ -45,7 +39,9 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
     public ChartsResultsSwitch(Tab tabChartsSwitchResults) {
         this.tabChartsSwitchResults = tabChartsSwitchResults;
         scpAllPage = new ScrollPane();
+        scpAllPage.getStyleClass().add("bg-general-container");
         vbxAllPage = new VBox();
+        vbxAllPage.setFillWidth(true);
         vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
         vbxAllPage.setSpacing(10);
         scpAllPage.setContent(vbxAllPage);
@@ -70,7 +66,7 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
         barChart = new StackedBarChart<String, Number>(xAxis, yAxis);
         barChart.setTitle("Trafico en los enrutadores. Ejecución numero:" + countPlays);
         barChart.setMinHeight(550);
-        barChart.setMinWidth(500);
+        barChart.setMinWidth(1000);
         countPlays++;
 
         xAxis.setCategories(FXCollections.observableArrayList(switchesNameList));
@@ -91,10 +87,10 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
 
         serieJobsSwitched.setName("Trabajos Conmutados");
         serieJobsNoSwitched.setName("Trabajos No Conmutados");
-        serieResultsSwiched.setName("Trabs. Atendidos Conmutados");
-        serieResultsNoSwitched.setName("Trabs. Atendidos No Conmutados");
-        serieRequestsSwitched.setName("Solic. de Agen. Conmutadas");
-        serieRequestsNoSwitched.setName("Solic. de Agen. No Conmutadas");
+        serieResultsSwiched.setName("Trabajos Atendidos Conmutados");
+        serieResultsNoSwitched.setName("Trabajos Atendidos No Conmutados");
+        serieRequestsSwitched.setName("Solicitudes de Agendamiento Conmutadas");
+        serieRequestsNoSwitched.setName("Solicitudes de Agendamiento No Conmutadas");
 
     }
 
@@ -124,7 +120,5 @@ public class ChartsResultsSwitch implements ViewResultsSwitchChart {
             barChart.getData().addAll(serieRequestsSwitched, serieRequestsNoSwitched,
                     serieJobsSwitched, serieJobsNoSwitched, serieResultsSwiched, serieResultsNoSwitched);
         }
-        
-
     }
 }

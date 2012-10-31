@@ -41,7 +41,7 @@ import javafx.util.Duration;
 public class ChartsResultsBuffer {
 
     private Tab tab;
-    private VBox vBox;
+    private VBox vbxAllPage;
     private transient Timeline time = new Timeline();
     private ScrollPane scrollPane;
     private AreaChart<Number, Number> areaChart;
@@ -54,13 +54,14 @@ public class ChartsResultsBuffer {
     public ChartsResultsBuffer(Tab tab) {
         this.tab = tab;
         scrollPane = new ScrollPane();
+        scrollPane.getStyleClass().add("bg-general-container");
         dataChartResourceController = new DataChartResourceController();
-        vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(10, 10, 10, 10));
-        vBox.setSpacing(5);
-        vBox.setFillWidth(true);
-        scrollPane.setContent(vBox);
+        vbxAllPage = new VBox();
+        vbxAllPage.setAlignment(Pos.CENTER);
+        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setSpacing(5);
+        vbxAllPage.setFillWidth(true);
+        scrollPane.setContent(vbxAllPage);
         tab.setContent(scrollPane);
     }
 
@@ -94,7 +95,6 @@ public class ChartsResultsBuffer {
 
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
 
@@ -103,8 +103,7 @@ public class ChartsResultsBuffer {
 
                     if (dataChartResourceController.loadDataChartResourceBuffer(resourceGraphNode)) {
                         XYChart.Series<Number, Number> serie = relationResourceSerie.get(resourceGraphNode);
-                        if(dataChartResourceController.getTime()>0)
-                        {
+                        if (dataChartResourceController.getTime() > 0) {
                             serie.getData().add(new XYChart.Data<Number, Number>(dataChartResourceController.getTime(), dataChartResourceController.getValue1()));
                         }
                     }
@@ -125,7 +124,7 @@ public class ChartsResultsBuffer {
         HBox.setHgrow(gridPane, Priority.ALWAYS);
         hBox.getChildren().addAll(gridPane, areaChart);
         hBox.setMinWidth(1200);
-        vBox.getChildren().add(0, hBox);
+        vbxAllPage.getChildren().add(0, hBox);
     }
 
     private GridPane loadInfoBufferResource() {
