@@ -9,8 +9,7 @@ ag2markov
 - Afinar propuesta de asignacion anticipada de recursos.(Franklin)
 - Marco teorico                  
       -Enrutamiento y agentamiento de conexiones en redes que soportan reservaciones anticipadamente.(Franklin)          
--Estadarizar nombre de propiedades  generales y de disposotivo (Yesid)
--Unificar unidades reales en el simulador.(Yesid)
+
 -Revisar lo de  los flujo a ver si se puede empatar con una teoria de network (traffic trunk). (Franklin)
 -Revisar algun alg que realizar de inv.opreaciones para balance de carga.(Franklin)
 -Terminar lio de respuesta del servidor sin tamaño(Franklin). 
@@ -20,7 +19,8 @@ ag2markov
 -Error al eliminar enlaces nullpointer mapping. (Yesid)
 -Cambiar avisos y formatos y alineacion y tooltips con ñ. (Yesid)
 -Cambiar min_bw por el 3% de la velocidad del canal.(Yesid) Listo
-
+-Estadarizar nombre de propiedades  generales y de disposotivo (Yesid) Listo
+-Unificar unidades reales en el simulador.(Yesid)
 
 #####  Cambios DESPUES de entrega de documento  ###############################################################################################################
 
