@@ -96,10 +96,10 @@ public class ExecutePane extends TilePane implements ExecuteView {
         setPrefColumns(2);
         setPrefRows(1);
 
-        btnRun.setTooltip(new Tooltip("Ejecutar simulación"));
+        btnRun.setTooltip(new Tooltip("Ejecutar simulaci\u00d3n"));
         btnRun.setToggleGroup(tgRun);
 
-        btnStop.setTooltip(new Tooltip("Parar simulación"));
+        btnStop.setTooltip(new Tooltip("Parar simulaci\u00d3n"));
         btnStop.setToggleGroup(tgRun);
         btnStop.setSelected(true);
         getChildren().addAll(btnRun, btnStop);

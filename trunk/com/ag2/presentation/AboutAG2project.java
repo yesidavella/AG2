@@ -29,6 +29,7 @@ public class AboutAG2project extends ModalAG2window {
     public void configWindow() {
         brPnWindowsLayout = getBrPnWindowsLayout();
         btnAccept = getBtnAccept();
+        btnAccept.getStyleClass().add("button-ag2");
       
         setWidth(600);
         setHeight(635);

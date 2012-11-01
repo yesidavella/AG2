@@ -32,17 +32,14 @@ public class SimulationOptionSwitcher extends VBox {
         rbPhosphorus1.setToggleGroup(toggleGroup);
         rbPhosphorus2.setToggleGroup(toggleGroup);
 
-        rbAg2.setTooltip(new Tooltip("Ejecuion con algoritmos AG2"));
-        rbPhosphorus1.setTooltip(new Tooltip("Ejecuion con algoritmos Phosphorus"));
-        rbPhosphorus2.setTooltip(new Tooltip("Ejecuion con algoritmos optimos Phosphorus"));
-
+        rbAg2.setTooltip(new Tooltip("Ejecuci\u00d3n con algoritmos AG2"));
+        rbPhosphorus1.setTooltip(new Tooltip("Ejecui\u00d3n con algoritmos Phosphorus"));
+        rbPhosphorus2.setTooltip(new Tooltip("Ejecui\u00d3n con algoritmos \u00d3ptimos Phosphorus"));
 
         rbAg2.setSelected(true);
         getChildren().addAll(rbPhosphorus1, rbPhosphorus2, rbAg2);
 
-
         rbPhosphorus1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
 //                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
@@ -50,40 +47,30 @@ public class SimulationOptionSwitcher extends VBox {
         });
 
         rbAg2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
-
 //                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
             }
         });
 
-          rbPhosphorus2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+        rbPhosphorus2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
-
 //                SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
             }
         });
     }
 
-    public void loadSimulationOptionBeforeRun()
-    {
-        if(rbAg2.isSelected())
-        {
-             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
-                //System.out.println("################    VIA AG2   ################");
-        }
-        else if(rbPhosphorus1.isSelected())
-        {
+    public void loadSimulationOptionBeforeRun() {
+        if (rbAg2.isSelected()) {
+            SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.AG2);
+            //System.out.println("################    VIA AG2   ################");
+        } else if (rbPhosphorus1.isSelected()) {
             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS);
-             //System.out.println("################    VIA PHOSPHORUS   ################");
-        }
-         else if(rbPhosphorus2.isSelected())
-        {
+            //System.out.println("################    VIA PHOSPHORUS   ################");
+        } else if (rbPhosphorus2.isSelected()) {
             SimulationOptionSwictherController.getInstance().setOptionSimulation(OptionSimulation.PHOSPHORUS_OPTIMIZE);
-             //System.out.println("################   VIA PHOSPHORUS_OPTIMIZE  ################");
+            //System.out.println("################   VIA PHOSPHORUS_OPTIMIZE  ################");
         }
     }
 }

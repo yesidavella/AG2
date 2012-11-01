@@ -39,8 +39,8 @@ public abstract class ModalAG2window extends Stage {
         brpWindowLayout.getStyleClass().add("modal-AG2-window");
 
         btnAccept = new Button("Cerrar");
+        btnAccept.getStyleClass().add("button-ag2");
         btnAccept.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent arg0) {
                 hideModalMessage();
@@ -68,7 +68,6 @@ public abstract class ModalAG2window extends Stage {
         TimelineBuilder.create().keyFrames(
                 new KeyFrame(Duration.seconds(1),
                 new EventHandler<ActionEvent>() {
-
                     public void handle(ActionEvent t) {
                         modalDimmer.setCache(false);
                     }
@@ -84,7 +83,6 @@ public abstract class ModalAG2window extends Stage {
         TimelineBuilder.create().keyFrames(
                 new KeyFrame(Duration.seconds(1),
                 new EventHandler<ActionEvent>() {
-
                     public void handle(ActionEvent t) {
                         modalDimmer.setCache(false);
                         modalDimmer.setVisible(false);

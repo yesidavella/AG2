@@ -25,199 +25,192 @@ import javafx.scene.text.FontWeight;
 public class ResultsOCS {
 
     private transient Tab tab;
-    private ScrollPane scrollPane;
+    private ScrollPane scpAllPage;
     private VBox vbxAllPage;
-    private TableView tvSummaryOCS ;
-    private TableView tvInstaceOCS ;
+    private TableView tvSummaryOCS;
+    private TableView tvInstaceOCS;
     private ObservableList<SummaryOCSData> dataSummaryOCS = FXCollections.observableArrayList();
     private ObservableList<InstanceOCSData> dataInstanceOCS = FXCollections.observableArrayList();
     private Label lblSummaryOCS;
     private Label lblInstanceOCS;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.###");
-    
-    private ResultsOCSController resultsOCSController ;
+    private DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+    private ResultsOCSController resultsOCSController;
 
     public ResultsOCS(Tab tab) {
         this.tab = tab;
-        scrollPane = new ScrollPane();
-        scrollPane.setFitToWidth(true);
-        scrollPane.getStyleClass().add("bg-general-container");
-        
+        scpAllPage = new ScrollPane();
+        scpAllPage.setFitToWidth(true);
+        scpAllPage.getStyleClass().add("bg-general-container");
+
         vbxAllPage = new VBox();
         vbxAllPage.setFillWidth(true);
-        vbxAllPage.setPadding(new Insets(10, 10, 10, 10));
+        vbxAllPage.setPadding(new Insets(8));
         vbxAllPage.setAlignment(Pos.CENTER);
-        vbxAllPage.setSpacing(10);           
+//        vbxAllPage.setSpacing(10);           
 
         lblSummaryOCS = new Label(" Resumen de Caminos Conmutados de Etiquetas de la capa optica (λSP) ");
         lblInstanceOCS = new Label();
+
+        lblSummaryOCS.getStyleClass().add("labelPhophorusResults");
+        lblInstanceOCS.getStyleClass().add("labelPhophorusResults");
+
         lblSummaryOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         lblInstanceOCS.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        
+
+        VBox.setMargin(lblSummaryOCS, new Insets(10, 0, 0, 0));
+        VBox.setMargin(lblInstanceOCS, new Insets(10, 0, 0, 0));
+
+        lblInstanceOCS.setVisible(false);
+
         createTVSummaryOCS();
         createTVInstanceOCS();
-                
+
         vbxAllPage.getChildren().addAll(lblSummaryOCS, tvSummaryOCS, lblInstanceOCS, tvInstaceOCS);
-        scrollPane.setContent(vbxAllPage);
-        tab.setContent(scrollPane);
+        scpAllPage.setContent(vbxAllPage);
+        tab.setContent(scpAllPage);
     }
-    public void play()
-    {
+
+    public void play() {
+
         dataInstanceOCS.clear();
         dataSummaryOCS.clear();
         resultsOCSController.clean();
     }
-    
-    public void showResults()
-    {
-        dataSummaryOCS.clear();       
-        
-        for (int i = 0; i < resultsOCSController.sizeSummaryOCS(); i++) 
-        {            
+
+    public void showResults() {
+        dataSummaryOCS.clear();
+
+        for (int i = 0; i < resultsOCSController.sizeSummaryOCS(); i++) {
             resultsOCSController.loadOCS_SummaryByIndex(i);
-            SummaryOCSData summaryOCSData = new  SummaryOCSData();
+            SummaryOCSData summaryOCSData = new SummaryOCSData();
             GraphNode graphNodeSource = resultsOCSController.getGnSummarySource();
             GraphNode graphNodeDestion = resultsOCSController.getGnSummaryDestination();
-            
+
             summaryOCSData.setGraphNodeSource(graphNodeSource);
             summaryOCSData.setGraphNodeDestination(graphNodeDestion);
-            
-            summaryOCSData.setSource(" "+graphNodeSource.getName());
-            summaryOCSData.setDestination(" "+graphNodeDestion.getName());
-            
-            summaryOCSData.setRequestOCS("   "+decimalFormat.format(resultsOCSController.getRequestedSummaryOCS()));
-            summaryOCSData.setCreateOCS("   "+decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
-            summaryOCSData.setCountFault("   "+decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));            
-            summaryOCSData.setTimeDuration("   "+decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));           
-              
-            dataSummaryOCS.add(summaryOCSData);            
-            
-        }        
-        
-    }
-    
-    public void loadInstancesOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination)
-    {
-        dataInstanceOCS.clear();
-      
-        lblInstanceOCS.setText("Camino entre "+graphNodeSource.getName()+" y "+graphNodeDestination.getName());
-        
-        for (int i = 0; i < resultsOCSController.sizeInstanceOCS(graphNodeSource, graphNodeDestination); i++)
-        {
-            InstanceOCSData instanceOCSData = new InstanceOCSData();            
-            resultsOCSController.loadOCS_InstanceByIndex(graphNodeSource, graphNodeDestination, i);
-            
-            String path =""; 
-            String separator ="";
-            int breaker=0; 
-            for(GraphNode graphNode:  resultsOCSController.getPathInstaceOCS())
-            {
-                breaker++;
-                path += separator+ graphNode.getName();
-                separator=" - ";
-                if(breaker>=4)
-                {
-                    breaker=0;
-                    path +="\n";
-                    separator ="";
-                }
-                
-            }          
-            String wavelengthIDs = "";
-            separator ="";
-            for ( Integer w : resultsOCSController.getListWavelengthID() ) {
-                
-                wavelengthIDs += separator+ w;
-                separator =" , ";
-            }
-            
-            
-            instanceOCSData.setPath(path);            
-            instanceOCSData.setRequestTime("   "+decimalFormat.format(resultsOCSController.getRequestTimeInstanceOCS()));
-            instanceOCSData.setLambda("   "+wavelengthIDs);
-            instanceOCSData.setSetupTime("   "+decimalFormat.format(resultsOCSController.getSetupTimeInstanceOCS()));
-            instanceOCSData.setDurationTime("   "+decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
-            instanceOCSData.setTearDownTime("   "+decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
-            instanceOCSData.setTraffic("   "+decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
-            
-            if(resultsOCSController.getNodeErrorInstanceOCS()==null)
-            {    
-                instanceOCSData.setErrorNodo("Sin problemas");
-            }
-            else
-            {
-                instanceOCSData.setErrorNodo("Nodo: "+resultsOCSController.getNodeErrorInstanceOCS().getName()+ "\n"+resultsOCSController.getProblemInstanceOCS());
-            }            
-            
-            dataInstanceOCS.add(instanceOCSData);
-            
+
+            summaryOCSData.setSource(" " + graphNodeSource.getName());
+            summaryOCSData.setDestination(" " + graphNodeDestion.getName());
+
+            summaryOCSData.setRequestOCS("   " + decimalFormat.format(resultsOCSController.getRequestedSummaryOCS()));
+            summaryOCSData.setCreateOCS("   " + decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
+            summaryOCSData.setCountFault("   " + decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));
+            summaryOCSData.setTimeDuration("   " + decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
+
+            dataSummaryOCS.add(summaryOCSData);
         }
-        
     }
-    
-    
-    private void createTVInstanceOCS()
-    {
-        tvInstaceOCS= new TableView();
+
+    public void loadInstancesOCS(GraphNode graphNodeSource, GraphNode graphNodeDestination) {
+
+        lblInstanceOCS.setVisible(true);
+        dataInstanceOCS.clear();
+
+        lblInstanceOCS.setText("Camino entre " + graphNodeSource.getName() + " y " + graphNodeDestination.getName());
+
+        for (int i = 0; i < resultsOCSController.sizeInstanceOCS(graphNodeSource, graphNodeDestination); i++) {
+            InstanceOCSData instanceOCSData = new InstanceOCSData();
+            resultsOCSController.loadOCS_InstanceByIndex(graphNodeSource, graphNodeDestination, i);
+
+            String path = "";
+            String separator = "";
+            int breaker = 0;
+            for (GraphNode graphNode : resultsOCSController.getPathInstaceOCS()) {
+                breaker++;
+                path += separator + graphNode.getName();
+                separator = " - ";
+                if (breaker >= 4) {
+                    breaker = 0;
+                    path += "\n";
+                    separator = "";
+                }
+
+            }
+            String wavelengthIDs = "";
+            separator = "";
+            for (Integer w : resultsOCSController.getListWavelengthID()) {
+
+                wavelengthIDs += separator + w;
+                separator = " , ";
+            }
+
+            instanceOCSData.setPath(path);
+            instanceOCSData.setRequestTime("   " + decimalFormat.format(resultsOCSController.getRequestTimeInstanceOCS()));
+            instanceOCSData.setLambda("   " + wavelengthIDs);
+            instanceOCSData.setSetupTime("   " + decimalFormat.format(resultsOCSController.getSetupTimeInstanceOCS()));
+            instanceOCSData.setDurationTime("   " + decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
+            instanceOCSData.setTearDownTime("   " + decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
+            instanceOCSData.setTraffic("   " + decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
+
+            if (resultsOCSController.getNodeErrorInstanceOCS() == null) {
+                instanceOCSData.setErrorNodo("Sin problemas");
+            } else {
+                instanceOCSData.setErrorNodo("Nodo: " + resultsOCSController.getNodeErrorInstanceOCS().getName() + "\n" + resultsOCSController.getProblemInstanceOCS());
+            }
+
+            dataInstanceOCS.add(instanceOCSData);
+        }
+    }
+
+    private void createTVInstanceOCS() {
+        tvInstaceOCS = new TableView();
         tvInstaceOCS.setMaxHeight(250);
         tvInstaceOCS.setMinHeight(250);
 
-        TableColumn tableColumn1 = new TableColumn();
-        tableColumn1.setText("Camino");
-        tableColumn1.setMinWidth(230);
-        tableColumn1.setCellValueFactory(new PropertyValueFactory("path"));
+        TableColumn tlcPath = new TableColumn();
+        tlcPath.setText("Camino");
+        tlcPath.setMinWidth(230);
+        tlcPath.setCellValueFactory(new PropertyValueFactory("path"));
 
-        TableColumn tableColumn8 = new TableColumn();
-        tableColumn8.setText("Longitud  \nde onda (λ)");
-        tableColumn8.setMinWidth(100);
-        tableColumn8.setCellValueFactory(new PropertyValueFactory("lambda"));
-        
-                
-        TableColumn tableColumn2 = new TableColumn();
-        tableColumn2.setText("Tiempo de la \nsolicitud λSP");
-        tableColumn2.setMinWidth(110);
-        tableColumn2.setCellValueFactory(new PropertyValueFactory("requestTime"));
+        TableColumn tbcWavelenght = new TableColumn();
+        tbcWavelenght.setText("Longitud  \nde onda (λ)");
+        tbcWavelenght.setMinWidth(100);
+        tbcWavelenght.setCellValueFactory(new PropertyValueFactory("lambda"));
 
-        TableColumn tableColumn3 = new TableColumn();
-        tableColumn3.setText("Tiempo de \nestablecimiento λSP");
-        tableColumn3.setMinWidth(130);
-        tableColumn3.setCellValueFactory(new PropertyValueFactory("setupTime"));
+        TableColumn tbcReqTime = new TableColumn();
+        tbcReqTime.setText("Tiempo de la \nsolicitud λSP(s)");
+        tbcReqTime.setMinWidth(110);
+        tbcReqTime.setCellValueFactory(new PropertyValueFactory("requestTime"));
 
-        TableColumn tableColumn4 = new TableColumn();
-        tableColumn4.setText("Duracion λSP");
-        tableColumn4.setMinWidth(110);
-        tableColumn4.setCellValueFactory(new PropertyValueFactory("durationTime"));
+        TableColumn tbcEstablishedTime = new TableColumn();
+        tbcEstablishedTime.setText("Tiempo de \nestablecimiento λSP(s)");
+        tbcEstablishedTime.setMinWidth(130);
+        tbcEstablishedTime.setCellValueFactory(new PropertyValueFactory("setupTime"));
 
-        TableColumn tableColumn5 = new TableColumn();
-        tableColumn5.setText("Tiempo de\nliberacion λSP");
-        tableColumn5.setMinWidth(130);
-        tableColumn5.setCellValueFactory(new PropertyValueFactory("tearDownTime"));
+        TableColumn tbcDurationTime = new TableColumn();
+        tbcDurationTime.setText("Duracion λSP(s)");
+        tbcDurationTime.setMinWidth(110);
+        tbcDurationTime.setCellValueFactory(new PropertyValueFactory("durationTime"));
 
-        TableColumn tableColumn6 = new TableColumn();
-        tableColumn6.setText("Trafico");
-        tableColumn6.setMinWidth(110);
-        tableColumn6.setCellValueFactory(new PropertyValueFactory("traffic"));  
-        
-        TableColumn tableColumn7 = new TableColumn();
-        tableColumn7.setText("Problemas");
-        tableColumn7.setMinWidth(320);
-        tableColumn7.setCellValueFactory(new PropertyValueFactory("errorNodo")); 
+        TableColumn tbcDepartureTime = new TableColumn();
+        tbcDepartureTime.setText("Tiempo de\nliberacion λSP(s)");
+        tbcDepartureTime.setMinWidth(130);
+        tbcDepartureTime.setCellValueFactory(new PropertyValueFactory("tearDownTime"));
 
-        tvInstaceOCS.setItems(dataInstanceOCS);       
+        TableColumn tbcTotalTraffic = new TableColumn();
+        tbcTotalTraffic.setText("Trafico(MB)");
+        tbcTotalTraffic.setMinWidth(110);
+        tbcTotalTraffic.setCellValueFactory(new PropertyValueFactory("traffic"));
+
+        TableColumn tbcProblems = new TableColumn();
+        tbcProblems.setText("Problemas");
+        tbcProblems.setMinWidth(320);
+        tbcProblems.setCellValueFactory(new PropertyValueFactory("errorNodo"));
+
+        tvInstaceOCS.setItems(dataInstanceOCS);
         tvInstaceOCS.getColumns().addAll(
-                tableColumn1, 
-                tableColumn2, 
-                tableColumn8,
-                tableColumn3,
-                tableColumn4, 
-                tableColumn5, 
-                tableColumn6,
-                tableColumn7);
- 
-        
+                tlcPath,
+                tbcWavelenght,
+                tbcReqTime,
+                tbcEstablishedTime,
+                tbcDepartureTime,
+                tbcDurationTime,
+                tbcTotalTraffic,
+                tbcProblems);
     }
+
     private void createTVSummaryOCS() {
-        tvSummaryOCS= new TableView();
+        tvSummaryOCS = new TableView();
         tvSummaryOCS.setMaxHeight(250);
         tvSummaryOCS.setMinHeight(250);
 
@@ -225,7 +218,7 @@ public class ResultsOCS {
         tableColumn1.setText("Origen");
         tableColumn1.setMinWidth(220);
         tableColumn1.setCellValueFactory(new PropertyValueFactory("source"));
-        
+
         TableColumn tableColumn7 = new TableColumn();
         tableColumn7.setText("Destino");
         tableColumn7.setMinWidth(220);
@@ -247,31 +240,32 @@ public class ResultsOCS {
         tableColumn4.setCellValueFactory(new PropertyValueFactory("countFault"));
 
         TableColumn tableColumn5 = new TableColumn();
-        tableColumn5.setText("Duracion promedio");
+        tableColumn5.setText("Duracion promedio (s)");
         tableColumn5.setMinWidth(130);
         tableColumn5.setCellValueFactory(new PropertyValueFactory("timeDuration"));
 
         TableColumn tableColumn6 = new TableColumn();
         tableColumn6.setText("Detalles");
         tableColumn6.setMinWidth(130);
-        tableColumn6.setCellValueFactory(new PropertyValueFactory("btnViewDetails"));  
-        
+        tableColumn6.setCellValueFactory(new PropertyValueFactory("btnViewDetails"));
 
-        tvSummaryOCS.setItems(dataSummaryOCS);       
-        tvSummaryOCS.getColumns().addAll(tableColumn1,tableColumn7 ,tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
+
+        tvSummaryOCS.setItems(dataSummaryOCS);
+        tvSummaryOCS.getColumns().addAll(tableColumn1, tableColumn7, tableColumn2, tableColumn3, tableColumn4, tableColumn5, tableColumn6);
     }
-    public static class InstanceOCSData{
-        
-         String source;
-         String destination;
-         String path;
-         String requestTime;
-         String setupTime;         
-         String durationTime;
-         String tearDownTime;
-         String errorNodo;
-         String traffic;
-         String lambda;
+
+    public static class InstanceOCSData {
+
+        String source;
+        String destination;
+        String path;
+        String requestTime;
+        String setupTime;
+        String durationTime;
+        String tearDownTime;
+        String errorNodo;
+        String traffic;
+        String lambda;
 
         public String getLambda() {
             return lambda;
@@ -321,7 +315,6 @@ public class ResultsOCS {
             this.setupTime = setupTime;
         }
 
-   
         public String getTearDownTime() {
             return tearDownTime;
         }
@@ -337,10 +330,9 @@ public class ResultsOCS {
         public void setTraffic(String traffic) {
             this.traffic = traffic;
         }
-                  
     }
 
-    public  class SummaryOCSData {
+    public class SummaryOCSData {
 
         private String source;
         private String destination;
@@ -351,16 +343,13 @@ public class ResultsOCS {
         private Button btnViewDetails;
         private GraphNode graphNodeSource;
         private GraphNode graphNodeDestination;
-        
-        
 
         public SummaryOCSData() {
             btnViewDetails = new Button("Ver detalles");
             btnViewDetails.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
                 @Override
                 public void handle(MouseEvent arg0) {
-                   ResultsOCS.this.loadInstancesOCS(graphNodeSource, graphNodeDestination);
+                    ResultsOCS.this.loadInstancesOCS(graphNodeSource, graphNodeDestination);
                 }
             });
         }
@@ -409,8 +398,6 @@ public class ResultsOCS {
             this.source = source;
         }
 
-      
-
         public String getDurationTime() {
             return durationTime;
         }
@@ -434,8 +421,6 @@ public class ResultsOCS {
         public void setGraphNodeSource(GraphNode graphNodeSource) {
             this.graphNodeSource = graphNodeSource;
         }
-        
-        
     }
 
     public ResultsOCSController getResultsOCSController() {
@@ -445,6 +430,4 @@ public class ResultsOCS {
     public void setResultsOCSController(ResultsOCSController resultsOCSController) {
         this.resultsOCSController = resultsOCSController;
     }
-    
-    
 }

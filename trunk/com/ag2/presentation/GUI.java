@@ -113,12 +113,12 @@ public class GUI extends Scene {
     private ChartsResultsCPU chartsResultsCPU;
     private ChartsResultsBuffer chartsResultsBuffer;
     private ScrollPane scpnProperties;
-    private Timeline tlProperties = new Timeline();
+    private Timeline tilProperties = new Timeline();
     private boolean showProperties = false;
     private ScrollPane scpMenuTools;
     private SimulationOptionSwitcher simulationOptionSwitcher = new SimulationOptionSwitcher();
     private WindowResizeButton windowResizeButton;
-    private Timeline tlPropertiesSmall = new Timeline();
+    private Timeline tilPropertiesSmall = new Timeline();
     private boolean hideAgainProperties = false;
     private Button btnDownUp = new Button();
     private transient ToolBarAnimationAG2 animationHeaderAG2;
@@ -162,6 +162,7 @@ public class GUI extends Scene {
         stpLayer.getChildren().add(brpRoot);
         stpLayer.getChildren().add(modalDimmer);
         btnShowLog.setDisable(true);
+        btnShowLog.getStyleClass().add("button-ag2");
 
         if (!Main.IS_APPLET) {
             brpRoot.getChildren().add(windowResizeButton);
@@ -234,24 +235,21 @@ public class GUI extends Scene {
                     increment = -0.00003;
 
                     if (!(widthProperties <= 401)) {
-                        tlPropertiesSmall.stop();
+                        tilPropertiesSmall.stop();
                         return;
                     }
                 } else {
                     increment = 0.00003;
 
-
                     if (!(widthProperties > 39)) {
 
-
-                        tlPropertiesSmall.stop();
+                        tilPropertiesSmall.stop();
                         return;
                     }
                 }
                 splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
             }
         });
-
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
             @Override
@@ -263,8 +261,8 @@ public class GUI extends Scene {
                     increment = -0.0005;
 
                     if (!(widthProperties <= 350)) {
-                        tlProperties.stop();
-                        tlPropertiesSmall.play();
+                        tilProperties.stop();
+                        tilPropertiesSmall.play();
 
                         return;
 
@@ -273,8 +271,8 @@ public class GUI extends Scene {
                     increment = 0.0003;
 
                     if (!(widthProperties > 90)) {
-                        tlProperties.stop();
-                        tlPropertiesSmall.play();
+                        tilProperties.stop();
+                        tilPropertiesSmall.play();
                         return;
                     }
                 }
@@ -282,16 +280,15 @@ public class GUI extends Scene {
             }
         });
 
-        tlProperties.setCycleCount(50000);
-        tlProperties.getKeyFrames().add(keyFrame);
+        tilProperties.setCycleCount(50000);
+        tilProperties.getKeyFrames().add(keyFrame);
 
-        tlPropertiesSmall.setCycleCount(50000);
-        tlPropertiesSmall.getKeyFrames().add(keyFrameSmall);
+        tilPropertiesSmall.setCycleCount(50000);
+        tilPropertiesSmall.getKeyFrames().add(keyFrameSmall);
 
         brpRoot.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> arg0, final Number arg1, final Number arg2) {
-
 
                 if (showProperties) {
 
@@ -312,7 +309,7 @@ public class GUI extends Scene {
                         public void run() {
                             if (arg2.doubleValue() > arg1.doubleValue()) {
                                 splitPane.setDividerPosition(0, .95);
-                                tlPropertiesSmall.play();
+                                tilPropertiesSmall.play();
                             }
                         }
                     };
@@ -327,7 +324,7 @@ public class GUI extends Scene {
             public void handle(MouseEvent arg0) {
                 if (hideAgainProperties && showProperties) {
                     showProperties = !showProperties;
-                    tlProperties.play();
+                    tilProperties.play();
                     hideAgainProperties = false;
 
                     btnDownUp.getStyleClass().remove("btn-show-minus");
@@ -614,12 +611,12 @@ public class GUI extends Scene {
         btnMinusZoom.setToggleGroup(tgTools);
         btnPlusZoom.setToggleGroup(tgTools);
 
-        btnHand.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton (SelecciÃ³n rapida:Alt)."));
+        btnHand.setTooltip(new Tooltip("Mueva el mapa a su gusto con el raton (Selecci\u00f3n rapida:Alt)."));
         btnSelection.setTooltip(new Tooltip("Seleccione cualquier objeto"));
-        btnPointSeparator.setTooltip(new Tooltip("AÃ±adale vertices a un enlace"));
+        btnPointSeparator.setTooltip(new Tooltip("Adici\u00f3nele vertices a un enlace"));
         btnDeleted.setTooltip(new Tooltip("Elimine un objeto"));
-        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde\nrealize el click (SelecciÃ³n rapida:Ctrl)"));
-        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (SelecciÃ³n rapida:Shift)"));
+        btnMinusZoom.setTooltip(new Tooltip("Disminuya el zoom del mapa en donde\nrealize el click (Selecci\u00f3n rapida:Ctrl)"));
+        btnPlusZoom.setTooltip(new Tooltip("Aumente el zoom del mapa en donde\nrealize el click (Selecci\u00f3n rapida:Shift)"));
 
         GridPane.setConstraints(btnSelection, 0, 0);
         grdPnToolsBar.getChildren().add(btnSelection);
@@ -672,12 +669,12 @@ public class GUI extends Scene {
 
         btnClient.setTooltip(new Tooltip("Nodo cliente"));
         btnBroker.setTooltip(new Tooltip("Nodo de servicio(Middleware)"));
-        btnPCE_Switch.setTooltip(new Tooltip("PCE (Path Computation Element)"));
+        btnPCE_Switch.setTooltip(new Tooltip("Nodo PCE (Path Computation Element)"));
         //     btnOBS_Switch.setTooltip(new Tooltip("Enrutador de RÃ¡faga"));
-        btnHybridSwitch.setTooltip(new Tooltip("Enrutador Hibrido"));
-        btnResource.setTooltip(new Tooltip("Cluster (Recurso de almacenamiento y procesamiento) "));
-        btnLink.setTooltip(new Tooltip("Enlace Optico"));
-        btnOCSCircuit.setTooltip(new Tooltip("Circuito Optico"));
+        btnHybridSwitch.setTooltip(new Tooltip("Nodo Enrutador \u00d3ptico"));
+        btnResource.setTooltip(new Tooltip("Nodo Cluster (Recurso de procesamiento) "));
+        btnLink.setTooltip(new Tooltip("Enlace \u00d3ptico (Fibra)"));
+        btnOCSCircuit.setTooltip(new Tooltip("Circuito \u00d3ptico (λSP)"));
 
         GridPane.setConstraints(btnClient, 0, 4);
         grdPnToolsBar.getChildren().add(btnClient);
@@ -717,7 +714,7 @@ public class GUI extends Scene {
         tabChartsSwitchResults.setClosable(false);
         tabResultsResource.setClosable(false);
         tabResultsOCS.setClosable(false);
-        
+
         tabSimulation.setText("Simulación");
         tabResults.setText("Resultados totales");
         tabChartsClientResults.setText("Gráficos de Clientes");
@@ -902,7 +899,7 @@ public class GUI extends Scene {
 
         btnDownUp.setId("btn-show-hide-properties");
         btnDownUp.getStyleClass().add("btn-show-more");
-        btnDownUp.setTooltip(new Tooltip("Muestra/oculta las propiedades de la simulación/dispositivo."));
+        btnDownUp.setTooltip(new Tooltip("Muestra/oculta las propiedades de la simulaci\u00d3n/dispositivo."));
 
         btnDownUp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -910,7 +907,7 @@ public class GUI extends Scene {
 
                 showProperties = !showProperties;
 
-                tlProperties.play();
+                tilProperties.play();
                 if (showProperties) {
                     if (btnDownUp.getStyleClass().contains("btn-show-minus")) {
                         btnDownUp.getStyleClass().remove("btn-show-more");
@@ -935,7 +932,7 @@ public class GUI extends Scene {
             public void handle(MouseEvent arg0) {
                 if (!showProperties) {
                     showProperties = !showProperties;
-                    tlProperties.play();
+                    tilProperties.play();
                     hideAgainProperties = true;
 
                     btnDownUp.getStyleClass().remove("btn-show-more");
@@ -943,9 +940,6 @@ public class GUI extends Scene {
                 }
             }
         });
-
-
-
 
         btnShowLog.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -1082,6 +1076,7 @@ public class GUI extends Scene {
         gpMapNavegation.setAlignment(Pos.BASELINE_CENTER);
         gpMapNavegation.setVgap(3);
         gpMapNavegation.setHgap(4);
+//        gpMapNavegation.getStyleClass().addAll("bg-map-navigation", "bg-map-navigation-container");
         gpMapNavegation.getStyleClass().addAll("bg-map-navigation", "bg-map-navigation-container");
 //        gpMapNavegation.setGridLinesVisible(true);
 
@@ -1325,6 +1320,7 @@ public class GUI extends Scene {
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
         btnShowLog.setDisable(false);
+
 //        graphDesignGroup.hideLineOCS();
     }
 
