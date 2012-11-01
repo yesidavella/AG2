@@ -506,10 +506,6 @@
     -fx-color: -fx-hover-base;
 }
 
-.button:armed {
-    -fx-color: -fx-pressed-base;
-}
-
 .button:default {
     -fx-base: -fx-accent;
 }
