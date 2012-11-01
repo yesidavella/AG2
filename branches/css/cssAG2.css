@@ -311,41 +311,39 @@ ProgressBar progress-bar:indeterminate .bar {
 /***************MAPA DE NAVEGACION Y ELEMENTOS INTERNOS************************/
 
 .bg-map-navigation{
-    -fx-background-color: linear-gradient(to bottom,derive(-fx-mBlue-ag2,20%),derive(-fx-mBlue-ag2,40%),derive(-fx-mBlue-ag2,20%) );
+    -fx-background-color: linear-gradient(from 100% 80% to 0% 20%,derive(-fx-mBlue-ag2,60%),derive(-fx-mBlue-ag2,80%),derive(-fx-mBlue-ag2,60%) );
     -fx-background-insets: 0, 1 1 0 1;
-    -fx-background-radius: 10;
+    -fx-background-radius: 6;
 
     -fx-text-fill:white;
     -fx-font-weight: bold;
 
     -fx-border-color:white;
-    -fx-border-style:segments(7,9,8);
-    -fx-border-insets:1;
-    -fx-border-radius:10;
-    -fx-border-width:2;
+    /*-fx-border-style:segments(7,9,8);*/
+    -fx-border-insets:2;
+    -fx-border-radius:5;
+    -fx-border-width:2.3;
 }
 
 #title-nav-map{
     -fx-label-padding:3;
-    -fx-text-fill:white;
+    -fx-text-fill:black;/*derive(-fx-dBlue-ag2,-50%)*/
     -fx-font-size:1.1em;
 }
 
 .bg-map-navigation .label{
-    -fx-text-fill:derive(-fx-dBlue-ag2,-75%);
-    -fx-alignment:center-right
+    -fx-text-fill:black/*derive(-fx-dBlue-ag2,-50%)*/;
+    -fx-alignment:center-right;
 }
 
 .bg-map-navigation .choice-box {
-    -fx-background-color: derive(-fx-mBlue-ag2,50%), derive(-fx-mBlue-ag2,25%),derive(-fx-mBlue-ag2,0%),
-        linear-gradient( to bottom, derive(-fx-mBlue-ag2,50%) 0%, derive(-fx-mBlue-ag2,90%) 100%);
+    -fx-background-color: derive(-fx-mBlue-ag2,70%), derive(-fx-mBlue-ag2,45%),derive(-fx-mBlue-ag2,20%),
+        linear-gradient( to bottom, derive(-fx-mBlue-ag2,70%) 0%, derive(-fx-mBlue-ag2,90%) 100%);
 }
 
 .bg-map-navigation .choice-box:focused {
-    /*    -fx-background-color: derive(-fx-mBlue-ag2,70%), derive(-fx-mBlue-ag2,45%),derive(-fx-mBlue-ag2,20%),
-            linear-gradient(to top,-fx-dBlue-ag2 75%,-fx-mBlue-ag2 98%);*/
-    -fx-background-color: derive(-fx-mBlue-ag2,20%), derive(-fx-mBlue-ag2,-5%),derive(-fx-mBlue-ag2,-30%),
-        linear-gradient( to bottom, derive(-fx-mBlue-ag2,20%) 0%, derive(-fx-mBlue-ag2,70%) 100%);
+    -fx-background-color: derive(-fx-mBlue-ag2,40%), derive(-fx-mBlue-ag2,15%),derive(-fx-mBlue-ag2,-10%),
+        linear-gradient( to bottom, derive(-fx-mBlue-ag2,40%) 0%, derive(-fx-mBlue-ag2,90%) 100%);
 }
 
 .bg-map-navigation .choice-box .label {
@@ -493,4 +491,38 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 #pill-fondo{
     -fx-background-color: #C3D5FF;
+}
+
+/**********************************BOTONES*************************************/
+.button-ag2 {
+    -fx-background-color: white;
+    -fx-background-radius: 1.5, 1.5, 1.5, 1.5;
+    -fx-background-insets: -0.5, 0, 0.5, 0.5;
+    -fx-text-fill: derive(-fx-dBlue-ag2,0%);
+
+    -fx-border-color:derive(-fx-dBlue-ag2,0%);
+    -fx-border-insets:1;
+    -fx-border-radius:1;
+    -fx-border-width:1;
+}
+
+.button-ag2:hover {
+    -fx-background-color: derive(-fx-mBlue-ag2,85%);
+    -fx-border-width:1.5;
+}
+/*
+.button-ag2:focused {
+    -fx-background-color: red;
+    -fx-text-fill: green;
+    -fx-border-color: black;
+}*/
+
+.button-ag2:armed {
+    -fx-background-color: derive(-fx-dBlue-ag2,0%);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+
+.button-ag2:disabled {
+    -fx-opacity: 0.5;
 }
