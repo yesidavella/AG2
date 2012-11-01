@@ -17,12 +17,12 @@ ag2markov
 -Terminar vista lambdaSP(Franki).
 -Establecer tamaño de respuesta de recurso cluster (Franki).
 -Error al eliminar enlaces nullpointer mapping. (Yesid)
--Cambiar avisos y formatos y alineacion y tooltips con ñ. (Yesid)
+-Cambiar avisos y formatos y alineacion y tooltips con ñ. (Yesid)Listo
 -Cambiar min_bw por el 3% de la velocidad del canal.(Yesid) Listo
 -Estadarizar nombre de propiedades  generales y de disposotivo (Yesid) Listo
--Unificar unidades reales en el simulador.(Yesid)
+-Unificar unidades reales en el simulador.(Yesid)Listo
 
-#####  Cambios DESPUES de entrega de documento  ###############################################################################################################
+#################  Cambios DESPUES de entrega de documento  ###################################################################################################
 
  - Hacer algo interesante con los logos. (Franklin)
  - Validar y ordenar los inputs de las propiedades (Yesid)
