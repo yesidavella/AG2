@@ -39,7 +39,7 @@ public class Main extends Application implements Serializable {
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
     private ResultsChartController resultsChartCtr;
-    private JSObject browser;
+    private JSObject webBrowser;
     private NotifyControllerOCS notifyControllerOCS;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
@@ -50,8 +50,8 @@ public class Main extends Application implements Serializable {
         stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
 
         try {
-            browser = getHostServices().getWebContext();
-            IS_APPLET = browser != null;
+            webBrowser = getHostServices().getWebContext();
+            IS_APPLET = webBrowser != null;
         } catch (Exception e) {
             IS_APPLET = false;
         }

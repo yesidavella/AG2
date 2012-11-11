@@ -1351,11 +1351,11 @@ public class GUI extends Scene {
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
-        chartsResultClient.play();
+        chartsResultClient.play();  
         chartsResultResource.play();
         chartsResultsBroker.play();
         chartsResultsSwitch.play();
-        tbpMain.getSelectionModel().select(tabResults);
+//        tbpMain.getSelectionModel().select(tabResults);
         resultsOCS.play();
         btnShowLog.setDisable(true);
 

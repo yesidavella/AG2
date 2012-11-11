@@ -9,6 +9,8 @@ import com.ag2.presentation.control.PhosphorusPropertySet;
 import com.ag2.presentation.control.ResultsOCS;
 import com.ag2.util.Utils;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -47,7 +49,7 @@ public class GraphOCS implements NodeListener {
     private TitledPane tpnDireccion1 = new TitledPane();
     private TitledPane tpnDireccion2 = new TitledPane();
     private Accordion accordion = new Accordion();
-    private VBox vBoxInfoOCS = new VBox();
+    private VBox vbxInfoOCS = new VBox();
     private ImageView ivwClose = new ImageView(new Image(Utils.ABS_PATH_IMGS + "close_blue.jpg"));
     private Button btnClose = new Button();
     private ObservableList<PhosphorusPropertySet> dataSummaryOCS;
@@ -140,18 +142,18 @@ public class GraphOCS implements NodeListener {
         btnClose.setPrefSize(10, 10);
         btnClose.setScaleX(0.7);
         btnClose.setScaleY(0.7);
-        vBoxInfoOCS.setAlignment(Pos.CENTER_RIGHT);
+        vbxInfoOCS.setAlignment(Pos.CENTER_RIGHT);
 
         btnClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent arg0) {
-                vBoxInfoOCS.setVisible(false);
+                vbxInfoOCS.setVisible(false);
             }
         });
-        vBoxInfoOCS.setSpacing(1);
-        vBoxInfoOCS.getChildren().addAll(btnClose, accordion);
-        graphDesignGroup.getGroup().getChildren().addAll(group, vBoxInfoOCS);
+        vbxInfoOCS.setSpacing(1);
+        vbxInfoOCS.getChildren().addAll(btnClose, accordion);
+        graphDesignGroup.getGroup().getChildren().addAll(group, vbxInfoOCS);
 
         group.toFront();
         graphNodeDestination.getGroup().toFront();
@@ -167,7 +169,7 @@ public class GraphOCS implements NodeListener {
 
         accordion.getPanes().add(tpnDireccion1);
         accordion.getPanes().add(tpnDireccion2);
-        vBoxInfoOCS.setVisible(false);
+        vbxInfoOCS.setVisible(false);
 
         TableColumn tcProperty = new TableColumn("Resultado");
         TableColumn tcValue = new TableColumn("Valor");
@@ -318,12 +320,12 @@ public class GraphOCS implements NodeListener {
 
     public void showLabel(double x, double y) {
 
-        vBoxInfoOCS.setVisible(true);
-        vBoxInfoOCS.setLayoutX(x );
-        vBoxInfoOCS.setLayoutY(y );
-        vBoxInfoOCS.setScaleX(0.7);
-        vBoxInfoOCS.setScaleY(-.7);
-        vBoxInfoOCS.toFront();
+        vbxInfoOCS.setVisible(true);
+        vbxInfoOCS.setLayoutX(x );
+        vbxInfoOCS.setLayoutY(y );
+        vbxInfoOCS.setScaleX(0.7);
+        vbxInfoOCS.setScaleY(-.7);
+        vbxInfoOCS.toFront();
  
 
     }
@@ -361,6 +363,8 @@ public class GraphOCS implements NodeListener {
     public void setTraffic(double traffic) {
 
         tvSummaryOCS_Traffic.setProperty2(" " + traffic);
+        tvSummaryOCS.setVisible(false);
+        tvSummaryOCS.setVisible(true);
 
     }
 
@@ -377,12 +381,20 @@ public class GraphOCS implements NodeListener {
         tvSummaryOCS_CreatedInverted.setProperty2(" " + countOCS_Inverted);
     }
 
-    public void setJobTraffic(double traffic) {
+    public void setJobTraffic(double traffic)
+    {
         tvSummaryOCS_JobTraffic.setProperty2(" " + traffic);
+        
+       
+        
     }
 
     public void setJobTrafficInverted(double traffic) {
         tvSummaryOCS_JobTrafficInverted.setProperty2(" " + traffic);
+        
+           
+
+     
     }
 
     public void setRequestJobSent(long jobSent) {
@@ -487,7 +499,7 @@ public class GraphOCS implements NodeListener {
     }
 
     public VBox getvBoxInfoOCS() {
-        return vBoxInfoOCS;
+        return vbxInfoOCS;
     }
     
     
