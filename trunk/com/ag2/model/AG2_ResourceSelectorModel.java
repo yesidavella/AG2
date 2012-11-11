@@ -81,9 +81,11 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 maxNetworkCost = networkCost;
             }
 
-            if (Double.MAX_VALUE != gridCost) {
+            if (Double.MAX_VALUE != gridCost) 
+            {
                 allFullBusy = false;
             }
+        
         }
 
         double degreeGrid = maxGridCost - minGridCost;
@@ -109,15 +111,26 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 gradeNetwork = (relativeNetworkCost * 100) / maxNetworkCost;
             }
 
-            totalGrade = (gradeNetwork * percentNetwork) + (gradeGrid * percentGrid);
+            if( mapResourceGridCost.get(resourceNode) == Double.MAX_VALUE)
+            {
+                totalGrade = 100+(gradeNetwork * percentNetwork) ;
+            }   
+            else
+            {
+                
+                 totalGrade = (gradeNetwork * percentNetwork) + (gradeGrid * percentGrid);
+            }
+           
 
-            if (totalGrade < minTotalGrade) {
+            
+            if (totalGrade < minTotalGrade)
+            {
                 minTotalGrade = totalGrade;
                 resourceSelectedByGrade = resourceNode;
 
             }
 
-//            System.out.println("Recurso:" + resourceNode.getID() + " NOta grilla:" + gradeGrid + ". Nota Red:" + gradeNetwork + ". TotalGrade:" + totalGrade);
+        //   System.out.println("Recurso:" + resourceNode.getID() + " NOta grilla:" + gradeGrid + ". Nota Red:" + gradeNetwork + ". TotalGrade:" + totalGrade);
         }
 
 //
