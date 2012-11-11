@@ -13,7 +13,7 @@ public class HybridSwitchGraphNode extends SwitchGraphNode {
     public HybridSwitchGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
             List<LinkAdminAbstractController> linkAdminAbstractController) {
 
-        super(graphDesignGroup, "Enrutador_Hibrido_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "enrutador_hibrido_mapa.png",
+        super(graphDesignGroup, "Conmutador_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "enrutador_hibrido_mapa.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
 
         if (nodeCounter > 9) {
