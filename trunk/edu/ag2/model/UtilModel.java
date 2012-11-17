@@ -68,7 +68,8 @@ public class UtilModel extends Util {
     }
 
     public static ResourceNode createHyridResourceNode(String id, GridSimulator simulator) {
-        ResourceNode resource = new HybridResourceNode(id, simulator, new ConstantDistribution(10));
+        ResourceNode resource = new HybridResourceNode(id, simulator, new ConstantDistribution(PropertyPhosphorusTypeEnum.getDoubleProperty(
+                PropertyPhosphorusTypeEnum.DEFAULT_RESULT_SIZE)));
         insertOptionsForResource(resource, simulator);
         simulator.register(resource);
         return resource;

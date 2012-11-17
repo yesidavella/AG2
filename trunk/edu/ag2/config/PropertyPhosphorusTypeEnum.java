@@ -93,13 +93,18 @@ public enum PropertyPhosphorusTypeEnum {
      * segun su capacidad. double executionTime = job.getMsg().getFlops() /
      * cpu.getCpuCapacity();
      */
-    DEFAULT_FLOP_SIZE("defaultFlopSize", "FLOPS de Trabajo(Mflops):", new TextField());
+    DEFAULT_FLOP_SIZE("defaultFlopSize", "FLOPS de Trabajo(Mflops):", new TextField()),
     /**
      * Promedio de la exp. neg. del retraso maximo en la solicitud del trabajo
      * Al parecer nunca se utiliza en serio.SOlo se utiliza en getMaxEndTime(),
      * pero este ultimo metodo nunca es utilizado.
      */
 //    MAX_DELAY("maxDelay", "Retraso máx/Trab_Req(s):", new TextField());
+    
+    
+    DEFAULT_RESULT_SIZE("defaultResultSize", "Tamaño de Respuesta:(MB):", new TextField());  
+    
+    
     private ExecuteController executeController;
     private String phosphorusPropertyName;
     private Control control;

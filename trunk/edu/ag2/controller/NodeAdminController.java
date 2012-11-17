@@ -7,6 +7,7 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Nodes.AbstractClient;
+import Grid.Nodes.AbstractResourceNode;
 import Grid.Nodes.AbstractServiceNode;
 import Grid.Nodes.PCE;
 import edu.ag2.model.BrokerCreationModel;
@@ -168,6 +169,12 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
+            
+            
+            NodeDistributionProperty resultSizeDistribution  = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(MB)");
+            createDistributionProperty(   (  (AbstractResourceNode)resource).getResultSizeDistribution()  , nodeProperties, resultSizeDistribution, "resultSizeDistribution");
+            
+            
 
             //============================================================================================================
 
@@ -194,14 +201,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeProperties.add(nodeRelationProperty);
 
         }
-//        else if (graphNode instanceof SwitchGraphNode) {
-//            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(graphNode);
-//
-//            //===========================================================================================================
-//            EntityProperty propertyHandleDelay = new EntityProperty("HandleDelay", "Retraso admitido:", EntityProperty.PropertyType.TEXT, false);
-//            propertyHandleDelay.setFirstValue(String.valueOf(abstractSwitch.getHandleDelay().getTime()));
-//            nodeProperties.add(propertyHandleDelay);
-//        }
 
         for (GraphNodesView graphNodesView : graphNodesViews) {
             graphNodesView.loadProperties(nodeProperties);
@@ -323,6 +322,19 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
+            else if (id.equalsIgnoreCase("resultSizeDistribution")) 
+            {
+                (  (AbstractResourceNode)resource).setResultSizeDistribution(getDistributionByText(value));
+                if (query) 
+                {
+                    queryProperties(selectedGraphNode);
+                }
+            } else if (id.contains("resultSizeDistribution")) 
+            {
+                setValuesDistribution( ((AbstractResourceNode)resource).getResultSizeDistribution() , value, id);
+            }
+            
+            
 
         } else if (selectedGraphNode instanceof BrokerGrahpNode) {
 
