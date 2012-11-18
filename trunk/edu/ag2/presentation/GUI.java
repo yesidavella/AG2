@@ -139,6 +139,7 @@ public class GUI extends Scene {
     private Button btnShowLog = new Button("Ver registros");
     private boolean isPlaying = false;
     private boolean OCSView = false;
+    private double totalIncrement =0;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -260,7 +261,11 @@ public class GUI extends Scene {
                         return;
                     }
                 }
-                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
+
+                totalIncrement += increment;
+                splitPane.setDividerPosition(0, totalIncrement);
+
+
             }
         });
 
@@ -289,7 +294,11 @@ public class GUI extends Scene {
                         return;
                     }
                 }
-                splitPane.setDividerPosition(0, splitPane.getDividerPositions()[0] + increment);
+                //  System.out.println(" BIG ANTES "+splitPane.getDividerPositions()[0]);
+
+                totalIncrement += increment;
+                splitPane.setDividerPosition(0, totalIncrement);
+                //    System.out.println(" BIG DESPUES  "+splitPane.getDividerPositions()[0]);
             }
         });
 
@@ -322,6 +331,7 @@ public class GUI extends Scene {
                         public void run() {
                             if (arg2.doubleValue() > arg1.doubleValue()) {
                                 splitPane.setDividerPosition(0, .95);
+                                totalIncrement = 0.95;
                                 tilPropertiesSmall.play();
                             }
                         }
@@ -770,6 +780,7 @@ public class GUI extends Scene {
 
         splitPane.getItems().addAll(vbxSimulation, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
+        totalIncrement= 0.95;
 
         tabSimulation.setContent(splitPane);
 
@@ -920,6 +931,8 @@ public class GUI extends Scene {
 
                 showProperties = !showProperties;
 
+                totalIncrement = splitPane.getDividerPositions()[0];
+                System.out.println("Init totalIncrement" + totalIncrement);
                 tilProperties.play();
                 if (showProperties) {
                     if (btnDownUp.getStyleClass().contains("btn-show-minus")) {
@@ -1364,7 +1377,7 @@ public class GUI extends Scene {
         }
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
-        chartsResultClient.play();  
+        chartsResultClient.play();
         chartsResultResource.play();
         chartsResultsBroker.play();
         chartsResultsSwitch.play();
