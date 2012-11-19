@@ -1,0 +1,528 @@
+/*Colores de azules del tema, el azul de abajo de los botones rgb(18,69,175)
+y del de arriba rgb(91,136,224). Tambien gris claro -fx-lGray-ag2:rgb(237,237,237)
+y gris medio -fx-mGray-ag2:rgb(204,204,204)*/
+.root {
+    -fx-dBlue-ag2:rgb(18,69,175);/*Significa dark-blue*/
+    -fx-mBlue-ag2:rgb(91,136,224);/*Significa middle-blue*/
+    -fx-lGray-ag2:rgb(237,237,237);
+    -fx-mGray-ag2:rgb(204,204,204)
+}
+
+.ver-borde-verde{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
+    -fx-border-style: solid;
+    -fx-border-color:green;
+}
+.ver-borde-rojo{/*Para ver el borde cualquier cosa cuando se desarrolla, TEMPORAL*/
+    -fx-border-style: solid;
+    -fx-border-color:red;
+}
+
+.ventanaPrincipal{
+    -fx-background-color: linear-gradient(to top, #EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6,#EEEEEE,#A6A6A6);
+    -fx-border-color: #020C70;/*#707070*/
+    -fx-border-width: 3px;
+    /*    -fx-border-radius: 5px;*/
+}
+
+.modal-AG2-window{
+    -fx-border-color: #707070;
+    -fx-border-width: 3px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+#mainToolBar{
+    -fx-background-image: url("../images/background-titlebar-ag2.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#menu-bar{
+    /*    -fx-background-color: #687FFF;*/
+    /*    -fx-background-radius: 5;*/
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);/*rgb(0,134,229),rgb(0,100,172)*/
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 6 6 0 0;
+    -fx-text-fill:white;
+    -fx-font-weight: bold
+}
+
+.bg-bigContainer-menuBar{
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-dBlue-ag2,-30%), derive(-fx-mBlue-ag2,10%));
+}
+
+
+#world-ocean{
+    -fx-fill:radial-gradient(center 50% 0%, radius 100%, derive(-fx-mBlue-ag2,50%), derive(-fx-dBlue-ag2,10%) 80%);
+}
+#non-world-ocean{
+    -fx-fill: white;
+}
+
+/**********************************************************************/
+/*Todo lo referente con los menus*/
+.menu-item-ag2 {
+    -fx-font-weight: normal;
+}
+.menu-item-ag2:hover,.menu-item-ag2:focused {
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);
+    -fx-text-fill:white;
+    -fx-font-weight: bold
+}
+
+.context-menu {
+    -fx-background-color:/*-fx-dBlue-ag2 0%,-fx-mBlue-ag2*/
+        derive(#B2D1FF,-40%),
+        derive(#B2D1FF,100%),
+        linear-gradient(to bottom, derive(#B2D1FF,100%) 0%, derive(#B2D1FF,50%) 12%, derive(#B2D1FF,65%) 88%, derive(#B2D1FF,23%) 100%);
+}
+/**********************************************************************/
+
+.bg-general-container{
+    /*    -fx-base: -fx-mBlue-ag2;*/
+    -fx-border-color: -fx-mBlue-ag2;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-color: linear-gradient(from 0% 20% to 100% 80%, derive(-fx-mBlue-ag2,90%),derive(-fx-mBlue-ag2,70%), derive(-fx-mBlue-ag2,90%));
+}
+
+#titleApplication{
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    /*    -fx-effect: dropshadow( two-pass-box , #B2BEFF, 10, 0.0 , 2 , 4);*/
+}
+
+.separator-toolbar{
+    -fx-background-color: -fx-dBlue-ag2;
+    -fx-border-style: dotted;
+    -fx-border-width: 0.1;
+}
+
+.arcoSeleccionado{
+    -fx-stroke:#3ADF00;
+    -fx-stroke-dash-array: 12 6 9 6;
+}
+
+.arcoNoSeleccionado{
+    -fx-stroke:#90EE90;
+    -fx-stroke-dash-array: 100%;
+}
+
+.nodoSeleccionado{
+    -fx-border-color: #44FF00;
+    -fx-border-width: 2;
+    -fx-border-style: dashed;
+}
+.marcoVentana{
+    -fx-border-color: gray;
+    -fx-border-width: 2;
+}
+#scrollPane-menu-tools{
+    -fx-background-color:linear-gradient(from 0% 49% to 100% 51%,derive(-fx-dBlue-ag2,80%), derive(-fx-mBlue-ag2,85%));
+}
+
+.nodoNoSeleccionado{
+    -fx-border-width: 0;
+}
+
+.boxLogosHorizontalGradient{
+    -fx-border-radius: 5;
+    -fx-border-color:gray;
+    -fx-border-width:1px;
+    /*    -fx-background-color:null;*/
+}
+.boxLogos{
+    -fx-background-color:#B4FCFF;
+    -fx-effect: innershadow(gaussian,blue,20,0.5,0,0);
+    -fx-background-radius: 15, 14, 13,13;
+    /*    -fx-opacity: 50%;*/
+}
+
+.boxLogosVerticalGradient{
+    -fx-border-radius: 5;
+    -fx-border-color:gray;
+    -fx-border-width:1px;
+    -fx-background-color:linear-gradient(to top, derive(-fx-base,-5%) 0%, derive(-fx-base,90%) 50%, derive(-fx-base,-5%) 100%);
+}
+.boxChart{
+    -fx-border-radius: 5;
+    -fx-border-color:#687FFF;
+    -fx-border-width:1px;
+    -fx-background-color:null;
+}
+.boxChart2{
+    -fx-border-radius: 5;
+    -fx-border-color:#BFBFBF;
+    -fx-border-width:1px;
+    -fx-background-color:null;
+}
+
+.boxDataChart{
+    -fx-border-radius: 4;
+    -fx-border-color:#687FFF;
+    -fx-border-width:1px;
+    -fx-background-color:null;
+}
+
+.data-progress-box{
+    -fx-border-width:1px;
+    -fx-border-style: dashed;
+    -fx-border-color:#FF9A00;
+    -fx-background-color:linear-gradient(to top, #FFD779 0%,#FFF2D0 45%, #FFF2D0 55%, #FFD779 100%);
+}
+/**Este es el estilo q se supone q usa la caja q tiene la pelotica q usa el avance
+de la simulacion, no se esta usando este estilo por ahora*/
+.progress-indicator-box{
+    -fx-border-style: dashed;
+    -fx-border-width:1px;
+    -fx-border-color:#FF9A00;
+    -fx-background-color:#FFE3A1;
+}
+
+ProgressBar progress-bar:indeterminate .bar {
+    -fx-background-color: linear-gradient(to top left, transparent,lime);
+}
+
+#window-close,#window-min,#window-max {
+    -fx-font-size: 1px;
+    -fx-background-color: transparent;
+    /*    -fx-padding:0px;*/
+}
+
+#window-close:hover {
+    -fx-background-image: url("../images/window-close-over.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#window-min:hover {
+    -fx-background-image: url("../images/window-min-over.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#window-max:hover {
+    -fx-background-image: url("../images/window-expand-over.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#modalDimmer {
+    -fx-background-color: rgb(0,0,0,0.5);
+}
+
+
+/******************************ESTILOS LOS TABS********************************/
+.tab{
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-font-weight:normal;
+    -fx-text-fill:black;
+}
+/*Estilos para los tab superiores*/
+.tab:top {
+    -fx-background-color: -fx-tab-border-color,-fx-inner-border-bottomup,linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+}
+/*Para los q son de izquierda*/
+.tab:left {
+    -fx-background-color: -fx-tab-border-color, -fx-inner-border-bottomup,linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: #C3D5FF;
+    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
+}
+
+.tab *.tab-label Text {
+    -fx-effect: dropshadow(two-pass-box , rgba(255, 255, 255, 0.4), 1, 0.0 , 0, 1);
+}
+
+.tab:selected {
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);/*rgb(0,134,229),rgb(0,100,172)*/
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-font-weight: bold;
+}
+
+.tab:selected *.tab-label {
+    -fx-text-fill:white;
+}
+
+/* ====================== LINE CHART =========================================*/
+.chart-title {
+    -fx-font-size: 14;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #f9d900, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 3px;
+    -fx-padding: 3px;
+}
+.chart-series-line {
+    -fx-stroke: #f9d900;
+    -fx-stroke-width: 2px;
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 0 , 3 );
+}
+.default-color0.chart-line-symbol { -fx-background-color: #f9d900, white; }
+.default-color1.chart-line-symbol { -fx-background-color: #a9e200, white; }
+.default-color2.chart-line-symbol { -fx-background-color: #22bad9, white; }
+.default-color3.chart-line-symbol { -fx-background-color: #0181e2, white; }
+.default-color4.chart-line-symbol { -fx-background-color: #2f357f, white; }
+.default-color5.chart-line-symbol { -fx-background-color: #860061, white; }
+.default-color6.chart-line-symbol { -fx-background-color: #c62b00, white; }
+.default-color7.chart-line-symbol { -fx-background-color: #ff5700, white; }
+.default-color0.chart-series-line { -fx-stroke: #f9d900; }
+.default-color1.chart-series-line { -fx-stroke: #a9e200; }
+.default-color2.chart-series-line { -fx-stroke: #22bad9; }
+.default-color3.chart-series-line { -fx-stroke: #0181e2; }
+.default-color4.chart-series-line { -fx-stroke: #2f357f; }
+.default-color5.chart-series-line { -fx-stroke: #860061; }
+.default-color6.chart-series-line { -fx-stroke: #c62b00; }
+.default-color7.chart-series-line { -fx-stroke: #ff5700; }
+
+#window-resize-button {
+    -fx-background-image: url("../images/window-corner.png");
+    -fx-background-position: right 1px bottom 1px;
+    -fx-background-repeat: no-repeat;
+    -fx-cursor:move;
+}
+
+/*************BOTON Q MUESTRA Y OCULTA LAS TABLAS DE PROPIEDADES**************/
+#btn-show-hide-properties{
+    -fx-background-color: white;
+    -fx-background-size: 60% 60%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-cursor: hand;
+    -fx-border-color: derive(-fx-mBlue-ag2,10%);
+    -fx-border-radius:3;
+}
+#btn-show-hide-properties:hover{
+    -fx-border-color: derive(-fx-dBlue-ag2,-10%);
+}
+
+.btn-show-minus{
+    -fx-background-image: url("../images/arrow-show-minus.png");
+}
+.btn-show-more{
+    -fx-background-image: url("../images/arrow-show-more.png");
+}
+
+/***************MAPA DE NAVEGACION Y ELEMENTOS INTERNOS************************/
+
+.bg-map-navigation{
+    -fx-background-color: linear-gradient(from 100% 80% to 0% 20%,derive(-fx-mBlue-ag2,60%),derive(-fx-mBlue-ag2,80%),derive(-fx-mBlue-ag2,60%) );
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 6;
+
+    -fx-text-fill:white;
+    -fx-font-weight: bold;
+
+    -fx-border-color:white;
+    /*-fx-border-style:segments(7,9,8);*/
+    -fx-border-insets:2;
+    -fx-border-radius:5;
+    -fx-border-width:2.3;
+}
+
+#title-nav-map{
+    -fx-label-padding:3;
+    -fx-text-fill:black;/*derive(-fx-dBlue-ag2,-50%)*/
+    -fx-font-size:1.1em;
+}
+
+.bg-map-navigation .label{
+    -fx-text-fill:black/*derive(-fx-dBlue-ag2,-50%)*/;
+    -fx-alignment:center-right;
+}
+
+.bg-map-navigation .choice-box {
+    -fx-background-color: derive(-fx-mBlue-ag2,70%), derive(-fx-mBlue-ag2,45%),derive(-fx-mBlue-ag2,20%),
+        linear-gradient( to bottom, derive(-fx-mBlue-ag2,70%) 0%, derive(-fx-mBlue-ag2,90%) 100%);
+}
+
+.bg-map-navigation .choice-box:focused {
+    -fx-background-color: derive(-fx-mBlue-ag2,40%), derive(-fx-mBlue-ag2,15%),derive(-fx-mBlue-ag2,-10%),
+        linear-gradient( to bottom, derive(-fx-mBlue-ag2,40%) 0%, derive(-fx-mBlue-ag2,90%) 100%);
+}
+
+.bg-map-navigation .choice-box .label {
+    -fx-text-fill:derive(-fx-dBlue-ag2,-90%);
+    -fx-font-weight: normal;
+}
+
+.menu-item:focused {
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);
+    -fx-text-fill: white;
+    -fx-font-weight: normal;
+}
+
+.menu-item .label {
+    -fx-font-weight: normal;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.bg-map-navigation .button {
+    -fx-background-color: white;
+    /*    -fx-text-fill: derive(-fx-dBlue-ag2,0%);*/
+}
+
+.bg-map-navigation .button:focused {
+    -fx-background-color: white, derive(-fx-mBlue-ag2,-5%),derive(-fx-mBlue-ag2,-30%),
+        white;
+}
+
+.go-btn{
+    -fx-background-image: url("../images/go_arrow.png");    
+    -fx-background-size: 55% 55%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    -fx-cursor:hand;
+    -fx-background-radius:10
+}
+
+/******************LUZ DEL HEADER Q TIENE LA ANIMACION************************/
+#animation-light{
+    /*    -fx-fill: red;*/
+    -fx-background-image: url("../images/light.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+}
+
+#path-light{
+    -fx-stroke:transparent;
+    /*    -fx-stroke-width:0.5px;*/
+    /*    -fx-effect:dropshadow( gaussian , derive(-fx-mBlue-ag2,-30%) , 10, 0.5 ,0,0 ); */
+}
+/************************FORMATO PARA LAS TABLESVIEWS**************************/
+.table-view .column-header, .table-view .filler, .table-view .column-drag-header {
+    -fx-font-size: 0.95em; /* 13pt - 1 more than the default font */
+    -fx-size: 20;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+}
+
+.table-cell{
+    -fx-alignment:center;
+}
+
+/*Tablaview de propiedades de SIMULACION y DISPOSITIVO*/
+.tab-pane#tabpaneProperties .table-cell, .tab-pane#tabpaneProperties .table-cell .text-field{
+    -fx-alignment:center-right;
+}
+
+.table-view:focused .table-row-cell:selected:focused, .table-view:focused .table-row-cell:selected,
+.table-view:row-selection .table-row-cell:filled:hover:selected {
+    -fx-background-color: linear-gradient(to top,-fx-dBlue-ag2 0%,-fx-mBlue-ag2 70%);
+}
+
+.labelPhophorusResults{
+    -fx-background-color: linear-gradient(to bottom, -fx-lGray-ag2 0%, -fx-mGray-ag2 100%);
+    -fx-padding: 5px;
+    -fx-border-radius: 5 5 0 0;
+    -fx-background-radius: 3px;
+    -fx-border-style: solid;
+    -fx-border-color:#959595 #959595 transparent #959595;
+}
+
+#pill-left {
+    -fx-padding: 5;
+    -fx-border-image-source: url("left-btn.png");
+    -fx-border-image-slice: 1 1 1 1 fill;
+    -fx-border-image-width: 1 1 1 1;
+    -fx-border-image-insets: 0;
+    -fx-border-image-repeat: stretch;
+    -fx-background-color: null !important; 
+}
+#pill-left:selected { -fx-border-image-source: url("left-btn-selected.png"); }
+#pill-left .label {
+    -fx-text-fill: #d3d3d3; 
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+}
+
+#pill-left:selected .label {
+    /* -fx-text-fill: black; */
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+}
+#pill-center {
+    -fx-padding: 5;
+    -fx-border-image-source: url("center-btn.png");
+    -fx-border-image-slice: 1 1 1 1 fill;
+    -fx-border-image-width: 1 1 1 1;
+    -fx-border-image-insets: 0;
+    -fx-border-image-repeat: stretch;
+    -fx-background-color: null !important;
+}
+#pill-center:selected { -fx-border-image-source: url("center-btn-selected.png"); }
+#pill-center .label {
+    -fx-text-fill: #d3d3d3;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+}
+#pill-center:selected .label {
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+}
+#pill-right {
+    -fx-padding: 5;
+    -fx-border-image-source: url("right-btn.png");
+    -fx-border-image-slice: 1 1 1 1 fill;
+    -fx-border-image-width: 1 1 1 1;
+    -fx-border-image-insets: 0;
+    -fx-border-image-repeat: stretch;
+    -fx-background-color: null !important;
+}
+#pill-right:selected { -fx-border-image-source: url("right-btn-selected.png"); }
+#pill-right .label {
+    -fx-text-fill: #d3d3d3;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
+}
+#pill-right:selected .label {
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
+}
+#pill-fondo{
+    -fx-background-color: #C3D5FF;
+}
+
+/**********************************BOTONES*************************************/
+.button-ag2 {
+    -fx-background-color: white;
+    -fx-background-radius: 1.5, 1.5, 1.5, 1.5;
+    -fx-background-insets: -0.5, 0, 0.5, 0.5;
+    -fx-text-fill: derive(-fx-dBlue-ag2,0%);
+
+    -fx-border-color:derive(-fx-dBlue-ag2,0%);
+    -fx-border-insets:1;
+    -fx-border-radius:1;
+    -fx-border-width:1;
+}
+
+.button-ag2:hover {
+    -fx-background-color: derive(-fx-mBlue-ag2,85%);
+    -fx-border-width:1.5;
+}
+/*
+.button-ag2:focused {
+    -fx-background-color: red;
+    -fx-text-fill: green;
+    -fx-border-color: black;
+}*/
+
+.button-ag2:armed {
+    -fx-background-color: derive(-fx-dBlue-ag2,0%);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+
+.button-ag2:disabled {
+    -fx-opacity: 0.5;
+}
