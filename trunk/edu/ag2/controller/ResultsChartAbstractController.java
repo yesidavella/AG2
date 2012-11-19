@@ -1,5 +1,10 @@
 package edu.ag2.controller;
 
+import edu.ag2.presentation.control.ChartsResultsBroker;
+import edu.ag2.presentation.control.ViewResultsBrokerChart;
+import edu.ag2.presentation.control.ViewResultsClientChart;
+import edu.ag2.presentation.control.ViewResultsResourceChart;
+import edu.ag2.presentation.control.ViewResultsSwitchChart;
 import java.io.Serializable;
 
 public abstract class ResultsChartAbstractController implements Serializable {

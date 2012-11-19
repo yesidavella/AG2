@@ -35,7 +35,7 @@ public abstract class ModalAG2window extends Stage {
 
         Scene scene = new Scene(brpWindowLayout, 515, 400);//#FFEB8C
         setGradientEffect(scene);
-        scene.getStylesheets().add(Utils.ABS_PATH_CSS + "cssAG2.css");
+        scene.getStylesheets().add(Utils.ABS_PATH_CSS + "ag2.css");
         brpWindowLayout.getStyleClass().add("modal-AG2-window");
 
         btnAccept = new Button("Cerrar");

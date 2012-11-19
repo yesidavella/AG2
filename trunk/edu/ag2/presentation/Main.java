@@ -3,6 +3,26 @@ package edu.ag2.presentation;
 import Grid.Entity;
 import edu.ag2.config.PropertyPhosphorusTypeEnum;
 import edu.ag2.config.serialization.UtilSerializator;
+import edu.ag2.controller.ExecuteController;
+import edu.ag2.controller.FiberAdminController;
+import edu.ag2.controller.LinkAdminAbstractController;
+import edu.ag2.controller.MatchCoupleObjectContainer;
+import edu.ag2.controller.NodeAdminController;
+import edu.ag2.controller.NotifyControllerOCS;
+import edu.ag2.controller.OCSAdminController;
+import edu.ag2.controller.ResultsChartController;
+import edu.ag2.controller.ResultsController;
+import edu.ag2.model.BrokerCreationModel;
+import edu.ag2.model.ClientCreationModel;
+import edu.ag2.model.FiberCreationModel;
+import edu.ag2.model.HybridSwitchCreationModel;
+import edu.ag2.model.LinkCreationAbstractModel;
+import edu.ag2.model.NodeCreationModel;
+import edu.ag2.model.OCSCreationModel;
+import edu.ag2.model.PCE_SwitchCreationModel;
+import edu.ag2.model.PhosphorusLinkModel;
+import edu.ag2.model.ResourceCreationModel;
+import edu.ag2.model.SimulationBase;
 import edu.ag2.presentation.control.ResultsOCSController;
 import edu.ag2.presentation.design.GraphArc;
 import edu.ag2.presentation.design.GraphDesignGroup;
@@ -37,7 +57,7 @@ public class Main extends Application implements Serializable {
     private SimulationBase simulationBase = SimulationBase.getInstance();
     private ResultsController resultsController;
     private ResultsChartController resultsChartCtr;
-    private JSObject browser;
+    private JSObject webBrowser;
     private NotifyControllerOCS notifyControllerOCS;
     private HashMap<GraphNode, Entity> nodeMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer();
     private HashMap<GraphLink, PhosphorusLinkModel> linkMatchCoupleObjectContainer = MatchCoupleObjectContainer.getInstanceLinkMatchCoupleObjectContainer();
@@ -46,10 +66,10 @@ public class Main extends Application implements Serializable {
     public void start(final Stage stage) {
 
         stage.setTitle("Simulador de infraestructura de grillas opticas AG2");
-
+        //FIXME: Pendiente multi-plataforma
         try {
-            browser = getHostServices().getWebContext();
-            IS_APPLET = browser != null;
+            webBrowser = getHostServices().getWebContext();
+            IS_APPLET = webBrowser != null;
         } catch (Exception e) {
             IS_APPLET = false;
         }
