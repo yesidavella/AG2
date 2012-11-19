@@ -7,11 +7,27 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Nodes.AbstractClient;
+import Grid.Nodes.AbstractResourceNode;
 import Grid.Nodes.AbstractServiceNode;
 import Grid.Nodes.PCE;
+import edu.ag2.model.BrokerCreationModel;
+import edu.ag2.model.ClientCreationModel;
+import edu.ag2.model.HybridSwitchCreationModel;
+import edu.ag2.model.NodeCreationModel;
+import edu.ag2.model.PCE_SwitchCreationModel;
+import edu.ag2.model.ResourceCreationModel;
+import edu.ag2.model.SimulationBase;
 import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.GraphNodesView;
 import edu.ag2.presentation.Main;
+import edu.ag2.presentation.design.BrokerGrahpNode;
+import edu.ag2.presentation.design.ClientGraphNode;
+import edu.ag2.presentation.design.GraphArc;
+import edu.ag2.presentation.design.GraphNode;
+import edu.ag2.presentation.design.HybridSwitchGraphNode;
+import edu.ag2.presentation.design.PCE_SwicthGraphNode;
+import edu.ag2.presentation.design.ResourceGraphNode;
+import edu.ag2.presentation.design.SwitchGraphNode;
 import edu.ag2.presentation.design.property.EntityProperty;
 import edu.ag2.presentation.design.property.NodeDistributionProperty;
 import edu.ag2.presentation.design.property.NodeRelationProperty;
@@ -153,6 +169,12 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
+            
+            
+            NodeDistributionProperty resultSizeDistribution  = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(MB)");
+            createDistributionProperty(   (  (AbstractResourceNode)resource).getResultSizeDistribution()  , nodeProperties, resultSizeDistribution, "resultSizeDistribution");
+            
+            
 
             //============================================================================================================
 
@@ -179,14 +201,6 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             nodeProperties.add(nodeRelationProperty);
 
         }
-//        else if (graphNode instanceof SwitchGraphNode) {
-//            AbstractSwitch abstractSwitch = (AbstractSwitch) nodeMatchCoupleObjectContainer.get(graphNode);
-//
-//            //===========================================================================================================
-//            EntityProperty propertyHandleDelay = new EntityProperty("HandleDelay", "Retraso admitido:", EntityProperty.PropertyType.TEXT, false);
-//            propertyHandleDelay.setFirstValue(String.valueOf(abstractSwitch.getHandleDelay().getTime()));
-//            nodeProperties.add(propertyHandleDelay);
-//        }
 
         for (GraphNodesView graphNodesView : graphNodesViews) {
             graphNodesView.loadProperties(nodeProperties);
@@ -308,6 +322,19 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
+            else if (id.equalsIgnoreCase("resultSizeDistribution")) 
+            {
+                (  (AbstractResourceNode)resource).setResultSizeDistribution(getDistributionByText(value));
+                if (query) 
+                {
+                    queryProperties(selectedGraphNode);
+                }
+            } else if (id.contains("resultSizeDistribution")) 
+            {
+                setValuesDistribution( ((AbstractResourceNode)resource).getResultSizeDistribution() , value, id);
+            }
+            
+            
 
         } else if (selectedGraphNode instanceof BrokerGrahpNode) {
 

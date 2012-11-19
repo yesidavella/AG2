@@ -13,15 +13,15 @@ import edu.ag2.presentation.design.GraphArc;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable {
-    private static final double COEFFICIENT_PROPORTIONALITY_GRID = 9670.77;
 
-    // private List<ResourceNode> resources;
+//    private static final double COEFFICIENT_PROPORTIONALITY_GRID = 9670.77;//Coef. de proporcionalidad entre la red y la grilla.
     boolean swithOrder = true;
 
     public AG2_ResourceSelectorModel(List<ResourceNode> resources) {
@@ -29,8 +29,6 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
     @Override
     public ResourceNode findBestResource(Entity sourceEntity, List<ResourceNode> resources, double jobFlops, PCE pce, JobAckMessage ackMsg) {
-
-        // this.resources = resources;
 
         double maxCPUCount = 0;
         double maxCPUCountSwap = 0;
@@ -52,63 +50,90 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
             }
         }
 
-        double costSelected = Double.MAX_VALUE;
-        ResourceNode resourceNodeSelected = null;
-        double totalCost = 0;
         boolean allFullBusy = true;
-        double gridCostSelected = 0;
-        double networkCostSelected = 0;
-        
+        /**
+         * Variables de menor y mayor costo de red y grilla
+         */
+        double minGridCost = Double.MAX_VALUE;
+//        double minNetworkCost = Double.MAX_VALUE;
+        double maxGridCost = 0;
+        double maxNetworkCost = 0;
+
+        HashMap<ResourceNode, Double> mapResourceGridCost = new HashMap();
+
         for (ResourceNode resourceNode : resources) {
             double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
-            gridCost *= COEFFICIENT_PROPORTIONALITY_GRID;
+//             System.out.println("Recurtso:"+resourceNode +" costo grid" +gridCost);
+            mapResourceGridCost.put(resourceNode, gridCost);
             Double networkCost = mapResourceNetworkCost.get(resourceNode);
+
+            if (gridCost < minGridCost) {
+                minGridCost = gridCost;
+            }
+
+            if (gridCost > maxGridCost) {
+                maxGridCost = gridCost;
+            }
+
+            if (networkCost > maxNetworkCost) {
+                maxNetworkCost = networkCost;
+            }
+
             if (Double.MAX_VALUE != gridCost) {
                 allFullBusy = false;
             }
 
-
-            if (networkCost != null) {
-                totalCost = gridCost + networkCost;
-            } else {
-                totalCost = gridCost + Double.MAX_VALUE;
-            }
-
-//            System.out.println("Costo AGG Resurso: " + resourceNode + " Total red:" + networkCost + " Costo de grilla " + gridCost + " Costo total total: " + totalCost);
-
-
-
-            if (swithOrder) 
-            {
-                if (totalCost < costSelected)
-                {
-                    costSelected = totalCost;
-                    resourceNodeSelected = resourceNode;
-                    gridCostSelected = gridCost;
-                    networkCostSelected = networkCost;
-                    
-                }
-            } else {
-                if (totalCost <= costSelected) {
-                    costSelected = totalCost;
-                    resourceNodeSelected = resourceNode;
-                    gridCostSelected = gridCost;
-                    networkCostSelected = networkCost;
-                }
-            }
         }
 
-        swithOrder = !swithOrder;
+        double degreeGrid = maxGridCost - minGridCost;
 
-        ackMsg.setEstimatedNetworkCost(networkCostSelected);
-        ackMsg.setEstimatedGridCost(gridCostSelected);
+        double percentGrid = 0.5;
+        double percentNetwork = 0.5;
+        double minTotalGrade = Double.MAX_VALUE;
+        ResourceNode resourceSelectedByGrade = null;
+        double totalGrade = 0;
+
+        for (ResourceNode resourceNode : resources) {
+
+            double relativeGridCost = mapResourceGridCost.get(resourceNode) - minGridCost;
+            double relativeNetworkCost = mapResourceNetworkCost.get(resourceNode);
+
+            double gradeGrid = 0;
+            if (degreeGrid > 0) {
+                gradeGrid = (relativeGridCost * 100) / degreeGrid;
+            }
+            double gradeNetwork = 0;
+
+            if (maxNetworkCost > 0) {
+                gradeNetwork = (relativeNetworkCost * 100) / maxNetworkCost;
+            }
+
+            if (mapResourceGridCost.get(resourceNode) == Double.MAX_VALUE) {
+                totalGrade = 100 + (gradeNetwork * percentNetwork);
+            } else {
+                totalGrade = (gradeNetwork * percentNetwork) + (gradeGrid * percentGrid);
+            }
+
+            if (totalGrade < minTotalGrade) {
+                minTotalGrade = totalGrade;
+                resourceSelectedByGrade = resourceNode;
+            }
+            //   System.out.println("Recurso:" + resourceNode.getID() + " NOta grilla:" + gradeGrid + ". Nota Red:" + gradeNetwork + ". TotalGrade:" + totalGrade);
+        }
+
+//
+//        System.out.println("Red max:" + maxNetworkCost + "-- Grilla min:" + minGridCost + " max:" + maxGridCost);
+//        System.out.println("seleccionado:" + resourceSelectedByGrade + " con GradeTotal:" + minTotalGrade);
+
+        ackMsg.setEstimatedNetworkCost(mapResourceGridCost.get(resourceSelectedByGrade));
+        ackMsg.setEstimatedGridCost(mapResourceNetworkCost.get(resourceSelectedByGrade));
         ackMsg.setDomainPCE(pce);
-         
+
         if (allFullBusy) {
             return resourceNodeMaxCPU;
         }
 
-        return resourceNodeSelected;
+        return resourceSelectedByGrade;
     }
 
     public double getCostProcByResource(ResourceNode resourceNode, double jobFlops, double maxCPUCount, double maxBuffer) {
@@ -121,7 +146,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
         double s;
         double bufferBusy;
         double bufferFree;
-        double z = 1;
+        double z = 1;//Coeficiente de ajuste entre el costo estimado de red+grilla y el costo real obtendio.
         /////////////
         double capacityCPU;
 
@@ -143,20 +168,17 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
         bufferBusy = ((AbstractResourceNode) resourceNode).getQueue().size();
         bufferFree = resourceNode.getMaxQueueSize() - bufferBusy;
-        Acpu = CPU_libre * capacityCPU;
+//        Acpu = CPU_libre * capacityCPU;
         CPU_totales = maxCPUCount;
 
-        Cproc = jobFlops / (Acpu / CPU_libre);
+        Cproc = (jobFlops / (capacityCPU)) / CPU_libre;
+
         d = (40 / 100) * (1 - (CPU_libre / CPU_totales));
-
         s = (20 / 100) * (1 - (bufferFree / maxBuffer));
-
 
         Tproc = Cproc + (d * Cproc) + (s * Cproc);
 
         return z * Tproc;
-
-
     }
 
     @Override

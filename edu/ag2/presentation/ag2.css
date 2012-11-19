@@ -32,7 +32,7 @@ y gris medio -fx-mGray-ag2:rgb(204,204,204)*/
 }
 
 #mainToolBar{
-    -fx-background-image: url("../images/background-titlebar-ag2.png");
+    -fx-background-image: url("images/background-titlebar-ag2.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
 }
@@ -54,6 +54,7 @@ y gris medio -fx-mGray-ag2:rgb(204,204,204)*/
 
 #world-ocean{
     -fx-fill:radial-gradient(center 50% 0%, radius 100%, derive(-fx-mBlue-ag2,50%), derive(-fx-dBlue-ag2,10%) 80%);
+    /*-fx-fill: white;*/
 }
 #non-world-ocean{
     -fx-fill: white;
@@ -191,17 +192,17 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 #window-close:hover {
-    -fx-background-image: url("../images/window-close-over.png");
+    -fx-background-image: url("images/window-close-over.png");
     -fx-background-repeat: no-repeat;
 }
 
 #window-min:hover {
-    -fx-background-image: url("../images/window-min-over.png");
+    -fx-background-image: url("images/window-min-over.png");
     -fx-background-repeat: no-repeat;
 }
 
 #window-max:hover {
-    -fx-background-image: url("../images/window-expand-over.png");
+    -fx-background-image: url("images/window-expand-over.png");
     -fx-background-repeat: no-repeat;
 }
 
@@ -281,7 +282,7 @@ ProgressBar progress-bar:indeterminate .bar {
 .default-color7.chart-series-line { -fx-stroke: #ff5700; }
 
 #window-resize-button {
-    -fx-background-image: url("../images/window-corner.png");
+    -fx-background-image: url("images/window-corner.png");
     -fx-background-position: right 1px bottom 1px;
     -fx-background-repeat: no-repeat;
     -fx-cursor:move;
@@ -302,10 +303,10 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 .btn-show-minus{
-    -fx-background-image: url("../images/arrow-show-minus.png");
+    -fx-background-image: url("images/arrow-show-minus.png");
 }
 .btn-show-more{
-    -fx-background-image: url("../images/arrow-show-more.png");
+    -fx-background-image: url("images/arrow-show-more.png");
 }
 
 /***************MAPA DE NAVEGACION Y ELEMENTOS INTERNOS************************/
@@ -377,7 +378,7 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 
 .go-btn{
-    -fx-background-image: url("../images/go_arrow.png");    
+    -fx-background-image: url("images/go_arrow.png");    
     -fx-background-size: 55% 55%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
@@ -388,7 +389,7 @@ ProgressBar progress-bar:indeterminate .bar {
 /******************LUZ DEL HEADER Q TIENE LA ANIMACION************************/
 #animation-light{
     /*    -fx-fill: red;*/
-    -fx-background-image: url("../images/light.png");
+    -fx-background-image: url("images/light.png");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position:center;
@@ -435,14 +436,14 @@ ProgressBar progress-bar:indeterminate .bar {
 
 #pill-left {
     -fx-padding: 5;
-    -fx-border-image-source: url("left-btn.png");
+    -fx-border-image-source: url("images/left-btn.png");
     -fx-border-image-slice: 1 1 1 1 fill;
     -fx-border-image-width: 1 1 1 1;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important; 
 }
-#pill-left:selected { -fx-border-image-source: url("left-btn-selected.png"); }
+#pill-left:selected { -fx-border-image-source: url("images/left-btn-selected.png"); }
 #pill-left .label {
     -fx-text-fill: #d3d3d3; 
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
@@ -455,14 +456,14 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 #pill-center {
     -fx-padding: 5;
-    -fx-border-image-source: url("center-btn.png");
+    -fx-border-image-source: url("images/center-btn.png");
     -fx-border-image-slice: 1 1 1 1 fill;
     -fx-border-image-width: 1 1 1 1;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-#pill-center:selected { -fx-border-image-source: url("center-btn-selected.png"); }
+#pill-center:selected { -fx-border-image-source: url("images/center-btn-selected.png"); }
 #pill-center .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );
@@ -473,14 +474,14 @@ ProgressBar progress-bar:indeterminate .bar {
 }
 #pill-right {
     -fx-padding: 5;
-    -fx-border-image-source: url("right-btn.png");
+    -fx-border-image-source: url("images/right-btn.png");
     -fx-border-image-slice: 1 1 1 1 fill;
     -fx-border-image-width: 1 1 1 1;
     -fx-border-image-insets: 0;
     -fx-border-image-repeat: stretch;
     -fx-background-color: null !important;
 }
-#pill-right:selected { -fx-border-image-source: url("right-btn-selected.png"); }
+#pill-right:selected { -fx-border-image-source: url("images/right-btn-selected.png"); }
 #pill-right .label {
     -fx-text-fill: #d3d3d3;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.75) , 0, 0.0 , 0 , -1 );

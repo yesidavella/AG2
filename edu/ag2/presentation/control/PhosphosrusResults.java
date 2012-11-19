@@ -243,7 +243,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         TableColumn tcReqsSent = new TableColumn("Enviadas");
         TableColumn tcReqsNotSent = new TableColumn("No enviadas");
         TableColumn relReqsSent_reqsCreated = new TableColumn("% enviadas/creadas ");
-        TableColumn tclScheduledReqs = new TableColumn("Agendadas");
+      
 
         TableColumn tcJobsSent = new TableColumn("Enviados");
         TableColumn tcJobsNotSent = new TableColumn("No enviados");
@@ -270,7 +270,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         TableColumn tclAllReqs = new TableColumn("Solicitudes de Agendamiento");
         TableColumn tclAllJobs = new TableColumn("Trabajos");
 
-        tclAllReqs.getColumns().addAll(tcReqsCreated, tcReqsSent, tcReqsNotSent, relReqsSent_reqsCreated, tclScheduledReqs);
+        tclAllReqs.getColumns().addAll(tcReqsCreated, tcReqsSent, tcReqsNotSent, relReqsSent_reqsCreated);
         tclAllJobs.getColumns().addAll(tcJobsSent, tcJobsNotSent, tcReceivedResults, relResultsReceived_jobsSent);
 
         tbvClientResults.getColumns().addAll(
@@ -287,7 +287,7 @@ public class PhosphosrusResults implements ViewResultsPhosphorus {
         setWidthAccordingTitlelength(tcReqsSent, 1);
         setWidthAccordingTitlelength(tcReqsNotSent, 1);
         setWidthAccordingTitlelength(relReqsSent_reqsCreated, 1);
-        setWidthAccordingTitlelength(tclScheduledReqs, 1);
+       
 
         setWidthAccordingTitlelength(tcJobsSent, 1);
         setWidthAccordingTitlelength(tcJobsNotSent, 1);

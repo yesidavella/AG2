@@ -15,9 +15,9 @@ public class Utils {
 
     static {
         try {
-            ABS_PATH_CONFIG_AG2 = new File("resources/").toURL().toString().replaceFirst("file:", "");
-            ABS_PATH_IMGS = new File("resources/images/").toURL().toString();
-            ABS_PATH_CSS = new File("resources/css/").toURL().toString();
+            ABS_PATH_CONFIG_AG2 = new File("configFiles/").toURL().toString().replaceFirst("file:", "");
+            ABS_PATH_IMGS = new File("sources/edu/ag2/presentation/images/").toURL().toString();
+            ABS_PATH_CSS = new File("sources/edu/ag2/presentation/").toURL().toString();
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);

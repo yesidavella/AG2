@@ -5,10 +5,17 @@
 package edu.ag2.presentation.design;
 
 import edu.ag2.presentation.GUI;
+import edu.ag2.presentation.Main;
 import edu.ag2.presentation.control.PhosphorusPropertySet;
 import edu.ag2.presentation.control.ResultsOCS;
 import edu.ag2.util.Utils;
+import javafx.animation.ScaleTransition;
+import javafx.animation.ScaleTransitionBuilder;
+import javafx.animation.StrokeTransition;
+import javafx.animation.StrokeTransitionBuilder;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -20,8 +27,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 /**
  *
@@ -47,7 +56,7 @@ public class GraphOCS implements NodeListener {
     private TitledPane tpnDireccion1 = new TitledPane();
     private TitledPane tpnDireccion2 = new TitledPane();
     private Accordion accordion = new Accordion();
-    private VBox vBoxInfoOCS = new VBox();
+    private VBox vbxInfoOCS = new VBox();
     private ImageView ivwClose = new ImageView(new Image(Utils.ABS_PATH_IMGS + "close_blue.jpg"));
     private Button btnClose = new Button();
     private ObservableList<PhosphorusPropertySet> dataSummaryOCS;
@@ -56,24 +65,27 @@ public class GraphOCS implements NodeListener {
     private TableView tvSummaryOCS_Inverted;
     private PhosphorusPropertySet tvSummaryOCS_Created;
     private PhosphorusPropertySet tvSummaryOCS_CreatedInverted;
-    PhosphorusPropertySet tvSummaryOCS_Traffic;
-    PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
-    PhosphorusPropertySet tvSummaryOCS_JobSent;
-    PhosphorusPropertySet tvSummaryOCS_JobSentInverted;
-    PhosphorusPropertySet tvSummaryOCS_JobTraffic;
-    PhosphorusPropertySet tvSummaryOCS_JobTrafficInverted;
-    PhosphorusPropertySet tvSummaryOCS_RequestSent;
-    PhosphorusPropertySet tvSummaryOCS_RequestSentInverted;
-    PhosphorusPropertySet tvSummaryOCS_RequestTraffic;
-    PhosphorusPropertySet tvSummaryOCS_RequestTrafficInverted;
-    PhosphorusPropertySet tvSummaryOCS_ackRequestSent;
-    PhosphorusPropertySet tvSummaryOCS_ackRequestSentInverted;
-    PhosphorusPropertySet tvSummaryOCS_ackRequestTraffic;
-    PhosphorusPropertySet tvSummaryOCS_ackRequestTrafficInverted;
-    PhosphorusPropertySet tvSummaryOCS_ResultSent;
-    PhosphorusPropertySet tvSummaryOCS_ResultSentInverted;
-    PhosphorusPropertySet tvSummaryOCS_ResultTraffic;
-    PhosphorusPropertySet tvSummaryOCS_ResultTrafficInverted;
+    private PhosphorusPropertySet tvSummaryOCS_Traffic;
+    private PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
+    private PhosphorusPropertySet tvSummaryOCS_JobSent;
+    private PhosphorusPropertySet tvSummaryOCS_JobSentInverted;
+    private PhosphorusPropertySet tvSummaryOCS_JobTraffic;
+    private PhosphorusPropertySet tvSummaryOCS_JobTrafficInverted;
+    private PhosphorusPropertySet tvSummaryOCS_RequestSent;
+    private PhosphorusPropertySet tvSummaryOCS_RequestSentInverted;
+    private PhosphorusPropertySet tvSummaryOCS_RequestTraffic;
+    private PhosphorusPropertySet tvSummaryOCS_RequestTrafficInverted;
+    private PhosphorusPropertySet tvSummaryOCS_ackRequestSent;
+    private PhosphorusPropertySet tvSummaryOCS_ackRequestSentInverted;
+    private PhosphorusPropertySet tvSummaryOCS_ackRequestTraffic;
+    private PhosphorusPropertySet tvSummaryOCS_ackRequestTrafficInverted;
+    private PhosphorusPropertySet tvSummaryOCS_ResultSent;
+    private PhosphorusPropertySet tvSummaryOCS_ResultSentInverted;
+    private PhosphorusPropertySet tvSummaryOCS_ResultTraffic;
+    private PhosphorusPropertySet tvSummaryOCS_ResultTrafficInverted;
+    private StrokeTransition strokeTransition;
+     final AudioClip bar1Note =   new AudioClip(Main.class.getResource("Note1.wav").toString());
+
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
@@ -98,7 +110,7 @@ public class GraphOCS implements NodeListener {
 
 
         line.setStroke(Color.web("#5B88E0"));
-        dropShadow.setColor(Color.BLACK);  
+        dropShadow.setColor(Color.BLACK);
 
 
 
@@ -117,7 +129,6 @@ public class GraphOCS implements NodeListener {
         lblCountOCS.setEffect(dropShadow1);
 
         accordion.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 lblCountOCS.setScaleX(1.7);
@@ -140,25 +151,23 @@ public class GraphOCS implements NodeListener {
         btnClose.setPrefSize(10, 10);
         btnClose.setScaleX(0.7);
         btnClose.setScaleY(0.7);
-        vBoxInfoOCS.setAlignment(Pos.CENTER_RIGHT);
+        vbxInfoOCS.setAlignment(Pos.CENTER_RIGHT);
 
         btnClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
-                vBoxInfoOCS.setVisible(false);
+                vbxInfoOCS.setVisible(false);
             }
         });
-        vBoxInfoOCS.setSpacing(1);
-        vBoxInfoOCS.getChildren().addAll(btnClose, accordion);
-        graphDesignGroup.getGroup().getChildren().addAll(group, vBoxInfoOCS);
+        vbxInfoOCS.setSpacing(1);
+        vbxInfoOCS.getChildren().addAll(btnClose, accordion);
+        graphDesignGroup.getGroup().getChildren().addAll(group, vbxInfoOCS);
 
         group.toFront();
         graphNodeDestination.getGroup().toFront();
         graphNodeSource.getGroup().toFront();
 
         line.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 GraphOCS.this.showLabel(arg0.getX(), arg0.getY());
@@ -167,7 +176,7 @@ public class GraphOCS implements NodeListener {
 
         accordion.getPanes().add(tpnDireccion1);
         accordion.getPanes().add(tpnDireccion2);
-        vBoxInfoOCS.setVisible(false);
+        vbxInfoOCS.setVisible(false);
 
         TableColumn tcProperty = new TableColumn("Resultado");
         TableColumn tcValue = new TableColumn("Valor");
@@ -307,6 +316,16 @@ public class GraphOCS implements NodeListener {
         tpnDireccion1.setContent(tvSummaryOCS);
         tpnDireccion2.setContent(tvSummaryOCS_Inverted);
 
+        strokeTransition = StrokeTransitionBuilder.create()
+                .duration(Duration.seconds(2.3))
+                .shape(line)
+                .fromValue(Color.web("#5B88E0"))
+                .toValue(Color.web("#40FF00"))
+                .cycleCount(2)
+                .autoReverse(true)
+                .build();
+
+    
 
     }
 
@@ -318,13 +337,13 @@ public class GraphOCS implements NodeListener {
 
     public void showLabel(double x, double y) {
 
-        vBoxInfoOCS.setVisible(true);
-        vBoxInfoOCS.setLayoutX(x );
-        vBoxInfoOCS.setLayoutY(y );
-        vBoxInfoOCS.setScaleX(0.7);
-        vBoxInfoOCS.setScaleY(-.7);
-        vBoxInfoOCS.toFront();
- 
+        vbxInfoOCS.setVisible(true);
+        vbxInfoOCS.setLayoutX(x);
+        vbxInfoOCS.setLayoutY(y);
+        vbxInfoOCS.setScaleX(0.7);
+        vbxInfoOCS.setScaleY(-.7);
+        vbxInfoOCS.toFront();
+
 
     }
 
@@ -343,6 +362,9 @@ public class GraphOCS implements NodeListener {
     public void addInstanceOCS() {
         countOCS++;
         tvSummaryOCS_Created.setProperty2(" " + countOCS);
+        strokeTransition.play();
+        bar1Note.play();
+       
 
     }
 
@@ -361,11 +383,14 @@ public class GraphOCS implements NodeListener {
     public void setTraffic(double traffic) {
 
         tvSummaryOCS_Traffic.setProperty2(" " + traffic);
+        tvSummaryOCS.setVisible(false);
+        tvSummaryOCS.setVisible(true);
 
     }
 
     public void setTrafficInverted(double traffic) {
         tvSummaryOCS_TrafficInverted.setProperty2(" " + traffic);
+        
 
     }
 
@@ -375,14 +400,24 @@ public class GraphOCS implements NodeListener {
         }
         countOCS_Inverted++;
         tvSummaryOCS_CreatedInverted.setProperty2(" " + countOCS_Inverted);
+        strokeTransition.play();
+        bar1Note.play();
+      
     }
 
     public void setJobTraffic(double traffic) {
         tvSummaryOCS_JobTraffic.setProperty2(" " + traffic);
+
+
+
     }
 
     public void setJobTrafficInverted(double traffic) {
         tvSummaryOCS_JobTrafficInverted.setProperty2(" " + traffic);
+
+
+
+
     }
 
     public void setRequestJobSent(long jobSent) {
@@ -444,7 +479,6 @@ public class GraphOCS implements NodeListener {
     private void addDirection() {
 
         lineMiddle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent arg0) {
                 GraphOCS.this.showLabel(arg0.getX(), arg0.getY());
@@ -455,8 +489,8 @@ public class GraphOCS implements NodeListener {
         lineMiddle.setStartY(posStartY);
         lineMiddle.setEndX(posEndX);
         lineMiddle.setEndY(posEndY);
-        line.setStrokeWidth(7);  
-        
+        line.setStrokeWidth(7);
+
         group.getChildren().addAll(lineMiddle);
     }
 
@@ -487,8 +521,6 @@ public class GraphOCS implements NodeListener {
     }
 
     public VBox getvBoxInfoOCS() {
-        return vBoxInfoOCS;
+        return vbxInfoOCS;
     }
-    
-    
 }

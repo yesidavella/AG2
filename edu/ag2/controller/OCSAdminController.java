@@ -1,6 +1,11 @@
 package edu.ag2.controller;
 
 import Grid.Entity;
+import edu.ag2.model.GridSimulatorModel;
+import edu.ag2.model.LinkCreationAbstractModel;
+import edu.ag2.model.OCSCreationModel;
+import edu.ag2.model.OCSRequest;
+import edu.ag2.model.SimulationBase;
 import edu.ag2.presentation.design.GraphLink;
 import edu.ag2.presentation.design.GraphNode;
 import java.util.ArrayList;
