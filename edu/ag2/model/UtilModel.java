@@ -23,21 +23,25 @@ import simbase.Time;
 public class UtilModel extends Util {
 
     private static void insertOptionsForClient(ClientNode client, GridSimulator simulator) {
-        client.getState().setJobInterArrival(new ConstantDistribution( 
+        client.getState().setJobInterArrival(new ConstantDistribution(
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_JOB_IAT)));
-        client.getState().setFlops(new ConstantDistribution( 
+        client.getState().setFlops(new ConstantDistribution(
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_FLOP_SIZE)));
 //        client.getState().setMaxDelayInterval(new ConstantDistribution( 
 //                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.MAX_DELAY)));
-        client.getState().setSizeDistribution(new ConstantDistribution( 
+        client.getState().setSizeDistribution(new ConstantDistribution(
                 PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_DATA_SIZE)));
         double ackSize = PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.ACK_SIZE);
+
         client.getState().setTrafficPriority(PropertyPhosphorusTypeEnum.getIntProperty(PropertyPhosphorusTypeEnum.CLIENT_TRAFFIC_PRIORITY));
+
+        client.getState().setResultSizeDistribution(new ConstantDistribution(
+                PropertyPhosphorusTypeEnum.getDoubleProperty(PropertyPhosphorusTypeEnum.DEFAULT_RESULT_SIZE)));
 
         if (ackSize == 0) {
             client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         } else {
-          //  client.getState().setAckSizeDistribution(new DDNegExp((SimBaseSimulator) simulator, ackSize));
+            //  client.getState().setAckSizeDistribution(new DDNegExp((SimBaseSimulator) simulator, ackSize));
             client.getState().setAckSizeDistribution(new ConstantDistribution(ackSize));
         }
     }
@@ -68,8 +72,7 @@ public class UtilModel extends Util {
     }
 
     public static ResourceNode createHyridResourceNode(String id, GridSimulator simulator) {
-        ResourceNode resource = new HybridResourceNode(id, simulator, new ConstantDistribution(PropertyPhosphorusTypeEnum.getDoubleProperty(
-                PropertyPhosphorusTypeEnum.DEFAULT_RESULT_SIZE)));
+        ResourceNode resource = new HybridResourceNode(id, simulator);
         insertOptionsForResource(resource, simulator);
         simulator.register(resource);
         return resource;
@@ -125,7 +128,7 @@ public class UtilModel extends Util {
      * @return A new outputresource
      */
     public static ResourceNode createOutputResource(String id, GridSimulator simulator) {
-        ResourceNode resource = new OutputResourceNode(id, simulator, new ConstantDistribution(10));
+        ResourceNode resource = new OutputResourceNode(id, simulator);
         simulator.register(resource);
         return resource;
     }
