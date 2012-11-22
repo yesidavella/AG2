@@ -4,18 +4,14 @@
  */
 package edu.ag2.presentation.design;
 
-import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.control.PhosphorusPropertySet;
-import edu.ag2.presentation.control.ResultsOCS;
 import edu.ag2.util.Utils;
-import javafx.animation.ScaleTransition;
-import javafx.animation.ScaleTransitionBuilder;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javafx.animation.StrokeTransition;
 import javafx.animation.StrokeTransitionBuilder;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -84,11 +80,15 @@ public class GraphOCS implements NodeListener {
     private PhosphorusPropertySet tvSummaryOCS_ResultTraffic;
     private PhosphorusPropertySet tvSummaryOCS_ResultTrafficInverted;
     private StrokeTransition strokeTransition;
-     final AudioClip bar1Note =   new AudioClip(Main.class.getResource("Note1.wav").toString());
+    private final AudioClip bar1Note = new AudioClip(Main.class.getResource("Note1.wav").toString());
+    private NumberFormat numberFormat = DecimalFormat.getInstance();
+    private String TRAFFIC_UNIT = "(MB)";
+
+    public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, final GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
 
-    public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
 
+        numberFormat.setMaximumFractionDigits(3);
 
         graphNodeSource.addNodeListener(this);
         graphNodeDestination.addNodeListener(this);
@@ -156,12 +156,15 @@ public class GraphOCS implements NodeListener {
         btnClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
-                vbxInfoOCS.setVisible(false);
+//                vbxInfoOCS.setVisible(false);
+
+                graphDesignGroup.getGroup().getChildren().remove(vbxInfoOCS);
+
             }
         });
         vbxInfoOCS.setSpacing(1);
         vbxInfoOCS.getChildren().addAll(btnClose, accordion);
-        graphDesignGroup.getGroup().getChildren().addAll(group, vbxInfoOCS);
+        graphDesignGroup.getGroup().getChildren().addAll(group);
 
         group.toFront();
         graphNodeDestination.getGroup().toFront();
@@ -176,7 +179,7 @@ public class GraphOCS implements NodeListener {
 
         accordion.getPanes().add(tpnDireccion1);
         accordion.getPanes().add(tpnDireccion2);
-        vbxInfoOCS.setVisible(false);
+//        vbxInfoOCS.setVisible(false);
 
         TableColumn tcProperty = new TableColumn("Resultado");
         TableColumn tcValue = new TableColumn("Valor");
@@ -325,7 +328,7 @@ public class GraphOCS implements NodeListener {
                 .autoReverse(true)
                 .build();
 
-    
+
 
     }
 
@@ -337,12 +340,17 @@ public class GraphOCS implements NodeListener {
 
     public void showLabel(double x, double y) {
 
-        vbxInfoOCS.setVisible(true);
-        vbxInfoOCS.setLayoutX(x);
-        vbxInfoOCS.setLayoutY(y);
-        vbxInfoOCS.setScaleX(0.7);
-        vbxInfoOCS.setScaleY(-.7);
-        vbxInfoOCS.toFront();
+//        vbxInfoOCS.setVisible(true);
+
+        if (!graphDesignGroup.getGroup().getChildren().contains(vbxInfoOCS)) {
+            graphDesignGroup.getGroup().getChildren().add(vbxInfoOCS);
+
+            vbxInfoOCS.setLayoutX(x);
+            vbxInfoOCS.setLayoutY(y);
+            vbxInfoOCS.setScaleX(0.7);
+            vbxInfoOCS.setScaleY(-.7);
+            vbxInfoOCS.toFront();
+        }
 
 
     }
@@ -361,36 +369,29 @@ public class GraphOCS implements NodeListener {
 
     public void addInstanceOCS() {
         countOCS++;
-        tvSummaryOCS_Created.setProperty2(" " + countOCS);
+        tvSummaryOCS_Created.setProperty2(numberFormat.format(countOCS));
         strokeTransition.play();
         bar1Note.play();
-       
-
     }
 
     public void setOCSJobSent(long jobSent) {
-
-        tvSummaryOCS_JobSent.setProperty2(" " + jobSent);
-
+        tvSummaryOCS_JobSent.setProperty2(numberFormat.format(jobSent));
     }
 
     public void setOCSJobSentInverted(long jobSent) {
-
-        tvSummaryOCS_JobSentInverted.setProperty2(" " + jobSent);
-
+        tvSummaryOCS_JobSentInverted.setProperty2(numberFormat.format(jobSent));
     }
 
     public void setTraffic(double traffic) {
-
-        tvSummaryOCS_Traffic.setProperty2(" " + traffic);
+        tvSummaryOCS_Traffic.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
         tvSummaryOCS.setVisible(false);
         tvSummaryOCS.setVisible(true);
 
     }
 
     public void setTrafficInverted(double traffic) {
-        tvSummaryOCS_TrafficInverted.setProperty2(" " + traffic);
-        
+        tvSummaryOCS_TrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
+
 
     }
 
@@ -399,81 +400,77 @@ public class GraphOCS implements NodeListener {
             addDirection();
         }
         countOCS_Inverted++;
-        tvSummaryOCS_CreatedInverted.setProperty2(" " + countOCS_Inverted);
+        tvSummaryOCS_CreatedInverted.setProperty2(numberFormat.format(countOCS_Inverted));
         strokeTransition.play();
         bar1Note.play();
-      
+
     }
 
     public void setJobTraffic(double traffic) {
-        tvSummaryOCS_JobTraffic.setProperty2(" " + traffic);
+        tvSummaryOCS_JobTraffic.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
 
 
 
     }
 
     public void setJobTrafficInverted(double traffic) {
-        tvSummaryOCS_JobTrafficInverted.setProperty2(" " + traffic);
-
-
-
-
+        tvSummaryOCS_JobTrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
     }
 
     public void setRequestJobSent(long jobSent) {
-        tvSummaryOCS_RequestSent.setProperty2(" " + jobSent);
+        tvSummaryOCS_RequestSent.setProperty2(numberFormat.format(jobSent));
     }
 
     public void setRequestJobSentInverted(long jobSent) {
-        tvSummaryOCS_RequestSentInverted.setProperty2(" " + jobSent);
+        tvSummaryOCS_RequestSentInverted.setProperty2(numberFormat.format(jobSent));
     }
 
     public void setRequestJobTraffic(double traffic) {
 
-        tvSummaryOCS_RequestTraffic.setProperty2(" " + traffic);
+        tvSummaryOCS_RequestTraffic.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
 
     }
 
     public void setRequestJobTrafficInverted(double traffic) {
-        tvSummaryOCS_RequestTrafficInverted.setProperty2(" " + traffic);
+        tvSummaryOCS_RequestTrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
     }
 
     public void set_ackRequestJobSent(long jobSent) {
-        tvSummaryOCS_ackRequestSent.setProperty2(" " + jobSent);
+        tvSummaryOCS_ackRequestSent.setProperty2(numberFormat.format(jobSent));
     }
 
     public void set_ackRequestJobSentInverted(long jobSent) {
-        tvSummaryOCS_ackRequestSentInverted.setProperty2(" " + jobSent);
+        tvSummaryOCS_ackRequestSentInverted.setProperty2(numberFormat.format(jobSent));
     }
 
     public void set_ackRequestJobTraffic(double traffic) {
-        tvSummaryOCS_ackRequestTraffic.setProperty2(" " + traffic);
+        tvSummaryOCS_ackRequestTraffic.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
     }
 
     public void set_ackRequestJobTrafficInverted(double traffic) {
-        tvSummaryOCS_ackRequestTrafficInverted.setProperty2(" " + traffic);
+        tvSummaryOCS_ackRequestTrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
     }
 
     public void setResultJobSent(long jobSent) {
 
-        tvSummaryOCS_ResultSent.setProperty2(" " + jobSent);
+        tvSummaryOCS_ResultSent.setProperty2(numberFormat.format(jobSent));
 
     }
 
     public void setResultJobSentInverted(long jobSent) {
 
-        tvSummaryOCS_ResultSentInverted.setProperty2(" " + jobSent);
+        tvSummaryOCS_ResultSentInverted.setProperty2(numberFormat.format(jobSent));
 
     }
 
     public void setResultJobTraffic(double traffic) {
 
-        tvSummaryOCS_ResultTraffic.setProperty2(" " + traffic);
+        tvSummaryOCS_ResultTraffic.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
 
     }
 
     public void setResultJobTrafficInverted(double traffic) {
-        tvSummaryOCS_ResultTrafficInverted.setProperty2(" " + traffic);
+        tvSummaryOCS_ResultTrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
     }
 
     private void addDirection() {
