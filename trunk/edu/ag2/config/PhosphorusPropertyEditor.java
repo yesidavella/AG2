@@ -28,7 +28,7 @@ public final class PhosphorusPropertyEditor {
         properties.setProperty("allocateWavelenght", "0.01");
         properties.setProperty("outputFileName", "resultado.html");
         properties.setProperty("defaultQueueSize", "20");
-        properties.setProperty("simulationTime", "1000000");
+        properties.setProperty("simulationTime", "4000");
         properties.setProperty("switchingSpeed", "100000");
         properties.setProperty("findCommonWavelenght", "0.03");
         properties.setProperty("OCS_SwitchingDelay", "0.01"); 

@@ -69,7 +69,7 @@ public class ExecuteController extends ExecuteAbstractController {
                 }
                 
             }else{
-                errorWindow.addErrorToShow(errorCounter+". LA SIMULACIÓN:"+errorInfo.getValue());
+                errorWindow.addErrorToShow(errorCounter+". LA SIMULACIÃ“N:"+errorInfo.getValue());
             }
             
             errorCounter++;
@@ -90,7 +90,7 @@ public class ExecuteController extends ExecuteAbstractController {
 
     @Override
     public void reLoadConfigFile() {
-       SimulationInstance.configuration.loadProperties();
+//       SimulationInstance.configuration.loadProperties();
       
     }
 }
