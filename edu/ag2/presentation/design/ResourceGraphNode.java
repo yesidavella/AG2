@@ -13,8 +13,8 @@ public class ResourceGraphNode extends GraphNode {
 
     public ResourceGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminAbstractController) {
         super(graphDesignGroup, "Cluster_" + (++nodeCounter), 
-                ImageHelper.getResourceInputStream( "recurso_cursor_mapa.png"),
-                ImageHelper.getResourceInputStream( "recurso_cursor_mapa_node.png"),
+                 "recurso_cursor_mapa.png",
+                 "recurso_cursor_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 67);
         setWidth((short) 49);

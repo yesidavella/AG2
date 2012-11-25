@@ -15,8 +15,8 @@ public class ClientGraphNode extends GraphNode{
             List<LinkAdminAbstractController> linkAdminAbstractController) {
         
         super(graphDesignGroup,"Cliente_"+(++nodeCounter),
-                ImageHelper.getResourceInputStream("cliente_mapa.png"), 
-                ImageHelper.getResourceInputStream("cliente_mapa_node.png"), 
+               "cliente_mapa.png", 
+               "cliente_mapa_node.png", 
                 nodeAdminAbstractController,linkAdminAbstractController);        
         setHeight((short)50);
 

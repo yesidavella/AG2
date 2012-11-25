@@ -50,12 +50,13 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient DropShadow dropShadow;
     protected transient VBox vbxWrapper;
     private transient Group group;
+    private String imageURL;
+    private String imageURLNode;
+    
     private String name = null;
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
     private boolean deleted = false;
     private boolean selected = false;
-    private InputStream imageURL;
-    private InputStream imageURLNode;
     private boolean dragging = false;
     private NodeAdminAbstractController nodeAdminController;
     private List<LinkAdminAbstractController> linkAdminControllers;
@@ -70,8 +71,9 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
     private boolean showSimpleNode = false;
+    
 
-    public GraphNode(GraphDesignGroup graphDesignGroup, String name, InputStream imageURL, InputStream imageURL_View, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
+    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, String imageURL_View, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
         this.graphDesignGroup = graphDesignGroup;
         this.nodeAdminController = nodeAdminAbstractController;
@@ -88,10 +90,10 @@ public abstract class GraphNode implements Selectable, Serializable {
     public void showSimpleNode() {
         if (!showSimpleNode) {
 
-            
+
             vbxWrapper.getChildren().remove(imageView);
-            vbxWrapper.getChildren().add(0,imageViewNode);
-            
+            vbxWrapper.getChildren().add(0, imageViewNode);
+
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -104,9 +106,9 @@ public abstract class GraphNode implements Selectable, Serializable {
         if (showSimpleNode) {
 
 
-              vbxWrapper.getChildren().add(0,imageView);
+            vbxWrapper.getChildren().add(0, imageView);
             vbxWrapper.getChildren().remove(imageViewNode);
-           
+
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -128,12 +130,12 @@ public abstract class GraphNode implements Selectable, Serializable {
         wildcardLink = new Line();
         wildcardOCS = new Line();
         vbxWrapper = new VBox();
-        image = new Image(imageURL);
-        imageNode = new Image(imageURLNode);
+        image = new Image( ImageHelper.getResourceInputStream(imageURL));
+        imageNode = new Image( ImageHelper.getResourceInputStream(imageURLNode));
 
         imageView = new ImageView(image);
         imageViewNode = new ImageView(imageNode);
-    
+
 
         vbxWrapper.setAlignment(Pos.CENTER);
         vbxWrapper.getChildren().addAll(imageView, lblName);
