@@ -32,6 +32,7 @@
 package edu.ag2.presentation.control;
 
 import edu.ag2.presentation.Main;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,11 +65,11 @@ public class WindowButtons extends VBox {
         this.stage = stage;
         // create buttons
         this.stpLayer = layerPane;
-        closeBtn.setGraphic(new ImageView(new Image(Utils.ABS_PATH_IMGS + "window-close.png")));
+        closeBtn.setGraphic(new ImageView(new Image(ImageHelper.getResourceInputStream( "window-close.png"))));
         closeBtn.setId("window-close");
 
         Button minBtn = new Button();
-        minBtn.setGraphic(new ImageView(new Image(Utils.ABS_PATH_IMGS + "window-min.png")));
+        minBtn.setGraphic(new ImageView(new Image(ImageHelper.getResourceInputStream( "window-min.png"))));
         minBtn.setId("window-min");
         minBtn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -79,7 +80,7 @@ public class WindowButtons extends VBox {
         });
         Button maxBtn = new Button();
         maxBtn.setId("window-max");
-        maxBtn.setGraphic(new ImageView(new Image(Utils.ABS_PATH_IMGS + "window-expand.png")));
+        maxBtn.setGraphic(new ImageView(new Image(ImageHelper.getResourceInputStream("window-expand.png"))));
 
         maxBtn.setOnAction(new EventHandler<ActionEvent>() {
 

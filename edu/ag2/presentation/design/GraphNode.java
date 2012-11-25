@@ -7,8 +7,10 @@ import edu.ag2.controller.OCSAdminController;
 import edu.ag2.presentation.ActionTypeEmun;
 import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -35,7 +37,7 @@ import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
 
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(Utils.ABS_PATH_IMGS + "prohibido_enlace.png"));
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ImageHelper.getResourceInputStream( "prohibido_enlace.png")));
     public static boolean linkBegin = false;
     private static GraphNode wildcardNodeA = null;
     protected transient Image image = null;
@@ -50,7 +52,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
     private boolean deleted = false;
     private boolean selected = false;
-    private String imageURL;
+    private InputStream imageURL;
     private boolean dragging = false;
     private NodeAdminAbstractController nodeAdminController;
     private List<LinkAdminAbstractController> linkAdminControllers;
@@ -65,13 +67,15 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
     private boolean showSimpleNode = false;
+    private InputStream imageURL_View; 
 
-    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
+    public GraphNode(GraphDesignGroup graphDesignGroup, String name, InputStream imageURL, InputStream imageURL_View,  NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
         this.graphDesignGroup = graphDesignGroup;
         this.nodeAdminController = nodeAdminAbstractController;
         this.linkAdminControllers = linkAdminControllers;
         this.imageURL = imageURL;
+        this.imageURL_View = imageURL_View; 
         this.name = name;
         this.originalName = name;
         nodeProperties = new HashMap<String, String>();
@@ -80,10 +84,15 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public void showSimpleNode() {
-        if (!showSimpleNode) {
-            imageURL = imageURL.replace(".png", "_node.png");
-            image = new Image(imageURL);
-            imageView.setImage(image);
+        if (!showSimpleNode) 
+        {
+//            imageURL = imageURL.replace(".png", "_node.png");
+            group.getChildren().remove(imageView);   
+            
+            image = new Image(imageURL_View);
+            imageView = new ImageView(image); 
+            group.getChildren().add(imageView); 
+          
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -94,9 +103,13 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public void hideSimpleNode() {
         if (showSimpleNode) {
-            imageURL = imageURL.replace("_node", "");
+            
+        
+             group.getChildren().remove(imageView);            
             image = new Image(imageURL);
-            imageView.setImage(image);
+            imageView = new ImageView(image); 
+            group.getChildren().add(imageView); 
+            
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
