@@ -52,7 +52,6 @@ public abstract class GraphNode implements Selectable, Serializable {
     private transient Group group;
     private String imageURL;
     private String imageURLNode;
-    
     private String name = null;
     private ArrayList<NodeListener> nodeListeners = new ArrayList<NodeListener>();
     private boolean deleted = false;
@@ -71,7 +70,6 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
     private boolean showSimpleNode = false;
-    
 
     public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, String imageURL_View, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
@@ -92,7 +90,10 @@ public abstract class GraphNode implements Selectable, Serializable {
 
 
             vbxWrapper.getChildren().remove(imageView);
-            vbxWrapper.getChildren().add(0, imageViewNode);
+            if (!vbxWrapper.getChildren().contains(imageViewNode)) {
+                vbxWrapper.getChildren().add(0, imageViewNode);
+            }
+
 
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
             group.setScaleX(0.5);
@@ -106,7 +107,10 @@ public abstract class GraphNode implements Selectable, Serializable {
         if (showSimpleNode) {
 
 
-            vbxWrapper.getChildren().add(0, imageView);
+            if (!vbxWrapper.getChildren().contains(imageView)) {
+                vbxWrapper.getChildren().add(0, imageView);
+            }
+
             vbxWrapper.getChildren().remove(imageViewNode);
 
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
@@ -130,8 +134,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         wildcardLink = new Line();
         wildcardOCS = new Line();
         vbxWrapper = new VBox();
-        image = new Image( ImageHelper.getResourceInputStream(imageURL));
-        imageNode = new Image( ImageHelper.getResourceInputStream(imageURLNode));
+        image = new Image(ImageHelper.getResourceInputStream(imageURL));
+        imageNode = new Image(ImageHelper.getResourceInputStream(imageURLNode));
 
         imageView = new ImageView(image);
         imageViewNode = new ImageView(imageNode);

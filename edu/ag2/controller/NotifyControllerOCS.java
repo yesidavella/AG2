@@ -31,7 +31,6 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
     public void notifyNewCreatedOCS(final Entity entitySource, final Entity entityDestination, final int countInstanceOCS) {
 
         Runnable runnable = new Runnable() {
-
             @Override
             public void run() {
 
@@ -48,7 +47,6 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
                         GraphOCS graphOCS = graphDesignGroup.addOCSLine(graphNodeSource, graphNodeDestination, countInstanceOCS);
                         graphOCS.addInstanceOCS();
                         MatchCoupleObjectContainer.putInstanceOCS(graphNodeSource, graphNodeDestination, graphOCS);
-
                     }
 
                 } else {
@@ -86,7 +84,6 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
             final long resultJobSent,
             final double resultJobTraffic) {
         Runnable runnable = new Runnable() {
-
             @Override
             public void run() {
 
@@ -131,7 +128,35 @@ public class NotifyControllerOCS implements NotificableOCS, Serializable {
 
                     graphOCS.setResultJobSent(resultJobSent);
                     graphOCS.setResultJobTraffic(resultJobTraffic);
+                }
 
+            }
+        };
+        Platform.runLater(runnable);
+    }
+
+    @Override
+    public void notifyDeletedCreatedOCS(final Entity entitySource, final Entity entityDestination) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                GraphNode graphNodeSource = Utils.findNodeGraphByOriginalName(entitySource.getId());
+                GraphNode graphNodeDestination = Utils.findNodeGraphByOriginalName(entityDestination.getId());
+
+                if (!MatchCoupleObjectContainer.containsIntanceOCS(graphNodeSource, graphNodeDestination)) {
+
+
+                    boolean directionCreated = MatchCoupleObjectContainer.containsIntanceOCS(graphNodeDestination, graphNodeSource);
+
+                    if (directionCreated) {
+                        GraphOCS graphOCS = MatchCoupleObjectContainer.getGraphOCS(graphNodeDestination, graphNodeSource);
+                        graphOCS.addDeleteOCS_Inverted();
+                    }
+
+                } else {
+                    GraphOCS graphOCS = MatchCoupleObjectContainer.getGraphOCS(graphNodeSource, graphNodeDestination);
+                    graphOCS.addDeleteOCS();
 
 
                 }
