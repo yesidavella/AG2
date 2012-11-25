@@ -37,13 +37,15 @@ import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
 
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ImageHelper.getResourceInputStream( "prohibido_enlace.png")));
+    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ImageHelper.getResourceInputStream("prohibido_enlace.png")));
     public static boolean linkBegin = false;
     private static GraphNode wildcardNodeA = null;
     protected transient Image image = null;
+    protected transient Image imageNode = null;
     private transient Line wildcardLink;
     private transient Line wildcardOCS;
     private transient ImageView imageView;
+    private transient ImageView imageViewNode;
     protected transient Label lblName;
     private transient DropShadow dropShadow;
     protected transient VBox vbxWrapper;
@@ -53,6 +55,7 @@ public abstract class GraphNode implements Selectable, Serializable {
     private boolean deleted = false;
     private boolean selected = false;
     private InputStream imageURL;
+    private InputStream imageURLNode;
     private boolean dragging = false;
     private NodeAdminAbstractController nodeAdminController;
     private List<LinkAdminAbstractController> linkAdminControllers;
@@ -67,15 +70,14 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutX;
     private double layoutY;
     private boolean showSimpleNode = false;
-    private InputStream imageURL_View; 
 
-    public GraphNode(GraphDesignGroup graphDesignGroup, String name, InputStream imageURL, InputStream imageURL_View,  NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
+    public GraphNode(GraphDesignGroup graphDesignGroup, String name, InputStream imageURL, InputStream imageURL_View, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
 
         this.graphDesignGroup = graphDesignGroup;
         this.nodeAdminController = nodeAdminAbstractController;
         this.linkAdminControllers = linkAdminControllers;
         this.imageURL = imageURL;
-        this.imageURL_View = imageURL_View; 
+        this.imageURLNode = imageURL_View;
         this.name = name;
         this.originalName = name;
         nodeProperties = new HashMap<String, String>();
@@ -84,15 +86,12 @@ public abstract class GraphNode implements Selectable, Serializable {
     }
 
     public void showSimpleNode() {
-        if (!showSimpleNode) 
-        {
-//            imageURL = imageURL.replace(".png", "_node.png");
-            group.getChildren().remove(imageView);   
+        if (!showSimpleNode) {
+
             
-            image = new Image(imageURL_View);
-            imageView = new ImageView(image); 
-            group.getChildren().add(imageView); 
-          
+            vbxWrapper.getChildren().remove(imageView);
+            vbxWrapper.getChildren().add(0,imageViewNode);
+            
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -103,13 +102,11 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public void hideSimpleNode() {
         if (showSimpleNode) {
-            
-        
-             group.getChildren().remove(imageView);            
-            image = new Image(imageURL);
-            imageView = new ImageView(image); 
-            group.getChildren().add(imageView); 
-            
+
+
+              vbxWrapper.getChildren().add(0,imageView);
+            vbxWrapper.getChildren().remove(imageViewNode);
+           
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -132,7 +129,12 @@ public abstract class GraphNode implements Selectable, Serializable {
         wildcardOCS = new Line();
         vbxWrapper = new VBox();
         image = new Image(imageURL);
+        imageNode = new Image(imageURLNode);
+
         imageView = new ImageView(image);
+        imageViewNode = new ImageView(imageNode);
+    
+
         vbxWrapper.setAlignment(Pos.CENTER);
         vbxWrapper.getChildren().addAll(imageView, lblName);
 
@@ -215,7 +217,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMouseEntered() {
         group.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
 
                 ActionTypeEmun actionTypeEmun = GUI.getActionTypeEmun();
@@ -281,7 +282,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMousePressed() {
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
 
                 if (GraphNode.this.showSimpleNode) {
@@ -334,7 +334,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMouseDragged() {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
                 if (GraphNode.this.showSimpleNode) {
                     return;
@@ -358,7 +357,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMouseReleased() {
         group.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
 
                 if (GraphNode.this.showSimpleNode) {
@@ -377,7 +375,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMouseClicked() {
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
 
                 if (GraphNode.this.showSimpleNode) {
@@ -434,7 +431,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void establishEventOnMouseExit() {
         group.setOnMouseExited(new EventHandler<MouseEvent>() {
-
             public void handle(MouseEvent mouseEvent) {
                 if (GraphNode.this.showSimpleNode) {
                     return;
@@ -609,7 +605,6 @@ public abstract class GraphNode implements Selectable, Serializable {
         fadeImgDenyLink.play();
 
         fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent arg0) {
                 graphDesignGroup.remove(IMG_VW_DENY_LINK);
             }
