@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class SwitchGraphNode extends GraphNode {
 
-    public SwitchGraphNode(GraphDesignGroup graphDesignGroup, String name,   InputStream  imageURL,InputStream  imageURL_View,  NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminAbstractController) {
+    public SwitchGraphNode(GraphDesignGroup graphDesignGroup, String name,   String   imageURL,String   imageURL_View,  NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminAbstractController) {
         super(graphDesignGroup, name, imageURL,imageURL_View ,nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 62);
         setWidth((short) 42);

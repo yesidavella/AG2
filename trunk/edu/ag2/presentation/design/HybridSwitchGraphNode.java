@@ -15,8 +15,8 @@ public class HybridSwitchGraphNode extends SwitchGraphNode {
             List<LinkAdminAbstractController> linkAdminAbstractController) {
 
         super(graphDesignGroup, "Enrutador_Hibrido_" + (++nodeCounter),
-                ImageHelper.getResourceInputStream("enrutador_hibrido_mapa.png"),
-                ImageHelper.getResourceInputStream("enrutador_hibrido_mapa_node.png"),
+                "enrutador_hibrido_mapa.png",
+               "enrutador_hibrido_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
 
         if (nodeCounter > 9) {

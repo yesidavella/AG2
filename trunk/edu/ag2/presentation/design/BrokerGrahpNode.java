@@ -15,8 +15,8 @@ public class BrokerGrahpNode extends GraphNode {
             List<LinkAdminAbstractController> linkAdminAbstractController) {
 
         super(graphDesignGroup, "Agentador_" + (++nodeCounter),
-                ImageHelper.getResourceInputStream( "nodo_servicio_mapa.png"),
-                ImageHelper.getResourceInputStream( "nodo_servicio_mapa_node.png"),
+                "nodo_servicio_mapa.png",
+                 "nodo_servicio_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
         setHeight((short) 74);
         setWidth((short) 61);
