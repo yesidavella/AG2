@@ -41,7 +41,9 @@ public class GraphOCS implements NodeListener {
     private GraphDesignGroup graphDesignGroup;
     private Label lblCountOCS;
     private int countOCS;
+    private int deteledCountOCS;
     private int countOCS_Inverted = 0;
+    private int deteledCountOCS_Inverted = 0;
     private Group group;
     private int posStartX;
     private int posStartY;
@@ -62,6 +64,8 @@ public class GraphOCS implements NodeListener {
     private TableView tvSummaryOCS_Inverted;
     private PhosphorusPropertySet tvSummaryOCS_Created;
     private PhosphorusPropertySet tvSummaryOCS_CreatedInverted;
+    private PhosphorusPropertySet tvSummaryOCS_Deleted;
+    private PhosphorusPropertySet tvSummaryOCS_DeletedInverted;
     private PhosphorusPropertySet tvSummaryOCS_Traffic;
     private PhosphorusPropertySet tvSummaryOCS_TrafficInverted;
     private PhosphorusPropertySet tvSummaryOCS_JobSent;
@@ -81,7 +85,10 @@ public class GraphOCS implements NodeListener {
     private PhosphorusPropertySet tvSummaryOCS_ResultTraffic;
     private PhosphorusPropertySet tvSummaryOCS_ResultTrafficInverted;
     private StrokeTransition strokeTransition;
+    private StrokeTransition strokeTransitionDeleted;
+    private StrokeTransition strokeTransitionOut;
     private final AudioClip bar1Note = new AudioClip(Main.class.getResource("Note1.wav").toString());
+    private final AudioClip bar2Note = new AudioClip(Main.class.getResource("Note8.wav").toString());
     private NumberFormat numberFormat = DecimalFormat.getInstance();
     private String TRAFFIC_UNIT = "(MB)";
 
@@ -210,6 +217,11 @@ public class GraphOCS implements NodeListener {
 
         tvSummaryOCS_Created = new PhosphorusPropertySet();
         tvSummaryOCS_CreatedInverted = new PhosphorusPropertySet();
+
+        tvSummaryOCS_Deleted = new PhosphorusPropertySet();
+        tvSummaryOCS_DeletedInverted = new PhosphorusPropertySet();
+
+
         tvSummaryOCS_Traffic = new PhosphorusPropertySet();
         tvSummaryOCS_TrafficInverted = new PhosphorusPropertySet();
 
@@ -239,6 +251,10 @@ public class GraphOCS implements NodeListener {
 
         tvSummaryOCS_Created.setProperty1("OCS Creados");
         tvSummaryOCS_CreatedInverted.setProperty1("OCS Creados");
+
+        tvSummaryOCS_Deleted.setProperty1("OCS Eliminados");
+        tvSummaryOCS_DeletedInverted.setProperty1("OCS Eliminados");
+
         tvSummaryOCS_Traffic.setProperty1("Trafico total");
         tvSummaryOCS_TrafficInverted.setProperty1("Trafico total");
 
@@ -271,6 +287,7 @@ public class GraphOCS implements NodeListener {
 
         dataSummaryOCS.addAll(
                 tvSummaryOCS_Created,
+                tvSummaryOCS_Deleted,
                 tvSummaryOCS_Traffic,
                 tvSummaryOCS_JobSent,
                 tvSummaryOCS_JobTraffic,
@@ -284,6 +301,7 @@ public class GraphOCS implements NodeListener {
 
         dataSummaryOCS_Inverted.addAll(
                 tvSummaryOCS_CreatedInverted,
+                tvSummaryOCS_DeletedInverted,
                 tvSummaryOCS_TrafficInverted,
                 tvSummaryOCS_JobSentInverted,
                 tvSummaryOCS_JobTrafficInverted,
@@ -295,6 +313,7 @@ public class GraphOCS implements NodeListener {
                 tvSummaryOCS_ResultTrafficInverted);
 
         setInitValue(tvSummaryOCS_Created,
+                tvSummaryOCS_Deleted,
                 tvSummaryOCS_Traffic,
                 tvSummaryOCS_JobSent,
                 tvSummaryOCS_JobTraffic,
@@ -305,6 +324,7 @@ public class GraphOCS implements NodeListener {
                 tvSummaryOCS_ResultSent,
                 tvSummaryOCS_ResultTraffic,
                 tvSummaryOCS_CreatedInverted,
+                tvSummaryOCS_DeletedInverted,
                 tvSummaryOCS_TrafficInverted,
                 tvSummaryOCS_JobSentInverted,
                 tvSummaryOCS_JobTrafficInverted,
@@ -321,7 +341,7 @@ public class GraphOCS implements NodeListener {
         tpnDireccion2.setContent(tvSummaryOCS_Inverted);
 
         strokeTransition = StrokeTransitionBuilder.create()
-                .duration(Duration.seconds(2.3))
+                .duration(Duration.seconds(1))
                 .shape(line)
                 .fromValue(Color.web("#5B88E0"))
                 .toValue(Color.web("#40FF00"))
@@ -329,6 +349,23 @@ public class GraphOCS implements NodeListener {
                 .autoReverse(true)
                 .build();
 
+        strokeTransitionDeleted = StrokeTransitionBuilder.create()
+                .duration(Duration.seconds(1))
+                .shape(line)
+                .fromValue(Color.web("#5B88E0"))
+                .toValue(Color.web("#FF0000"))
+                .cycleCount(2)
+                .autoReverse(true)
+                .build();
+
+        strokeTransitionOut = StrokeTransitionBuilder.create()
+                .duration(Duration.seconds(1))
+                .shape(line)
+                .fromValue(Color.web("#5B88E0"))
+                .toValue(Color.web("#FFFFFF"))
+                .cycleCount(1)
+                .autoReverse(false)
+                .build();
 
 
     }
@@ -373,6 +410,42 @@ public class GraphOCS implements NodeListener {
         tvSummaryOCS_Created.setProperty2(numberFormat.format(countOCS));
         strokeTransition.play();
         bar1Note.play();
+        verificarColor();
+    }
+
+    public void addInstanceOCS_Inverted() {
+        if (countOCS_Inverted == 0) {
+            addDirection();
+        }
+        countOCS_Inverted++;
+        tvSummaryOCS_CreatedInverted.setProperty2(numberFormat.format(countOCS_Inverted));
+        strokeTransition.play();
+        bar1Note.play();
+        verificarColor();
+    }
+
+    public void addDeleteOCS() {
+        deteledCountOCS++;
+        tvSummaryOCS_Deleted.setProperty2(numberFormat.format(deteledCountOCS));
+
+        bar2Note.play();
+        if (!(countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0)) {
+            strokeTransitionDeleted.play();
+        }
+        verificarColor();
+
+    }
+
+    public void addDeleteOCS_Inverted() {
+        deteledCountOCS_Inverted++;
+        tvSummaryOCS_DeletedInverted.setProperty2(numberFormat.format(deteledCountOCS_Inverted));
+       
+        bar2Note.play();
+        if (!(countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0)) {
+            strokeTransitionDeleted.play();
+        }
+         verificarColor();
+
     }
 
     public void setOCSJobSent(long jobSent) {
@@ -393,17 +466,6 @@ public class GraphOCS implements NodeListener {
     public void setTrafficInverted(double traffic) {
         tvSummaryOCS_TrafficInverted.setProperty2(numberFormat.format(traffic) + TRAFFIC_UNIT);
 
-
-    }
-
-    public void addInstanceOCS_Inverted() {
-        if (countOCS_Inverted == 0) {
-            addDirection();
-        }
-        countOCS_Inverted++;
-        tvSummaryOCS_CreatedInverted.setProperty2(numberFormat.format(countOCS_Inverted));
-        strokeTransition.play();
-        bar1Note.play();
 
     }
 
@@ -520,5 +582,19 @@ public class GraphOCS implements NodeListener {
 
     public VBox getvBoxInfoOCS() {
         return vbxInfoOCS;
+    }
+
+    private void verificarColor() {
+        if (countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0) {
+            strokeTransitionOut.play();
+            System.out.println("Linea Blanca " + graphNodeSource + " " + graphNodeDestination);
+
+        } else {
+            System.out.println("Linea azul " + graphNodeSource + " " + graphNodeDestination);
+
+
+        }
+
+
     }
 }

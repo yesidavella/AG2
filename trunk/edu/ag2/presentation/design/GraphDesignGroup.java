@@ -438,7 +438,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             copyFile("110m_admin_0_countries.shp");
             copyFile("110m_admin_0_countries.shx");
 
-
+            System.gc();
 
             File file = new File(folderMap,"110m_admin_0_countries.shp");
 
@@ -514,6 +514,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
             add(backgroundRec);
             backgroundRec.toBack();
+              System.gc();
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
