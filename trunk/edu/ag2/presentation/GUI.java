@@ -22,6 +22,7 @@ import edu.ag2.presentation.design.GraphLink;
 import edu.ag2.presentation.design.GraphNode;
 import edu.ag2.presentation.design.SwitchGraphNode;
 import edu.ag2.presentation.design.property.EntityPropertyTableView;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -144,7 +145,9 @@ public class GUI extends Scene {
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
-        getStylesheets().add(Utils.ABS_PATH_CSS + "ag2.css");
+        getStylesheets().add(
+                Main.class.getResource("ag2.css").toExternalForm()
+                );
 
         if (!Main.IS_APPLET) {
             stage.initStyle(StageStyle.UNDECORATED);
@@ -1046,7 +1049,7 @@ public class GUI extends Scene {
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
 
-        ImageView ivAG2 = new ImageView(new Image(Utils.ABS_PATH_IMGS + "logos.gif"));
+        ImageView ivAG2 = new ImageView(new Image(ImageHelper.getResourceInputStream( "logos.gif")));
         ivAG2.setEffect(new DropShadow());
         vbLogos.getChildren().addAll(ivAG2);
         ivAG2.setFitHeight(90);

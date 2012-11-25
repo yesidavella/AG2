@@ -2,6 +2,7 @@ package edu.ag2.presentation.design;
 
 import edu.ag2.controller.LinkAdminAbstractController;
 import edu.ag2.controller.NodeAdminAbstractController;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import java.io.ObjectInputStream;
 import java.util.List;
@@ -13,7 +14,9 @@ public class HybridSwitchGraphNode extends SwitchGraphNode {
     public HybridSwitchGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
             List<LinkAdminAbstractController> linkAdminAbstractController) {
 
-        super(graphDesignGroup, "Enrutador_Hibrido_" + (++nodeCounter), Utils.ABS_PATH_IMGS + "enrutador_hibrido_mapa.png",
+        super(graphDesignGroup, "Enrutador_Hibrido_" + (++nodeCounter),
+                ImageHelper.getResourceInputStream("enrutador_hibrido_mapa.png"),
+                ImageHelper.getResourceInputStream("enrutador_hibrido_mapa_node.png"),
                 nodeAdminAbstractController, linkAdminAbstractController);
 
         if (nodeCounter > 9) {

@@ -2,6 +2,7 @@ package edu.ag2.presentation.design;
 
 import edu.ag2.controller.LinkAdminAbstractController;
 import edu.ag2.controller.NodeAdminAbstractController;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import java.io.ObjectInputStream;
 import java.util.List;
@@ -13,7 +14,9 @@ public class ClientGraphNode extends GraphNode{
     public ClientGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
             List<LinkAdminAbstractController> linkAdminAbstractController) {
         
-        super(graphDesignGroup,"Cliente_"+(++nodeCounter), Utils.ABS_PATH_IMGS+"cliente_mapa.png", 
+        super(graphDesignGroup,"Cliente_"+(++nodeCounter),
+                ImageHelper.getResourceInputStream("cliente_mapa.png"), 
+                ImageHelper.getResourceInputStream("cliente_mapa_node.png"), 
                 nodeAdminAbstractController,linkAdminAbstractController);        
         setHeight((short)50);
 

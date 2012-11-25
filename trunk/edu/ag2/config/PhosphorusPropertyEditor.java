@@ -27,7 +27,7 @@ public final class PhosphorusPropertyEditor {
 
     public String getPropertyValue(PropertyPhosphorusTypeEnum propertyPhosphorusTypeEnum) 
     {         
-        System.out.println("-"+propertyPhosphorusTypeEnum.getPhosphorusPropertyName()+"-");
+       
         return SimulationInstance.getConfiguration().getProperty(propertyPhosphorusTypeEnum.getPhosphorusPropertyName());
     }
 

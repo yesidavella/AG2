@@ -41,7 +41,7 @@ public class SimulationBase implements Runnable, Serializable {
 
     private SimulationBase() {
 
-        simulationInstance = new GridSimulation(Utils.ABS_PATH_CONFIG_AG2 + "ConfigInitAG2.cfg");
+        simulationInstance = new GridSimulation("ConfigInitAG2.cfg");
         gridSimulatorModel = new GridSimulatorModel();
         simulationInstance.setSimulator(gridSimulatorModel);
         id = new Date().toString();

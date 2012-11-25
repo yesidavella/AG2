@@ -6,6 +6,7 @@ package edu.ag2.presentation.design;
 
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.control.PhosphorusPropertySet;
+import edu.ag2.presentation.images.ImageHelper;
 import edu.ag2.util.Utils;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -53,7 +54,7 @@ public class GraphOCS implements NodeListener {
     private TitledPane tpnDireccion2 = new TitledPane();
     private Accordion accordion = new Accordion();
     private VBox vbxInfoOCS = new VBox();
-    private ImageView ivwClose = new ImageView(new Image(Utils.ABS_PATH_IMGS + "close_blue.jpg"));
+    private ImageView ivwClose = new ImageView(new Image(ImageHelper.getResourceInputStream("close_blue.jpg")));
     private Button btnClose = new Button();
     private ObservableList<PhosphorusPropertySet> dataSummaryOCS;
     private ObservableList<PhosphorusPropertySet> dataSummaryOCS_Inverted;
