@@ -96,7 +96,7 @@ public class ResultsOCS {
             summaryOCSData.setCreateOCS( decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
             summaryOCSData.setCountFault( decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));
             summaryOCSData.setTimeDuration(decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
-
+            summaryOCSData.setCountTearDown(decimalFormat.format(resultsOCSController.getTearDownSummaryOCS() ));
             dataSummaryOCS.add(summaryOCSData);
         }
     }
@@ -142,7 +142,8 @@ public class ResultsOCS {
             instanceOCSData.setTearDownTime( decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
             instanceOCSData.setTraffic( decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
             instanceOCSData.setMessage( decimalFormat.format(resultsOCSController.getMessageInstanceOCS()));
-
+             instanceOCSData.setToreDown( resultsOCSController.isTearDown()?"Si":"No" );
+            
             if (resultsOCSController.getNodeErrorInstanceOCS() == null) {
                 instanceOCSData.setErrorNodo("Sin problemas");
             } else {
@@ -198,10 +199,20 @@ public class ResultsOCS {
         tbcMessage.setMinWidth(110);
         tbcMessage.setCellValueFactory(new PropertyValueFactory("message"));
 
+        
+        TableColumn tbcTearDown = new TableColumn();
+        tbcTearDown.setText("Eliminado");
+        tbcTearDown.setMinWidth(90);
+        tbcTearDown.setCellValueFactory(new PropertyValueFactory("toreDown"));
+        
         TableColumn tbcProblems = new TableColumn();
         tbcProblems.setText("Problemas");
         tbcProblems.setMinWidth(320);
         tbcProblems.setCellValueFactory(new PropertyValueFactory("errorNodo"));
+        
+        
+        
+        
 
         tvInstaceOCS.setItems(dataInstanceOCS);
         tvInstaceOCS.getColumns().addAll(
@@ -212,7 +223,8 @@ public class ResultsOCS {
                 tbcDepartureTime,
                 tbcDurationTime,
                 tbcMessage,
-                tbcTotalTraffic,                
+                tbcTotalTraffic,    
+                tbcTearDown,
                 tbcProblems);
     }
 
@@ -247,9 +259,11 @@ public class ResultsOCS {
         tableColumn4.setCellValueFactory(new PropertyValueFactory("countFault"));
 
         TableColumn tableColumn5 = new TableColumn();
-        tableColumn5.setText("Duracion promedio (s)");
-        tableColumn5.setMinWidth(130);
-        tableColumn5.setCellValueFactory(new PropertyValueFactory("timeDuration"));
+        tableColumn5.setText("Eliminados");
+        tableColumn5.setMinWidth(100);
+        tableColumn5.setCellValueFactory(new PropertyValueFactory("countTearDown"));
+        
+        
 
         TableColumn tableColumn6 = new TableColumn();
         tableColumn6.setText("Detalles");
@@ -274,6 +288,7 @@ public class ResultsOCS {
         String traffic;
         String message;
         String lambda;
+        String toreDown; 
 
         public String getLambda() {
             return lambda;
@@ -346,6 +361,15 @@ public class ResultsOCS {
         public void setMessage(String message) {
             this.message = message;
         }
+
+        public String getToreDown() {
+            return toreDown;
+        }
+
+        public void setToreDown(String toreDown) {
+            this.toreDown = toreDown;
+        }
+        
         
         
     }
@@ -358,6 +382,7 @@ public class ResultsOCS {
         private String createOCS;
         private String countFault;
         private String durationTime;
+        private String countTearDown;
         private Button btnViewDetails;
         private GraphNode graphNodeSource;
         private GraphNode graphNodeDestination;
@@ -439,6 +464,15 @@ public class ResultsOCS {
         public void setGraphNodeSource(GraphNode graphNodeSource) {
             this.graphNodeSource = graphNodeSource;
         }
+
+        public String getCountTearDown() {
+            return countTearDown;
+        }
+
+        public void setCountTearDown(String countTearDown) {
+            this.countTearDown = countTearDown;
+        }
+        
     }
 
     public ResultsOCSController getResultsOCSController() {
