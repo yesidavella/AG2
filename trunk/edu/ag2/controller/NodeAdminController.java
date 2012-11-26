@@ -128,10 +128,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             //===========================================================================================================
 //            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Gen. de intervalo máximo de retraso:");
 //            createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
-            
-              NodeDistributionProperty resultSizeDistribution  = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(MB)");
-            createDistributionProperty(   clientNode.getState().getResultSizeDistribution()  , nodeProperties, resultSizeDistribution, "resultSizeDistribution");
-            
+
+            NodeDistributionProperty resultSizeDistribution = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(MB)");
+            createDistributionProperty(clientNode.getState().getResultSizeDistribution(), nodeProperties, resultSizeDistribution, "resultSizeDistribution");
+
 
 
         } else if (graphNode instanceof ResourceGraphNode) {
@@ -173,10 +173,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
-            
-            
-          
-            
+
+
+
+
 
             //============================================================================================================
 
@@ -283,18 +283,14 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 
             } else if (id.contains("answerSizeDistribution")) {
                 setValuesDistribution(clientNode.getState().getAckSizeDistribution(), value, id);
-            }
-            else if (id.equalsIgnoreCase("resultSizeDistribution")) 
-            {
-                 clientNode.getState().setResultSizeDistribution(getDistributionByText(value));
-                if (query) 
-                {
+            } else if (id.equalsIgnoreCase("resultSizeDistribution")) {
+                clientNode.getState().setResultSizeDistribution(getDistributionByText(value));
+                if (query) {
                     queryProperties(selectedGraphNode);
                 }
-            } else if (id.contains("resultSizeDistribution")) 
-            {
-                setValuesDistribution(  clientNode.getState().getResultSizeDistribution() , value, id);
-            }   
+            } else if (id.contains("resultSizeDistribution")) {
+                setValuesDistribution(clientNode.getState().getResultSizeDistribution(), value, id);
+            }
 
         } else if (selectedGraphNode instanceof ResourceGraphNode) {
             ResourceNode resource = (ResourceNode) MatchCoupleObjectContainer.getInstanceNodeMatchCoupleObjectContainer().get(selectedGraphNode);
@@ -335,9 +331,9 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     }
                 }
             }
-            
-            
-            
+
+
+
 
         } else if (selectedGraphNode instanceof BrokerGrahpNode) {
 
@@ -512,9 +508,11 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
                     constantDistribution.setConstant(Double.parseDouble(value));
                 }
             }
+            return ;
 
         } catch (ClassCastException exception) {
-            //System.out.println(" Error class dd " + distribution + " value:  " + value + " id " + id);
+            return ;
+        } catch (NumberFormatException formatException) {
         }
 
     }
