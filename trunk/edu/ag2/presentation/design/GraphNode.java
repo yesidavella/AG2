@@ -123,6 +123,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public void initTransientObjects() {
 
+        showSimpleNode = false;
         group = new Group();
         dropShadow = new DropShadow();
         group.setEffect(dropShadow);
