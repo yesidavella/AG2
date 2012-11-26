@@ -28,6 +28,7 @@ public abstract class ResultsAbstractOCSController {
     protected double trafficInstanceOCS;
     protected String problemInstanceOCS;
     protected GraphNode nodeErrorInstanceOCS;
+    protected long messageInstanceOCS;
 
     public abstract int sizeSummaryOCS();
 
@@ -98,6 +99,15 @@ public abstract class ResultsAbstractOCSController {
     public ArrayList<Integer> getListWavelengthID() {
         return listWavelengthID;
     }
+
+    public long getMessageInstanceOCS() {
+        return messageInstanceOCS;
+    }
+
+    public void setMessageInstanceOCS(long messageInstanceOCS) {
+        this.messageInstanceOCS = messageInstanceOCS;
+    }
+    
 
     
 }

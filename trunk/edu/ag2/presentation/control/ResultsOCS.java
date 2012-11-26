@@ -92,10 +92,10 @@ public class ResultsOCS {
             summaryOCSData.setSource(" " + graphNodeSource.getName());
             summaryOCSData.setDestination(" " + graphNodeDestion.getName());
 
-            summaryOCSData.setRequestOCS("   " + decimalFormat.format(resultsOCSController.getRequestedSummaryOCS()));
-            summaryOCSData.setCreateOCS("   " + decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
-            summaryOCSData.setCountFault("   " + decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));
-            summaryOCSData.setTimeDuration("   " + decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
+            summaryOCSData.setRequestOCS( decimalFormat.format(resultsOCSController.getRequestedSummaryOCS()));
+            summaryOCSData.setCreateOCS( decimalFormat.format(resultsOCSController.getCreatedSummaryOCS()));
+            summaryOCSData.setCountFault( decimalFormat.format(resultsOCSController.getFaultSummaryOCS()));
+            summaryOCSData.setTimeDuration(decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
 
             dataSummaryOCS.add(summaryOCSData);
         }
@@ -135,12 +135,13 @@ public class ResultsOCS {
             }
 
             instanceOCSData.setPath(path);
-            instanceOCSData.setRequestTime("   " + decimalFormat.format(resultsOCSController.getRequestTimeInstanceOCS()));
-            instanceOCSData.setLambda("   " + wavelengthIDs);
-            instanceOCSData.setSetupTime("   " + decimalFormat.format(resultsOCSController.getSetupTimeInstanceOCS()));
-            instanceOCSData.setDurationTime("   " + decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
-            instanceOCSData.setTearDownTime("   " + decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
-            instanceOCSData.setTraffic("   " + decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
+            instanceOCSData.setRequestTime(decimalFormat.format(resultsOCSController.getRequestTimeInstanceOCS()));
+            instanceOCSData.setLambda( wavelengthIDs);
+            instanceOCSData.setSetupTime( decimalFormat.format(resultsOCSController.getSetupTimeInstanceOCS()));
+            instanceOCSData.setDurationTime( decimalFormat.format(resultsOCSController.getDurationTimeInstanceOCS()));
+            instanceOCSData.setTearDownTime( decimalFormat.format(resultsOCSController.getTearDownTimeInstanceOCS()));
+            instanceOCSData.setTraffic( decimalFormat.format(resultsOCSController.getTrafficInstanceOCS()));
+            instanceOCSData.setMessage( decimalFormat.format(resultsOCSController.getMessageInstanceOCS()));
 
             if (resultsOCSController.getNodeErrorInstanceOCS() == null) {
                 instanceOCSData.setErrorNodo("Sin problemas");
@@ -191,6 +192,11 @@ public class ResultsOCS {
         tbcTotalTraffic.setText("Trafico(MB)");
         tbcTotalTraffic.setMinWidth(110);
         tbcTotalTraffic.setCellValueFactory(new PropertyValueFactory("traffic"));
+        
+        TableColumn tbcMessage = new TableColumn();
+        tbcMessage.setText("Mensajes");
+        tbcMessage.setMinWidth(110);
+        tbcMessage.setCellValueFactory(new PropertyValueFactory("message"));
 
         TableColumn tbcProblems = new TableColumn();
         tbcProblems.setText("Problemas");
@@ -205,7 +211,8 @@ public class ResultsOCS {
                 tbcEstablishedTime,
                 tbcDepartureTime,
                 tbcDurationTime,
-                tbcTotalTraffic,
+                tbcMessage,
+                tbcTotalTraffic,                
                 tbcProblems);
     }
 
@@ -265,6 +272,7 @@ public class ResultsOCS {
         String tearDownTime;
         String errorNodo;
         String traffic;
+        String message;
         String lambda;
 
         public String getLambda() {
@@ -330,6 +338,16 @@ public class ResultsOCS {
         public void setTraffic(String traffic) {
             this.traffic = traffic;
         }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+        
+        
     }
 
     public class SummaryOCSData {
