@@ -47,6 +47,7 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         createdSummaryOCS = sumaryOCS.getCountCreateOCS();
         faultSummaryOCS = sumaryOCS.getCountFaultOCS();
         timeDuracionSummaryOCS = sumaryOCS.getCountAverageDurationTimeOCS();
+        tearDownSummaryOCS = sumaryOCS.getCountTearDownOCS();
 
     }
 
@@ -90,6 +91,7 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
         trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
         problemInstanceOCS = instanceOCS.getProblemInstanceOCS();
         messageInstanceOCS = instanceOCS.getMessageSent();
+        tearDown = instanceOCS.isToreDown();
 
 
         listWavelengthID = instanceOCS.getListWavelengthID();

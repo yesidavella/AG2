@@ -394,7 +394,7 @@ public class GraphOCS implements NodeListener {
     }
 
     public void remove() {
-//        //System.out.println("Elminando linea  "+graphNodeSource.getName()+" -  "+graphNodeDestination.getName());
+
         graphDesignGroup.getGroup().getChildren().removeAll(group, lblCountOCS);
         graphDesignGroup.getLinesOCS().remove(group);
 
@@ -586,14 +586,9 @@ public class GraphOCS implements NodeListener {
 
     private void verificarColor() {
         if (countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0) {
-            strokeTransitionOut.play();
-            System.out.println("Linea Blanca " + graphNodeSource + " " + graphNodeDestination);
+            strokeTransitionOut.play();          
 
-        } else {
-            System.out.println("Linea azul " + graphNodeSource + " " + graphNodeDestination);
-
-
-        }
+        } 
 
 
     }

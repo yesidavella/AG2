@@ -18,6 +18,7 @@ public abstract class ResultsAbstractOCSController {
     protected double requestedSummaryOCS;
     protected double createdSummaryOCS;
     protected double faultSummaryOCS;
+    protected double tearDownSummaryOCS;
     protected double timeDuracionSummaryOCS;
     protected ArrayList<GraphNode> pathInstaceOCS;
     protected ArrayList<Integer>  listWavelengthID;
@@ -29,6 +30,7 @@ public abstract class ResultsAbstractOCSController {
     protected String problemInstanceOCS;
     protected GraphNode nodeErrorInstanceOCS;
     protected long messageInstanceOCS;
+    protected boolean tearDown; 
 
     public abstract int sizeSummaryOCS();
 
@@ -107,6 +109,25 @@ public abstract class ResultsAbstractOCSController {
     public void setMessageInstanceOCS(long messageInstanceOCS) {
         this.messageInstanceOCS = messageInstanceOCS;
     }
+
+    public boolean isTearDown() {
+        return tearDown;
+    }
+
+    public void setTearDown(boolean tearDown) {
+        this.tearDown = tearDown;
+    }
+
+    public double getTearDownSummaryOCS() {
+        return tearDownSummaryOCS;
+    }
+
+    public void setTearDownSummaryOCS(double tearDownSummaryOCS) {
+        this.tearDownSummaryOCS = tearDownSummaryOCS;
+    }
+    
+    
+    
     
 
     
