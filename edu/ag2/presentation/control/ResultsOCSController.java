@@ -89,6 +89,7 @@ public class ResultsOCSController extends ResultsAbstractOCSController {
 
         trafficInstanceOCS = instanceOCS.getTrafficInstanceOCS();
         problemInstanceOCS = instanceOCS.getProblemInstanceOCS();
+        messageInstanceOCS = instanceOCS.getMessageSent();
 
 
         listWavelengthID = instanceOCS.getListWavelengthID();
