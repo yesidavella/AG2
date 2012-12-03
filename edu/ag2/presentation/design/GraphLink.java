@@ -23,11 +23,11 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
     private boolean isSelected;
     private HashMap<String, String> properties;
 
-    public GraphLink(GraphDesignGroup graphDesignGroup, GraphNode graphNodeA, GraphNode graphNodeB, LinkAdminAbstractController linkAdminAbstractController) {
+    public GraphLink(GraphDesignGroup graphDesignGroup, GraphNode graphNodeA, GraphNode graphNodeB, LinkAdminAbstractController linkAdminAbstractCtr) {
 
         this.graphNodeA = graphNodeA;
         this.graphNodeB = graphNodeB;
-        this.linkAdminCtr = linkAdminAbstractController;
+        this.linkAdminCtr = linkAdminAbstractCtr;
         this.graphNodeA.addNodeListener(this);
         this.graphNodeB.addNodeListener(this);
 
@@ -38,15 +38,14 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
         initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
         initialGraphArc.setStartY(graphNodeA.getLayoutY() + graphNodeA.getHeight() / 2);
         initialGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
-        initialGraphArc.setEndY(graphNodeB.getLayoutY() + graphNodeB.getHeight() / 2);
+        initialGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75 * graphNodeB.getHeight() - graphNodeB.getInitialHeight() / 4);
+        
         initialGraphArc.calculateCenter();
         graphArcs.add(initialGraphArc);
 
         properties = new HashMap<String, String>();
         findOutInitialAndFinalArc();
-//        linkAdminAbstractController.createLink(graphNodeA,graphNodeB);
-//        select(true);
-
+        graphNodeB.updateNodeListener();
     }
 
     public void setVisible(boolean visible) {
@@ -85,10 +84,9 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
                 graphNodeB = null;
 
             } else {
-
                 initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
                 initialGraphArc.setStartY(graphNodeA.getLayoutY() + 0.75 * graphNodeA.getHeight() - graphNodeA.getInitialHeight() / 4);
-
+                System.out.println(graphNodeB.getOriginalName());
                 finalGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
                 finalGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75 * graphNodeB.getHeight() - graphNodeB.getInitialHeight() / 4);
             }
@@ -134,6 +132,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
             linkAdminCtr.queryProperty(this);
 
         } else {
+            
             for (GraphArc graphArc : graphArcs) {
                 graphArc.getQuadCurve().getStyleClass().remove("arcoSeleccionado");
                 graphArc.getQuadCurve().getStyleClass().add("arcoNoSeleccionado");
@@ -147,7 +146,6 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
             }
             graphDesignGroup.setSelectable(null);
         }
-
     }
 
     public boolean isSelected() {

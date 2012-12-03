@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
         CLIENT("cliente","cliente_cursor",14,14),
         PCE_SWITCH("PCE","PCE_cursor",10,13),
         //OBS_SWITCH("enrutador_rafaga","enrutador_rafaga_cursor",10,13),
-        HRYDRID_SWITCH("enrutador_hibrido","enrutador_hibrido_cursor",10,13),
+        HRYDRID_SWITCH("enrutador","enrutador_cursor",10,13),
         BROKER("nodo_servicio","nodo_servicio_cursor",15,16),
         RESOURCE("recurso","recurso_cursor",13,16),
         LINK("fiber_link","fiber_cursor",3,4,"fiber_add_cursor",3,8),

@@ -8,9 +8,7 @@ import edu.ag2.presentation.ActionTypeEmun;
 import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.images.ImageHelper;
-import edu.ag2.util.Utils;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -22,12 +20,14 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,7 +37,7 @@ import javafx.util.Duration;
 
 public abstract class GraphNode implements Selectable, Serializable {
 
-    private static ImageView IMG_VW_DENY_LINK = new ImageView(new Image(ImageHelper.getResourceInputStream("prohibido_enlace.png")));
+    private static ImageView IMV_DENY_LINK = new ImageView(new Image(ImageHelper.getResourceInputStream("prohibido_enlace.png")));
     public static boolean linkBegin = false;
     private static GraphNode wildcardNodeA = null;
     protected transient Image image = null;
@@ -71,7 +71,13 @@ public abstract class GraphNode implements Selectable, Serializable {
     private double layoutY;
     private boolean showSimpleNode = false;
 
-    public GraphNode(GraphDesignGroup graphDesignGroup, String name, String imageURL, String imageURL_View, NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminControllers) {
+    public GraphNode(GraphDesignGroup graphDesignGroup,
+            String name,
+            String imageURL,
+            String imageURL_View,
+            NodeAdminAbstractController nodeAdminAbstractController,
+            List<LinkAdminAbstractController> linkAdminControllers,
+            short lineBreakStep) {
 
         this.graphDesignGroup = graphDesignGroup;
         this.nodeAdminController = nodeAdminAbstractController;
@@ -82,6 +88,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         this.originalName = name;
         nodeProperties = new HashMap<String, String>();
         subNodeProperties = new HashMap<String, String>();
+        this.lineBreakStep = lineBreakStep;
         initTransientObjects();
     }
 
@@ -94,7 +101,6 @@ public abstract class GraphNode implements Selectable, Serializable {
                 vbxWrapper.getChildren().add(0, imageViewNode);
             }
 
-
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
             group.setScaleX(0.5);
             group.setScaleY(-0.5);
@@ -105,7 +111,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     public void hideSimpleNode() {
         if (showSimpleNode) {
-
 
             if (!vbxWrapper.getChildren().contains(imageView)) {
                 vbxWrapper.getChildren().add(0, imageView);
@@ -127,7 +132,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         group = new Group();
         dropShadow = new DropShadow();
         group.setEffect(dropShadow);
-        lblName = new Label(formatearNombre(name));
+        lblName = new Label(formatNameWithBreakSpaces(name));
         lblName.setTextFill(Color.BLACK);
         lblName.setTextAlignment(TextAlignment.CENTER);
         lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:#CCD4EC");
@@ -141,10 +146,9 @@ public abstract class GraphNode implements Selectable, Serializable {
         imageView = new ImageView(image);
         imageViewNode = new ImageView(imageNode);
 
-
         vbxWrapper.setAlignment(Pos.CENTER);
         vbxWrapper.getChildren().addAll(imageView, lblName);
-
+        
         group.getChildren().addAll(vbxWrapper);
         group.setScaleX(0.5);
         group.setScaleY(-0.5);
@@ -215,6 +219,8 @@ public abstract class GraphNode implements Selectable, Serializable {
             dropShadow.setWidth(25);
             dropShadow.setHeight(25);
         }
+        setWidth((short) vbxWrapper.getWidth());
+        setHeight((short) vbxWrapper.getHeight());
     }
 
     @Override
@@ -294,7 +300,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 if (GraphNode.this.showSimpleNode) {
                     return;
                 }
-
+                System.out.println("EventOnMousePressed() en:" + originalName);
                 setWidth((short) vbxWrapper.getWidth());
                 setHeight((short) vbxWrapper.getHeight());
 
@@ -305,6 +311,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                     double x = graphNode.getLayoutX();
                     double y = graphNode.getLayoutY();
+
                     wildcardLink.setStartX(x + width / 2);
                     wildcardLink.setStartY(y + height / 2);
                     wildcardLink.setEndX(x + width / 2);
@@ -354,6 +361,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                     dragging = true;
                     wildcardLink.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardLink.setEndY(getLayoutY() + height - (mouseEvent.getY()));
+
                 } else if (GUI.getActionTypeEmun() == ActionTypeEmun.OCS_CIRCUIT) {
                     wildcardOCS.setEndX(getLayoutX() + (mouseEvent.getX()));
                     wildcardOCS.setEndY(getLayoutY() + height - (mouseEvent.getY()));
@@ -522,17 +530,8 @@ public abstract class GraphNode implements Selectable, Serializable {
         return width;
     }
 
-    public void setWidth(short ancho) {
-        this.width = ancho;
-    }
-//FIXME:Eliminar este y dejar el generico y mira q enrutador no descuadre
-
-    private String formatearNombre(String nombre) {
-
-        if (nombre.startsWith("Enrutador")) {
-            return nombre.substring(0, "Enrutador".length()) + "\n" + nombre.substring("Enrutador".length() + 1, nombre.length());
-        }
-        return nombre;
+    public void setWidth(short width) {
+        this.width = width;
     }
 
     public boolean isLinkBegin() {
@@ -548,24 +547,28 @@ public abstract class GraphNode implements Selectable, Serializable {
         StringBuilder alterName = new StringBuilder();
 
         nameToFormat = nameToFormat.trim();
-        int tamaño = nameToFormat.length();
+        int lengthName = nameToFormat.length();
         int i = 0;
 
-        while (tamaño >= lineBreakStep) {
+        while (lengthName >= lineBreakStep) {
 
             alterName.append(nameToFormat.substring(i * lineBreakStep, (i * lineBreakStep) + lineBreakStep)).append("\n");
 
-            tamaño = nameToFormat.substring(((i * lineBreakStep) + lineBreakStep)).length();
+            lengthName = nameToFormat.substring(((i * lineBreakStep) + lineBreakStep)).length();
 
-            if (tamaño > 0 && tamaño < lineBreakStep) {
+            if (lengthName > 0 && lengthName < lineBreakStep) {
                 alterName.append(nameToFormat.substring(((i * lineBreakStep) + lineBreakStep)));
             }
 
             i++;
         }
-        setHeight((short) vbxWrapper.getHeight());
-        setWidth((short) vbxWrapper.getWidth());
-        updateNodeListener();
+
+        if (vbxWrapper != null) {
+            setHeight((short) vbxWrapper.getHeight());
+            setWidth((short) vbxWrapper.getWidth());
+            updateNodeListener();
+        }
+
         return (alterName.length() == 0) ? nameToFormat : alterName.toString();
     }
 
@@ -601,19 +604,19 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void playDenyLinkAnimation() {
 
-        IMG_VW_DENY_LINK.setLayoutX(getLayoutX() + getWidth() / 2 - IMG_VW_DENY_LINK.getBoundsInParent().getWidth() / 2);
-        IMG_VW_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getHeight() - (getInitialHeight() / 4 + IMG_VW_DENY_LINK.getBoundsInParent().getHeight() / 2));
+        IMV_DENY_LINK.setLayoutX(getLayoutX() + getWidth() / 2 - IMV_DENY_LINK.getBoundsInParent().getWidth() / 2);
+        IMV_DENY_LINK.setLayoutY(getLayoutY() + 0.75 * getHeight() - (getInitialHeight() / 4 + IMV_DENY_LINK.getBoundsInParent().getHeight() / 2));
 
-        graphDesignGroup.add(IMG_VW_DENY_LINK);
+        graphDesignGroup.add(IMV_DENY_LINK);
 
-        FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMG_VW_DENY_LINK);
+        FadeTransition fadeImgDenyLink = new FadeTransition(Duration.millis(800), IMV_DENY_LINK);
         fadeImgDenyLink.setFromValue(1.0);
         fadeImgDenyLink.setToValue(0);
         fadeImgDenyLink.play();
 
         fadeImgDenyLink.setOnFinished(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent arg0) {
-                graphDesignGroup.remove(IMG_VW_DENY_LINK);
+                graphDesignGroup.remove(IMV_DENY_LINK);
             }
         });
     }
@@ -622,7 +625,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
     private void writeObject(ObjectOutputStream stream) {
         try {
-
 
             ArrayList<NodeListener> nodeListenersToDelete = new ArrayList<NodeListener>();
             for (NodeListener nodeListener : nodeListeners) {

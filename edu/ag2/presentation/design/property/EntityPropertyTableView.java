@@ -18,10 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class EntityPropertyTableView extends TableView<EntityProperty> implements GraphNodesView {
 
     private NodeAdminAbstractController nodeAdminCtrl;
-    private LinkAdminAbstractController linkAdminAbstractController;
+    private LinkAdminAbstractController linkAdminCtrl;
 
     public EntityPropertyTableView() {
-
 
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         TableColumn valueTableColumn = new TableColumn("VALOR");
@@ -45,12 +44,11 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
     }
 
     public void setLinkAdminAbstractController(LinkAdminAbstractController linkAdminAbstractController) {
-        this.linkAdminAbstractController = linkAdminAbstractController;
+        this.linkAdminCtrl = linkAdminAbstractController;
     }
 
     @Override
     public void loadProperties(ArrayList<EntityProperty> entityProperties) {
-
 
         TableColumn propertyTableColumn = new TableColumn("PROPIEDAD");
         TableColumn valueTableColumn = new TableColumn("VALOR");
@@ -68,7 +66,6 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
         propertyTableColumn.setSortable(false);
         valueTableColumn.setSortable(false);
 
-
         ObservableList dataObservableList = FXCollections.observableArrayList();
 
         for (EntityProperty entityProperty : entityProperties) {
@@ -76,9 +73,6 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
             dataObservableList.add(entityProperty);
         }
         setItems(dataObservableList);
-
-
-
     }
 
     public void clearData() {
@@ -94,7 +88,7 @@ public class EntityPropertyTableView extends TableView<EntityProperty> implement
             if (selectable instanceof GraphNode) {
                 nodeAdminCtrl.updateProperty(isSubProperty, true, id, value);
             } else if (selectable instanceof GraphLink) {
-                linkAdminAbstractController.updatePropiedad((GraphLink) selectable, id, value);
+                linkAdminCtrl.updatePropiedad((GraphLink) selectable, id, value);
             }
         }
     }

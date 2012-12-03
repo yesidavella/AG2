@@ -63,7 +63,6 @@ import javax.swing.JOptionPane;
 
 public class GUI extends Scene {
     //Static object
-
     private static GUI iguAG2;
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
     private static Stage stage;
@@ -140,14 +139,13 @@ public class GUI extends Scene {
     private Button btnShowLog = new Button("Ver registros");
     private boolean isPlaying = false;
     private boolean OCSView = false;
-    private double totalIncrement =0;
+    private double totalIncrement = 0;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
         getStylesheets().add(
-                Main.class.getResource("ag2.css").toExternalForm()
-                );
+                Main.class.getResource("ag2.css").toExternalForm());
 
         if (!Main.IS_APPLET) {
             stage.initStyle(StageStyle.UNDECORATED);
@@ -322,7 +320,6 @@ public class GUI extends Scene {
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
-
                             splitPane.setDividerPosition(0, y / 100);
                         }
                     };
@@ -783,7 +780,7 @@ public class GUI extends Scene {
 
         splitPane.getItems().addAll(vbxSimulation, scpnProperties);
         splitPane.setDividerPosition(0, 0.95);
-        totalIncrement= 0.95;
+        totalIncrement = 0.95;
 
         tabSimulation.setContent(splitPane);
 
@@ -1049,7 +1046,7 @@ public class GUI extends Scene {
         vbLogos.setAlignment(Pos.CENTER);
         vbLogos.setPadding(new Insets(3, 3, 3, 3));
 
-        ImageView ivAG2 = new ImageView(new Image(ImageHelper.getResourceInputStream( "logos.gif")));
+        ImageView ivAG2 = new ImageView(new Image(ImageHelper.getResourceInputStream("logos.gif")));
         ivAG2.setEffect(new DropShadow());
         vbLogos.getChildren().addAll(ivAG2);
         ivAG2.setFitHeight(90);
@@ -1091,10 +1088,7 @@ public class GUI extends Scene {
         tbcolPropValue.setCellValueFactory(new PropertyValueFactory<PropertyPhosphorusTypeEnum, Control>("control"));
 
         tbvSimulationProperties.getColumns().addAll(tbcolPropName, tbcolPropValue);
-
         tbvSimulationProperties.setMinHeight(400);
-//        tbwSimulationProperties.setPrefWidth(345);
-//        tbwSimulationProperties.setPrefHeight(200);
 
         return tbvSimulationProperties;
     }
@@ -1188,7 +1182,6 @@ public class GUI extends Scene {
         setEventGoBtn(btnIrServiceNodes, cbServiceNodes);
         setEventGoBtn(btnIrResources, cbResources);
         setEventGoBtn(btnIrSwichtes, cbSwicthes);
-
     }
 
     private void setEventGoBtn(Button goButton, final ChoiceBox cbxbNodes) {
@@ -1198,7 +1191,6 @@ public class GUI extends Scene {
                 GraphNode selectedNode = (GraphNode) cbxbNodes.getSelectionModel().getSelectedItem();
 
                 if (selectedNode != null) {
-                    //selectedNode.select(true);
 
                     Scale sclEscalaDeZoom = graphDesignGroup.getScZoom();
                     sclEscalaDeZoom.setX(1.5);
@@ -1301,7 +1293,6 @@ public class GUI extends Scene {
 
     public void disableButtons(boolean disable) {
 
-
         if (disable) {
             GUI.setActionTypeEmun(ActionTypeEmun.POINTER);
             graphDesignGroup.getGroup().setCursor(ActionTypeEmun.POINTER.getCursorImage());
@@ -1318,8 +1309,6 @@ public class GUI extends Scene {
         btnResource.setDisable(disable);
         btnLink.setDisable(disable);
         btnOCSCircuit.setDisable(disable);
-
-
 
         btnPointSeparator.setDisable(disable);
         btnDeleted.setDisable(disable);
@@ -1368,6 +1357,7 @@ public class GUI extends Scene {
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
+        
         if (!tbpMain.getTabs().contains(tabResults)) {
             tbpMain.getTabs().addAll(
                     tabResultsResource,
@@ -1378,6 +1368,7 @@ public class GUI extends Scene {
                     tabChartsSwitchResults);
 
         }
+        
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
         chartsResultClient.play();

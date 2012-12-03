@@ -140,11 +140,12 @@ public class EntityProperty {
         final TextField textField = ((TextField) control);
 
         textField.setOnMouseExited(new EventHandler<MouseEvent>() {
-
+            
             public void handle(MouseEvent event) {
                 GUI.getInstance().getGraphDesignGroup().getGroup().requestFocus();
             }
         });
+        
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
             public void changed(ObservableValue<? extends Boolean> textControl, Boolean beforeStateFocus, Boolean currentStateFocus) {
