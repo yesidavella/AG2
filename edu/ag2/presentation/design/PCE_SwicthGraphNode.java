@@ -16,6 +16,9 @@ public class PCE_SwicthGraphNode extends SwitchGraphNode {
                 "PCE_mapa.png",
                 "PCE_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
+        
+        setWidth((short)30);
+        setHeight((short)44);
     }
 
     private void readObject(ObjectInputStream inputStream) {

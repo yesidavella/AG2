@@ -20,14 +20,12 @@ import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -243,7 +241,6 @@ public abstract class GraphNode implements Selectable, Serializable {
 
                 if (linkBegin == false) {
                     wildcardNodeA = null;
-//                    //System.out.println("wildcardNodeA esta NULO EN."+name);
                 }
 
                 if (actionTypeEmun == ActionTypeEmun.LINK) {
