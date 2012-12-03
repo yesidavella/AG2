@@ -2,8 +2,6 @@ package edu.ag2.presentation.design;
 
 import edu.ag2.controller.LinkAdminAbstractController;
 import edu.ag2.controller.NodeAdminAbstractController;
-import edu.ag2.presentation.images.ImageHelper;
-import edu.ag2.util.Utils;
 import java.io.ObjectInputStream;
 import java.util.List;
 
@@ -17,7 +15,9 @@ public class ClientGraphNode extends GraphNode{
         super(graphDesignGroup,"Cliente_"+(++nodeCounter),
                "cliente_mapa.png", 
                "cliente_mapa_node.png", 
-                nodeAdminAbstractController,linkAdminAbstractController);        
+                nodeAdminAbstractController,linkAdminAbstractController,
+                (short)15); 
+        
         setHeight((short)50);
 
         if(nodeCounter<10){
@@ -25,8 +25,6 @@ public class ClientGraphNode extends GraphNode{
         }else{
             setWidth((short)44);
         }
-        
-        lineBreakStep = 15;
     }
 
     @Override

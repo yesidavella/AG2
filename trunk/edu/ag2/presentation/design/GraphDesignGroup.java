@@ -1,5 +1,9 @@
 package edu.ag2.presentation.design;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
 import edu.ag2.controller.LinkAdminAbstractController;
 import edu.ag2.controller.NodeAdminAbstractController;
 import edu.ag2.presentation.ActionTypeEmun;
@@ -7,12 +11,7 @@ import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.GraphNodesView;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.design.property.EntityProperty;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
 import edu.ag2.presentation.maps.MapHelper;
-import java.awt.Paint;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,7 +23,6 @@ import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -430,8 +428,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         Group texts = new Group();
 
         try {
-
-
             copyFile("110m_admin_0_countries.dbf");
             copyFile("110m_admin_0_countries.prj");
             copyFile("110m_admin_0_countries.qix");
@@ -439,10 +435,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             copyFile("110m_admin_0_countries.shx");
 
             System.gc();
-
             File file = new File(folderMap,"110m_admin_0_countries.shp");
-
-
 
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
             SimpleFeatureSource featureSource = store.getFeatureSource();
@@ -480,7 +473,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
                         path.setStrokeWidth(0.2);
 
                         path.setFill(Color.web("#AD9784"));//A0A5CE,B7B7B7,A4A4A4,C1BBB1,AD9784 
-                        //Si le va cambiar el color, dejar el registro de cual era el q estaba¡¡¡
+                        //Si se cambia el color, dejar el registro de cual era el q estaba¡¡¡
                         path.getElements().add(new MoveTo(coords[0].x * MAP_SCALE, coords[0].y * MAP_SCALE));
 
                         for (int i = 0; i < coords.length; i++) {
@@ -495,7 +488,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             }
 
             add(texts);
-
 
 //            Stop[] stops = {
 //                new Stop(0.1, Color.web("#9DCAFF")),

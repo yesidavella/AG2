@@ -2,17 +2,21 @@ package edu.ag2.presentation.design;
 
 import edu.ag2.controller.LinkAdminAbstractController;
 import edu.ag2.controller.NodeAdminAbstractController;
-import java.io.InputStream;
 import java.util.List;
 
 public abstract class SwitchGraphNode extends GraphNode {
 
-    public SwitchGraphNode(GraphDesignGroup graphDesignGroup, String name,   String   imageURL,String   imageURL_View,  NodeAdminAbstractController nodeAdminAbstractController, List<LinkAdminAbstractController> linkAdminAbstractController) {
-        super(graphDesignGroup, name, imageURL,imageURL_View ,nodeAdminAbstractController, linkAdminAbstractController);
+    public SwitchGraphNode(GraphDesignGroup graphDesignGroup,
+            String name,
+            String imageURL,
+            String imageURL_View,
+            NodeAdminAbstractController nodeAdminAbstractController,
+            List<LinkAdminAbstractController> linkAdminAbstractController) {
+        
+        super(graphDesignGroup, name, imageURL, imageURL_View, nodeAdminAbstractController, linkAdminAbstractController, (short) 11);
+        
         setHeight((short) 62);
-        setWidth((short) 42);
-
-        lineBreakStep = 10;
+        setWidth((short) 44);
     }
 
     @Override
