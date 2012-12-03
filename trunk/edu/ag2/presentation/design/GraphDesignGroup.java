@@ -61,7 +61,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
     private transient ArrayList<Group> linesOCS;
     private transient ArrayList<VBox> resultOCS;
     private transient ArrayList<Shape> listMapWorld;
-    private File folderMap = new File("maps"); 
+    private File folderMap = new File("maps");
 
     public GraphDesignGroup() {
         initTransientObjects();
@@ -81,7 +81,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         for (Group line : linesOCS) {
             line.setVisible(true);
         }
-
     }
 
     public void hideLineOCS() {
@@ -288,18 +287,17 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
     private void addNodeOnMap(GraphNode graphNode, MouseEvent mouseEvent) {
 
-        double posicionX = 0;
-        double posicionY = 0;
+        double posXNewNode = 0;
+        double posYNewNode = 0;
 
         if (graphNode != null) {
 
-            posicionX = mouseEvent.getX() - graphNode.getWidth() / 2;
-            posicionY = mouseEvent.getY() - graphNode.getHeight() / 2;
+            posXNewNode = mouseEvent.getX() - 0.75*graphNode.getWidth()+GUI.getActionTypeEmun().getPoint2D().getX()/4;
+            posYNewNode = mouseEvent.getY() - 0.75*graphNode.getHeight();
 
-            graphNode.setLayoutX(posicionX);
-            graphNode.setLayoutY(posicionY);
+            graphNode.setLayoutX(posXNewNode);
+            graphNode.setLayoutY(posYNewNode);
             add(graphNode);
-
         }
     }
 
@@ -435,7 +433,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             copyFile("110m_admin_0_countries.shx");
 
             System.gc();
-            File file = new File(folderMap,"110m_admin_0_countries.shp");
+            File file = new File(folderMap, "110m_admin_0_countries.shp");
 
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
             SimpleFeatureSource featureSource = store.getFeatureSource();
@@ -506,7 +504,7 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
             add(backgroundRec);
             backgroundRec.toBack();
-              System.gc();
+            System.gc();
 
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
@@ -517,10 +515,10 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
         InputStream inputStream = MapHelper.getResourceInputStream(name);
         OutputStream out = null;
         try {
-            
+
             folderMap.mkdir();
-            
-            File file = new File(folderMap,name);
+
+            File file = new File(folderMap, name);
             out = new FileOutputStream(file);
             byte buf[] = new byte[1024];
             int len;

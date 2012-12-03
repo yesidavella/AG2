@@ -14,16 +14,19 @@ public class HybridSwitchGraphNode extends SwitchGraphNode {
 
         super(graphDesignGroup, "Enrutador_" + (++nodeCounter),
                 "enrutador_mapa.png",
-               "enrutador_mapa_node.png",
+                "enrutador_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
 
-        if (nodeCounter > 9) {
-            setWidth((short) 46);
-        }
+//        if (nodeCounter > 9) {
+////            setWidth((short) 46);
+//        }
+
+        setWidth((short)54);
+        setHeight((short)40);
     }
 
     private void readObject(ObjectInputStream inputStream) {
-        
+
         try {
             inputStream.defaultReadObject();
             nodeCounter++;

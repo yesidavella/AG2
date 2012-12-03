@@ -23,7 +23,6 @@ import edu.ag2.presentation.design.GraphNode;
 import edu.ag2.presentation.design.SwitchGraphNode;
 import edu.ag2.presentation.design.property.EntityPropertyTableView;
 import edu.ag2.presentation.images.ImageHelper;
-import edu.ag2.util.Utils;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;

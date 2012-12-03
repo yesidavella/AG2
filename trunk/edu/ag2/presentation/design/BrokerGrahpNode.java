@@ -18,8 +18,8 @@ public class BrokerGrahpNode extends GraphNode {
                 nodeAdminAbstractController, linkAdminAbstractController,
                 (short) 12);
         
-        setHeight((short) 74);
-        setWidth((short) 61);
+        setWidth((short) 56);
+        setHeight((short) 56);
     }
 
     @Override
