@@ -93,7 +93,6 @@ public abstract class GraphNode implements Selectable, Serializable {
     public void showSimpleNode() {
         if (!showSimpleNode) {
 
-
             vbxWrapper.getChildren().remove(imageView);
             if (!vbxWrapper.getChildren().contains(imageViewNode)) {
                 vbxWrapper.getChildren().add(0, imageViewNode);
@@ -297,7 +296,7 @@ public abstract class GraphNode implements Selectable, Serializable {
                 if (GraphNode.this.showSimpleNode) {
                     return;
                 }
-                System.out.println("EventOnMousePressed() en:" + originalName);
+
                 setWidth((short) vbxWrapper.getWidth());
                 setHeight((short) vbxWrapper.getHeight());
 
