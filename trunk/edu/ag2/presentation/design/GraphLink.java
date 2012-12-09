@@ -37,7 +37,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 
         initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
         initialGraphArc.setStartY(graphNodeA.getLayoutY() + graphNodeA.getHeight() / 2);
-        initialGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
+        initialGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth()/2);
         initialGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75 * graphNodeB.getHeight() - graphNodeB.getInitialHeight() / 4);
         
         initialGraphArc.calculateCenter();
@@ -45,7 +45,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
 
         properties = new HashMap<String, String>();
         findOutInitialAndFinalArc();
-        graphNodeB.updateNodeListener();
+
     }
 
     public void setVisible(boolean visible) {
@@ -86,7 +86,7 @@ public class GraphLink implements NodeListener, Serializable, Selectable {
             } else {
                 initialGraphArc.setStartX(graphNodeA.getLayoutX() + graphNodeA.getWidth() / 2);
                 initialGraphArc.setStartY(graphNodeA.getLayoutY() + 0.75 * graphNodeA.getHeight() - graphNodeA.getInitialHeight() / 4);
-                System.out.println(graphNodeB.getOriginalName());
+
                 finalGraphArc.setEndX(graphNodeB.getLayoutX() + graphNodeB.getWidth() / 2);
                 finalGraphArc.setEndY(graphNodeB.getLayoutY() + 0.75 * graphNodeB.getHeight() - graphNodeB.getInitialHeight() / 4);
             }

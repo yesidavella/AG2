@@ -15,8 +15,8 @@ public abstract class SwitchGraphNode extends GraphNode {
         
         super(graphDesignGroup, name, imageURL, imageURL_View, nodeAdminAbstractController, linkAdminAbstractController, (short) 12);
         
-//        setHeight((short) 62);
-//        setWidth((short) 44);
+        setHeight((short) 75);
+        setWidth((short) 54);
     }
 
     @Override
