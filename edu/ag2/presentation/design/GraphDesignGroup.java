@@ -172,7 +172,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
             GraphNode graphNode = null;
             NodeAdminAbstractController nodeAdminAbstractController = nodeAdminAbstractControllers.get(0);
-//            LinkAdminAbstractController linkAdminAbstractController = linkAdminAbstractControllers.get(0);
 
             if (actionTypeEmun == ActionTypeEmun.HAND) {
                 group.setCursor(ActionTypeEmun.HAND.getCursorImage());
@@ -292,8 +291,9 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
 
         if (graphNode != null) {
 
-            posXNewNode = mouseEvent.getX() - 0.75*graphNode.getWidth()+GUI.getActionTypeEmun().getPoint2D().getX()/4;
-            posYNewNode = mouseEvent.getY() - 0.75*graphNode.getHeight();
+            posXNewNode = mouseEvent.getX()- (graphNode.getWidth()/2);
+            
+            posYNewNode = mouseEvent.getY()- (GUI.getActionTypeEmun().getPoint2D().getY()+ graphNode.getHeight()/4 );
 
             graphNode.setLayoutX(posXNewNode);
             graphNode.setLayoutY(posYNewNode);
@@ -330,7 +330,6 @@ public class GraphDesignGroup implements EventHandler<MouseEvent>, Serializable,
             serializableComplete = false;
             stream.defaultWriteObject();
             Main.countObject++;
-            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

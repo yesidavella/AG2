@@ -16,8 +16,8 @@ public class ResourceGraphNode extends GraphNode {
                 nodeAdminAbstractController, linkAdminAbstractController,
                 (short) 11);
         
-        setWidth((short) 42);
-        setHeight((short) 50);
+        setWidth((short) 59);
+        setHeight((short) 70);
     }
 
     private void readObject(ObjectInputStream inputStream) {

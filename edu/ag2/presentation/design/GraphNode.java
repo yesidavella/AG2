@@ -88,6 +88,7 @@ public abstract class GraphNode implements Selectable, Serializable {
         subNodeProperties = new HashMap<String, String>();
         this.lineBreakStep = lineBreakStep;
         initTransientObjects();
+
     }
 
     public void showSimpleNode() {
@@ -216,8 +217,11 @@ public abstract class GraphNode implements Selectable, Serializable {
             dropShadow.setWidth(25);
             dropShadow.setHeight(25);
         }
-        setWidth((short) vbxWrapper.getWidth());
-        setHeight((short) vbxWrapper.getHeight());
+        
+        if(vbxWrapper.getWidth()!=0){
+            setWidth((short) vbxWrapper.getWidth());
+            setHeight((short) vbxWrapper.getHeight());
+        }
     }
 
     @Override
@@ -495,14 +499,12 @@ public abstract class GraphNode implements Selectable, Serializable {
     private void readObject(ObjectInputStream inputStream) {
         try {
             inputStream.defaultReadObject();
-            //System.out.println("read :" + name);
             if (graphDesignGroup.isSerializableComplete()) {
                 initTransientObjects();
                 getGroup().setLayoutX(getLayoutX());
                 getGroup().setLayoutY(getLayoutY());
                 select(false);
                 graphDesignGroup.getGroup().getChildren().add(getGroup());
-                //System.out.println("read load post :" + name);
             }
 
         } catch (Exception e) {
@@ -631,7 +633,6 @@ public abstract class GraphNode implements Selectable, Serializable {
             nodeListeners.removeAll(nodeListenersToDelete);
             stream.defaultWriteObject();
             Main.countObject++;
-            //System.out.println("Writing: " + Main.countObject + "  " + this.getClass().getCanonicalName());
         } catch (IOException ex) {
             Logger.getLogger(GraphArc.class.getName()).log(Level.SEVERE, null, ex);
         }

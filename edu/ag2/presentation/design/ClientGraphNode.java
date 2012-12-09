@@ -18,8 +18,8 @@ public class ClientGraphNode extends GraphNode {
                 nodeAdminAbstractController, linkAdminAbstractController,
                 (short) 15);
 
-        setWidth((short) 42);
-        setHeight((short) 38);
+        setWidth((short) 58);
+        setHeight((short) 53);
     }
 
     @Override

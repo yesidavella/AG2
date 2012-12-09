@@ -17,11 +17,7 @@ public class HybridSwitchGraphNode extends SwitchGraphNode {
                 "enrutador_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);
 
-//        if (nodeCounter > 9) {
-////            setWidth((short) 46);
-//        }
-
-        setWidth((short)54);
+        setWidth((short)75);
         setHeight((short)40);
     }
 
