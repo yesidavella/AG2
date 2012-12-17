@@ -12,7 +12,7 @@ public class PCE_SwicthGraphNode extends SwitchGraphNode {
     public PCE_SwicthGraphNode(GraphDesignGroup graphDesignGroup, NodeAdminAbstractController nodeAdminAbstractController,
             List<LinkAdminAbstractController> linkAdminAbstractController) {
 
-        super(graphDesignGroup, "PCE" + (++nodeCounter),
+        super(graphDesignGroup, "PCE_" + (++nodeCounter),
                 "PCE_mapa.png",
                 "PCE_mapa_node.png",
                 nodeAdminAbstractController, linkAdminAbstractController);

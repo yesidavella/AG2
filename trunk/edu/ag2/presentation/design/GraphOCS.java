@@ -29,10 +29,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
-/**
- *
- * @author Frank
- */
 public class GraphOCS implements NodeListener {
 
     private Line line;
@@ -45,12 +41,12 @@ public class GraphOCS implements NodeListener {
     private int countOCS_Inverted = 0;
     private int deteledCountOCS_Inverted = 0;
     private Group group;
-    private int posStartX;
-    private int posStartY;
-    private int posEndX;
-    private int posEndY;
-    private int desfaseX = 24;
-    private int desfaseY = 34;
+    private double posStartX;
+    private double posStartY;
+    private double posEndX;
+    private double posEndY;
+    private final int desfaseX = 24;
+    private final int desfaseY = 34;
     private Line lineMiddle = new Line();
     private TitledPane tpnDireccion1 = new TitledPane();
     private TitledPane tpnDireccion2 = new TitledPane();
@@ -116,17 +112,19 @@ public class GraphOCS implements NodeListener {
 
         line.setEffect(dropShadow);
 
-
         line.setStroke(Color.web("#5B88E0"));
         dropShadow.setColor(Color.BLACK);
-
-
-
-        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX + (graphNodeSource.getWidth() / 2);
+        
+        posStartX = (int) graphNodeSource.getLayoutX() + 0.85*graphNodeSource.getWidth();
         posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
-        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX + graphNodeSource.getWidth() / 2;
+        posEndX =  graphNodeDestination.getLayoutX()  + 0.85*graphNodeSource.getWidth();
         posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+//        posStartX = (int) graphNodeSource.getLayoutX() + 0 ;
+//        posStartY = (int) graphNodeSource.getLayoutY() + (graphNodeSource.getHeight() );
+//
+//        posEndX = (int) graphNodeDestination.getLayoutX()  + graphNodeDestination.getWidth() ;
+//        posEndY = (int) graphNodeDestination.getLayoutY()  + (graphNodeDestination.getHeight() );
 
         lblCountOCS.setScaleX(0.9);
         lblCountOCS.setScaleY(-.9);
@@ -143,7 +141,6 @@ public class GraphOCS implements NodeListener {
                 lblCountOCS.setScaleY(-1.7);
             }
         });
-
 
         line.setStartX(posStartX);
         line.setStartY(posStartY);
@@ -439,12 +436,12 @@ public class GraphOCS implements NodeListener {
     public void addDeleteOCS_Inverted() {
         deteledCountOCS_Inverted++;
         tvSummaryOCS_DeletedInverted.setProperty2(numberFormat.format(deteledCountOCS_Inverted));
-       
+
         bar2Note.play();
         if (!(countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0)) {
             strokeTransitionDeleted.play();
         }
-         verificarColor();
+        verificarColor();
 
     }
 
@@ -586,9 +583,9 @@ public class GraphOCS implements NodeListener {
 
     private void verificarColor() {
         if (countOCS - deteledCountOCS == 0 && countOCS_Inverted - deteledCountOCS_Inverted == 0) {
-            strokeTransitionOut.play();          
+            strokeTransitionOut.play();
 
-        } 
+        }
 
 
     }
