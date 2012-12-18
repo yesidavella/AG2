@@ -550,10 +550,10 @@ public class GraphOCS implements NodeListener {
     @Override
     public void update() {
 
-        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX + (graphNodeSource.getWidth() / 2);
+        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX-10 + (graphNodeSource.getWidth() / 2);
         posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
-        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX + graphNodeSource.getWidth() / 2;
+        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX-10  + graphNodeSource.getWidth() / 2;
         posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
         line.setStartX(posStartX);
