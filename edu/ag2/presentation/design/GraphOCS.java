@@ -115,17 +115,9 @@ public class GraphOCS implements NodeListener {
         line.setStroke(Color.web("#5B88E0"));
         dropShadow.setColor(Color.BLACK);
         
-        posStartX = (int) graphNodeSource.getLayoutX() + 0.85*graphNodeSource.getWidth();
-        posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
-
-        posEndX =  graphNodeDestination.getLayoutX()  + 0.85*graphNodeSource.getWidth();
-        posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
-//        posStartX = (int) graphNodeSource.getLayoutX() + 0 ;
-//        posStartY = (int) graphNodeSource.getLayoutY() + (graphNodeSource.getHeight() );
-//
-//        posEndX = (int) graphNodeDestination.getLayoutX()  + graphNodeDestination.getWidth() ;
-//        posEndY = (int) graphNodeDestination.getLayoutY()  + (graphNodeDestination.getHeight() );
-
+        update();
+        
+  
         lblCountOCS.setScaleX(0.9);
         lblCountOCS.setScaleY(-.9);
         lblCountOCS.setStyle(" -fx-text-fill: #585858;-fx-font: bold 6pt 'Arial'; -fx-background-color:#FFFFFF;"
