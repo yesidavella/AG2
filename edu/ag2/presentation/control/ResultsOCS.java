@@ -190,7 +190,7 @@ public class ResultsOCS {
         tbcDepartureTime.setCellValueFactory(new PropertyValueFactory("tearDownTime"));
 
         TableColumn tbcTotalTraffic = new TableColumn();
-        tbcTotalTraffic.setText("Trafico(MB)");
+        tbcTotalTraffic.setText("Trafico(Mb)");
         tbcTotalTraffic.setMinWidth(110);
         tbcTotalTraffic.setCellValueFactory(new PropertyValueFactory("traffic"));
         

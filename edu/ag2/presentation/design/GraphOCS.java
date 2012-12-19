@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.ag2.presentation.design;
 
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.control.PhosphorusPropertySet;
 import edu.ag2.presentation.images.ImageHelper;
-import edu.ag2.util.Utils;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javafx.animation.StrokeTransition;
@@ -86,11 +81,9 @@ public class GraphOCS implements NodeListener {
     private final AudioClip bar1Note = new AudioClip(Main.class.getResource("Note1.wav").toString());
     private final AudioClip bar2Note = new AudioClip(Main.class.getResource("Note8.wav").toString());
     private NumberFormat numberFormat = DecimalFormat.getInstance();
-    private String TRAFFIC_UNIT = "(MB)";
+    private String TRAFFIC_UNIT = "(Mb)";
 
     public GraphOCS(final GraphNode graphNodeSource, final GraphNode graphNodeDestination, final GraphDesignGroup graphDesignGroup, int countInstanceOCS) {
-
-
 
         numberFormat.setMaximumFractionDigits(3);
 
@@ -114,10 +107,10 @@ public class GraphOCS implements NodeListener {
 
         line.setStroke(Color.web("#5B88E0"));
         dropShadow.setColor(Color.BLACK);
-        
+
         update();
-        
-  
+
+
         lblCountOCS.setScaleX(0.9);
         lblCountOCS.setScaleY(-.9);
         lblCountOCS.setStyle(" -fx-text-fill: #585858;-fx-font: bold 6pt 'Arial'; -fx-background-color:#FFFFFF;"
@@ -550,10 +543,10 @@ public class GraphOCS implements NodeListener {
     @Override
     public void update() {
 
-        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX-10 + (graphNodeSource.getWidth() / 2);
+        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX - 10 + (graphNodeSource.getWidth() / 2);
         posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
-        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX-10  + graphNodeSource.getWidth() / 2;
+        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX - 10 + graphNodeSource.getWidth() / 2;
         posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
 
         line.setStartX(posStartX);

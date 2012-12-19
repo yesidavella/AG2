@@ -83,11 +83,11 @@ public enum PropertyPhosphorusTypeEnum {
      */
     DEFAULT_JOB_IAT("defaultJobIAT", "Intervalo de generación de trabajo:(s)", new TextField()),
     //The size of control messages. If control messages are 0, the are being send immediately
-    ACK_SIZE("ACKsize", "Tamaño de msg confirmación:(MB)", new TextField()),
+    ACK_SIZE("ACKsize", "Tamaño de msg confirmación:(Mb)", new TextField()),
     /**
      * Tamaño de cada trabajo jobMsg.
      */
-    DEFAULT_DATA_SIZE("defaultDataSize", "Tamaño de Trabajo:(MB)", new TextField()),
+    DEFAULT_DATA_SIZE("defaultDataSize", "Tamaño de Trabajo:(Mb)", new TextField()),
     /**
      * Determina el tiempo q tarde ejecutando un trabajo en el Nodo de recurso
      * segun su capacidad. double executionTime = job.getMsg().getFlops() /
@@ -101,9 +101,7 @@ public enum PropertyPhosphorusTypeEnum {
      */
 //    MAX_DELAY("maxDelay", "Retraso máx/Trab_Req(s):", new TextField());
     
-    
-    DEFAULT_RESULT_SIZE("defaultResultSize", "Tamaño de Respuesta:(MB)", new TextField());  
-    
+    DEFAULT_RESULT_SIZE("defaultResultSize", "Tamaño de Respuesta:(Mb)", new TextField());  
     
     private ExecuteController executeController;
     private String phosphorusPropertyName;
