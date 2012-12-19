@@ -117,10 +117,10 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
             NodeDistributionProperty jobsDistribution = new NodeDistributionProperty("jobsDistribution", "Intervalo de generación de trabajo:(s)");
             createDistributionProperty(clientNode.getState().getJobInterArrival(), nodeProperties, jobsDistribution, "jobsDistribution");
             //===========================================================================================================
-            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Tamaño de msg confirmación:(MB)");
+            NodeDistributionProperty answerSizeDistribution = new NodeDistributionProperty("answerSizeDistribution", "Tamaño de msg confirmación:(Mb)");
             createDistributionProperty(clientNode.getState().getAckSizeDistribution(), nodeProperties, answerSizeDistribution, "answerSizeDistribution");
             //===========================================================================================================
-            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Tamaño de Trabajo:(MB)");
+            NodeDistributionProperty jobSizeDistribution = new NodeDistributionProperty("jobSizeDistribution", "Tamaño de Trabajo:(Mb)");
             createDistributionProperty(clientNode.getState().getSizeDistribution(), nodeProperties, jobSizeDistribution, "jobSizeDistribution");
             //===========================================================================================================
             NodeDistributionProperty flopsDistribution = new NodeDistributionProperty("flopsDistribution", "FLOPS de Trabajo(Mflops):");
@@ -129,7 +129,7 @@ public class NodeAdminController extends NodeAdminAbstractController implements 
 //            NodeDistributionProperty maxDelayDistribution = new NodeDistributionProperty("maxDelayDistribution", "Gen. de intervalo máximo de retraso:");
 //            createDistributionProperty(clientNode.getState().getMaxDelayInterval(), nodeProperties, maxDelayDistribution, "maxDelayDistribution");
 
-            NodeDistributionProperty resultSizeDistribution = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(MB)");
+            NodeDistributionProperty resultSizeDistribution = new NodeDistributionProperty("resultSizeDistribution", "Tamaño de Respuesta:(Mb)");
             createDistributionProperty(clientNode.getState().getResultSizeDistribution(), nodeProperties, resultSizeDistribution, "resultSizeDistribution");
 
 
