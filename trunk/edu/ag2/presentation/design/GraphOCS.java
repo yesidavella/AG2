@@ -543,11 +543,11 @@ public class GraphOCS implements NodeListener {
     @Override
     public void update() {
 
-        posStartX = (int) graphNodeSource.getLayoutX() + desfaseX - 10 + (graphNodeSource.getWidth() / 2);
-        posStartY = (int) graphNodeSource.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+        posStartX = (graphNodeSource.getLayoutX() + graphNodeSource.getWidth() / 2);
+        posStartY = (graphNodeSource.getLayoutY() + 0.75 * graphNodeSource.getHeight() - graphNodeSource.getInitialHeight() / 4);
 
-        posEndX = (int) graphNodeDestination.getLayoutX() + desfaseX - 10 + graphNodeSource.getWidth() / 2;
-        posEndY = (int) graphNodeDestination.getLayoutY() + desfaseY + (graphNodeSource.getHeight() / 2);
+        posEndX = (graphNodeDestination.getLayoutX() + graphNodeDestination.getWidth() / 2);
+        posEndY = (graphNodeDestination.getLayoutY() + 0.75 * graphNodeDestination.getHeight() - graphNodeDestination.getInitialHeight() / 4);
 
         line.setStartX(posStartX);
         line.setStartY(posStartY);
@@ -558,8 +558,6 @@ public class GraphOCS implements NodeListener {
         lineMiddle.setStartY(posStartY);
         lineMiddle.setEndX(posEndX);
         lineMiddle.setEndY(posEndY);
-
-
     }
 
     public VBox getvBoxInfoOCS() {

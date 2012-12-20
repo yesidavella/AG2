@@ -100,8 +100,8 @@ public abstract class GraphNode implements Selectable, Serializable {
             }
 
             lblName.setStyle("-fx-font: bold 12pt 'Arial'; -fx-background-color:white");
-            group.setScaleX(0.5);
-            group.setScaleY(-0.5);
+            group.setScaleX(0.8);
+            group.setScaleY(-0.8);
         }
 
         showSimpleNode = true;
@@ -146,7 +146,7 @@ public abstract class GraphNode implements Selectable, Serializable {
 
         vbxWrapper.setAlignment(Pos.CENTER);
         vbxWrapper.getChildren().addAll(imageView, lblName);
-        
+
         group.getChildren().addAll(vbxWrapper);
         group.setScaleX(0.5);
         group.setScaleY(-0.5);
@@ -217,8 +217,8 @@ public abstract class GraphNode implements Selectable, Serializable {
             dropShadow.setWidth(25);
             dropShadow.setHeight(25);
         }
-        
-        if(vbxWrapper.getWidth()!=0){
+
+        if (vbxWrapper.getWidth() != 0) {
             setWidth((short) vbxWrapper.getWidth());
             setHeight((short) vbxWrapper.getHeight());
         }
