@@ -110,15 +110,14 @@ public class SimulationBase implements Runnable, Serializable {
         nodeAdminCtr.reCreatePhosphorousNodes();
         fiberLinkAdminCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
-        //System.out.println("------------------------Stop en base");
-//        HybridSwitchSender.ocsTearDownSend=false;
+
     }
 
     public void initNetwork() {
         simulationInstance.stopEvent = false;
         gridSimulatorModel.getRouting().clear();
         gridSimulatorModel.getPhysicTopology().clear();
-//        gridSimulatorModel.getEstablishedCircuits().clear();
+
         route();
 
         ((OCSAdminController) OCSLinkAdminCtr).createOCS();
