@@ -120,13 +120,14 @@ public class SimulationBase implements Runnable, Serializable {
 
         route();
 
-        ((OCSAdminController) OCSLinkAdminCtr).createOCS();
+//        ((OCSAdminController) OCSLinkAdminCtr).createOCS();
     }
 
     @Override
     public void run() {
 
         initEntities();
+        ((OCSAdminController) OCSLinkAdminCtr).createOCS();
         simulationInstance.run();
 
         for (SimBaseEntity entity : gridSimulatorModel.getEntities()) {
