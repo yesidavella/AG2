@@ -50,6 +50,8 @@ public class ExecutePane extends TilePane implements ExecuteView {
                             simulationOptionSwitcher.loadSimulationOptionBeforeRun();
                             
                             if (executeController.isWellFormedNetwork()) {
+                                
+                                
                                 if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
                                     GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
                                     GUI.getInstance().getGraphDesignGroup().setSelectable(null);
@@ -62,6 +64,7 @@ public class ExecutePane extends TilePane implements ExecuteView {
                                 btnStop.setDisable(false);
                                 executeController.run();
                             } else {
+                                
                                 btnStop.setSelected(true);
                             }
                         }
