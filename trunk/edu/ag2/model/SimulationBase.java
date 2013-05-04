@@ -38,6 +38,7 @@ public class SimulationBase implements Runnable, Serializable {
     private ResultsChartAbstractController resultsChartAbstractController;
     private String id;
     private double runTime;
+    public static boolean running=false; 
 
     private SimulationBase() {
 
@@ -110,6 +111,11 @@ public class SimulationBase implements Runnable, Serializable {
         nodeAdminCtr.reCreatePhosphorousNodes();
         fiberLinkAdminCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
+        
+        running = false; 
+        System.out.println("RELOAD");
+        
+        
 
     }
 
@@ -126,6 +132,8 @@ public class SimulationBase implements Runnable, Serializable {
     @Override
     public void run() {
 
+        running = true; 
+         System.out.println("SimulationBase-Init.Run");
         initEntities();
         ((OCSAdminController) OCSLinkAdminCtr).createOCS();
         simulationInstance.run();
