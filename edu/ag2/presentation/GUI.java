@@ -59,9 +59,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
+import org.omg.PortableServer.THREAD_POLICY_ID;
 
 public class GUI extends Scene {
     //Static object
+
     private static GUI iguAG2;
     private static ActionTypeEmun actionTypeEmun = ActionTypeEmun.POINTER;
     private static Stage stage;
@@ -139,6 +141,8 @@ public class GUI extends Scene {
     private boolean isPlaying = false;
     private boolean OCSView = false;
     private double totalIncrement = 0;
+    private static final int NUM_EXECUTES_MAX = 10;
+    private static int executes = 0;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -1337,6 +1341,30 @@ public class GUI extends Scene {
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
         btnShowLog.setDisable(false);
+        System.out.println("Stop en GUI");
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    executes++;
+                    if (executes <= NUM_EXECUTES_MAX) {
+                        Thread.sleep(5000);
+                        System.out.println("re playALL  en GUI");
+                        executePane.playAll();
+                      
+                    }
+                    else
+                    {
+                          executes= 0; 
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        };
+        Platform.runLater(runnable);
 
 //        graphDesignGroup.hideLineOCS();
     }
@@ -1356,7 +1384,7 @@ public class GUI extends Scene {
         gpTools.setOpacity(0.8);
 
         graphDesignGroup.getGroup().setOpacity(0.8);
-        
+
         if (!tbpMain.getTabs().contains(tabResults)) {
             tbpMain.getTabs().addAll(
                     tabResultsResource,
@@ -1367,7 +1395,7 @@ public class GUI extends Scene {
                     tabChartsSwitchResults);
 
         }
-        
+
         chartsResultsCPU.play();
         chartsResultsBuffer.play();
         chartsResultClient.play();
@@ -1422,5 +1450,17 @@ public class GUI extends Scene {
 
     public ChartsResultsSwitch getChartsResultsSwitch() {
         return chartsResultsSwitch;
+    }
+
+    public VBox getVbLogos() {
+        return vbLogos;
+    }
+
+    public ToggleButtonAg2 getBtnPointSeparator() {
+        return btnPointSeparator;
+    }
+
+    public boolean isIsPlaying() {
+        return isPlaying;
     }
 }

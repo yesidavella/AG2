@@ -1,10 +1,15 @@
 package edu.ag2.presentation;
 
+import com.sun.java.accessibility.util.GUIInitializedListener;
 import edu.ag2.controller.ExecuteAbstractController;
+import edu.ag2.model.SimulationBase;
 import edu.ag2.presentation.control.PhosphosrusHTMLResults;
 import edu.ag2.presentation.control.PhosphosrusResults;
 import edu.ag2.presentation.control.SimulationOptionSwitcher;
 import edu.ag2.presentation.control.ToggleButtonAg2;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -13,7 +18,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
-public class ExecutePane extends TilePane implements ExecuteView {
+public class ExecutePane extends TilePane implements ExecuteView, Runnable {
 
     private ToggleButtonAg2 btnRun;
     private ToggleButtonAg2 btnStop;
@@ -25,49 +30,24 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
     public ExecutePane() {
 
-        btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
 
+
+        btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
             @Override
             public void setGraphDesignGroup(final Group group) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
-
                     public void handle(MouseEvent mouEvent) {
 
-                        ToggleButtonAg2 toggleButtonAg2 = (ToggleButtonAg2) mouEvent.getSource();
+                      
+                        
+                        
 
-                        if (executeController != null) {
+                       
+//                          Platform.runLater(ExecutePane.this);
+                          ExecutePane.this.playAll();
 
-                            //System.out.println("################    PLAY  ################");
 
-                            if (phosphosrusHTMLResults != null) {
-                                phosphosrusHTMLResults.lookToNextExecution();
-                            }
-                            if (phosphosrusResults != null) {
-                                phosphosrusResults.lookToNextExecution();
-                            }
 
-                            executeController.initNetwork();
-                            simulationOptionSwitcher.loadSimulationOptionBeforeRun();
-                            
-                            if (executeController.isWellFormedNetwork()) {
-                                
-                                
-                                if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
-                                    GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
-                                    GUI.getInstance().getGraphDesignGroup().setSelectable(null);
-                                }
-
-                                GUI.getInstance().getEntityPropertyTable().clearData();
-                                GUI.getInstance().play();
-                                toggleButtonAg2.setSelected(true);
-                                btnRun.setDisable(true);
-                                btnStop.setDisable(false);
-                                executeController.run();
-                            } else {
-                                
-                                btnStop.setSelected(true);
-                            }
-                        }
                     }
                 });
             }
@@ -75,11 +55,9 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
 
         btnStop = new ToggleButtonAg2(ActionTypeEmun.STOP) {
-
             @Override
             public void setGraphDesignGroup(final Group grGrupoDeDiseño) {
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
-
                     public void handle(MouseEvent mouEvent) {
 
                         //System.out.println("################    STOP  ################");
@@ -106,6 +84,44 @@ public class ExecutePane extends TilePane implements ExecuteView {
         btnStop.setToggleGroup(tgRun);
         btnStop.setSelected(true);
         getChildren().addAll(btnRun, btnStop);
+    }
+
+    public void playAll() {
+
+        btnRun.setSelected(true);
+        if (executeController != null) {
+
+            //System.out.println("################    PLAY  ################");
+
+            if (phosphosrusHTMLResults != null) {
+                phosphosrusHTMLResults.lookToNextExecution();
+            }
+            if (phosphosrusResults != null) {
+                phosphosrusResults.lookToNextExecution();
+            }
+
+            executeController.initNetwork();
+            simulationOptionSwitcher.loadSimulationOptionBeforeRun();
+
+            if (executeController.isWellFormedNetwork()) {
+
+
+                if (GUI.getInstance().getGraphDesignGroup().getSelectable() != null) {
+                    GUI.getInstance().getGraphDesignGroup().getSelectable().select(false);
+                    GUI.getInstance().getGraphDesignGroup().setSelectable(null);
+                }
+
+                GUI.getInstance().getEntityPropertyTable().clearData();
+                GUI.getInstance().play();
+
+                btnRun.setDisable(true);
+                btnStop.setDisable(false);
+                executeController.run();
+            } else {
+
+                btnStop.setSelected(true);
+            }
+        }
     }
 
     public void setExecuteAbstractController(ExecuteAbstractController executeAbstractController) {
@@ -135,5 +151,37 @@ public class ExecutePane extends TilePane implements ExecuteView {
 
     public void setSimulationOptionSwitcher(SimulationOptionSwitcher simulationOptionSwitcher) {
         this.simulationOptionSwitcher = simulationOptionSwitcher;
+    }
+
+    @Override
+    public void run() {
+
+        
+                
+        try {
+           
+                
+            for (int i = 0; i < 3; i++) {
+
+                while (SimulationBase.running) 
+                {
+                    System.out.println("Esperando..");
+                    Thread.sleep(10000);
+
+                }
+
+              
+
+                        System.out.println("RUN playALL..");
+                        Thread.sleep(4000);
+                playAll();
+                Thread.sleep(4000);
+
+
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ExecutePane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
