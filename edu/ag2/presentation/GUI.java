@@ -23,6 +23,7 @@ import edu.ag2.presentation.design.GraphNode;
 import edu.ag2.presentation.design.SwitchGraphNode;
 import edu.ag2.presentation.design.property.EntityPropertyTableView;
 import edu.ag2.presentation.images.ImageHelper;
+import edu.ag2.util.XLSWritter;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -141,14 +142,14 @@ public class GUI extends Scene {
     private boolean isPlaying = false;
     private boolean OCSView = false;
     private double totalIncrement = 0;
-    private static final int NUM_EXECUTES_MAX = 10;
+    private static final int NUM_EXECUTES_MAX = 3;
     private static int executes = 0;
+    private XLSWritter xlsWritterSingleton;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
 
-        getStylesheets().add(
-                Main.class.getResource("ag2.css").toExternalForm());
+        getStylesheets().add(Main.class.getResource("ag2.css").toExternalForm());
 
         if (!Main.IS_APPLET) {
             stage.initStyle(StageStyle.UNDECORATED);
@@ -268,8 +269,6 @@ public class GUI extends Scene {
 
                 totalIncrement += increment;
                 splitPane.setDividerPosition(0, totalIncrement);
-
-
             }
         });
 
@@ -287,7 +286,6 @@ public class GUI extends Scene {
                         tilPropertiesSmall.play();
 
                         return;
-
                     }
                 } else {
                     increment = 0.0003;
@@ -344,7 +342,6 @@ public class GUI extends Scene {
             }
         });
 
-
         scpWorld.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
@@ -358,8 +355,6 @@ public class GUI extends Scene {
                 }
             }
         });
-
-
     }
 
     private void settingupProgressIndicator() {
@@ -429,7 +424,6 @@ public class GUI extends Scene {
             public void handle(MouseEvent event) {
                 mouseDragOffsetX = event.getSceneX();
                 mouseDragOffsetY = event.getSceneY();
-
             }
         });
         tobWindow.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -441,7 +435,6 @@ public class GUI extends Scene {
                 }
             }
         });
-
     }
 
     public ScrollPane getScPnWorld() {
@@ -1349,19 +1342,22 @@ public class GUI extends Scene {
                 try {
                     executes++;
                     if (executes <= NUM_EXECUTES_MAX) {
+                        
+                        xlsWritterSingleton = XLSWritter.getInstance();
+                        
                         Thread.sleep(5000);
-                        System.out.println("re playALL  en GUI");
+                        System.out.println("Re-playALL() en GUI." + executes + "/" + NUM_EXECUTES_MAX);
                         executePane.playAll();
-                      
-                    }
-                    else
-                    {
-                          executes= 0; 
+                        
+                        xlsWritterSingleton.writteInFile();
+                    } else {
+                        xlsWritterSingleton.closeFile();
+                        executes = 0;
+                        System.out.println("Fin de ciclos de simulaciones¡¡¡");
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         };
         Platform.runLater(runnable);
