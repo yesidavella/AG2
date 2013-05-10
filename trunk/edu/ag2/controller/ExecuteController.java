@@ -24,7 +24,6 @@ public class ExecuteController extends ExecuteAbstractController {
         thread.start();
         
         System.out.println("###########----  RUN ----####################################################");
-
     }
 
     @Override
@@ -69,7 +68,7 @@ public class ExecuteController extends ExecuteAbstractController {
                 }
                 
             }else{
-                errorWindow.addErrorToShow(errorCounter+". LA SIMULACIÃ“N:"+errorInfo.getValue());
+                errorWindow.addErrorToShow(errorCounter+". LA SIMULACI\u00D3N:"+errorInfo.getValue());
             }
             
             errorCounter++;

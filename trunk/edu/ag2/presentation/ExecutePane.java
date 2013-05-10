@@ -30,29 +30,18 @@ public class ExecutePane extends TilePane implements ExecuteView, Runnable {
 
     public ExecutePane() {
 
-
-
         btnRun = new ToggleButtonAg2(ActionTypeEmun.RUN) {
             @Override
             public void setGraphDesignGroup(final Group group) {
+
                 setOnMouseClicked(new EventHandler<MouseEvent>() {
+                
                     public void handle(MouseEvent mouEvent) {
-
-                      
-                        
-                        
-
-                       
-//                          Platform.runLater(ExecutePane.this);
                           ExecutePane.this.playAll();
-
-
-
                     }
                 });
             }
         };
-
 
         btnStop = new ToggleButtonAg2(ActionTypeEmun.STOP) {
             @Override
@@ -64,7 +53,6 @@ public class ExecutePane extends TilePane implements ExecuteView, Runnable {
                         GUI.getInstance().stop();
                         enable();
                         executeController.stop();
-
                     }
                 });
             }
