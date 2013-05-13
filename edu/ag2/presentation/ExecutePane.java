@@ -1,6 +1,5 @@
 package edu.ag2.presentation;
 
-import com.sun.java.accessibility.util.GUIInitializedListener;
 import edu.ag2.controller.ExecuteAbstractController;
 import edu.ag2.model.SimulationBase;
 import edu.ag2.presentation.control.PhosphosrusHTMLResults;
@@ -9,7 +8,6 @@ import edu.ag2.presentation.control.SimulationOptionSwitcher;
 import edu.ag2.presentation.control.ToggleButtonAg2;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;

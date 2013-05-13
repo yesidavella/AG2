@@ -6,6 +6,8 @@ import Grid.Interfaces.ClientNode;
 import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ServiceNode;
 import Grid.Interfaces.Switch;
+import Grid.Nodes.Coeficiente;
+import Grid.Nodes.PCE;
 import Grid.Routing.Routing;
 import Grid.Utilities.HtmlWriter;
 import edu.ag2.controller.LinkAdminAbstractController;
@@ -13,6 +15,7 @@ import edu.ag2.controller.NodeAdminAbstractController;
 import edu.ag2.controller.OCSAdminController;
 import edu.ag2.controller.ResultsAbstractController;
 import edu.ag2.controller.ResultsChartAbstractController;
+import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.design.GraphArc;
 import edu.ag2.util.Utils;
@@ -38,7 +41,7 @@ public class SimulationBase implements Runnable, Serializable {
     private ResultsChartAbstractController resultsChartAbstractController;
     private String id;
     private double runTime;
-    public static boolean running=false; 
+    public static boolean running = false;
 
     private SimulationBase() {
 
@@ -96,7 +99,7 @@ public class SimulationBase implements Runnable, Serializable {
     public void reload() {
 
         runTime = simulationBase.getSimulationInstance().getSimulator().getMasterClock().getTime();
-        
+
         simulationBase = new SimulationBase();
         simulationBase.runTime = runTime;
         OutputterModel outputterModelNew = new OutputterModel(simulationBase.getGridSimulatorModel());
@@ -111,12 +114,9 @@ public class SimulationBase implements Runnable, Serializable {
         nodeAdminCtr.reCreatePhosphorousNodes();
         fiberLinkAdminCtr.reCreatePhosphorousLinks();
         HtmlWriter.getInstance().incrementFolderCount();
-        
-        running = false; 
-        System.out.println("RELOAD");
-        
-        
 
+        running = false;
+        System.out.println("RELOAD");
     }
 
     public void initNetwork() {
@@ -125,18 +125,22 @@ public class SimulationBase implements Runnable, Serializable {
         gridSimulatorModel.getPhysicTopology().clear();
 
         route();
-
-//        ((OCSAdminController) OCSLinkAdminCtr).createOCS();
     }
 
     @Override
     public void run() {
 
-        running = true; 
-         System.out.println("SimulationBase-Init.Run");
+        running = true;
+        System.out.println("SimulationBase-Init.Run");
         initEntities();
         ((OCSAdminController) OCSLinkAdminCtr).createOCS();
-        simulationInstance.run();
+
+        if (GUI.reEjecutarAutonomamente) {
+            setParametrosReEjecucionAutonoma();
+        }
+
+        //FIXME: Ojo solo para efectos de re_ejecucion sin ejecutar
+        //simulationInstance.run();
 
         for (SimBaseEntity entity : gridSimulatorModel.getEntities()) {
             if (entity instanceof ClientNode) {
@@ -195,5 +199,26 @@ public class SimulationBase implements Runnable, Serializable {
         return runTime;
     }
 
- 
+    private void setParametrosReEjecucionAutonoma() {
+        if (GUI.Cx == null) {
+            GUI.Cx = new Coeficiente(0, 3, 1);
+        }
+
+        if (GUI.Cfindλ == null) {
+            GUI.Cfindλ = new Coeficiente(0, 2, 1);
+        }
+
+        if (GUI.Callocate == null) {
+            GUI.Callocate = new Coeficiente(0, 1, 1);
+        }
+
+        if (GUI.getInstance().Cx != null && GUI.getInstance().Cfindλ != null && GUI.getInstance().Callocate != null) {
+            System.out.println("Cx NO es null... GUI.Cx:" + GUI.Cx.getValor());
+            for (SimBaseEntity pceNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(PCE.class)) {
+                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCx(GUI.getInstance().Cx.getValor());
+                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCfind(GUI.getInstance().Cfindλ.getValor());
+                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCallocate(GUI.getInstance().Callocate.getValor());
+            }
+        }
+    }
 }
