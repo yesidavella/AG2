@@ -140,7 +140,7 @@ public class SimulationBase implements Runnable, Serializable {
         }
 
         //FIXME: Ojo solo para efectos de re_ejecucion sin ejecutar
-        //simulationInstance.run();
+        simulationInstance.run();
 
         for (SimBaseEntity entity : gridSimulatorModel.getEntities()) {
             if (entity instanceof ClientNode) {
