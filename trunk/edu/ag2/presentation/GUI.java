@@ -23,7 +23,9 @@ import edu.ag2.presentation.design.GraphNode;
 import edu.ag2.presentation.design.SwitchGraphNode;
 import edu.ag2.presentation.design.property.EntityPropertyTableView;
 import edu.ag2.presentation.images.ImageHelper;
-import edu.ag2.util.XLSWritter;
+import edu.ag2.util.CSVWritter;
+import Grid.Nodes.Coeficiente;
+import Grid.Nodes.MultiCostMarkovAnalyzer;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -60,7 +62,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 public class GUI extends Scene {
     //Static object
@@ -144,7 +145,11 @@ public class GUI extends Scene {
     private double totalIncrement = 0;
     private static final int NUM_EXECUTES_MAX = 3;
     private static int executes = 0;
-    private XLSWritter xlsWritterSingleton;
+    private CSVWritter csvWritter;
+    public static Coeficiente Cx;
+    public static Coeficiente Cfindλ;
+    public static Coeficiente Callocate;
+    public static boolean reEjecutarAutonomamente = true;
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -1336,32 +1341,89 @@ public class GUI extends Scene {
         btnShowLog.setDisable(false);
         System.out.println("Stop en GUI");
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    executes++;
-                    if (executes <= NUM_EXECUTES_MAX) {
-                        
-                        xlsWritterSingleton = XLSWritter.getInstance();
-                        
-                        Thread.sleep(5000);
-                        System.out.println("Re-playALL() en GUI." + executes + "/" + NUM_EXECUTES_MAX);
-                        executePane.playAll();
-                        
-                        xlsWritterSingleton.writteInFile();
-                    } else {
-                        xlsWritterSingleton.closeFile();
-                        executes = 0;
-                        System.out.println("Fin de ciclos de simulaciones¡¡¡");
-                    }
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Platform.runLater(runnable);
+        if (reEjecutarAutonomamente) {
 
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        executes++;
+                        if (csvWritter == null) {
+                            csvWritter = new CSVWritter();
+                        }
+                        System.out.println("Ejecucion:" + executes + " Cx:" + Cx.getValor());
+                        csvWritter.writteInFile(executes + "," + Cx.getValor() + "," + Cfindλ.getValor() + "," + Callocate.getValor());
+
+                        if (nextCombination()) {
+
+                            Thread.sleep(2000);
+                            System.out.println("Re-playALL() en GUI." + executes);
+                            executePane.playAll();
+
+                        } else {
+                            csvWritter.closeFile();
+                            csvWritter = null;
+                            System.out.println("Fin de ciclos de simulaciones¡¡¡" + executes);
+                            executes = 0;
+                            Cx = null;
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                private boolean nextCombination() {
+
+                    if (Cx.hasNext()) {
+
+                        //Dos variables
+                        if (Cfindλ.hasNext()) {
+
+                            if (Callocate.hasNext()) {
+                                Callocate.next();
+                                return true;
+                            } else {
+                                Callocate.reset();
+                                Cfindλ.next();
+                                return true;
+                            }
+                        } else {//forzo ultima itera de Callocate
+                            if (Callocate.hasNext()) {
+                                Callocate.next();
+                                return true;
+                            } else {
+                                Callocate.reset();
+                                Cfindλ.reset();
+                                Cx.next();
+                                return true;
+                            }
+                        }
+                        //Dos variables
+                    } else {//Forzo la ultima itera de cx
+                        
+                        if (Cfindλ.hasNext()) {
+
+                            if (Callocate.hasNext()) {
+                                Callocate.next();
+                                return true;
+                            } else {
+                                Callocate.reset();
+                                Cfindλ.next();
+                                return true;
+                            }
+                        } else {//forzo ultima itera de Callocate
+                            if (Callocate.hasNext()) {
+                                Callocate.next();
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }   
+                    }
+                }//Metodo
+            };
+            Platform.runLater(runnable);
+        }//if
 //        graphDesignGroup.hideLineOCS();
     }
 

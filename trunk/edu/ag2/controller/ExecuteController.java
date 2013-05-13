@@ -7,11 +7,9 @@ import edu.ag2.presentation.NetworkErrorsReporter;
 import edu.ag2.presentation.design.GraphNode;
 import java.util.Iterator;
 import java.util.Map;
-import simbase.SimulationInstance;
 
 public class ExecuteController extends ExecuteAbstractController {
    
-
     @Override
     public void initNetwork() {
         SimulationBase.getInstance().initNetwork();
