@@ -144,12 +144,20 @@ public class GUI extends Scene {
     private boolean OCSView = false;
     private double totalIncrement = 0;
     private static final int NUM_EXECUTES_MAX = 3;
-    private static int executes = 0;
+    public static int executes = 0;
     private CSVWritter csvWritter;
     public static Coeficiente Cx;
     public static Coeficiente Cfindλ;
     public static Coeficiente Callocate;
     public static boolean reEjecutarAutonomamente = true;
+
+    public ToggleButtonAg2 getBtnDeleted() {
+        return btnDeleted;
+    }
+
+    public void setBtnDeleted(ToggleButtonAg2 btnDeleted) {
+        this.btnDeleted = btnDeleted;
+    }
 
     private GUI(StackPane stpLayer, double width, double height) {
         super(stpLayer, width, height);
@@ -1347,13 +1355,6 @@ public class GUI extends Scene {
                 @Override
                 public void run() {
                     try {
-                        executes++;
-                        if (csvWritter == null) {
-                            csvWritter = new CSVWritter();
-                        }
-                        System.out.println("Ejecucion:" + executes + " Cx:" + Cx.getValor());
-                        csvWritter.writteInFile(executes + "," + Cx.getValor() + "," + Cfindλ.getValor() + "," + Callocate.getValor());
-
                         if (nextCombination()) {
 
                             Thread.sleep(2000);
@@ -1361,6 +1362,7 @@ public class GUI extends Scene {
                             executePane.playAll();
 
                         } else {
+
                             csvWritter.closeFile();
                             csvWritter = null;
                             System.out.println("Fin de ciclos de simulaciones¡¡¡" + executes);
@@ -1400,7 +1402,7 @@ public class GUI extends Scene {
                         }
                         //Dos variables
                     } else {//Forzo la ultima itera de cx
-                        
+
                         if (Cfindλ.hasNext()) {
 
                             if (Callocate.hasNext()) {
@@ -1418,7 +1420,7 @@ public class GUI extends Scene {
                             } else {
                                 return false;
                             }
-                        }   
+                        }
                     }
                 }//Metodo
             };
@@ -1520,5 +1522,13 @@ public class GUI extends Scene {
 
     public boolean isIsPlaying() {
         return isPlaying;
+    }
+
+    public CSVWritter getCsvWritter() {
+        return csvWritter;
+    }
+
+    public void setCsvWritter(CSVWritter csvWritter) {
+        this.csvWritter = csvWritter;
     }
 }
