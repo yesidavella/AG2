@@ -58,7 +58,16 @@ public class CSVWritter {
         return System.getProperty("user.home")+separator+desktop+separator+fileName.toString();
     }
     
-    public void writteInFile(String lineToPrint){
+    public void writteInFile(Object... valores)
+    {
+        String lineToPrint = ""; 
+        String separador = ""; 
+        for(Object valor: valores)
+        {
+            lineToPrint+=separador+String.valueOf( valor); 
+             separador = ";"; 
+        }
+        
 //        System.out.println("Escribiendo en archivo");
         printWriter.println(lineToPrint);
         printWriter.flush();
@@ -91,7 +100,10 @@ public class CSVWritter {
     }
 
     private void printHeaderFile() {
-        String headerFile = "# Simulaci\u00F3n, Indep.Topo Cx,Cfindλ, Callocateλ, #OCS fin Simulaci\u00F3n";
+        StringBuffer headerFile = new StringBuffer();
+        headerFile.append("# Simulacion; Indep.Topo Cx;Cy=Cfind;Cy=Callocate;");
+        headerFile.append("Cliente1;Cliente2;Cliente3;Cliente4;Cliente5;");
+        headerFile.append("Cliente6;Cliente7;Cliente8;Cliente9;Cliente10;");
         writteInFile(headerFile);
     }
 }

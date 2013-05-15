@@ -18,6 +18,7 @@ import edu.ag2.controller.ResultsChartAbstractController;
 import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.design.GraphArc;
+import edu.ag2.util.CSVWritter;
 import edu.ag2.util.Utils;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -27,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import simbase.SimBaseEntity;
 import simbase.SimulationInstance;
+import simbase.Stats.SimBaseStats;
 
 public class SimulationBase implements Runnable, Serializable {
 
@@ -153,6 +155,40 @@ public class SimulationBase implements Runnable, Serializable {
                 outputterModel.printBroker((ServiceNode) entity);
             }
         }
+
+        if (GUI.reEjecutarAutonomamente) {
+            CSVWritter csvWritter = GUI.getInstance().getCsvWritter();
+            if (csvWritter == null) {
+                csvWritter = new CSVWritter();
+                GUI.getInstance().setCsvWritter(csvWritter);
+            }
+
+            StringBuffer datosClientes = new StringBuffer();
+            
+            GUI.executes += 1;
+            for (SimBaseEntity clientNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(ClientNode.class)) {
+
+                double resultReceive = gridSimulatorModel.getStat(clientNode, SimBaseStats.Stat.CLIENT_RESULTS_RECEIVED);
+                double jobSent = gridSimulatorModel.getStat(clientNode, SimBaseStats.Stat.CLIENT_JOB_SENT);
+
+                double relativeReceiveResult_jobSent = 0;
+                if (jobSent > 0) {
+                    relativeReceiveResult_jobSent = resultReceive / jobSent;
+                }
+                
+                datosClientes.append( String.valueOf( relativeReceiveResult_jobSent ) );
+                datosClientes.append( ";" );
+            }
+
+
+            System.out.println("Ejecucion:" + GUI.executes + " Cx:" + GUI.Cx.getValor());
+            csvWritter.writteInFile(GUI.executes,
+                    GUI.Cx.getValor(),
+                    GUI.Cfindλ.getValor(),
+                    GUI.Callocate.getValor(),
+                    datosClientes.toString());
+        }
+
         reload();
     }
 
@@ -201,15 +237,15 @@ public class SimulationBase implements Runnable, Serializable {
 
     private void setParametrosReEjecucionAutonoma() {
         if (GUI.Cx == null) {
-            GUI.Cx = new Coeficiente(0, 3, 1);
+            GUI.Cx = new Coeficiente(1, 10, 2);
         }
 
         if (GUI.Cfindλ == null) {
-            GUI.Cfindλ = new Coeficiente(0, 2, 1);
+            GUI.Cfindλ = new Coeficiente(1, 20, 5);
         }
 
         if (GUI.Callocate == null) {
-            GUI.Callocate = new Coeficiente(0, 1, 1);
+            GUI.Callocate = new Coeficiente(1, 100, 20);
         }
 
         if (GUI.getInstance().Cx != null && GUI.getInstance().Cfindλ != null && GUI.getInstance().Callocate != null) {
