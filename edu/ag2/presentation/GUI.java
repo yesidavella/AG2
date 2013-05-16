@@ -147,8 +147,8 @@ public class GUI extends Scene {
     public static int executes = 0;
     private CSVWritter csvWritter;
     public static Coeficiente Cx;
-    public static Coeficiente Cfindλ;
-    public static Coeficiente Callocate;
+    public static Coeficiente Cy;
+    public static Coeficiente percentGrid;
     public static boolean reEjecutarAutonomamente = true;
 
     public ToggleButtonAg2 getBtnDeleted() {
@@ -1379,23 +1379,23 @@ public class GUI extends Scene {
                     if (Cx.hasNext()) {
 
                         //Dos variables
-                        if (Cfindλ.hasNext()) {
+                        if (Cy.hasNext()) {
 
-                            if (Callocate.hasNext()) {
-                                Callocate.next();
+                            if (percentGrid.hasNext()) {
+                                percentGrid.next();
                                 return true;
                             } else {
-                                Callocate.reset();
-                                Cfindλ.next();
+                                percentGrid.reset();
+                                Cy.next();
                                 return true;
                             }
                         } else {//forzo ultima itera de Callocate
-                            if (Callocate.hasNext()) {
-                                Callocate.next();
+                            if (percentGrid.hasNext()) {
+                                percentGrid.next();
                                 return true;
                             } else {
-                                Callocate.reset();
-                                Cfindλ.reset();
+                                percentGrid.reset();
+                                Cy.reset();
                                 Cx.next();
                                 return true;
                             }
@@ -1403,19 +1403,19 @@ public class GUI extends Scene {
                         //Dos variables
                     } else {//Forzo la ultima itera de cx
 
-                        if (Cfindλ.hasNext()) {
+                        if (Cy.hasNext()) {
 
-                            if (Callocate.hasNext()) {
-                                Callocate.next();
+                            if (percentGrid.hasNext()) {
+                                percentGrid.next();
                                 return true;
                             } else {
-                                Callocate.reset();
-                                Cfindλ.next();
+                                percentGrid.reset();
+                                Cy.next();
                                 return true;
                             }
                         } else {//forzo ultima itera de Callocate
-                            if (Callocate.hasNext()) {
-                                Callocate.next();
+                            if (percentGrid.hasNext()) {
+                                percentGrid.next();
                                 return true;
                             } else {
                                 return false;

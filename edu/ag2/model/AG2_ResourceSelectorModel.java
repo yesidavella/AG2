@@ -8,6 +8,7 @@ import Grid.Interfaces.ResourceNode;
 import Grid.Interfaces.ResourceSelector;
 import Grid.Nodes.AbstractResourceNode;
 import Grid.Nodes.PCE;
+import edu.ag2.presentation.GUI;
 import edu.ag2.presentation.Main;
 import edu.ag2.presentation.design.GraphArc;
 import java.io.IOException;
@@ -89,6 +90,11 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
         double percentGrid = 0.5;
         double percentNetwork = 0.5;
+        if (GUI.reEjecutarAutonomamente) {
+            percentGrid = GUI.percentGrid.getValor();
+            percentNetwork = 1 - percentGrid;
+        }
+
         double minTotalGrade = Double.MAX_VALUE;
         ResourceNode resourceSelectedByGrade = null;
         double totalGrade = 0;
