@@ -104,6 +104,7 @@ public class CSVWritter {
         headerFile.append("# Simulacion; Indep.Topo Cx;Cy=Cfind;Cy=Callocate;");
         headerFile.append("Cliente1;Cliente2;Cliente3;Cliente4;Cliente5;");
         headerFile.append("Cliente6;Cliente7;Cliente8;Cliente9;Cliente10;");
+        headerFile.append("#OCS final simulacion;");
         writteInFile(headerFile);
     }
 }

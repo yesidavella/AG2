@@ -184,9 +184,11 @@ public class SimulationBase implements Runnable, Serializable {
             System.out.println("Ejecucion:" + GUI.executes + " Cx:" + GUI.Cx.getValor());
             csvWritter.writteInFile(GUI.executes,
                     GUI.Cx.getValor(),
-                    GUI.Cfindλ.getValor(),
-                    GUI.Callocate.getValor(),
-                    datosClientes.toString());
+                    GUI.Cy.getValor(),
+                    GUI.percentGrid.getValor(),
+                    datosClientes.toString(),
+                    ((Grid.GridSimulator) gridSimulatorModel).getEstablishedCircuits().size()
+                    );
         }
 
         reload();
@@ -237,23 +239,23 @@ public class SimulationBase implements Runnable, Serializable {
 
     private void setParametrosReEjecucionAutonoma() {
         if (GUI.Cx == null) {
-            GUI.Cx = new Coeficiente(1, 10, 2);
+            GUI.Cx = new Coeficiente(0.1, 5, 2);
         }
 
-        if (GUI.Cfindλ == null) {
-            GUI.Cfindλ = new Coeficiente(1, 20, 5);
+        if (GUI.Cy == null) {
+            GUI.Cy = new Coeficiente(0.1, 5, 2);
         }
 
-        if (GUI.Callocate == null) {
-            GUI.Callocate = new Coeficiente(1, 100, 20);
+        if (GUI.percentGrid == null) {
+            GUI.percentGrid = new Coeficiente(0, 1, 0.1);
         }
 
-        if (GUI.getInstance().Cx != null && GUI.getInstance().Cfindλ != null && GUI.getInstance().Callocate != null) {
-            System.out.println("Cx NO es null... GUI.Cx:" + GUI.Cx.getValor());
+        if (GUI.getInstance().Cx != null && GUI.getInstance().Cy != null && GUI.getInstance().percentGrid != null) {
+
             for (SimBaseEntity pceNode : SimulationBase.getInstance().getGridSimulatorModel().getEntitiesOfType(PCE.class)) {
                 ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCx(GUI.getInstance().Cx.getValor());
-                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCfind(GUI.getInstance().Cfindλ.getValor());
-                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCallocate(GUI.getInstance().Callocate.getValor());
+                ((PCE) pceNode).getMultiCostMarkovAnalyzer().setCfind(GUI.getInstance().Cy.getValor());
+                
             }
         }
     }
