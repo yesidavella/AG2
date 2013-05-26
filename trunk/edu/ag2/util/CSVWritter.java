@@ -101,7 +101,7 @@ public class CSVWritter {
 
     private void printHeaderFile() {
         StringBuffer headerFile = new StringBuffer();
-        headerFile.append("# Simulacion; Indep.Topo Cx;Cy=Cfind;%Grid;");
+        headerFile.append("# Simulacion;Cx (Indep.Topo);Cy(Cfind);%Grilla;");
         headerFile.append("Cliente1;Cliente2;Cliente3;Cliente4;Cliente5;");
         headerFile.append("Cliente6;Cliente7;Cliente8;Cliente9;Cliente10;");
         headerFile.append("#OCS final simulacion;");
