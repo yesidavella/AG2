@@ -151,14 +151,14 @@ public class ExecutePane extends TilePane implements ExecuteView, Runnable {
 
                 while (SimulationBase.running) 
                 {
-                    System.out.println("Esperando..");
+                   //System.out.println("Esperando..");
                     Thread.sleep(10000);
 
                 }
 
               
 
-                        System.out.println("RUN playALL..");
+                       //System.out.println("RUN playALL..");
                         Thread.sleep(4000);
                 playAll();
                 Thread.sleep(4000);

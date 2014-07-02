@@ -118,7 +118,7 @@ public class SimulationBase implements Runnable, Serializable {
         HtmlWriter.getInstance().incrementFolderCount();
 
         running = false;
-        System.out.println("RELOAD");
+       //System.out.println("RELOAD");
     }
 
     public void initNetwork() {
@@ -133,13 +133,15 @@ public class SimulationBase implements Runnable, Serializable {
     public void run() {
 
         running = true;
-        System.out.println("SimulationBase-Init.Run");
+       //System.out.println("SimulationBase-Init.Run");
         initEntities();
         ((OCSAdminController) OCSLinkAdminCtr).createOCS();
 
         if (GUI.reEjecutarAutonomamente) {
             setParametrosReEjecucionAutonoma();
         }
+      
+            
 
         //FIXME: Ojo solo para efectos de re_ejecucion sin ejecutar
         simulationInstance.run();
@@ -181,7 +183,7 @@ public class SimulationBase implements Runnable, Serializable {
             }
 
 
-            System.out.println("Ejecucion:" + GUI.executes + " Cx:" + GUI.Cx.getValor());
+           //System.out.println("Ejecucion:" + GUI.executes + " Cx:" + GUI.Cx.getValor());
             csvWritter.writteInFile(GUI.executes,
                     GUI.Cx.getValor(),
                     GUI.Cy.getValor(),
@@ -239,15 +241,16 @@ public class SimulationBase implements Runnable, Serializable {
 
     private void setParametrosReEjecucionAutonoma() {
         if (GUI.Cx == null) {
-            GUI.Cx = new Coeficiente(0.1, 5, 2);
+            GUI.Cx = new Coeficiente(0.1, 10, 0.3);
         }
 
         if (GUI.Cy == null) {
-            GUI.Cy = new Coeficiente(0.1, 5, 2);
+            GUI.Cy = new Coeficiente(0.1, 10, 0.3);;
         }
 
-        if (GUI.percentGrid == null) {
-            GUI.percentGrid = new Coeficiente(0, 1, 0.1);
+        if (GUI.percentGrid == null) 
+        {
+            GUI.percentGrid = new Coeficiente(0.1, 1, 0.1);
         }
 
         if (GUI.getInstance().Cx != null && GUI.getInstance().Cy != null && GUI.getInstance().percentGrid != null) {

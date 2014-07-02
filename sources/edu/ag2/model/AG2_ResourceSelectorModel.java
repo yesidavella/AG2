@@ -64,7 +64,7 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
 
         for (ResourceNode resourceNode : resources) {
             double gridCost = getCostProcByResource(resourceNode, jobFlops, maxCPUCount, maxBuffer);
-//             System.out.println("Recurtso:"+resourceNode +" costo grid" +gridCost);
+//            //System.out.println("Recurtso:"+resourceNode +" costo grid" +gridCost);
             mapResourceGridCost.put(resourceNode, gridCost);
             Double networkCost = mapResourceNetworkCost.get(resourceNode);
 
@@ -124,12 +124,12 @@ public class AG2_ResourceSelectorModel implements ResourceSelector, Serializable
                 minTotalGrade = totalGrade;
                 resourceSelectedByGrade = resourceNode;
             }
-            //   System.out.println("Recurso:" + resourceNode.getID() + " NOta grilla:" + gradeGrid + ". Nota Red:" + gradeNetwork + ". TotalGrade:" + totalGrade);
+            //  //System.out.println("Recurso:" + resourceNode.getID() + " NOta grilla:" + gradeGrid + ". Nota Red:" + gradeNetwork + ". TotalGrade:" + totalGrade);
         }
 
 //
-//        System.out.println("Red max:" + maxNetworkCost + "-- Grilla min:" + minGridCost + " max:" + maxGridCost);
-//        System.out.println("seleccionado:" + resourceSelectedByGrade + " con GradeTotal:" + minTotalGrade);
+//       //System.out.println("Red max:" + maxNetworkCost + "-- Grilla min:" + minGridCost + " max:" + maxGridCost);
+//       //System.out.println("seleccionado:" + resourceSelectedByGrade + " con GradeTotal:" + minTotalGrade);
 
         ackMsg.setEstimatedNetworkCost(mapResourceGridCost.get(resourceSelectedByGrade));
         ackMsg.setEstimatedGridCost(mapResourceNetworkCost.get(resourceSelectedByGrade));

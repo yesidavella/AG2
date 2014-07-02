@@ -143,7 +143,7 @@ public class GUI extends Scene {
     private boolean isPlaying = false;
     private boolean OCSView = false;
     private double totalIncrement = 0;
-    private static final int NUM_EXECUTES_MAX = 3;
+    
     public static int executes = 0;
     private CSVWritter csvWritter;
     public static Coeficiente Cx;
@@ -309,11 +309,11 @@ public class GUI extends Scene {
                         return;
                     }
                 }
-                //  System.out.println(" BIG ANTES "+splitPane.getDividerPositions()[0]);
+                // //System.out.println(" BIG ANTES "+splitPane.getDividerPositions()[0]);
 
                 totalIncrement += increment;
                 splitPane.setDividerPosition(0, totalIncrement);
-                //    System.out.println(" BIG DESPUES  "+splitPane.getDividerPositions()[0]);
+                //   //System.out.println(" BIG DESPUES  "+splitPane.getDividerPositions()[0]);
             }
         });
 
@@ -941,7 +941,7 @@ public class GUI extends Scene {
                 showProperties = !showProperties;
 
                 totalIncrement = splitPane.getDividerPositions()[0];
-//                System.out.println("Init totalIncrement" + totalIncrement);
+//               //System.out.println("Init totalIncrement" + totalIncrement);
                 tilProperties.play();
                 if (showProperties) {
                     if (btnDownUp.getStyleClass().contains("btn-show-minus")) {
@@ -1347,7 +1347,7 @@ public class GUI extends Scene {
         chartsResultsBuffer.stop();
         resultsOCS.showResults();
         btnShowLog.setDisable(false);
-        System.out.println("Stop en GUI");
+       //System.out.println("Stop en GUI");
 
         if (reEjecutarAutonomamente) {
 
@@ -1358,14 +1358,14 @@ public class GUI extends Scene {
                         if (nextCombination()) {
 
                             Thread.sleep(2000);
-                            System.out.println("Re-playALL() en GUI." + executes);
+                           //System.out.println("Re-playALL() en GUI." + executes);
                             executePane.playAll();
 
                         } else {
 
                             csvWritter.closeFile();
                             csvWritter = null;
-                            System.out.println("Fin de ciclos de simulaciones¡¡¡" + executes);
+                           //System.out.println("Fin de ciclos de simulaciones¡¡¡" + executes);
                             executes = 0;
                             Cx = null;
                         }

@@ -54,7 +54,7 @@ public class CSVWritter {
         fileName.append(getTwoDigits(currentDate.get(Calendar.SECOND)));
         fileName.append(".csv");
         
-//        System.out.println(System.getProperty("user.home")+separator+desktop+separator+fileName.toString());
+//       //System.out.println(System.getProperty("user.home")+separator+desktop+separator+fileName.toString());
         return System.getProperty("user.home")+separator+desktop+separator+fileName.toString();
     }
     
@@ -68,7 +68,7 @@ public class CSVWritter {
              separador = ";"; 
         }
         
-//        System.out.println("Escribiendo en archivo");
+//       //System.out.println("Escribiendo en archivo");
         printWriter.println(lineToPrint);
         printWriter.flush();
     }
